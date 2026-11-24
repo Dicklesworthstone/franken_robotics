@@ -1,0 +1,249 @@
+{
+ "round": 4,
+ "slice": "S-14",
+ "reviewed": 24,
+ "changed": [
+  {
+   "bead": "N24a-01",
+   "kinds": [
+    "request",
+    "broken",
+    "plan",
+    "convention"
+   ],
+   "what": "Applied the audit note: added dep N34-08 (M0, no cycle), which delivers `xtask check-contracts`, run by the acceptance and the e2e script; nothing upstream delivered it. That check also requires `contract.toml` and `tests/conformance.rs` of every member (rules contract.missing, contract.no-conformance-test), which the bead never created, so its acceptance could not pass: Scope and step 5 now create both, with the record's fields (layer 4, ranks 1 and 6 of N34-02's map, plane decision, D0, Tested, empty refusals, gates and features, safe_mode refuse:FROB-REF-702 / reference-path). The ADR path hedge 'or the decision-register path the workspace bootstrap fixed' removed (convention 4: docs/adr/)."
+  },
+  {
+   "bead": "N24a-06",
+   "kinds": [
+    "convention",
+    "deadlock",
+    "broken",
+    "registry",
+    "contradiction"
+   ],
+   "what": "Its e2e was N24a-42's `clocks-*` steps through `frob task check/show` (BD-122), both of which depend on this bead: now its own `scripts/e2e/spec_clocks.sh` (unit, golden, planted) on its own deps. Added dep N24a-02 (the reader that parses :kind/:reduce/:source, the kitchen-tray golden file and the `clocks.req` structural refusal it relies on; no cycle) and STD-E2E. The kitchen-tray acceptance claimed the lidar signal is held, but the golden task declares no signal on its lidar clock: the hold is now checked on a variant `lidar-hold.ftask.json`; fixture 1's clock check names its own test task (fixture 1's task file is a later bead's). The reduction table now spells the kind identifiers as BD-090/N24a-44 do (`state`, `interval-extremum`, `cumulative-counter`, `interval-mean`, `impulse`, `event`). Known answer named KA-471. The audit's split note (N24a-44 into a kind bead) was not applied: see notes."
+  },
+  {
+   "bead": "N24a-09",
+   "kinds": [
+    "convention",
+    "deadlock",
+    "broken",
+    "registry"
+   ],
+   "what": "E2E was N24a-42's steps through `frob task verdict`/`task check` (later beads): now its own `scripts/e2e/spec_offline_verdict.sh` with an example program on synthetic fixture-shaped traces (docks, strike, never, cut copy, truncation control, gap, horizon 6 s -> 526, one-bit integrity fault). Acceptance on 'runs' of fixture 1 reworded to synthetic traces built in code; the strike case now states the condition under which `no-strike` binds (every dwell margin below -1 before the strike; otherwise the binding atom is `cleared`, by the until margin's max over candidates). C-30 truncation control named KA-151. Added STD-E2E."
+  },
+  {
+   "bead": "N24a-10",
+   "kinds": [
+    "convention",
+    "deadlock",
+    "broken"
+   ],
+   "what": "E2E used `frob task verdict` on recorded docking runs and a `--precision f32 --no-guard` option no verb has: now its own `scripts/e2e/spec_boundary_guard.sh` (unit, docking cases in exact rationals, BD-030's 65,536-row screen guarded and the unguarded f32 control as the example program's own flags). The acceptance 'a fixture run at an analytic threshold carries the flag' needed later fixture beads: now a synthetic trace at an exact threshold, with KA-606's fixture-run control named as BD-123's and N24b-09's. Added STD-E2E."
+  },
+  {
+   "bead": "N24a-11",
+   "kinds": [
+    "contradiction",
+    "convention",
+    "deadlock"
+   ],
+   "what": "BD-094's `timeout` row says the class is assigned when the verdict record is built (N24a-11) for a task with no success termination; this bead never said so: field rule 4 now assigns it (and states no reason for a numerical outcome), with test `timeout_assigned_at_horizon`. E2E used `frob task verdict` and `frob run show` (later): now its own `scripts/e2e/spec_verdict_record.sh` (values, purity, re-evaluation against a scratch .frun and ledger, joint stages). Acceptance reworded to synthetic traces and the writer level (re-evaluation through the verb is N24c-02's). Added STD-E2E. The audit's BD-094 split note not applicable: BD-094 was not split."
+  },
+  {
+   "bead": "N24a-12",
+   "kinds": [
+    "convention",
+    "deadlock",
+    "broken",
+    "registry"
+   ],
+   "what": "E2E consisted of N24a-42's and N24c-06's steps through `frob task check` (BD-122 and N24c-06 depend on this bead) and asserted a field `result.examples_report` that its own Scope does not define: now its own `scripts/e2e/spec_examples.sh` (unit, sled, fixture 1 nine-trace set and the variant without rollover, planted files, pilot materials). Acceptance 'Reachable through frob task check' moved to BD-122/N24c-06; cancellation is a unit test on the stage's token. The pilot clause now holds whether or not N24a-33 ran its extended set (it may record it as not run). Trace storage in the task registry is BD-122's; this stage resolves TraceRefs through a given resolver. Hand case named KA-ARENA-A1. Added STD-E2E. The audit's move of hard_limit_atoms from N24a-13 was not applied: see notes."
+  },
+  {
+   "bead": "N24a-33",
+   "kinds": [
+    "convention",
+    "registry",
+    "deadlock"
+   ],
+   "what": "Pilot register path was `frob-conformance/registry/pilots.toml` (convention 3: crates/..., schema frob.gauntlet.pilot/1); the record now carries N38a-09's fields (id PILOT-REQWRITE-01, tier S with required_by §24.17, bead, work_package, gated_beads N24a-12, protocol, falsifier, ceiling, fallback, cost, tool) and an acceptance that it loads. The e2e 'drives frob task check and frob task verdict if the verbs exist' (convention 8: those verbs come after N24a-12, after this bead) now runs only the evaluator its tool field names. fallback.kill_gate is 'none' (GATE-ARENA-09 has no kill gate); request to N38a-09."
+  },
+  {
+   "bead": "N24ax-01",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Applied F-U24a-2's request after checking VERBS-sim (`--fixture <space>/<name>` resolves conformance fixtures registered in N24b-03's registry; --telemetry T2, --key) and N24a-39: the fixtures fail/brownout-exhausted, fail/brownout-ceiling and the previously unnamed fail/brownout-fall are registered conformance fixtures under crates/frob-conformance/fixtures/fail/, run as `frob sim run --fixture <f> --tier referee --telemetry T2 --seed $SEED --key fb-<name> --json`. The bead had no script of its own (its steps lived in N24a-39's, which depends on it): now `scripts/e2e/failures_brownout.sh` with unit, runs, failures, explain and controls (gauntlet-mutations; the clip mutant is N15b-03's). Deps added: N24b-03 (registry and --fixture), BD-112 (explain.run), STD-E2E; no cycle. 'GATE-CHRON-08 ... is recorded' changed to measured, recorded only by N29b-06 (convention 9)."
+  },
+  {
+   "bead": "BD-202",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Applied F-U24b's request after checking N24bx-01 and N16a-02. The manifest declared no axes.profile, so a batch-cpu development call took the tier default (lockstep) and ran off the registered adjudicator: it now declares [axes.profile] referee, strict, lockstep (default referee; lockstep kept because the batched rig rows of KA-ARENA-W1/N24c-19 and the device tiers admit only it), axes.set and axes.reflect with the mirror map, and every call that steps case-set episodes names the adjudicator in full (--tier referee or --tier batch-cpu --profile strict; batch-cpu without --profile is 222). The gate record named no test target, tier or key and no record_gate: now g1_known_answers (KA-616 rigs) and g3_metamorphic (KA-599, KA-617 reflection, planted asymmetry control strip-misplaced-5mm) receipts of one commit, recorded with record_gate --receipt <g1> --receipt <g3>. The e2e was N24b-22's steps (N24b-22 depends on BD-202) with no --key and a hard-coded referee tier: now its own scripts/e2e/arena_fixture2_sets.sh (unit, check_task with 526/539 variants, contact-capacity preflight, settle, axes refusals, development_set 8 episodes, reflection 14, control, determinism) with distinct keys. Made explicit that --set development runs 8 episodes and --reflect adds 6. Unit test f2_axes_selection added."
+  },
+  {
+   "bead": "BD-383",
+   "kinds": [
+    "convention",
+    "deadlock",
+    "contradiction"
+   ],
+   "what": "E2E was N24b-25's script, which depends on BD-383 (convention 7/11): now its own scripts/e2e/cert_campaign_replay.sh (unit; N24b-19's bundle script as a stage; one closed 500-request campaign run with BD-260's driver and family and bundled with prove.bundle; auditor built alone; replay; 12x200 mutants from an example program; checker control under gauntlet-mutations; --reserialize roundtrip). Acceptance 1's 'campaigns from the 500-retry gate's run' had no source: now that campaign. The gate acceptance had no form: g4_chaos (KA-623's tier) receipt and record_gate, BD-383 the one recorder. arith_recompute_absolute_rule asserted bounds 0.0432 and 0.0504, which are KA-762's rounded-to-nearest prints below the true bounds (N12-13: exact 0.043208..., 0.050414...); a test asserting them would assert a bound the auditor must reject: now the exact values."
+  },
+  {
+   "bead": "N24b-07",
+   "kinds": [
+    "convention",
+    "deadlock",
+    "broken"
+   ],
+   "what": "E2E was N24b-20's steps (N24b-20 depends on N24b-07) and its batch call had no --key: now its own scripts/e2e/arena_fixture1_devbatch.sh (unit; eval.preanalyze admission and the 532 tie refusal; the batch on the referee with --key; report checked against preanalyze's min_b_for_prefer by the rule's symmetry; changed-table and wrong-seed 530 controls; determinism under a second key). The CLI run waits to completion by default (NJL-01 wait.cli); job.wait is M2, so no job.wait call at M1. Unit test f1_batch_registration_refuses_tie added for the registration acceptance."
+  },
+  {
+   "bead": "N24b-08",
+   "kinds": [
+    "request",
+    "convention",
+    "deadlock",
+    "broken",
+    "contradiction"
+   ],
+   "what": "Applied F-U24b's request: the e2e named N24b-20's variants_register/variants_run, which an M1 bead cannot carry: now its own scripts/e2e/arena_fixture1_variants.sh (unit, primary, gain_match rigs and batch, rotor_cadence via --variant cells, fidelity variants, shared addresses, the frob.fixture.variants/1 report, 530 refusal, determinism), every call with --key and the adjudicator. Variant names fixture:cart-sill-dock/<v> did not resolve under N24b-03 (fixture:<name> is assets/fixtures/<name>): now <space>/<name> fixtures under crates/frob-conformance/fixtures/cart-sill-dock/, declaring fixture 1's axes. 'Tier as run (referee at M1 scale, batch-cpu strict once available)' let variants pair with a primary on another tier, breaking the reused cell and bit-identity acceptances: now one adjudicator for primary and variants, named in full; under strict the primary is re-run and labelled against the referee batch (the re-run N24b-09 says is N24b-08's). Deps: N24b-09 (fixture 1 on batch-cpu strict; no cycle) and STD-E2E."
+  },
+  {
+   "bead": "BD-064",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Had no script of its own (convention 11; its steps lived only in N14a-27, which depends on it): now scripts/e2e/design_lints.sh on its own deps (unit; an example program over every trigger and clean fixture of expect.toml; rank-1 repair applied through BD-058's apply; check-rank order; torso masses; three controls with gauntlet-mutations; debug/release byte identity). N14a-27 keeps the user-side steps."
+  },
+  {
+   "bead": "N24c-13",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "'No script of its own' left acceptance 5 (sizing recomputed by frob eval preanalyze) and the loader's fail-closed behaviour with no end-to-end run, and pointed at a lane script that does not log the file: now scripts/e2e/qual_config_decision.sh (unit; preanalyze at levels 0.05/2, 0.05/110, 0.05/420, 0.05/250500 for first ties 99, 178, the request-20 value, 328 and 478 promote outcomes; an example loading config/qualification.toml and the ADR; fail-closed loads and the designer-holder refusal). Sizing arithmetic rechecked (1.23, 2.57, 3.02, 4.08; 5,120)."
+  },
+  {
+   "bead": "N24c-15",
+   "kinds": [
+    "convention",
+    "broken",
+    "registry"
+   ],
+   "what": "E2E called `frob spark check` with no kernel, backend or --key (a run verb) and 'a frob task fixture row for the boundary screen', which no fixture has (the screen is the Gauntlet row KA-615), and gave no way to run the six band arms: now steps unit, arms (an example program per backend: both screens, six bands, derived-bound arm, unguarded control), agreement (10^6 traces per operator with device atoms), spark check with --key, collated mask equality, and the KA-615 Gauntlet row. The device half of GATE-ARENA-03 had no record form: now its M2 part, record_gate --part M2 from that receipt (N24a-42 records the host half). Decision record placed under docs/adr/. The BD-255 counterpart note needs nothing: BD-255 still depends on BD-253, the proposal was not applied."
+  },
+  {
+   "bead": "N24c-18",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "The e2e was a list of checks with no script of its own and no keys, partly run on N24c-19's rig runs (N24c-19 depends on this bead): now its own scripts/e2e/arena_traction_metric.sh (seed 2418) on synthetic contact sets through one example program (traction_metric, which also reads a recorded run's contact state with --run, the form N24c-19's scorecard step uses) and the real task.check on four task files, with the controls under gauntlet-mutations. The refusal text narrated that a code number would be assigned later: it now states the worded N24-REF row metric-moment-free-under-moment-command under N24-REF's rule. Unit test check_rejects_tie_break_on_scalar added, so the tie-break control has a test that fails it. Arithmetic checked: 0.3486·N (unidirectional) and 0.3731·N (signed) hold."
+  },
+  {
+   "bead": "N24c-19",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "Every task.fixture call in the script lacked --key and most named no tier, so two passes would return the first stored receipt and the tier was the default: each row now names its tier (host for the program rows, referee for the rigs) and its own key. The batch_tiers step used --tier batch-cpu with no profile (tier default) and GPU spellings task.fixture does not take: now --profile lockstep on batch-cpu, cuda and metal (KA-ARENA-W1's lockstep tier), absent tiers logged skip. The scorecard step called eval.scorecard, whose full form is M3 (this bead is M2): it now uses N24c-18's traction_metric example on the rig runs. Known answers said they had no Appendix number although KA-ARENA-W1/W2 exist: cited. The gate record had no test target or record_gate: now g1_known_answers -- GATE-ARENA-10 under gauntlet-mutations and record_gate by this bead. The ramp_halved row and the program rows are now declared in the manifest (variant ramp-half; wrench-slice/program). The stale sentence that the gate register does not restate the threshold is replaced by N40-10's first-class row. Script header in the own-script form."
+  },
+  {
+   "bead": "N24c-20",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The pilot record was described in prose fields that are not N38a-09's schema (a 'tier Frontier' word, a separate kill-gate field, no id), so N38a-09's loader would refuse it and the fundable check could not gate the foil beads: now PILOT-FOIL-01 in the schema's fields (tier F, owner §24.20, bead, work_package WP-24, gated_beads N24c-23 and N24c-24, frozen protocol path and BLAKE3, falsifier, ceiling, fallback {ships, kill_gate KILL-FOIL}, cost, tool on host, status, appended [[pilot.result]]), with an acceptance that it loads. The hand case now cites KA-ARENA-A1."
+  },
+  {
+   "bead": "N24c-21",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "The e2e expected `frob task new` to refuse intent-signal-misused, but VERBS-task lists that worded refusal under task.check only (task.new's worded list does not carry it), so the step would fail on a correct build: it now runs `frob task check` on the planted file. Known answers now cite KA-ARENA-A1 (dwell hand case) and KA-709 (created-energy fixtures). Arithmetic of the unit tests checked (margins, 6,000 ticks over 4,096, 5^5 = 3,125 cells, dwell window 9.5 s)."
+  },
+  {
+   "bead": "N24c-25",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "The script lacked the own-script form, had no controls step although the acceptance requires both negative controls to be caught, no envelope citation for a run of up to 7.5 reference campaigns (it would be refused 704/761 or meter as adhoc E0), and waited on job handles the CLI does not return by default: now arena_gate_audit.sh [--seed S] with steps unit, hand_case (N24c-22's arena_a1 fixture), foil, comparator, count, controls (gauntlet-mutations, e2e_expect_caught), determinism (pass-2 keys), receipt; every audit call cites --envelope-scope gate:GATE-ARENA-11. The gate record named no Gauntlet target: now g1_known_answers -- GATE-ARENA-11 (re-runs KA-ARENA-A1 and re-checks the thresholds from the audit records) and record_gate by this bead. The sentence that the gate register does not restate the thresholds contradicted N40-10, which enters the row with its brief. Cost bullet updated for the controls."
+  },
+  {
+   "bead": "N24c-26",
+   "kinds": [
+    "contradiction",
+    "registry",
+    "convention"
+   ],
+   "what": "Rule 5 said 'no trigger: kept', contradicting the bead's own band note and unit tests (18 ≤ D < 24 → not yet) and allowing kept while the gate failed on compute: now kept only when no trigger fires and the gate passed (D ≥ 24, P ≤ 6, C ≤ 5%), otherwise not yet; a C = 6% test case added. The register decision entry omitted receipts, which N40-03 requires (a not-fired entry without one fails the load): now {outcome, adr, date, session, receipts}. The repair-cycle text called its fresh-instance re-run 'a stricter reading' than N40-03, which now prescribes exactly that for N24c-26: restated, and the second-miss-is-fallback rule is listed as an amendment in the ADR. The script appended a decide step to N24c-25's script log (a script it does not own): it now records that log's path and the receipt read."
+  },
+  {
+   "bead": "N24c-34",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "Same three faults as N24c-26: the register decision entry omitted receipts (N40-03: a not-fired entry, which kept and kept-unproven are, fails the load without one); the repair cycle was described as stricter than N40-03, which now names N24c-34's newly recorded matrix as its fresh-instance case; and the script appended a decide step to N24c-33's script log. Also 'recorded not passed' is not a gate-part status: the gate part is recorded fail (N38b-19). Arithmetic checked (24,000 episodes, unit-test cases)."
+  },
+  {
+   "bead": "N24cx-01",
+   "kinds": [
+    "deadlock",
+    "convention"
+   ],
+   "what": "E2E step 5 called `frob spark check --decisions <A> <B>`, an option of BD-177 (which depends on this bead) in a form its row does not have (--decisions --pair A:B), logged skipped when absent; and the acceptance required the per-world comparison (N35-09, a dependent) to read the records. Now a reader hook of this bead (decisions::read and an example `decisions -- <run> --world <address>`) is the acceptance and the script's addressable step; N35-09 and BD-177 compare placements in their own scripts. The sim.run calls had no --key: added, distinct per run. Script in the own-script form with a unit step. Arithmetic checked (262 MB = 250 MiB; 2^-21 ≈ 4.77e-7; 4,096/50 → 82)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N24a-02",
+   "what": "The kitchen-tray golden task (and ART-L3's copy) declares `(spill_events 1 :kind count ...)`, but BD-090's kind table, N24a-44, N24a-06, N24a-18, N24b-11 and the Chronicle beads spell that kind `cumulative-counter`. Left as is, the reader's ChannelKind parse refuses the golden file, or a second spelling of one kind enters the format. Write `:kind cumulative-counter` (the plan's Appendix L text says `count`; if the owner prefers to keep it, BD-090 must register `count` as the spelling)."
+  },
+  {
+   "bead": "N38a-09",
+   "what": "Rule 3 makes `fallback.kill_gate` mandatory (a register id, or `to-register`, which blocks funding until the gate exists). The chapter-required tier-S pilot PILOT-REQWRITE-01 (N24a-33, required_by §24.17) gates N24a-12, and GATE-ARENA-09 has no kill gate in the plan (its fallbacks are the pilot's outcome rows). With `to-register` N24a-12 could never be funded. Accept `kill_gate = \"none\"` on a tier-S record whose required_by subsection attaches no kill gate, funding on the result alone."
+  },
+  {
+   "bead": "N24a-39",
+   "what": "Step 1 (`setup-*`) calls `frob job wait` where the envelope returns a job handle; job.wait is first available at M2 (VERBS-job), and N24a-39 is M1, so the step names a verb that does not exist at its milestone. On the command line a run verb waits to completion by default (NJL-01 wait.cli = to-completion): drop the job.wait clause."
+  },
+  {
+   "bead": "N24b-22",
+   "what": "BD-202 now owns scripts/e2e/arena_fixture2_sets.sh (development set and reflection on the adjudicator, with axes.profile). Run it as a stage beside model_rigs, slip_metric and holdout. Also step 5 asserts 14 verdict objects for `--set development` without `--reflect`; by N24bx-01 and BD-202's manifest that call runs 8 episodes (dry and three split-grip cells per sole) and `--reflect` adds the 6 mirrored ones (14): assert 8 in step 5 and 14 in step 6."
+  },
+  {
+   "bead": "N24b-25",
+   "what": "BD-383 now owns scripts/e2e/cert_campaign_replay.sh; N24b-25 may run it as a stage, and its Background's statement that BD-383 records from 'its own known-answer receipt' is now the g4_chaos receipt of KA-623."
+  },
+  {
+   "bead": "N24-KA",
+   "what": "KA-617 (fixture 2 reflected cases mirror) lists tier 'G3 · referee, lockstep'. BD-202's capacity rule (CX-151, FD-FSIM-13) makes batch-cpu under the strict profile the adjudicator of the development set while the referee's cap is 21; add 'batch-cpu · strict' to KA-617's tier column, or the G3 receipt of the reflection row comes from a tier the row does not list."
+  },
+  {
+   "bead": "N24c-22",
+   "what": "Its ARENA-A1 control says 'GATE-ARENA-11's audit runs it among its planted tasks, N24c-25'. N24c-25's 30 planted tasks are a frozen fixture of six per loophole class, and the hand case runs as its separate `hand_case` step on N24c-22's arena_a1 fixture; read literally the sentence adds a 31st planted task to D's denominator. Write 'runs it as the hand-case step of N24c-25's script'."
+  },
+  {
+   "bead": "N24c-33",
+   "what": "Its script ends with a step `gate_record`, and the gate record names no Gauntlet target. By conventions 1 and 9 a script never writes a gate row: the last step should produce the receipt with `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier> -- GATE-ARENA-13` (the tier the gate's rows sit in), and the gate is recorded from that receipt with record_gate by the recording session. N24c-34 reads 'the GATE-ARENA-13 receipt (N24c-33)' and needs that receipt to exist in that form."
+  }
+ ],
+ "unchanged": 1,
+ "notes": "Complete: 24 of 24 reviewed, 23 changed, 1 unchanged (N24bp4-01: paths, names and checks agree with BD-065 and BD-067). Audit dependency notes: N24a-01's missing dep N34-08 applied. N24a-06's split of N24a-44 into a kind bead not applied: N24a-44 is outside the slice and was not split by its reviewer, the new bead does not exist, and N24a-08's reviewer kept its referee item, which reaches BD-081 only through N24a-06 -> N24a-44. N24a-11's split of a registry bead from BD-094 not applicable: BD-094 is outside the slice and was not split by its reviewer. N24a-12's move of hard_limit_atoms from N24a-13 not applied: N24a-13's reviewer got no matching note, so applying one side would leave two beads defining hard_limit_atoms. The N24a-08 counterpart note under N24a-12 needs nothing (not applied by N24a-08's reviewer); the N24c-15 counterpart for BD-255 needs nothing (BD-255 still depends on BD-253). Requests from F-U24a/F-U24b applied to N24ax-01, BD-202 and N24b-08. BD-202's axes.profile declares referee, strict and lockstep (lockstep is needed by N24c-19's batched rig rows), and N24c-19 passes --profile lockstep there. graph_check cycles: 0. Front matter of all 24 parses; every bead keeps its seven sections."
+}

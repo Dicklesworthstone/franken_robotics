@@ -46,9 +46,11 @@ asset-go1-<source hash> --json` (NEG-15's import recipe; the verb writes no file
 the design's `term` section). Expected loss-report entries (HYPOTHESIS until the file is read):
 visual meshes carried as visuals only; mesh collision geometry on the trunk and thighs replaced by fitted
 primitives with a recorded fitting error; solver and contact parameters of the source (`solref`, `solimp`,
-`condim`) not mapped to a native contact law and listed; joint `armature`, `damping` and `frictionloss` mapped
-to reflected inertia, viscous loss and stiction of an `assumed` actuator card; keyframes mapped to named
-poses; default classes expanded.
+`condim`) not mapped to a native contact law and listed (BD-066 infers no end effector and no contact law: the
+report says "no contact law declared"); actuators bound to a generic `assumed` card with the source's limits as
+overrides. Not loss-report entries, by BD-066's table: joint `damping` and `frictionloss` map to the joint's own
+damping and friction, and `armature` to an override of the bound card's rotor inertia. Keyframe `home` mapped
+to the named pose `home` and any other keyframe listed; default classes expanded.
 
 **Validation specifics.** Left and right legs must be mirror images: masses equal and inertias related by the
 mirror, to the precision of the source; a discrepancy is a finding (public models sometimes carry asymmetric
@@ -92,8 +94,10 @@ Log lines carry commit, licence identifier and hash, counts, mass in kg, finding
 
 Import parity for each reference robot (forward kinematics within 10⁻⁹ m and 10⁻⁹ rad over 10⁴ configurations;
 the loss report lists every dropped field found by a field-coverage diff). Controls: a manifest whose licence
-hash is altered; an import with the loss report suppressed; a foot sphere dropped by the importer (the
-end-effector count changes). Determinism: goldens are data; identities equal across platforms.
+hash is altered; an import with the loss report suppressed; a foot sphere dropped by the importer (the import
+declares no end effector, so the end-effector count cannot show it: the field-coverage diff reports the
+missing collision geom and the loss-report and `DesignId` goldens differ). Determinism: goldens are data;
+identities equal across platforms.
 
 ## Considerations
 

@@ -157,9 +157,12 @@ source that two records marked differently is listed once, with each mark and wh
 - [ ] The eleven figures of the table are typed `figures` with hardware and `how`; the 410 s figure has
       `how = "figure-by-eye"` and `uncertainty = "± 20 s"`.
 - [ ] Every unlocated source has `unlocated = true` and an exact title; none has an invented URL.
-- [ ] Every non-P reading reports `reread_before_gate = true`, and the reading-task report of NAB-10 lists it
-      under the earliest gate that cites it.
-- [ ] The incumbent capability register's source keys (N00-13) all resolve to records of this bead or NAB-13.
+- [ ] Every non-P reading reports `reread_before_gate = true` through NAB-09's loader, and every reading's mark
+      equals the frozen bracket list of this bead (`marks_match_frozen_list`). (Listing each such reading under
+      the earliest gate that cites it is NAB-10's reading-task report, which comes after this bead.)
+- [ ] Every record of these topics has an `id` of the form `SRC-PUB-nnn`, so that the source keys of the
+      incumbent capability register resolve to them. (That every key of that register resolves is the test
+      `sources_resolve` of N00-13, which depends on this bead; it is not this bead's close condition.)
 
 ## Test plan
 
@@ -178,6 +181,10 @@ source that two records marked differently is listed once, with each mark and wh
   6.2.0 (Isaac Sim), 1.4.7 (Genesis), 3.0.1 (ManiSkill), 1.58.0 (Drake) appear as `version` values.
 - `by_eye_figure_has_uncertainty`; `benchmark_page_is_unlocated`.
 - `figure_values`: 2.55 M world-steps/s at 8,192 worlds; 88.4 kB; 262 ns; about 96 s.
+- `marks_match_frozen_list`: each reading of the four topics has the mark of its bracket in the frozen
+  plan-time list (`tests/fixtures/sources/public_engines_marks.tsv`); a stronger mark is accepted only when the
+  reading has a `reread` entry with `result = "confirmed"`. This is the frozen-mark comparison that NAB-16's
+  plant `mark-raised` must trip.
 - `no_url_is_fabricated`: every `locator` that is a URL appears verbatim in this bead's text.
 
 ### End-to-end script and logging
@@ -192,11 +199,14 @@ Known answers: 49 URLs (14, 13, 6 and 16 per topic); 61 brackets (18, 18, 8 and 
 24 P, 29 F, 8 S; 64 readings after the split rule (18, 20, 9 and 17) with marks 25 P, 29 F, 10 S. Arithmetic pins on the figures: 262 ns per world-step is 1 ÷ 262 ns = 3.82 M
 world-steps/s for that trace, of which the stages a design-specialized recursion could touch are 53 ns (20%),
 the solve 124 ns (47%) and constraint construction 38 ns; 8,192 worlds × 88.4 kB = 724 MB for the humanoid
-batch. The test `figures_have_units` refuses a figure without a unit or without its hardware. Negative
-controls: a gate that
-cites the 410 s figure without "± 20 s" (NAB-10 must fail it); a record whose mark was raised from F to P
-without a `reread` entry (a test compares marks against the frozen plan-time list and allows a stronger mark
-only with a confirmed re-read); a fabricated URL for the benchmark page.
+batch. The test `figures_have_units` requires a non-empty `unit` on every figure whose value is a number, and a
+non-empty `hardware` on every figure (`"n/a"` where the table prints "—"); a fixture figure with a number and
+no unit is refused. Negative
+controls: a record whose mark was raised from F to P without a `reread` entry (must fail
+`marks_match_frozen_list`); a fabricated URL for the benchmark page (must fail `no_url_is_fabricated`); the 410 s
+figure stored without its uncertainty (must fail `by_eye_figure_has_uncertainty`). A gate that cites the 410 s
+figure without "± 20 s" is refused by NAB-10's `cite.by-eye-without-uncertainty`, which comes after this bead;
+that control is NAB-16's plant `by-eye`.
 
 ## Considerations
 

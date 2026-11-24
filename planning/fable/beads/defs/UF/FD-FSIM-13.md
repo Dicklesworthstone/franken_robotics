@@ -4,7 +4,7 @@ title: "upstream frankensim: sustained contact beyond 21 contacts (larger solve,
 type: "task"
 priority: 1
 milestone: "M2"
-labels: ["m2", "suite", "kinesis", "traction", "upstream", "frankensim", "solid"]
+labels: ["m2", "suite", "kinesis", "traction", "upstream", "frankensim", "solid", "review-notes-open"]
 parent: "WP-39"
 deps: ["BD-080", "FDEF-04", "N24b-03", "N33b-04", "STD-E2E"]
 needs: []
@@ -34,8 +34,10 @@ the solve (a fork of the referee); silently clamping at 21.
 
 In: in FrankenSim, one of: (i) a higher or parameterized capacity; (ii) an island-wise solve; (iii) a
 documented patch model with a qualification fixture. Here: the capacity read as data, the pin move and the
-referee-side re-runs of the switch-over (INT-FSIM-04's refusal row at the new limit; the 22-contact fixture on the
-referee). Out: the M2 side of the switch-over, that is the capacity audit through `contact.capacity` and
+referee-side re-runs of the switch-over (INT-FSIM-04's refusal row at the new limit; BD-080's 22-contact fixture
+`traction/referee_capacity_22` on the referee, and BD-080's test `referee_capacity_22_refuses`, which asserts the
+refusal at 22 with `required = 21` and is re-pointed in the pin-move change at a set of capacity + 1 spheres with
+`required` equal to the capacity the airlock reads, once a form that raises the capacity of one island has landed). Out: the M2 side of the switch-over, that is the capacity audit through `contact.capacity` and
 `contact.audit`, the capacity-bias fixture of GATE-TRAC-06 and the re-issue of the referee's coverage table
 GATE-FID-03 (NFp3-12, which depends on this bead and on the M2 beads that own those checks, N18b-24 and BD-213, so
 that this upstream work can start before they exist; the split made for FD-FSIM-02 in NFp2-01); the capacity
@@ -162,8 +164,9 @@ asserting that they pass. Phase `post`, after the pin move: the same fixture mus
 is re-run at the new limit, and the registry row must read `landed` with a receipt newer than the pin move
 (`adopted` once NFp3-12 has run: GATE-TRAC-06 and GATE-FID-03 are read there, not here). Phase `post` also runs
 `frob doctor --section referee --json` (the capacity the airlock read, N33a-14), `frob sim run --fixture
-traction/plate_on_22_points --tier referee --seed 5 --key fd13-22-post --json` (the 22-contact fixture, registered
-by this bead in the fixture registry of N24b-03 and stepped by the referee step of BD-080: a committed run, where
+traction/referee_capacity_22 --tier referee --seed 5 --key fd13-22-post --json` (the 22-contact fixture, a
+`synthetic` body resting on a plane through 22 sample spheres, registered by BD-080 in the fixture registry of
+N24b-03 and stepped by BD-080's referee step: a committed run, where
 phase `pre` under the key `fd13-22-pre` asserts `FROB-REF-721`, exit 5, with the contact count, the capacity and
 the upstream reason; where only form (ii) or form (iii) landed the capacity of one island is still 21, the `post`
 run still refuses and the script logs that as the expected state, the run through a registered patch reduction

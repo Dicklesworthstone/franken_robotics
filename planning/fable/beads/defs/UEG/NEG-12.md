@@ -34,13 +34,25 @@ rows to hold different numbers, by leaving neither row a number to hold.
 
 ## Technical approach
 
-1. **One registration.** In `crates/frob-conformance/registry/known_answers.toml`, the Traction row for the
-   squeeze times, KA-404, carries `tolerance = "2% relative"` and `owner = "Traction"`. Its Habitat twin, KA-438,
-   is marked as the same answer with the row schema's field `same_as = "KA-404"` (N38a-12) and stores no
-   tolerance of its own: it references the Traction row by identifier.
+1. **One registration.** In `crates/frob-conformance/registry/known_answers.toml`, in the row schema's own
+   forms (N38a-12: `tolerance` is a table with a `kind`, and a row's `owner` is a gate, proof-obligation or
+   invariant identifier). The Traction row for the squeeze times, KA-404, holds the number:
+   `tolerance = { kind = "rel", value = "0.02" }` with `owner = "GATE-TRAC-05"`, the gate of the chapter that
+   owns the law (kind `rel` and not `gate`, because after this bead no gate row holds the number). Its Habitat
+   twin, KA-438, is marked as the same answer with the row schema's field `same_as = "KA-404"` and, as the
+   loader requires of a `same_as` row, carries KA-404's `fixture` (one fixture, measured once: N40-08's
+   reading). It stores no tolerance of its own: `tolerance = { kind = "same-as" }`, a tolerance kind this bead
+   adds to the loader (DESIGN, additive: valid only on a row whose `same_as` is set; it resolves to the
+   tolerance of the row named, which must itself hold a number, so no chain; eligibility counts it as a
+   tolerance that is present). This bead amends the two records in one dated change: KA-404 from the gate's
+   2% (the form the Traction registry entered) and KA-438 from `{ kind = "gate", value = "2%" }` (the form the
+   Habitat registry entered), each keeping its other fields, KA-438 its `printed = "within 1%"`.
 2. **Gate rows.** In `registries/gates.toml`, GATE-TRAC-05 and GATE-HAB-06 each cite the known answer by
-   identifier; the gate runner resolves the tolerance from the registry at run time. A gate row that states a
-   numeric tolerance for a cited known answer is rejected by the registry lint. The gate register's
+   identifier (KA-404 and KA-438); the gate runner resolves the tolerance from the registry at run time. The
+   registry lint added here has this scope: for a known answer that more than one gate cites, directly or
+   through a `same_as` twin, a citing gate row that states a numeric tolerance for it is rejected. A known
+   answer cited by one gate, whose row defers to that gate (`kind = "gate"`), is not touched: there the gate
+   row is the one registration. The gate register's
    related-threshold check (N40-08) reads a gate's effective threshold, so after this change it finds 2% for
    both rows through the registration; this bead re-runs that check and keeps it passing.
 3. **Values.** t = 3π·η·a⁴/(4·N·h²) to h = 10 µm: 0.0376991 s, 2.2619467 s, 0.7634070 s. Acceptance windows
@@ -51,12 +63,22 @@ rows to hold different numbers, by leaving neither row a number to hold.
    5 to 7% of the interval unless the update is exact in 1/h². The exact update makes the time step-
    independent, and 2% then covers the handover detection and single-precision rounding on GPU tiers; 1% was
    never derived from an error budget.
-5. **Register and scan.** Item E7-B: stale pattern `1%` in the scope of squeeze, film and the Habitat gate's
-   identifier; pinned by the test below.
+5. **Register and scan.** Item E7-B, in the engine's entry form (N38b-50): pattern `(^|[^0-9.])1 ?%`, so
+   that 0.01% (the finite-film row of the card), 11% and 21% do not match a bare `1%`, with
+   `all_of = ["squeeze", "GATE-HAB-06"]` (the withdrawn claim is the scene gate's 1% on the squeeze times; the
+   three-part scope of the first draft, read as alternatives, fired on any 1% near the word film). One correct
+   line still matches: KA-438's `printed = "within 1%"`, which the known-answer registry keeps on purpose and
+   which stands in a scanned file; it carries the marker `stale-as-control: E7-B` as a comment on its line.
+   The test file below is scanned too (`crates/*/tests/`), and its planted 1% strings stand beside "squeeze"
+   and "GATE-HAB-06": each line that holds one (in `registry_lint_rejects_local_tolerance` and
+   `e7b_stale_entry_is_anchored`) carries the same marker, and the strings handed to the scan or the lint are
+   built without it. Pinned by the test below.
 
 ## Acceptance criteria
 
-- [ ] The registry has one tolerance (2%) for the squeeze-time answer; the Habitat row references it.
+- [ ] The registry has one tolerance (2%, `rel 0.02` on KA-404) for the squeeze-time answer; the Habitat row
+      references it (`same_as = "KA-404"`, the same `fixture`, `tolerance = { kind = "same-as" }`), loads, and
+      is `eligible`.
 - [ ] Both gate rows resolve to 2%; the lint rejects a gate row with its own numeric tolerance for a cited
       known answer.
 - [ ] Both gates pass or fail together on a `synthetic` measurement at 1.5% error (pass) and at 2.5% (fail).
@@ -75,7 +97,14 @@ registry_single_tolerance`):
 - `gates_resolve_same_tolerance`: both gates read 2%.
 - `gates_agree_on_boundary_cases`: measurements at +1.5% and +2.5% on each of the three times give
   (pass, pass) and (fail, fail), never a split verdict.
-- `registry_lint_rejects_local_tolerance`.
+- `registry_lint_rejects_local_tolerance` (a planted 1% in the Habitat gate row); `registry_lint_scope`: a
+  `synthetic` known answer cited by one gate whose row states its number passes, and the same answer cited by
+  two gates fails for both rows.
+- `same_as_tolerance_resolves`: KA-438 resolves to rel 0.02 through KA-404; a `same-as` kind on a row with no
+  `same_as`, or naming a row that itself has kind `same-as`, is a load error; KA-438 is `eligible`.
+- `e7b_stale_entry_is_anchored`: through the scan of NEG-03, "0.01% less" beside "squeeze" and "GATE-HAB-06"
+  gives no hit, "GATE-HAB-06 holds the squeeze times to 1%" gives one, and KA-438's marked `printed` line
+  gives none.
 - `squeeze_windows`: the three windows above from the closed form.
 
 ### End-to-end script and logging

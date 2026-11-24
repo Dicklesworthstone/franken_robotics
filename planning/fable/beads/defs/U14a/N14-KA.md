@@ -4,7 +4,7 @@ title: "Known-answer registry of Skeleton (§14): KA-261 to KA-292 with truths, 
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "skeleton", "frob-conformance", "solid", "registry", "test"]
+labels: ["m1", "skeleton", "frob-conformance", "solid", "registry", "test", "review-notes-open"]
 parent: "WP-07"
 deps: ["BD-025", "N38a-12", "N38a-40", "N38b-05", "STD-E2E", "STD-TEST"]
 needs: []

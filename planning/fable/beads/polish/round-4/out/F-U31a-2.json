@@ -1,0 +1,276 @@
+{
+ "round": 4,
+ "slice": "F-U31a-2",
+ "reviewed": 28,
+ "changed": [
+  {
+   "bead": "N31a-61",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The e2e asserted that each verb choice equals 'the library's BeamRung::size on the same inputs', which a bash script cannot call: now this bead's example program beam_rung prints it. The fatigue-governed step gave no command, and a foundry.size fixture brings a declared case, which step 3 answers `fatigue: no-claim`, so the 3.0 mm / 2.759 mm assertion could not pass: the fixture beam-fatigue-governed now brings its own synthetic sample stream; the other steps name their fixtures (beam-tube-600n, beam-no-curve, beam-plate-torso), added to the cluster's index. Numbers recomputed and correct: 45.62 / -39.26 MPa, utilizations 1.5552 / 0.6561 / 0.3359 / 0.1944, t_req 2.759 mm, 1.845 mm and 0.14087 kg, 0.15268 kg, 11.3% and 18.1%."
+  },
+  {
+   "bead": "N31a-62",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "Unit command's two positional filters moved after `--` (cargo refuses two). The script used literal keys fwh-1, fwh-3, fwh-4-n (now e2e_key labels) and exported `<design>` with --controller knee-pi-clamped, a fixture controller declared only on quad-ref-final (N31a-58), elsewhere refused: now quad-ref-final. The good receipt was a static fixture file whose `firmware` digest must equal the exported manifest's: it would stop matching at every emitter change, so the script now fills the digest and vector hash from step 1's manifest into a template and derives the three bad receipts from it."
+  },
+  {
+   "bead": "N31ap1-51",
+   "kinds": [
+    "broken",
+    "registry"
+   ],
+   "what": "The cross-consistency failure `packet-inconsistent` was to be planted through foundry.export, which takes a design and has no input to plant through: it now uses the assembler's conformance-only hook FROB_TEST_PACKET_PLANT (N31a-43) on a gauntlet-mutations frob. ref_163 said N31-REF writes `yield_strength`; N31-REF now names `structure.yield_Pa`, so the stale discrepancy note is gone. Fixture count (27), the 285,712 / 285,714 bound (N = 3.5T + 4), the near-misses and the six MCP tools checked against N31-REF and VERBS-foundry."
+  },
+  {
+   "bead": "N31ap3-51",
+   "kinds": [
+    "broken",
+    "registry",
+    "convention"
+   ],
+   "what": "The script spelled run inputs by their parameter names: `sync_wait_ms=1` and `=0`, and `estimate_only`, whose CLI form is `--estimate` (NJL-01; a guessed --estimate-only answers 802); now `--sync-wait-ms 1|0`, `--estimate` and `--budget cpu_core_s=<n>`. The header declared plants= for three compiled mutants that the script runs as e2e_expect_caught controls, so run-all.sh --verify-plants (E2E_PLANT_FAILURE must make the script fail) would report the script broken: plants key removed and the mutant builds (gauntlet-mutations,frob-foundry/nc-<nnnn>) named."
+  },
+  {
+   "bead": "N31a-46",
+   "kinds": [
+    "request",
+    "broken",
+    "convention"
+   ],
+   "what": "Own script scripts/e2e/foundry_firmware_vectors.sh (example firmware_vectors: the full export order on knee-pi-clamped, host-built harness 0 mismatches over 10^6, seed reproducibility, bound against observed maximum, in-loop digests twice, planted 15->14 shift caught and localized, params-only), dep STD-E2E; it named N31a-58's script with the literal key fw-10-1. Unit command's two positional filters moved after `--`. Numbers recomputed (9830 counts, 1.22e-5, 4.27e-5)."
+  },
+  {
+   "bead": "N31a-47",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Own script scripts/e2e/foundry_lifecycle_core.sh (example lifecycle_core on the host toys: z(T) = 0.1 within 5% at compression >= 50 with its wording, second-order convergence, 20.125-period bias, not-periodic, accounting 2.25e6 and 800), dep STD-E2E; it named N31a-59's script through foundry_key. Unit command's three positional filters moved after `--`. Numbers recomputed (step doubling e = eps^2 H^2 z/4, accepted error eps^3 H^3 z/6; 0.4% bias; 1.8e9)."
+  },
+  {
+   "bead": "N31a-48",
+   "kinds": [
+    "request",
+    "registry",
+    "broken"
+   ],
+   "what": "Own script scripts/e2e/foundry_lifecycle_laws.sh (example lifecycle_laws: 2.5/tau_ref, 3.195, 4.5% through the actuator crate's law, kill-switch constants, macro-level 140 MPa cycle and carried residue, 831 with four repairs, 113 under --strict-data), dep STD-E2E. Step 5 rendered 'the registry row's repairs followed by this bead's further two', but N31-REF's 831 row now has all four, so an implementer would render six; now the row's four in order. Unit command's filters moved after `--`. Counterpart of the N31b-28 proposal: nothing changes on this side (N31b-28 keeps its card tests on this bead)."
+  },
+  {
+   "bead": "N31a-50",
+   "kinds": [
+    "plan"
+   ],
+   "what": "Audit edge applied: BD-409 moved from deps to related. The foundry.lifecycle row is entered by VERBS-foundry (a dependency); BD-409 only checks it as a declared entry answering 724, which N31a-50's not-in-build answer through N00-02 keeps true; N31a-50 names nothing of BD-409, and eval.run (N24c-04) and nemesis.search (BD-273) are deps. Graph: no cycle; NJL-05 and N00-02 still reached."
+  },
+  {
+   "bead": "N31a-51",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "C13 narration ('requested of N31b-45 as an eleventh row') replaced by the fact: row 11 of N31b-45, held with no interim. foundry.check's row and the uncoded-names paragraph now list the reader's held refusal packet-integrity-failed (N31a-36), five uncoded names in all. The preamble wrote `sync_wait_ms=1`, not a CLI spelling and racy on a quick call: now `--sync-wait-ms 0` appended (NJL-01's spelling). The foundry_key request was already answered (a thin alias of e2e_key)."
+  },
+  {
+   "bead": "N31a-52",
+   "kinds": [
+    "request",
+    "registry",
+    "broken"
+   ],
+   "what": "H-ref-2 applied: 261 now renders N31-REF's repairs 4-8 (buckling 4-5, modal 6-8) with 2 first for buckling or modal failures; acceptance and tests updated. The rows now carry every mechanism repair, so the 'then' markers and the C13 narration ('requested of N31-REF') are gone and repairs_follow_registry_order asserts equality. NamedRefusal was fixed at exit 3, which would render firmware-controller-not-exportable (row 11, capability class) with the wrong exit: it now takes the row's exit; assert_refusal likewise; row 11 and packet-integrity-failed added to the held list."
+  },
+  {
+   "bead": "N31a-53",
+   "kinds": [
+    "broken",
+    "users"
+   ],
+   "what": "Step 8 re-read the campaign 'with the scratch store', a mechanism frob does not have (STD-E2E: no --root, the run's FROB_STATE only): the chunk is now deleted in the run's own store, with the step run after step 11 so no later step reads the damaged campaign. Preamble wait spelled `--sync-wait-ms 0`. Stage request already applied."
+  },
+  {
+   "bead": "N31a-54",
+   "kinds": [
+    "request",
+    "broken",
+    "convention"
+   ],
+   "what": "Request applied: keys written with e2e_key labels (stages were already listed). Step 11 killed the loop job with FROB_TEST_KILL_AT, a hook defined nowhere for a job (N31a-36's is the packet writer's): now frobd is killed with SIGKILL after three committed stages, restarted, and `frob job wait` resumes it (N31a-05 step 5); cancel through `frob job cancel`. Step 8's 'short sync_wait_ms' and job.wait given their CLI forms. The run-verb list no longer names export, which the script does not call and does not depend on."
+  },
+  {
+   "bead": "N31a-55",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Request applied: CX-338's plant is finish-per-window (N31-CX plant BD-402:finish-per-window), and its build feature is frob-foundry/finish-per-window, not an nc-<nnnn> feature; step 8 and the self-test used the old name and feature, so the mutation build would not compile. Stages already listed. Numbers recomputed: 1.159 mm, 30 MPa, 300 MPa and 1.25, Euler 8,558 N (2.14, 1.71), f1 204 Hz, 10.7%."
+  },
+  {
+   "bead": "N31a-57",
+   "kinds": [
+    "request",
+    "broken",
+    "users",
+    "convention"
+   ],
+   "what": "Requests applied: keys from foundry_key and the literal sel-mf-1 become e2e_key labels; stages now include the own scripts of N31a-35, -36, -37, -39, -40, -41 and -43 beside N31a-03, N31a-34 and N31ax-01; quad-ref-final-exploratory was already present. Step 9 planted inconsistencies through `mutate packet-inputs`, but the verb takes a design and has no input to plant through: it now uses the assembler's conformance-only plant hook FROB_TEST_PACKET_PLANT (defined in N31a-43) on a gauntlet-mutations build. Step 10's kill boundaries omitted the bundle and the build: now N + 3 per N31a-36 step 9 on a gauntlet-mutations frob. Considerations said the release binary 'rejects' the variable; it ignores it, asserted by an export that completes. Step 5's wait given its CLI form."
+  },
+  {
+   "bead": "N31a-58",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Every export used literal keys fw-<step>-<n> (STD-E2E: written with e2e_key): now e2e_key labels. Added step 1b running the new own scripts of N31a-44, -45 and -46 as stages (convention 11). Step 12 claimed only the manifest's file table differs between the packets with and without firmware, but the bundle embeds the manifest bytes and differs too; corrected. Step 2 now states the held detail of row 11."
+  },
+  {
+   "bead": "N31a-59",
+   "kinds": [
+    "plan",
+    "convention",
+    "broken",
+    "registry"
+   ],
+   "what": "Audit edge applied: BD-409 to related (nothing in the script uses it; NJL-05 still reached). N31b-28 counterpart taken: step 9 now runs N31b-28's slow-wear fixture (assumed label; 113 under --strict-data; 831 with a narrower insulation card) and the acceptance and receipt state every card's provenance class, which N31b-28 cannot assert itself since the gate row is written after it closes. Step 4 used a `mutate law-at-mean-temperature` helper that cannot change the law inside the verb: the script now computes the contrast value from the fixture. foundry_key keys become e2e_key labels; the 831 repairs are the row's four; step 7's wait given its CLI form; the binding test's parenthetical no longer suggests a feature flag on frob-lifecycle."
+  },
+  {
+   "bead": "N31a-35",
+   "kinds": [
+    "request",
+    "broken",
+    "registry",
+    "users"
+   ],
+   "what": "Lead note applied: own script scripts/e2e/foundry_step_export.sh (example step_export, no-verb; tetrahedron bit-exact replay, tetrahedron-open -> 824 open-shell, sphere-285714 -> 824 over-limit with N = 1,000,003 against 285,712, --decimate re-checked through N31a-19/N31a-23), dep STD-E2E. The unit-test command named two positional filters, which cargo refuses; now after `--`. The sibling's refusal had no N31-REF reason token or repairs: the payload now carries reason open-shell | non-triangle-face | over-limit | replay and the ranked repairs 1-3 of the 824 row. `--decimate` had no unit: it is a Hausdorff length in metres, non-positive or non-finite refused by the schema."
+  },
+  {
+   "bead": "N31a-36",
+   "kinds": [
+    "request",
+    "broken",
+    "contradiction",
+    "deadlock",
+    "plan"
+   ],
+   "what": "Own script scripts/e2e/foundry_packet_container.sh added, dep STD-E2E. Unit command with several positional filters fixed. The manifest was written with a trailing newline and identified by a plain BLAKE3, so frob-verify (N31b-44, re-serializing per N34-18 and checking manifest_digest under domain frob.build/1) would reject every packet: now canonical bytes without newline and identity Canon<F>::id() under frob.build/1 (plan §34.9 rule 2, N34-19); files keep plain BLAKE3. The manifest lacked the `selection` block that N31b-44 requires (selection.status in {model-robust, none-recorded}), so the differential test and frob-verify would fail on every packet; the field, its two-valued type and the reader rule are now declared here (filled by N31ax-01, none-recorded until then). The reader now runs the same checks as the auditor (reality, review, units, selection, section headers -> 860; the bundle's own flags also -> 860, since inside a packet the bundle is a member and FROB-REF-833 is not on foundry.check's list, the auditor keeping 833 for its bundle report with the same reason token) with failures other than flags under the held `packet-integrity-failed` detail. FROB_TEST_KILL_AT, used by N31a-57 step 10 and BD-408, was defined nowhere: it is now the writer's conformance-only kill hook (BD-025 pattern, ignored outside that build, envelope warning test-kill-hook)."
+  },
+  {
+   "bead": "N31a-37",
+   "kinds": [
+    "request",
+    "broken",
+    "contradiction"
+   ],
+   "what": "Own script scripts/e2e/foundry_packet_flags.sh (example packet_flags; MCP foundry_export with a flag key -> 860 before any handler, nested -> 860, misspelt -> 802), deps STD-E2E and VERBS-foundry (the forbidden_keys schema lives on the export row; no cycle). The bead wrote an 'audit log' entry that exists nowhere in the program, so the acceptance test could not pass: the attempt is the BD-258 job-ledger row refused {session, verb, code}; test renamed refused_row_in_job_ledger."
+  },
+  {
+   "bead": "N31a-39",
+   "kinds": [
+    "request"
+   ],
+   "what": "Own script scripts/e2e/foundry_parts_list.sh (example parts_list on parts-quad and two-finger, --priced and --strict-data -> 818, snap revalidation, unsourced part), dep STD-E2E; verb-level steps stay N31a-57 steps 11 and 13."
+  },
+  {
+   "bead": "N31a-40",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Own script scripts/e2e/foundry_packet_geometry.sh (example packet_geometry on tube, bracket-chiral, scaled STL 10^9, a 1e-5 model mismatch, collinear and two-site fiducials), dep STD-E2E. Unit command with two positional filters moved after `--`. Numbers recomputed and correct (35,186 mm^3, 0.0950 kg, 0.99990, 2.7 kg, 0.79%)."
+  },
+  {
+   "bead": "N31a-41",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Own script scripts/e2e/foundry_harness.sh (example harness: harness-24v 0.0688 ohm, 0.688 V 2.87%, 6.88 W, 20 A/mm^2, 0.35 mm^2 fails at 4.1%; slack 36 mm; four-leg bus route; single-ended net blocked), dep STD-E2E (lead note: its only e2e evidence was a step of N31a-57's script, a later bead that depends on it). The packet-level step of N31a-57 is named with an e2e_key label. Numbers recomputed and correct."
+  },
+  {
+   "bead": "N31a-43",
+   "kinds": [
+    "request",
+    "broken",
+    "deadlock",
+    "contradiction"
+   ],
+   "what": "Own script scripts/e2e/foundry_packet_assemble.sh (example packet_assemble on recorded section inputs: ten rows and three parallel plants -> packet-inconsistent with no directory, preconditions 166/166/820/830/261 in order, reduced profile, frob-verify accepts the clean packet), dep STD-E2E. Unit command's three positional filters moved after `--`. Acceptance asked for idempotency-key replay of the stored envelope, which is the verb layer's (BD-408 depends on this bead), so this bead could not pass it: now same inputs -> same identity and the writer's idempotent success; the verb replay is named as BD-408's and N31a-57's. Step 2.3 now states that the passed selection block fills the manifest's `selection` field, without which N31b-44 rejects the packet. The ten row plants and three parallel-section plants had no way into the binary (the verb takes a design), so N31a-57 step 9 and the replay of this bead could not run: added the conformance-only plant hook FROB_TEST_PACKET_PLANT (gauntlet-mutations build, envelope warning test-packet-plant, ignored otherwise) with its unit test."
+  },
+  {
+   "bead": "N31a-44",
+   "kinds": [
+    "request",
+    "broken",
+    "registry",
+    "deadlock"
+   ],
+   "what": "Own script scripts/e2e/foundry_firmware_emit.sh (example firmware_emit with the obligation table built directly: byte-identical emissions, host build and thumbv7em check, refused families exit 5, undecided table writes nothing, planted write_volatile caught by the lint, packet with and without firmware both accepted), dep STD-E2E; the old section used `--key fw-9-1`, a literal key STD-E2E forbids (now the e2e_key label fw-9-1 of N31a-58's step 9). The refusal said N31b-45 'numbers it'; N31-REF Table 3 row 11 holds it with interim none, so the payload now carries detail firmware-controller-not-exportable behind the constant, no code. The packet-independence criterion required a re-export through foundry.export, which needs N31a-45/N31a-46/N31a-58 (later beads that depend on this one): now proven by the writer with and without firmware/, the binary re-export named as N31a-58's stage. Unit filters after `--`."
+  },
+  {
+   "bead": "N31a-45",
+   "kinds": [
+    "request",
+    "broken",
+    "convention"
+   ],
+   "what": "Own script scripts/e2e/foundry_firmware_obligations.sh (example firmware_obligations: Q15 product and negation refuted with re-executed witnesses, unclamped integrator 827 with witness 32,400 and repairs in order, clamped controller certified and replayed, widened u breaks the range digest, a 1 ms budget gives undecided with the budget repair third; exit 77 where fln is absent), dep STD-E2E. The old section used literal keys fw-5-1 and fw-5-2; the N31a-58 step now uses e2e_key labels. Unit command's four positional filters moved after `--`. Numbers recomputed: 400 x 81 = 32,400, 400 x 82 = 32,800 > 32,767; 0x8000^2 = 0x40000000, >>15 = 0x8000; 32767^2 >> 15 = 32,766."
+  },
+  {
+   "bead": "N31ax-01",
+   "kinds": [
+    "contradiction",
+    "convention"
+   ],
+   "what": "Scope and step 7 claimed to declare the manifest field and both checkers' rules, which now belong to N31a-36 (the container, which needs the field or frob-verify rejects every packet) and N31b-44, both dependencies: this bead's precondition fills the block and its tests re-assert the rule. The literal `--key sel-mf-1` (STD-E2E: every key is written with e2e_key) replaced by an e2e_key label. Its own script ran `--ranking @fixture:box-cone-exploit`, a ranking fixture defined by N31a-57's gate script, a later bead that depends on this one, so the script could not run when this bead closes: it now uses N16b-15's planted pyramid-cone ranking R_cone (a dependency through BD-266) and asserts `cone` in flipped_by."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N31-REF",
+   "what": "Row FROB-REF-165: the trigger reads 'the true quantity evaluated at the tolerance-band extremes leaves the specification', but the plan's check is of the linearization (§31.11: robustness_check, 'a check of the linearization at tolerance-band extremes'), and N31a-33 step 2 and BD-406 state that a corner beyond the margin is not a failure (the worked case's 41.4 um corner against T = 30 um fails nothing). Write the trigger as: a feature whose true change at its single-feature extreme differs from s_i*t_i by more than 10% of the margin T, or a band-box corner whose discrepancy from the linearization exceeds 0.1*T (attribution rule of N31a-33); and the observed column as the discrepancy against 0.1*T. Otherwise an implementer of BD-406 following the registry refuses every statistical allocation."
+  },
+  {
+   "bead": "N31b-28",
+   "what": "Counterpart of the audit proposal, taken on N31a-59's side: N31a-59 step 9 now runs the slow-wear fixture (assumed label; FROB-REF-113 under --strict-data; FROB-REF-831 with the narrower insulation card) and its acceptance and receipt carry the provenance class of every card the gate run used. N31b-28 can drop scripts/e2e/foundry_lifecycle_cards.sh's three verb calls, its acceptance item 4 (the gate row is written from N31a-59's receipt after N31b-28 closes, so N31b-28 cannot satisfy it) and its dep on N31a-50, keeping the decision record, the slow-wear fixture entry and the cards tests on N31a-48."
+  },
+  {
+   "bead": "N31a-42",
+   "what": "Its end-to-end section still names N31a-57's script (a later bead that depends on it) as its only evidence. Give it its own scripts/e2e/foundry_schedule.sh on an example program (row counts against joints and sensors, no empty fields, card multiplicities against the parts list, net identifiers by the shared naming rule) with dep STD-E2E; N31a-57 will run it as a stage beside the other section beads' scripts."
+  },
+  {
+   "bead": "N31-REF",
+   "what": "Add to Table 3 the held, uncoded refusal `packet-integrity-failed` (family 8xx, interim none, exit 3, retry after-change), raised by N31a-36's packet reader for every integrity failure that is not a flag (hash, size, unlisted or missing file, not-canonical, digest, schema, exploratory, no-verdict, selection-status, section identity), the reason being the auditor's token. N31b-32's M1 and `foundry.check <packet>` return it. Without the row the reader's refusal has no registry entry and verbs_lists_agree cannot account for it."
+  },
+  {
+   "bead": "N31b-45",
+   "what": "Add the matching decision row for `packet-integrity-failed` (8xx, no fitting interim; the constant PACKET_INTEGRITY_FAILED in frob-foundry's packet reader is where its number lands), so the ledger assigns it with the other held Foundry refusals."
+  },
+  {
+   "bead": "VERBS-foundry",
+   "what": "List `packet-integrity-failed` among the held, uncoded refusals of foundry.check (packet mode), raised through N31a-36's reader; otherwise the check row does not name a refusal its handler returns."
+  },
+  {
+   "bead": "N31b-32",
+   "what": "Name the reader's refusal as `packet-integrity-failed` (N31a-36 step 4) where it says 'the reader's refusal', so M1's assertion has a value to compare."
+  },
+  {
+   "bead": "N31b-44",
+   "what": "State that the manifest's `selection` field and its two-valued type are declared by N31a-36 (the container) and filled by N31ax-01's precondition; the checker rule stays N31b-44's. Today the bead attributes the field to N31ax-01 alone, which would leave the container writing packets that its own checker rejects."
+  },
+  {
+   "bead": "BD-408",
+   "what": "FROB_TEST_KILL_AT is now defined by N31a-36 step 9: read only in frob-foundry's `conformance` feature (enabled by gauntlet-mutations), abort after boundary n of N + 3 (listed files in path order, manifest.json, certs/packet.frobcert, the rename), warning test-kill-hook. Cite that definition and use a frob built with --features gauntlet-mutations for the kill lane; a release binary ignores the variable."
+  }
+ ],
+ "unchanged": 2,
+ "notes": "Unchanged after a full read: N31a-56 (every number recomputed: 15.9904/6.3458 um, 7.276, 19.9%, 0.0447/0.0894, 6.083, 41.4 um, 0.15 mm) and N31a-60 (every hand value recomputed: 1.05912 N / 0.105912 N m, 2.25 / 1.6875 / 8.25 N, 0.45 N / 0.09 N m, 150 N / 45 N m / -3 N m, 0.4 N m and 0.0015625, 27.5 MPa, J 4.578e-9, 2.037 and 4.811 MPa, 6.366 MPa, 207.1 / 204.2 / 45.6 Hz). Audit edges: BD-409 moved to related on N31a-50 and N31a-59 (evidence holds, no cycle); the N31b-28 counterpart taken on N31a-59's side, N31a-48 needs nothing. Own scripts of the mechanism beads carry no plants= header key (their planted defects are unit-test defects the script cannot inject under E2E_PLANT_FAILURE). Dependency graph re-checked with my own helper: no cycle; every dep exists and none is on a later milestone."
+}

@@ -1,0 +1,226 @@
+{
+ "round": 4,
+ "slice": "F-U23b",
+ "reviewed": 45,
+ "changed": [
+  {
+   "bead": "BD-218",
+   "kinds": [
+    "registry"
+   ],
+   "what": "(1) Arm (a) of the end-to-end script ran `frob train start ... --devices 0`, a form the train.start row does not have (its example is `--devices cuda:0`); now the design positional, `--backend` and `--devices cuda:0` as the row spells them. (2) N23-CX registers CX-23-L3 (first crossing taken as attainment) for GATE-CORTEX-05 as well as -20, but the bead never ran it: the negative controls now run it in the recording run with `--features gauntlet-mutations`, caught by same_rule_both_arms. Left, the script's first command is refused 802, and the recorder refuses `pass` for a listed control not caught in the same run."
+  },
+  {
+   "bead": "BD-267",
+   "kinds": [
+    "registry",
+    "contradiction",
+    "broken"
+   ],
+   "what": "(1) A `pairs_budget` below 16 was answered 701, the compute-budget code: now FROB-REF-802 at /pairs_budget, exit 3, and 701 stays for a compute budget that cannot cover 16 pairs per arm (budget_admission and e2e step 6 split). (2) It said eval.promote refuses a flagged result, while BD-263 completes with exit 2, the label unchanged and `blocked_by`: the flags paragraph, promotion_blocked and e2e step 4 now assert BD-263's form. Left, the script asserts a code eval.promote never returns, and an agent passing --pairs-budget 10 is told to raise a session budget that is not the cause."
+  },
+  {
+   "bead": "BD-320",
+   "kinds": [
+    "request",
+    "registry",
+    "convention",
+    "contradiction"
+   ],
+   "what": "Applied the three requests: (a) convention 14's split: a daemon-queued campaign-class job with no approved envelope gets 704 from the size classifier (BD-296) at submission; 761 otherwise and always in process; 701 after; the scope is the pretrain:<run> derived from --approval (VERBS-train, N36-20) and must name the request's class; (b) the `seed` input, `trained_on.seed`, seed_distinct_runs and an e2e step; (c) self_declared_envelope_refused (802), token_binds_purpose (761) and a deterministic ceiling_stops_run, with e2e steps 2b-2d. Also: the pilot check required status `falsified`, which the register lacks: it now reads PILOT-FAMILY-01's verdict (falsifier-holds, inconclusive or no result -> 724); evidence `Tested` -> *screening* as VERBS-train labels it; `frob capabilities` showed `killed` for a missing pilot, now `partial` with the Frontier rider until KILL-FAMILY fires (N00-02); dep BD-296 added (its 704 is asserted). Left: BD-320 and BD-321 assert different codes for one job, the pilot check matches no register value, the evidence overclaims, and BD-321 has no seed to pass."
+  },
+  {
+   "bead": "BD-324",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "C11 finding is right in substance: the bead delivers nothing a `frob` command reaches; the test plan now says so. Verdicts were `falsified/not-falsified/undetermined`, which N38a-09 rejects: now its words; the six records had no identifier: DESIGN PILOT-ALTALGO-01 to -06; `not-run: sharding stopped` is not a register status: now `withdrawn` with KILL-SHARD's record; E2 inherits a 2 h per-run wall limit (N36-20) and frob-launch stops a child at it, so arms longer than that run as chunked, resumed launches, the control chunked alike; the not-approved case no longer fabricates a result. Falsifier test gains the case where only the pass rate wins. Left, the register refuses the six records, N23a-14 and N23b-23 have no id to read, and a long arm is killed at two hours mid-comparison."
+  },
+  {
+   "bead": "N23b-19",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "C11: no frob-reachable delivery (its record is read through BD-320's train_family.sh); stated in the test plan. Verdict words -> register words; the record had no id: PILOT-FAMILY-01 (DESIGN), the id BD-320's pilot check reads; 60 GPU-hours of pretraining run as a chain of launches of at most 2 h, resumed from checkpoints (N36-20's per-run limit, which frob-launch enforces); the not-approved close is now `withdrawn: not run: no envelope, R7` (N41-17 rule 2, N44-01); 'KILL-FAMILY fires at the pilot' -> the decision is N23a-26's; falsifier test gains the strict boundaries and the ceiling case. Left, the register rejects the record, BD-320 cannot find it, and the first pretraining launch is killed at two hours."
+  },
+  {
+   "bead": "N23b-20",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "C11: no frob-reachable delivery; stated. R13 is filed by this bead but its scope was a placeholder ('the scope R13 admits'): now `admits = [\"campaign:pilot-inherit\"]` and the launch line uses it. Left, the row is filed with an empty admits (N44-01's loader refuses it) or with a scope nobody chose, and every launch is refused 761."
+  },
+  {
+   "bead": "N23b-23",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "Its inputs and branches read `falsified/not-falsified/undetermined`, words the pilot register never holds; now the register's verdicts, plus no result (R16 not approved) and `withdrawn` (KILL-SHARD fired first), both -> `not-reached`; altalgo_branches and the A/A negative control follow. Left, no pilot record matches any branch and no decision can be recorded."
+  },
+  {
+   "bead": "N23b-24",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Its enforcement paragraph said every unapproved pretraining job is refused with 761; convention 14 puts the size classifier's 704 first, at submission, for a daemon-queued campaign-class job (launches and in-process runs still get 761). Left, BD-320's 704 test contradicts the owner bead of the envelope it tests."
+  },
+  {
+   "bead": "N23b-16",
+   "kinds": [
+    "registry",
+    "deadlock"
+   ],
+   "what": "The Controls paragraph mapped CX-23-L3 only to -20, while N23-CX registers it for -05 too; and GATE-CORTEX-02, -12 and -16, which no CX row names, had no source for their `controls` lists. Now L3 -> -05 as well, and those three list their carriers' planted negative controls (BD-196, BD-328, BD-301). Left, three gates carry empty control lists and can never pass, and -05 passes without the control its registry row names."
+  },
+  {
+   "bead": "BD-328",
+   "kinds": [
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "The script passed a bare `--score-for-ladder`, which the policy.apply row refuses with 802 (it takes `select|discard`); in the calibration step the flag was also wrong in substance, since a ladder use before any record exists is 537: the calibration call drops it (as N23a-24's script does) and the default step asserts 537 for `select` and for `discard`. The default step's 761 is now stated as the in-process answer, with 704 from the size classifier when the daemon queues the campaign-class job (convention 14). Left, every calibration score is refused and the experiment cannot run."
+  },
+  {
+   "bead": "N23b-01",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "C11: no frob-reachable delivery; stated. The register has no status `not run`: an unmet precondition is now `withdrawn` with the reason (the bead closes `withdrawn: not run: no envelope, R10`), and a launch refused after runs began ends `inconclusive`. Each 10 GPU-hour training ran as one launch, but E3 inherits a 2 h per-run wall limit that frob-launch enforces (N36-20): now a chain of resumed launches, chunked alike in all arms, the equal-wall-clock rule counting the summed time. Left, the loader rejects `not run`, and every training is killed at two hours."
+  },
+  {
+   "bead": "N23b-02",
+   "kinds": [
+    "registry",
+    "deadlock"
+   ],
+   "what": "It read the pilot's verdict as `falsified/not-falsified/undetermined`, words the register does not store, and had no branch for a pilot that never ran (R10 not approved): now it reads the register's verdicts through N23b-01's mapping and records `not-reached` for a withdrawn pilot; the branch test gains both cases. Left, KILL-GATREE's first reading cannot be recorded in the most likely case (no envelope), and the decision bead never closes."
+  },
+  {
+   "bead": "N23b-04",
+   "kinds": [
+    "convention"
+   ],
+   "what": "It narrated a request ('the third value is requested of it') and logged its diagnostic step `skipped: capability absent'; VERBS-eval's eval.run row now lists `fixed|adaptive|training-distribution`, so the text states that and the step runs. Also names the pilot id PILOT-ALTALGO-05 the registry row moves on. Left, the script skips the diagnostic it is meant to assert and the bead narrates a request (convention 13)."
+  },
+  {
+   "bead": "N23b-11",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "C11 finding is right: the pilot delivers nothing a `frob` command reaches (its record is read by N23b-14); the test plan now says so. The record had no identifier and its result words were `falsified`/`not-falsified`, which N38a-09's register does not store: now PILOT-GYMADAPT-01 (DESIGN, conforming to N38a-09's grammar) with the verdict `falsifier-holds` or `falsifier-rejected` in a `[[pilot.result]]`, and falsifier_reading asserts those words. Left, the loader rejects the result and N23b-14 has no record identifier to cite."
+  },
+  {
+   "bead": "N23b-14",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "It read the pilot as `falsified`/`not-falsified` (not register words) and set KILL-GYMADAPT itself to status `killed`, while N40-03 gives a kill row a decision entry (`fired`) and propagates `killed` to the gate it reads (an outcome `killed` fails the load, as N23b-02's test states). Now: register verdicts, KILL-GYMADAPT's `fired` entry, GATE-CORTEX-16 `killed`; on the not-fired branch no entry is appended (as N23b-02 does), the M3 entry being N23b-13's. Left, the firing record fails the register load and the printouts show a killed kill gate."
+  },
+  {
+   "bead": "N23b-13",
+   "kinds": [
+    "registry",
+    "deadlock"
+   ],
+   "what": "The final reading was appended to the ADR only, and no bead entered KILL-GYMADAPT's M3 decision entry (the first reading appends none when it does not fire), so on a passing gate N40-03's exit query lists the kill gate undecided; and 'the row is `killed`' put a status on the kill row. Now the reading enters `not-fired` with the gate's receipt, or `fired` with GATE-CORTEX-16 `killed` by propagation; acceptance follows. Left, the M3 exit has a kill gate with no decision and cannot close."
+  },
+  {
+   "bead": "N23b-21",
+   "kinds": [
+    "convention",
+    "deadlock",
+    "broken"
+   ],
+   "what": "C11 finding is right; stated. The `[[pilot.result]]` holds one verdict but the falsifier is read per teacher, with no rule for a split outcome: now a DESIGN reading that follows N23a-21's (falsified only when the students of every teacher measured stay below 70%; each teacher's own reading kept in the table so N23a-21 can restrict one kind), with test cases. Each launch's `--wall-s` is now bounded by E1's 2 h per-run limit (N36-20), longer steps resumed from checkpoints. Left, a split result has no verdict word and KILL-DISTILL's decision cannot tell whether the pilot's falsifier held."
+  },
+  {
+   "bead": "N23b-22",
+   "kinds": [
+    "convention"
+   ],
+   "what": "C11 finding is right: the pilot runs on an incumbent stack and delivers nothing a `frob` command reaches; the test plan now says so and names its driver. Left, the bead appears to owe a `scripts/e2e/` script that cannot exist, and the mechanical check stays open."
+  },
+  {
+   "bead": "N23b-30",
+   "kinds": [
+    "request"
+   ],
+   "what": "Applied F-U33c's request after checking it: N33c-40 item 7 has row 6 registered by N23b-30 and part M2 entered with `record_gate --part M2` from the receipt of the GATE-WS-06 tier run of `suite_ws06.sh --sampler-row`, and N33c-37's entry `cx:CX-23-L1@host` carries both gates. Row 6's G1 entry is now registered under GATE-WS-06 as well as GATE-CORTEX-18, and the bead's session enters part M2 with that command; acceptance follows. Left, no tier run of GATE-WS-06 contains row 6 and nobody records part M2, so the gate stays `row 6 due M2` at the M2 exit."
+  },
+  {
+   "bead": "N23b-36",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "C11 finding is right; stated (incumbent stack). A run cut by the 2 h per-run wall limit was `undetermined`, but E2 and a per-run request inherit that limit (N36-20) while the bead admits budgets up to 48 device-hours and more over about twenty runs, so runs exceed two hours: now a longer run is a chain of launches resumed from checkpoints, chunked alike in every arm, its GPU-hours summed; acceptance counts one meter row per launch. Left, above E1 every run is killed at two hours and the pilot can only end `undetermined`."
+  },
+  {
+   "bead": "N23b-37",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Precondition (b) demanded exactly one meter row per pilot run, which a chained run of N23b-36 does not have: now a meter row for every launch, at least one per run. Left, the decision refuses a valid pilot record whose runs were chained."
+  },
+  {
+   "bead": "N23b-39",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "Its arms run through `frob` run verbs with no scope citation; by convention 14 and NJL-01 an uncited job is `adhoc`, class E0, so every arm above E0 is refused FROB-REF-761 and nothing is metered against R18. Now every run verb cites `--envelope-scope gate:GATE-CORTEX-22` (Envelope paragraph and script). Left, GATE-CORTEX-22 cannot be measured even with R18 approved."
+  },
+  {
+   "bead": "N23bp1-01",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "It narrated a request to the `sim` cluster (convention 13) that VERBS-sim's sim.run row has already taken (the two conditional inputs under N23bp1-01): now it states the row. Its script ran 64 worlds for 1,000 intervals, far short of the 10³ episodes its digest-parity criterion requires, and the native comparison run had no length: now 1,024 worlds for the task's episode length H, the episode count logged, and the native run `--intervals <H>`. Left, its own test cannot meet its acceptance and the parity compare covers runs of different lengths."
+  },
+  {
+   "bead": "N23bx-02",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The reading table gave GATE-CORTEX-17 the statuses `passed`, `failed` and `not-passed: undetermined`; N40-01's statuses are not-run, pass, fail, killed, blocked, no-claim, superseded. Now `pass`, `fail`, and `fail` with the detail `undetermined:` and its reason, so N40-03's propagation still kills the gate when KILL-GATREE fires. Left, the recorder rejects the row and an undetermined gate is never propagated to `killed`."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-263",
+   "what": "eval.promote on a result that carries any standing exploitation flag of BD-267 (energy-created, capacity-biased and the other eight), or whose detector is undetermined, completes with exit 2, the label unchanged and `blocked_by` naming the flags; state it for every flag, not only the two it names. Left, BD-267's promotion_blocked asserts a form BD-263 does not promise for eight of the ten flags."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.detect: `pairs_budget` has a minimum of 16 (pairs per arm); a smaller value is FROB-REF-802 with pointer /pairs_budget, exit 3; 701 remains for a compute budget that cannot cover 16 pairs per arm. Left, the schema accepts values no arm can reach a verdict with, and the row's 701 sentence is read as covering them."
+  },
+  {
+   "bead": "BD-296",
+   "what": "It says a campaign-class submission without an approved class is answered 761 by the envelope stage and 'a submission is never answered 704' (lines 60-74, acceptance 152). Convention 14 and N32-REF row 704 say the size classifier refuses it at submission with 704, before envelope admission; 704 again at dispatch and resume. BD-320 (now depending on BD-296) and BD-321 assert 704 at submission. Left, the scheduler is built to the opposite rule."
+  },
+  {
+   "bead": "N36-12",
+   "what": "It gates its start on KILL-ALTALGO's row reading `funded` (and refuses on `killed`/`not-funded`) and records the pilot arm `not-run: sharding stopped`. N23b-23 records the N40-03 outcomes `fired`/`not-fired`/`not-reached` per `algorithm:<name>` scope, and BD-324 records PILOT-ALTALGO-06 as status `withdrawn` with KILL-SHARD's record (the register has no `not-run`). Use `not-fired` for asynchronous sharding's entry. Left, start_checks_both_gates waits for a word no record holds."
+  },
+  {
+   "bead": "N23a-14",
+   "what": "The algorithm registry's `pilot` field for sac, td3, es, teacher-student, adaptive-randomization and async-sharding names PILOT-ALTALGO-01 to -06 (BD-324, in that order). `bc-warmstart` is not one of the six pilots of §23.22 or BD-324: give it its pilot's id or say which bead pilots it. Left, a row moves to `admitted` on 'a recorded passed pilot' with no id to resolve."
+  }
+ ],
+ "unchanged": 21,
+ "notes": "All 45 beads read in full. Unchanged (21): N23b-03, N23b-05, N23b-06, N23b-07, N23b-08, N23b-09, N23b-10, N23b-15, N23b-18, N23b-25, N23b-27, N23b-28, N23b-29, N23b-32, N23b-33, N23b-34, N23b-38, N23b-40, N23b-41, N23bx-01, N23bx-03. Numbers recomputed and correct in these, among them: e-process table; sign-test peeking 5.08/8.76/12.9/17.4%; IQM cases; KA rows of N23b-18 (gamma 0.99/0.99499, 3.15149, 585.4/133.3/66.7, 32/9); attainment 0.90497/0.0303/0.78548 and 36/46/74/103; phase step 0.1672451 and agreement 0.66551 (and the lag table 0.33102, 0.00347, 0.99306, 0.98612, 0.70022); 559 and 473 statistics; docking witness (1, 0); window loss -15.62329; store 4.32 MB, 8.85 GB, 1,988 worlds; paired bounds 2.4713 (N23b-39) and 1.395/1.463, 1.200, 0.953/1.598 (N23bx-02); 786,432 bytes and 10.2 ms; 1.8 M parameters. No dependency points to a later milestone or a missing bead. No dependency-audit notes were addressed to this slice. All touched files parse (front matter and seven sections)."
+}

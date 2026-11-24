@@ -128,8 +128,9 @@ NFp1-52 adds a sixth assertion for stage 5.
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
-is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt
-(`frob.stack-receipt/1`) under `receipts/`; (3) re-run that sibling's admission gates, the parity gates and the
+is never rolled back locally); (2) write a new resolution receipt (`frob.stack-receipt/1`) under `receipts/`
+with `cargo xtask check-stack --write-receipt --reason pin-move --gate INT-FT-01` (plain `check-stack` only
+verifies and writes nothing); (3) re-run that sibling's admission gates, the parity gates and the
 gates this item names; (4) relock (`Cargo.lock` regenerated and committed, builds `--locked` on the one toolchain
 T) and append the record, with the receipt hash, to `DEPENDENCY_ADMISSION.md`. Only then does the interim
 posture of the limits that stage removes end; the row's `status` becomes `adopted` only after the last stage's
@@ -168,7 +169,7 @@ the Mac trains on `batch-cpu` using its CPU cores and keeps its world-bank, proo
 - [ ] In FrankenTorch, per stage: the new API exists with tests; every existing test, including the compile-fail tests that make R1 a compile-time fact, still passes; any new `unsafe` is inside `ft-kernel-metal` with its safety note.
 - [ ] Stage 1: two command buffers are in flight at once and complete in submission order on the fixture; a wait with a deadline returns `TimedOut` without invalidating a later completion.
 - [ ] Stage 2: the offset-bound and 40-argument probes run; an offset that breaks alignment or overlaps a declared write range is refused.
-- [ ] Here: after each adopted stage INT-FT-01 and INT-FT-02 are re-run and recorded; where the Metal backend and the gates exist at that pin, GATE-SPARK-02 and GATE-SPARK-04 are re-run and recorded, rules R1 to R6 are re-tested, and launch counts and blocked host time per chunk are recorded before and after; where they do not, the record names each as `first run against the new pin` with the bead that will make it.
+- [ ] Here: after each adopted stage INT-FT-01 and INT-FT-02 are re-run and recorded; where the Metal backend and the gates exist at that pin, GATE-SPARK-02 and GATE-SPARK-04 are re-run, each recorded only by its recorder in the gate register (N21b-35 and BD-217) from the receipt with `record_gate`, rules R1 to R6 are re-tested, and launch counts and blocked host time per chunk are recorded before and after; where they do not, the record names each as `first run against the new pin` with the bead that will make it.
 - [ ] Here: no code in `spark/frob-spark-metal` binds Metal outside the gateway (a source scan), at every pin.
 - [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `landed` once stage 1 or 2 is on FrankenTorch's `main`, and stays `landed`, with the stages not yet adopted named, until NFp1-52 sets `adopted`.
 - [ ] After stages 1 and 2 are adopted, the fixture's three stage-1 and stage-2 assertions pass and the stage-3 assertion fails with its recorded signature.
@@ -194,13 +195,13 @@ Here:
 non-zero on failure). This bead writes it with stages 1 and 2; NFp1-51 and NFp1-52 add their stages to the same
 script. Phase `post` for a stage asserts that stage's assertions pass and that every later stage's assertions
 still fail with their recorded signatures.
-Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (the registry
+Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (its `upstream`
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_ft_01 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
 bead are re-run, and the registry row must read `landed` with the adopted stages named and a receipt newer than
 the pin move (`adopted` only after NFp1-52). Run on the Mac. Phase `post` also runs `frob spark probe --device
-metal --suite all --key fdft01-probe-s<N> --json`, `frob spark fingerprint --device metal --no-soak --key
+metal --suite all --key fdft01-probe-s<N> --json`, `frob spark fingerprint --device metal:0 --no-soak --key
 fdft01-fp-s<N> --json` (which records the language version and the 64-bit atomic probe) and `frob spark check
 --kernel K-cay-step --backend gpu-metal --key fdft01-check-s<N> --json` (the M0 single-kernel form of the
 CPU-versus-device check), each a `run` verb under its own key per stage N (the three verbs are those of the M0

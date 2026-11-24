@@ -65,8 +65,9 @@ RoboBenchMart and MarketGen, which are two unlocated records). The 102 brackets 
   survives in version 3; the minutes-and-dollars figure is in version 2 only. Two readings, each with its
   `version`, so that a citation of the dollars figure cannot silently resolve to version 3.
 - Two sources carry mark **U** (no mark recorded): `https://arxiv.org/abs/2610.14064` and
-  `https://arxiv.org/abs/2202.13415`. They are uncitable by a gate and are listed first among the reading
-  tasks.
+  `https://arxiv.org/abs/2202.13415`. They are uncitable by a gate (`may_cite_without_reading = false` under
+  NAB-09's loader), and NAB-10's reading-task report lists readings weakest effective mark first, so these two
+  lead it.
 - Figures entered as typed `figures`. Where the planning record names what was read without stating the value,
   the record's `value` is left empty and the first re-read fills it:
 
@@ -184,13 +185,15 @@ RoboBenchMart and MarketGen, which are two unlocated records). The 102 brackets 
       without an address: 106 records.
 - [ ] Mark counts over the 102 brackets of these topics: 15 P, 63 F, 22 S, 2 U; over the 110 readings the
       register holds after the rule above: 18 P, 66 F, 24 S, 2 U.
-- [ ] The two U sources are present, uncitable, and first in the reading-task report.
+- [ ] The two U sources are present and uncitable (`may_cite_without_reading = false` under NAB-09's loader).
+      (Their place at the head of NAB-10's reading-task report is NAB-10's, which comes after this bead.)
+- [ ] Every reading's mark equals the frozen bracket list of this bead (`marks_match_frozen_list`).
 - [ ] `arXiv 2510.25850` has separate readings for versions 2 and 3 with what each covers.
 - [ ] The seven figures of the table are typed; the 67.4% figure's derived ratio is recorded as derived.
 - [ ] The five asset collections carry `licence_verified = false`.
-- [ ] Every "what survives" figure of the hypothesis register that names a published source resolves to a
-      record of this bead or of NAB-12 (tested where the hypothesis records are entered: N00-11's resolution
-      check, which depends on this bead).
+- (Not this bead's close condition: that every "what survives" figure of the hypothesis register that names a
+  published source resolves to a record of this bead or of NAB-12 is the resolution check of N00-11 and
+  N00-12, which depend on this bead.)
 
 ## Test plan
 
@@ -207,7 +210,11 @@ RoboBenchMart and MarketGen, which are two unlocated records). The 102 brackets 
   the frozen bracket list gives 102 brackets with 15 P, 63 F, 22 S, 2 U.
 - `shared_bracket_copies`: the abs and pdf records of 1512.08055 each hold one F reading; RoboBenchMart and
   MarketGen are two unlocated records, each with one P reading covering "abstract".
-- `u_sources_are_two`; `u_source_is_never_citable` (with NAB-10's grading function).
+- `u_sources_are_two`; `u_source_is_never_citable` (NAB-09's `may_cite_without_reading` is false for both, and
+  `reread_before_gate` true).
+- `marks_match_frozen_list`: each reading of the nine topics has the mark of its bracket in the frozen plan-time
+  list (`tests/fixtures/sources/public_research_marks.tsv`, with the copies and splits of the rule above); a
+  stronger mark is accepted only when the reading has a `reread` entry with `result = "confirmed"`.
 - `versioned_readings_do_not_merge`: a citation `#minutes-and-dollars` resolves to version 2 only.
 - `derived_ratio`: 1/(1 − 0.674) = 3.067…, stored as 3.07 with `how = "derived"`.
 - `asset_licences_unverified`.
@@ -223,10 +230,11 @@ URL is fetched. Logged per STD-E2E as `metric` lines with expected values.
 
 Known answers: 98 URLs; 106 records; 102 brackets (15 P, 63 F, 22 S, 2 U); 110 readings (18 P, 66 F, 24 S, 2 U); together
 with NAB-12 the public register has 147 URLs, 163 brackets (39 P, 92 F, 30 S, 2 U) and 174 readings (43 P,
-95 F, 34 S, 2 U), and no reading marked R or M. Negative controls: a hypothesis
-range restated as a gate threshold with an F citation (NAB-10 must fail the gate once it records a value); a
-U source given mark S without a `reread` entry (the frozen-mark comparison fails); the dollars figure cited
-against version 3.
+95 F, 34 S, 2 U), and no reading marked R or M. Negative controls: a U source given mark S without a `reread`
+entry (must fail `marks_match_frozen_list`); the dollars figure cited against version 3 (must fail
+`versioned_readings_do_not_merge`). A hypothesis range restated as a gate threshold with an F citation is
+refused by NAB-10 once the gate records a value; that control needs the citation lint, which comes after this
+bead, and is NAB-16's plant `pass-on-unread`.
 
 ## Considerations
 

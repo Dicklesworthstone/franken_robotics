@@ -10,7 +10,7 @@ deps: ["N12-06", "SPEC-C-15"]
 needs: []
 related: ["GB-29", "GB-30", "N12-13", "N12-37", "N12-48", "N12-52", "N12x-05", "N24b-06", "N24b-15", "N24c-08", "N24c-09", "N28c-23"]
 gates: []
-plan_refs: ["§12.3 (T-26)", "§10 C-15", "§24.12", "§24.13", "§0.7 (a frozen decision rule is enumerated before sampling)", "Appendix D.8 (error budget for retries)"]
+plan_refs: ["§12.3 (T-26)", "§10 C-15", "§24.12", "§24.13", "§24.15 (PO-ARENA-02)", "§0.7 (a frozen decision rule is enumerated before sampling)", "Appendix D.8 (error budget for retries)"]
 ---
 ## Background
 
@@ -41,14 +41,15 @@ exact-rational check of the level series, the registered Lean statement. Out: th
 Lean proof (written in BD-381's first batch).
 
 Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
-the study types of `frob-arena` (BD-124) is `related`, not a dependency (a card that waited for its implementer
-would close a loop, because the implementer's own acceptance runs the card's law tests). What the card does depend
-on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and Lemma's own
-proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and every
-acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output (the
-enumeration of a declared study rule at admission, and the refusal of a study that needs an unreachable verdict)
-is run inside the implementing bead, with this card's law tests, as part of that bead's acceptance; the receipt
-produced there is what moves the registry row for that output.
+the study types of `frob-arena` (BD-124) and the verb `eval.preanalyze` with its enumerator and its conformance
+reference (N24b-06) are `related`, not dependencies; neither depends on this card. What the card does depend on is
+in `deps`: the card registry and its specification. It closes on its statement document, its registry row, its
+own exact enumeration of the reference rule, the level-series check, the registered Lean statement and every
+acceptance line that its own fixtures decide. Two outputs are observed on the live verb by the end-to-end script
+of N24b-21 (`scripts/e2e/arena_study_preanalysis.sh`), which cites this card: the refusal of a study that needs an
+unreachable verdict (step `refuse_unreachable`), and the count-for-count agreement of the production enumerator
+with N24b-06's independent re-implementation (step `independent_enumeration`). Neither is a condition of this
+card's close.
 
 ## Technical approach
 
@@ -60,9 +61,9 @@ produced there is what moves the registry row for that output.
    of outcome counts that produce it. The pre-analysis attached to a study is this table with its digest. A
    study that needs a verdict outside the reachable set is refused at admission.
 2. The stated set is checked, not trusted: the conformance crate holds an independent re-implementation of the
-   rule's arithmetic, and the two enumerations must agree count for count. Where a pre-analysis travels in a
-   bundle, it is part of a `sample-coverage` receipt and the auditor recomputes the table for small n within its
-   size limits (larger n: the digest is checked and the claim is `Tested`).
+   rule's arithmetic (N24b-06's `preanalysis_reference`), and the two enumerations must agree count for count.
+   Where a pre-analysis travels in a bundle, it is part of a `sample-coverage` receipt and the auditor recomputes
+   the table for small n within its size limits (larger n: the digest is checked and the claim is `Tested`).
 3. Part (b), instances: for the campaign's α and every index up to the declared maximum, Σ α_i is computed as an
    exact rational and compared with α·n/(n + 1); the auditor's `sample-coverage` rule performs the same
    recomputation on receipts.
@@ -73,15 +74,19 @@ produced there is what moves the registry row for that output.
    bundle and `Tested` otherwise; it says which verdicts can occur, not how likely they are. (b) bounds the
    total level; the error-rate guarantee of the lane also needs three operational conditions that no checker
    decides (the request is fixed before the draw, the clusters are fresh, the level is spent whatever the
-   answer).
+   answer). (b) is the finite statement of proof obligation PO-ARENA-02 (§24.15), which raises no new card and is
+   listed on this card's row as a consumer (N12-52); the infinite sum is not claimed.
 6. Artifacts: `docs/math/cards/T-26.md`; registry row; the enumeration fixtures; `lean/Frob/Statements/T26.lean`.
 
 ## Acceptance criteria
 
 - [ ] For the reference rule (a two-sided 97.5% exact Clopper–Pearson rule at n = 64 with a ±5 point indifference
-      band) the enumeration shows that no outcome can return a tie: perfect concordance gives the interval
-      [−0.0662, +0.0662], wider than the band; a study that needs that verdict is refused at admission.
-- [ ] The independent re-implementation agrees with the enumeration count for count on the reference rules.
+      band) the card's exact enumeration shows that no outcome can return a tie: perfect concordance gives the
+      interval [−0.0662, +0.0662], wider than the band; the tie is first reachable at n = 86. The refusal at
+      admission of a study that needs that verdict is observed in N24b-21's step `refuse_unreachable`.
+- [ ] The card's enumeration and its digest are stable across two runs; agreement count for count with the
+      independent re-implementation of N24b-06 on the reference rules is observed in N24b-21's step
+      `independent_enumeration`, which logs both table digests.
 - [ ] The level series is exact: for α = 1/20, n = 1, 7, 10, 500 give 1/40, 7/160, 1/22, 25/501, each below 1/20.
 - [ ] Negative controls: a stated reachable set that includes an unreachable verdict is rejected; a series with
       α_i = α/i² in place of α/[i·(i + 1)] fails the identity; the Lean statement with α·n/(n + 2) on the right side
@@ -97,22 +102,25 @@ produced there is what moves the registry row for that output.
 
 `crates/frob-lemma/tests/cards/t26.rs`: `level_series_exact_small_n`; `level_series_strictly_below_alpha`
 (n up to 10⁴); `telescoping_identity` (1/[i·(i + 1)] = 1/i − 1/(i + 1) for i up to 10³);
-`reachability_cp_n64_no_tie`; `reachability_table_digest_stable`; `second_implementation_agrees`;
+`reachability_cp_n64_no_tie`; `tie_first_reachable_n86`; `reachability_table_digest_stable`;
 `unreachable_verdict_claim_rejected`; `retry_cost_table` (relative to a single test at α = 0.05, the sample size
 grows with ln(1/α_i): about 1.23 times the units at request 1, 2.57 at request 10, 4.08 at request 100 and 5.15
 at request 500; checked as ln(1/α_i)/ln(1/α) to two decimals).
 
 ### End-to-end script and logging
 
-`scripts/e2e/arena_study_preanalysis.sh` (bead N24b-21), steps `enumerate`, `consequences` and
-`refuse_unreachable`, runs `frob eval preanalyze` on the reference rule and logs the pre-analysis digest and the
-reachable set (asserting the concordance interval ±0.0662 at n = 64, that the tie is first reachable at 86, and
-that a study declaring it at n = 64 is refused); `scripts/e2e/lemma_lean_capsule.sh` (bead N12-37) seals the
-Lean half at M5. For this card their NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-26"),
-`step`, `event`, the exact command line, exit code, wall time, the rule's identity and n, the reachable verdicts
-with their outcome counts, the table digest from both implementations (which must agree), the level-series values
-as exact rationals for the indices checked, and on a mismatch the first differing outcome count or level and the
-path to reproduce.
+`scripts/e2e/arena_study_preanalysis.sh` (bead N24b-21), steps `enumerate`, `consequences`,
+`refuse_unreachable` and `independent_enumeration`, runs `frob eval preanalyze` on the reference rule and logs
+the pre-analysis digest and the reachable set (asserting the concordance interval ±0.0662 at n = 64, that the tie
+is first reachable at 86, that a study declaring it at n = 64 is refused, and that the production enumerator and
+N24b-06's independent re-implementation agree count for count); `scripts/e2e/lemma_lean_capsule.sh` (bead
+N12-37) seals the Lean half at M5. For this card the lines of those four steps (STD-E2E helper) carry `ts`,
+`script`, `bead` (N24b-21's key, since a line carries its owning bead; this card's evidence is found by the step
+names), `step`, `event`, the exact command line, exit code, wall time, the rule's identity and n, the reachable
+verdicts with their outcome counts, the table digest from both implementations (which must agree), and on a
+mismatch the first differing outcome count and the path to reproduce. The T-26 stage of the capsule script writes
+per-card lines with `bead` "CARD-T-26", the capsule hash and the checker identities. The level-series values are
+checked as exact rationals by the card's unit tests above, not by these scripts.
 
 ### Known answers and negative controls
 

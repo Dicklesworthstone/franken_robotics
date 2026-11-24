@@ -1,0 +1,213 @@
+{
+  "round": 4,
+  "slice": "F-U30b",
+  "reviewed": 24,
+  "changed": [
+    {
+      "bead": "BD-139",
+      "kinds": [
+        "request",
+        "registry",
+        "convention",
+        "broken"
+      ],
+      "what": "Adds the `reports` field as its row of N32a-02's later-field table (bool, lint reports-carry-reality in frob-verbs/build.rs, member on VerbEntry) in place of an xtask check, and writes NJL-01 variation 15's arm in derive.rs (814, 816, 819, 873, 889, 895, 897 appended for reports = true or an artifact-input/ref/identity reader, as a set) with test reality_guard_codes_appended; without them the field fails the closed schema (unknown-field) and the codes the rows rely on are never appended. Builds CX-334's and CX-335's plants (fixtures cx-334, cx-335, removed checks synthetic-not-sticky and the new feature guard-no-claim-kind-check) so their controls are not stale and GATE-GROUND-01 can be eligible at M1; the receipt now requires every listed control caught, not three. N30-CX moved from related to deps (the plants write its entries). The gate's recording is named as N30b-01's (one recorder; BD-139 no longer waits on a recording made by a bead that depends on it)."
+    },
+    {
+      "bead": "BD-388",
+      "kinds": [
+        "request"
+      ],
+      "what": "R-04 registers its trial counts per rig and day (two calibration days of 10, a validation day of 20, a holdout day of 20) with test r04_days_registered, so N30a-10's within-units band at 90% is finite (index 19 <= 20); R-06 names the law class coulomb-viscous through which the fit is restricted."
+    },
+    {
+      "bead": "BD-389",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Builds CX-326's plant BD-389:cx-326 (feature cx-326 of frob-ground, the scored event taken as a mark) with its expected observation and an acceptance line, so GATE-GROUND-02's control is not stale; the gate command gains FROB_TEST_SEED and --features gauntlet-mutations (both controls run in it)."
+    },
+    {
+      "bead": "BD-391",
+      "kinds": [
+        "request",
+        "plan",
+        "convention"
+      ],
+      "what": "Implements --law-class <class> (N30a-18's omitted_laws.toml, 802 for an unlisted class, conditional_on names it; GATE-GROUND-04 clause 3 runs through coulomb-viscous) and --windows raw (724 naming FD-FSIM-23 at an old pin, exit 5; record field route windowed|streaming), with tests; without them clause 3 and FD-FSIM-23 have no verb path. Moves N30a-28, N30a-29 and N30a-30 to related (identify writes candidates only; admission, floor and class cards come at or after scoring; the 17 and 53 beads losing those paths use only dataset admission or reach them via N30b-06; N30a-26 carries the matching note to take N30a-30). Builds CX-G-07's plant with case_supplied_by, numeric = true and re-seed; gate command gains FROB_TEST_SEED and the mutations feature."
+    },
+    {
+      "bead": "BD-393",
+      "kinds": [
+        "request",
+        "plan",
+        "broken",
+        "convention"
+      ],
+      "what": "Retire is the admin action `--action retire` (ground:retire, no key, --key is 802, already: retired on repeat), with acceptance and test; N30a-43 added to deps because the action calls its retirement transaction (no cycle). BD-349 and BD-391 moved to related (band never calls identify or the DC-02/03/05 tables; BD-397, which runs identify, now depends on BD-391 directly so BD-411 keeps its path). Builds CX-330's plant at band::bucket_key; gate command gains FROB_TEST_SEED."
+    },
+    {
+      "bead": "BD-394",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Gives the bead its own script ground_model_drift.sh whose stage gate-chron-08 runs N29b-06's gate_chron_08.sh on the whole list, so the wave-3 recording of GATE-CHRON-08 has a receipt from this bead's run (N29b-06 item 10) recorded with record_gate --part M2 by a non-implementing session; builds CX-G-12's plant (kernel-discrepancy test) with case_supplied_by, numeric = true and re-seed; gate command gains FROB_TEST_SEED."
+    },
+    {
+      "bead": "BD-396",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "States the row's capability form (capabilities ground:run, option_capabilities out = export:packet: build needs both, check ground:run alone), --out required with build (802 /out), the check form with --key, and tests build_without_export_scope_refused_720 and build_without_out_refused_802; builds CX-G-13's and CX-G-14's plants with case_supplied_by, numeric = true and re-seed; item 7 lists R-04's identification calls in analysis/ for the sample of ten rigs N30b-12 replays (N30b-12's --full flag was an unknown parameter)."
+    },
+    {
+      "bead": "BD-397",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "States N38a-02's and N38b-19's no-claim form instead of 'requested of' (convention 13); form A's tier run carries --features gauntlet-mutations so its pass can have every control caught; builds CX-G-11's planted world and CX-G-15's recorder mutation (case_supplied_by, numeric, re-seed); adds BD-391 to deps (its procedure runs ground.identify, previously reached only through BD-393); takes N41-10's band clause (band_request_refused_without_cell, 889 under the defaults, in the registry's band form) so the audit's move can be applied there. The C1 mechanical finding is a false alarm: the text says the command does not exist."
+    },
+    {
+      "bead": "N30b-01",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "Step 5 and the acceptance now require every control GATE-GROUND-01 lists caught (the three mutations, KA-735's and CX-334's and CX-335's), as BD-139's receipt does; three would pass a receipt with stale controls. FROB_STATE was already applied."
+    },
+    {
+      "bead": "N30b-06",
+      "kinds": [
+        "request"
+      ],
+      "what": "Builds CX-331's plant N30b-06:cx-331 (feature cx-331: score reads the calibration split) with acceptance; the synopsis gains --then calibration|regression (default calibration, N30a-34) as the row now lists it. The audit's counterpart notes hold: N30b-06 depends on N30a-28 and N30a-29 directly, so BD-391's move costs no path. Interval scores, alpha spending and P(<=15 of 20) recomputed."
+    },
+    {
+      "bead": "N30b-12",
+      "kinds": [
+        "request",
+        "broken"
+      ],
+      "what": "States the row's capability form (check needs ground:run alone; --out with check is 802) and drops 'requested of the registry' (convention 13), with test check_needs_ground_run_only; removes the --full flag, an unknown parameter (802): the R-04 sample of ten rigs comes from the kit's analysis/, the full battery is GATE-GROUND-04's run."
+    },
+    {
+      "bead": "N30b-18",
+      "kinds": [
+        "contradiction",
+        "broken"
+      ],
+      "what": "The decision rule compares the mean with 19/21 exactly (0.904762, not its rounding 0.9048) and the fractions as integer counts (39..99 of 1,000; >= 900 of 1,000; <= 500 of 10^4); the decision_table test had 0.9148 passing although it lies 0.010038 from 19/21, so the kill test contradicted GATE-GROUND-06. The fired-branch band command gains its required --metric."
+    },
+    {
+      "bead": "N30b-19",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Convention-10 form as N30b-17, -18 and -20 have it: ADR docs/adr/ADR-KILL-CLOCK-M5.md (naming the old KILL-CLOCK.md) with N40-03's required fields and the registered reading; the kill row's decision entry {outcome, adr, date, session, receipts} with the closed outcome set in place of 'not fired' and status 'killed: fallback adopted'; both gate rows read from their one recorders (N30a-14, N30a-35), never written; apply_decisions prints killed; acceptance that the decision records whichever way the gates fall; tests outcome_from_closed_set and adr_path_is_the_registered_form; the script header names its gates and plants and the script reads only."
+    },
+    {
+      "bead": "N30b-23",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "States why there is no script of its own (C11: property tests and an xtask rule, which no frob command reaches). The sequence generator drives identify, band, retire, scope change, kit-build and class cards, whose beads it did not reach: BD-391, BD-394 (band, N30a-40, N30a-43), BD-396 and N30a-30 added to deps (no cycle). The six mutation plants are named as Cargo features under gauntlet-mutations, reusing BD-139's two; 'each registered as a negative control' would fail BD-025's load (a control row needs a gate and this bead has none), so only BD-139's two are register rows."
+    },
+    {
+      "bead": "N30b-24",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "The five planted defects are named as Cargo features of frob-ground under gauntlet-mutations (po01-index-n, po01-ties-first, po02-product-numerator, po03-threshold-10, po03-restart-each-look). The acceptance that dc-07.toml cites the records had no writer: this bead adds the PO-GROUND-01 and -03 record addresses beside the identifiers in N28a-28's record. The round-3 command request was already applied; the C1 mechanical finding is a false alarm (the text names the old command to retire it). Every number recomputed (0.891, 7.071 ppm, 39.53/35.36/79.06 us, 0.22%, 0.0565, 18/21)."
+    },
+    {
+      "bead": "N30b-29",
+      "kinds": [
+        "request"
+      ],
+      "what": "Builds CX-G-01's plant N30b-29:cx-<nnn> (feature of frob-ground under gauntlet-mutations: the sensor stage splits v*delta + b by the prior on delta), with its expected observation and an acceptance line; CX-G-01 is numeric, so no case record or re-seed."
+    },
+    {
+      "bead": "N30b-31",
+      "kinds": [
+        "broken",
+        "contradiction"
+      ],
+      "what": "The identify step passed --cell, which ground.identify's row does not take (the dataset names its cell): 802 on every call. run-all ran it 'with the six batteries' while the scope names seven battery scripts."
+    },
+    {
+      "bead": "N30b-36",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "kit build and kit check carry --key (805 without); FROB_HOME and env -i replaced by e2e_init's FROB_STATE, the clean check run by --check-only in a fresh process with a new empty state root and --store; header names gates and plants; the gate is now measured by this bead's tier entry (g1_known_answers GATE-GROUND-09, G1:host) whose receipt cites both platforms' check receipts (not-run without the second), and recorded with record_gate by a session that implemented none of BD-396, N30b-12 and this bead, in place of 'appended to the same gate row'; --allow-private asserted as 802 exit 3."
+    },
+    {
+      "bead": "N30b-37",
+      "kinds": [
+        "registry",
+        "broken"
+      ],
+      "what": "The 897 prediction case is refused by ground.predict, which the table did not name; the no-override step asserts 802 with exit 3. Total of planted violations recounted (46)."
+    },
+    {
+      "bead": "N30b-22",
+      "kinds": [
+        "request",
+        "convention",
+        "registry"
+      ],
+      "what": "Names the one recorder of each gate in the table (N30a-19 for GATE-GROUND-03, N30b-01 for -01, N30b-36 for -09, BD-397 for -10, the gate-script beads elsewhere), states the tier of every record (G2:host for -10, the others from N30-KA's tier column) and GATE-GROUND-01's controls (BD-139's three mutation records plus KA-735, CX-334, CX-335); replaces 'the gate report tool assembles the receipts' and 'BD-397 enters the row' with the tier run's receipt recorded by record_gate from a non-implementing session (C9), and says why the bead has no script (C11 form)."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N32a-02",
+      "what": "List the later field `reports` (bool, default false; true on a report surface; lint reports-carry-reality: an entry with reports = true whose output schema lacks evidence.reality fails the build) as BD-139's row (M1) in the later-field table, and its member in the VerbEntry comment; NJL-01's variation 15 and BD-139 cite it and the closed schema admits no field the table lacks."
+    },
+    {
+      "bead": "N30a-03",
+      "what": "Use BD-139's envelope field `evidence.card_guess_share` ({guessed, total}, from M1; N30b-01 asserts it) instead of `evidence.cards`, extending it with the six column counts at M3 if wanted; two names for one number contradict."
+    },
+    {
+      "bead": "N30a-26",
+      "what": "BD-391 has moved N30a-28, N30a-29 and N30a-30 to related; take N30a-30 into deps (the `class` stage exercises the class card), as the audit's counterpart note says, or N30a-30 is left with no dependent."
+    },
+    {
+      "bead": "N30-CX",
+      "what": "CX-G-11's plant is BD-397's (due M5), but its control is registered for GATE-GROUND-04, whose recorder N30a-26 does not depend on BD-397: N30a-26's run can find the control stale and the gate ineligible. Plant it in a bead N30a-26 waits on (BD-388 generates the omitted-law world R-06, or N30a-26 itself), or have N30a-26 depend on BD-397."
+    },
+    {
+      "bead": "N41-10",
+      "what": "BD-397 now carries the band clause (acceptance, test band_request_refused_without_cell, and the script step in the registry's form `frob ground band --cell c:9f2c41 --metric crossing_time_s --level 0.90 --json` exiting 3 with 889); the audit's move can be applied and BD-393 dropped from deps. N41-10's own step uses `frob ground band <fixture-cell> --json`, which is not the row's form."
+    },
+    {
+      "bead": "N30a-43",
+      "what": "Step 5's manual retirement is BD-393's admin action `frob ground band --action retire --cell <id> --reason <text> --json` (no --key; 802 with one); BD-393 now depends on N30a-43 because the action calls its transaction."
+    },
+    {
+      "bead": "N30b-21",
+      "what": "Same convention-10 form as N30b-17 to -20 now have: ADR at docs/adr/ADR-KILL-KIT-M5.md (it names docs/adr/KILL-KIT.md) with N40-03's required fields; the kill row's decision entry {outcome, adr, date, session, receipts} with a closed-set outcome instead of 'not fired'; GATE-GROUND-09's row read, never written. N30b-36 now measures the gate by one tier receipt that cites both platforms' check receipts (recorded once by record_gate), so 'pass with the two receipts' should read the one receipt citing both."
+    },
+    {
+      "bead": "VERBS-ground",
+      "what": "N30-REF's 897 row names a prediction among the uses of a retired calibration and N30b-37 plants that case at ground.predict, but ground.predict's refusal list (883; consumed 532, 552, 102) lacks 897, and no verb may raise a code its row does not list: add 897 to ground.predict's list (and the 897 row's verbs), or state which verb refuses a prediction that names a retired cell's admitted cards."
+    },
+    {
+      "bead": "N30b-08",
+      "what": "N30b-24 now adds the discharge-record addresses of PO-GROUND-01 and -03 beside their identifiers in registries/cores/dc-07.toml (the record N28a-28 created); when N30b-08 writes the M5 record, keep them (the two beads have no order between them)."
+    }
+  ],
+  "unchanged": 4,
+  "notes": "unchanged: BD-395, N30b-17, N30b-20, N30b-30"
+}

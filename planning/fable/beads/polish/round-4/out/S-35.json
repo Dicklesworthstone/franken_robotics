@@ -1,0 +1,288 @@
+{
+ "round": 4,
+ "slice": "S-35",
+ "reviewed": 30,
+ "changed": [
+  {
+   "bead": "FD-FNP-01",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate <the moved sibling's admission gate: INT-FNP-01 for franken_numpy, INT-FT-01 for FrankenTorch>`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. Stride cases, the 48/52-byte extent case, the overflow case and the three negative controls recomputed and right."
+  },
+  {
+   "bead": "FD-FSIM-01",
+   "kinds": [
+    "registry",
+    "broken",
+    "convention",
+    "deadlock"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSIM-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. Phase post ran `frob sim run --tier referee --json` with no design and no key: a run verb without `--key` is FROB-REF-805, so the step could not pass; it now names the fixture design and carries `--key`. The bead re-runs GATE-KIN-02 and GATE-KIN-03 and calls design.check and sim.run on a stored design, but reached none of their beads, so its acceptance could not be met from its dependencies: added deps BD-089 (GATE-KIN-02), N16a-17 (GATE-KIN-03, moved from related), BD-110 (design.check) and N29ax-01 (sim.run on a stored design on the referee); no cycle, none later than M2. Precession -5 rad/s, planar and cylindrical accelerations recomputed and right."
+  },
+  {
+   "bead": "FD-FSIM-05",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSIM-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. The gait.gradient call matches its VERBS-gait row; the nine C-16 labels, 2.899053 and the 72-of-80 clause checked and right."
+  },
+  {
+   "bead": "FD-FSIM-07",
+   "kinds": [
+    "registry",
+    "broken",
+    "convention",
+    "contradiction",
+    "deadlock"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSIM-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. `frob sim run g1 --tier referee --seconds 2 --json` had no `--key` (805 on a run verb) and `frob job cancel` no job: both now complete (per-machine keys; a job submitted with `--sync-wait-ms 0`, then `job cancel <job>`). N35-03 owns the G5 `arch` lane and records its referee row `not-run: upstream FD-FSIM-07` until this switch-over, but this bead built 'added lanes' of its own and never said it runs that row, so the row had no bead to flip it and two cross-machine comparisons would exist; the bead now says the G1 lane is that row and the battery lanes join the same lane. Added deps N35-03 (from related), BD-085 and BD-088 (the M1 batteries whose digests the lanes compare) and N29a-23 (job.cancel); no cycle."
+  },
+  {
+   "bead": "FD-FSIM-09",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSIM-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. The spark.probe and spark.check calls match their rows; the twelve AE fields match the plan's order."
+  },
+  {
+   "bead": "FD-FSIM-15",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSIM-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. Phase post called `scripts/train/toolchain_train.sh --dry-run` with no target; NF-02's script takes `--to <channel> [--dry-run]` and refuses without it, so the matrix row could not be re-run. Now `--to <channel> --dry-run`, and NF-02 (M0, the script's owner) moves from related to deps. Dimension spot values recomputed and right."
+  },
+  {
+   "bead": "FD-FSIM-16",
+   "kinds": [
+    "registry",
+    "broken",
+    "contradiction"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSIM-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. Scope named BD-004 as the owner of the receipt and of `check-stack`; BD-004 keeps the command table only, and the `own_lock` field and its classification, which this bead's switch-over reads, are N33a-04's and N33a-05's. Corrected, so the implementer looks in the beads that hold them."
+  },
+  {
+   "bead": "FD-FSIM-17",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSIM-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. The fidelity.ledger and eval.promote calls match their rows; allocation 100:10:1, e^-10 = 4.54e-5, rho >= 0.894 and the doubly robust identity recomputed and right."
+  },
+  {
+   "bead": "FD-FSIM-18",
+   "kinds": [
+    "registry",
+    "broken",
+    "contradiction",
+    "deadlock"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSIM-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. Phase post asserted the row reads `adopted`, but N26b-24 calls this phase at step 7 of its Procedure A and sets `adopted` only at step 8, so the phase could never pass; it now asserts `landed` with the sibling commit and a newer receipt (the form FD-FSIM-19 has). Its `nemesis bound` call used `--budget episodes=3000000` and no `--finalist`: under the policy `table` the nominal share is 80% (2,400,000 < 2,995,731 needed), so the call is refused 760, and the finalists-only rule refuses a fixture candidate without `--finalist`; now `--finalist --budget episodes=3750000`, the form N26b-24 states for this phase. The pre phase and the row's `admission_test` need N26b-22's tests and the call needs N26a-26's flag: both added to deps (N26b-22 from related). Counts 29,956 / 299,572 / 2,995,731 and the bounds recomputed and right."
+  },
+  {
+   "bead": "FD-FSIM-26",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSIM-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. 3.5F + 4 <= 10^6 gives 285,712 triangles; 18 instances for the tetrahedron; the foundry.export call matches its row."
+  },
+  {
+   "bead": "FD-FSIM-27",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSIM-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. Both constitutive matrices, the strip strains (1.4286e-3, -4.714e-4, 1.2730e-3) and 1.1222 recomputed and right; the foundry.optimize and foundry.check calls match their rows."
+  },
+  {
+   "bead": "FD-FSIM-28",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSIM-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. The re-run of INT-FSIM-15 attributed the hand case with sensitivities (1, 4) (t = 15.99 and 6.35 um) to KA-770, whose row in N33-KA is the fixture a = (1, 2), sigma = (0.03, 0.02) mm (0.0009 and 0.0016 mm^2, 36% and 64%); an implementer citing KA-770 for the (1, 4) numbers would cite a row that holds other values. Both cases are now named as N33b-14 has them. 2PL/sigma = 1.449e-6 m^3 and 4P^2L^2/(EV) re-derived and right."
+  },
+  {
+   "bead": "FD-FSIM-29",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSIM-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. The two overhang conventions (psi = 90 deg - beta), the slot against tools of radius 2.5 and 4 mm and the foundry.check call checked and right."
+  },
+  {
+   "bead": "FD-FSIM-30",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSIM-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. Commands match the foundry rows; BD-402 and N31a-18 are reached through BD-403."
+  },
+  {
+   "bead": "FD-FSIM-32",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSIM-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. Phase step 0.167245, agreement 0.665510 and 0.331020, 4/sqrt(N) = 0.01265, 406 and 66 pairs recomputed and right."
+  },
+  {
+   "bead": "FD-FSQL-01",
+   "kinds": [
+    "registry",
+    "broken",
+    "deadlock"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSQL-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. Phase post reads `frob store status --json`, an M2 verb of BD-209 that the bead did not reach, so the script called a verb outside its dependencies; BD-209 added to deps (M2, no cycle)."
+  },
+  {
+   "bead": "FD-FSYM-01",
+   "kinds": [
+    "registry",
+    "broken",
+    "deadlock"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSYM-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. Phase post runs `frob prove verify` on the M0 kernel certificates, BD-027's verb and bundles, which the bead did not reach; BD-027 added to deps (as NF-04 and FD-FSYM-04 have it)."
+  },
+  {
+   "bead": "FD-FSYM-02",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FSYM-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. Structure constants, the hat map of (1, 2, 3), the se(3) block form, the BCH coefficients, the Killing form -2 delta and the nilpotent 4x4 control re-derived and right."
+  },
+  {
+   "bead": "FD-FT-03",
+   "kinds": [
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "Switch-over step (2) said plain `cargo xtask check-stack` writes the pin-move receipt; N33a-05 makes the default verify-only, so the re-run gates and the admission record would cite the receipt from before the pin move. Now `check-stack --write-receipt --reason pin-move --gate INT-FT-01`. The pre phase's doctor check named a 'registry section', which in BD-022/VERBS-operator is `registries` (digests); the items with their status are in the `upstream` section. The acceptance said GATE-SPARK-02 and GATE-SPARK-03 'are recorded for both routes' by this bead; each gate has one recorder (N21b-35, BD-217; convention 9), so a second recording would be refused or would overwrite the gate's row with a route comparison. It now re-runs both, logs the receipt hashes and leaves the recording to the recorders, as FD-FT-01 does. The contraction case -2^-26 checked."
+  },
+  {
+   "bead": "NF-02",
+   "kinds": [
+    "request"
+   ],
+   "what": "Applied the F-UF-2 request after checking N33a-05: step 5 took 'the new receipt from `cargo xtask check-stack`', which writes nothing, so the gates of step 6 would cite the pre-train receipt. Now `check-stack --write-receipt --reason toolchain-train --gate INT-TOOLCHAIN-01`, followed by a plain verify for the four one-toolchain conditions."
+  },
+  {
+   "bead": "NF-13",
+   "kinds": [
+    "registry",
+    "broken",
+    "convention",
+    "contradiction",
+    "deadlock"
+   ],
+   "what": "Switch-over step (2) now writes the receipt with `check-stack --write-receipt --reason pin-move --gate INT-FMCP-01` (plain check-stack writes nothing). 'The register's status has no closed state' is no longer true of BD-037, which has `not-needed` for its conditional constant; the sentence now says why this item still writes no row. The acceptance had this bead record the MCP clause of GATE-WS-05; N34-21 is that gate's one recorder (convention 9), and the clause is re-measured by N34-21's script on its golden corpus, which the bead did not reach: N34-21 (M0) added to deps and the line now leaves the recording to it."
+  },
+  {
+   "bead": "NFp1-51",
+   "kinds": [
+    "request",
+    "registry",
+    "broken"
+   ],
+   "what": "Applied the F-UF-2 request after checking VERBS-spark: spark.fingerprint takes `--device <id>` or `all`, so `--device metal` is refused; now `metal:0` (spark.probe keeps the family form, which its row admits). The per-stage switch-over wrote its receipt with plain `check-stack`; now `--write-receipt --reason pin-move --gate INT-FT-01`. The doctor check reads the `upstream` section."
+  },
+  {
+   "bead": "NFp1-52",
+   "kinds": [
+    "request",
+    "registry",
+    "broken"
+   ],
+   "what": "Applied the F-UF-2 request: `frob spark fingerprint --device metal:0`. The switch-over's receipt is written with `check-stack --write-receipt --reason pin-move --gate INT-FT-01` (plain check-stack writes nothing, so INT-FT-01's record would cite the receipt of the old binding)."
+  },
+  {
+   "bead": "NFx-01",
+   "kinds": [
+    "contradiction",
+    "broken"
+   ],
+   "what": "Rule 1 of the register-wide test requires every bead titled `upstream <repository>` to have exactly one row. The new bead NFp4-01 (the sibling half of FD-ASUP-01, written in this round) is titled `upstream asupersync, ...` and has no row, so `every_upstream_bead_has_one_row` would fail on the real export. The rule's exception now reads 'a part or a later stage of a registered item' and names NFp4-01 beside NFp1-51 and NFp1-52 (request to NFp4-01 for the title). The script step asserted that `frob doctor --json` lists one reservation, but the reservation lives in the series file, test data that doctor does not read: the count now comes from the register-wide test, whose printout (rule 5) gains the reservation and tombstone counts; doctor is called as `--section upstream`. Counts 64 = 53 + 6 + 5, 42/6/3/2/2/9 and 2/10/16/36 recomputed and right."
+  },
+  {
+   "bead": "ART-L1",
+   "kinds": [
+    "request",
+    "contradiction",
+    "broken"
+   ],
+   "what": "Applied both F-UJL requests after checking NJLx-02 and N35-01: the known answers are rows JL-06 and JL-07 (cited by number, with their controls), and the design.check envelope's determinism is `D0`, not `exact`. Found on the full read: the script refused the mutations 105, 111 (lever value) and 126 through `frob design new --file` with exit 3, but N14a-21 and VERBS-design make stage-1 codes findings of design.new (the design is stored, exit 2), so three of the eight `e2e_expect_refusal` steps would fail on a correct build, or push the implementer to make design.new refuse against its owner. Those three are now loaded with design.new (exit 2 and the finding asserted) and refused at stage 1 by `design check`; 103 and 125 stay reader refusals of design.new. Pointer table and turn fractions recomputed and right."
+  },
+  {
+   "bead": "ART-L3",
+   "kinds": [
+    "request"
+   ],
+   "what": "Applied the F-UJL request: the task.check envelope's determinism is `D0` (N35-01's reader rejects `exact`), so the assertion can pass. Ticks, margins, the eleven labels, the near-boundary values and the four-example control recomputed and right; JL-09 and JL-10 were already cited."
+  },
+  {
+   "bead": "ART-L6",
+   "kinds": [
+    "request",
+    "registry",
+    "broken"
+   ],
+   "what": "Applied the F-U26a request after checking N26a-19: `frob.mcw/1` requires `legality.profile` (rule 3 checks the world against the profile the file names), so the specimen as it stood could not be resolved and validated. The specimen now carries `\"profile\": \"kitchen-commercial/default@b3:…\"` (a second field beyond the specification's text, DESIGN, as `one_minimal_verified` is), with a resolve rule for its placeholder address, the field description, the invariant row and a planted violation (a profile that does not resolve); the invariant count stays thirteen. Applied the F-UJL request: the known answers are row JL-15. The negative-control line said 'six mutated files' against a list that already had more; it now follows the acceptance list. The delta-debugging case (a, c, d, e, b) traced by hand and right."
+  },
+  {
+   "bead": "ART-L8",
+   "kinds": [
+    "request",
+    "contradiction",
+    "broken"
+   ],
+   "what": "Applied the F-UJL request: the interval [0.0554, 0.4392] is row JL-17. Found on the full read: N33b-19 (DESIGN) embeds the record `frob.preanalysis/1` of N24b-06 unchanged in the plan and says the specification's sample spells that block otherwise, while this fixture pinned the specification's block (`reachable` as a map of counts, `unreachable`, `note`, `least_b_at_a_0`) byte for byte and required the resolved plan to validate against `frob.plan/1` and to equal `study.plan`'s output field by field: that cannot pass on a correct build. The specimen's `preanalysis` block is now entered as the owner's record (the one part taken from the owner's writer, DESIGN with its reason), with its contents pinned member by member; the first acceptance item, the files line and the consideration on spellings follow. All counts and both Clopper-Pearson intervals recomputed (521/521/1,103; 1,031/1,031/1/1,765; 15, 17, 19, 21, 23)."
+  },
+  {
+   "bead": "NJL-04",
+   "kinds": [
+    "deadlock",
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "This M0 bead required every `use` target and every verb of the fifteen mechanisms to be a registered row, but rows enter the registry with the VERBS-<cluster> beads from M0 to M4, and those beads depend on this one: the criteria `mechanisms_have_one_name` and `retired_targets_exist` could not pass at M0 (a wait on what waits on it). They are now staged by cluster, `not-due` until the cluster has a row, as NJL-03 stages the counts; the non-existence checks hold from M0. 'N32a-02 is asked to admit the field' narrated a request that N32a-02 has answered (convention 13): now a fact. The repair for `nemesis.show` named the 'action `show`', but VERBS-nemesis makes `--action show` FROB-REF-802 (the default action has no name to pass): the skeleton is now `frob nemesis hardset --class <class> --json`. The MCP tests and script step need `surface/frob-mcp`, which the bead did not reach: BD-023 added to deps (no cycle; the VERBS beads already reach it through NJL-02)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "NFp4-01",
+   "what": "Its title begins `upstream asupersync, frankensim, ...`. NFx-01's register-wide test (rule 1) requires every bead so titled to be named by exactly one register row, and beads that carry a part or a stage of a registered item are titled by repository without the `upstream` prefix (as NFp1-51 and NFp1-52 are). Retitle, for example 'asupersync, frankensim, frankentorch, fastmcp_rust: one published asupersync version V chosen and landed (FD-ASUP-01's sibling half)', or `every_upstream_bead_has_one_row` fails on the real export (the FD-ASUP-01 row keeps `bead = \"FD-ASUP-01\"` and its four mirrors)."
+  },
+  {
+   "bead": "NJL-07",
+   "what": "ART-L6's specimen now carries `legality.profile` as `kitchen-commercial/default@b3:…` (N26a-19 requires the field and prints no digits). Add its row to the identity map's list (defined by L6; full value the profile name with the content address BD-270's registry gives it) and let the lenient specimen pattern admit it, as ART-L7's two placeholders need; otherwise `resolve_replaces_every_abbreviation` leaves a `…` in L6's resolved file and the file does not parse."
+  },
+  {
+   "bead": "N32-REF",
+   "what": "Row 801's ranked repairs are 'up to three nearest registry names by edit distance' and `frob robot-docs`. NJL-04 (and its acceptance) makes the first repair of a retired name the registered verb of its `[[retired_name]]` row with a command skeleton (`frob autopsy fork` -> `frob run fork …`), which edit distance would not give. Add that case to the row's repairs, or the refusal-conformance check of the row's repair order fails on every retired name."
+  },
+  {
+   "bead": "N33b-19",
+   "what": "`frob.plan/1` is described only as the plan address, `bound`, the estimate and the embedded `frob.preanalysis/1`; no bead prints its member names or says whether the resolved manifest is echoed in it. The golden fixture L.8 (ART-L8) now takes the `preanalysis` block from your ruling, but outside it still carries the specification's proposals (`plan`, `designs` as a map of A and B, `controller_arm` as a sentence, `scenes`, `seed_protocol` with unit `building`, `study`), and it compares `study.plan`'s output with them field by field. Print the members of `frob.plan/1` (and N24b-06 a JSON example of `frob.preanalysis/1`), or the fixture and the verb are built to two schemas and ART-L8 must be re-entered after the fact."
+  },
+  {
+   "bead": "N35-03",
+   "what": "FD-FSIM-07 now depends on this bead and states that its switch-over runs the referee row of your `arch` lane (turning `not-run: upstream FD-FSIM-07` into a run under the deterministic mode) and adds the referee digests of the M1 contact and dynamics batteries (BD-085, BD-088) to that lane. Your fixture set is frozen with a content hash before the first run: say that it is re-frozen once at that switch-over with the two batteries added, or the added lanes change a frozen set with no rule that allows it."
+  },
+  {
+   "bead": "N26b-24",
+   "what": "Step (2) of the train frame in its Trigger says `cargo xtask check-stack` writes the new receipt; N33a-05 makes the default verify-only. Use `check-stack --write-receipt --reason pin-move --gate INT-FSIM-01` (the form FD-FSIM-18 now has), or Procedure A's gate re-runs and its `adopted` row cite the receipt from before the pin move."
+  }
+ ],
+ "unchanged": 1,
+ "notes": "All 30 beads read in full against their plan sections, registry rows and the 14 conventions; 29 changed, 1 unchanged: FDEF-06 (numbers, the GATE-CORTEX-18 command and deps right; its 'closed as not needed' step waits on the BD-037 request F-UF-2 already recorded, so none is repeated here). All eight notes addressed to the slice were checked against their owners and applied. Two findings recur. (1) Nineteen upstream beads carried the template sentence in which plain `check-stack` writes the pin-move receipt, and the doctor 'registry section': each now has `--write-receipt --reason pin-move --gate <its sibling's admission gate>` and the `upstream` section, in the form F-UF-2 used. (2) Scripts and acceptance lines that used verbs, gate harnesses or tests of beads outside the dependency closure: fixed by adding the dependency (FD-FSIM-01, -07, -15, -18, FD-FSQL-01, FD-FSYM-01, NF-13, NJL-04); every new edge was checked for cycles and milestones (graph_check reports no cycle). For the lead: as F-UF-1 observed, each such edge also holds the sibling half of an upstream bead behind this repository's work (FD-FSIM-01 now waits on BD-089, BD-110, N16a-17 and N29ax-01; FD-FSIM-07 on N35-03); a split into a sibling half and a here half, as was done for FD-ASUP-01, would let the sibling work start early. Larger than a point edit and not made: the L.8 specimen outside its `preanalysis` block still uses the specification's proposal spellings, which cannot be reconciled until the owner prints the members of `frob.plan/1` (request to N33b-19). Not edited, noted only: the titles of NFp1-51 and NFp1-52 are 127 and 128 characters. Numbers recomputed in this pass are listed per bead. Loader check: all 30 files parse (front matter, one-line JSON lists, seven sections), no dependency is unknown, later than its bead's milestone or duplicated in `related`."
+}

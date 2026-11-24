@@ -4,7 +4,7 @@ title: "Spark refusal registry: FROB-REF-601 to -618 with triggers, ranked repai
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "spark", "frob-kernels", "frob-core", "solid", "registry", "test", "e2e"]
+labels: ["m0", "spark", "frob-kernels", "frob-core", "solid", "registry", "test", "e2e", "review-notes-open"]
 parent: "WP-35"
 deps: ["BD-005", "N35-33", "STD-E2E", "STD-TEST"]
 needs: []

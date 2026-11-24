@@ -48,8 +48,10 @@ exact LDLᵀ on the imported decimals and has no epsilon, and this robot is its 
 the validation and in the parity fixtures is either relative or stated in the quantity's own unit with a
 scale; the validation runs once on the model as imported and once on a `synthetic` copy scaled by a factor of
 ten in length (mass by 10³, inertia by 10⁵), and every verdict must be identical. (3) Servo actuators given
-as position servos with a gain: mapped to an actuator card with a position loop, the gain carried, the
-torque limit `assumed` if the source gives only a control range in angle.
+as position servos with a gain: mapped as BD-066's table maps every MJCF actuator, to a generic `assumed`
+card with the limits the source states as overrides; the gain (`kp`, and `kv` if present) is a controller
+assumption, not carried, and is listed in the loss report with its value; the torque limit stays `assumed`
+where the source gives only a control range in angle.
 
 **Validation specifics.** Counts, mass properties, joint limits and limb mirror consistency as for every
 robot; the scaled-copy comparison; the list of every tolerance used with its kind (relative or scaled
@@ -72,7 +74,8 @@ absolute).
 - `robot_op3_inertia_exact_no_epsilon`: a `synthetic` link with principal moments (1, 1, 1.9) × 10⁻⁷ kg·m²
   passes and (1, 1, 2.1) × 10⁻⁷ is reported (triangle inequality), independent of magnitude.
 - `robot_op3_scale_invariance_of_verdicts`.
-- `robot_op3_position_servo_mapping`.
+- `robot_op3_position_servo_mapping`: each servo is bound to a generic `assumed` card with the source's limits
+  as overrides, and its gain is a loss-report entry with the source's value.
 - `robot_op3_mass_properties_consistent`, `robot_op3_joint_limits_valid`, `robot_op3_loss_report_golden`,
   `robot_op3_design_id_pinned`.
 

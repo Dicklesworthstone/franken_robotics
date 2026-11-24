@@ -123,7 +123,8 @@ the pinned commit.
 - [ ] Every Moonshot-queue item with earliest milestone M6, and MQ-02, MQ-08 and MQ-12, has a recorded state;
       `active_after` is at most 4; no item entered ahead of a cheaper pilot of the same milestone without an
       ADR.
-- [ ] MQ-08 is `killed` if MQ-02 was killed, and never `active` while MQ-02 is not `passed`.
+- [ ] If MQ-02 was killed, the sweep cites MQ-08's `release` to `killed` (N41-09's transition, which writes the
+      queue record's state); MQ-08 is never in `entered` while MQ-02 is not `passed`.
 - [ ] Each row of step 2 has measured values and `condition_met`.
 - [ ] The three ideas of step 4 have a recorded state.
 - [ ] The entries of KI-16, KI-22, KI-23 and KI-65 and the queue outcomes of MQ-04 and MQ-05 cite the decision
@@ -160,8 +161,10 @@ passed and failed and the kill gates read.
 Known answers: eight families; nine queue items with earliest milestone M6 or decided here (MQ-02 to MQ-07,
 MQ-09, MQ-10, MQ-12) and one dependent (MQ-08); 0.95 + 0.05·c ≤ 10 gives c ≤ 181; 19 × 4 × 2 = 152 bytes per
 cell; 100 h × 3,600 s ÷ 2 ms = 1.8 × 10⁸ steps; the lattice Mach number √3·u·Δt/Δx at 1 m/s and 20 ms is 0.35,
-3.5 and 6.9 at cells of 10 cm, 1 cm and 5 mm. Negative controls: a fifth active Moonshot; MQ-08 active with
-MQ-02 queued; an island funded when the proxies reproduced 90% or more of the failures (KILL-LIVING's trigger).
+3.5 and 6.9 at cells of 10 cm, 1 cm and 5 mm. Negative controls: a fifth active Moonshot (`sweep.cap-exceeded`); MQ-08
+in `entered` with MQ-02 queued (`sweep.cap-exceeded`, the `waits_for` rule of NAB-22 check (e)); MQ-02 in
+`entered` when the proxy-adequacy pilot's record shows the proxies reproduced 90% or more of the failures, so that
+KILL-LIVING fired (`sweep.kill-not-reflected`).
 
 ## Considerations
 

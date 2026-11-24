@@ -4,7 +4,7 @@ title: "upstream frankensim: one vector vocabulary across `fs-mbd` and `fs-ga` (
 type: "task"
 priority: 2
 milestone: "M1"
-labels: ["m1", "suite", "marrow", "upstream", "frankensim", "frob-fsim", "solid"]
+labels: ["m1", "suite", "marrow", "upstream", "frankensim", "frob-fsim", "solid", "review-notes-open"]
 parent: "WP-02"
 deps: ["BD-024", "BD-032", "BD-037", "N33b-04", "STD-E2E"]
 needs: []

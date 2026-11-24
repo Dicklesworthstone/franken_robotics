@@ -6,7 +6,7 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-io", "solid", "test", "asset", "robot"]
 parent: "WP-08"
-deps: ["BD-066", "BD-067", "N14b-20", "NEG-15"]
+deps: ["BD-066", "BD-067", "BD-104", "N14b-20", "NEG-15"]
 needs: []
 related: ["ZOO-mobile-manipulator", "ZOO-quad-mammal"]
 gates: []
@@ -42,15 +42,16 @@ machine and modelled as a plain revolute joint in the public file.
 **Import path.** `frob design import assets/robots/spot/source/<entry> --format mjcf --name spot --key
 asset-spot-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
 the design's `term` section). Expected loss-report entries (HYPOTHESIS until read): visual meshes;
-fitted collision primitives with recorded error; unmapped solver and contact parameters; `armature`,
-`damping`, `frictionloss` to an `assumed` card. If the public model states a position-dependent knee torque
-limit or gear ratio, it is carried as a transmission modulus table; if it states a constant, the constant is
-carried and the loss report notes that the real knee's ratio varies with angle (HYPOTHESIS; decided by
-reading the file).
+fitted collision primitives with recorded error; unmapped solver and contact parameters. Not losses, by
+BD-066's table: joint `damping` and `frictionloss` (the joint's own damping and friction) and `armature` (an
+override of the bound `assumed` card's rotor inertia). The knee's actuator `gear`, a constant in MJCF, is
+carried as a constant transmission ratio (BD-066 has no position-dependent mapping; an element that would
+express one is listed as unsupported); the manifest, not the importer's loss report, notes that the real
+knee's ratio varies with angle through its linkage (HYPOTHESIS; decided by reading the file).
 
 **Validation specifics.** Joint ranges: the knee's wide range is checked against self-collision of the shank
-with the body over the declared range at the reference hip pose, and any interpenetration is a finding (a
-native design would be refused with FROB-REF-123). Naming: a test asserts that no generated artifact name,
+with the body over the declared range at the reference hip pose by A-13 (`frob analyze self-collision`,
+BD-104), and any interpenetration is a finding (a native design would be refused with FROB-REF-123). Naming: a test asserts that no generated artifact name,
 report title or fixture path contains the maker's name; the manifest's `display` field carries the model's
 own title for attribution only.
 

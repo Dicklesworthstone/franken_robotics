@@ -6,7 +6,7 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "chronicle", "spark", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["NAB-32"]
+deps: ["N00-11", "NAB-12", "NAB-14", "NAB-32"]
 needs: []
 related: ["NAB-35"]
 gates: []
@@ -41,7 +41,11 @@ harness and lint (NAB-32); the surviving mechanisms (their carriers).
 
 **Transcription rule.** As in NAB-33: one `[[idea]]` per entry; the three paragraphs verbatim; the last two
 lines of each entry are `revive_only_if` and `carriers`; identifiers in the *survives* paragraph fill
-`sections`, `gates`, `kill_gates`, `bets`.
+`sections`, `gates`, `kill_gates`, `bets`; `hypothesis_state` is the state word alone (KI-14: `NARROWED`, row
+H-11 of N00-11). Revival fields by NAB-33's rule: KI-10 `gate` (none); KI-11 `gate` (none); KI-12 `gate`
+(GATE-HAB-13, KILL-POOL); KI-13 `primary-source` (none: the refutation was vendor documentation, and a revival
+needs documentation first); KI-14 `gate` (GATE-FID-07, KILL-SHADOW); KI-15 `none`; KI-16 `pilot` (GATE-HAB-15,
+KILL-FARFIELD).
 
 **Machine-checked arithmetic of this group.**
 
@@ -88,7 +92,7 @@ wall-clock feedback. KI-16: causal tile reuse, incremental replay, recompute onl
   bandwidth of an RTX 4090, and so at most a quarter of one 4.1 ms batch step at 2.0 M world-steps/s.
 - *Survives.* Fork by indexed copy of the chosen rows into free slots (`K-snapshot`), with warm template
   environments kept resident (§27.3, §29.8).
-- *Revive only if.* A measured fork copy that costs more than a stated share of one batch step on our own profile. The recomputed figure is 0.49 GB of traffic, about 0.5 ms at 1,008 GB/s, an eighth of a 4.1 ms step.
+- *Revive only if.* A measured fork copy that costs more than a quarter of one batch step on our own profile (the bound the refutation rests on). The recomputed figure is 0.49 GB of traffic, about 0.5 ms at 1,008 GB/s, an eighth of a 4.1 ms step.
 - *Carried by.* BD-203 (`K-snapshot`), BD-205 (forks by indexed copy).
 
 **KI-11. Order-dependent quantile sketches**
@@ -132,7 +136,7 @@ wall-clock feedback. KI-16: causal tile reuse, incremental replay, recompute onl
   1,600 at p = 0.5. The mechanism adds cost and removes no training or search.
 - *Survives.* A sampled background referee with a reported coverage figure, as a correctness guard (§16.11;
   GATE-FID-07 at coverage of at least 0.1% and a throughput loss of at most 5%; KILL-SHADOW; BET-34).
-- *Revive only if.* The strong form (catching tier-sensitive behaviour during training at no more than 5% of throughput) is revived only if the measured referee rate gives coverage that reaches n ≈ 16·p·(1 − p)/δ² episodes per tier inside one training run. The surviving form stands or falls at GATE-FID-07.
+- *Revive only if.* The strong form (catching tier-sensitive behaviour during training at no more than 5% of throughput) is revived only if the measured referee rate gives coverage that reaches n ≈ 16·p·(1 − p)/δ² episodes per tier inside one training run (576 at p = 0.9 and 1,600 at p = 0.5, for a five-point gap). The surviving form stands or falls at GATE-FID-07.
 - *Carried by.* BD-214, BD-268, N16b-19 (KILL-SHADOW).
 
 **KI-15. Feedback control of solver effort on wall-clock**
@@ -153,7 +157,7 @@ wall-clock feedback. KI-16: causal tile reuse, incremental replay, recompute onl
 - *Refutation.* The robot's neighbourhood dominates the compute and is always dirty. The 95% premise holds for
   far-field state that costs almost nothing to recompute.
 - *Survives.* Sharing of static far-field fields through the brick pool (§19.15).
-- *Revive only if.* The far-field pilot measures a reusable share whose recomputation cost is material (GATE-HAB-15, KILL-FARFIELD). The robot-neighbourhood form is not revived.
+- *Revive only if.* The far-field pilot measures a reusable share of at least 0.8 on an admitted living-world fixture (the bar of KILL-FARFIELD), with a recomputation cost that is material (GATE-HAB-15, KILL-FARFIELD). The robot-neighbourhood form is not revived.
 - *Carried by.* BD-164, N19c-33 to N19c-37.
 
 ## Acceptance criteria
@@ -163,8 +167,9 @@ wall-clock feedback. KI-16: causal tile reuse, incremental replay, recompute onl
 - [ ] The harness recomputes the twelve calculation rows; the sketch counterexample is executed by a test
       that implements the two-centroid sketch and feeds it both orders.
 - [ ] The revive lint fails a planted bead "Use a t-digest for telemetry quantiles across shards" with
-      `ki.match-without-citation` naming KI-11, and passes "Integer log-bin histograms `K-x-hist` (replacing
-      order-dependent sketches, KI-11)".
+      `ki.match-without-citation` naming KI-11, and passes "Build integer log-bin histograms `K-x-hist` (BD-207)
+      instead of a mergeable sketch (KI-11)" as the surviving form (a keyword, the citation and a carrier in one
+      sentence).
 - [ ] KI-14's record states both forms: the refuted strong form and the surviving sampler with its gate
       (coverage of at least 0.1% and a throughput loss of at most 5%).
 - [ ] KI-10's record carries the recomputed copy cost (about 0.5 ms, an eighth of the step) beside the
@@ -186,18 +191,20 @@ wall-clock feedback. KI-16: causal tile reuse, incremental replay, recompute onl
 - `ki14_sample_sizes`: 576 and 1,600.
 - `ki16_factor`: 1/0.079 = 12.66.
 - `records_complete_and_verbatim` against `tests/fixtures/killed/g2.md`.
+- `ki11_revive_cases`: the two planted beads of the criteria.
+- `revival_fields`: `revive_evidence` and `revive_gates` per record as listed.
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh` (NAB-50) recomputes the calculations, runs the sketch counterexample and the
-two planted revive cases. Logged per STD-E2E.
+`scripts/e2e/decision_records.sh` (NAB-50) runs this module with the rest of `killed_ideas` and recomputes the
+calculations. Logged per STD-E2E.
 
 ### Known answers and negative controls
 
 Known answers: the table and the two sketch results. Negative controls: a "sketch" that sorts its input first
 (order-independent; the test must then report equality, proving the test distinguishes); a record of KI-12
-that states the directory is 4% of the field; a proposal to adjust solver iterations from measured step time
-"only in training" (must match KI-15 and be routed to the labelled training profile). Metamorphic relation
+that states the directory is 4% of the field; a proposal to "enable adaptive iterations from step time only in
+training" (must match KI-15 by its keyword and be routed to the labelled training profile). Metamorphic relation
 for the surviving histogram, stated here because it is the property the killed sketch lacked: merging
 histograms in any order and any sharding gives identical integer counts.
 

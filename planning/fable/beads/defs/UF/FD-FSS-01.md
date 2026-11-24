@@ -53,10 +53,11 @@ BD-398, so that this upstream work starts when the pilot reports instead of wait
 `crates/frob-conformance/registry/pilots.toml`, cited by its id and digest) into
 `tests/upstream/FD-FSS-01/PILOT.md`: which twin package and version was inspected, and for each of the three
 things, present or missing, with the field or file where it was found. If all three are present (verdict
-`falsifier-rejected`), set the registry row's `status` to `not-needed` (DESIGN: the value requested of BD-037's
-schema `frob.upstream/1`, admitted only on a conditional row whose pilot found nothing missing, with `PILOT.md`
-citing the pilot record; until the schema admits it the row stays `open` and `PILOT.md` carries the verdict
-"not needed (pilot)"), and stop.
+`falsifier-rejected`), set the registry row's `status` to `not-needed`, and stop. BD-037's schema
+`frob.upstream/1` admits `not-needed` only on a conditional row (this one is the only conditional item) and only
+when the row's fixture directory holds `PILOT.md` citing the pilot record by its id and digest in `pilots.toml`
+with the verdict that nothing is missing; any other `not-needed` row is a load-time error (loader test
+`upstream_not_needed_conditional_only`).
 
 **Where the work is done, and under whose rules (binding), if step 0 finds something missing.** The change is
 made in the `franken_surveillance_system` repository (beside this one; its head and toolchain were not read for
@@ -123,7 +124,7 @@ survey, with every surveyed dimension recorded as `measured`, and the pack says 
 ## Acceptance criteria
 
 - [ ] The pilot's finding is recorded in `tests/upstream/FD-FSS-01/PILOT.md` with the package version and the three verdicts.
-- [ ] If nothing was missing: the registry row reads `not-needed` (or `open` with the verdict in `PILOT.md` while BD-037's schema lacks that value), and no change was made in the sibling.
+- [ ] If nothing was missing: the registry row reads `not-needed` and loads under BD-037's loader (`PILOT.md` cites the pilot record), and no change was made in the sibling.
 - [ ] If something was missing, in the sibling: the twin package carries the missing items as new fields; its exporter refuses four coplanar landmarks; its own tests pass.
 - [ ] Here: the validator passes on a package from the landed commit (four named landmarks spanning a tetrahedron above the threshold, a witness with method and uncertainty, a coverage partition), and fails with the recorded signature on the package the pilot inspected; the package version and the exporting commit are recorded and the row reads `landed` (NFp2-03 runs the importer checks and GATE-HAB-03 and moves it to `adopted`).
 - [ ] The mirrored bead exists (if the change was needed), files were reserved and released, and nothing in this repository patches the sibling.

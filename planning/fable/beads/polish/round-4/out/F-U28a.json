@@ -1,0 +1,226 @@
+{
+ "round": 4,
+ "slice": "F-U28a",
+ "reviewed": 45,
+ "changed": [
+  {
+   "bead": "N28ap1-01",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "H-verbs-2's request applied after checking VERBS-design and N14b-10: the refusal list lacked 108 at stage 1 (raised at binding) and 168 at stage 2, carried 308 at stage 7 and narrated 168 as '(requested)'; an implementer would have built an owned-codes table that refuses a stage-1 108 as out-of-row and raises 308. Now stage 1 has 108, stage 2 has 168, stage 7 has 119 only, 308 is reported `undecided` (N14b-12), and the 31-code union is printed. Added that the design input accepts a file and is an `artifact-input<F>` path parameter, so 734 and 828 are appended (VERBS-design counts it among its seven file rows); the refusal-list unit test now checks 108, 168 and not 308."
+  },
+  {
+   "bead": "BD-110",
+   "kinds": [
+    "request",
+    "convention",
+    "contradiction"
+   ],
+   "what": "F-UEG-1's request applied: BD-064 and GB-10 both say design.check (BD-110) attaches the predicted body mass to the `set-fill` repairs of a stage-1 FROB-REF-105, and nobody built it, so GB-10's surface lane (NEG-02) could never pass. Added the step (BD-062's functor on the one body with the repaired fill, `predicted (body_mass, kg)`, validity `Predicted`, ranking unchanged), an acceptance line and the unit test `fill_repairs_predict_mass` with GB-10's exact values 2.2957992 kg and 22.68 kg (recomputed). The stage-table copy omitted stage 1's 108 (N14b-10 row 1) and described 168 as 'no declared fill' with 'entering STAGES ... by request' (convention 13); both now match the constant. The lead's audit note (BD-126 -> NJL-08 reaching BD-109 through BD-110) holds: BD-110 keeps BD-109 as a dependency, nothing to change."
+  },
+  {
+   "bead": "BD-107",
+   "kinds": [
+    "broken"
+   ],
+   "what": "An unbalanced stance was 'refused' with exit 3 but no refusal code, and the analyze.modes row has no chapter code for it, so the envelope could not be built. It now refuses with the surface's FROB-REF-802, pointer /stance, with the residual and repairs (DESIGN, as the registry uses 802 for other inadmissible values); the unit test and the e2e step name the code."
+  },
+  {
+   "bead": "BD-108",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "BD-108 claimed to record 'four parts' of GATE-ATEL-05 as rows `part = \"A-2x\"`, while N28a-29 also recorded the M1 part's template-timing clause: the register keeps one [[gate.part]] per milestone (N40-01) and one recorder per part (convention 9), and record_gate takes `--part <milestone>`, so the A-2x rows could not be written and N28c-25's one_recorder_per_part check would fail. BD-108 now measures its four clauses in its own Gauntlet receipt and writes no row; N28a-29, which alone can measure the 2 s clause on the templates, records the one M1 part. Title, Background, Scope and acceptance aligned."
+  },
+  {
+   "bead": "N28a-29",
+   "kinds": [
+    "convention",
+    "contradiction",
+    "broken"
+   ],
+   "what": "Counterpart of the BD-108 fix: step 9 and the acceptance now make this bead the one recorder of GATE-ATEL-05's M1 part (the four analyses' clauses that BD-108 measures, and the template timing), from one receipt with `record_gate ... --part M1`; GATE-ATEL-02 and GATE-SKEL-04 M1 parts stay BD-110's. Step 1 asserted 26 entries of cluster `analyze`, which from M3 holds NJLx-51's three late rows (29); it now names the 26 numbered analyses and logs the three late rows as present without calling them. The fixtures used the four templates 'by name' though no step instantiated them, so `design check quad-mammal` and the step-1a sweep would hit an unknown design; they are now instantiated under their archetype names before step 1. Step 9's 'M1 parts A-20 to A-23' and 'M4 parts' now read one part per milestone."
+  },
+  {
+   "bead": "N28a-02",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Unit test `refused_check_blocks_sim` planted a stage-3 record refused with code 124, which stage 3 does not own (124 is stage 6's static margin, as the top-heavy design is refused in N28a-29); the fixture would be an impossible record. Now a stage-6 record."
+  },
+  {
+   "bead": "N28a-03",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Mechanical C13 finding confirmed: 'requested of VERBS-session for its row' narrated a request; VERBS-session's session.show row carries `phases` (CLI --phases, M1, N28a-03), so the bead now states that fact."
+  },
+  {
+   "bead": "N28a-05",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "The test `generated_block_equals_registry` listed `analyze.rank-robustness` with 557, `analyze.structure` with 163 only and `analyze.curvature` without naming where its stratum code comes from, while VERBS-analyze (the authority) has rank-robustness with none of its own (neither 557 nor 830), structure with 163, 167, 169, and curvature's code read from the allocation ledger; the generator test would have failed against the rows on file. The list of codes a verb raises itself now also names 167/169, 431 and the stratum refusal as VERBS-analyze does. The generator's equality check covered 'the analyze block', which from M3 also holds NJLx-51's three late rows that no Analysis registration produces, so check-generated would have failed at M3: it now compares the numbered rows and accepts an extra analyze row only when an `[[addition]]` record lists it, with a planted unlisted row failing. The '243 verbs' count is now NJLx-51's 247."
+  },
+  {
+   "bead": "N28a-06",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Called KA-625 and KA-658 'equivalents' of KA-682, but N28-KA declares exactly five same_as pairs and KA-682 is not among them (nor does Appendix M); an implementer could add a same_as row and break N28-KA's equivalence test. Now binds KA-682 alone and cites the mission chapter's rows. All battery counts recomputed exactly (2,304; 11,520; 2,254; 114; 1,596; lexicographic first (2,2,(0,0,160,240)); authority row (155,135,105,5) vs (175,115,85,25))."
+  },
+  {
+   "bead": "N28a-07",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The e2e stored the sill task with `frob task new sill --file <copy>`, but task.new takes the document positionally and the name with `--name` (VERBS-task, N24c-06): the script would fail with 802. Now `frob task new <copy> --name sill --key ...`. Numbers recomputed (0.94176 J, slack 0.00824 J, 0.471 J vs 0.378 J, 9.4176 W, 0.36 J)."
+  },
+  {
+   "bead": "N28a-08",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Same task.new misuse in the e2e (`frob task new a21-arrive-<k> --file <copy>`), fixed to the positional document with `--name`. VERBS-analyze lists FROB-REF-440 (inadmissible clock lattice) on analyze.deadlines and N28a-05's generator emits each row's codes from the analysis's declaration, but this bead never declared or raised 440, so check-generated would fail and a zero period would reach the enumerator. Added the lattice admission through BD-078 (440, exit 3, pointer to the clock), an acceptance line and the unit test `inadmissible_lattice_refused_440`. Hyperperiod, latency-endpoint and actuation-margin arithmetic recomputed."
+  },
+  {
+   "bead": "N28a-10",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Stated 'KA-687 (≡ KA-080)', an equivalence neither N28-KA's five same_as pairs nor Appendix M declares; now binds KA-687 alone and cites C-12's KA-080. Divisible-load, 3! and 2^3-2 counts recomputed."
+  },
+  {
+   "bead": "N28a-14",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The pilot read its gradient estimate through `frob analyze sensitivity --mode smoothed-gradient`, which N33b-18 (M3) declares and answers with FROB-REF-724, and no bead wires to the M4 estimator, so step 4 could never produce a value. It now reads the paired finite-difference gradient of BD-353 (already a dependency) through `frob phylum gradient ... --envelope-scope gate:KILL-ATLAS --key ...`, and names the KILL-FDGRAD branch from the `gradient_mode` that N17b-20 has every phylum.gradient envelope echo. Unit and skill arithmetic recomputed (480 units, 48 trainings, 0.82/0.34/0.48, s ≈ 0.3)."
+  },
+  {
+   "bead": "N28a-16",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "H-verbs-1's request applied (convention 13): 'VERBS-analyze is asked to add it to this row' narrated a request already met; the analyze.regimes row carries --from-study with the two-call form and 802 on the KILL-ATLAS fallback, and the bead now says so."
+  },
+  {
+   "bead": "N28a-17",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The acceptance requires `scripts/e2e/explain_compare.sh` to pass on batch-cpu, but its eval.compare step named no placement, so the script never exercised batch-cpu. Step (2) now passes `--backend batch-cpu` (eval.compare's backend input, BD-262)."
+  },
+  {
+   "bead": "N28a-18",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "F-U28c's two requests applied after checking N28c-25, BD-124, N28-REF and N28c-21. (1) The 553 trigger 'evaluate an e-process on a fixed-n study's stored outcomes' had no user-side form; the bead now says the both-types form is reachable through eval.compare and the re-reading form only on pairing::admit (its unit test; N28c-21's atelier_harness pairing.admit). (2) GATE-ATEL-06 has one M1 part, but this bead 'recorded the refusal clause' and required BD-124's enumeration clause 'also on record', two recordings of one part that N28c-25's one_recorder_per_part check rejects; it now records the whole part once, from one g1_known_answers receipt holding both clauses and the CX-311/312 controls, with `record_gate ... --part M1` by a non-implementer session, and its script logs that receipt."
+  },
+  {
+   "bead": "N28a-30",
+   "kinds": [
+    "request",
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "F-U28c's request was already met in step 12 (no record_gate in the script), but the step still named BD-124 and N28a-18 as two recorders of GATE-ATEL-06's clauses, contradicting N28c-25; it now names N28a-18 for the one M1 part and BD-262 for GATE-ATEL-04's M3 part, so this bead is no recorder and needs no Recording paragraph. Step 2's fixed-n eval.compare omitted `--rule`, a field of the fixed_n block (VERBS-eval), so the request would be 802 and the 555 assertion would fail; now `--rule paired-clopper-pearson/1`. The eval.compare calls never passed the selected backend, so the batch-cpu and device acceptance could not be shown; every call now carries `--backend \"$FROB_E2E_BACKEND\"`. Pre-analysis sums (2,145; 3,828) and the worked interval [0.0554, 0.4392] recomputed."
+  },
+  {
+   "bead": "N28a-19",
+   "kinds": [
+    "registry"
+   ],
+   "what": "Named the enumeration's per-a promotion threshold `least_b_at_a`, while the one implementation (N24b-06) and VERBS-eval's eval.preanalyze output call it `min_b_for_prefer`; the bead's tests call the frob-arena functions, so they would look for a field that does not exist. Renamed in the approach and the unit test. Every number recomputed by script: the four enumerations (2,145/521/521/0/1,103; 3,828/1,031/1,031/1/1,765; 8,385/2,517/2,517/4/3,347; 33,153/11,384/11,384/39/10,346), U(0;64) = 0.06618, min b 15..23, power 0.117/0.406/0.962, first tie n 86/99/178/328, 478 promoting at α/2, 0.04573, and the tie-scan counts (230 wrong stops at n = 256, first at n = 156 with 76)."
+  },
+  {
+   "bead": "N28ax-01",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The e2e ran `frob design check <template>` on archetype names, but design.check takes a stored design, a DesignId or a file and templates are instantiated by design.new (BD-109); the step would be refused. It now instantiates each archetype with `frob design new as-<archetype> --template <archetype> --key ...` first. Box-case arithmetic recomputed (mass [−0.4, −0.1], reach [0.01, 0.05], energy 0.8829–1.00062 J, 8.1 kg fails, stance witness and passive margins)."
+  },
+  {
+   "bead": "BD-113",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The M1 e2e applied the diff with `frob design patch <root DesignId> --file <edits> --expected-parent <root DesignId>` and branched by editing the second version, but heads move per name by compare-and-swap (BD-058, BD-059): with the name's head at the third version both calls are stale (112 for the patch, 804 for the edit, exit 7), and a bare edit list is not a `frob.design.patch/1` document, so the round trip and the branch diff could never run. The script now wraps the list as a patch document with `parent` = root, applies it to a fresh copy of the root made by `design new <copy> --template quad-mammal` (same DesignId, the name is not in the term), and builds the branch under a third name by replaying the first two edits. Three-edit lineage values unchanged."
+  },
+  {
+   "bead": "BD-262",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "H-owners-3's request applied after checking VERBS-task: the repair for `exposure-table-untested` read `frob task check --coupling <task> --pair A B`, a flag that is the unknown-parameter 802 and an arm option that does not exist, so the printed next_action would fail; it is now `frob task check <task> --action coupling --arms A,B --key <k>` (a run action, so it carries a key), and the unit test's wording matches. GATE-ATEL-04 has two parts (M3 here, M4 N28b-03), so the recording now names `--part M3`. Checked: 2·ln20/0.25 ≈ 24 pairs; a seeded simulation of the betting rule stops the 0.80-vs-0.50 case at a median of about 30 to 35 pairs (well under 150) and keeps the null rate at about 0.02."
+  },
+  {
+   "bead": "BD-310",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Step 4 ran `cargo test -p frob-conformance --test pilots`, a target that does not exist; the pilot register's loader tests are N38a-09's `--test pilot_register` (as every other pilot bead calls it), so the step would fail with 'no test target'. Fixed. Recomputed: τ = 41/45, top-band m = 10/15, the conformal index 38 of 39, halving 81→27→9→3, ladder costs 40.5 h / 6.1 h / 2.0 h / 2.2 h."
+  },
+  {
+   "bead": "BD-343",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The e2e 'merges two branches' lineages in both orders and compares bytes' with no command: lineage merge has no verb, and the harness subcommand that reaches `Lineage::absorb` (`atelier_harness -- lineage.merge`) is added by N28b-06, which depends on this bead. The step now runs this bead's own merge tests through cargo and states that the two-session merge end to end is N28b-06's `merge` step. Probe counts recomputed (⌈log₂ 6⌉ = 3, 5 at L = 32, 6 with the endpoint, ⌈log₂ 12⌉ + 1 = 5, the nine-edit contraction to 3) and the six-version fixture traced."
+  },
+  {
+   "bead": "BD-347",
+   "kinds": [
+    "convention"
+   ],
+   "what": "'VERBS-report, VERBS-study and VERBS-opt are asked to list 870 … and N28-REF to name these verbs' narrated a request (convention 13) that is met: report.design, report.mission, report.campaign, study.compare and opt.cascade all list 870, and N28-REF's row names them as raisers from M4. Now stated as fact. Counted the 16 preserved cells of the polarity table; KA-699 and KA-701 values match N28-KA."
+  },
+  {
+   "bead": "BD-348",
+   "kinds": [
+    "convention",
+    "contradiction"
+   ],
+   "what": "Recorded GATE-ATEL-05 with `record_gate … --receipt <hash>` and no part, while the gate has two parts (M1 N28a-29, M4 this bead) and N28a-29 records with `--part M1`; now `--part M4` in the approach and the script. It also called the A-20 to A-23 rows BD-108's 'closed at M1', but BD-108 measures them and writes no row (N28c-25: N28a-29 records the M1 part); Background, Out, the coverage acceptance and the unit test now say M1 part measured by BD-108 and recorded by N28a-29. Recomputed 3807/4096 and the two-link 25/3 N against 10 N."
+  },
+  {
+   "bead": "BD-349",
+   "kinds": [
+    "request",
+    "deadlock"
+   ],
+   "what": "F-U28c's request applied: the Background still said this bead 'assembles the gate GATE-ATEL-13 for the eight'; it now delivers what the M4 part is measured on, with N28c-08 to N28c-11 measuring and N28cp3-01 recording. The last acceptance required GATE-ATEL-13 to 'have recorded rows' for eight cores, which only those dependents can produce, so the bead could never close; it now requires what the rows need to run on its artifacts (regeneration, calibration reports, forced triggers, shadow replay, the two stage scripts) and writes no row, as N28a-27 and N28a-28 do. EVSI values recomputed (0.001306, 0.005496, 1.02 × 10⁻⁵, sixfold), the five triggers each, the 38th of 39."
+  },
+  {
+   "bead": "BD-351",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "F-U28c's request applied: the script paragraph carried a `record_gate -- --gate GATE-ATEL-15 --receipt <hash>` form with one receipt for a part recorded from two measurements; it now keeps the replay clause as this bead's entry in the gate's tier target with atelier_suggest.sh producing its receipt, and says N28c-16, the part's one recorder, records it without giving this bead a recording step. The GATE-AUGUR-11 acceptance stays (N28c-16 records it). Recomputed EVSI 0.0013059 and 0.0054965, the second fast batch 1.02 × 10⁻⁵ and the m = 0.15 value 1.2 × 10⁻⁶."
+  },
+  {
+   "bead": "BD-352",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Three requests applied after checking VERBS-opt, N28b-23, BD-328 and the reach of N21b-42 and N35-15. (1) opt.cascade's row has the conformance-only input `--mutant <name>`, which the bead did not implement, so BD-346's `skip-stage5` and N28b-28's sabotage (b) had no handler: item 14 now passes it to the one loader (receipt and envelope carry `conformance_mutant`, the run is non-citable, a release build answers 802), with an acceptance line and the unit test `mutant_conformance_only`. (2) The row lists eight chapter codes (870 at stage 2 among the passed-on ones) and the bead said seven with three passed on; now eight, 870 included in the approach, acceptance and references, and item 4 states that both rows list 870 (convention 13). (3) N28b-23 leaves the verb forms on BD-328's `discard-only` record to this script: step 7 asserts `--finalists-from R1` is 545, exit 3, with its two repairs in order, and `selection_basis: survivors` printed as 'k survivors'. Burnside count 86,185, 500,500 and the audit bounds 0.0950/0.0495 recomputed."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [],
+ "unchanged": 17,
+ "notes": "Unchanged after full review: N28a-04, BD-100, BD-101, BD-106, N28a-09, N28a-11, N28a-13, N28a-15, N28a-20, N28a-21, N28a-22, N28a-23, N28a-27, N28a-28, N28ap1-02, BD-250, BD-329 (numbers recomputed by script: stance forces and battery counts, A-22 radii and slider tables, majority 3807/4096, drawbar forces, e-BH k* = 1 and 3, the Binomial(512, 0.05) 0.99 quantile 38, DC-04 n = 29,958/299,574/2,995,733 and exact 29,956/299,572/2,995,731 with 75 s/12.5 min/2.1 h and cv 0.0735, DC-06 0.76/0.13, DC-08 bounds 0.025/0.0445/0.1225, the f32 spacing 8, the docking boundary 5/16, the two-link wrench gap 5/3 N, BD-250's AUCs 0.75/0.875, heuristic 1.835 and discard bound 0.0950, BD-329's Beta(38, 2) fifth percentile 0.8840). N28a-13: the audit's proposal for N30a-15 (BD-348 to related) needs nothing from this bead, which already builds A-25 and is N30a-15's dependency. BD-343's merge leg: N28b-06 already names the harness subcommand that reaches Lineage::absorb, so no request was needed. All 45 files parse (front matter, seven sections, three test subsections)."
+}

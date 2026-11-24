@@ -4,7 +4,7 @@ title: "frob-conformance: known-answer registry of the doctrine chapter, KA-033 
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "gauntlet", "frob-conformance", "solid", "spine", "registry", "test"]
+labels: ["m0", "gauntlet", "frob-conformance", "solid", "spine", "registry", "test", "review-notes-open"]
 parent: "WP-14"
 deps: ["BD-025", "N00-KA", "N38a-10", "N38a-12", "N38b-05", "STD-E2E", "STD-TEST"]
 needs: []

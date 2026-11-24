@@ -1,0 +1,329 @@
+{
+ "round": 4,
+ "slice": "S-11",
+ "reviewed": 39,
+ "changed": [
+  {
+   "bead": "BD-018",
+   "kinds": [
+    "registry",
+    "deadlock"
+   ],
+   "what": "FROB-REF-250's repairs follow N35-REF's row (fix the derivation; declare the missing conversion constant with its dimension; never suppressed) and N35-REF moved from related to deps, so the code it raises loads; the criterion that `frob schema frob.kir/1 --json` prints the schema needed BD-022's verb layer, which this M0 spike does not depend on: it now asks for the v0 layout stated in CONTRACT.md and exported by the crate, the CLI print being N21a-16's criterion; the 805 note says 805 is raised from M1 by N32a-09 (the M0 handler accepts a keyless call)."
+  },
+  {
+   "bead": "N21a-01",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "F-U34 request and the lead note applied after the N34 split: the workspace table, forbidden list, layout, lockfile and toolchain rules and the cudarc plant cite N34p4-02 (dep), apps/ and backend registration N34-01, check-layers and core_to_annex_fails N34p4-01, the stray toolchain file N33c-08, capsules N34-07, check-deps BD-003; BD-004 moved to related (no check of it is used); added dep N21c-24 and took over the real-annex exact cudarc pin assertion (acceptance item and unit test cuda_annex_pin_exact_on_tree)."
+  },
+  {
+   "bead": "N21c-24",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "F-U34 request and lead notes: the forbidden list and workspace table cite N34p4-02 (dep, replacing N34-01); the exact-pin rule is proven on fixture annexes and the real annex's pin is asserted by N21a-01; dropped the INV-SPARK-01 contract-section criterion and the N21c-27 dependency (N21c-27 generates those sections from its register); the forbidden-list entry form is { package, why = { route = ... } }."
+  },
+  {
+   "bead": "N21a-05",
+   "kinds": [
+    "broken"
+   ],
+   "what": "the e2e passed `--result <file>` after `--` to a default libtest target, which rejects unknown options and ends the run; the result path is now passed as FROB_LAYOUT_RESULT, and the target is stated to run on batch-cpu only (binding is host-side and frob-kernels links no device annex under INV-SPARK-01)."
+  },
+  {
+   "bead": "N21a-06",
+   "kinds": [
+    "contradiction",
+    "broken"
+   ],
+   "what": "its 'footprint language' contradicted N21b-01's manifest: now N21b-01's Footprint { arg, lanes: LaneScope, lo, hi } with CapExpr bounds; a containment violation is N21b-01's ManifestError::LoadStoreNotContained (CrossWorldFootprint for the lane rule), not FROB-REF-251; FROB_CLAMP_INDEX, used but defined nowhere, is defined and added to both BD-013 preludes."
+  },
+  {
+   "bead": "N21a-16",
+   "kinds": [
+    "registry",
+    "convention",
+    "request",
+    "plan"
+   ],
+   "what": "FROB-REF-250's repairs follow N35-REF's order; the compared runs' key carries backend and run id (kir-loop-<backend>-<run-id>). Resumed review: S-03 request applied after checking CARD-T-09 (its buffer rule arrives at M2 with this bead): the dimension checker states the store rule (a stored value's dimension equals the slot's declared component dimension), an acceptance item covers it, and the negative test store_dimension_mismatch_rejected stores a force (kg·m·s⁻², M 1 L 1 T −2) into a torque slot (kg·m²·s⁻², M 1 L 2 T −2) and expects FROB-REF-250 naming both vectors, with the force slot accepted; the negative-control list carries it. Without it the store half of T-09's buffer rule had no check at any milestone."
+  },
+  {
+   "bead": "N21a-13",
+   "kinds": [
+    "registry"
+   ],
+   "what": "the e2e said a keyless run is refused with 805; 805 is raised from M1 by N32a-09, and this M0 pilot's handler accepts it (every call still carries its key)."
+  },
+  {
+   "bead": "N21a-09",
+   "kinds": [
+    "convention"
+   ],
+   "what": "the sort step compared runs across backends and worker counts under one `--key <k>`, so the second call would return the first one's stored receipt; the key now carries backend, worker count and run id."
+  },
+  {
+   "bead": "N21a-11",
+   "kinds": [
+    "convention"
+   ],
+   "what": "the det_functions step compares backends under one key; the key now carries backend and run id."
+  },
+  {
+   "bead": "N21a-17",
+   "kinds": [
+    "convention"
+   ],
+   "what": "the exact_ops step compares four devices under one key; the key now carries device and run id."
+  },
+  {
+   "bead": "N21a-20",
+   "kinds": [
+    "convention"
+   ],
+   "what": "added dep BD-053: the run-time mask 'within a declared band of a switching surface' is a guarded predicate of BD-053 and an acceptance item tests it; no cycle (BD-053 does not reach N21a-20)."
+  },
+  {
+   "bead": "N21a-21",
+   "kinds": [
+    "convention"
+   ],
+   "what": "the negative control and test fma_product_rejected_by_lints relied on the Rust kernel lint, which is N21a-10's and not a dependency; the bead's test is now the dialect lint (BD-013's rule 4, reachable) and the Rust lint's mul_add rejection is cited as N21a-10's rust_lint_rejects_mul_add."
+  },
+  {
+   "bead": "N21a-26",
+   "kinds": [
+    "registry"
+   ],
+   "what": "the pilot result's verdict was written as `fund-lowering-study` / `closed`, words N38a-09's register does not accept; it is now `falsifier-rejected` or `falsifier-holds` (reported as 'fund a lowering study' / 'row closed'), the record's status following it."
+  },
+  {
+   "bead": "BD-174",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "F-U16b request applied: added dep N16b-25 (owner of --tier beyond referee, --worlds and --intervals on sim.run at M2; no cycle); the Surface paragraph names the option owners. Took over from N21b-06 the sim.run option --profile-kernels on gpu-metal (acceptance item and test profile_option_refused_off_metal), since sim.run reaches the Metal backend only through this bead."
+  },
+  {
+   "bead": "N21b-01",
+   "kinds": [
+    "deadlock",
+    "contradiction",
+    "request"
+   ],
+   "what": "binding rule 1, an acceptance item and the test stride_convention_2x2 had this M0 bead materialize a mismatched view, charge the copy to the receipt and raise FROB-REF-617; the receipt is BD-014's (which depends on this bead) and the materialize path and 617 are N21a-05's (M2). A mismatch is now the typed error LayoutMismatch naming both layouts (added to ManifestError); materialization and 617 are cited as N21a-05's. Lead note [missing] N21-REF not applied: after this fix the bead raises no FROB-REF code (registration errors are typed), and N21-REF is reached through BD-022 anyway. Lead note [partial] BD-022 not applied: dropping the edge also cuts BD-022 from BD-028, N16b-16 and N10a-03, which call `frob doctor` and reach BD-022 only through this bead (BD-017 and N21b-36, named by the note, reach it through VERBS-spark), and BD-017 carries no matching note to take the doctor section; requests filed so it can be done safely later. Resumed review: S-02 request applied (N10a-03's D-1, D-3 and D-7 lints had no field to read): ArgDecl gains kind (the closed ElemKind set, coordinate kinds representable so D-3 can refuse them), components and state, required by the schema and inside KernelId; the registries/kernels.toml row gains origin (derived { derivation_hash, source_hash } | skeleton | handwritten { reason, adr }, required at load) and lowers (per state argument { arg, model, field_path, lowering_hash }, read by D-1, which reports a missing entry), both outside KernelId (DESIGN: re-running a derivation or lowering must not make a new kernel or stale its check). Acceptance item and unit test arg_meaning_and_provenance_fields added; CONTRACT.md documents the row's fields."
+  },
+  {
+   "bead": "N21b-03",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "the e2e passed `-- --card <n>` to a default libtest target (rejected, the run ends): the card is now FROB_CUDA_CARD in the environment; the e2e read the launch block with `frob spark fingerprint` (BD-029, not a dependency): it now reads it from N21c-01's annex harness (cargo test -p frob-spark-cuda --release --test fingerprint_probes), as N21c-01 itself does."
+  },
+  {
+   "bead": "N21b-05",
+   "kinds": [
+    "convention"
+   ],
+   "what": "the negative control 'a sub-buffer view at a non-zero offset rejected by the dialect lint' is the pointer-arithmetic rule of N21a-10, which this bead does not depend on; it is now cited as N21a-10's control rule5_rejects_pointer_arithmetic."
+  },
+  {
+   "bead": "N21b-06",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "an acceptance item and the test profile_option_refused_off_metal exercised `sim.run --tier gpu-metal --profile-kernels` and `--tier batch-cpu`, which exist only with BD-174 (depends on this bead) and N16b-25 (not a dependency); the bead now delivers the worker's Profile request and the option's verb criteria moved to BD-174."
+  },
+  {
+   "bead": "N21b-12",
+   "kinds": [
+    "request"
+   ],
+   "what": "F-U21b request applied: the conformance-build key-input override (feature `conformance-key-override`, variable FROB_CACHE_KEY_OVERRIDE naming options, compiler or driver; one field at a time; metadata records the override; absent from release builds) defined as the cache's test seam, with an acceptance item and the tests key_override_substitutes_one_field and key_override_inert_without_feature; the e2e says how the four perturbations are made."
+  },
+  {
+   "bead": "N21b-15",
+   "kinds": [
+    "broken"
+   ],
+   "what": "the device lanes of the e2e were `cargo test -p frob-kernels` targets, but frob-kernels is a core crate and links no device annex (INV-SPARK-01); the lanes are now the same-named layout_rules_e2e targets of frob-spark-cuda (trj) and frob-spark-metal (Mac), with frob-kernels kept for batch-cpu."
+  },
+  {
+   "bead": "N21b-19",
+   "kinds": [
+    "convention"
+   ],
+   "what": "aligned with convention 10 / N40-03: ADR path docs/adr/ADR-KILL-BUCKET-M2.md (was ADR-KILL-BUCKET.md, which fails decision-adr-path); the decision entry's outcome is one of N40-03's closed set (holds -> not-fired, each fires row -> fired with the clause named in the ADR; pending writes no entry, deferred only by an ADR with deferred_to and reason); the ADR's required fields and the decision entry listed; the holds-only beads close `superseded` (N41-17's close type) instead of the non-existent `killed: KILL-BUCKET`."
+  },
+  {
+   "bead": "N21b-20",
+   "kinds": [
+    "registry"
+   ],
+   "what": "the pilot record lacked id, mechanism, owner, work_package and gated_beads, so the stated consequence ('funding of N21b-21 and BD-295 follows from pilots::fundable') could not hold: this bead is WP-46 while N21b-21 and BD-295 are WP-26. The record now carries id PILOT-SLOT-01 (conforming to N38a-09's grammar), mechanism, owner §21.11, work_package WP-26 and gated_beads [N21b-21, BD-295]; the acceptance item checks that fundable_bead answers for both from it."
+  },
+  {
+   "bead": "N21b-24",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "VERBS-sim lists N21b-24 as owner of the conformance-build sim.run input `--inject-stall chunk=<k>`, which the bead's e2e uses but never defined: the stall seam now names that input, its feature gate, 802 in a release build and its entry into StepPlanId, with an acceptance item. The criterion 'a throughput figure without the lost time is refused by the disclosure rule' relied on N21b-28's whole-denominator rate function, not a dependency: added dep N21b-28 (no cycle; its deps are already reached) and the criterion now names that function."
+  },
+  {
+   "bead": "N21b-30",
+   "kinds": [
+    "broken"
+   ],
+   "what": "the crossover closed form used the ceiling, which at an exact quotient gives a tie where the decision rule is strict (T_dev < T_host); it is now floor(quotient) + 1, matching the brute-force scan the acceptance compares it with."
+  },
+  {
+   "bead": "N21b-38",
+   "kinds": [
+    "convention",
+    "contradiction",
+    "broken"
+   ],
+   "what": "added deps N21a-11 (det_max/det_min, used for the κ̂ reduction), N21b-23 (owner of the per-world status word whose bit 3 this bead sets, and of the caller policies refuse/continue-flagged its criteria use) and N35-KA (rows KA-796 and KA-799 whose truth the e2e harness reads); none reaches this bead. States that K-chol (BD-156) reads κ̂ off the factor in its SolveCertificate and this bead fixes the one reduction to active rows (padding's identity diagonal could make κ̂ exceed κ₂ of the real block), instead of a second computation; names N35-04 as owner of --on-degraded. The known answer κ̂ = 16 for diag(4, 1, 0.25) contradicted the bead's own definition (κ̂ of the scaled matrix): that matrix scales to the identity, so the recorded κ̂ is 1; the test now checks both the formula on the factor (16) and the scaled path (1)."
+  },
+  {
+   "bead": "N21b-41",
+   "kinds": [
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "the pilot record was 'committed to frob-conformance/registry/pilots.toml' with none of N38a-09's fields, so the register could not load it nor gate N21b-17 (WP-46, not this bead's WP-44): the record is now PILOT-FAMILYBUCKET-01 (PILOT-FAMILY-01 is N23b-19's) in crates/frob-conformance/registry/pilots.toml with mechanism, tier F, owner §21.11, bead, work_package WP-46, gated_beads [N21b-17], frozen protocol, ceiling, fallback { ships per-design tables without a shared pool, kill_gate KILL-BUCKET }, cost, tool.site host; the result is an appended [[pilot.result]] in the register's verdict words (falsifier-rejected with the funded benefit in limits, or falsifier-holds) with its committed receipt, and N21b-17's readiness follows from pilots::fundable_bead. The falsifier paragraph said failing any one condition funds the mechanism, contradicting the registered total verdict function (ratio < 2 with traffic ≥ 5% is 'not funded' there): it now defers to the function. The e2e called `frob phylum plan --designs @corpus:pilot-m1 --json`: no loader resolves that corpus name, --worlds-per-design is required by the row, and BD-171 (phylum.plan) was not a dependency; the script now regenerates BD-144's recorded population into a list file and calls `frob phylum plan --designs <list-file> --worlds-per-design 1 --json`, dep BD-171 added (M2, no cycle), and the log gains command lines, exit codes, wall time, the result digest and a summary line."
+  },
+  {
+   "bead": "N21c-02",
+   "kinds": [
+    "contradiction",
+    "broken"
+   ],
+   "what": "step 5 wrote the missing-probe case as `unavailable: probe not run` while BD-029's record (which fetches the same IEEE digest and class through this copy) writes Unavailable { reason: \"spark probe not yet run\" }: aligned to the record owner's form. The e2e ran the `--release` command 'twice, in debug and release', which never builds debug: it now runs it twice and once without --release. Lead note [partial] (move steps 5 and 6 and the fast-math control to BD-029, drop N21b-36 and BD-017) not applied: BD-029 carries no matching note and reaches N21b-36 only through this bead, so the canary and subnormal fields would lose their writer until BD-029 takes them; the gain is one level. Request filed to BD-029."
+  },
+  {
+   "bead": "N21c-04",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "the bead had no end-to-end script of its own: its checks were steps of N21c-06's script, and N21c-06 depends on this bead (conventions 7 and 11); it now owns scripts/e2e/spark_devices.sh built on BD-029 and N21c-05 (missing → fingerprint --no-soak keyed → current with digest equality → stale under N21c-05's FROB_INJECT_IDENTITY seam → current again; allocation and 1 s checks), with the charter's logging, and an acceptance item. The registry entry it repeats had task clusters operate/devices/fleet and two examples where VERBS-spark has devices/fleet and one; aligned. The sentence 'VERBS-spark lists the verb's inputs as \"none\" and is asked to list them' was false (the row lists device and recheck) and narrated a request (convention 13). The criterion 'in the generated refusal table with an empty list' could not pass: every verb gets the surface-wide 720, 723, 724 and 802; it now says the chapter list is empty and the generated list is exactly those."
+  },
+  {
+   "bead": "N21c-12",
+   "kinds": [
+    "contradiction",
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "The device view carried `envelope_in_force`, but the class in force belongs to the job's scope (N36-20/N21c-35's class_in_force(scope, registry, today); E0 for adhoc), not to a device: FleetJob now carries its EnvelopeScope (N36-20's order: launcher token, cited envelope_scope, the verb's own scope, else adhoc) and the device field is gone; step 5 Envelope reads class_in_force, the same for every device. Step 5 said a campaign-class job without an approved envelope is FROB-REF-704 there; 704 is BD-296's size classifier's, at submission, and never reaches this predicate (convention 14; BD-296 'admit_run never builds 704 and this classifier never builds 761'). The criterion '44.6 GB fits the Mac' could not pass under the default E0 (16 GiB): it now names the scope (E1 gate row: Memory on the cards, fits the Mac; adhoc: Memory on the cards, Envelope on the Mac), the E2 criterion and fits_envelope test name their scopes, and the example takes --scope and a synthetic envelope fixture, run once adhoc and once gate:GATE-SPARK-13. The e2e ran `frob sim estimate <fixture> --json` with no scene or world count and for a proof job, which sim.estimate does not price: it now uses the row's inputs (design or --designs, --scene, --worlds, --tier) and, for the proof job, `frob prove bundle … --estimate --key …` as N21c-07's script does. Rechecked: 524,288 × 85,000 = 44,564,480,000 B; 8,192 × 35 kB = 0.287 GB and 8,192 × 24 kB = 0.197 GB (KA-816); ⌈20·0.9⌉ = 18; e^0.2231 = 1.25 → [80, 125] s."
+  },
+  {
+   "bead": "N21c-13",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "The bead's own lane was a cargo integration test with no scripts/e2e/<name>.sh (convention 11): it now owns scripts/e2e/fleet_assign.sh, which sources the STD-E2E helper and runs fleet_assign_e2e. The starvation bound and its property test counted only 'the work that was ahead of it' in its queue, but re-planning moves queued jobs, so an earlier-submitted zero-effective-work job moved into the queue could break the bound on a correct implementation: the bound now counts the jobs running when its effective work reached zero and the jobs submitted before it not yet started, in any queue, and the property test runs with re-planning that moves jobs. Rechecked: 1,800·(1 − 540/600) = 180 < 200 and 1,800·(1 − 500/600) = 300 > 200; two_cards_balance by backlog then identifier; A = 600 s is BD-296's ageing period; fleet.plan --job and --explain are in VERBS-fleet's row."
+  },
+  {
+   "bead": "N21c-14",
+   "kinds": [
+    "convention"
+   ],
+   "what": "fleet_dropout.sh 'submits a mixed queue' with no verb (convention 8; the job.* verbs submit nothing): it now submits through the jobs' own run verbs in the forms of N21c-15's script (a dependency): frob sim run on a 2 cm home scene (train), frob sim run bound to a 1 cm warehouse (eval-large), frob prove bundle a:… (derive-prove), --tier batch-cpu where taken, each with its own --key fd-<n>-<run-id>. Rechecked: FROB-REF-803 is a conflict (exit 7) in N32-REF; b = ln 1.5 = 0.405, 1,000·1.5 = 1,500 > 1,200 so Y; 10 of 50 = 20% trips, 9 does not; job.find is VERBS-job's (N29a-23, a dep); session.show carries the daemon's overhead line from M2 (BD-138); no cycle with N21c-15."
+  },
+  {
+   "bead": "N21c-16",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "S-08 request applied after checking N17-CX (row CX-164: planted-input `N21c-16:cx-164`, removed_check the s ≥ 1/3 clause of the funding rule, KILL-SPECIALIZE's reading must not fund; its acceptance requires every refusal-type plant to carry removed_check): the control is declared with kind, gate, fixture cx-164.toml (synthetic profile on gpu-cuda, ten repetitions, Q s = 0.2023 in [0.19, 0.21], H 0.16 in [0.15, 0.17]), removed_check and expect; step 4 now evaluates the kill clause before the funding clause as separate checks so the plant can be caught; unit test cx164_funding_request_below_third_not_funded and an acceptance item added. The criterion 'The record is cited by the kill-gate decision bead' needed N21c-18, which depends on this bead (convention 7): it now says the record is entered in the review log with identifier and digest, the form N21c-17 and N21c-18 read. Rechecked: 53/262 = 0.2023, 262/209 = 1.2536, 262/235.5 = 1.1125, 1/0.84 = 1.19, 100/300 met and 99/300 not met, every share_interval_band case; Q and H constants match N36-33; artifact.read (BD-097) reachable."
+  },
+  {
+   "bead": "N21c-20",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The e2e 'injects each abort cause in turn' through `frob train start`, but no option of train.start's row plants an over-cap compiler, a state-map mismatch or a failed estimate (convention 8): the missing fence row is now the reassociated forced switch it already runs (that set holds no current identity row), the failed memory estimate is a forced switch on a fixture cohort that fits the budget alone and not with the specialized bucket beside it (602 in the receipt), and the over-cap compile and post-move mismatch run as the stage `cargo test -p frob-kernels --release abort_paths`. fence_refusal_recorded_not_raised asserted 'exit 0' in a library test: it now asserts Ok to the job (exit 0 at the verb). Checked: --specialize-force-switch is in VERBS-train's row (conformance build, M4, N21c-20); telemetry.divergence --mode exact (BD-206, reachable); KA-538 and INV-SPARK-09; N17a-16 depends on this bead, not the reverse; tools/pilot/unroll_quadruped is N21c-17's."
+  },
+  {
+   "bead": "N21c-42",
+   "kinds": [
+    "contradiction",
+    "broken"
+   ],
+   "what": "The e2e asserted an arithmetic block with fields u64-int, u64-atomic, f64 and f32dd, but BD-029's and N21c-02's block records 64-bit integers, 64-bit atomics and canaries and has no double-precision field, so the step could not pass and f64 had no source (an f64 kernel on batch-cpu would have been refused as absent): the bead now maps the vocabulary to the block (u64-int ← 64-bit integers yes; u64-atomic ← 64-bit atomics yes; f32dd ← canaries pass; f64 present on the CPU reference only, by the IR's rule, absent on every device family; the CPU reference holds all four and never narrows the intersection), the Background says so, and features_common is named as N21c-02's helper. Rule 7 (N21a-10) rejects 64-bit types under its default empty feature set, so no 64-bit variant could compile and the variant rule had nothing to select: the library-level configuration now admits u64 for units carrying `// frob: requires = u64`, decided per run at plan time, never u64-atomics. The fingerprint step runs --no-soak (VERBS-spark's row; the block is discrete). Checked: spark.place's row takes --tier strict:<backend> --workload Q --worlds and lists 616; sim.run --workload and strict: tiers; N21-REF's 616 row and N35-REF's 251; every verb's implementer reachable."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N21b-31",
+   "what": "its step stride_handoff runs `cargo test -p frob-kernels --test layout_boundary -- --nocapture --result <file>`, which the default libtest harness rejects; use N21a-05's form (FROB_TEST_SEED=<seed> FROB_LAYOUT_RESULT=<file> cargo test -p frob-kernels --test layout_boundary -- --nocapture), batch-cpu only, since the core crate links no device annex."
+  },
+  {
+   "bead": "N21c-27",
+   "what": "N21c-24 no longer depends on it: add N21c-24 to the owners whose test names the register adopts; the INV-SPARK-01 row's control cites 'the planted cudarc edge of N34-01', which after the split is N34p4-02's plant."
+  },
+  {
+   "bead": "BD-028",
+   "what": "your e2e calls `frob doctor --json` and `frob spark probe`, but you reach BD-022 only through N21b-01 and do not reach BD-017 at all; add BD-022 and BD-017 (the owner of spark.probe) to deps, so the verb layer is a stated prerequisite (the lead's audit proposes dropping N21b-01's BD-022 edge)."
+  },
+  {
+   "bead": "N16b-16",
+   "what": "you call `frob doctor --json` and reach BD-022 only through N21b-01; add BD-022 to deps explicitly (the lead's audit proposes dropping N21b-01's BD-022 edge)."
+  },
+  {
+   "bead": "N10a-03",
+   "what": "you run `frob doctor --section kernels --json` and reach BD-022 only through N21b-01; add BD-022 to deps explicitly. If the kernels doctor section later moves from N21b-01 (lead audit, BD-022 edge), cite its new owner."
+  },
+  {
+   "bead": "BD-017",
+   "what": "lead audit of N21b-01's BD-022 edge: if you take over N21b-01's `kernels` doctor section (registering the section over N21b-01's validation report, `frob doctor --section kernels --json` exit 0 on the real registry and 2 with one finding per planted bad manifest, and the doctor stages of spark_manifest_registry.sh), say so; N21b-01 can then drop BD-022 once BD-028, N16b-16 and N10a-03 depend on BD-022 directly. N21b-01 keeps it until then."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "the sim.run input `--profile-kernels`: its gpu-metal owner is now BD-174 (M2; it wires the Metal backend into sim.run and selects N21b-06's Profile request); N21b-06 delivers only the worker side. N21a-27 still extends it to CUDA and batch-cpu."
+  },
+  {
+   "bead": "N21-REF",
+   "what": "Row 612's raised_by should name N21b-12 (the cache lookup that raises 612 on a corrupt entry offline), with BD-173 integrating; row 615's raised_by names BD-175 and BD-174 but not N21b-24, the watchdog that raises it (VERBS-sim already lists N21b-24 as owner of `--inject-stall` -> 615)."
+  },
+  {
+   "bead": "N35-REF",
+   "what": "Row FROB-REF-248's raised_by begins 'The conditioning bead of the Spark unit'; name it by key, N21b-38, so the registry check can bind the row to the raising test."
+  },
+  {
+   "bead": "BD-156",
+   "what": "κ̂ read off K-chol's factor should be reduced over the active rows only: padded rows carry an identity diagonal (L̂ii = 1), and after scaling every real L̂ii can lie below 1, which makes κ̂ exceed κ₂ of the real block by up to a factor of 2 and fails this bead's own criterion 'κ̂ never exceeds κ₂'. N21b-38 states the masked reduction (det_max/det_min of N21a-11); either cite it or add the mask here."
+  },
+  {
+   "bead": "N10a-03",
+   "what": "N21b-01 now carries what your lints read: per argument, ArgDecl.kind (closed ElemKind set incl. the coordinate kinds), ArgDecl.components and ArgDecl.state (state slabs); per registry row of registries/kernels.toml, origin (derived { derivation_hash, source_hash } | skeleton | handwritten { reason, adr }) and lowers = [{ arg, model, field_path, lowering_hash }] per state argument. D-1's step 2 says the buffer schema 'in the kernel manifest' names its algebraic source: read it from the registry row's lowers (outside KernelId, so a re-run lowering does not make a new kernel); a missing entry is your D-1 finding (N21b-01's loader accepts it)."
+  },
+  {
+   "bead": "BD-029",
+   "what": "lead audit note on N21c-02 (not applied there, since you carry no matching note): if you take over N21c-02's steps 5 and 6 (copy from the spark.probe reports the IEEE digest, attainable class and subnormal verdict, and the canary results, with Unavailable { reason: \"spark probe not yet run\" } when absent) and the fast-math canary control, add N21b-36 to your deps (you reach it today only through N21c-02); N21c-02 can then drop BD-017 and N21b-36. Your step 2 already fetches the digest and class; say also where the subnormal verdict and canaries come from."
+  },
+  {
+   "bead": "N21a-10",
+   "what": "N21c-42 now states the library-level configuration it passes rule 7: a feature set admitting `u64` for units carrying `// frob: requires = u64` (each in a kernel family that registers a 32-bit variant), never `u64-atomics`, with the 'every device family in use' condition checked per run by its plan-time variant selection (616). Your rule 7.3 reads as if the build-time set must itself be one every family in use records; under the default empty set no 64-bit variant can be compiled at all. Say that for 64-bit integer types the build-time set is the library's and the in-use condition is N21c-42's plan-time check, or answer with the form that holds."
+  }
+ ],
+ "unchanged": 5,
+ "notes": "Resumed slice, review complete: all 39 beads read in full against the 14 conventions and the registry beads as they stand now. The interrupted reviewer's 25 edits were checked whole, parse and hold; none was half-finished, and every bead it touched is in its entries. Reviewed and unchanged: N21ap1-01, BD-171, N21b-02, N21b-10, N21c-01. Slice-file items, each answered in the entries above: N21a-01 (F-U34 request applied; [false] BD-004 applied, moved to related; [partial] counterpart of N21c-24 applied, the real annex's exact cudarc pin asserted here), N21a-16 (S-03 applied), BD-174 (F-U16b applied), N21b-01 (S-02 applied; [missing] N21-REF not applied, the bead raises no FROB-REF code after this round's fix and reaches N21-REF through BD-022; [partial] BD-022 not applied, the edge also carries BD-028, N16b-16 and N10a-03 to the doctor verb), N21b-12 (F-U21b applied), N21c-16 (S-08 applied), N21c-24 (F-U34 applied; both [partial] notes applied: N34p4-02 replaces N34-01, N21c-27 dropped with the contract-section criterion, the real-annex pin moved to N21a-01). N21c-02's [partial] note (move steps 5 and 6 and the fast-math control to BD-029) is not applied: BD-029 carries no matching note and reaches N21b-36 only through N21c-02, so the canary and subnormal fields would lose their writer; a request to BD-029 is filed. All 39 files parse (front matter, JSON lists, seven sections, three Test plan subsections) and the staged graph has no cycle."
+}

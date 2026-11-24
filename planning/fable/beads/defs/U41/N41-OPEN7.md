@@ -4,7 +4,7 @@ title: "registries/open.toml, part 7: suite, workspace, numerics, performance, s
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "delivery", "suite", "workspace", "spark", "safety", "registry", "solid"]
+labels: ["m0", "delivery", "suite", "workspace", "spark", "safety", "registry", "solid", "review-notes-open"]
 parent: "EPIC-M0"
 deps: ["N41-03"]
 needs: []
@@ -58,9 +58,14 @@ decisions.
 | OPEN-PERF-3 | A credible energy source on each machine | A named gap in every disclosure block | Performance lead | Nothing | none | considerations of N36-13 (the disclosure block of the harness BD-216) |
 | OPEN-PERF-4 | How the reference performance rows are restated if the default physics step moves from 2 ms (OPEN-KIN-1) | Every row is restated with its new decimation before any gate cites it | Performance lead | Every gate that cites the reference rows | M2 | N36-26 (with N16a-16) |
 | OPEN-SAFE-1 | Which weight layout and which policy architectures are on the allowlist at M2 | The single layout and family of the learning chapter's reference policy | Cortex lead | GATE-SAFE-07 | M2 | N37-08 |
-| OPEN-SAFE-2 | Whether policy weights trained in a private or research-only scene inherit its mark and licence set | They inherit both | Owner | GATE-SAFE-04, GATE-SAFE-05 | M2 | N41-11 (owner packet); N37-20 |
-| OPEN-SAFE-3 | Whether sandboxed custom reward terms are admitted, and in what sandbox | Not admitted; the closed expression language only | Owner | M4 | M4 | N41-11 (owner packet); N37-09 |
-| OPEN-SAFE-4 | Retention periods for job logs, idempotency keys and retired confirmation clusters | Job logs and keys for 30 days; retired clusters sealed indefinitely | Owner | M3 | M3 | N41-11 (owner packet); N37-30 |
+| OPEN-SAFE-2 | Whether policy weights trained in a private or research-only scene inherit its mark and licence set | They inherit both | Owner | GATE-SAFE-04, GATE-SAFE-05 | M2 | N37-20; N41-11 (owner packet) |
+| OPEN-SAFE-3 | Whether sandboxed custom reward terms are admitted, and in what sandbox | Not admitted; the closed expression language only | Owner | M4 | M4 | N37-09; N41-11 (owner packet) |
+| OPEN-SAFE-4 | Retention periods for job logs, idempotency keys and retired confirmation clusters | Job logs and keys for 30 days; retired clusters sealed indefinitely | Owner | M3 | M3 | N37-30; N41-11 (owner packet) |
+
+Where the last column names more than one bead, the record's one `decision_bead` field (N41-03) holds the first
+named and its `note` the others, so the printout shows all of them. For OPEN-SAFE-2, -3 and -4 the first is the
+chapter's decision bead, which writes the question's ADR (ADR-PROG-08, -09 and -10) and moves the row; N41-11 is
+the owner packet that puts the three to the owner.
 
 Status at entry: twenty-two `open`, one `decided` (OPEN-SUITE-2). Two defaults are confirmed by the gate register
 and are open only to new evidence: the anchored cell of OPEN-NUM-3 and the parity tolerance of OPEN-PERF-1. What

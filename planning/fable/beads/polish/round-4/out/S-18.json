@@ -1,0 +1,259 @@
+{
+  "round": 4,
+  "slice": "S-18",
+  "reviewed": 36,
+  "changed": [
+    {
+      "bead": "BD-282",
+      "kinds": [
+        "deadlock",
+        "convention"
+      ],
+      "what": "Acceptance item 1 required GATE-AUTOPSY-05 'recorded with measured values' at this bead's close, but the gate's one recorder is N27a-18, which depends on BD-282 (KNOWN_DRIFTS 7 and 9): the bead could never close. The item now asks for this bead's measurement (`gate_autopsy_05` with the controls failing it) and says N27a-18 records the row after it closes. Step 7 now states that the three registered controls (largest contrast regardless of rho0; nearest declared factor; always decline) are `mutation` records of controls.toml naming GATE-AUTOPSY-05, `nc-<nnnn>` features in frob-autopsy, registered here: N27a-18's tier run plants 'the gate's registered controls' and nobody registered them. The first control's feature is `autopsy-no-placebo`, the same feature N27-CX now names as CX-300's plant, so one build serves both controls."
+    },
+    {
+      "bead": "N27a-01",
+      "kinds": [
+        "request",
+        "registry",
+        "contradiction",
+        "broken"
+      ],
+      "what": "Applied the three dependency-audit notes after checking them: (1) the missing JobContext edge is real (the trait's methods take the job context, which is N34-06's port), so dep N34-06 is added (N34-06a does not exist: S-25 has not split it; if it does, the edge belongs on N34-06a, request recorded); (2) the clause 'check-layers passes with frob-autopsy depending on no layer-6 crate' moved to N27a-10, which creates frob-autopsy; (3) BD-003 replaced by N34p4-01 (F-U34's request: the bead uses only check-layers). Also fixed: the trait was spelled `JobCx`, N34-06's port is `JobContext` (&dyn JobContext now); the bead called ForkService 'a standing inversion', but N34-06's register holds exactly five `standing` rows and requires an ADR row for any further inversion (check-layers' L-10 rules), so an implementer would either fail `register_has_five_standing_rows` or leave an unregistered inversion. It now carries the marker `// frob:inversion fork-service` and adds the row (implementor frob-chronicle, adr docs/adr/ADR-WS-07-fork-service-inversion.md, DESIGN number after ADR-WS-04 to -06), with acceptance items for the row count and two planted L-10 failures. 'The daemon hands an implementation through the job context' contradicted N34-06's JobContext (no such method); it now says the verb layer passes &dyn ForkService beside &dyn JobContext."
+    },
+    {
+      "bead": "N27a-03",
+      "kinds": [
+        "broken"
+      ],
+      "what": "`--before failure` on a world with no failure was 'refused as an invalid argument' with no code, so BD-205's handler and this resolver could pick different codes and `no_failure_refused` had nothing to assert. Now FROB-REF-802 pointing at `before` (the surface code the program uses for verb-specific argument cases, as BD-279 does), with its observed text and the repair `--at`."
+    },
+    {
+      "bead": "N27a-06",
+      "kinds": [
+        "request",
+        "convention",
+        "registry"
+      ],
+      "what": "Applied F-U27a's request: Scope now says the population manifest (now given a path, crates/frob-conformance/fixtures/autopsy/gate01_population.toml, with its fields) is also read by N27a-07's g5_determinism entry GATE-CHRON-05, so a change of format or location changes that entry in the same commit. The four negative controls were 'planted behind a test-only switch', a private mechanism: the recorder only counts controls registered for the gate, so three of them would never have been required. They are now controls.toml records naming GATE-AUTOPSY-01: the stripped queue is KA-671's seeded control (this bead states its target and fixture), the other three are `mutation` records with `nc-<nnnn>` features built one per build (BD-025, N38b-04). Added dep N27-KA (KA-671's control record must exist for the gate run; no cycle)."
+    },
+    {
+      "bead": "N27-CX",
+      "kinds": [
+        "registry"
+      ],
+      "what": "CX-298's and CX-301's planted-input plants expect the product's own refusal (581, 880) and named no `removed_check`; BD-025's rule 5 rejects such a control as `boundary-not-control`, so the seeded controls of GATE-AUTOPSY-06 and of the citation guard would not load. Both now name the check disabled in their build; CX-298 is stated as two plant records (the planted input and the `autopsy-forced-fork-answers` mutation) as N38b-05's list form requires. The eight build flags of the plant column were declared by no bead, so every seeded mutation control would be `stale` (BD-025 rule 3, N38b-04) and GATE-AUTOPSY-04 to -07 and -09 could not pass, and this bead's own `plants_turn_controls_red` had nothing to enable. A paragraph now gives each plant N38b-05's id `<planting bead>:<name>` with its crate, and where a known-answer control has the same defect (KA-675, KA-677, GATE-AUTOPSY-05's first control) the same feature."
+    },
+    {
+      "bead": "N27a-09",
+      "kinds": [
+        "registry",
+        "convention"
+      ],
+      "what": "Step 9 said 'the pointwise and gap-skipping mutants are its controls', but those are N29a-21's test-tree functions, not records of controls.toml; the recorder requires registered controls caught in the receipt (N38b-19 rule 4), so the gate row could not be written (pass-without-control) or the seeded KA-677/KA-678 controls would be stale. It now names KA-677's and KA-678's seeded controls as the gate's, with their plants built here as cfg features in frob-chronicle (`divergence-pointwise-midpoint`, shared with CX-299's plant, and an `nc-<nnnn>` gap skip), adds dep N27-KA (the rows that seed them; no cycle), and says which entry tests fail under each."
+    },
+    {
+      "bead": "N27a-10",
+      "kinds": [
+        "request",
+        "broken",
+        "contradiction",
+        "deadlock"
+      ],
+      "what": "Took its side of the audit note: acceptance item 1 now states that check-layers passes with frob-autopsy at layer 5 depending on no layer-6 crate (moved from N27a-01). 'Receives an implementation through the job context' contradicted N34-06's JobContext (no such method); now the verb layer hands in &dyn ForkService. Its acceptance 'check-contracts accepts CONTRACT.md' could not pass: N34-08 also requires contract.toml and tests/conformance.rs (contract.missing, contract.no-conformance-test), and contract.toml's features must equal the manifest's; added both with DESIGN values (layer 5 rank 3, decision plane, gates, refusals, safe mode, features `nemesis` and `coalitions` with KILL-AUTOPSY). Added dep N26a-01: frob-autopsy's manifest names frob-nemesis as an optional path dependency, which cargo cannot resolve before N26a-01 creates the crate, and the rank ADR must edit the rank N26a-01 writes into frob-nemesis's manifest and contract.toml (otherwise map.metadata-mismatch / contract.layer-mismatch, depending on which lands first)."
+    },
+    {
+      "bead": "N27a-11",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The e2e pointer used `frob autopsy attribute … --shapley`, a bare flag; VERBS-autopsy's `shapley` option takes `auto`, `never` or `force` (N27a-18 uses `--shapley force`). Fixed."
+    },
+    {
+      "bead": "N27a-12",
+      "kinds": [
+        "convention",
+        "plan"
+      ],
+      "what": "Scope said the gate is recorded by 'BD-281, with the script of N27a-18'; the one recorder of GATE-AUTOPSY-04 is N27a-18 from its tier receipt (convention 9). The cost note left out the distractor checks, the A/A worlds and the referee corners (about 6,800 episodes, not 5,500), which matters for the 'hours on one machine' budget."
+    },
+    {
+      "bead": "N27a-13",
+      "kinds": [
+        "broken",
+        "contradiction"
+      ],
+      "what": "The reader consumes the divergence search's per-stage answer and a per-class tolerance search, which live in frob-chronicle (layer 6), but frob-autopsy (layer 5) may not call it and ForkService has no divergence method: an implementer would either break check-layers or have no input. Step 1 now says channels come through TraceSource (N34-06, already a dep) and the verb layer runs the search and hands in its report."
+    },
+    {
+      "bead": "N27a-17",
+      "kinds": [
+        "registry",
+        "convention"
+      ],
+      "what": "The tier entry 'plants the gate's registered controls' (checkpoint restore under the edited model; forced fork as the answer) but no bead registered or built them, so GATE-AUTOPSY-06 could not be recorded (N38b-19 rule 4). It now states both: KA-675's seeded control with plant feature `autopsy-forced-fork-answers` in frob-autopsy (shared with CX-298's mutation plant) and an `nc-<nnnn>` control it registers at BD-283's re-run start."
+    },
+    {
+      "bead": "N27a-18",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "Step 7's `--self-test` ran cases 'against a binary built with one registered negative control at a time', but no product `frob` binary may carry a mutation feature (N38b-04, BD-025) and the script has no such option in STD-E2E: the acceptance item could not be met. Now the six build-level controls are asserted `caught` from the two tier receipts (GATE-AUTOPSY-04's registered by BD-281, -05's by BD-282), and the script's own plants are declared in its header and injected under E2E_PLANT_FAILURE (`shapley-label`, `leak-repair-action`), checked by `run-all.sh --verify-plants`."
+    },
+    {
+      "bead": "N27b-01",
+      "kinds": [
+        "convention",
+        "contradiction"
+      ],
+      "what": "Step 5 said the torque-limit row of the fork service's field registry is 'this bead's to add as data' and Considerations kept an 'open point ... until its field registry classifies the torque-limit pattern', but N27a-02 already holds that row under its kind `actuator-limit` (convention 13: state what is). An implementer would add a duplicate row to N27a-02's registry. Now stated as N27a-02's row; the consideration says what the test guards."
+    },
+    {
+      "bead": "N27b-03",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The perturbation stream was named `autopsy.perturb` keyed by (child address, fork tick); N35-23 registers it as `autopsy-perturb` (row 20) with entity the intervention identifier and tick the sample index, so the stream lookup would fail or a second key schema would be invented. Now the registry's name and key. Also declares the Cargo feature `perturb-fixed-size` (u fixed at 1), the plant `N27b-03:perturb-fixed-size` of N27-CX's late-02, which no bead declared."
+    },
+    {
+      "bead": "N27b-06",
+      "kinds": [
+        "registry"
+      ],
+      "what": "Declares the feature `autopsy-label-from-shapley` of frob-autopsy, the plant of CX-296 (N27-CX) and its own Shapley-label negative control, which no bead declared; adds dep N27a-11, whose `shapley.rs` the mutant reads (no cycle)."
+    },
+    {
+      "bead": "N27b-09",
+      "kinds": [
+        "request",
+        "deadlock",
+        "convention"
+      ],
+      "what": "Applied F-U27b's request. The script's `--negative-controls` option exists nowhere, and its build-flag plants cannot be in a product binary. The two build-level defects are now registered mutation controls of GATE-AUTOPSY-03, asserted `caught` from the tier receipt, and the script's own plants are E2E_PLANT_FAILURE plants declared in its header. The note's premise (N27b-28 writes the lane clause for this bead to read) hides a deadlock. The lane beads N27b-23 to N27b-28 depend on N27b-11, which reads this gate's row, which this bead records. So the lane clause cannot exist when this bead records, and a line `not-eligible: lane clause pending` would leave N27b-11 nothing to read and the lane could never be built. Now the part is recorded with the lane clause on KILL-ENSEMBLE's fallback named in advance (`fallback: double precision only`). The KILL-ENSEMBLE decision (N27b-29) lifts it with the measured lane clause when it does not fire (N38b-19's one further recording). When it fires, the row on the fallback is the right final state. The dead `not applicable` verdict branch is gone."
+    },
+    {
+      "bead": "N27b-13",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "The pairs rule required the on-demand rule to label 'planted joint causes correctly at the rate the coalition gate requires (95 of 100)', but the gate's suite has 50 joint and 50 alternative cases (N27a-12) and its threshold is 95 of the 100 together; the rule could not be evaluated as written. Now 95 of the 100 joint and alternative causes, in the rule and in `pairs_decision_rule`."
+    },
+    {
+      "bead": "N27b-15",
+      "kinds": [
+        "registry"
+      ],
+      "what": "Writes the planted request of CX-301's control (plant `N27b-15:cx-301-cite-established`, a synthetic fixture) and names its removed_check, the class check of `offer`; without them the seeded control has no fixture (stale) and would be rejected as boundary-not-control."
+    },
+    {
+      "bead": "N27b-17",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "Said N27a-13 'wraps telemetry.divergence', which frob-autopsy (layer 5) cannot call (frob-chronicle, layer 6). Aligned with N27a-13: the reader builds ForkDivergence from the search report the verb layer hands in. The e2e export named its fork option only as 'the export verb's own'. Now it is `telemetry.export-html … --forks <list> --out <file>`, the registered spelling (convention 8)."
+    },
+    {
+      "bead": "N27b-19",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Applied F-U27b's request. 'Planted defects the script must catch (`--negative-controls`)' named an option that exists nowhere and a build flag no product binary may carry (N38b-04), so `run-all.sh --verify-plants` could not exercise them. The script's plants are now declared in its header (`plants=exit-2-for-lone-581,reordered-repairs`) and injected under E2E_PLANT_FAILURE. The build-level defect (a lone 581 mapped to exit 2) is left to BD-279's crate tests, because this script touches no gate whose receipt could carry a mutation control (request to BD-279)."
+    },
+    {
+      "bead": "N27b-23",
+      "kinds": [
+        "registry"
+      ],
+      "what": "N27-CX names the plant `N27b-23:lane-admit-reads-1e12` for late-01's control, but no bead declared the feature, so the seeded control would be `stale` and GATE-AUTOPSY-09 could not pass. Now this bead declares the Cargo feature `lane-admit-reads-1e12` of frob-autopsy (lane/admit.rs draws its placebo forks at 10⁻¹²). The feature is both its own negative control and that plant."
+    },
+    {
+      "bead": "N27b-29",
+      "kinds": [
+        "deadlock",
+        "contradiction",
+        "registry",
+        "convention"
+      ],
+      "what": "(1) Step 4 had GATE-AUTOPSY-03's lane clause 'recorded `not applicable: KILL-ENSEMBLE`' after a kill, but no bead could write it: the one recorder, N27b-09, is upstream of the lane. N27b-28 could only lift the row before this decision, so a failed lane clause on a killed lane would have stayed a `fail`. Now this bead lifts GATE-AUTOPSY-03 itself after a `not-fired` decision (a tier run at its commit and the recorder: N38b-19's one further recording). Its gates field gains GATE-AUTOPSY-03. A fired decision leaves N27b-09's fallback row standing. (2) The kill-row decision lacked N40-03's required `receipts` field, and the per-device-family `scope` had no form. It is now `backend:<tier>`. Requests ask N40-03 and N40-29 to give the row that scope kind; without it the entries fail `decision-scope-invalid`. (3) Removed the stale claim that the register lists KILL-ENSEMBLE 'with no milestone column, which this bead resolves'. N40-29's row is decided at M3 (convention 12)."
+    },
+    {
+      "bead": "N27b-30",
+      "kinds": [
+        "broken",
+        "contradiction"
+      ],
+      "what": "(1) The review confirms GATE-AUTOPSY-06's row but did not depend on (or reach) its recorder N27a-17, so it could start before that row exists. Dependency added; it makes no cycle. (2) Step 2(e) re-ran 'the gate's script', and the e2e script ran five scripts, none of which reproduces GATE-AUTOPSY-01, -02, -04, -05, -06 or -07. Now it re-runs the command each of the eight rows cites (the tier runs) plus every gate bead's user-side script. (3) Added check (f): GATE-AUTOPSY-03's row must agree with KILL-ENSEMBLE's decision. When the decision is `not-fired` the row is the one N27b-29 lifted. When it is fired or not reached, the row is N27b-09's fallback recording. A lane clause left on the fallback is therefore caught."
+    },
+    {
+      "bead": "N28a-01",
+      "kinds": [
+        "registry",
+        "broken"
+      ],
+      "what": "The contracts were told to declare 'design codes 101 to 133' and 'refusals 542 to 557 and 870 to 872'. Codes 117 and 127 to 129 are unassigned, so a literal range fails `contract.unknown-reference`. Codes 544, 547, 552 and 554 belong to other crates, and 872 is raised by `frob_verbs::require_establishable` (N28-REF). Now frob-opt lists its thirteen N28-REF codes exactly, and frob-analyze lists its registered design codes. The bead also states `plane = \"decision\"` for both crates. contract.toml requires that key, and this two-planes bead had left it unset."
+    },
+    {
+      "bead": "N28a-33",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The e2e step called the run verb `frob opt cascade … --allocation fixed --json` without `--key` (convention 5; VERBS-opt's own example carries one). Key added."
+    },
+    {
+      "bead": "N28a-34",
+      "kinds": [
+        "convention",
+        "registry"
+      ],
+      "what": "The e2e script compared an idle and a saturated `frob sim run` for identical profile and digests with no keys. Under one key the second run returns the first one's stored receipt, so the comparison proves nothing (convention 5). Every run now carries `--key`, distinct for compared runs. Step 9 said `--effort` was 'to be entered in the verb registry', but VERBS-sim already holds it (conventions 12 and 13). It now cites the registered option and its FROB-REF-802."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N34-06",
+      "what": "N27a-01 now adds an L-10 register row `fork-service` (trait frob_core::fork::ForkService, defining crate frob-core, implementor frob-chronicle, adr docs/adr/ADR-WS-07-fork-service-inversion.md) at M2. List it among the 'rows already planned by later beads' and update the known answer (ten rows at M1; eleven at M2 with fork-service; twelve at M3 with member-sizer). If you split off N34-06a (the four port traits), tell the lead: N27a-01's dependency (for JobContext) should then be N34-06a, and the register row still needs N34-06's inversions.rs (or N34p4-01's table type)."
+    },
+    {
+      "bead": "N34x-01",
+      "what": "N27a-01 (M2) adds the register row `fork-service` under ADR-WS-07, so the register holds eleven rows when this bead starts (not ten) and twelve after its member-sizer row (not eleven); the acceptance item and the known answer that count rows must say so, or count 'one more than the count in force' as N16a-01 does."
+    },
+    {
+      "bead": "BD-281",
+      "what": "Acceptance item 1 requires 'GATE-AUTOPSY-04 (TARGET), recorded with measured values', but the gate's one recorder is N27a-18, which depends on BD-281: the bead can never close (convention 7). Change it to the measurement (the crate test's counts with the gate's registered controls failing it) and state that N27a-18 records the row after this bead closes, as BD-282 now does. Also register GATE-AUTOPSY-04's three build-level controls, which no bead registers. N27a-18 asserts them `caught` from the tier receipt as 'registered by BD-281', and a gate row whose `controls` list is empty or stale cannot pass. Add records of kind `mutation` to crates/frob-conformance/registry/controls.toml for: (1) labels taken from Shapley values, using the feature `autopsy-label-from-shapley` that N27b-06 declares (plant `N27b-06:autopsy-label-from-shapley`); (2) pairs tested at the singles' level; (3) v(∅) left out of the interaction. Make (2) and (3) each a `cfg(feature = \"nc-<nnnn>\")` branch that you declare in frob-autopsy, never in gauntlet-mutations."
+    },
+    {
+      "bead": "BD-318",
+      "what": "Row 'Joint and alternative pairs' describes N27a-12's ten A/A controls as '10 worlds with no adverse factor'; N27a-12 says such a world would not fail and builds each A/A world to fail through one adverse factor left out of its declared list. Use N27a-12's description."
+    },
+    {
+      "bead": "N27b-14",
+      "what": "N27-CX names the plant `N27b-14:autopsy-repair-monotone` for CX-297: declare the Cargo feature `autopsy-repair-monotone` in frob-autopsy (a repair search that assumes adding an intervention never loses a rescue; per-control feature, not in gauntlet-mutations, BD-025) and tag `cancelling_factor` with #[cx(\"CX-297\")]; otherwise CX-297's seeded control is stale and GATE-AUTOPSY-04 cannot pass."
+    },
+    {
+      "bead": "BD-279",
+      "what": "N27-CX names the plant `BD-279:cx-298-gear-change` for CX-298's planted input: write the thermal fixture's request (`--do 'model.joint[m].gear_ratio := 16'` at the fork 1 s before the trip) as a fixture with its `synthetic` header, and name the check disabled in the control's build (removed_check: the classifier's structural and design-parameter check), so the control is not rejected as boundary-not-control (BD-025 rule 5). Also make `all_refused_exit_3` include a lone FROB-REF-581 request: one structural intervention at a mid-episode fork, expecting exit 3. N27b-19 now leaves the build-level defect 'a lone 581 mapped to exit 2' to that test, because no product binary may carry the mutant."
+    },
+    {
+      "bead": "N27b-28",
+      "what": "Your text says that GATE-AUTOPSY-03's recorder, N27b-09, reads the lane clause from your receipt (Background; Scope; step 3, 'whose entry reads the lane clause from this receipt'; acceptance item 2). But N27b-09 is upstream of you (N27b-28 -> N27b-23 -> N27b-11 -> N27b-09). It records before the lane exists, with the clause on the fallback `fallback: double precision only`. The clause in your receipt is now read by the KILL-ENSEMBLE decision, N27b-29, which lifts the GATE-AUTOPSY-03 row when it does not fire. Reword those places; you still record no GATE-AUTOPSY-03 row. Left as it is, the text sends an implementer to a reader that does not exist."
+    },
+    {
+      "bead": "N40-03",
+      "what": "Add KILL-ENSEMBLE (row entered by N40-29; decided by N27b-29) to the `backend` row of the closed scope-kind table. N27b-29 records one decision entry per device family where the outcomes differ (`backend:gpu-cuda`, `backend:gpu-metal`). Without the scope kind, those entries fail the load with `decision-scope-invalid`."
+    },
+    {
+      "bead": "N40-29",
+      "what": "Give the KILL-ENSEMBLE row `scope_kind = \"backend\"`. N27b-29 decides it per device family (`scope = \"backend:<tier>\"`), and a scoped entry on a row with no `scope_kind` fails N40-03's load (`decision-scope-invalid`). A separate request asks N40-03 to add the gate to its `backend` row."
+    },
+    {
+      "bead": "VERBS-autopsy",
+      "what": "autopsy.intervene, sequential mode (N27bp2-01). The row says an unreachable request without `allow_unreachable` is FROB-REF-802 pointing at `replicates`, and it describes `allow_unreachable` as 'at the requested replicates'. Under `test = sequential` the pointer is `max_pairs`, and reach is counted in rounds. In that mode N27bp2-01 also refuses `replicates`, `placebo` and `series_1e7 = always`, each with FROB-REF-802 pointing at the option. Add both to the row so that the generator's refusal list and the schema match the implementing bead."
+    }
+  ],
+  "unchanged": 10,
+  "notes": "Unchanged after a full read: N27a-04, N27a-14, N27a-15, N27a-19, N27b-02, N27b-05, N27b-11, N27b-12, N27b-25, N27bp2-01. All eight slice notes were checked and applied: the three N27a-01 audit notes and F-U34's N34p4-01 request; N27a-06 (F-U27a); N27a-10; N27b-09 and N27b-19 (F-U27b). The N27b-09 note's premise, that N27b-09 reads N27b-28's receipt, does not hold because of a deadlock, and the lift now sits with N27b-29. Systemic finding: N27-CX's eight entries named build flags and planted requests that no bead declared. The seeded controls would have been stale, and GATE-AUTOPSY-04 to -07 and -09 could not pass. Each plant now has a planting bead (`<bead>:<name>`). In-slice planting beads were edited; N27b-14 and BD-279 have requests. Several gates listed controls that no bead registered (GATE-AUTOPSY-01, -03, -05, -06 and -07). These were fixed in the gate beads, and BD-281 has a request for GATE-AUTOPSY-04's. Numbers re-derived: the Fisher p, the Shapley cases, the Hoeffding half-widths, the e-process bounds and rounds, the fork counts, the cost cases (6.1 h and 40.5 h), the slope forces (40.26 N and 44.73 N) and the growth bound (46.4 steps, 1.16 s)."
+}

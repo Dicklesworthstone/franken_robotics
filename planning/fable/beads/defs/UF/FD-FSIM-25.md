@@ -4,7 +4,7 @@ title: "upstream frankensim: a correspondence-search lane in `fs-asbuilt`"
 type: "task"
 priority: 3
 milestone: "M5"
-labels: ["m5", "suite", "ground", "foundry", "upstream", "frankensim", "frontier"]
+labels: ["m5", "suite", "ground", "foundry", "upstream", "frankensim", "frontier", "review-notes-open"]
 parent: "WP-68"
 deps: ["BD-037", "BD-395", "N33b-04", "STD-E2E"]
 needs: []
@@ -145,11 +145,14 @@ section shows this item with its status); `cargo test -p frob-conformance --test
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
 bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs the as-built ingestion verb on the planted-pose cloud with and
-without fiducials: `frob ground ingest <scan bundle> --design <the link's design> --task-family tf:none --key
-fd25-<with|without>-fiducials --json` (the scan form of `ground.ingest`, BD-395; the two bundles' manifests
-declare `origin = "synthetic"`, and each call carries its own key), asserting the recovered rotation,
-translation and wall deviation, and in the as-built record the route (`correspondence-search` for the bundle
-without fiducials) with its trimmed share and initial pose.
+without fiducials: `frob ground ingest <scan bundle> --design <the link's design> --task-family tf:none
+--emit-variant --key fd25-<with|without>-fiducials --json` (the scan form of `ground.ingest`, BD-395, with the
+variant option of N30a-47, reached through BD-395; the two bundles' manifests declare `origin = "synthetic"`, and
+each call carries its own key), asserting from the result's `registration` and `quantities` the recovered
+rotation, translation and wall deviation, from `variant` a `ModelId` different from the design's, and in the
+as-built record the route (`correspondence-search` for the bundle without fiducials) with its trimmed share and
+initial pose. Without `--emit-variant` the call builds no variant, and the acceptance line on the variant's route
+could not be checked.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_25/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

@@ -4,9 +4,9 @@ title: "upstream asupersync, frankensim, frankentorch, fastmcp_rust: one publish
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "suite", "upstream", "asupersync", "frankensim", "frankentorch", "fastmcp_rust", "solid"]
+labels: ["m0", "suite", "upstream", "asupersync", "frankensim", "frankentorch", "fastmcp_rust", "solid", "review-notes-open"]
 parent: "WP-02"
-deps: ["BD-001", "BD-006", "N33c-09", "N34-03", "STD-E2E"]
+deps: ["BD-001", "BD-006", "N33c-09", "N34-03", "NFp4-01", "STD-E2E"]
 needs: []
 related: ["FD-FKER-01", "FD-FMCP-01", "FD-FTUI-01", "N33b-04", "N33b-08", "N33c-26", "N33c-35", "N34-16", "N41-20", "N44-04", "NF-05", "NF-13"]
 gates: ["INT-ASUP-01"]
@@ -45,12 +45,17 @@ survive a pin move).
 
 ## Scope
 
-In: choosing V with asupersync's maintainers' rules (the procedure and its evidence); the change in each of the
-four repositories; the mirrored beads; the failing fixture; the switch-over train and the pins here (the
-FD-ASUP row's `version` set to V). This bead is the only specification of that work: the seed bead BD-008 was
-drafted with a second copy of the steps, and its three additions are folded in below.
+In: the half of the work done here: the root patch entry; the check, with `cargo metadata` over this project's
+workspaces, that every activated exact requirement on asupersync was handled; the failing fixture; the switch-over
+train and the pins here (the FD-ASUP row's `version` set to V); the closing record BD-037 takes over. This bead and
+its sibling half NFp4-01 are the only specification of that work: the seed bead BD-008 was drafted with a second
+copy of the steps, and its three additions are folded into the two.
 
-Out, with the bead that has it: the gate INT-ASUP-01 itself, that is its measurement, its wiring into
+Out, with the bead that has it: the half done in the four sibling repositories, that is choosing V under
+asupersync's maintainers' rules (the procedure and its evidence), the change in each of the four repositories,
+any further exact requirement moved to V, the mirrored beads and the "before" listings (NFp4-01, a dependency:
+that work needs nothing from this workspace, so it starts at M0 from the suite survey instead of waiting behind
+this bead's admission dependencies); the gate INT-ASUP-01 itself, that is its measurement, its wiring into
 `xtask check-stack`, the reading of `check-deps`, the gate evaluation, its admission record, and the
 verification of the interim posture (BD-008, which depends on this bead and re-runs the gate as one step of the
 switch-over); the rules of `check-deps` that hold the interim posture (one asupersync package per binary:
@@ -60,51 +65,34 @@ constellation lock (FD-FSIM-16); frankentui's exact 0.5.0 pin (FD-FTUI-01); brin
 
 ## Technical approach
 
-Four repositories are touched. The same rules bind each: its own `AGENTS.md`, gates and conventions govern; every
-file is reserved through Agent Mail before it is edited, because other agents work there (asupersync's checkout
-had 267 modified paths: nobody else's uncommitted work is touched); the change is additive and lands on that
-repository's `main` through its own gates; each repository gets its own mirrored bead, and the four identifiers
-are written into this bead's closing record, each beside its repository and in the order of the row's `repo`
-(asupersync, frankensim, frankentorch, fastmcp_rust), from which BD-037 enters them in the `mirror` field of this
-item's row in `registries/upstream.toml` (`frob.upstream/1`). DESIGN, an ordering fact of the graph: the upstream
-registry BD-037 depends on this P0 item (through BD-023 and BD-008, which report its state), so the registry,
-its `frob doctor` section and the scripted compatibility train of N33b-04 all come after this bead; this bead
-therefore opens its own fixture, runs its switch-over by the four written steps below, and hands BD-037 the row's
-content. For
-FrankenSim the rules include its layer checks, its contracts and its ban on branches and worktrees. Nothing in
-this repository patches, forks or vendors a sibling (INV-SUITE-04).
+The four repositories are touched by NFp4-01, under each repository's own `AGENTS.md`, gates and reservations:
+it fixes V (OPEN-SUITE-1: a published version that corresponds to one clean, tagged asupersync commit and that
+every consumer in the table's first seven rows can build against; 0.6.2 if its published bytes equal a clean
+commit, otherwise the next version published from a clean commit), moves FrankenSim's constellation entry, the
+FrankenTorch requirement and the fastmcp_rust requirement to V, opens the four mirrored beads and writes
+`before.tree-d.txt`. This bead edits no sibling file. It starts from NFp4-01's closing record: V, V's commit and
+tag, the evidence for V (the two digests compared, or the release commit), the exact requirements found and what
+was done with each, each repository's pre-change and landed commits, the four mirrored-bead identifiers in the
+order of the row's `repo` (asupersync, frankensim, frankentorch, fastmcp_rust), and the hash of
+`before.tree-d.txt`. It copies the mirror identifiers into its own closing record, from which BD-037 enters them
+in the `mirror` field of this item's row in `registries/upstream.toml` (`frob.upstream/1`), and it hands the V
+decision and its evidence to BD-008 for the admission record of INT-ASUP-01. DESIGN, an ordering fact of the
+graph: the upstream registry BD-037 depends on this P0 item (through BD-023 and BD-008, which report its state),
+so the registry, its `frob doctor` section and the scripted compatibility train of N33b-04 all come after this
+bead; this bead therefore opens its own fixture, runs its switch-over by the four written steps below, and hands
+BD-037 the row's content. Nothing in this repository patches, forks or vendors a sibling (INV-SUITE-04).
 
-1. **Fix V (OPEN-SUITE-1).** V is a version of asupersync that (i) is published, (ii) corresponds to one clean,
-   tagged commit of the asupersync repository, and (iii) every consumer in the table's first seven rows can
-   build against. The expected answer is 0.6.2 if its published bytes equal a clean commit; otherwise the next
-   version, published from a clean commit under asupersync's own release rules. Procedure: list the published
-   versions; compare the registry bytes of 0.6.2 with the tracked bytes that FrankenSim's pinned commit builds
-   against (the path checkout is dirty, so "0.6.2 by path" is not yet evidence of "0.6.2 as published"). If they
-   agree, V = 0.6.2. If the path carries changes the graph needs, a new version is published from a clean
-   asupersync head through that repository's own release gates, and V is that version. The decision and its
-   evidence (the two digests compared, or the release commit) go into the admission record of INT-ASUP-01.
-   Fail-closed default until V is recorded: whatever FrankenSim's pinned commit builds with (0.6.2 by path
-   today), with the tree hash in the receipt and no gate PASS on a dirty tree (OPEN-SUITE-3). If V is not 0.6.2,
-   every other exact `=0.6.2` requirement that a graph here activates also blocks resolution (franken_numpy's
-   optional one, behind a feature): before V is fixed, `cargo metadata` over every workspace lists the activated
-   exact requirements on asupersync, and each one is either moved to V in the same train (a further mirrored
-   change in that repository, recorded in the registry row) or its feature stays off here (DESIGN: V must not
-   be chosen in a way that silently disables a consumer).
-2. **asupersync.** If no clean published commit exists for V: the release is cut there, under its rules, from a
-   clean tree. This program does not publish from a tree that holds another agent's uncommitted work.
-3. **frankensim.** Its constellation entry for asupersync is moved from 0.5.0 at `7a0f2f55047c` to V at V's
-   commit, so that its own verify-only preflight (which treats an off-pin or dirty sibling as a refusal) agrees
-   with what its `Cargo.lock` builds. Only the asupersync row is touched; the other stale rows are FD-FSIM-16.
-   Its manifests name V as the version beside the path, and its `[patch.crates-io] asupersync` entry keeps
-   pointing at the path for development.
-4. **frankentorch.** Its requirement becomes exactly V (today `0.6.2`, default features off); its lockfile is
-   regenerated; its own suite passes.
-5. **fastmcp_rust.** Its exact requirement becomes `=V` (today `=0.6.2`), or a caret requirement on V if that
-   repository's rules allow one (an exact pin splits the graph again at the next release; see Considerations);
-   lockfile regenerated; suite and MCP conformance checks pass. If FD-FMCP-01 (whose gate INT-FMCP-01 is run by
-   BD-023), which edits the same manifests for the toolchain, is in flight, the two changes are landed in one
-   reservation.
-6. **Here.** The workspace root repeats FrankenSim's `[patch.crates-io] asupersync` entry, so every registry
+Fail-closed default until this bead's switch-over sets the FD-ASUP row's `version` to V: builds here use whatever
+FrankenSim's pinned commit builds with (0.6.2 by path today), with the tree hash in the receipt and no gate PASS on
+a dirty tree (OPEN-SUITE-3).
+
+1. **Every activated exact requirement handled.** `cargo metadata` over every workspace here lists the exact
+   requirements on asupersync that a graph of this project activates (franken_numpy's optional `=0.6.2`, behind a
+   feature, is the known one); each must appear in NFp4-01's closing record, moved to V by a landed commit or
+   recorded as a feature that stays off here, and a feature recorded as off is not enabled in any manifest here.
+   One that is activated and appears in neither form fails the step (DESIGN: V must not be chosen in a way that
+   silently disables a consumer).
+2. **Here.** The workspace root repeats FrankenSim's `[patch.crates-io] asupersync` entry, so every registry
    requirement on V resolves to the one path package at V's commit. `surface/frob-mcp` depends on `fastmcp_rust`
    by commit and never on the registry package `fastmcp-rust` 0.13.0, which resolves with asupersync 0.5.0 (FACT,
    to re-read); that refusal is FD-FMCP-01's negative control and is repeated here as control 4. `franken-stack.lock`
@@ -126,8 +114,13 @@ with the airlock, the Metal annex with `ft-kernel-metal`, and a probe on `fastmc
 and asserts exactly one package named `asupersync`, at one version, from one source, in each workspace; and that
 each consumer's own lock agrees with V. At the starting state FrankenSim's constellation lock disagrees (0.5.0).
 Beside `expected.toml` the fixture keeps `before.tree-d.txt`, the `cargo tree -d` output of each consumer
-workspace before the change, with its BLAKE3 hash recorded in `expected.toml`: the "before" half of the
-evidence that the gate's "after" listing is compared with.
+workspace before the change, written by NFp4-01 before its first manifest edit; this bead records its BLAKE3
+hash in `expected.toml` and checks it against NFp4-01's closing record: the "before" half of the evidence that
+the gate's "after" listing is compared with. NFp4-01 may land before a consumer is first pinned in
+`franken-stack.lock`. Where a consumer's pin already contains its landed change, the fixture is run in a scratch
+clone at that consumer's pre-change commit from NFp4-01's closing record, must fail there, and `observed_at`
+names that commit; at the pin it passes, which is the `adopted` reading of BD-037's status-dependent fixture
+check, and that consumer needs no pin move.
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
@@ -157,20 +150,20 @@ wherever cancellation is observed, the token only in that case).
 
 ## Acceptance criteria
 
-- [ ] V is recorded with the commit it corresponds to, and that commit is clean and tagged in the asupersync repository.
-- [ ] FrankenSim's constellation entry for asupersync names V at V's commit; FrankenTorch and fastmcp_rust require V; each landed through its own repository's gates and has its mirrored bead.
-- [ ] In each of the three consumers, at the landed commit, `cargo tree -d` in the consumer's own workspace shows no duplicate asupersync.
+- [ ] NFp4-01 is closed, and its closing record gives V with its clean, tagged commit, the four mirrored-bead identifiers and each consumer's landed commit; each consumer's pin in `franken-stack.lock` is at or after its landed commit.
+- [ ] Every exact requirement on asupersync that `cargo metadata` finds activated in a workspace here appears in NFp4-01's closing record, moved to V or recorded as a feature that stays off, and no feature recorded as off is enabled here.
 - [ ] Here, `cargo metadata` over every workspace BD-008 measures (at M0 at least the core workspace and `worker/`) shows exactly one `asupersync` package, at V; `cargo tree -d` shows no duplicate; the receipt's `duplicates` is empty.
 - [ ] A seeded second asupersync version in a scratch copy fails `cargo xtask check-deps` (the done-condition this item shares with BD-008).
 - [ ] The precondition of INT-ASUP-01 holds at the new pins, measured here directly with `cargo metadata` and `cargo tree -d` (one package, at V, in every workspace that exists); or the record names the consumer that still disagrees, and KILL-MCP's fallback is decided at the M0 exit review. The gate's evaluation and its admission record are BD-008's first run, made against the new pins (BD-008 depends on this bead), as the switch-over rule's last sentence provides.
 - [ ] The closing record names the fixture path, this bead, the four mirrored beads and the status reached: `landed`, or `adopted` once BD-008's run of INT-ASUP-01 passes at the new pins. BD-037, which comes after this bead, enters exactly that as the item's row in `registries/upstream.toml`, and its registry check then covers this fixture.
-- [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
-- [ ] Nothing in this repository patches, forks or vendors the sibling; `cargo xtask check-stack` reports it on-pin and clean under the new receipt, and the record in `DEPENDENCY_ADMISSION.md` cites that receipt.
+- [ ] `before.tree-d.txt` is present in the fixture directory and its BLAKE3 hash in `expected.toml` equals the file's and NFp4-01's closing record.
+- [ ] This bead edited no sibling file. Nothing in this repository patches, forks or vendors the sibling; `cargo xtask check-stack` reports it on-pin and clean under the new receipt, and the record in `DEPENDENCY_ADMISSION.md` cites that receipt.
 
 ## Test plan
 
 ### Unit tests
-In each sibling: its existing suite on the regenerated lockfile; no expectation edited. Added in FrankenSim (additive):
+In the siblings (NFp4-01's, re-run here at the pins): each sibling's existing suite on the regenerated lockfile, and
+FrankenSim's added test:
 - `constellation_asupersync_matches_cargo_lock`: the asupersync entry of `constellation.lock` equals the version and revision `Cargo.lock` resolves. Input today: 0.5.0 against 0.6.2; expected after the change: equal.
 Here (`tests/upstream/FD-ASUP-01/`, real resolution, no mocks):
 - `one_asupersync_package_per_workspace`: `cargo metadata` on each workspace; expected package count 1 for the name `asupersync`.
@@ -183,8 +176,9 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack --json` 
 the asupersync entry of the receipt); `cargo test -p frob-conformance --test upstream_fd_asup_01 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests
 (the `check-deps` controls below), asserting that they pass. Phase `post`, after the pin move: the same fixture
-must pass, the gates named in this bead that exist are re-run, and the closing record must state `adopted` or
-`landed` with a receipt newer than the pin move. `frob doctor` and its `upstream` section come after this bead
+must pass, the gates named in this bead that exist are re-run, NFp4-01's script
+(`scripts/e2e/upstream_fd_asup_01_siblings.sh`) is re-run and must pass, and the closing record must state
+`adopted` or `landed` with a receipt newer than the pin move. `frob doctor` and its `upstream` section come after this bead
 (BD-022 and BD-037 depend on it through BD-008), so both phases call `frob doctor --section upstream --json` (the
 registered form of the section selector) only when the `frob` binary of BD-022 exists, asserting there that the
 row reads as the closing record says once BD-037 has entered it; while the binary is absent, or the section does
@@ -215,7 +209,7 @@ gates touched. No private-scene data is logged.
 - RISK-03: two asupersync versions in one build; three siblings still pin 0.5.0. Earliest signal: `cargo tree -d` at INT-ASUP-01. Those three (frankentui's executor, franken_threed, frankenjax) are never Cargo dependencies here.
 - A dirty asupersync checkout is acceptable for development builds between receipts, with the tree hash in the receipt, and for nothing else (OPEN-SUITE-3, owner; fail-closed default as stated).
 - An exact requirement (`=V`) in a consumer is brittle: the next asupersync release splits the graph again until every consumer moves. Each later move is one compatibility train (N33b-04, which absorbed the draft NF-01), and the registry row records the consumers that pin exactly.
-- `franken-kernel` and `franken-evidence` live in the asupersync repository; FD-FKER-01 touches the same repository and should share a reservation window with this item.
+- `franken-kernel` and `franken-evidence` live in the asupersync repository; FD-FKER-01 touches the same repository and should share a reservation window with this item's sibling half, NFp4-01.
 - No milestone waits on this bead. Its milestone label says when its switch-over gate first exists, not that the
   milestone's exit depends on it. Until the switch-over has been run, the interim posture above is the design of
   record. M1 depends only on FrankenSim, asupersync and FrankenSQLite, and no upstream work item is on its

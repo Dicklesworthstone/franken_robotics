@@ -70,7 +70,8 @@ followed by `frob --json scene purge <pack> --dry-run=false --confirm <digest>` 
 keys, the schema's fields, and no more rows with `default_pipeline = true` than the schema permits.
 
 **Division matrix.** For each user-supplied stand-in (`hssd`, `hm3d`, `partnet-mobility`, `behavior-1k`, a
-`procthor` entry declared by the user, and an `objaverse-xl` object of class `unknown`) and for each export kind,
+user-supplied `procthor` entry imported with no declared class (class `unknown`, `NotRead`; a declared class
+would weaken the row and is refused with 802, NEG-21), and an `objaverse-xl` object of class `unknown`) and for each export kind,
 one expected outcome:
 
 | Export of | Session without `private:export` | Session with `private:export` and the flag |
@@ -140,8 +141,8 @@ The matrix is the known answer (N19b-02's DESIGN, N37-18's table). Controls: mut
 ## Considerations
 
 - The private root is configured per run so that a user's real private store is never touched by the script.
-- If the owner later adds an aggregate-export path at the door (asked of N37-18 in polishing round 1), the
-  scorecard row of the matrix changes by a dated amendment of this bead, not silently.
+- N37-18's table has no aggregate exception; were the door ever changed to admit one, the scorecard row of the
+  matrix would change by a dated amendment of this bead, not silently.
 
 ## References
 

@@ -54,6 +54,10 @@ hyphens, plus `-<sense>`.
   `sync_wait_ms`, `tier-sensitive`, `unknown`.
 - Structural rows (defined by the glossary itself; `structural = true`): `Stratum`, `Witness`, `World`.
 - Subsystem rows: `Sensorium`, `Sinew`, `Skeleton`, `Spark`, `Tether`, `Traction`.
+- Identifiers. NAB-01's schema requires an `id` of lower-case ASCII letters, digits and hyphens, so two terms of
+  this range take a spelled-out `id`: `Top-weighted τ` → `top-weighted-tau`, and `sync_wait_ms` →
+  `sync-wait-ms` (the term itself keeps its underscores and `code = true`). `Toolchain T; toolchain train` →
+  `toolchain-t`.
 - Enumerations to keep verbatim: the three step profiles `lockstep`, `strict`, `referee`; the four telemetry
   levels T0 per-episode metrics, T1 events, T2 control-rate traces on sampled worlds, T3 restart snapshots; the
   two solvability-witness kinds `solvable-causal` and `plant-feasible`; the theorem cards T-01 to T-35; the two
@@ -154,9 +158,12 @@ Rows in this range: 78.
 - [ ] The registry contains 78 records whose sort key begins with S to Z, in the order above, and loads.
 - [ ] `Tier` has two records with senses `maturity` and `physics`.
 - [ ] `Stratum`, `Witness` and `World` are the only records of this range with `structural = true`.
-- [ ] With NAB-03 to NAB-06 landed, the whole registry holds 337 records (73 + 59 + 61 + 66 + 78) and the
-      generated `docs/GLOSSARY.md` has 337 table rows.
+- [ ] Every `id` of this range matches `^[a-z0-9]+(-[a-z0-9]+)*$`, including `top-weighted-tau` and
+      `sync-wait-ms`.
 - [ ] The generated document prints the 78 meanings character for character as in the table.
+- (Not this bead's close condition: the whole registry's 337 records (73 + 59 + 61 + 66 + 78) and the 337 table
+  rows of `docs/GLOSSARY.md` need all five ranges, which are parallel beads; they are asserted by NAB-08's module
+  `whole_registry` and script.)
 
 ## Test plan
 
@@ -170,8 +177,10 @@ Rows in this range: 78.
   "(run_seed, world, episode)"; `World-second` contains "1/h"; `Telemetry level` contains "T0" and "T3";
   `Theorem card` contains "T-01 to T-35"; `Step profile` contains the three names; `Tier (physics)` contains the
   four tier names; `Transversality number` contains "D_t g + D_x g·f⁻".
-- `whole_registry_count_is_337` (runs once all five ranges are present).
+- `ids_are_slugs`: every `id` of the range matches the slug pattern; `Top-weighted τ` has `top-weighted-tau` and
+  `sync_wait_ms` has `sync-wait-ms`.
 - `meanings_match_frozen_table` against `tests/fixtures/glossary/s_to_z.tsv`.
+- (The whole-registry count `whole_registry_count_is_337` is in NAB-08's module `whole_registry`.)
 
 ### End-to-end script and logging
 

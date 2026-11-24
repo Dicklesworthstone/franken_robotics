@@ -4,7 +4,7 @@ title: "upstream frankensim: dynamic rods (`fs-solid` has geometrically exact ro
 type: "task"
 priority: 4
 milestone: "M6"
-labels: ["m6", "suite", "habitat", "upstream", "frankensim", "moonshot"]
+labels: ["m6", "suite", "habitat", "upstream", "frankensim", "moonshot", "review-notes-open"]
 parent: "WP-73"
 deps: ["BD-037", "BD-231", "N19b-20", "N33b-04", "STD-E2E"]
 needs: []
@@ -100,8 +100,8 @@ across the path, a rug with a free edge, one square metre of oil), 200 randomize
 and one legged robot; then again with the proxies (a 20-link chain, a hinged thin plate, a friction patch, the
 patch with the dwell-time law). The measure is the share of full-model failures that the proxy reproduces in
 the same failure class within one second. At switch-over the cord and rug scenes are re-run with FrankenSim's
-rod and cloth as the full model, and the two shares are reported side by side (GATE-HAB-09 reports; KILL-LIVING
-decides).
+rod and cloth as the full model, and the two shares are reported side by side (GATE-HAB-09 reports, from N19b-16's
+recording, which this re-run does not replace; KILL-LIVING decides).
 
 **Fallback if the change cannot land, and the kill gate.** KILL-LIVING: trigger: the proxies reproduce 90% or
 more of the full-model failures, or an island costs more than 181 rigid worlds at 5% activity with no route to
@@ -118,7 +118,7 @@ that ADR (the row in `registries/upstream.toml` keeps its number, as every withd
 - [ ] In FrankenSim: the dynamic rod passes the known answers below and closes its energy ledger to its stated residual over 10⁵ steps; the static rod's tests are unchanged.
 - [ ] In FrankenSim: the cloth's batched entry gives, for each instance, results bit-identical to the same instance advanced alone.
 - [ ] Here: the airlock exposes both as evaluation-tier owners; a result that used them is labelled evaluation tier and is refused in a throughput claim (INV-SUITE-05).
-- [ ] Here: the pilot is re-run with the new owner and both shares are recorded for the cord and rug scenes, per robot.
+- [ ] Here: the pilot is re-run with the new owner and both shares are logged for the cord and rug scenes, per robot, beside the re-run's receipt hash. The re-run is a check: the GATE-HAB-09 row stays the recording of N19b-16, its one recorder, and no `record_gate` call is made here.
 - [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
 - [ ] Nothing in this repository patches, forks or vendors the sibling; `cargo xtask check-stack` reports it on-pin and clean under the new receipt, and the record in `DEPENDENCY_ADMISSION.md` cites that receipt.

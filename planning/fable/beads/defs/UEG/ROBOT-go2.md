@@ -42,10 +42,12 @@ hip, thigh and calf joints; sphere feet.
 asset-go2-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
 the design's `term` section). Expected loss-report entries (HYPOTHESIS until read): visual meshes as
 visuals only; mesh collision replaced by fitted primitives with recorded error; source contact and solver
-parameters listed as unmapped; joint `armature`, `damping`, `frictionloss` mapped to an `assumed` actuator
-card; per-joint actuator force ranges mapped to torque limits on the card, with the calf's larger range
-(a knee reduction) preserved and not averaged; IMU and joint sensors mapped to native sensors with frame,
-rate and clock, the rate being `assumed` where the source gives none.
+parameters listed as unmapped, with "no contact law declared"; IMU and joint sensors not mapped (the source
+states no rate and no clock, and a sensor without them is refused) and each listed with the card that would
+fit (BD-066's table). Mapped and not lost: actuators bound to a generic `assumed` card whose per-joint force
+ranges are overrides on the card, with the calf's larger range (a knee reduction) preserved and not averaged;
+joint `damping` and `frictionloss` as the joint's own damping and friction; `armature` as an override of the
+card's rotor inertia.
 
 **Validation specifics.** Mirror consistency of legs as for every quadruped; in addition the per-joint
 actuator limits must be reported per joint class, and the import must not silently unify them. If a variant

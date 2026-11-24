@@ -4,7 +4,7 @@ title: "Known-answer registry of Kinesis: KA-338 to KA-364, with truths, toleran
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "kinesis", "frob-conformance", "solid", "registry", "test"]
+labels: ["m1", "kinesis", "frob-conformance", "solid", "registry", "test", "review-notes-open"]
 parent: "WP-14"
 deps: ["BD-025", "N36-KA", "N38a-12", "N38a-40", "N38b-04", "N38b-05", "STD-E2E", "STD-TEST"]
 needs: []

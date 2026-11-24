@@ -1,0 +1,284 @@
+{
+ "round": 4,
+ "slice": "F-U33b",
+ "reviewed": [
+  "BD-033",
+  "BD-034",
+  "BD-035",
+  "BD-068",
+  "BD-093",
+  "BD-111",
+  "BD-124",
+  "BD-243",
+  "BD-333",
+  "BD-401",
+  "N33b-02",
+  "N33b-03",
+  "N33b-04",
+  "N33b-05",
+  "N33b-06",
+  "N33b-09",
+  "N33b-11",
+  "N33b-13",
+  "N33b-14",
+  "N33b-15",
+  "N33b-16",
+  "N33b-18",
+  "N33b-19",
+  "N33b-20",
+  "N33b-21",
+  "N33bx-02"
+ ],
+ "changed": [
+  {
+   "bead": "BD-033",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "The acceptance said only that INT-FSIM-05 'has an admission record citing a receipt hash and a row', with no tier, receipt or recorder, so an implementer could write the row by hand or from the admission lane alone, which the recorder N38b-19 refuses (convention 9; N33a-07's form). Added N33a-07's form: the rows this bead carries (KA-776, KA-775, KA-003) bound in g1_known_answers naming INT-FSIM-05 (the sibling families as an entry wrapping the admission lane), the two planted defects as controls, `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers --features gauntlet-mutations -- INT-FSIM-05`, the record citing that receipt as harness_receipt, and `record_gate --gate INT-FSIM-05 --receipt <hash>` by a session that did not implement the oracle. deps: N00-KA and N33-KA moved from related (the bead binds their rows), N38b-19 added (the recorder; no cycle, both M0)."
+  },
+  {
+   "bead": "BD-034",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "N00-KA assigns KA-005 (clip side with a negative advantage) and KA-006 (critic gradient non-zero) to BD-034 as carrier, due M0, and the bead named neither, so two registry rows would stay unbound and the summary chapter's sibling-defect rows unmeasured. Named KA-004, KA-005 and KA-006 with their truths and reported values (probes C, A, B against the capture). Added N33a-07's recording form for INT-FSIM-06 (bind KA-773, KA-774, KA-004 to KA-006 in g1_known_answers; the three planted implementations as controls; tier command with gauntlet-mutations; harness_receipt; record_gate by a non-implementer). deps: N00-KA and N33-KA moved from related."
+  },
+  {
+   "bead": "BD-035",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "INT-FSIM-04 and INT-FSIM-07 (part 1 of 2) were 'recorded' with no tier, receipt or recorder command, and nothing said INT-FSIM-07's M0 part is entered with `--part M0`, so the M1 completion by BD-093 would overwrite or collide with it. Added N33a-07's form for both gates (KA-778's refusal half at @referee and the INT-FSIM-04 clauses bound in g1_known_answers; the three planted adapters as controls; one tier run per gate; `record_gate --gate INT-FSIM-04 --receipt <hash>` and `--gate INT-FSIM-07 --receipt <hash> --part M0`). deps: N33-KA moved from related."
+  },
+  {
+   "bead": "BD-068",
+   "kinds": [
+    "request",
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "H-verbs-8 applied after checking VERBS-sim and N15a-05: the acceptance said 'at M1 no row names it, and the admission record says so' and the script text said the choice was 'requested of the registry', both false now (sim.run's row names `actuation` under `design-has-port-actuators`, registered by N15a-05, which depends on BD-068). The generic 790 check is now a test on a synthetic row (`actuation_group_absent_790`, cargo test -p frob-verbs), with N33c-32 added to deps (its admission check raises 790; M0, no cycle); the sim.run case is cited as N15a-05's test and N33b-21's stage. Added N33a-07's recording form for the M1 re-run of INT-FSIM-09 (g1 entries wrapping the admission lane, planted adapters as controls, harness_receipt, record_gate). Then N38b-19's re-recording rule was checked (each part has one recording bead; only a fallback-lifting bead may record once more): INT-FSIM-09's one register part (M0) is N33b-10's row, so the M1 re-run now writes the production admission record at the M1 pin (citing the harness receipt) and no gate row; a record_gate call by BD-068 would be a second recorder."
+  },
+  {
+   "bead": "BD-111",
+   "kinds": [
+    "request",
+    "registry",
+    "contradiction",
+    "convention",
+    "deadlock"
+   ],
+   "what": "(1) H-owners-3 applied: NJL-01's variation 14 says BD-111 adds the field `memo` to N32a-02's later-field table and writes the arm in derive.rs, and five VERBS rows say BD-111 sets `memo = true`, but the bead had none of it and said `--no-memo` 'on every verb' (Scope, Rollout), which would put a do-nothing flag on every verb and contradict variation 14. Added the field row (bool, default false; dispatch fronts exactly those executors; lint `memo-kind`, DESIGN: only on read or run entries), the arm (no_memo, CLI --no-memo, disposition NoMemo, no code appended), the rows it sets at its change (design.check, design.show, sim.run; eval.run and eval.compare if already entered) and the staging rule for later rows (study.submit, train.start), with tests `memo_field_adds_no_memo` and `dispatch_fronts_exactly_memo_entries`; fixed Scope, Rollout and Background wording. (2) Graph-audit note (counterpart of N33a-06) checked and applied: N33a-06's item 5 (a memoized referee result under lock digest A is not served under B) asserts the memo graph's behaviour, which only BD-111 delivers; added the acceptance and `memo_not_served_across_lock_digest` (a test-only airlock-naming analysis kind through a synthetic StackKeyed adapter; mutant that omits the digest). N33a-06 moved from related to deps (already a transitive dep via BD-090), N32a-02 and NJL-01 added (transitive already). (3) 'the gate rows are recorded with measured values' contradicted the Background (GATE-ATEL-12's row is N28b-40's) and made two recorders for INT-FSIM-16 (N33b-15 records it; N33a-17, N33a-34 and N33c-32 name N33b-15): now this bead writes no gate row and its production-graph run of INT-FSIM-16 is a test."
+  },
+  {
+   "bead": "N33b-15",
+   "kinds": [
+    "convention",
+    "contradiction"
+   ],
+   "what": "INT-FSIM-16's recording had no tier, receipt or record_gate command, and BD-111 also claimed to complete the gate (two recorders). Stated this bead is the gate's one recorder in N33a-07's form (KA-771 bound in g3_metamorphic, the two planted kinds as controls, the tier command with gauntlet-mutations, harness_receipt, record_gate by a non-implementer; BD-111's run and N33b-21's stage write no row); N33-KA added to deps. Rule 2 said `stack_receipt` is part of every key, which contradicts N33a-06 (the key carries the stack-lock digest through stack_key_component; the receipt is the same-stack check at serving) and rule 9 of this same bead; rewritten to both, and NodeRecord.stack_receipt typed StackReceiptHash (N33a-06's type) instead of a bare Blake3, so a lock digest cannot be stored in its place."
+  },
+  {
+   "bead": "N33b-19",
+   "kinds": [
+    "request",
+    "registry",
+    "contradiction",
+    "deadlock",
+    "broken"
+   ],
+   "what": "(1) H-verbs-9 ANSWER applied: the manifest is artifact-input<FMT-FSTUDY>, so the generator appends 891, 734 and 828, not 893; another registered format given as the manifest is 802 naming both formats (N34-24). Fixed in the technical approach, the acceptance line, `manifest_is_registered_format` and e2e step 9 (each would have asserted a code the binary never raises). (2) Round-3 F-U34 note: Scope Out now states the optional manifest member `registration` (BD-145, which depends on this bead); a manifest without it plans as here; BD-145 in related. (3) 'registers its four at M1 with tier `referee` only' mixed the registry tier (S) with the backend and claimed eval.compare's row, which VERBS-eval enters at M1: now the bead enters the three study rows at M1 in VERBS-study's form (first_milestone M2, tier S, memo = true on study.submit), implements eval.compare's CPU form on VERBS-eval's row (added to deps; M1, no cycle) and enters no second row. (4) The refusal-list acceptance and `refusal_lists_follow_layer_rule` required eval.compare's chapter codes to equal 542, 543, 553, 555, 556, but VERBS-eval's row lists eleven (464, 502, 551, 561, 843, 890 too), so the test could never pass: now containment plus the layer rule for eval.compare; study.plan's list adds the ledger numbers of the two N16-REF slugs read by slug, as VERBS-study's test does. (5) e2e step 6 compared designs `A B` on task `dock`, which no bead registers; the docking-cart fixture is task `cart-sill-dock` with designs `cart-a` and `cart-b` (BD-123, N24b-05, a dependency): the step now stores them with design new from the fixture files and compares them with --max-pairs 256, as N28a-30 does."
+  },
+  {
+   "bead": "N33b-21",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "H-verbs-8 applied: the actuation stage said no row names the group and logged rows_naming_group = 0, false now (sim.run's member under design-has-port-actuators, N15a-05). The stage now runs `frob sim run quad-mammal --tier referee --actuator-level L1 --seconds 2 --key ag-act-l1-<binary> --json` (exit 5, 790 naming actuation, no world stepped, in the binary without the group) and the L0 run (needs no group; completes in both and is byte-identical); BD-109 (the archetype) and N15a-05 added to deps (both already transitive). C9-recorder note checked: no stage writes a record, but the Considerations said the gates field names the gates 'it measures', which under convention 9 makes it a recorder; rewritten to name the recorders (BD-068, N33b-15, N33b-12) and say this script records none. The `rules` step (first milestone M0) was built only by this M1 script, so N33b-09 (M0) had no end-to-end script of its own until M1; now the step runs N33b-09's own `airlock_rules.sh` as a stage (convention 11). The stats_m1 step compared `A B --task dock` (no such task or designs): now cart-a and cart-b on cart-sill-dock, stored first from the fixture files. The gates bullet now says the register gives INT-FSIM-14 one part (M3, entered by N33b-13) and N33b-12's M1 record is a first-use admission record."
+  },
+  {
+   "bead": "BD-093",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "INT-FSIM-07's M1 part had no tier, receipt, recorder or `--part M1`, and the acceptance said this bead records the row 'as passed in both parts' although part M0 is BD-035's: added N33a-07's form (KA-778's migration half and KA-008 bound at @referee in g1_known_answers wrapping wheel_over_lip_completes; the four mutants as controls; `record_gate --gate INT-FSIM-07 --receipt <hash> --part M1` by a non-implementer; a --no-migration run never cited) and reworded the row line to the M1 part. KA-008 (N00-KA, carriers BD-035 and BD-093, due M1) was named nowhere: added to the known answers. The unit test said `--no-migration` off the referee is 'a usage error'; VERBS-sim's row says FROB-REF-802, exit 3, so a test expecting a clap usage error would fail against the row. deps: N00-KA and N33-KA added (already transitive; N00-KA moved from related)."
+  },
+  {
+   "bead": "BD-124",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "KA-002 (N00-KA: three of four verdicts reachable at n = 64, the tie first at 86; carriers BD-124 and N38b-14, due M1) was not named: added with its control (532 at creation). The GATE-ATEL-06 entry cited a receipt from a run without `--features gauntlet-mutations`, but the gate's one recording run (N28a-18) has the feature, and a receipt from the bare run carries no controls: aligned to N28a-18's command. N24-KA (KA-612 and KA-613, which this bead binds as the gate's entry) moved from related to deps (no cycle; both M1); N00-KA added (transitive already). All numbers recomputed (pre-analysis counts, 0.0662, 13/256, KA-089's 16 and 22, c = 25/21, 1.5^7 and 1.5^8, 565)."
+  },
+  {
+   "bead": "BD-243",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "H-verbs-1 applied: step 1 said the request 'names the contact stratum' with no spelling, so no caller could choose one; now `--stratum <rolling[:<wheel>,…]|flight>` with VERBS-analyze's defaults (rolling when the design declares wheel constraints, flight otherwise, echoed in the result), with `--shape`, and a test `stratum_option`. INT-FSIM-10's M3 re-run had no tier, receipt or record form: added N33a-07's form for the M3 admission record (fsim10_fixed_point_sensitivity bound in g1_known_answers with N33b-10's planted adapters naive-partial and wrong-sign as controls; harness_receipt; written by a non-implementer; N33b-18 records nothing), and stated that the register's one part (M0) is N33b-10's row, so this bead writes no gate row (N38b-19: one recording bead per part). Recomputed the fixed point (700/121, 200/121), det W_g = 0.9002·ℓ, the beanie (−0.1 rad) and the SO(3) sign case: all right."
+  },
+  {
+   "bead": "BD-333",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "INT-FSIM-13's M4 re-run was 'recorded' with no tier, receipt or record form, and KA-768 (N33-KA, carriers N33b-11 and BD-333) was not named: added N33a-07's form for the M4 admission record (KA-768 bound in g1_known_answers through this bead's block-spectrum call, the modulus-1.01 control, harness_receipt, written by a non-implementer) and stated that the register's one part (M3) is N33b-11's row, so this bead and its scripts write no gate row (N38b-19); KA-768 added to the known answers; N33-KA moved from related to deps (transitive already). Recomputed the rimless wheel (b = 1.49915, c² = ½), the bouncing-ball saltation matrix and determinant, e^±1 and slope_deg 5.729578: all right."
+  },
+  {
+   "bead": "BD-401",
+   "kinds": [
+    "request",
+    "registry",
+    "contradiction",
+    "convention",
+    "broken"
+   ],
+   "what": "C13 and H-verbs-1 notes applied: 'the two reader codes are requested of VERBS-analyze' narrated a request; VERBS-analyze's analyze.structure now lists 163, 167 and 169 and states the registration and --loads spellings, so the line states that fact. The script's step 2 calls `--fixture cantilever-thinned --load 80` but step 6 listed neither `--fixture` nor `--load`, and VERBS-foundry credits `--load` on foundry.size to N31a-19, which defines it on foundry.check only and is not a dependency: the input list now has both (this bead implements `--load` on foundry.size), with the halving case `--load 25` (0.580 mm, 15 MPa). The acceptance said 'the gate row carries measured values' while N31a-55 (which depends on this bead) records GATE-FOUNDRY-01 from foundry_check.sh as the Foundry register N31b-12 names it: now this bead writes no row of that gate (one recorder). INT-FSIM-15's re-run gained N33a-07's form for the admission record at this bead's pin (KA-770's entries as N33b-14 binds them plus the finite-element cantilever; harness_receipt), and the register row stays N33b-14's (N38b-19). Recomputed the cantilever (1.159 mm, 30 MPa), the overstress (300 MPa, 1.25, 0.20), the tube (1.845 mm, 0.141 kg, 0.153 kg, 4.2e-3), the floors (60 and 40 Hz): all right."
+  },
+  {
+   "bead": "N33b-02",
+   "kinds": [
+    "contradiction",
+    "broken"
+   ],
+   "what": "The m1-core feature set enabled 'the airlock's default groups only (referee, geometry, ledger) plus the statistics crate the study types use': that crate, fs-eproc, sits in group `optimize` (N33a-11, N33b-12), not in any statistics group, and the M1 battery's actuator checks and sim.run on a design with port actuators need `actuation` (BD-068), so the isolation binary would answer 790 where the full build answers and the battery (digests and design-check results equal to the full build's) could not pass. Now: the FrankenSim groups the M1 verbs call (default groups, `optimize`, `actuation`), the others off; the isolation is of other foundations, not of FrankenSim groups. Step 5 compared `cart-a cart-b --task dock`: no task `dock` exists; the fixture task is `cart-sill-dock` and its designs must first be stored with design new from assets/fixtures/cart-sill-dock/design-a.fbot and design-b.fbot (N24b-05); fixed, with --max-pairs 256."
+  },
+  {
+   "bead": "N33b-03",
+   "kinds": [
+    "request",
+    "registry",
+    "broken"
+   ],
+   "what": "Round-3 F-U39b request applied after reading N39bp3-01: 'What a move voids' and the Scope line credited the conduct (freeze record, watcher, breach classification by extent) to N39b-13, but N39bp3-01 (which depends on this bead) is the tournament conduct module that applies the extent rule, and N39b-13 conducts the tournament with it and re-runs what is void; cited N39bp3-01 in the Out line, the rule's header, the bounded-extent bullet and the abort rule; N39bp3-01 and N39b-13 added to related. The acceptance requires check-stack to fail on a changed lockfile while frozen, but step 2 listed only receipt, siblings and toolchain: it now says N33a-05's comparison still runs (stack.lockfile), dirty-unchanged no longer passes, exit 2, and --write-receipt is refused while frozen."
+  },
+  {
+   "bead": "N33b-04",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Step 9 put 'the gate rows' in the train's commit, which reads as the train (a script run by whoever trains) writing gate rows; N38b-19 gives each part one recording bead, which alone records it again from newer receipts, and convention 9 forbids a script writing a record. Now the train re-runs each gate's tier, writes the admission records at the new pin citing the harness receipts (N33a-07's form; what N40-07's exit check reads), prints the receipt hashes for the parts' recording beads, and writes no gate row. Rechecked the breakage share (5 of 20 = 0.25 fires, 4 = 0.20 does not) and the 28-day window of 20 working days."
+  },
+  {
+   "bead": "N33b-05",
+   "kinds": [
+    "convention",
+    "broken",
+    "plan"
+   ],
+   "what": "The decision entry's `receipts` was to cite 'the receipts of the measurements' including the stack receipt and the first train's receipt_after, but N40-03's loader resolves a hash only to a harness receipt under receipts/gates/ (or a pilot receipt), so an entry citing resolution receipts would fail the load the acceptance requires: `receipts` now lists the INT-FSIM-01 (and INT-FSIM-18) harness receipts, and the resolution receipts are cited in the ADR. The rolling re-reads append entries with `exit` to the row's decision array (N40-03), never editing the M0 entry; test decision_entry_form extended. plan_refs: §40.1, cited in References, added."
+  },
+  {
+   "bead": "N33b-06",
+   "kinds": [
+    "convention"
+   ],
+   "what": "'Every admission and group gate in use is re-run through the worker and recorded' named no tier, harness receipt or recorder, and read as this bead re-recording every gate's row (N38b-19: one recording bead per part). Step 7 and the acceptance now say: admission records through the worker in N33a-07's form (harness receipt of a run against the referee-remote build, written by a non-implementer; the posture change is a new use), and no gate row by this bead. Checked 2^53 + 1 and the 21-contact capacity (N33a-14)."
+  },
+  {
+   "bead": "N33b-09",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "This M0 bead's end-to-end test was a step of N33b-21's script (M1, which depends on this bead), so the bead had no script it could build or run when it closes (convention 11: each mechanism bead owns its own script on its own dependencies). It now owns scripts/e2e/airlock_rules.sh with the four planted copies and their findings, and N33b-21's `rules` step runs it as a stage (edited there too)."
+  },
+  {
+   "bead": "N33b-11",
+   "kinds": [
+    "convention"
+   ],
+   "what": "INT-FSIM-13's recording cited 'a receipt hash' from the admission lane: no Gauntlet tier, so no harness receipt for record_gate to read. Added N33a-07's form (KA-768 bound in g1_known_answers naming INT-FSIM-13, wrapping cases 1 and 4; the modulus-1.01 monodromy and both planted adapters as controls; harness_receipt; record_gate by a session that did not write the adapter) and the e2e stage runs that entry. N33-KA added to deps (transitive already). Recomputed e^(−0.2π) = 0.533488, diag(1.01, 1/1.01) has floating determinant exactly 1 (the planted determinant_only adapter is caught), the hundredfold transient."
+  },
+  {
+   "bead": "N33b-13",
+   "kinds": [
+    "broken",
+    "convention",
+    "registry"
+   ],
+   "what": "Case 3 defined the effective sample size on the raw weights, (Σ w)²/Σ w², and claimed it falls under the floor of 100 for the proposal centred at −2 and passes for +4. Computed and simulated: on raw weights the −2 run gives about 10⁴/e⁴ ≈ 180 (100 to 300 over seeds, above the floor) and the +4 run about 5 to 20 (below it), so the negative control and the passing run would both fail. The floor now applies to the weighted indicator (Σ w·f)²/Σ (w·f)², 0 with no hit: the −2 run has no hit in 10⁴ draws (statistic 0, refused), the +4 run about 1,800 (accepted); acceptance and the test ess_on_weighted_indicator added, with the raw-weight statistic as a planted check. KA-769's printed hand case (Δ = 1, s₁ = s₂ = 1, Φ(−1/√2) = 0.23975006109347673) was not among the hand cases: added. INT-FSIM-14's row gained N33a-07's form (KA-769 in g1_known_answers, the case-3 refusal and lower-the-floor as controls, harness_receipt, record_gate; this bead the one recorder of the register's single M3 part). N33-KA added to deps."
+  },
+  {
+   "bead": "N33b-14",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "The bead binds KA-770 but never tested its printed fixture (a = (1, 2), σ = (0.03, 0.02) mm: contributions 0.0009 and 0.0016 mm², σ_y = 0.05 mm, shares 36% and 64%); its own two-term case is a different stack, so the registry row would stay unbound. Added the fixture to case 1, the acceptance and the test toleralloc_ka770_fixture. INT-FSIM-15's recording named no tier or harness receipt: added N33a-07's form (KA-770 in g1_known_answers, the over-bound STEP and both planted adapters as controls, harness_receipt, record_gate by a non-implementer; BD-401 re-runs at its pin). N33-KA added to deps. Recomputed the allocation: t₂/t₁ = 0.39685, t = (15.990, 6.346) µm, split 28.41/71.59 µm², equal tolerances 7.276 µm, costs 0.2201 and 0.2749 per µm, 19.9% less: all right."
+  },
+  {
+   "bead": "N33b-16",
+   "kinds": [
+    "convention"
+   ],
+   "what": "INT-FSIM-17's acceptance asked for 'an admission record citing a receipt hash and a row' with no tier, harness receipt or recorder. Added N33a-07's form (KA-772, G1 · referee evaluation, bound in g1_known_answers in the M6 lane; the two refusals and both planted adapters as controls; a failing run recorded the same way with the fallback), and stated as DESIGN the conformance crate's off-by-default feature `multiphysics` forwarding frob-fsim's, without which that tier run could not reach the bridge while the default build stays free of the fluid crates. N33-KA and N33a-07 added to deps (transitive already). Recomputed 3.0 × 10⁸ cells and 45.6 GB, the 181-world cost bound, Ma = 3.46, 0.35, 6.9 and τ − ½ = 6 × 10⁻⁶: all right."
+  },
+  {
+   "bead": "N33b-18",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The gates field and the script summary name INT-FSIM-10 but nothing said who records it, so the bead read as a recorder. Stated that neither the bead nor its script writes a gate row or admission record of INT-FSIM-10 (the M0 part is N33b-10's row; the M3 admission record BD-243's). Recomputed m* = 2.8235 kg, 1.176471 and 0.176471, 700/121 and 200/121, 0.4750 kg/m, δ = 2/3, 40 and 210 evaluations, the flip at p₀ + 0.3125: all right."
+  },
+  {
+   "bead": "N33b-20",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The battery's gates field lists eleven gates and its step reads the gate file, but nothing said the script records none (convention 9; N38b-19), the reading the round-4 mechanical check flags for scripts. Added a paragraph: the script writes no admission record and no gate row, with the recording bead of each gate (BD-032, BD-035, BD-033, BD-034, N33b-10, BD-028, BD-008; all dependencies)."
+  },
+  {
+   "bead": "N33bx-02",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Round-3 F-U34 request applied after reading N34-03: the first rule of section 3 'has no finding of its own in check-deps' is no longer true; N34-03 (a dependency) owns `fsim.optional-default-on`. Cited it in section 4 and the Out line, and the failing cases of consumer_request_is_off_by_default now name that finding; the test stays as the pin of the data."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N32a-02",
+   "what": "Add the row `memo` to the later-field table (bool, default false; `true` on an entry whose executor the memo graph fronts, and dispatch wraps exactly those executors; NJL-01's variation 14 generates `no_memo`; lint `memo-kind`: only on a `read` or `run` entry; added by BD-111, M1) and `memo` to the member comment listing the later fields. NJL-01 and five VERBS beads already say BD-111 adds it there; without the row the closed schema refuses `memo = true` as unknown-field on every one of those rows."
+  },
+  {
+   "bead": "VERBS-study",
+   "what": "Two statements contradict the beads that own the work: 'BD-137 enters the rows at M1 and this bead completes them' (BD-137 enters no row and depends on N33b-19, so it cannot enter rows N33b-19 needs) and 'memo = true on study.submit ... BD-111 sets on this row in its change' (BD-111 lands before any study row exists; N33b-19 and BD-137 depend on it). State instead: N33b-19 enters study.plan, study.submit and study.status at M1 in this bead's form (first_milestone M2, tier S, memo = true on study.submit), and this bead completes them and enters study.compare and study.cancel at M2; and 'Rows are entered when the cluster is first registered (M2)' needs the same exception. Without it no bead enters the M1 study rows, and N33b-19's acceptance (rows with generated schemas at M1) cannot pass."
+  },
+  {
+   "bead": "VERBS-gait",
+   "what": "gait.orbit's row credits `--section <event | auto | post-impact>` to N22c-36, but N22c-36 says `--section` is in BD-333's grammar, BD-333's step 10 defines it and its script gait_orbit.sh calls `--section post-impact` and `--section auto` (steps 1 and 2), and N22c-36 depends on BD-333. Credit `--section` to BD-333 (N22c-36 adds `--form` with `--form section` equal to it); otherwise an implementer of BD-333 reading the row leaves the option out and its own GATE-GAIT-01 steps fail on an unknown option (802)."
+  },
+  {
+   "bead": "VERBS-foundry",
+   "what": "foundry.size's row credits `--load <N>` to N31a-19, which defines `--load` on foundry.check only (its step 8) and is not a dependency of BD-401, the bead that implements foundry.size and whose script calls `--fixture cantilever-thinned --load 80`. Credit `--load` on foundry.size to BD-401 (now stated in BD-401's step 6)."
+  },
+  {
+   "bead": "N33b-12",
+   "what": "Your acceptance says the registries/gates.toml row of INT-FSIM-14 'shows its M1 part with measured values; the M3 part stays not run until N33b-13'. The register (N40-02, test parts_equal_exits) gives INT-FSIM-14 one part, M3 (only INT-FSIM-07, INT-FMCP-01 and INT-FDGR-01 have more than one part among admission rows), and EPIC-M1 does not list INT-FSIM-14, so record_gate has no M1 part to enter and N33b-13 is the gate's one recorder. State the M1 result as the first-use admission record of fs-eproc (N33a-07's writer, citing its harness receipt), with no gate row, or ask N40-02 for an M1 part."
+  },
+  {
+   "bead": "VERBS-analyze",
+   "what": "analyze.sensitivity's row says the FROB-REF-802 refusal of a task parameter in a Morris set is 'OPEN, owner N33b-19: refused, never silently dropped, until the study machinery accepts per-arm settings'. N33b-19 has decided (round 4, its answer to H-verbs-9) that the study manifest takes immutable designs and one task and no per-arm settings, and N33b-18 states the refusal as decided. Drop 'OPEN' and state the refusal as the row's form."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "Every bead of the slice was read in full and every one changed. Recording rule applied across the slice (N38b-19: each gate part has one recording bead): consumer re-runs at later pins (BD-068, BD-243, BD-333, BD-401), the compatibility train (N33b-04) and the worker posture (N33b-06) write admission records citing harness receipts and no gate row; the measuring beads (BD-033, BD-034, BD-035, BD-093, N33b-11, N33b-13, N33b-14, N33b-15, N33b-16) record in N33a-07's form. All slice notes were checked against their beads and dependencies and applied; no dependency was removed."
+}

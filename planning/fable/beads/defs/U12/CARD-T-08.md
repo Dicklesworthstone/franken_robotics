@@ -10,7 +10,7 @@ deps: ["BD-381", "N12-06", "N12-23", "N12-24", "N12-37", "N12-51", "SPEC-C-06"]
 needs: []
 related: ["N12-16", "N12-43", "N15a-05", "N15a-08", "N16b-29", "N18a-16", "N18b-28", "N18b-31"]
 gates: []
-plan_refs: ["§12.3 (T-08)", "§10 C-06", "§16.13 (PO-KIN-01)", "§18.12 (INV-TRAC-01)", "§15.6", "Appendix D.3 (fast-tier contact problem)"]
+plan_refs: ["§12.3 (T-08)", "§10 C-06", "§16.15 (PO-KIN-01)", "§18.15 (INV-TRAC-01)", "§15.6", "Appendix D.3 (fast-tier contact problem)"]
 ---
 ## Background
 

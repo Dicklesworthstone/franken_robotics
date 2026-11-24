@@ -1,6 +1,6 @@
 # Integration worksheet for group GF (units UF)
 
-## Beads in this group (80)
+## Beads in this group (81)
 
 | Key | Unit | Milestone | Type | Title |
 |---|---|---|---|---|
@@ -82,6 +82,7 @@
 | NFp2-03 | UF | M5 | task | switch-over of FD-FSS-01: the extended twin package enters the import contract, GATE-HAB-03 re-run at scale label witnessed |
 | NFp3-11 | UF | M2 | task | switch-over of FD-FSIM-12: fidelity ledger re-baselined once for upstream witness migration, coverage re-issued |
 | NFp3-12 | UF | M2 | task | switch-over of FD-FSIM-13: capacity fixtures of Traction re-run at the new referee capacity, coverage re-issued |
+| NFp4-01 | UF | M0 | task | upstream asupersync, frankensim, frankentorch, fastmcp_rust: one published asupersync version V chosen and landed in the four repositories (FD-ASUP-01's sibling half) |
 | NFx-01 | UF | M0 | task | upstream register: late rows FD-FSIM-39 to -42 and FD-FSYM-06, FD-FMCP-02 reserved; a count that follows the lists |
 | NFx-02 | UF | M5 | task | upstream frankensim (conditional): an external differentiable stage in `fs-topopt`'s design map; airlock probe |
 

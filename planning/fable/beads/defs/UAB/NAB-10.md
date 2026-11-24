@@ -4,7 +4,7 @@ title: "frob-conformance: citation lint: no gate, contract or close reason cites
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "workspace", "gauntlet", "frob-conformance", "solid", "test", "gate"]
+labels: ["m0", "workspace", "gauntlet", "frob-conformance", "solid", "test", "gate", "review-notes-open"]
 parent: "WP-01"
 deps: ["BD-002", "BD-025", "N00-01", "N38a-10", "N40-01", "NAB-09", "STD-TEST"]
 needs: []
@@ -59,12 +59,20 @@ Out, and where it is:
 
 **1. Citation forms recognised.**
 
-1. A field `sources = ["SRC-PUB-027#mixed-batch-ratio", …]` in a record of `registries/gates.toml`, of any
-   registry under `registries/` or `crates/frob-conformance/registry/`, and of a `contract.toml`. The part after
-   `#` names a figure or a `covers` phrase of a reading; without it the citation is of the source's weakest
-   reading.
+1. A field `sources = ["SRC-PUB-027#mixed-batch-ratio", …]` in a record of `registries/gates.toml`, of a
+   `contract.toml`, and of any registry under `registries/` or `crates/frob-conformance/registry/` whose schema
+   declares the field (the killed-idea register's `sources`, NAB-32). The part after `#` names a figure or a
+   `covers` phrase of a reading; without it the citation is of the source's weakest reading. Neither of the
+   first two schemas has the field today, and both refuse an unknown one, so this bead adds it in the same
+   commit as the scan: the optional list of strings `sources` on a `[[gate]]` record of `frob.gates/1` (the
+   gate register's schema and N40-01's loader, which fails a record with an undeclared field) and the optional
+   key `sources` in the `[crate]` table of the hand-written `schemas/contract.schema.json` (the rule of
+   `check-contracts`, N34-08: the bead that introduces a `contract.toml` key adds it to the schema).
 2. In prose (`CONTRACT.md`, `docs/**`, `README.md`): the form `[SRC-…]` or `[SRC-…#figure]` after a statement.
-3. In a bead close record (`docs/delivery/logs/<bead>.ndjson`): the field `cites`.
+3. In a bead's close reason: the close-reason text of each closed issue in the tracker's exported issue file
+   `.beads/issues.jsonl` (the file the close audit of N38b-03 reads), scanned for the forms of items 2, 4 and 5.
+   The per-bead logs `docs/delivery/logs/<bead>.ndjson` (`frob.beadlog/1`, N29a-09) have no citation field and
+   are not a citation form.
 4. A bare URL, or a path into a sibling repository, anywhere in the scanned files outside code blocks.
 5. A plan-time check cited without a source id: the phrase "FACT, plan-time" or "FACT, Appendix K" after a
    statement, or a ledger identifier (`PILOT-PT-nn`, `PILOT-PT-Sn`) in a record of `registries/gates.toml`, a
@@ -136,6 +144,11 @@ register and the plan-time pilot ledger (the plan-time records of `pilots.toml`)
 labelled `synthetic`):
 
 - `clean_gate_passes`: a gate citing a P reading at its recorded version.
+- `sources_field_is_declared`: a `[[gate]]` record with `sources` loads through N40-01's loader and validates
+  against the gate register's schema, and a `contract.toml` with `[crate] sources` validates against
+  `schemas/contract.schema.json`; the same records with the misspelled `source` fail both.
+- `close_reason_citation_is_scanned`: a fixture `.beads/issues.jsonl` whose closed issue's reason ends
+  `[SRC-PUB-999]` fails `cite.unknown-source` with the issue id.
 - `pass_on_s_reading_fails`; `not_run_on_s_reading_warns_and_lists_task`.
 - `confirmed_reread_makes_clean`; `corrected_reread_keeps_old_figure_uncitable`.
 - `unknown_source_fails`; `unknown_figure_fails_and_lists_figures`.
@@ -182,8 +195,8 @@ finding. Determinism lanes: twice on one machine and on both platforms, identica
 
 ## Considerations
 
-- Citations in the delivery log are scanned but never rewritten; a close reason with an unclean citation is
-  reported to the exit review, which already rejects closes that do not cite their own test.
+- Close reasons in the tracker export are scanned but never rewritten; a close reason with an unclean citation
+  is reported to the exit review, which already rejects closes that do not cite their own test.
 - A source's page may vanish. `result = "not-found"` keeps the reading uncitable and lists every dependent gate;
   the gate either finds another source or is restated as a measurement on our own hardware.
 - The lint shares its file walker with the evidence-label lint (N00-01), the identifier lint (N00-03) and the

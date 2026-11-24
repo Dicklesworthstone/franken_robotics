@@ -1,0 +1,185 @@
+{
+ "round": 4,
+ "slice": "F-U25c-1",
+ "reviewed": [
+  "BD-129",
+  "BD-291",
+  "BD-359",
+  "BD-363",
+  "N25c-01",
+  "N25c-02",
+  "N25c-03",
+  "N25c-04",
+  "N25c-05",
+  "N25c-06",
+  "N25c-09",
+  "N25c-10",
+  "N25c-11",
+  "N25c-12",
+  "N25c-13",
+  "N25c-14",
+  "N25c-15",
+  "N25c-16",
+  "N25c-17",
+  "N25c-18",
+  "N25c-20",
+  "N25c-21",
+  "N25c-22",
+  "N25c-23"
+ ],
+ "changed": [
+  {
+   "bead": "BD-129",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "The public-verb leg no longer points at a skip in N20b-13's script: N20b-13 calls no mission verb and stops at its Gauntlet rows, so the label comparison through the verbs is N25c-22's alone; an implementer no longer looks for a 'needs BD-129' leg that does not exist."
+  },
+  {
+   "bead": "BD-291",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The last acceptance item names N28c-16 (the experiment.suggest end-to-end bead, after BD-351) as GATE-AUGUR-11's one recorder with record_gate, and states that this bead records no gate row (convention 9); before, 'recorded with experiment suggestion (BD-351)' named a bead that does not record it."
+  },
+  {
+   "bead": "N25c-01",
+   "kinds": [
+    "request",
+    "users"
+   ],
+   "what": "Applied the F-U25d-2 request: the pilot fills N25d-40's two records 14a PILOT-TRANSPORT-01 (tier F, static core) and 14b PILOT-TRANSPORT-02 (tier M, full relation) instead of writing its own, commits one protocol and hash into both, sets gated_beads [N25c-02] on 14a and [N25c-03] on 14b (N25c-03 is in WP-79, outside the records' package, so without it the register gated nothing there), appends the result to both; dep N25d-40 added; a new acceptance item checks both records load registered. The review-notes-open label is removed, since the note is applied."
+  },
+  {
+   "bead": "N25c-03",
+   "kinds": [
+    "contradiction",
+    "users"
+   ],
+   "what": "The certificate paragraph states N12x-07's ruling (a dependency, decided at M4) instead of 'until the Lemma lead decides': under 1A (default) a bundle set with claim.kind refinement and a partition bundle tying every game edge to its enclosure; under 1B one alt-simulation proof through the checker bead that record opens. The partition bundle was missing, so an unbound game edge would have gone unchecked; an acceptance item and e2e step 5 now reject a set with one edge unbound."
+  },
+  {
+   "bead": "N25c-04",
+   "kinds": [
+    "broken",
+    "contradiction"
+   ],
+   "what": "Training and qualification jobs now cite --envelope-scope gate:GATE-AUGUR-23 (convention 14); without it they fell to adhoc at E0 and every arm above E0 was refused with 761. Arm 3's limited adaptation, which the plan gives equal compute, is now under R22 too and is 'not run' when R22 is declined (before, the bead was silent and clause A could not be evaluated without it); unit test, acceptance item and Considerations follow."
+  },
+  {
+   "bead": "N25c-05",
+   "kinds": [
+    "contradiction",
+    "registry"
+   ],
+   "what": "Propagation follows N40-03 step 7: GATE-AUGUR-23 becomes killed only if its recorded value failed (clause B); a pass under clause A alone stays pass, and detail is the row's fallback text, not a shortened string. On not-reached, N25c-03 is closed withdrawn citing R22 and the ADR (N41-17 rule 5), since closing this bead would otherwise make it ready; re-read words are N40-03's ('released' was not one). 'Parked-verb refusal' is named FROB-REF-724, exit 5; inputs name both pilot records."
+  },
+  {
+   "bead": "N25c-06",
+   "kinds": [
+    "convention",
+    "registry",
+    "users"
+   ],
+   "what": "C13 note applied: the record names kill_gate KILL-AUGUR-FAMILYKERNEL, the row N40-26 enters at M1 by an introduce amendment (pilot-before-funding, decided M4, reads PILOT-FAMILYKERNEL-01), instead of narrating a request with to-register. Added gated_beads [N25c-07, N25c-08, N25c-09]; WP-66 holds many upper-tier mechanisms, so without it the register gated these beads on every pilot in the package. Also states what a no-go does to the three beads (withdrawn citing the result)."
+  },
+  {
+   "bead": "N25c-09",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The batch-script step ran gpu-cuda and gpu-metal on one host, which no machine has (CUDA on Linux, Metal on the Mac), so it failed everywhere. It now runs batch-cpu and the host's own device tiers (one card and two shards on Linux, Metal on the Mac), logs a missing tier with e2e_skip, and compares each digest with batch-cpu and KA-656; the two hosts' logs cover the four placements of the acceptance item."
+  },
+  {
+   "bead": "N25c-10",
+   "kinds": [
+    "deadlock",
+    "convention"
+   ],
+   "what": "The acceptance item relied on N25d-34's independence check, and N25d-34 depends on this bead. It is now this bead's own test, lowerings_share_no_source_file. The grid-agreement item (11,520 of 11,520) used N25c-12's grid, which was not a dependency: N25c-12 is added to deps (both M1, no cycle) and dropped from related."
+  },
+  {
+   "bead": "N25c-11",
+   "kinds": [
+    "registry"
+   ],
+   "what": "Script step 3 called `frob mission show stance.fmission`, but mission.show takes stored identities (VERBS-mission: every mission verb except show and revalidate takes a .fmission path), so the step failed before asserting anything. It now calls `frob mission show q:<mission id>` with the identity each synthesize call returned; the passive query has its own MissionId."
+  },
+  {
+   "bead": "N25c-13",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Scope narrated '(requested of this bead by that one)' (convention 13). It now states the fact: N25a-08 leaves row 10 to this bead. The background's 'recorded at M4 with experiment suggestion' now names N28c-16 as GATE-AUGUR-11's one recorder and says this script writes no gate record (convention 9); before, an implementer could not tell who records the gate."
+  },
+  {
+   "bead": "N25c-15",
+   "kinds": [
+    "request",
+    "contradiction",
+    "users"
+   ],
+   "what": "Applied the F-U25d-2 request: added dep N25d-40 and named the record PILOT-PROBE-01, entered at M0 by N25d-40 with bead N25c-15. The bead now commits its protocol path and hash into that record, which makes it registered, plus gated_beads [N25c-17]; the grammar this pilot funds is in WP-66, outside the record's package WP-59, so without it the register never gated N25c-17 on this result. Removed dep BD-080, the referee contact step: the hidden model is N25c-48's std-only oracle and the bead uses nothing from BD-080. The review-notes-open label is removed."
+  },
+  {
+   "bead": "N25c-16",
+   "kinds": [
+    "contradiction",
+    "convention"
+   ],
+   "what": "Propagation now follows N40-03 step 7: only a gate in reads whose recorded value failed becomes killed; a passed gate keeps pass. On not-reached the bead closes N25c-17 withdrawn citing the ADR (N41-17 rule 5); before, closing the decision left the unfunded grammar bead ready to start. The acceptance item now lists the three outcomes. GATE-AUGUR-11's recorder is named as N28c-16, and the pilot record as PILOT-PROBE-01."
+  },
+  {
+   "bead": "N25c-21",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied the F-U25b request. Row D14 of BD-136's mutation corpus is now filled here: the pinned {1, 2} screen offered with --reuse to the {1, 33/32, 2} query, FROB-REF-854, exit 3, pointer /world/hidden/g, CX-282, control registered under GATE-AUGUR-01, run in the fixed-case stage of mission_mutation_campaign.sh. Scope, an acceptance item and script step 7 cover it; before, D14 stayed pending forever. The re-solve call `frob mission synthesize --from <answer>` lacked the required mission positional and now reads q:<three-gain query> --from a:<answer>. The review-notes-open label is removed."
+  },
+  {
+   "bead": "N25c-22",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied the F-U20b request: step 2 no longer points at a 'needs BD-129' skip in N20b-13's script, which does not exist; N20b-13 stops at its Gauntlet rows and this step is the public-verb comparison of its vector. Step 3 called `mission show docking.fmission`; mission.show takes a stored identity, so it now uses q:<step 1's MissionId>. Step 8's re-solve `mission synthesize --from <answer>` lacked the required mission positional and now names q:<amended family>."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N44-01",
+   "what": "Row R22: the demand names only arms 1 and 2 of GATE-AUGUR-23. The plan gives all three treatments equal compute, so arm 3's limited adaptation in its lost modes trains at the same per-arm budget under gate:GATE-AUGUR-23 (N25c-04, step 0). Please name it in R22's demand, or a class sized for two arms is exceeded (761) when arm 3 adapts."
+  },
+  {
+   "bead": "N25c-07",
+   "what": "Considerations still say 'No kill gate of its own: the governing stop is the one-tenth rule of N25c-06'. N40-26 now enters KILL-AUGUR-FAMILYKERNEL, mode pilot-before-funding, decided M4, reads PILOT-FAMILYKERNEL-01, with this bead as the mechanism gated. PILOT-FAMILYKERNEL-01 lists you in gated_beads (N25c-06). Please name that kill gate."
+  },
+  {
+   "bead": "N40-26",
+   "what": "KILL-AUGUR-FAMILYKERNEL (introduced here, decided M4) has no decision bead: no bead writes docs/adr/ADR-KILL-AUGUR-FAMILYKERNEL-M4.md or the decision entry, so the M4 due list can never be met for it. Please name the bead that records it on PILOT-FAMILYKERNEL-01's verdict: fired on a no-go, not-fired on a go, not-reached if WP-66 never asks. N25c-06, the pilot, is a candidate if its recording session did not implement N25c-07."
+  },
+  {
+   "bead": "N25d-40",
+   "what": "Row 9, PILOT-PROBE-01, sits in work_package WP-59. Its to-run part is carried by N25c-15, which depends on BD-291, N25c-13 and N25c-14: frontier beads of WP-59 that no record lists in gated_beads. Under N38a-09's package answer they are Blocked{registered} until N25c-15 appends its result, so the pilot can never start, a funding-layer cycle. N25c-23 (WP-59) is held by that unrelated pilot too, while its own record, row 10 PILOT-INFOGAME-01 (bead BD-041, WP-37), gates nothing in WP-59. N25c-15 now commits gated_beads [N25c-17]. Please make BD-291, N25c-13 and N25c-14 stand on row 9's plan-time part only, for example by splitting it 9a/9b as rows 14, 16 and 17 are, and list N25c-23 in row 10's gated_beads."
+  },
+  {
+   "bead": "N25a-21",
+   "what": "Step 9 says result.revalidate 'has no --against'. VERBS-result's row has `--against q:…` for a mission-answer target (the form N25a-13, N25c-21 and N25c-22 use). Your `--between` form is also valid; please drop the false parenthesis."
+  }
+ ],
+ "unchanged": [
+  "BD-359",
+  "BD-363",
+  "N25c-02",
+  "N25c-12",
+  "N25c-14",
+  "N25c-17",
+  "N25c-18",
+  "N25c-20",
+  "N25c-23"
+ ],
+ "notes": "Unchanged after full review: BD-359, BD-363, N25c-02, N25c-12, N25c-14, N25c-17, N25c-18, N25c-20, N25c-23. In these, every known answer was recomputed: stance grid 2,254/406/630/114, breakdown 16x7+1+1, weak screen 1,596; KA-656 34,590/30,946/1,820 on both grids; pad probe intervals and gaps for the three admitted sets; pad family bounds 85.37/80.30/73.79, eccentric 0.0707/0.1241; docking extrema, 344/217/9, fixed probe, 1/65 at 64/65, witness 63/130 and -191/260; passive spring 175/115/85/25 and dual 145+15v/2; f,r,h ceiling 13.468. Verbs and options were checked against VERBS-mission, -experiment, -sense, -sim, -train, -eval, -prove, -result and -task. All 24 beads were reviewed; the three slice requests and the C13 and N20b-13 notes are applied. The BD-080 dep removal in N25c-15 was checked: N25c-48 is std-only and nothing in N25c-15 uses the referee contact step. No later-milestone deps, no cycles; every edited file parses with seven sections."
+}

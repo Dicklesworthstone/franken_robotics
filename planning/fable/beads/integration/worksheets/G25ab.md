@@ -1,6 +1,6 @@
 # Integration worksheet for group G25ab (units U25a, U25b)
 
-## Beads in this group (88)
+## Beads in this group (90)
 
 | Key | Unit | Milestone | Type | Title |
 |---|---|---|---|---|
@@ -29,7 +29,7 @@
 | N25a-09 | U25a | M1 | feature | frob-mission: refutation: scoped impossibility bound or defeating witness, binding constraint, smallest relaxation |
 | N25a-10 | U25a | M1 | feature | frob-mission: minimum, repair, gap claims: incumbent and matching lower bound, (un)attained infima, refusal 853 |
 | N25a-11 | U25a | M1 | feature | frob-mission: chance constraints: probability binder, joint law vs additive failure budgets by stage, refusal 846 |
-| N25a-12 | U25a | M1 | feature | frob-mission: M1 synthesis driver: lowering registry, cell worklist, point and existence queries, paving, refinement |
+| N25a-12 | U25a | M1 | feature | frob-mission: M1 synthesis driver: cell worklist, point and existence queries, paving, refinement, cost block |
 | N25a-13 | U25a | M1 | feature | frob-mission: M1 revalidation of cells by identity and dependency support (grades 1, 2); passive-spring amendment |
 | N25a-14 | U25a | M1 | task | GATE-AUGUR-07 fixture: ten scripted docking and stance amendments with sealed ground truth and the scoring rubric |
 | N25a-15 | U25a | M3 | task | Pilot and corpus for monotone transport: 23 non-monotone fixtures (with the widened sole), 10 controls, exact truths |
@@ -53,6 +53,7 @@
 | N25a-34 | U25a | M1 | task | e2e mission_distinguish.sh: first mission.distinguish on docking: interventions, open thresholds, the witness pair |
 | N25ap1-01 | U25a | M3 | feature | frob-verbs revalidate, grade 3: polarity-rule registry, pure-change rules, joint edits, rule disablement |
 | N25ap2-01 | U25a | M3 | task | frob-conformance: the incremental incumbent for the revalidation campaign, field-keyed graph with LP ranging |
+| N25ap4-01 | U25a | M1 | feature | frob-mission: the Lowering trait, Proposal, the budget meter and the lowering registry with primary and second roles |
 | N25ax-01 | U25a | M4 | task | frob-mission: template `delivery-and-placement` and its small instance `carrier-wet-strip` with all three verdicts |
 | N25ax-02 | U25a | M3 | task | GATE-AUGUR-14, M3 reading: ceiling before speed for the mission subsystem, from the program-wide check |
 | BD-021 | U25b | M0 | task | frob-lemma v0: claims and instance certificates for T-01, T-03, T-04 on the M0 kernels, checked by FrankenSymPy |
@@ -92,6 +93,7 @@
 | N25b-29 | U25b | M3 | task | Kill-gate decision KILL-AUGUR-ALIAS at M3: audit of generated alias witnesses against permitted probes |
 | N25b-30 | U25b | M3 | feature | frob-lemma: mission bundle writer for the proof kinds checked from M3 (transports, composition, sample-coverage) |
 | N25bp1-01 | U25b | M3 | task | fixtures/separation: the ten planted design reversals, validated on the referee and sealed before any engine run |
+| N25bp4-01 | U25b | M1 | task | GATE-WS-03 at M1: auditor_independence.sh with the corpus-wide verdict clause, and the gate's record |
 
 ## Prerequisites to resolve (0)
 

@@ -4,7 +4,7 @@ title: "Known-answer registry for Cortex (KA-576 to KA-593): gym semantics, PPO 
 type: "task"
 priority: 1
 milestone: "M2"
-labels: ["m2", "cortex", "frob-learn", "frob-conformance", "registry", "test", "solid"]
+labels: ["m2", "cortex", "frob-learn", "frob-conformance", "registry", "test", "solid", "review-notes-open"]
 parent: "WP-48"
 deps: ["BD-025", "N38a-12", "N38a-40", "N38b-05", "STD-E2E", "STD-TEST"]
 needs: []

@@ -41,8 +41,9 @@ hip flexion, knee per leg); 13 bodies; n_v = 18; total mass on the order of 30 k
 **Import path.** `frob design import assets/robots/anymal-b/source/<entry> --format mjcf --name anymal-b --key
 asset-anymal-b-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
 the design's `term` section). Expected loss-report entries (HYPOTHESIS until read): visual
-meshes; fitted collision primitives with recorded error; unmapped solver and contact parameters; joint
-`armature`, `damping` and `frictionloss` to an `assumed` card. The source models a rigid transmission: the
+meshes; fitted collision primitives with recorded error; unmapped solver and contact parameters. Not losses,
+by BD-066's table: joint `damping` and `frictionloss` (the joint's own damping and friction) and `armature` (an
+override of the bound `assumed` card's rotor inertia). The source models a rigid transmission: the
 series elasticity of the real actuator is absent from the public model, so the import has no compliant
 element and the loss report must not claim one; an elastic element can only come from a calibrated card.
 

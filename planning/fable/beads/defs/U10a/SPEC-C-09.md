@@ -6,7 +6,7 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "marrow", "frob-algebra", "solid", "frontier", "spine", "spec", "test"]
 parent: "WP-03"
-deps: ["BD-025", "N10a-01", "STD-E2E", "STD-TEST"]
+deps: ["BD-025", "N10-CX", "N10-KA1", "N10a-01", "STD-E2E", "STD-TEST"]
 needs: []
 related: ["BD-048", "BD-102", "BD-241", "BD-326", "N10a-10", "N13-18", "SPEC-C-12", "SPEC-C-16", "SPEC-C-22", "SPEC-C-23", "SPEC-C-24"]
 gates: ["GATE-MARROW-03", "GATE-MARROW-04", "GATE-REFLEX-07", "GATE-CORTEX-03"]
@@ -221,10 +221,14 @@ tied; M4); GATE-CORTEX-03 (the three-arm experiment; M4). Cards: T-10, T-16.
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c09.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control; G1 and G3 rows
-KA-066, KA-068 to KA-071; `frob --json analyze symmetry` on the symmetric quadruped, the front-lidar
-quadruped and the payload edit, asserting (Γ_mech, Γ_obs) orders (4, 4), (4, 2) and (4, 1), the breaker field
-path, and the evidence
+`scripts/e2e/spec_c09.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control (one control
+per build, N10a-01 section 6); the registry rows in their tier targets,
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g3_metamorphic -- KA-066` (a G3 row) and
+`--test g1_known_answers -- KA-068 KA-069 KA-070 KA-071` (G1 rows), each again with
+`--features gauntlet-mutations` for the rows' controls; `frob --json analyze symmetry <design>` (a `read` verb,
+BD-102; logged `pending` until it lands) on three fixture designs, the symmetric quadruped, the front-lidar
+quadruped and the front-lidar quadruped with the one-sided payload, asserting (Γ_mech, Γ_obs) orders (4, 4),
+(4, 2) and (4, 1), the breaker field path, and the evidence
 block (class `Certified` on the exact routes, `Tested` with the recorded tolerance on the tolerance route).
 Log `target/e2e-logs/spec_c09/<utc>.ndjson` with transcript: commands, exit codes, group orders and
 generators, equivariance residuals with thresholds, and on failure the generator and the first state

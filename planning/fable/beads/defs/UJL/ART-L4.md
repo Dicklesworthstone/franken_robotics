@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "augur", "frob-mission", "frob-spec", "frob-conformance", "solid", "test", "e2e"]
 parent: "WP-42"
-deps: ["BD-126", "BD-128", "BD-130", "BD-132", "BD-133", "BD-135", "N25a-12", "N25b-07", "NJL-07", "NJLx-02", "STD-E2E"]
+deps: ["BD-126", "BD-128", "BD-130", "BD-132", "BD-133", "BD-135", "BD-136", "N25a-12", "N25b-07", "N25c-21", "NJL-07", "NJLx-02", "STD-E2E"]
 needs: []
-related: ["ART-L9", "BD-042", "BD-136", "BD-140", "BD-141", "GB-31", "N24b-26"]
+related: ["ART-L9", "BD-042", "BD-140", "BD-141", "GB-31", "N24b-26", "N25a-10", "N25a-23"]
 gates: []
 plan_refs: ["Appendix L.4", "§25.3.2", "§25.3.3", "§25.5.2", "§25.13", "§25.3.6", "Appendix H.5"]
 ---
@@ -48,7 +48,10 @@ refutation; refusals on planted mutations of the query; the script. Out: the mis
 **Files** under `fixtures/golden/appendix-l/L4/`: `tray-stance-and-knee.specimen.fmission.json` (the text
 below); `…resolved.fmission.json`; `answer.first.expect.json`; `answer.refined.expect.json`;
 `outer.expect.json`; `refute.expect.json`; `closed-form.grid.json` (the 81 × 31 grid with labels);
-`fields.toml`.
+`a1-attained.frobcert` (the 853 case below: the bundle of the first answer, written by `frob prove bundle <a1>`,
+with its cost block edited to claim the minimum as attained and every hash recomputed by BD-136's mutation
+library; generated once, pinned in the manifest, and regenerated only by a blessed change, since every input
+of it is class D0); `fields.toml`.
 
 **The artifact.**
 
@@ -200,7 +203,7 @@ points are feasible (FACT: recomputed for this bead).
 | `mission.show --set outer` | Cells c:02, c:03, c:05, c:06; area fraction 1/3; inner within: c:03; unresolved within: c:02, c:05, c:06 |
 | `mission.synthesize --from` the first answer (the refinement) | Inner: c:03 and c:06a = (6, 8] × [11/5, 5/2] (lower end in v open), proof p4. Unresolved: c:02, c:05, c:06b = (6, 8] × [2, 11/5). Witness p4: forces (88, 32, 40, 0) N at v = 8, r = 11/5. Cost bounds: incumbent 1/8 m, lower bound 1/8 m, gap 0, `attained: true`. Next test: none. Warning: the boundary design has zero reserve at foot.pp (rating, knee-hold) and at foot.mm (unilateral). Thirteen cells in all |
 | `mission.refute` at v = 9, r = 5/2 | Excluded for every allocation; `lp-farkas`, proof p2; binding "rating at foot.pp: 94 N required, 88 N rated"; smallest relaxing changes: the rating to 94 N, or the P_y envelope to 32/3 N·m |
-| Evidence on every answer | class Certified, tier `static`, determinism `exact`, claims [Proof], `reality: no-claim`; the three no-authorization flags, all false |
+| Evidence on every answer | class Certified, tier `static`, determinism `D0` (the wire form of class D0, N35-01), claims [Proof], `reality: no-claim`; the three no-authorization flags, all false |
 
 Open and closed ends: c:03 is closed on all four sides; cells in v ∈ (6, 8] are open at v = 6; c:06a is closed
 at r = 11/5 and c:06b open there. The design of artifact L.1 sits at the centre of c:06a, v = 7 and
@@ -216,8 +219,13 @@ transfer. It says nothing about walking, slipping or the door.
 exact string: `FROB-REF-868`. An empty world family (W with no value): `FROB-REF-874`. Predicates that
 conflict with the world family for every design (a rating of 30 N per foot against a 160 N load):
 `FROB-REF-877` (the check at admission position 15, N25b-07, a dependency for that reason). No quantifier prefix: `FROB-REF-884`. An observation with no arrival instant:
-`FROB-REF-847`. Objective claim `minimum-with-matching-lower-bound` reported as attained on the first answer:
-`FROB-REF-853` (a minimum without a matching lower bound). Each is exit 3 with one envelope.
+`FROB-REF-847`. Each is exit 3 with one envelope, from `frob mission check` on the mutated file (the admission
+of BD-126 and N25b-07). One more planted case is an answer, not a query, because 853 is not an admission code
+and `mission.check` never raises it: the first answer's bundle with its cost block edited to claim the minimum
+as attained (`attained: true` with incumbent 1/6 m against the lower bound 1/8 m), re-sealed with every hash
+recomputed by BD-136's mutation library, offered to `frob mission synthesize <id> --reuse <bundle>` (N25c-21's
+option) as caller-supplied evidence: `FROB-REF-853` (a minimum claimed without a matching lower bound; N25a-10),
+exit 3 (the shape of N25a-23's case a17).
 
 ## Acceptance criteria
 
@@ -237,7 +245,11 @@ conflict with the world family for every design (a rating of 30 N per foot again
       rationals.
 - [ ] Each witness is checked by the offline auditor: forces sum to 160 N; first moments equal the vertex;
       every force within [0, 88] N; knee torque (1/10)·f ≤ r·4 N·m.
-- [ ] The six planted query mutations are refused with their codes; the unmutated query is accepted.
+- [ ] The five planted query mutations are refused by `mission.check` with their codes (868, 874, 877, 884,
+      847); the unmutated query is accepted; the re-sealed first-answer bundle that claims the minimum as
+      attained is refused by `mission.synthesize --reuse` with `FROB-REF-853`, exit 3.
+- [ ] The bundle of the refined answer, written by `frob prove bundle`, is accepted by `frob prove verify` and
+      by the offline `frob-verify`.
 - [ ] `MissionId`, both answers and the bundle root are identical on two runs, in debug and release, on Linux
       and macOS (class D0); once blessed they equal the map's entries for `q:3c9d…`, `a:0e51…`, `a:8b27…`,
       `b3:61f0…` and `b3:d4a9…`.
@@ -276,12 +288,16 @@ v:4,r:3:lu --budget cpu_core_s=60,checker_s=10 --key l4-syn-1 --sync-wait-ms 200
 `answer.first.expect.json` field by field (`e2e_assert_rational` for every bound and force); (5) `frob mission
 show <id> --answer <a1> --set outer --json`; (6) `frob mission synthesize <id> --from <a1>
 --key l4-syn-2 --json`, compare with `answer.refined.expect.json`; (7) `frob mission refute <id> --design
-v=9,r=5/2 --key l4-ref --json` (`mission.refute` is a `run` verb, so the call carries a key); (8) `frob prove verify` on the bundle of the refined answer, then the offline `frob-verify`
-on the same file, both `accept`; (9) the six mutations through `e2e_expect_refusal <code> 3`; (10)
+v=9,r=5/2 --key l4-ref --json` (`mission.refute` is a `run` verb, so the call carries a key); (8) `frob prove
+bundle <a2> --out <scratch>/l4.frobcert --key l4-bun --json` (VERBS-prove's mission-answer form, BD-133), then
+`frob prove verify <scratch>/l4.frobcert --json` and the offline `frob-verify` on the same file, both `accept`;
+(9) the five query mutations as `frob mission check <mutated file> --json` through `e2e_expect_refusal <code>
+3`, and the 853 case, `frob mission synthesize <id> --reuse fixtures/golden/appendix-l/L4/a1-attained.frobcert
+--key l4-m853 --json` through `e2e_expect_refusal FROB-REF-853 3` (the file's digest logged); (10)
 `frob-golden check --artifact L4`. Plants: `cap-80` lowers the rating to 80 N and must change the boundary to
 v ≤ 20/3 (the comparison with the expected answer fails); `torque-as-moment` must make the auditor reject. The
 log (`target/e2e-logs/art_l4_fmission/<utc>.ndjson`) records every command with exit code and wall time, the
-evidence block (claims [Proof], class Certified, tier `static`, determinism `exact`), each compared value as
+evidence block (claims [Proof], class Certified, tier `static`, determinism `D0`), each compared value as
 an exact rational with its expectation, the bundle digests, each refusal with code and first repair, and the
 `summary`.
 
@@ -291,12 +307,13 @@ an exact rational with its expectation, the bundle digests, each refusal with co
   the witness forces (76, 44, 40, 0) and (88, 32, 40, 0) N; the dual vector and its values 64 and 94; the gap
   1/24 m and its closure; the grid count 515 of 2,511; the centre reserve 6 N and 6/5 N·m. FACT recorded at
   plan time for the same artifact: zero mismatches on the 81 × 31 grid; one inner, three unresolved and eight
-  excluded cells. These have no number in the known-answer suite; the unit's coverage file lists them.
+  excluded cells. These are rows JL-11 (the closed form) and JL-12 (the paving and the grid) of NJLx-02's
+  known-answer block (a dependency), which this bead's tests cite by number once the block is issued.
 - Related known answer of the mission chapter (a different family, kept by its own beads): the 400 N stance
   family with boundary exactly 3/14 m.
 - Counterexample kept alive: reporting an incumbent as a minimum. The first answer has a feasible candidate at
   1/6 m and a lower bound at 1/8 m; only when the two meet is a minimum stated.
-- Negative controls: the two plants; the six mutations; a swapped foot order with unchanged forces; an
+- Negative controls: the two plants; the five query mutations and the re-sealed 853 answer; a swapped foot order with unchanged forces; an
   unreported positive force floor; a passive-authority tag (each must be rejected by the auditor).
 - Metamorphic relations: mirroring the load hull in x or y permutes the witness forces and changes no verdict;
   scaling W, the hull and the ratings by one factor leaves the boundary in v and scales forces.
@@ -314,9 +331,9 @@ an exact rational with its expectation, the bundle digests, each refusal with co
 - The specimen session writes the refinement as `--strategy refine --from a:…`, and its first answer's
   `next_actions` carries that command. N25a-12 refines with `--from` alone and refuses `--strategy refine` at M1
   with `FROB-REF-724`, because `refine` names the trajectory-optimization lane (BD-362); step (6) therefore uses
-  `--from`, and the `next_actions` command is asserted to be a registered command path that reproduces step (6),
-  not compared with the specimen's string, until the registry freeze settles the spelling (NJL-08, the MCP
-  transcript of the same session, is asked to make the same change).
+  `--from`, and the `next_actions` command is asserted to be the registered path `frob mission synthesize` with
+  `--from` and the first answer and no `--strategy`, which reproduces step (6); it is not compared with the
+  specimen's string. NJL-08, the MCP transcript of the same session, asserts the same.
 - Kill gate KILL-AUGUR-FALSECERT: one accepted false certificate fails the mission gates. The plants of this
   fixture are part of the seeded-defect suite that must yield zero false accepts.
 - The paving the engine chooses may differ from four by three: on this linear-static fragment its default is

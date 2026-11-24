@@ -1,0 +1,286 @@
+{
+ "round": 4,
+ "slice": "S-32",
+ "reviewed": 27,
+ "changed": [
+  {
+   "bead": "NAB-03",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "The Alias witness record carries see = indistinguishability-witness, and NAB-01's loader refuses an unresolved see (gloss.see-unresolved); that record is NAB-05's, which was not a dependency, so done first NAB-03 could never load. Added dep NAB-05 (moved from related) and said why."
+  },
+  {
+   "bead": "NAB-04",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The energy-created row's reference parenthetical '(§29.9; applied by §16.10)' holds words, and the transcription rule would put 'applied by §16.10' into constructs. Stated the record: defined_in = [§29.9, §16.10], empty constructs."
+  },
+  {
+   "bead": "NAB-06",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "Acceptance and the test all_23_subsystems_defined checked the whole registry (23 subsystem records across all five ranges), which NAB-06 cannot pass alone because the five range beads run in parallel. The range test is now subsystems_in_range (Nemesis, Phylum, Reflex); the whole-registry test moved to NAB-08's module whole_registry."
+  },
+  {
+   "bead": "NAB-07",
+   "kinds": [
+    "deadlock",
+    "broken"
+   ],
+   "what": "The 337-record whole-registry criterion and test whole_registry_count_is_337 waited on NAB-03 to NAB-06, which are not its dependencies; moved to NAB-08. The id rule produced 'top-weighted-τ' and 'sync_wait_ms', which break NAB-01's ASCII slug rule; stated the ids top-weighted-tau and sync-wait-ms, with a criterion and test."
+  },
+  {
+   "bead": "NAB-08",
+   "kinds": [
+    "deadlock",
+    "broken",
+    "plan"
+   ],
+   "what": "Took over the whole-registry checks as a module whole_registry (count 337, per range, 23 subsystems, 6/13 senses, 11 code literals, 5 multi-name, 4 structural, which NAB-01 lists as known answers but nothing asserted), with a counts file the script reads by e2e_get --file; added dep N00-03 (it reads registries/subsystems.toml). The scratch copy held only the glossary files, so check-generated would exit 2 with gen.missing whatever was planted and every control was caught vacuously: now copies the tracked tree and runs a baseline first. E2E_PLANT_FAILURE now makes the script exit 1, as STD-E2E's --verify-plants requires, replacing a lint 'test hook' no bead has. The unsorted and missing-subsystem plants now name a check that reads the scratch tree. Removed 'e2e_step summary' (the EXIT trap writes it) and an 'evidence: null' field the log schema does not have."
+  },
+  {
+   "bead": "NAB-11",
+   "kinds": [
+    "request",
+    "broken",
+    "deadlock"
+   ],
+   "what": "Lead note applied: added dep BD-025 (its tests are in frob-conformance; the edge came only through NAB-09 -> N34p4-03 -> N33a-07). The negative control said src.local-path-missing-repo fires for a repo absent from the stack lock, which would refuse its own mcp_agent_mail_rust and franken_mining records; it now means an empty repo, and the two workspace AGENTS.md files (no repository, one outside local_root) get repo = '' and a ~/ locator. The path test used a stack-lock commit that five repositories do not have; those are checked at HEAD. The cite.local-not-at-pin control needs NAB-10, which comes later: now named as NAB-16's plant."
+  },
+  {
+   "bead": "NAB-12",
+   "kinds": [
+    "deadlock",
+    "broken"
+   ],
+   "what": "Two criteria waited on later beads: that N00-13's source keys resolve (N00-13 depends on NAB-12 and has sources_resolve), and NAB-10's reading-task report. Both are now noted as not this bead's close condition. Added the test marks_match_frozen_list, the 'frozen-mark comparison' NAB-16's mark-raised plant relies on, which no bead named. figures_have_units would have refused six of the bead's own figures (hardware '—', non-numeric values): it now requires a unit on numeric figures and hardware 'n/a' for '—'. The by-eye control is NAB-16's plant."
+  },
+  {
+   "bead": "NAB-13",
+   "kinds": [
+    "deadlock",
+    "broken"
+   ],
+   "what": "u_source_is_never_citable used NAB-10's grading function and a criterion required the U sources to come first in NAB-10's report, though NAB-10 is not a dependency (and orders nothing); now uses NAB-09's may_cite_without_reading, with a request to NAB-10. The N00-11 resolution item is marked as N00-11's and N00-12's. Added marks_match_frozen_list; the F-citation gate control is now NAB-16's pass-on-unread plant."
+  },
+  {
+   "bead": "NAB-17",
+   "kinds": [
+    "deadlock",
+    "contradiction",
+    "broken"
+   ],
+   "what": "Criteria and tests asserted the whole matrix (143 rows, all scores, 16 and 32 below 2.0, C-01 to C-40, the rescored row), which only exists after NAB-18 to NAB-20, beads that depend on this one; they are now fixture-based, with the real-table counts left to NAB-18 to NAB-20 and NAB-50, which read a new print_summary hook (FROB_EV_SUMMARY). On a tree with only some tables, ev.construction-missing and the queue lookup would fail on rows still to land (NAB-18's 'lints pass' could never hold): both are now recorded skips while a table or the queue records are absent. Rule 2 accepted only hypothesis or gate-record evidence, so NAB-22's legal re-scores by pilot, share row or effort record would be flagged: now any non-empty history evidence, NAB-22 judging the kind. Defined the frozen plan-time copy (the three table fixtures and their columns), that it binds only rows without history (NAB-22 appends 'fell back to' to decision text, which the frozen tests would reject), that carried = true only for the three rows the plan says come from version 0.2 (there is no list), ev.unsorted against tie order (contradicted the metamorphic relation), the base for ev.history-edited, and the false claim that only three rejected rows lack a colon. Added dep N34p4-03 (it adds a generator row) and dropped 'xtask still has six subcommands', which needs BD-004, not a dependency."
+  },
+  {
+   "bead": "NAB-18",
+   "kinds": [
+    "deadlock",
+    "broken"
+   ],
+   "what": "cross_references_resolve needs KI-01 and KI-11, records of NAB-33 and NAB-34, which were not dependencies: added both (no cycle). The kill-gate criterion required all 14 to resolve, but eleven are entered by the M1 ledger groups (N40-24 to N40-26): now the frozen-list skip of NAB-17. carried = true had no source (the plan has no list): now false for this table. EV-S37 names no tier, so its tiers would have been []: stated ['S'], with a tiers test (35 and 6)."
+  },
+  {
+   "bead": "NAB-19",
+   "kinds": [
+    "deadlock",
+    "contradiction",
+    "broken"
+   ],
+   "what": "The queue criterion and test required NAB-21's records, and NAB-21 depends on this bead: the rows now carry NAB-21's step 8 mapping as data (test queue_lists, all fifteen), the two-way check stays NAB-21's. The pilot-ledger criterion named a completeness check that does not take this table as input and whose pilots land at M1 to M8: now a note. Kill gates now resolve or skip per NAB-17. 'Each of the four rows without a kill gate has a fallback' was false for EV-F02 and EV-F40: now names the four. Tiers 'in order' (NAB-18) would give EV-F03, F11, F14, F39 ['S','F'] and trip ev.tier-table-mismatch: stated ['F','S'] and EV-F24 ['F']. The renamed-kill-gate control would only produce a skip at M0: now a name on neither list."
+  },
+  {
+   "bead": "NAB-20",
+   "kinds": [
+    "deadlock",
+    "contradiction",
+    "broken"
+   ],
+   "what": "killed_idea_references_resolve needs the KI records of NAB-33 to NAB-38, not dependencies: added them (no cycle). The refusal-code criterion needs FROB-REF-245 (N18-REF, M1): now a note pointing to KI-01's and KI-48's criteria under NAB-32's skip. reason = 'the text after the colon' left EV-P04 to EV-P09 empty, contradicting 'each of the 11 at or above 2.0 has a reason' and NAB-17's field rule: now the qualifier rule with examples, the criterion 'reason or killed_idea'. The e2e line described a bandit-allocation plant NAB-50 does not have: now its copy-on-write plant on EV-P22."
+  },
+  {
+   "bead": "NAB-33",
+   "kinds": [
+    "deadlock",
+    "broken",
+    "convention"
+   ],
+   "what": "NAB-32's loader refuses a hypothesis absent from the register and a state that differs from it: KI-01/KI-03 name H-15 and H-04, rows of N00-12 and N00-11, not dependencies (added), and 'REFUTED for recursion-only specialization' would be refused (state word only; the qualifier is the row's scope). The transcription rule (for all KI beads) never said how to fill revive_evidence and revive_gates, which NAB-32's revival check reads: added the rule and this group's values. KI-08 and KI-09 compared against unstated numbers, which NAB-32's typed thresholds cannot express: stated them (ratio above 1; 10 and 20 ms). FROB-REF-245 now carries NAB-32's skip. The f16 surviving-form case named no carrier id, the revive cases had no unit test, and the e2e line claimed NAB-50 plants them. The transcription rule (all KI beads) now also says revive_gates is empty for revive_evidence none and that a primary-source line naming no gate keeps it empty (the survives fallback would have filled none-records with unrelated gates, e.g. KI-18's KILL-ADVECT), and that a FACT calculation names the source-register ids of its figures, so each KI bead depends on the source beads it cites (ids are assigned in order by NAB-11 to NAB-15, so an implementer could not fill sources before they land): added NAB-12 and NAB-15."
+  },
+  {
+   "bead": "NAB-34",
+   "kinds": [
+    "deadlock",
+    "broken",
+    "convention"
+   ],
+   "what": "Added dep N00-11 (H-11). Revival fields stated. KI-10 ('a stated share'), KI-14 and KI-16 ('material') had no number for a typed threshold: now a quarter of a step (the refutation's bound), 576 and 1,600 episodes, and KILL-FARFIELD's 0.8. The surviving-form sentence for KI-11 held no keyword or carrier, and the KI-15 control ('adjust solver iterations from measured step time') matched no keyword: both rewritten to match. Revive cases moved into unit tests; the e2e line matched to NAB-50. Its FACT calculations must name source-register ids, which the source beads assign in order, and none of them was a dependency: added NAB-12 (Metal documentation) and NAB-14 (the not-verified 1,008 GB/s)."
+  },
+  {
+   "bead": "NAB-35",
+   "kinds": [
+    "deadlock",
+    "broken",
+    "convention"
+   ],
+   "what": "Added dep N00-12 (H-16). The planted bead 'Couple an LBM fluid tile to every training world' and the control 'one Koopman model for the whole hybrid system' contain no keyword of KI-17, KI-18, KI-22 or KI-65, so the lint would pass them: rewritten to hold one of each. 'Registered as negative controls' asked an M0 bead to register controls of M1 analyses: now names the owning carriers. KI-17's revival now states KILL-LIVING's 90% and the 181-world bound. Revival fields stated; revive case in a unit test. Its FACT calculations must name source-register ids, which the source beads assign in order, and none of them was a dependency: added NAB-11 (the sibling lattice solver's Mach limit)."
+  },
+  {
+   "bead": "NAB-36",
+   "kinds": [
+    "deadlock",
+    "broken",
+    "convention",
+    "request"
+   ],
+   "what": "Added deps N00-11 and N00-12 (six hypothesis rows) and NAB-13 (the KI-27/KI-28 FACT sources whose resolution a control tests). FROB-REF-817 (M1) now under NAB-32's skip. 'Registered as negative controls of the shield' (M4 beads) became a fixture this bead supplies plus the carriers. 'No record or contract uses deployable' was unenforceable (and KI-31's own text holds the word): now the wording lint's, with a request to N00-12. KI-28, KI-29 and KI-30 revival lines now state their gates' numbers. Revival fields stated; tests for the strong-form plant and FACT sources. Also added NAB-12 (the 410 s run of KI-30's FACT row) and named which source bead each FACT row cites; corrected 'every state here is NARROWED' (KI-32 has no hypothesis until NAB-40's index)."
+  },
+  {
+   "bead": "NAB-37",
+   "kinds": [
+    "deadlock",
+    "broken",
+    "convention"
+   ],
+   "what": "Added deps N00-11 and N00-12 (ten hypothesis rows; the loader refuses an unknown one) and the source beads NAB-12, NAB-13, NAB-15. The test ki44_enumeration needed 'the study bead's fixture' for the frozen rule's classification (N24-KA's KA-612 at M1, not a dependency): it now checks 2,145 = (n+1)(n+2)/2 and that the recorded verdict counts sum to it, with the classification left to KA-612 and N00-06. Revival fields and hypothesis states stated (KI-34, KI-37, KI-44 to KI-46 name none here). Revival lines of KI-35, KI-40, KI-41 and KI-42 had comparisons with no number for a typed threshold: now the bars of KILL-AUGUR-REGION, GATE-ATEL-07/KILL-DR (0.7), KILL-FDGRAD and GATE-PHYLUM-08, KILL-PHYLUM. Revive case and revival fields as unit tests; e2e line matched to NAB-50."
+  },
+  {
+   "bead": "NAB-38",
+   "kinds": [
+    "deadlock",
+    "broken",
+    "convention"
+   ],
+   "what": "The KI-47 plant 'α-theory inside the Lean kernel on the GPU' contains no KI-47 keyword ('α-theory inside the proof kernel'), so the lint would pass it: now 'proof kernel'. The harness grammar is real arithmetic, so the C3 indicator row (1 + ω² + ω)/3 could not be evaluated: stated a real expr. Added deps N00-01 (the 'verified' wording criterion uses its lint), N00-12 (H-17) and the source beads NAB-11, NAB-14, NAB-15. Revival fields stated; KI-56's revival now writes its count (at least 1) for a typed threshold. Revive case and revival fields as unit tests; e2e line matched to NAB-50."
+  },
+  {
+   "bead": "NAB-39",
+   "kinds": [
+    "deadlock",
+    "broken",
+    "contradiction"
+   ],
+   "what": "The README plant '16x faster' was to fail ki.strong-form-as-goal, but the revive lint does not scan READMEs and KI-60's 'keywords' were templates ('N× faster') that a phrase match never hits: now real phrases, a planted bead for KI-60, and the README sentence fails N00-01's L-RESULT (dep added). The KI-63 plants 'Vendor the multibody crate…' and 'Patch the sibling locally…' matched no keyword: keywords added. 'Claimed instead equals the permitted wording' cannot hold (N00-15's withdrawn records carry no wording, and the nine rows group sixteen statements): now a stated mapping of rows to withdrawn numbers 1 to 16 (KI-62 holds 12 and 16) and differentiator ids that must resolve. Added N00-11, N00-12 (H-12, H-14, H-18) and source deps; stated record states (KI-58 deferred, KI-60 deflated, KI-61 withdrawn-claim) and revival fields."
+  },
+  {
+   "bead": "NAB-40",
+   "kinds": [
+    "broken",
+    "deadlock",
+    "convention"
+   ],
+   "what": "KD-01 to KD-03 had no keywords, so the revive lint could never match a re-proposal, which is the reason given for recording them: keywords, revive_evidence and the strong_form/survives mapping stated, with a plant. NAB-50 asserts the register's counts and spot values from test output that nothing printed: added print_summary (FROB_KI_SUMMARY), with the e2e line matched. The index's State column carries qualifiers ('REFUTED for exact reuse') that the records must not copy: stated, and that this bead fills both fields for the six records joined only here."
+  },
+  {
+   "bead": "NAB-41",
+   "kinds": [
+    "deadlock",
+    "broken"
+   ],
+   "what": "The killed-idea register (in the engine's walk set, not exempt) keeps KI-10's refutation verbatim, which states DX-06's withdrawn bounds ('about a millisecond', 'a quarter of one 4.1 ms batch step'), so 'no withdrawn figure in context outside the exempt files' could never pass: the register file and the KI fixtures are now declared exempt paths, with a test. dx17 needs constructions only the solid table holds (C-01 to C-04 and others; NAB-18 was not a dependency) and dx08 reads the pilot ledger (N00-07, not a dependency): both added (no cycle)."
+  },
+  {
+   "bead": "NAB-43",
+   "kinds": [
+    "broken",
+    "deadlock"
+   ],
+   "what": "stale_numbers_absent tested 'the pairs the earlier numbering used', which the bead never listed: now the list from B.1 (BD-104/112, 053–061, 062–066/113, 018–020/102/103, 046/068), text fields only, since BD-018 to BD-020 are also current carriers. The 410 s FACT criterion had no test and its source (NAB-12) was no dependency: added both, with the TARGET-owned-by-gates check. The e2e line claimed NAB-50 asserts 15 ranks, which it does not."
+  },
+  {
+   "bead": "NAB-44",
+   "kinds": [
+    "deadlock",
+    "broken"
+   ],
+   "what": "gates_resolve required all 25 kill gates to exist at M0, but 22 are entered by the M1 ledger groups (N40-24 to N40-26): now NAB-42's recorded skip until the M1 exit, with the three M0 ones named. The e2e line claimed NAB-50 asserts 22 records; it asserts the 88 IP records. 'Seven records carry a contested link that resolves' waited on NAB-47's CT records, while NAB-47 needs these IP records (it copies their carriers and gates): NAB-47 now depends on NAB-44 to NAB-46 and checks the links; the CT ids are stated here."
+  },
+  {
+   "bead": "NAB-45",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "Same as NAB-44: 17 of the 30 kill gates are M1 ledger rows, and FROB-REF-856 is an Augur row entered at M1 (NAB-42 says so), yet the criteria required both to exist at M0: now the recorded skip. e2e line matched to NAB-50's 88-record assertion. The contested-link resolution moved to NAB-47 likewise, with the CT ids stated."
+  },
+  {
+   "bead": "NAB-46",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "total_ip_records_is_88 and 'with NAB-44 and NAB-45 the register holds 88' needed sibling beads that are not dependencies (all three run in parallel after NAB-42): removed, NAB-50 asserts 88. 20 of its 23 kill gates and FROB-REF-877 are M1 rows: now NAB-42's recorded skip. contested_links_resolve needed NAB-47's records: moved to NAB-47, CT ids stated. e2e line matched to NAB-50."
+  },
+  {
+   "bead": "NAB-47",
+   "kinds": [
+    "deadlock",
+    "broken"
+   ],
+   "what": "placed_rows_resolve and 'shares the carriers and gates of its placed rows' need the IP records of NAB-44 to NAB-46, and CT-12's killed_idea KI-16 (needed by idea.refuted-without-record) is NAB-34's; none was a dependency: added all four (no cycle), and took over the IP→CT contested-link check from NAB-44 to NAB-46 (sixteen links; IP-02 and IP-60 are placed rows of CT-17 and CT-06 without a back link, so a two-way check would fail). The criterion that every kill gate named exists at M0 contradicted the test's own M1 skip: aligned."
+  },
+  {
+   "bead": "NAB-48",
+   "kinds": [
+    "deadlock",
+    "broken"
+   ],
+   "what": "group3_consistent_with_not_yet_placed_list needs NAB-49's UP records, and NAB-49 depends on this bead (and already holds that check): removed here. Ten blind-spot records name no gate, so 'the traceability lint passes' would fail on idea.placed-without-gate: gates now come from the text, the placed rows and the carriers' gates (as NAB-43), tiers empty. The placed-row joins and the citation-lint control needed NAB-44 to NAB-46 and NAB-10: added (no cycle). e2e line matched to NAB-50."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "NAB-01",
+   "what": "The generator must print a multi-name record's names joined as the plan-time row does ('Adjoint, coadjoint'; 'Toolchain T; toolchain train'), but the schema cannot tell further names from plurals and notations among aliases (Adjoint's are coadjoint, Ad, ad*). Add a field (for example printed_term = the term column as printed) or the generator cannot be written as specified."
+  },
+  {
+   "bead": "NAB-05",
+   "what": "The id rule gives 'hervé-class' for Hervé class, which breaks NAB-01's ASCII slug rule (lower-case ASCII, digits, hyphens); state id = 'herve-class' (NAB-07 does the same for top-weighted-tau and sync-wait-ms)."
+  },
+  {
+   "bead": "NAB-09",
+   "what": "src.local-path-missing-repo is listed but not defined. NAB-11 needs: a local record with an empty repo is refused unless its locator begins '~/' (the owner's workspace rule files ~/AGENTS.md and ~/projects/AGENTS.md lie in no sibling repository, one outside local_root). Define the error that way and admit the ~/ locator form in the schema comment."
+  },
+  {
+   "bead": "NAB-16",
+   "what": "Add a plant local-not-at-pin: a gate record citing a local source (an SRC-LOC record with no reread at the stack-lock commit) must fail NAB-10's cite.local-not-at-pin. NAB-11 listed this control but cannot run the lint, which comes after it."
+  },
+  {
+   "bead": "NAB-10",
+   "what": "Order the reading-task report (frob.reading-tasks/1) by effective mark, weakest first (U, M, R, then S/F), then by the earliest citing milestone. NAB-13 states that the two U sources lead the report, and nothing orders it today."
+  },
+  {
+   "bead": "N00-13",
+   "what": "Its rows cite sources that NAB-13 enters (Rudin et al., arXiv 2603.13616 and 2503.10966, the retail-store generators, 2606.07424, 2505.21665, 2510.25850), but it depends on NAB-12 only; its test sources_resolve cannot pass until NAB-13 lands. Add dep NAB-13."
+  },
+  {
+   "bead": "NAB-50",
+   "what": "Step 2 asserts families, score_mismatches, unsorted, below-2.0 per table, constructions_missing and kill gates from 'cargo test --test ev_matrix -- --nocapture', but no test printed them. NAB-17 now has print_summary: run it with FROB_EV_SUMMARY=\"$PWD/ev_summary.json\" and read each field with e2e_get --file. 'Distinct kill gates named == 82, all resolving' cannot hold at M0 (eleven of the solid table's alone are M1 ledger rows): assert kill_gates_named == 82 and kill_gates_unresolved == 0, logging kill_gates_skipped. Likewise step 3 (killed ideas): read NAB-40's print_summary via FROB_KI_SUMMARY (ki_records, groups, mismatches, joined, aliases, kd/kp, values for the spot figures), and step 4 the idea register's summary once NAB-42 adds one. The KI beads' revive plants (f16, t-digest, LBM, UCB, α-theory) are now their own unit tests; step 9 need not repeat them."
+  },
+  {
+   "bead": "NAB-21",
+   "what": "MQ-21's family is EV-P35, a row of NAB-20's table, and the criterion 'ev.queue-mismatch passes in both directions' fails on a queue item whose family names a row that does not exist; NAB-21 depends on NAB-17 and NAB-19 only. Add dep NAB-20 (no cycle)."
+  },
+  {
+   "bead": "NAB-32",
+   "what": "Typed revival thresholds need numbers written in revive_only_if, but some conditions compare against figures nobody fixed: KI-02 ('1/(1 - s) at or above the claimed gain': the strong form claims none) and KI-12 ('threatens the device memory budget at the admitted scene sizes'). Either set the bar, or let the lint take the value from a 'claim:' line of the revival ADR for conditions written against 'the claimed gain'. Also: revive_evidence is single-valued, and conditions such as KI-03's (a profile gate, then a pilot) mix two kinds; NAB-33 now rules that the deciding step's kind is stored."
+  },
+  {
+   "bead": "N00-12",
+   "what": "KI-31's survives line (plan C.2 entry 31) says the word 'deployable' is not used, and nothing enforces it: add 'deployable' (as a description of a safety filter or controller) to the banned patterns of row H-20, so hyp.banned-wording covers contracts, help text and report templates."
+  },
+  {
+   "bead": "NAB-32",
+   "what": "A FACT calculation must name a sources id, but nothing checks that the id resolves in registries/sources.toml (the KI beads now depend on the source beads that assign them). Add a finding such as ki.source-missing so a typo or a retired id is caught."
+  },
+  {
+   "bead": "NAB-42",
+   "what": "NAB-50 step 4 asserts counts by prefix (30/88/19/27/16), the tally join (90 placed, 9 not placed over 99), unresolved carriers and gates and findings from 'cargo test --test idea_register -- --nocapture', but no test prints them (NAB-42's tests are fixture-based). Add a print_summary test writing these as JSON when FROB_IDEA_SUMMARY names a file, as NAB-17 (FROB_EV_SUMMARY) and NAB-40 (FROB_KI_SUMMARY) now do. Also name the frozen list of 'rows that land later' for the idea register (path and columns): NAB-44/45 now rely on it for 39 M1 kill gates and FROB-REF-856."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "Complete: all 27 reviewed in full. Glossary tables match Appendix A row for row; public-source counts recompute; the three EV tables match C.1.1 to C.1.3 cell for cell (41/59/43 rows, 0/16/32 below 2.0, 82 distinct kill gates, C-01 to C-40 named); KI strong forms, refutations and survives are verbatim; every KI, CT and discrepancy calculation spot-checked recomputes (incl. 86,185 by Burnside, 27 strata, Beta(19,2) sd 0.0626); every carrier of the KI, FP, IP, CT and BS rows exists; idea-row counts (tiers, kill gates, ungated rows, contested links) recount as stated. Same BD-025 transitive situation as NAB-11 exists for NAB-03/04/06/07/08/12/13 (reached through NAB-01 or NAB-09); not edited, nothing goes wrong. Graph cycles after all edits: 0. Settled on this side; the requests are open."
+}

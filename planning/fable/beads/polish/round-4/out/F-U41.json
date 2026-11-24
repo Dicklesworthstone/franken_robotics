@@ -1,0 +1,198 @@
+{
+ "round": 4,
+ "slice": "F-U41",
+ "reviewed": 40,
+ "changed": [
+  {
+   "bead": "BD-087",
+   "kinds": [
+    "broken",
+    "contradiction"
+   ],
+   "what": "The mutant controls were built per crate and frob-dyn took a dev-dependency on frob-conformance, which BD-025 forbids (no manifest depends on the layer-7 crate). The control tests and the D.2 oracle comparison now sit in the check target crates/frob-conformance/tests/free_body_oracle_controls.rs, built with --features gauntlet-mutations,frob-dyn/nc-<nnnn> (debug only: each nc-* feature implies frob-dyn's conformance feature, whose guard is a compile error under the release profile, N38b-04); the clean known answers stay in frob-dyn. Left as it was, the bead could not be built under the workspace rules."
+  },
+  {
+   "bead": "BD-157",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The Cayley angle bound read <= 0.199 rad; it is 2*atan(|a|/2) <= 2*atan(0.1) = 0.19934 rad, now stated with its formula. The e2e text narrated a pending request; it now names the owner's form: the run is step 12 (spin-translate) of N16a-18's lockstep script (convention 13)."
+  },
+  {
+   "bead": "BD-341",
+   "kinds": [
+    "contradiction",
+    "convention"
+   ],
+   "what": "The last acceptance item made this bead write gate rows of GATE-ATEL-13 (M4 part) and GATE-ATEL-16, each of which has one recorder (N28cp3-01 and N28b-28, both dependents). It now records the PO-ATEL-04 discharge run cited in the ledger N28c-23 and writes no gate row (one recorder per gate part, N38b-19). Left as it was, two beads would have recorded the same gate part."
+  },
+  {
+   "bead": "N41-01",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "(1) Round-3 request F-U41-2: the risks target names its fourth subcommand, plants --exit <Mn> [--id RISK-nn] [--root <dir>] [--all] --json, added by N41-32 and N41-37, and the parser dispatches on the subcommand word. (2) Round-4 request H-cx-3: declared the mutation feature severity-tally-printed-rows-only (gauntlet-mutations only; it implies the crate's conformance feature, a compile error under the release profile, N38b-04; 25/28/2 against 28/29/2, so severity_tally_from_rows fails), cited X41-52 as the control of K41-04. (3) Added N41-REF to deps: the bead prints risk-* harness reasons, and N38-REF's no_unregistered_reason_in_source fails on any reason the registry bead has not yet registered."
+  },
+  {
+   "bead": "N41-02",
+   "kinds": [
+    "request",
+    "contradiction"
+   ],
+   "what": "Round-3 request: the record command carries --part M0 (three parts; N41-38 and N41-31 record --part M2 and --part M3). The bead called a check-deps 'all-groups mode' that N34-04's guard does not have (it counts every optional feature group in the same run) and a command form (cargo run -p xtask -- check-deps) that BD-003's alias replaces: the plant now runs cargo xtask check-deps --root <overlay> --json, and the default-feature shortcut is shown with cargo metadata. Left as it was, the implementer would look for a mode flag that does not exist."
+  },
+  {
+   "bead": "N41-03",
+   "kinds": [
+    "request",
+    "deadlock",
+    "plan"
+   ],
+   "what": "(1) Round-3 S52 and round-4 F-U16c requests: added the optional field decision_digest (BLAKE3 of a decided row's decision table; OPEN-KIN-6's bound table, written by N16c-11, read by BD-212) and loader rule 9, write-once through the generated append-only registries/open.lock (as streams.lock is for N35-23), with reason open-rule-broken, the test decision_digest_write_once and its planted violation. (2) Audit: added N41-REF to deps (the loader prints open-* reasons that N41-REF registers). (3) Counterpart of the N41-OPEN8 move: rule 8 and the acceptance now say the 161 on the real file are asserted by N41-04, not by N41-OPEN8. (4) Stated that the six questions that matter most are a fixed list printed in K41-16's order, since OPEN-PROG-1 (deadline M0) is placed by its second asking, so the order is not a sort on deadline. The N22b-27 counterpart needs nothing here: F-U22b did not apply it, and every subcommand already takes --root."
+  },
+  {
+   "bead": "N41-04",
+   "kinds": [
+    "request",
+    "plan"
+   ],
+   "what": "Round-3 request: plants are fired with cargo run -p frob-conformance --example risks -- plants --exit <Mn> --root <scratch> --json, the pre-mortem is read with --example premortem -- read M0 --root <scratch> --json, and N41-PM's premortem_exit.sh runs as a stage. Took N41-OPEN8's side of the audit: a new check target crates/frob-conformance/tests/open_register_complete.rs with register_total_is_161, owner_table_questions_resolve (K41-15), gaunt_2_and_3_counts_come_from_ka_registry (133, 325), thresholds_agree_with_gate_register and tenfold_4_on_calendar_at_m1_and_m2, run in step 1, with an acceptance item. This bead depends on all eight parts and on N40-35 and reaches N38a-12 and N40-02. The N41-REF counterpart (items 3 and 6 of N41-REF) was not applied: no round-4 slice holds N41-REF, so its side is not moving."
+  },
+  {
+   "bead": "N41-05",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Added N41-OPEN8 to deps (from related): the bead's page and require subcommands and its first acceptance item read the OPEN-PROG-1 row, which N41-OPEN8 enters; once that bead no longer depends on the other parts, nothing else brought the row in."
+  },
+  {
+   "bead": "N41-09",
+   "kinds": [
+    "contradiction",
+    "registry"
+   ],
+   "what": "The transition command exited 1 on a refusal with an unnamed reason; the unit's convention (N41-REF exit_conventions) is exit 3 with reason=<id> first. It now refuses with moonshot-cap (N38-REF) for the cap and moonshot-transition-refused with a rule field (incomplete-record, not-next, queued-release-without-sweep, no-adr) otherwise, and the refusal tests assert both. Requests to N41-REF and N38-REF cover the registration."
+  },
+  {
+   "bead": "N41-10",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "Audit applied: the band clause (FROB-REF-889 of ground.band), the test band_request_refused_without_cell and the owner_reality.sh band step moved to BD-397 (which already depends on BD-393 and runs under the same defaults; it carries the matching note), and BD-393 moved to related. The page must exist at the M4 exit, yet the bead waited on the M5 band verb; nothing else in it uses ground.band."
+  },
+  {
+   "bead": "N41-18",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "Audit applied: N33a-04 moved from deps to related. The step runs BD-001's bootstrap generator and reads the receipt it wrote; the xtask writer of N33a-04 (which itself depends on BD-001) is named only as out of scope. The C11-script finding is a false alarm: the bead's end-to-end script is its runbook step script scripts/session/first/step-1.sh, which the test plan names as such."
+  },
+  {
+   "bead": "N41-21",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The host reference loop and the bit comparison (with X41-50's mutation feature kernel-tolerance-comparison, 'reachable only under gauntlet-mutations') were placed in the Metal annex crate, a separate workspace that builds on the Mac only and cannot see gauntlet-mutations, yet step 5 (N41-22) computes the same reference on trj and compares through the same mutant. Moved to host code of frob-conformance (crates/frob-conformance/src/session/cayley.rs, tests in tests/session_kernel.rs) with the control-build command. Known values rechecked (quarter turn, 256 x 2^24 lanes, 0x3F800001 within 1e-5)."
+  },
+  {
+   "bead": "N41-22",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Counterpart of N41-21: states that the comparison and its X41-50 mutant are host code of frob-conformance, so they build on trj."
+  },
+  {
+   "bead": "N41-23",
+   "kinds": [
+    "broken"
+   ],
+   "what": "'more than about eight times the published figure' for a run that misses the one-hour envelope: 3,600 / 410 = 8.8, now stated. Other figures recomputed (493/410 = +0.2024, 492 = +0.2000, 451 = +0.1000; 5 x 410 s = 34 min). C11-script finding is a false alarm (step-6.sh is its own script)."
+  },
+  {
+   "bead": "N41-24",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Round-4 request H-cx-3: the step-6 non-strict comparator is now the mutation feature non-strict-docking-classifier of tools/pilots/docking_exact, declared by this bead (its one piece of code), reachable only under gauntlet-mutations from the conformance target (cargo test -p frob-conformance --features gauntlet-mutations,docking_exact/non-strict-docking-classifier --test pilot_docking -- grid_counts, debug only); grid_counts fails with 353. BD-041's crate has no conformance feature, so the same change adds it with the release guard line and lists docking_exact/conformance in gauntlet-mutations; without them N38b-04's mutation_guard and BD-025's manifest check fail. The dependency table stays empty. The step script runs the control once. Grid arithmetic recomputed (344/217/9; 353), witnesses, 15/16, 1/65, sqrt 1656 = 40.694 and sqrt 1680 = 40.988."
+  },
+  {
+   "bead": "N41-28",
+   "kinds": [
+    "request",
+    "broken",
+    "convention"
+   ],
+   "what": "Round-3 request: the rubric check is the last stage of N41-27's example target (cargo run -p frob-conformance --example release_check -- <manifest> --root <tree> --json), extended here, and the bead has its own script scripts/e2e/release_rubric.sh (convention 11) with the plant rubric-not-cumulative and an acceptance item. Added N41-29 to deps (from related): the rubric's lint pass reads N41-29's manifest field disposition to refuse a reworded tied study (X41-05, which N41-CX lists as caught here too), and neither bead depended on the other. Added STD-E2E for the script."
+  },
+  {
+   "bead": "N41-30",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Added N41-CX to deps (from related). The gate stage asserts four of four GATE-WS-08 controls caught, and those controls are seeded by N38b-05 from N41-CX's rows X41-02 to X41-05, with N41-CX's planted fixtures (N41-CX names this stage as their user). Nothing else brought N41-CX in, so the gate stage could run before its controls existed."
+  },
+  {
+   "bead": "N41-33",
+   "kinds": [
+    "broken"
+   ],
+   "what": "RISK-33's plant was 'a scratch tracker export with a fifth Moonshot item active', but its named detector (N40-05 step 11) runs N10a-02's moonshot_cap on the Moonshot queue (the [[moonshot_queue]] records of registries/ev_matrix.toml, NAB-21), not on a tracker export. The plant would never fire. It is now a scratch copy of that queue with a fifth active record; the exit is blocked and the five active items are named. Other figures checked: 842.8/575.7 = 1.464; 21 contacts; codes 866, 741, 826 and 889 against their registries; counts 30 and 29."
+  },
+  {
+   "bead": "N41-36",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The e2e verb list did not include the verb that fires RISK-28 (i), the out-of-class family-policy score: policy.apply (N23a-25, reached through BD-345), which calls BD-320's membership rule and refuses with FROB-REF-534 (as N17-REF's worked example shows). It is now named. Verbs, codes 534/540/761 and the counts 57, 2 and 10 checked."
+  },
+  {
+   "bead": "N41-37",
+   "kinds": [
+    "request"
+   ],
+   "what": "Round-4 request H-cx-3: declared the mutation feature detector-disabled-after-plant of frob-conformance, X41-17's plant. It is reachable only under gauntlet-mutations and implies the crate's conformance feature, a compile error under the release profile (N38b-04). It is one cfg branch in RISK-53's detector, the due-question check that the exit runner calls (N40-35's rule over N41-03's register, both in this crate). The real detector is still called, so the outcome is missed and not plant-stub-detector. The control build cargo test -p frob-conformance --features gauntlet-mutations,detector-disabled-after-plant --test risk_plants_m5 -- sweep_counts_69 fails with 68 of 69. The acceptance item, the e2e repeat (reason=plant-missed) and the negative control name it. RISK-42's figures were recomputed: 3.33/6.67 N torque-limited, and 4 against 8 N at 3 A under 10 N."
+  },
+  {
+   "bead": "N41-OPEN2",
+   "kinds": [
+    "convention",
+    "request"
+   ],
+   "what": "Convention 13: the OPEN-KIN-6 paragraph narrated a pending request to N41-03 (decision_digest and a write-once rule). It now states N41-03's form: the row's optional decision_digest, locked by loader rule 9 through registries/open.lock; the part enters it empty. Round-4 request F-U18b-2: OPEN-TRAC-4 is decided in N18bp4-01, not N18b-26. N18b-26 cannot measure the f32 Newton-step error curve, which needs BD-156. N18bp4-01 is M2 and depends on this bead. The other 15 decision beads were checked against their titles and milestones."
+  },
+  {
+   "bead": "N41-OPEN8",
+   "kinds": [
+    "deadlock",
+    "broken",
+    "contradiction"
+   ],
+   "what": "Audit applied (both proposals): acceptance items 2, 3 and 6 and the tests register_total_is_161, owner_table_questions_resolve, gaunt_2_and_3_counts_come_from_ka_registry and thresholds_agree_with_gate_register moved to N41-04, which depends on all eight parts and reaches N38a-12 and N40-02; deps are now N41-03 only (the other parts to related). The calendar half of item 5 (N40-35, not a dependency) moved with them. Item 4 said each owner row carries the cost of its default, but frob.open/1 has no cost field: the cost is the cost_of_default of the question's [[owner_input]] row in N40-35's calendar, now stated. Added part_loads_alone. Round-3 request (cite --example open_questions -- check --complete) holds: that citation moved with item 2 to N41-04."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N41-KA",
+   "what": "K41-15's checker cell names N41-OPEN8's owner_table_questions_resolve. That test moved, with the audit, to N41-04's check target crates/frob-conformance/tests/open_register_complete.rs (N41-04 depends on all eight parts; N41-OPEN8 now depends on N41-03 only). Name N41-04's owner_table_questions_resolve there."
+  },
+  {
+   "bead": "N41-REF",
+   "what": "Register the harness reason moonshot-transition-refused: tool N41-09's transition command (cargo run -p frob-conformance --example moonshot -- <enter|release|reorder> <id> --adr <path> --json); trigger an enter refused by N10a-02's completeness rule for an active record or because the item is not among NAB-21's next_entries, a queued -> falsified release whose ADR no sweep record lists as freed: falsified-before-pilot, or a transition or reorder with no ADR; the JSON carries rule = incomplete-record | not-next | queued-release-without-sweep | no-adr; exit 3; ranked repairs: register the pilot / falsifier / expiry gate; enter the next item of next_entries; cite the sweep record's ADR; record an ADR. The cap case uses N38-REF's moonshot-cap."
+  },
+  {
+   "bead": "N38-REF",
+   "what": "moonshot-cap's tool column names the pilot register's status change and funding check only. N41-09's transition command (--example moonshot -- enter) raises the same reason when an enter would break N10a-02's moonshot_cap (the same rule at its other point of application); add it among the tools."
+  },
+  {
+   "bead": "BD-041",
+   "what": "N41-24 (X41-34, plant N41-24:non-strict-docking-classifier) adds to tools/pilots/docking_exact the mutation feature non-strict-docking-classifier (<= at check a's comparator, reachable only under gauntlet-mutations, enabled from crates/frob-conformance/tests/pilot_docking.rs) and, with it, the crate's conformance feature with the release guard line #[cfg(all(feature = \"conformance\", not(debug_assertions)))] compile_error!(...), listed in frob-conformance's gauntlet-mutations (N38b-04, BD-025). Please state that the manifest's [features] table holds these two, and that manifest_has_no_dependencies checks the dependency tables only. Also state how nc_nonstrict_changes_nine plants the <= in your own test module, since you are at M0 and come before N41-24's feature."
+  }
+ ],
+ "unchanged": 18,
+ "notes": "Unchanged after checking: BD-058, BD-166, BD-180, BD-200 (commands against VERBS-design/sim, KA and CX rows, numbers recomputed); N41-06 (alpha_i levels 0.025, 0.00833, 0.004167; frob-tenfold subcommands of N39a-01; call sites N39a-13, N39a-40, N39b-26, N39b-27 depend on it); N41-12 (H-owners-1 ANSWER: MACHINE_NOT_LOCAL holds; 0.125/0.30 shares and 1/(1-g) recomputed; sim.run flags checked); N41-15 (reasons tenfold.* in N39-REF, FROB-REF-761 per convention 14, dependents checked). C11-script findings on N41-18 and N41-20 to N41-24 are false alarms: each owns its runbook step script scripts/session/first/step-<n>.sh as its end-to-end script. Also unchanged after checking: N41-20, N41-26, N41-27 (codes 816/833/860, 819/834, 873/879/889 against N41-REF; release_rules.sh), N41-29, N41-31 (20/10.98 = 1.8215, 0.99^24 = 0.78568, 32/46/49, 121 ln20/2 -> 182; eval.preanalyze --plan mode of N39b-34), N41-32 (staged counts 20/30/39/54/57/59 and 1/5/3/1 agree with N41-33 to N41-37; 115% cap, 3,600 s and 16 GiB against N34-08 and N33a-10), N41-34 (codes 813/822/533/761 and exits; trigger values both sides), N41-35 (verbs and codes 310/731/311/841/537/840; tau modes of BD-310), N41-38 (1 - 2*0.16724512 = 0.66551; 0.5/sqrt(1e6); train.start flags), N41-PM (cluster partition, X41-48, premortem-warning-unanswered in N41-REF), N41-RISK4 (the round-3 request to cite risks -- check --complete was already applied; 7/7 severities; N40-02 is reached through N40-10, so thresholds_agree_with_gate_register needs no new dependency). The audit's N41-REF counterpart for N41-04 and N41-32 was not applied: no round-4 slice holds N41-REF, so that side is not moving."
+}

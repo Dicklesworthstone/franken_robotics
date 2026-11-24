@@ -1,0 +1,293 @@
+{
+  "round": 4,
+  "slice": "F-U30a",
+  "reviewed": [
+    "BD-311",
+    "BD-390",
+    "N30a-01",
+    "N30a-02",
+    "N30a-04",
+    "N30a-06",
+    "N30a-10",
+    "N30a-11",
+    "N30a-13",
+    "N30a-14",
+    "N30a-15",
+    "N30a-18",
+    "N30a-19",
+    "N30a-22",
+    "N30a-24",
+    "N30a-25",
+    "N30a-26",
+    "N30a-27",
+    "N30a-28",
+    "N30a-29",
+    "N30a-33",
+    "N30a-34",
+    "N30a-35",
+    "N30a-37",
+    "N30a-39",
+    "N30a-40",
+    "N30a-43",
+    "N30a-44",
+    "N30a-45",
+    "N30a-47",
+    "N30a-48",
+    "N30ax-01"
+  ],
+  "changed": [
+    {
+      "bead": "BD-390",
+      "kinds": [
+        "request",
+        "users"
+      ],
+      "what": "Built CX-328's plant BD-390:cx-328 (feature cx-328, gauntlet-mutations only: a ridge-regularized solve in place of the refusal in excite::guard, caught by guard_refuses_each_879) with an acceptance line; dropped the dependency BD-348 to related (it only assembles A-24 to A-26 and records GATE-ATEL-05; A-25 itself, N28a-13, stays a dependency). If left: GATE-GROUND-03's control CX-328 stays stale and the gate is ineligible, and the bead waits on an unrelated M4 gate assembly."
+    },
+    {
+      "bead": "N30a-01",
+      "kinds": [
+        "broken"
+      ],
+      "what": "Added N34-08 (xtask check-contracts, M0) to deps: acceptance item 4 and script step 3 run it. If left: the bead's own check calls a tool no dependency delivers."
+    },
+    {
+      "bead": "N30a-02",
+      "kinds": [
+        "registry"
+      ],
+      "what": "Stated that KA-735's one runner entry ka:KA-735@host is BD-139's (the binding map), and that this bead names its five type-level tests in KA-735's derivation front matter beside it, adding no second entry. If left: two beads could each add a runner entry for one row, which the KA loader refuses."
+    },
+    {
+      "bead": "N30a-04",
+      "kinds": [
+        "convention"
+      ],
+      "what": "C13: replaced 'do not yet list 895; requested of NJL-01' by the fact: NJL-01 variation 15 (reports = true or an artifact reader: 814, 816, 819, 873, 889, 895, 897, exit 3, BD-139) puts 895 on report.design's row. If left: the bead narrates a settled request and tells the implementer to omit a registered refusal."
+    },
+    {
+      "bead": "N30a-10",
+      "kinds": [
+        "broken",
+        "convention"
+      ],
+      "what": "Replaced the narration 'the trial count per day of R-04 is requested of BD-388' by the stated requirement (R-04's validation day holds the 20 trials of the fixed-n:20 study; with fewer, the expected outcome is 889 and the script fails naming the count) and filed the request to BD-388. If left: the band step at index 19 of n = 20 has no stated input size and a short day reads as a band failure."
+    },
+    {
+      "bead": "N30a-11",
+      "kinds": [
+        "broken"
+      ],
+      "what": "adequacy_rejects_planted_skew_step now states its inputs: marks at 0, 2.5, 5, 7.5, 10 s, σ_m = 10 µs, residuals 100, -25, -150, -25, 100 µs, χ² = 437.5 against 16.27 (99.9% of χ²(3)); at σ_m = 50 µs the same marks give χ² = 17.5 and with jitter the test fails about one seed in three (simulated 34.6%). The piecewise test uses the same marks, knot at 5 s. If left: an implementer using the planted case's 50 µs gets a flaky test."
+    },
+    {
+      "bead": "N30a-13",
+      "kinds": [
+        "request"
+      ],
+      "what": "Built CX-327's plant N30a-13:cx-327 (feature cx-327: the DelayPlusOffset-to-Delay conversion and a delay-write that accepts it; on delay 8 ms, offset -8 ms the 0 ms lag is written in place of 8 ms; unlinked_lag_is_delay_plus_offset and forced_delay_update_refused_879 fail) with an acceptance line, run by N30a-14 and N30a-19. If left: CX-327 stays stale and GATE-GROUND-02 and -03 are ineligible."
+    },
+    {
+      "bead": "N30a-14",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Gate run now carries --features gauntlet-mutations so the registered controls run in the recorded run (N38b-19's same-run rule); the recorder enters GATE-GROUND-02 from the run's receipt passing or not, a failing value recorded fail with every control caught, and the bead closes recorded (N41-17 rule 2), which readies KILL-CLOCK's N30b-19. If left: a passing receipt is refused control-missing-from-receipt, and a failing gate is never recorded, so the kill decision never becomes ready."
+    },
+    {
+      "bead": "N30a-15",
+      "kinds": [
+        "request",
+        "broken"
+      ],
+      "what": "Built CX-329's plant N30a-15:cx-329 (synthetic fixture cx-329.toml: the (1 A, 30 N) and (2 A, 40 N) runs with a μ fit request; removed_check the zero-sensitivity check of excite::assess; expected 879 and separator 3 A under 10 N), ten files not nine, deps now include N28a-13 (A-25, which fixtures_agree_with_a25 calls) with BD-348 moved to related; alias 5's smallest case and separator now say hardware mark (protocol-sync marks do not link clocks, N30a-13). If left: CX-329 stays stale, the A-25 cross-check has no delivered dependency, and alias 5's separator names two marks that by N30a-13's rule do not separate delay from offset."
+    },
+    {
+      "bead": "N30a-18",
+      "kinds": [
+        "request"
+      ],
+      "what": "omitted_laws.toml keys its classes by name ([class.<name>]), the Coulomb-plus-viscous class (τ_s = τ_c, no Stribeck term) being coulomb-viscous, the value ground.identify --law-class takes; conditional_on names the class by its key; acceptance line added. If left: N30a-26's population-B call --law-class coulomb-viscous names a class the registry has no key for and is refused 802."
+    },
+    {
+      "bead": "N30a-19",
+      "kinds": [
+        "convention",
+        "broken",
+        "request"
+      ],
+      "what": "Gate run now carries --features gauntlet-mutations and the bead lists the gate's registered controls it runs (KA-722's control, CX-327 N30a-13, CX-328 BD-390, CX-329 N30a-15, CX-G-07 BD-391), recording pass only with every one caught; alias 5's bundle is stated to share two protocol-sync marks and no hardware mark, so both clocks have a fit and the refusal is the fit guard's (pointer the parameter set), not the stage gate's clock condition (pointer stage). If left: the receipt is refused control-missing-from-receipt, and the alias-5 refusal assertion fails on the pointer."
+    },
+    {
+      "bead": "N30a-24",
+      "kinds": [
+        "request",
+        "contradiction"
+      ],
+      "what": "Built CX-332's plant N30a-24:cx-332 (feature cx-332: admission_blockers() skips the energy cross-check; wrong_reason_is_an_admission_blocker fails; caught by N30a-26's gate run on R-07) with an acceptance line; the record's misfit is now pass B's χ² = rᵀR⁻¹r, not ½·rᵀR⁻¹r. If left: CX-332 stays stale (GATE-GROUND-04 ineligible), and the record stores half the χ² that N30a-22 reports with its degrees of freedom, so a reduced value read against 1 is off by two."
+    },
+    {
+      "bead": "N30a-25",
+      "kinds": [
+        "request"
+      ],
+      "what": "Built CX-G-08's plant N30a-25:cx-<nnn> (feature: the stage gate removed, a contact fit on a planted 20% torque-constant error admitted; FACT from PILOT-PT-17, 24 of 156 labels; stage_gate_enforced fails) with an acceptance line. If left: CX-G-08 stays stale and GATE-GROUND-04 is ineligible."
+    },
+    {
+      "bead": "N30a-26",
+      "kinds": [
+        "request",
+        "convention",
+        "broken",
+        "registry"
+      ],
+      "what": "Population B now runs through the verb, `frob ground identify <ds> --stage actuators --law-class coulomb-viscous --key gi-ol-<S>-<i> --json`, with the 'not run' fallback, the request narration and its acceptance caveat removed; the gate run carries --features gauntlet-mutations and lists the gate's registered controls (KA rows, CX-331, CX-332, CX-G-08, CX-G-09, CX-G-10, CX-G-11); the repair cycle follows N40-03 step 5 and N30b-17 (opening note line with cause repair-cycle, fresh R-04 and R-06 rigs under a new seed, not the same seeds); the recorder records from a passing run or from the run that closes the cycle, a failure recorded fail with the bead closing recorded (N41-17 rule 2), which readies N30b-17; step 10's repeated `--keep-prior actuators --keep-prior contact` became the registered single `--keep-prior contact` (N30a-20 rule (c) reads only the stage before); N30a-30 added to deps (the class stage exercises its class card; no cycle). If left: the omitted-law clause never runs through the verb, the receipt is refused control-missing-from-receipt, a repair re-run on the same rigs can be tuned to them, the first failure is recorded so the decisive re-run cannot be, and the stage-3 call may be refused for a repeated option."
+    },
+    {
+      "bead": "N30a-27",
+      "kinds": [
+        "request"
+      ],
+      "what": "Built CX-G-09's plant N30a-27:cx-<nnn> (feature: card::sampler ignores the covariance block; on equal σ and correlation -0.9 the sum variance reads 2σ² in place of 0.2σ²; sum_and_difference_variances and sampler_reproduces_correlation fail), with the word-stated case written as fixture cx-<nnn>.toml, recorded in case_supplied_by with numeric = true, and an acceptance line. BD-392 counterpart checked: N30a-27 can be a dependency of BD-392 (no cycle); nothing to change here. If left: CX-G-09 stays an obligation and GATE-GROUND-04 is ineligible."
+    },
+    {
+      "bead": "N30a-28",
+      "kinds": [
+        "contradiction",
+        "broken"
+      ],
+      "what": "The admitted width is now max(posterior σ, √floor_i) = √max(posterior variance, floor_i), matching N30a-29's variance floor (it read max(posterior standard deviation, floor), a standard deviation against a variance), and the test states its floor as variance 3.6·10⁻⁵, σ 0.006; the admission rule now gives the status when (d) or (e) fails (WrongReason: Rejected; EnergyUnchecked under strict, or (e): stays Candidate). If left: an implementer compares a σ with a variance and the width is wrong by orders of magnitude, and admission_requires_all_five_conditions has no expected status for two of its sub-cases."
+    },
+    {
+      "bead": "N30a-29",
+      "kinds": [
+        "request"
+      ],
+      "what": "Built CX-G-10's plant N30a-29:cx-<nnn> (feature: every σ_mf² set to zero, so P_floor = P and the shared-bias fixture reports 10⁻⁸ in place of 10⁻⁶; floor_applies and floor_survives_more_data fail), with the word-stated case written as fixture cx-<nnn>.toml, recorded in case_supplied_by with numeric = true, and an acceptance line; floor_applies now names its case. If left: CX-G-10 stays an obligation and GATE-GROUND-04 is ineligible."
+    },
+    {
+      "bead": "N30a-33",
+      "kinds": [
+        "request"
+      ],
+      "what": "Wrote CX-333's planted input N30a-33:cx-333: synthetic fixture cx-333.toml, 'failure rate under 5%' under fixed-n:20 at nominal α = 0.10 (first attempt at 0.05), removed_check the reachability pre-analysis reach::analyse; expected 532 with 'n ≥ 59, or claim under 13.9%', accepted without the check; run by N30a-35's gate run; acceptance line added. If left: CX-333 stays stale and GATE-GROUND-05 is ineligible."
+    },
+    {
+      "bead": "N30a-34",
+      "kinds": [
+        "convention",
+        "request",
+        "broken"
+      ],
+      "what": "C13: the parenthesis saying --then is requested of VERBS-ground and scripts never pass it is replaced by the registered form `frob ground score <prediction> --then regression --key <k> --json`; then_regression_stays_sealed runs through the verb as well as the typed input; N30a-27 added to deps (lineage and refit rules read card versions' parents; no cycle), as the N30a-31 counterpart note proposes. If left: the bead narrates a settled request and forbids scripts a registered option, and it reaches the card-version writer only through N30a-31."
+    },
+    {
+      "bead": "N30a-35",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "The gate run carries --features gauntlet-mutations and lists the gate's registered controls (KA-732, KA-734, CX-331, CX-333, CX-G-06); the recorder enters GATE-GROUND-05 from the run passing or not, a failure recorded fail with the bead closing recorded (N41-17 rule 2; KILL-CLOCK names no cycle), which readies N30b-19. BD-391 counterparts checked: N30a-35 already depends on N30a-28 and N30a-29 directly. If left: a passing receipt is refused control-missing-from-receipt and a failing gate is never recorded, so the kill decision never becomes ready."
+    },
+    {
+      "bead": "N30a-37",
+      "kinds": [
+        "request"
+      ],
+      "what": "Built CX-G-02's plant N30a-37:cx-<nnn> (feature: band::authorize counts a calibrated unit's episodes as draws for a new unit; a band issued for a second unit from 20 episodes where 9 units are needed; one_unit_twenty_episodes_is_within_units_only and new_unit_reclassified_as_unit_draw fail; run by N30a-39's gate run), with an acceptance line. If left: CX-G-02 stays stale and GATE-GROUND-06 is ineligible."
+    },
+    {
+      "bead": "N30a-39",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "The gate is now run once per tier with the gate filter and --features gauntlet-mutations (g0_laws for KA-728 and KA-736, g1_known_answers for KA-729), running every registered control (KA rows, CX-330, CX-G-02), and recorded from the two tier receipts (`--receipt <g0> --receipt <g1>`, N38b-19's receipt set), passing or not, a failure closing the bead recorded and readying N30b-18. It cited row runs (-- KA-728, -- KA-729) without the mutation feature and one --receipt. If left: the recorder refuses (control-missing-from-receipt, and a single receipt that does not cover both tiers), and a failing gate is never recorded."
+    },
+    {
+      "bead": "N30a-43",
+      "kinds": [
+        "request",
+        "registry",
+        "broken"
+      ],
+      "what": "Manual retirement is now `frob ground band --action retire --cell <id> --reason \"<text>\" --json` (NJL-01's action rule: selected by --action, kind admin, no key, --key is 802; a repeat returns the stored record with already: retired; needs ground:retire), in step 5, step 7 and the acceptance; the e2e's `frob result revalidate <design> --since <retirement sequence>` (a retirement is not an edit, version pair or amendment, so that call has no registered form) is replaced by `frob evidence trace <claim> --json`, which step 2 says shows the stale mark, and the acceptance reads the stale mark from it. If left: the script calls a per-action flag and a key the registry refuses (802), and a revalidate call with no valid change."
+    },
+    {
+      "bead": "N30a-44",
+      "kinds": [
+        "convention",
+        "broken",
+        "request"
+      ],
+      "what": "The gate run carries --features gauntlet-mutations and runs every registered control (KA-730's null battery, KA-731's p0 = 0.10 monitor, CX-G-12's BD-394 plant); the recorder enters GATE-GROUND-07 passing or not, a failure closing the bead recorded and readying N30b-18 (N41-17 rule 2); step 6's `frob result revalidate` became `frob evidence trace <claim> --json` (N30a-43's form). The C1-command finding on `--test ground_obligations` is a false alarm: N30b-24 declares that test target. If left: the receipt is refused control-missing-from-receipt, a failing gate is never recorded, and step 6 calls an unregistered form."
+    },
+    {
+      "bead": "N30a-45",
+      "kinds": [
+        "request"
+      ],
+      "what": "Built CX-G-03's plant (feature: a scale near 25.4 accepted as shrinkage and applied silently; scale_25_4_unit_suspicion fails) and CX-G-04's plant (feature: the residual RMS reported as the transform's uncertainty in place of the noise screen; on residual 0.4 mm against a 0.3 mm deviation the deviation is reported; residual_never_labelled_uncertainty and noise_screen_blocks_deviation_below_residual fail), CX-G-04's word-stated case written as fixture cx-<nnn>.toml, recorded in case_supplied_by with numeric = true; both run by N30a-48's gate run; acceptance line added. If left: both controls stay stale or obligations and GATE-GROUND-08 is ineligible."
+    },
+    {
+      "bead": "N30a-47",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Step 4 now states the registered form `frob ground ingest <scan> --design <design> --task-family tf:none --emit-variant --key <k> --json` and its `variant` output as ground.ingest's row has them (implemented by this bead), with no interim. If left: the bead cites an option without its registry form, and the round-3 request stays open."
+    },
+    {
+      "bead": "N30a-48",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "Step 2 now ingests the bench dataset (the 104.2 g scale reading the variant's mass reads) and then the scan with --emit-variant; the 'not run' fallback, the 'requested of VERBS-ground' narration and the acceptance caveats are gone, so steps 5 and 6 run; step 5's `frob result revalidate <variant> --key` (no change given: 802) became `frob result show <as-built verdict> --json`; the gate run carries --features gauntlet-mutations with CX-G-03 and CX-G-04's plants among its controls, and the recorder records passing or not, readying N30b-20. The C1-command finding is a false alarm (it narrates the absent binary). If left: the variant clause never runs through the verb, the variant's mass has no scale reading to read, step 5's call is refused, and the receipt is refused control-missing-from-receipt."
+    },
+    {
+      "bead": "N30ax-01",
+      "kinds": [
+        "broken",
+        "registry"
+      ],
+      "what": "The scoring requirement now says K + 1 classified marks for a clock declared piecewise with K segments (it said two for every clock, contradicting N30a-11 and 876's trigger); the refusal code of every rule is stated (shape rules: BD-387's schema refusal 802 with the field as pointer; value comparisons, such as a decreasing hours counter or bias_sigma > bias_bound: 873; scan-block rules: 812), where the bead said only 'refused'. If left: a piecewise clock passes admission with too few marks, and the refusal tests cannot assert a code."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "BD-388",
+      "what": "R-04: register the trial count per synthetic day; the validation day holds the 20 trials of N30a-10's fixed-n:20 study (its band step reads index 19 of n = 20; with fewer the expected outcome is 889). If left: N30a-10's band step has no registered input size."
+    },
+    {
+      "bead": "BD-388",
+      "what": "R-02, alias 5's bundle: the command and encoder clocks share two `protocol-sync` marks (with sigma_s) and no `hardware-pulse` or `sync-edge` mark (N30ax-01's kinds). Both clocks then have a fit, so N30a-20's clock condition does not refuse first (pointer stage, naming clocks), while N30a-13 keeps the lag DelayPlusOffset and the fit guard refuses 879 with the parameter set as pointer, as N30a-19 step 3 asserts. If left: with no marks at all the alias-5 fit request is refused by the stage gate and N30a-19's pointer assertion fails."
+    },
+    {
+      "bead": "N30-CX",
+      "what": "CX-327's expected observation says 'an 8 ms lag is written as the card's delay', but on CX-327's own case (delay 8 ms, offset -8 ms, no shared hardware mark) the cross-correlation lag is d + o = 0 ms. Read: 'the 0 ms cross-correlation lag is written as the card's delay in place of the planted 8 ms, where only delay plus offset is identified and the writer must refuse with FROB-REF-879'. If left: the seeding tool copies an expect text the plant can never show."
+    },
+    {
+      "bead": "N30b-22",
+      "what": "GATE-GROUND-03's measured_by names BD-390 and N30b-31 only, but its script scripts/e2e/ground_excite.sh is N30a-19's, and N30a-19 is the gate's one recorder. Add N30a-19 to measured_by. If left: the lint 'the script header names a bead in measured_by' fails for GATE-GROUND-03."
+    },
+    {
+      "bead": "N30-CX",
+      "what": "CX-G-11 (\"the rehearsal's omitted-law world\", GATE-GROUND-04) is planted by BD-397, the Reality lane's first record, which neither owns the rehearsal nor is reached by GATE-GROUND-04's recorder N30a-26 (BD-397 depends on BD-393, BD-394, BD-396, N30b-25, N30b-27, N38b-26). N38b-19 needs every registered control caught in the recorded run, so GATE-GROUND-04 stays ineligible until BD-397 lands. Move the plant to the rehearsal's owner BD-388 (BD-388:cx-<nnn>, the omitted-law world beside R-06), which N30a-26 already depends on. If left: GATE-GROUND-04 cannot be recorded pass before the Reality lane bead, and N30a-26 does not depend on it."
+    },
+    {
+      "bead": "N30-KA",
+      "what": "GATE-GROUND-07's third clause, 'every scope change fires', has no known-answer row or fixture: KA-730 (drift and null battery) and KA-731 (miss arithmetic) are the gate's only rows, so its gate run's receipt carries no scope-change value and the recorder (N30a-44) cannot hold the 9-of-9 count the script measures (N38b-19 records from receipts only). Add a row (nine planted scope changes on calibrated synthetic cells: controller, firmware, part replaced, part re-lubricated, surface, envelope, instrument calibration, new card version, kernel digest; each retires with its reason; control: a scope check that ignores firmware reads 8 of 9), bound by N30a-44, with BD-388 registering the fixture. If left: GATE-GROUND-07 can be recorded pass with its scope-change clause unmeasured."
+    },
+    {
+      "bead": "N30-REF",
+      "what": "Triggers that N30ax-01's validator raises are missing from the rows: FROB-REF-873 lacks 'a dataset of a calibrated cell without rig.maintenance or rig.trials; a maintenance entry dated after acquisition; an operating-hours counter lower than an earlier admitted dataset's; bias_sigma above bias_bound'; FROB-REF-812 lacks the scan block's shape rules (no length_unit, both routes, a duplicated fiducial id, no packet hash, a non-rigid transform, a registration without digest or stated_sigma). If left: the registry, which governs (KNOWN_DRIFTS 12), does not list conditions its verb refuses with those codes."
+    }
+  ],
+  "unchanged": 4,
+  "notes": "Unchanged after full review: BD-311, N30a-06, N30a-22, N30a-40. Audit notes: BD-391 counterparts (N30a-26, N30a-35): N30a-26 now depends on N30a-30 directly (no cycle) and reaches N30a-29 through N30b-06; N30a-35 already depends on N30a-28 and N30a-29. BD-392 counterpart (N30a-27): feasible, no cycle, nothing to change here. N30a-31 counterpart (N30a-34): N30a-27 added to N30a-34's deps. Mechanical C1-command findings on N30a-44 and N30a-48 are false alarms (N30b-24 declares the ground_obligations target; the other text narrates the absent binary). All 32 staging files parse: one-line JSON lists in front matter and the seven sections."
+}

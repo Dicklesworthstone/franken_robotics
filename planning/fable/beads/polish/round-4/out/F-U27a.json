@@ -1,0 +1,67 @@
+{
+  "round": 4,
+  "slice": "F-U27a",
+  "reviewed": 9,
+  "changed": [
+    {
+      "bead": "BD-205",
+      "kinds": ["request", "registry", "contradiction", "convention", "broken"],
+      "what": "H-verbs-7: run.fork's `children` parameter is artifact-input<frob.fork.children/1> but no bead entered its format row, so fmt.param-without-row would block registering the verb. The bead now enters FMT-FCHILDREN (.fchildren, owner frob-chronicle, canonical JSON with no view, exact-rational, ADR-WS-06 decision), adds the fmt_fchildren round-trip, refusal and fuzz tests through N34-22, and adds deps N34-22, N34-24 and N34-27. The child plan changes from a bare JSON array to an object with a `schema` member and a `children` array (DESIGN): with an array the version gate (891) had no `schema` member to read, routing could not recognise a .json plan, and an inline MCP value would have been looked up as a store name. FROB-REF-840 is now exit 5 with N24-REF's repairs; before, the bead said exit 3 and 'none', and refusal_exit_codes asserted 3 for it. The 583 row gains the registry's fourth repair (explain run, Estimated). The bead now lists six common run properties, adding --envelope-scope. A stale sentence calling scope names 'proposals until BD-258' is removed."
+    },
+    {
+      "bead": "BD-283",
+      "kinds": ["request", "registry", "plan", "contradiction"],
+      "what": "H-verbs-1: the design.edit codes row now says that the sized-fill-unsatisfiable code (170 once N31b-45 loads it, 105 with detail before that) joins this row in the same change. Without that line the refusal list would drift from VERBS-autopsy's refusal_lists test. FROB-REF-840 is now exit 5 with N24-REF's repairs; before, it was exit 3 and 'none'. The but-for rule was missing the 'contrast at least 0.5' clause of plan §27.6 and N27b-06, so a weak edit with stable replicates would have been labelled but-for. label_rules gains a pair of cases on either side of 0.5. VERBS-autopsy moves from related to deps, because the acceptance needs the registered CLI and MCP row (M3, no cycle). The mechanical C5-key finding is a false alarm: the synopsis carries --key on its third line."
+    },
+    {
+      "bead": "BD-281",
+      "kinds": ["convention", "broken"],
+      "what": "The acceptance command for the run verb autopsy.intervene had no --key, so a test written from it would get 805 (convention 5). VERBS-autopsy is added to deps, because the acceptance requires CLI reachability through its rows (M3, no cycle)."
+    },
+    {
+      "bead": "BD-375",
+      "kinds": ["registry", "deadlock", "broken"],
+      "what": "The tier command took the test target from the `tier` field of GATE-AUTOPSY-08's row, but Autopsy has no register bead and nobody filled that field or `controls` (N40-02 rule 8). With empty `controls` a pass is forbidden, so the gate could never be recorded. The bead now registers its two harness controls in controls.toml, fills controls and tier = [\"G1:host\"] (DESIGN, as GATE-ATEL-09 and GATE-TENFOLD-03 do), and runs the entry under g1_known_answers. The acceptance line 'recorded `not run`' asked the recorder to write a status it cannot write; it now says the row stays not-run and the reason goes in the campaign record."
+    },
+    {
+      "bead": "N27a-07",
+      "kinds": ["registry", "broken", "convention"],
+      "what": "GATE-CHRON-05's third clause (the empty intervention replays on 1,000 worlds) was only 'cited from N27a-06'. N27a-06's run writes lines for GATE-AUTOPSY-01 only, and the recorder enters a part only from its receipts' lines, so GATE-CHRON-05 would have been recorded PASS with that clause unmeasured: a broken null replay could not fail it. The bead now adds a g5_determinism entry that measures the clause on N27a-06's committed population on batch-cpu, with a sixth mutation control, and records the gate from two receipts through N38b-19's receipt set. It also fills `controls` and `tier` for GATE-AUTOPSY-02 ([\"G1:host\"]) and GATE-CHRON-05 ([\"G1:host\",\"G5:batch-cpu\"]), which no bead filled (N40-02), and adds dep N27a-06, whose population it uses (convention 7; no cycle)."
+    },
+    {
+      "bead": "N27a-08",
+      "kinds": ["broken", "contradiction"],
+      "what": "Step 4 looped the 41 catalogue rows through `--change '<do>'`, which cannot express rows C1-C3 (empty set), C4-C5 (placebo perturbations), C6-C7 (doctored checkpoints) or C8 (profile change). pairs_correct = 41 could not be reached. Each special row's form is now stated: no --change, a one-element child plan, a doctored copy under a scratch FROB_STATE as the self-test does, or --precision. Step 9's child plan is now the object form with a `schema` member, which BD-205 now requires. Its key `<seed>-cancel` lacked the script's `rf-` prefix and could collide with other scripts' keys; it is now `rf-<seed>-cancel`."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "VERBS-run",
+      "what": "In run.fork's Inputs, describe the child plan `frob.fork.children/1` as a JSON object with a top-level `schema` member and a `children` array, not 'a JSON array'. Reasons: the version gate (891), routing by `schema` member and the inline form 3 of N34-24 all need an object (BD-205 states DESIGN). Its exit text 'exit 3 on the chapter refusals except 604' should also except FROB-REF-840, which is exit 5 per N24-REF, as VERBS-autopsy convention 3 already says."
+    },
+    {
+      "bead": "VERBS-autopsy",
+      "what": "autopsy.rerun's 'Evidence: *study*' contradicts plan §27.8 step 4 ('report the paired outcomes, labelled Estimated') and BD-283. A verdict belongs to eval.compare. Make it *model cause* (class Estimated), or a re-run-specific scope of class Estimated."
+    },
+    {
+      "bead": "N34-27",
+      "what": "Add `frob.fork.children/1` to the decision record's table of added formats: FMT-FCHILDREN, .fchildren, owner frob-chronicle, taken by path by run.fork (artifact-input), entered by BD-205 at M2. That keeps the GATE-WS-02 'k added formats' count and the ADR-WS-06 table complete."
+    },
+    {
+      "bead": "N27a-06",
+      "what": "N27a-07 now measures GATE-CHRON-05's third clause in its own g5_determinism entry on N27a-06's committed population manifest on batch-cpu. State in Scope that the manifest is reused there, so a change to the manifest's format or location is coordinated."
+    },
+    {
+      "bead": "BD-279",
+      "what": "Add VERBS-autopsy to deps (M3, no cycle). The acceptance requires reachability through `frob autopsy intervene` and its MCP tool, which need that registry row; it is now only in related."
+    },
+    {
+      "bead": "BD-280",
+      "what": "Add VERBS-autopsy to deps (M3, no cycle), for the same reason as BD-279: the CLI and MCP reachability of autopsy.attribute needs its registry row."
+    }
+  ],
+  "unchanged": 3,
+  "notes": "Unchanged: N27a-02 (classifier; 580/581/582 match N27-REF, the classes and forcing-field order match §27.4), N27a-05 (restore per class; matches N20ax-01's retime_in_flight and reinit_state and FROB-REF-441), N27a-16 (thermal fixture; recomputed 37.95 s, 113.3 °C, 42.4 s, 82.0 °C and the 1/N control). The BD-283 C5-key mechanical finding was a false alarm. The BD-281 arithmetic (689/505/113/137, interactions, levels 1/200 and 1/900) and the BD-375 e-values (1.7e4, 19.1, 61 pairs) were verified correct. No dependency-audit notes were addressed to this slice. All six touched files parse: front matter, one-line JSON lists, seven sections."
+}

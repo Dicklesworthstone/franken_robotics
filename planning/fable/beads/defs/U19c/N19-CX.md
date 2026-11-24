@@ -4,7 +4,7 @@ title: "registry: Habitat counterexamples CX-184 to CX-199 as negative controls,
 type: "task"
 priority: 1
 milestone: "M2"
-labels: ["m2", "habitat", "frob-scene", "solid", "registry", "test"]
+labels: ["m2", "habitat", "frob-scene", "solid", "registry", "test", "review-notes-open"]
 parent: "WP-17"
 deps: ["BD-025", "N38a-40", "N38b-05", "STD-E2E", "STD-TEST"]
 needs: []

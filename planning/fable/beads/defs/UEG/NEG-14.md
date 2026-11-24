@@ -50,9 +50,18 @@ report of both costs.
    beside it, the small-angle estimate with its validity note: the small-angle form overstates the exact cost by
    under 1% while the optimal rotation α is below about 0.49 rad (d/b below about 0.235; at b = 0.20 m a shift up
    to about 0.047 m), and by 0.37% at α = 0.3 rad. The note is computed from the two forms, not hard-coded.
-3. **Register and scan.** Items E7-K1 and E7-K2: stale patterns `0.48 µm` in the scope of cell, offset or
-   anchor text unless labelled "uncentred"; a sideways cost of `0.57 m` for the 0.10 m shift printed without
-   the exact 0.55 m beside it. Pinned by `gb_04_reference`, `gb_05_reference` and the tests below.
+3. **Register and scan.** Items E7-K1 and E7-K2 of `registries/cards/discrepancies.toml`, whose `stale`
+   entries NEG-03 writes at M0 in the scan engine's form (N38b-50: `{ pattern, scope, all_of }`, a 200-character
+   window, no negative condition):
+   `stale = [{ pattern = "\\b0\\.48 ?[µμu]m", scope = "cell|offset|anchor|spacing" }]` for E7-K1 and
+   `stale = [{ pattern = "\\b0\\.57 ?m\\b", scope = "sideways|lateral|shift" }]` for E7-K2 (the leading `\b`
+   keeps 10.48 µm and 10.57 m from matching). The engine cannot tell
+   a labelled uncentred figure, or a small-angle 0.57 m printed beside the exact 0.55 m, from a stale one, so
+   every line that prints either figure legitimately carries the marker `stale-as-control: E7-K1` or
+   `stale-as-control: E7-K2` (exemption (d) of the engine): the uncentred row of `registries/cards/GB-04.toml`,
+   the small-angle row of `registries/cards/GB-05.toml` (marked from GB-05's milestone, M1, since the pattern
+   is scanned from M0), and any test line of this bead that prints the uncentred or small-angle figure. An
+   unmarked line fires. Pinned by `gb_04_reference`, `gb_05_reference` and the tests below.
 
 ## Acceptance criteria
 
@@ -60,7 +69,9 @@ report of both costs.
       type equals it.
 - [ ] The maneuverability analysis returns 0.5536688 m for the 0.10 m shift and labels 0.5656854 m as the
       small-angle estimate.
-- [ ] The stale-value scan finds no unlabelled 0.48 µm and no unaccompanied 0.57 m.
+- [ ] The stale-value scan finds no 0.48 µm and no 0.57 m in their scopes outside the lines marked
+      `stale-as-control: E7-K1` or `E7-K2`; a scratch file with each figure in scope and unmarked fires once,
+      and the same line marked does not.
 
 ## Test plan
 
@@ -74,6 +85,10 @@ report of both costs.
 - `small_angle_validity_threshold`: at b = 0.20 m the relative error reaches 1% at d = 0.0471 m (α = 0.490 rad) and
   is 0.375% at α = 0.3 rad; the report's validity note marks d = 0.04 m inside and d = 0.05 m outside.
 - `analysis_reports_both`: the report structure has `cost_exact` and `cost_small_angle` with a validity note.
+- `e7k_stale_entries_marked`: the engine run over the two entries on scratch files: "worst spacing in an 8 m cell
+  is 0.48 µm" and "the sideways shift of 0.10 m costs 0.57 m" each fire once; the same lines with the marker do
+  not; the GB-04 and GB-05 card files raise no hit. The test's own source lines that hold those strings carry
+  the marker in a comment, since `crates/*/tests/` is in the walk set.
 
 ### End-to-end script and logging
 

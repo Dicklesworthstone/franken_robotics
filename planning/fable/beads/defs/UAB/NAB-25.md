@@ -159,9 +159,11 @@ the path of the sweep record; a `summary` with assertions passed and failed and 
 
 Known answers: seven families, eight pairs; arithmetic of the conditions: 262/209 = 1.25; 1/(1 − 1/3) = 1.5;
 53/262 = 20%; 124/262 = 47%; 2³² ÷ (4 × 10⁶ per second) = 1,074 s ≈ 18 minutes; 0.49 GB ÷ 1,008 GB/s ≈ 0.49 ms.
-Negative controls: a sweep that reopens KI-03 on a share of 0.25 (condition not met; a proposal there fails the
-check); a sweep that leaves MQ-01 without an outcome; a no-GPU sweep that marks a device-dependent family
-`unchanged`.
+Negative controls: a sweep that reopens KI-03 on a share of 0.25 against its threshold `specializable-share >=
+1/3` (a proposal, or `condition_met = true`, on an unmet threshold fails `sweep.change-without-evidence`, NAB-22
+check (c)); a sweep that leaves MQ-01 without an outcome (`sweep.row-not-swept`); a no-GPU sweep that marks a
+device-dependent family `unchanged` with only `not-run` device gate records in `looked_at`
+(`sweep.row-not-swept`).
 
 ## Considerations
 

@@ -44,7 +44,7 @@ records both, with the date, in the licence entry. Resolution of the class from 
 | Stated licence | Class | Redistribution |
 |---|---|---|
 | A public-domain dedication or a permissive licence without attribution duty | `redistributable` | Allowed |
-| An attribution licence (for example CC BY 4.0) | `attribution` | Allowed with notice; the user supplies the attribution text or the import refuses |
+| An attribution licence (for example CC BY 4.0) | `attribution` | Allowed with notice; the user supplies the attribution text or the import refuses (`FROB-REF-802` naming `--attribution`, exit 3, nothing written) |
 | Any non-commercial or no-derivatives licence | `research-only` | Forbidden |
 | A bespoke or platform-specific licence | `proprietary` | Forbidden |
 | None stated, or "unknown" | `unknown` | Forbidden |
@@ -75,10 +75,11 @@ explicit act with its own stated licence. No selection list of this source is sh
 - [ ] The register row exists with `default_pipeline = false` and per-object resolution.
 - [ ] Each row of the resolution table is exercised by a `synthetic` object and yields the stated class and
       redistribution.
-- [ ] A pack with one `unknown` object is refused for export with FROB-REF-310 and the object named, and a
-      still of a scene containing it with FROB-REF-731 at the door (FROB-REF-733 in a session holding
-      `private:export` and the flag), exit 5; removing it allows the export of the rest
-      with their notices.
+- [ ] A mixed pack of the `redistributable`, the `attribution` and the `unknown` object is refused for export
+      with FROB-REF-310 and the `unknown` object named, and a still of a scene containing it with FROB-REF-731 at
+      the door (FROB-REF-733 in a session holding `private:export` and the flag), exit 5; removing the
+      `unknown` object allows the export of the other two with the attribution notice (a pack that also held
+      the `research-only` or `proprietary` object would stay refused).
 - [ ] An import without a stated licence defaults to `unknown`; an attribution licence without attribution
       text is refused.
 - [ ] Oversized and reference-following fixtures are refused by the importer limits; embedded text is marked
@@ -102,7 +103,8 @@ explicit act with its own stated licence. No selection list of this source is sh
 `scripts/e2e/assets_licences.sh` (the M3 scene-asset loop, owned and run by NEGp1-51, which depends on this
 bead; this bead lists the steps of its row), every `run` verb call with its own `--key`: five `synthetic`
 objects imported with the five stated licences (the attribution one once without `--attribution`, refused, and
-once with it), a mixed pack, its refused export (`FROB-REF-310`, exit 3, the `unknown` object named), a still
+once with it), a mixed pack of the `redistributable`, `attribution` and `unknown` objects, its refused export
+(`FROB-REF-310`, exit 3, the `unknown` object named), a still
 of a run in the mixed scene (`FROB-REF-731` at the door, exit 5, the `unknown` object lying under the private
 root; `FROB-REF-733` in a session holding `private:export` and the flag), removal of the blocker and a successful export with the notices. Log lines carry `ts`, `script`,
 `bead: "NEG-26"`, `step`, `event`, the exact command, exit code, wall time, the `evidence` block, object

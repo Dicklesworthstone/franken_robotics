@@ -4,7 +4,7 @@ title: "upstream frankensim: the `Component` trait of `fs-ports` frozen as contr
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "suite", "skeleton", "upstream", "frankensim", "frob-fsim", "solid"]
+labels: ["m1", "suite", "skeleton", "upstream", "frankensim", "frob-fsim", "solid", "review-notes-open"]
 parent: "WP-07"
 deps: ["BD-007", "BD-037", "N33a-15", "N33b-04", "SPEC-C-12", "STD-E2E"]
 needs: []

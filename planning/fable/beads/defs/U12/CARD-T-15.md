@@ -6,11 +6,11 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "frob-lemma", "solid", "test"]
 parent: "WP-05"
-deps: ["BD-027", "N12-06", "SPEC-C-12"]
+deps: ["BD-027", "N12-06", "N12-33", "SPEC-C-12"]
 needs: []
 related: ["N12-37", "N12-44", "N12-52", "N12x-01", "N15b-01", "N15b-09", "N15b-12"]
 gates: []
-plan_refs: ["§12.3 (T-15)", "§10 C-12", "§10 C-38", "§15.9", "Appendix D.4 (rational gear law, four-quadrant transmission)"]
+plan_refs: ["§12.3 (T-15)", "§10 C-12", "§10 C-38", "§15.9", "§15.13 (PO-SINEW-03)", "Appendix D.4 (rational gear law, four-quadrant transmission)"]
 ---
 ## Background
 
@@ -34,20 +34,21 @@ with their own ledger terms. Rejected alternative: an efficiency number applied 
 
 ## Scope
 
-In: statement document, registry row, the instance certificates on the transmission kernels' ideal parts
-(gear, belt, screw, linkage, cable and coupling matrices), specimen and mutants; the card's side of the Lean
-capsule (the proof itself is written in BD-381's first batch). Out: the transmission models and loss laws (the
-actuator beads); the port energy-balance check on the referee; wiring-level conservation (CARD-T-29).
+In: statement document, registry row, the identities of the ideal parts (gear, belt, screw, linkage, cable and
+coupling matrices, the last in symbolic entries) as specimens with mutants; the card's side of the Lean capsule
+(the proof itself is written in BD-381's first batch). Out: the certificates bound to the content hashes of the
+transmission kernels as built, which the certificate-coverage pipeline N12-20 issues at M5 (its catalogue row
+"Transmission and port kernels"); the transmission models and loss laws (the actuator beads); the port
+energy-balance check on the referee; wiring-level conservation (CARD-T-29).
 
-Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
-the transmission models of `frob-actuate` (BD-074) is `related`, not a dependency (a card that waited for its
-implementer would close a loop, because the implementer's own acceptance runs the card's law tests). What the card
-does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and
-Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and
-every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output
-(certificates bound to the content hashes of the transmission kernels as built) is run inside the implementing
-bead, with this card's law tests, as part of that bead's acceptance; the receipt produced there is what moves the
-registry row for that output.
+Order of work. The transmission models of `frob-actuate` (BD-074) are `related`: BD-074 does not depend on this
+card and the card does not wait for them. What the card depends on is in `deps`: the card registry, its
+specification, Lemma's own proof machinery and the script that replays its specimens (N12-33). It closes on its
+statement document, its registry row, its specimens and mutants, its registered Lean statement and every
+acceptance line that its own fixtures decide. The certificates on the transmission kernels as built are N12-20's
+at M5, and that receipt moves the instance route to `checked`; the Lean proof is sealed by BD-381 at M5, and that
+receipt moves the Lean route. Neither is a dependency: both are at a later milestone, and BD-381 depends on this
+card.
 
 ## Technical approach
 
@@ -66,19 +67,23 @@ registry row for that output.
 5. Class and limits: `Certified` for each kernel's ideal part at its content hash; `Proved` for the general law
    once sealed. The loss terms are `Estimated` card values and are outside the identity.
 6. Relies on it: construction C-12 (gears are transformers and motors are gyrators); C-38; the port
-   energy-balance check; the energy ledger.
-7. Artifacts: `docs/math/cards/T-15.md`; registry row; certificates beside the transmission kernels; specimen
-   `poly-identity/accept-T-15.frobcert` with mutants; `lean/Frob/Statements/T15.lean`.
+   energy-balance check; the energy ledger; proof obligation PO-SINEW-03 (§15.13, the ideal gear law conserves
+   power), which raises no new card and is listed on this card's row as a consumer (N12-52).
+7. Artifacts: `docs/math/cards/T-15.md`; registry row; specimen `poly-identity/accept-T-15.frobcert` with
+   mutants; `lean/Frob/Statements/T15.lean` (the certificates beside the transmission kernels are N12-20's, at
+   M5).
 
 ## Acceptance criteria
 
-- [ ] `frob-verify` accepts the T-15 bundles for the transmission kernels' ideal parts and rejects: the same-sign
-      law e₁ = r·e₂ (power 2·r·e₂·f₁ ≠ 0); a ratio applied to flow and not to effort; one changed coefficient.
+- [ ] `frob-verify` accepts the T-15 specimen bundles (the gear law, and the coupling-matrix identity in the
+      entries of C as symbols) and rejects: the same-sign law e₁ = r·e₂ (power 2·r·e₂·f₁ ≠ 0); a ratio applied to
+      flow and not to effort; one changed coefficient.
 - [ ] The composition identity for two gears in series certifies with ratio r·s.
-- [ ] Registry row at this card's close (M1): instance route `checked`, class `Certified`; Lean route
-      `hypothesis`, with the registered statement `lean/Frob/Statements/T15.lean` present. BD-381, which depends on
-      this card, seals the proof at M5, and its receipt moves the Lean route to `checked`, class `Proved`, with
-      capsule hash and both checker identities.
+- [ ] Registry row at this card's close (M1): instance route `hypothesis`, printing no class (N12-20's
+      certificates on the transmission kernels as built move it to `checked`, class `Certified`, at M5); Lean
+      route `hypothesis`, with the registered statement `lean/Frob/Statements/T15.lean` present. BD-381, which
+      depends on this card, seals the proof at M5, and its receipt moves the Lean route to `checked`, class
+      `Proved`, with capsule hash and both checker identities.
 - [ ] The statement document states that lossy and back-driven behaviour is outside the identity and names the
       four-quadrant counterexample.
 
@@ -97,7 +102,7 @@ control, asserted on the loss model's tests, not on this identity).
 ### End-to-end script and logging
 
 At M1, when the card closes, its `poly-identity` specimen and mutants join the specimen set that
-`scripts/e2e/lemma_kernel_cert.sh` (bead N12-33) replays offline with `frob-verify`; at M5
+`scripts/e2e/lemma_kernel_cert.sh` (bead N12-33, a dependency) replays offline with `frob-verify`; at M5
 `scripts/e2e/lemma_coverage.sh` (bead N12-36) lists the transmission kernels' certificates and
 `scripts/e2e/lemma_lean_capsule.sh` (bead N12-37) seals the Lean form. For this card their NDJSON lines (STD-E2E
 helper) carry `ts`, `script`, `bead` ("CARD-T-15"), `step`, `event`, the exact command line, exit code, wall time,

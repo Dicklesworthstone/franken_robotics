@@ -4,7 +4,7 @@ title: "golden fixture L.9: the scripted agent session over MCP, run on frob-mcp
 type: "task"
 priority: 2
 milestone: "M3"
-labels: ["m3", "tether", "frob-mcp", "frob-cli", "frob-conformance", "solid", "test", "e2e", "gate", "review-notes-open"]
+labels: ["m3", "tether", "frob-mcp", "frob-cli", "frob-conformance", "solid", "test", "e2e", "gate"]
 parent: "WP-26"
 deps: ["BD-023", "BD-210", "BD-298", "BD-304", "NJL-05", "NJL-07", "NJL-08", "NJL-09", "STD-E2E"]
 needs: []
@@ -135,6 +135,8 @@ its `sync_wait_ms` plus 500 ms with a result or a handle; a wire-cancelled wait 
 `session_focus` the list holds at most seven tools plus the base three; each resource kind is listed and
 readable; prompts match `robot-docs`. This session measures the first three clauses on the tools it calls and
 reads the task-cluster directory resource once; the remaining clauses are measured by the MCP surface bead.
+BD-298 is the gate's one recorder: this script logs its measurements tagged with the gate for BD-298's record
+and writes no gate row itself.
 
 ## Acceptance criteria
 
@@ -184,8 +186,8 @@ fixture sessions labelled `synthetic`; the real server over the in-memory transp
 `scripts/e2e/art_l9_mcp_session.sh` (header: `bead=ART-L9 milestone=M3 labels=golden,appendix-l,mcp,tether
 gates=GATE-TETHER-12 seed=901 needs=cpu,cuda,mcp,frobd plants=lane-diverges,wait-overrun,focus-grants-scope`).
 Steps: (1) set up one scratch root per lane, each with the fixtures of artifacts L.1, L.3 and L.4, a test
-campaign opened under an administrative session (`frob eval ledger --open --task t:kitchen-tray@88c1…
---world-family <synthetic family> --key l9-open --json`, as NJL-09 does) and the poisoned-name design; (2) lane 1: start `frob-mcp` over stdio with no daemon, run `frob-mcp-drive` on the
+campaign opened under an administrative session (`frob eval ledger --action open --task t:kitchen-tray@88c1…
+--world-family <synthetic family> --json`, N24b-15's admin action, which takes no key, as NJL-09 does) and the poisoned-name design; (2) lane 1: start `frob-mcp` over stdio with no daemon, run `frob-mcp-drive` on the
 CPU-tier subset, assert the in-process statement and the typed refusals; (3) lane 2: start `frobd`, run the full
 step file over stdio; (4) lane 3: start `frobd --mcp` on a loopback port, run the full step file over HTTP with
 the bearer token; (5) run the part beads' assertions on the recordings of lanes 2 and 3; (6) compare the lanes
@@ -193,7 +195,7 @@ step by step (`e2e_assert_digest_eq` on canonical results); (7) the session-wide
 `frob://docs/clusters` compared with the focused lists, and the budget identity (`e2e_assert_num`, exact); (8)
 the wire-cancel and kill checks of rule 4, each followed by `job_find`; (9) the full replay under the same keys;
 (10) the search for the poisoned string; (11) the offline `frob-verify`; (12) close each lane's test campaign
-(`frob eval ledger <campaign> --close --key l9-close --json`) after the sealed-read refusals; (13) `frob-golden
+(`frob eval ledger <campaign> --action close --json`) after the sealed-read refusals; (13) `frob-golden
 check --artifact L9`.
 Plants: `lane-diverges` (the hosted server patched to alter one result) must fail step (6); `wait-overrun` (a
 tool that sleeps 2 s past its wait) must fail the gate metric; `focus-grants-scope` (a server that adds a scope

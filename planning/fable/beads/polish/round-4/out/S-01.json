@@ -1,0 +1,211 @@
+{
+ "round": 4,
+ "slice": "S-01",
+ "reviewed": 28,
+ "changed": [
+  {
+   "bead": "BET-02",
+   "kinds": [
+    "contradiction",
+    "convention"
+   ],
+   "what": "The decide script 'recomputed the verdict', a second verdict rule beside N00-28's verdict function, so the script and the bet register could disagree on the per-family HeldInPart reading while the ADR check passed. It now reads the per-family verdict from the bets report (`cargo run -p frob-conformance --example bets -- status --json`). The script checks the N6 wording that N00-15 renders, but N00-15 was only `related`, so the wording registry could land after this bead; it is now a dependency (moved from related)."
+  },
+  {
+   "bead": "BET-04",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Same second verdict rule in `bet_04_decide.sh`: it now recomputes only the breakage share per four-week window and reads the verdict from the bets report, so the ADR is checked against the one rule."
+  },
+  {
+   "bead": "BET-13",
+   "kinds": [
+    "contradiction",
+    "request"
+   ],
+   "what": "The script 'recomputed the per-stratum verdict' (second rule) and ran 'the metric-contract conformance check' without saying which; it now runs N00-19's `frob-tenfold check-report --report <file> --campaign <dir> --json` and reads the per-stratum verdict from the bets report. The unit test said 'the funding check then refuses speed-lever records' without naming it or its scope, so nothing implemented it; it now names N00-09's `admit`, per class on which KILL-TENFOLD-SPEED fired (every record when all classes fired), and the check is requested of N00-09."
+  },
+  {
+   "bead": "BET-14",
+   "kinds": [
+    "contradiction",
+    "request"
+   ],
+   "what": "The script 'recomputed the per-stratum labels', a second rule beside N00-28; it now reads N39b-43's `three_arm` readings and N39b-45's ablations from the gate records and the verdict from the bets report. The test `bet14_tie_refuses_engine_speed_funding_for_stratum` named no check that refuses; it now names N00-09's `admit` (a speed-lever record on a stratum where KILL-TENFOLD-TIE fired, unless its reason names an engine-internal gap), requested of N00-09."
+  },
+  {
+   "bead": "BET-18",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Second verdict rule in `bet_18_decide.sh`; the bet has a GateFailedShort band (0.5 to 0.70), exactly where two rules would diverge. The script now reads the verdict from the bets report, which prints GateFailedShort as 'open: gate failed short of the falsifier'."
+  },
+  {
+   "bead": "BET-32",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "Scope said BD-276/N26a-30 measure clauses (a) to (d), but GATE-NEMESIS-04 records only (a) coverage and (d) the uncovered second mode; nothing measured (b) effective sample size or (c) the 3x episode ratio, so the verdict had no input for two clauses. The script ran `frob nemesis bound` with no `--tier` (no default: refused), no `--finalist` (N26a-26 refuses a fixture candidate) and no `--key` (two arms would be one stored receipt). It now reads (a) and (d) from the gate record via `registry_report -- gates`, measures (b) and (c) on N26a-04's 10^-4 T4 trap with a crude `--mode certify` arm (sequential design) and a bounded-weight `--mode refute --shift --epsilon 1/10` arm, each call with `--tier batch-cpu --finalist --key`, and reads the verdict from the bets report."
+  },
+  {
+   "bead": "BET-33",
+   "kinds": [
+    "registry",
+    "convention",
+    "contradiction"
+   ],
+   "what": "`frob result revalidate` was invoked with no `--between`, `--grades` or `--key` (a run verb: refused without its key, and three amendments would collide on one receipt); it now uses the VERBS-result form with one key per amendment, grade 3 under the session flag and grade 2 when KILL-REUSE fired. The stale-key mutant had no run form; it now runs in the Gauntlet form (`FROB_TEST_SEED=33 cargo test -p frob-conformance --test g1_known_answers --features gauntlet-mutations -- GATE-ATEL-11`, convention 1). The verdict is read from the bets report, not recomputed."
+  },
+  {
+   "bead": "BET-36",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "`frob contact probe` was called with no film-branch flags, so the dry limit, thick-film limit and squeeze time could not be evaluated as written (the plain probe has no film). The calls now use the VERBS-contact film forms (`--film --card --h0 0` for the dry limit, bit for bit; `--h0 1mm` thick film; `--until-h 10um` squeeze time against KA-404's 0.0377 s within 2%), and the verdict is read from the bets report instead of recomputed."
+  },
+  {
+   "bead": "EPIC-PROGRAM",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "The root bead, which says 'read this bead first', stated that the project is at the planning stage, that executing implementation beads needs a change of scope, and that beads change only with `br`. AGENTS.md (2026-11-23) now says implementation is the work and that a `br`-only change is overwritten by the next sync of the staging files. An implementer would stop, or make edits the sync erases. The status now states the implementation stage, that plan numbers are not measurements, and the staging-file plus `sync_beads.py` path."
+  },
+  {
+   "bead": "N00-01",
+   "kinds": [
+    "plan"
+   ],
+   "what": "The lint snapshots `robot-docs` and the `--help` of `frob` and `frob-verify` at M0 and fails when a binary has no snapshot, but it depended on neither BD-022 (the `frob` skeleton with `robot-docs`) nor BD-026 (the `frob-verify` binary); a session could take it before either binary exists and fail its own acceptance. Both added (no cycle)."
+  },
+  {
+   "bead": "N00-20",
+   "kinds": [
+    "broken"
+   ],
+   "what": "`portable` was 'true for seven; false only where an engine-internal property is required', with test `seven_levers_portable`, but it never said which lever is false, so the implementer had to guess and a wrong guess changes which levers arm W may host. It now states lever 1 (DESIGN: the mixed-topology batch with run-to-run replay is an engine-internal gap documented in H-19; W hosts only per-topology buckets or the engine's heterogeneous solver, N39b-43), and the test asserts it."
+  },
+  {
+   "bead": "N00-22",
+   "kinds": [
+    "contradiction",
+    "broken",
+    "plan"
+   ],
+   "what": "(1) It said the README status table prints goal lines (`xtask check-generated`), but N38b-20's honest-status table is a function of gates.toml alone and no generator row or view reads goals.toml, so no one would generate the lines and a hand edit would pass. The goal block is now its own README block, rendered by `goals::print::goal_table` and registered as a view in N38b-20's register (dep added). (2) `met-by-fallback` fired when any one gate was killed, so a goal with one gate killed and two not yet run printed as met; it now requires every gate `pass` or `killed`. (3) `killed: fallback adopted` is the printed form, not the stored status `killed`. (4) `withdrawn` had no rule, and `superseded` gates were never followed. (5) 'a kill gate reachable from its gates' mechanisms' could not be computed; it now uses the kill rows' `reads` (N40-03, dep added). (6) `status` was listed as a record field while a typed status is a negative control. (7) The concession check was attributed to N00-15, which does not cover goals. Tests added for each."
+  },
+  {
+   "bead": "N00-23",
+   "kinds": [
+    "request",
+    "contradiction",
+    "plan"
+   ],
+   "what": "F-U34's request applied after checking: the forbidden-package list is N34p4-02's (`crates/xtask/src/workspaces.rs`), so the dep moves from N34-01 to N34p4-02. The default-feature guard used placeholder names (`rods`, `islands`) that match no real feature (`moonshot-islands`), so as written it passed by construction. Read from the feature table, it would duplicate N34-03's `tier.default-on` and N34-08's kill-gate rule (two checks of one rule). It now cites them (N34-08 dep) and keeps only the map from non-goal to declared feature. Delegated guards for NONGOAL-07, -10 and -16 named no owner, so the meta-test could find no test. They now name N24a-23 (requested), BD-320 (FROB-REF-534) and N38a-33 (`actor-subject-claim`)."
+  },
+  {
+   "bead": "N00-30",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "It said external review comes 'before implementation scope is opened', that a critical finding 'blocks the change of scope to implementation', that findings go 'through the tracker', and that the repository is at the planning stage. AGENTS.md (2026-11-23) opened implementation and says a br-only edit is overwritten by the next sync. As written, the blocking rule had nothing left to block and applied findings would be lost. An open critical finding now keeps this bead open, and so the M0 exit. A finding against a closed bead reopens it. Findings are applied in staging files."
+  },
+  {
+   "bead": "N00-31",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "The consequences of the audit were 'carried into the bound beads through the tracker'. Since the scope change, an edit made with br alone is overwritten by the next sync of the staging files, so the corrections would silently vanish. They now go through the beads' staging files and `sync_beads.py`, and the stale 'executable at the planning stage' line is restated."
+  },
+  {
+   "bead": "N00-32",
+   "kinds": [
+    "plan",
+    "contradiction"
+   ],
+   "what": "The graph-audit/F-U40 note was checked: N40-10 holds `gate_named_by_late_mechanism_exists_once` and the file-side acceptance item, so the test and the 'appears exactly once in the gate registry' half are dropped here (two tests of one rule). The coherence pass keeps checking the names against the gate-register beads' text (N40-02, N40-10); no edge to N40-10 was added. Also, the `blocked-by-review` label was 'set by the lead' with no route; a br-only label is removed by the next sync, so a blocked bead could be taken. It is now set in the staging file. 'Before any of them is implemented' is restated for the implementation stage."
+  },
+  {
+   "bead": "N00-36",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Findings were routed 'through the tracker by the lead', which the next sync would overwrite. They now go through the staging files. The 66-row tables and every bead key were re-checked (all exist; none superseded); the two plan documents still have no revision after 47e8e89 and 1f5703d."
+  },
+  {
+   "bead": "NS-01",
+   "kinds": [
+    "broken",
+    "registry"
+   ],
+   "what": "The script checked a design file, then ran `analyze symmetry quad-a` and `design edit quad-a … --expected-parent <checked DesignId>`. Checking a file stores nothing, so the name `quad-a` resolves to nothing and both steps would be refused. A step now stores it with the registered file form `frob design new quad-a --file … --key ns01-new`, and the edit's expected parent is that stored DesignId; steps, counts and MCP parity are renumbered. The stale-parent control now names its code, FROB-REF-804, exit 7."
+  },
+  {
+   "bead": "NS-03",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "`--task warehouse-tote` names no registered task, so every compare would be refused as unknown. The story's warehouse tote task is `transport-carry` of the payload-transport family (N24a-26, already a transitive dependency). The one-call form omitted `--metric`, so `eval.compare` would compare on the task's primary metric, not energy per metre. Both calls now pass `--task transport-carry --metric energy_per_metre`. The metric is requested of N24a-26, whose scorecard lists cost of transport and energy per task but not energy per metre."
+  },
+  {
+   "bead": "NS-08",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Tasks `stair-climb`, `rubble-cross` and `soil-traverse` are not registered. The real names are `stairs-tracked` (N24a-29) and `terrain-rubble` (N24a-25), and no soil task exists (N18b-19's soil fixtures declare none). As written, every task verdict would be refused. Steps c and d now use the registered names. The soil run reads sinkage, drawbar pull and rut depth from telemetry instead of a verdict on a task that does not exist. Every `sim.run` names the lane tier (`--tier batch-cpu` in the cpu lane)."
+  },
+  {
+   "bead": "NS-09",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "`frob eval run fixture:tier-sensitive-hopper …` put a controller fixture in the design positional, and it did not request the mutated fast configuration. Per VERBS-eval, `fixture:<name>` is a `--controller` form. N16b-06's plant exists only under `--conformance-plant …/penetration-recovery.json` in the conformance build, so as written the call would either be refused or run an honest configuration and never show the exploit. The call is now `frob eval run <reference quadruped> --controller fixture:tier-sensitive-hopper --conformance-plant … --tier … --key`, and the honest arm uses the default baseline controller."
+  },
+  {
+   "bead": "NS-14",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "`--task flat-walk` is not a registered task. It is now BD-125's `traverse-5m-flat`, which is reachable through BD-184. The single-design comparison run passed neither the sweep's task nor `--seed <root>`. World addresses are (run seed, world, episode), so with the default seed 0 every address would differ and the digest-equality check would fail on a correct engine. The run now repeats task and seed and joins by world address and ModelId, as N17a-10 does."
+  },
+  {
+   "bead": "NS-18",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "The run named no task or tier and the verdict named `--task deliver-to-kitchen`, which is not registered. The run therefore had no goal for its baseline controller, and the verdict would be refused. The demo now ships `demos/ns-18/inputs/deliver-to-kitchen.ftask`, which both runs take through `--task`. `task verdict` reads the TaskId the run recorded, and the runs carry `--tier batch-cpu` and one `--seed`, so 'the same world addresses' holds for the before and after runs."
+  },
+  {
+   "bead": "NS-19",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The hexapod fallback run was `frob sim run hexa-variant --scene <flat> …` with no task or tier, followed by a bare `task verdict`. A run given only a scene records no task, so the verdict has nothing to evaluate. The run now takes `--task <t> --tier <lane tier>`, uses its default baseline controller, and the verdict reads the recorded task."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N00-09",
+   "what": "Add to `admit` two refusals that BET-13 and BET-14 now rely on. (1) A `speed-lever` record whose `classes` include a class on which N39b-06's KILL-TENFOLD-SPEED record fired (all classes when the M3 stop decision fired) is refused, quoting that record's hash; this is N39b-06 step 4c/5's re-plan as a mechanical check. (2) A `speed-lever` record for engine work on a stratum on which N39b-07's KILL-TENFOLD-TIE fired is refused unless its `reason` names one of the engine-internal gaps N39b-07 step 4c keeps. Today only check g reads a kill record (KILL-TENFOLD-LEVER), so both refusals in BET-13's and BET-14's tests have no implementer."
+  },
+  {
+   "bead": "N24a-23",
+   "what": "N00-23 delegates the NONGOAL-07 guard ('a task family of in-hand manipulation is refused at admission') to the task-family registry, but `registries/task-families.toml` has no field that could express it and no refusal. Please add the rule (for example a closed `kind`/scope field whose `in-hand` value fails the load with a named finding) and a test with a stable name that N00-23's meta-test can find from M1."
+  },
+  {
+   "bead": "N24a-26",
+   "what": "NS-03 (the North-Star A/B this family's background names) compares designs on `transport-carry` with `--metric energy_per_metre`. The scorecard of section 5 lists cost of transport, energy per completed task and charge consumed, but no energy per metre, so `study.plan` and `eval.compare` would refuse the metric. Please add `energy_per_metre` (battery energy out ÷ route length, on completed episodes, both denominators as KA-598 requires) to the scorecard's metrics."
+  }
+ ],
+ "unchanged": 4,
+ "notes": "Unchanged (4): BET-10, NS-07, NS-10, NS-11. Settled: all 28 beads read in full against the plan sections, the VERBS rows, the -REF codes, the KA/CX ranges and the 14 conventions. Arithmetic was re-checked: NS-03's 17 pairs, NS-11's Cayley 90 degrees, NS-14's harmonic mean, NS-18's 1.27 and 228 mm, NS-19's 585, and N00-31's eight recomputations. Every gate named in N00-22 exists, both 66-row tables of N00-32 agree, and no cycle was introduced (graph_check cycles: 0). Both slice notes were applied after their evidence held: N00-23's swap from N34-01 to N34p4-02, and N00-32's move to N40-10 with no new edge. The pattern of this sweep: the North-Star scripts named tasks that are not registered (warehouse-tote, stair-climb, rubble-cross, soil-traverse, flat-walk, deliver-to-kitchen) and ran sim.run without the task, tier or seed a comparison needs. NS-02, -04, -05, -06, -12, -13, -15 to -17 and -20 to -24 are outside this slice and may share it. For the lead (not edited, outside the slice): NAB-09 line 17 ('FrankenRobotics is at the planning stage') and N00-34 ('Executable at the planning stage') carry the pre-2026-11-23 status. N00-33 to N00-35 may route findings 'through the tracker' as N00-30, -31 and -36 did."
+}

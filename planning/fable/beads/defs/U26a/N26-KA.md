@@ -4,7 +4,7 @@ title: "Nemesis known-answer registry: KA-659 to KA-669 with truths, tolerances,
 type: "task"
 priority: 2
 milestone: "M3"
-labels: ["m3", "nemesis", "frob-nemesis", "frob-conformance", "solid", "registry", "test"]
+labels: ["m3", "nemesis", "frob-nemesis", "frob-conformance", "solid", "registry", "test", "review-notes-open"]
 parent: "WP-55"
 deps: ["BD-025", "N38a-12", "N38b-05", "N38b-28", "STD-E2E", "STD-TEST"]
 needs: []

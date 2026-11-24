@@ -1,0 +1,280 @@
+{
+  "round": 4,
+  "slice": "F-U28c",
+  "reviewed": 37,
+  "changed": [
+    {
+      "bead": "BD-309",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The test dc01_null_runs_catch_loose_table called 0.343 the exact wrong-promotion probability of the loose table; 0.7^3 = 0.343 is only the chance the first three pairs are clean, and the exact figure over the 32-pair budget at alpha- = 1/20 is 0.392 (a run that starts with an exceedance can still promote). A test written to 0.343 exactly would fail on a correct implementation; it now says at least 0.343 and 0.392 over the budget."
+    },
+    {
+      "bead": "BD-350",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "The planted companions were built behind the crates' `conformance` feature, which exposes test-support options; a planted defect there is neither applied by the control runner (which rebuilds with `gauntlet-mutations,<crate>/nc-<nnnn>`) nor kept out of product builds by the mutation guard (N38b-04), so the potency controls would be `stale` and the gate `not-eligible`; they are now mutation controls in N38b-04's form. `--no-memo` was narrated as something the row was asked to list (convention 13), now stated as NJL-01 variation 14 from `memo = true`; and the gate receipt came from the same invocation as the fixture phase that plants registry defects through `e2e_registries_scratch`, which marks every receipt `override` and the recorder rejects: the phase `gate` now runs alone for the receipt."
+    },
+    {
+      "bead": "N28c-01",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "The e2e planted registry defects in an ad-hoc copy under target/e2e-scratch/core_contract/ that neither xtask nor frob resolves, so the planted defects would never be seen and the script would pass on a broken validator; it now calls `e2e_registries_scratch`, which exports FROB_REGISTRIES_ROOT (honoured by N32ax-03's resolver and by frob)."
+    },
+    {
+      "bead": "N28c-05",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "Split into phases `measure` (registries of record) and `planted` (starts with `e2e_registries_scratch`), because one run that plants a scratch registry makes every receipt `override` and the recorder of GATE-ATEL-13 (this bead) could not record its own M3 part; `$SEED` (never set) is now `$FROB_E2E_SEED`; the DC-01 `run` commands of step 6 lacked `--key` (convention 5, refused without it); the probability 0.343 is now 'at least 0.343, 0.392 over the 32-pair budget'; the helper tests are now the script check `core-rows` (crates/frob-conformance/src/e2e/checks/core_rows.rs, tests core_rows_*), as STD-E2E requires."
+    },
+    {
+      "bead": "N28c-06",
+      "kinds": [
+        "convention",
+        "deadlock",
+        "broken"
+      ],
+      "what": "Removed the sentence that defined an 'older spelling' `frob-conformance run <name>` as an alias (convention 1: no such command, and the alias invites scripts to use it); the static check failed whenever a named interference test did not resolve, but the tests are BD-350's and BD-350 depends on this bead, so this bead could not close (convention 7): before they exist the check lists them `unresolved` and passes, and BD-350's acceptance makes all nine resolve; the e2e now plants its six defects through `e2e_registries_scratch`. The lint finding [C1-command] was partly a false alarm: the sentence saying the command cannot exist was right."
+    },
+    {
+      "bead": "N28c-10",
+      "kinds": [
+        "request",
+        "convention",
+        "contradiction"
+      ],
+      "what": "Acceptance said 'GATE-ATEL-13 rows for DC-04 and DC-06 recorded', a second recorder beside N28cp3-01 (convention 9); now the four clauses are entries in g1_known_answers behind `gauntlet-mutations` and N28cp3-01 records the M4 part; `nemesis.bound` commands lacked `--key` (refused); 'stage 5 of BD-352' named the wrong cascade stage (the rare-failure bound is stage 6, Qualify); dep STD-E2E added since the phases use its template."
+    },
+    {
+      "bead": "N28c-11",
+      "kinds": [
+        "registry",
+        "broken"
+      ],
+      "what": "The class-E certificate check called `frob prove kernel`, which takes a kernel name and does not re-check a certificate, so the step could not produce the accept/reject verdict it asserts; it now calls `frob prove verify <certificate> --json`, the read verb that re-checks certificates by proof kind (`rewrite-trace`, N12p2-02)."
+    },
+    {
+      "bead": "N28c-14",
+      "kinds": [
+        "request",
+        "contradiction",
+        "registry"
+      ],
+      "what": "Hook 3 said this bead registers the ladder campaign's expected saving, while N28b-17 registers it under `studio:saving` (C_table / C_conf, confidence 0.8, before the first score): two writers would register two predictions per campaign and double-count calibration; now each registration is its owner's (N28b-08 for a race, N28b-17 for a ladder) and this bead supplies the predictor identity, versions and report; dep N28b-17 added (no path from N28b-17 to N28c-14, both M4). The NJL-01 update placed `from_proposal` after `on_cancel`, which would break NJL-01's order test now that `envelope_scope` is the sixth `run` property; it now goes after `envelope_scope`. The `--root` request was already met (FROB_STATE)."
+    },
+    {
+      "bead": "N28c-15",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The e2e registered 30 predictions with `frob predict register`, a `mutate` verb, without `--key`, so each call would be refused with 805 and the snapshot never built; each call now carries `--key mon-reg-<i>-$FROB_E2E_SEED`. The `--root` request was already met (FROB_STATE, registries read in place); band cuts recomputed (c = 0.5: 10/20, 0.8: 19/28, 0.9: 23/30, 0.95: 25/none) and agree."
+    },
+    {
+      "bead": "N28c-16",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "The `augur` steps were held as a phase of this script although N25c-18 owns `scripts/e2e/experiment_suggest_augur.sh` and cannot close on a phase of a script that depends on it (convention 11/7): the stage now runs N25c-18's script and asserts its exit and summary; the helper tests are now script checks `ranks-descending`, `exact-zero` and `comparator` with tests named <check>_... (STD-E2E). The `--root` request was already met (FROB_STATE and `e2e_registries_scratch`)."
+    },
+    {
+      "bead": "N28c-17",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "Part two of the e2e set DC-05's registry states in 'a scratch copy of the registry' that neither `frob` nor xtask resolves, so the switch would be tested against the registry of record and the fallback branch never exercised; it now uses `e2e_registries_scratch` (FROB_REGISTRIES_ROOT), harmless here since the script produces no gate receipt. Numbers recomputed (EVSI 0.0013, 0.0055, 10^-5, 6,144 evaluations) and agree."
+    },
+    {
+      "bead": "N28c-18",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "The helper tests in `--test e2e_scripts` are now the script checks `sequence-order`, `accounting-identity` and `hint-parse` with tests named <check>_... (STD-E2E: a helper test that no script calls checks nothing the script asserts). The `--root` request was already met (FROB_STATE; no registry change in this script)."
+    },
+    {
+      "bead": "N28c-20",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "Step 6 ran the `win-27-noplant` variant 'in a scratch state root' in the middle of the run; a run has one state root (FROB_STATE) and `frob` has no `--root`, so emptying it would destroy the campaigns steps 7 to 12 read: it is now the phase `noplant`, a run of its own with its own FROB_STATE. The helper tests are now the script checks `number-walk`, `key-set-diff` and `wording-scan` with tests named <check>_... (STD-E2E)."
+    },
+    {
+      "bead": "N28c-21",
+      "kinds": [
+        "request",
+        "registry",
+        "broken",
+        "contradiction",
+        "convention"
+      ],
+      "what": "The 555 case omitted `--rule`, which has no default in the fixed-n block (N24b-06, N33b-19), so 100 of 100 variants would be refused 802 before 555 and the battery would fail on a correct tree: `--rule paired-clopper-pearson/1` added; the 550 case put the task inside `--predicate` (`\"<task> succeeds\"`), which the registry row spells `--predicate succeeds --task <t>`; the 549 case named stage 5 of BD-352, but the rare-failure bound is stage 6 (Qualify); the 871 case edited 'a scratch registry' no tool reads, now `e2e_registries_scratch`; the 'conformance build' negative controls are now N38b-04's mutation builds; the helper tests are now the script checks `variant-gen`, `repair-apply`, `registry-compare`, `keys-distinct` (STD-E2E). Count pairs 2,145 = C(66,2) and 521+521+1,103 recomputed."
+    },
+    {
+      "bead": "N28c-23",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The e2e ran the ledger check 'on three scratch copies' of crates/frob-conformance/registry/obligations.toml under target/e2e-scratch/, but nothing points the check at a copy (the conformance registry lies outside registries/, so `e2e_registries_scratch` and FROB_REGISTRIES_ROOT do not reach it) and the planted defects would never be read; the planted defects are now tests of the target (`planted_*`, each writing its own synthetic copy) which the script runs by name. All numbers recomputed and agree (132, 569, 42; 0.8840; 0.0662, 0.0497, 0.0503; b = 15 at 0.0604, b = 14 at 0.0485; 0.04573)."
+    },
+    {
+      "bead": "N28c-24",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The KA controls were 'built behind the `conformance` feature', the crates' test-support feature, so the control runner (which rebuilds with `gauntlet-mutations,<crate>/nc-<nnnn>`, N38b-04) would report each mutation control `stale` and the mutation guard would not keep it out of product builds; a wrong-formula control is now a mutation control in N38b-04's form, the rest planted inputs. Burnside 86,185, 500,500, 3807/4096, drawbar forces, 0.0950/0.0495 and the f32 groupings recomputed and agree."
+    },
+    {
+      "bead": "N28c-25",
+      "kinds": [
+        "request",
+        "contradiction",
+        "convention"
+      ],
+      "what": "The measured-by column named BD-343 for GATE-ATEL-04 (the bisect row is measured and recorded by N28b-03; BD-343 cannot wait for it), omitted N28a-18 for GATE-ATEL-06's refusal clause (it records the part), and left the M1 recorders of -02 and -05 ambiguous, so the declaration's `recorded_by` would name a second or wrong recorder (convention 9); the column and item 2 now name one recorder per part as the owners state it (BD-110/BD-332 for -02, with N28a-29 re-measuring and recording nothing; BD-262/N28b-03 for -04; N28a-29/BD-348 for -05, BD-108 measuring four clauses only; N28a-18 for -06). The F-U28a request's split of -05's M1 part between BD-108 and N28a-29 was not applied as worded: BD-108 and N28a-29 agree that N28a-29 records the whole M1 part from one receipt. The e2e planted its defects in a copy under target/e2e-scratch/ that no runner reads; it now uses `e2e_registries_scratch`."
+    },
+    {
+      "bead": "N28c-26",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "The e2e regenerated DC-01 under 'a scratch copy of the registry' that `frob` does not read, so the regenerated table, the version bump and the 871 case would all be checked against the registry of record; it now uses `e2e_registries_scratch`, and the 871 case names its command (`eval.promote --require-rule table` with a key; without the pin the request completes on the fallback with 871 in warnings, so the refusal would never be seen). All option-table numbers recomputed (16/22/29, 8, 0.0021/0.81, 4.2, 36 pairs) and agree."
+    },
+    {
+      "bead": "N28c-27",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "The e2e ran `xtask check-contracts` 'on scratch copies under target/e2e-scratch/open_atel_2/', which xtask never reads, so the three planted invalid strata files would pass unseen; it now uses `e2e_registries_scratch`, resolved through N32ax-03 (M0), added as a dependency (no cycle). Floor 19, margin indices 38/39/20/19, 0.854 and generation 8 recomputed."
+    },
+    {
+      "bead": "N28c-28",
+      "kinds": [
+        "deadlock"
+      ],
+      "what": "The e2e ran the null race unconditionally 'on the selected branch', but the local race is BD-341's (M4), which depends on this bead, so with the local default in force the M1 script could not pass (convention 7) and contradicted the acceptance's 'every branch that exists'; the script now runs each existing branch and logs a missing one `not-built`, never a pass."
+    },
+    {
+      "bead": "N28c-29",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "The entries gained `same_engine_as`, but the entry schema is closed and N32a-02's later-field table had no row for it, so the registry would fail `unknown-field` at build; the bead now adds the row (string, a registered verb name) with lint `same-engine-mutual` (errors `same-engine-unknown-verb`, `same-engine-not-mutual`), the emitted member, an acceptance item and the lint test, as VERBS-mission and VERBS-result state."
+    },
+    {
+      "bead": "N28c-31",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "The two-fraction scratch `rungs.toml` was a loose copy, so the 548 pooling request through `frob` would read the registry of record (one fraction) and could not be refused for pooling; the copy is now made by `e2e_registries_scratch` (harness and `frob` read the same file) and the 548 request is named with its key. 3.75k break-even recomputed."
+    },
+    {
+      "bead": "N28c-39",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "Step 6 used `$SEED`, which nothing sets, and 'three seeds' unnamed; it now runs at `$FROB_E2E_SEED` and the next two. Step 9's `eval.promote` had no key, so 805 would answer before 872. Step 12 cancelled a repeat of step 7's sweep, which the memo and step 7's rows would complete at once (and the same key would return the stored result), so 'rows for the completed level only' could never hold; it now runs on an emptied state root under its own key. Helper tests are now script checks `rounding`, `coverage-threshold`, `key-absent` (STD-E2E). The FROB_HOME request was already met. Beta(96, 5) tail 0.090 and 0.247 for three draws recomputed."
+    },
+    {
+      "bead": "N28c-42",
+      "kinds": [
+        "broken"
+      ],
+      "what": "Phase `ledger` asserted 'a record per edit, regime and resource' after reading only `--regime warm`, and no cold record can exist there (a cold record is priced only by a control in a fresh state root, and the phase runs no control), so the script would fail on a correct ledger; it now asserts a warm record per edit and resource. It also 'ran the identity on two planted record sets' with no way to feed them in: the example target now reads them with `--records` (fixtures residual-0019.json and residual-003.json, labelled synthetic). 95.91/335.91 = 0.2855, 0.89/240.89 = 0.00369 and 0.9 x 0.8 = 0.72 recomputed."
+    },
+    {
+      "bead": "N28c-44",
+      "kinds": [
+        "request",
+        "registry",
+        "broken"
+      ],
+      "what": "The action was spelt `--run-control`, a per-action flag that NJL-01 action rule 1 and the parity harness N32a-11 forbid (the generated CLI has only `--action run-control`, so every documented command and the e2e would fail as unknown options); now `--action run-control --key <k>` throughout, the e2e key named. The `run` common properties were listed as five; NJL-01 now has six, with `envelope_scope` (`--envelope-scope`), so `run_control_is_a_run_action` would fail; now six. The combined count row read 138, 83, 15, 6, 4, which sums to 246 (NJLx-51's complete registry is 247 with `run` 84; only `read` moves), so the count-mismatch lint would fail; now 138, 84, 15, 6, 4. The uncoded refusal now names its ledger row `reuse-figure-without-column` (N35x-02, held under N35x-01; N28-REF) and its interim form. Routes (a) and (c) of the planted refusals cannot be planted through any verb input, so the script runs them through this bead's tests printing `refusal-fixture` lines; route (b) goes through `frob report campaign`."
+    },
+    {
+      "bead": "N28c-45",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "Step 4 used `--run-control`, which does not exist (NJL-01 action rule 1); now `--action run-control` with its key. The 'helper tests' are now the script checks `manifest-hash`, `identity-residual`, `node-kind-count`, `third-column` and `sum-cell` called with `e2e_check`, tests named `<check>_...` in `e2e_scripts` (STD-E2E). Step 10's placeholder and citation routes, which no verb input can plant, run through N28c-44's tests; the option route goes to `frob report campaign`."
+    },
+    {
+      "bead": "N28cp3-01",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "The tier command was spelt out as `FROB_TEST_SEED=$SEED`, a variable nothing sets; a script written from it would make the receipt at the default seed while the phases ran at FROB_E2E_SEED, and the value cross-check would fail; now `$FROB_E2E_SEED`, the seed `e2e_tier` passes. The phase's helpers were '.bats-style shell tests' run by a Rust test target, which STD-E2E does not provide; they are now the script checks `cores-crosscheck` (step 4) and `cores-status` (step 5), with tests `cores_crosscheck_*` and `cores_status_agreement`. Conformal coverage 19/21 = 0.905 and Beta(38, 2) 5th percentile 0.884 recomputed."
+    },
+    {
+      "bead": "N28cx-01",
+      "kinds": [
+        "plan",
+        "convention",
+        "broken"
+      ],
+      "what": "At its M1 close the phase asserted that `frob schema --verbs --json` lists 883 under `predict.register`, but the `predict` rows enter only with VERBS-predict at M4 (and `experiment` at M3), so the script would fail at M1 on a correct tree; those checks are now `not-due` until the rows exist (NJLx-51 staging, NJL-03's rule). The M4 calls of `predict.register` (a `mutate` verb) carried no key; case 2's change attempt would meet 805 or a stored receipt before the freeze refusal; each call now has its own key. The tests load FROB-REF-883 from the real registry, which N30-REF (M1) writes, but nothing ordered N30-REF first: it is now a dependency (no path either way; both M1), and is removed from `related`."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "VERBS-eval",
+      "what": "N28c-38 gives `eval.compare` the option `--ladder <id>` beside `--budget-curve` (default: the registered default ladder of each design's controller kind; both designs on one ladder, mismatched ladders a schema refusal); the row lists only `budget_curve`. Please add `ladder` (`--ladder <id>`, only with `--budget-curve`; N28c-38) so the option exists in the schema."
+    },
+    {
+      "bead": "N28cp1-01",
+      "what": "Mechanics item 3 builds each KA control 'behind the `conformance` feature'; that feature exposes test-support options, and a planted wrong formula must be a mutation control in N38b-04's form (`cfg(feature = \"nc-<nnnn>\")`, built with `--features gauntlet-mutations,<crate>/nc-<nnnn>`), or the control runner reports it `stale` and the mutation guard does not keep it out of product builds. N28c-24 now says so for the M4 rows."
+    },
+    {
+      "bead": "N28c-03",
+      "what": "Item 5 calls 0.7^3 = 0.343 'an exact wrong-promotion probability' of the scratch table at alpha+ = 1/2; 0.343 is only the chance that the first three pairs are clean. Over the 32-pair budget with alpha- = 1/20 unchanged the exact figure is 0.392, since a run that starts with an exceedance can still promote later (BD-309 and N28c-05 now say 'at least 0.343, 0.392 over the budget'). A test pinned to 0.343 exactly would fail on a correct implementation."
+    },
+    {
+      "bead": "BD-352",
+      "what": "Several mentions call the rare-failure bound the 'stage-5 bound'; in the six-stage cascade it is stage 6 (Qualify), as §28.11 and N28c-10/N28c-21 now say. Please correct the stage number so beads citing it do not drift."
+    },
+    {
+      "bead": "VERBS-cores",
+      "what": "The row text says NJL-01 derives 'variations 10 to 13'; NJL-01 now has variations 1 to 16 (14: `no_memo` from `memo = true`; 15, 16). Please say 'variations 10 to 16' or cite NJL-01 without a range."
+    },
+    {
+      "bead": "VERBS-report",
+      "what": "Same as VERBS-cores: 'variations 10 to 13' should be 'variations 10 to 16' (NJL-01 now has sixteen)."
+    },
+    {
+      "bead": "VERBS-control",
+      "what": "Same as VERBS-cores: 'variations 10 to 13' should be 'variations 10 to 16' (NJL-01 now has sixteen)."
+    },
+    {
+      "bead": "N28c-43",
+      "what": "The e2e phase `controls` says '`design.diff --reuse --run-control` lands later with N28c-44'. There is no `--run-control` flag: the action is selected only with `--action run-control` (NJL-01 action rule 1; VERBS-design), as N28c-44 and N28c-45 now spell it. Please use that spelling so no script copies the flag."
+    },
+    {
+      "bead": "N35x-02",
+      "what": "The list of rows this round does not file gives the studio's two requests as '`8xx`, held, interim 883 with their `detail`'. N28cx-01, which files them, gets `merged` into FROB-REF-883 for `prediction-changed-after-freeze` (883's second clause, rule 1) and `held` only for `prediction-after-outcome` (interim 883 with `detail = \"registration-after-outcome\"`); N30-REF's 883 row records the merge. Please say 'one merged into 883, one held on interim 883 with its detail'."
+    }
+  ],
+  "unchanged": 9,
+  "notes": "No audit graph notes (dependency changes) were addressed to this slice. Reviewed so far: 37 of 37. Unchanged after review: N28c-08, N28c-09, N28c-30, N28c-32, N28c-34, N28c-37, N28c-38, N28c-40, N28c-41. Settled: every bead of the slice was read in full and checked against the VERBS rows, REF/KA/CX rows, the gate register, recomputed numbers, deps and plan_refs; no open defect is left in the slice beads. The lint finding on N28c-06 was partly a false alarm (only the scratch-registry and deadlock parts held). The F-U28a request to split the M1 part of GATE-ATEL-05 between BD-108 and N28a-29 conflicted with the owner beads; N28c-25 follows the owners (N28a-29 records the part, BD-108 measures the four clauses). U28c/coverage.md (not a bead) still calls it the `--run-control` sub-mode at line 112; it should read the action `run-control`, selected with `--action run-control`."
+}

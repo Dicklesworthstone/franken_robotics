@@ -1,0 +1,172 @@
+{
+  "round": 4,
+  "slice": "S-16",
+  "reviewed": 29,
+  "changed": [
+    {
+      "bead": "N25c-07",
+      "kinds": [
+        "request",
+        "registry",
+        "broken"
+      ],
+      "what": "Request applied after checking N40-26 (step 3a enters KILL-AUGUR-FAMILYKERNEL by an introduce amendment, mode pilot-before-funding, decided M4, reads PILOT-FAMILYKERNEL-01, mechanism gated N25c-07) and N25c-06 (its record lists this bead in gated_beads): Considerations said 'No kill gate of its own', so an implementer would not know that fundable --bead N25c-07 blocks on that pilot or which ADR governs the fallback. Now names the gate with its trigger (u > T_base/10 or C1 below the claimed ratio, every symbol defined) and fallback. Also the e2e's solo comparison ran `frob sim run <design> --worlds 1`, i.e. world 0 of seed 0, against a batched world at its own address: any address-dependent draw makes the digests differ on a correct implementation. The solo run now uses the logical world's run seed and `--world-addr` (sim.run row, N16a-12), read from `run show`."
+    },
+    {
+      "bead": "N25c-08",
+      "kinds": [
+        "registry"
+      ],
+      "what": "This bead is in PILOT-FAMILYKERNEL-01's gated_beads (N25c-06), but Considerations named no kill gate; added KILL-AUGUR-FAMILYKERNEL with its effect on `fundable --bead N25c-08` and its fallback (every neighbour simulated). Arithmetic of all unit tests recomputed and correct (0.043233, 0.063891, delta-t 0.005 s, saltation matrix [[-0.5,0],[7.3575,-0.5]], threshold 4.4294 m/s)."
+    },
+    {
+      "bead": "N25c-24",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "Request applied after checking N38a-09 (fundable_bead answers a bead named by no gated_beads by the whole work package; `complete` warns on such records in a multi-mechanism package) and the dependents of the pilot: PILOT-C-40 now fills gated_beads = [BD-359, N25c-25, N25c-26, CARD-T-32] (the mechanism, its shared-input lowering built on BD-359, the gate measurement, the theorem card that also depends on this pilot); the decision N25c-27 is deliberately not listed (convention 10). Without it a held falsifier or an unregistered record of any other WP-66 mechanism (family kernels, transport, labels) would block the dominance beads. The acceptance now checks the list and the absent `complete` warning. Calibration table and shares (0.100, 0.0667, 0.080, 0.7533) recomputed and correct."
+    },
+    {
+      "bead": "N25c-25",
+      "kinds": [
+        "convention",
+        "deadlock"
+      ],
+      "what": "Conventions 7 and 11: the bead's end-to-end section was a step of N25c-26's gate script, a bead that depends on this one, so the bead could not close on its own e2e. It now owns `scripts/e2e/mission_shared_inputs.sh`, built only on its dependencies: the cargo tests (file `crates/frob-mission/tests/shared_inputs.rs` named), the edge and false-regression fixtures through BD-359's `mission.refute --baseline --baseline-policy` with distinct keys, and the planted tick-indexed build (gauntlet-mutations) that must fail both assertions; full NDJSON logging. The bead writes the two fixtures (N25c-26 reuses the edge fixture). Added dep STD-E2E and an acceptance line. Fixture arithmetic (8% regression share; tick 4/5 false regression) checked. Fixtures placed under fixtures/missions/dominance/, the directory convention of the mission beads, and the note on N25c-26 now says it reuses the edge fixture and may run the script as a stage (it does not run it today)."
+    },
+    {
+      "bead": "N25c-36",
+      "kinds": [
+        "convention",
+        "deadlock"
+      ],
+      "what": "Conventions 7 and 11: the e2e was N25c-38's gate script (a dependent). Now owns `scripts/e2e/mission_label_premise.sh`: cargo tests (`label_premise.rs` named), the station-record fixture and its measured, field and late variants through `mission.synthesize` with distinct keys (expected: no tag count, 2 tags, 1 tag, infeasible), and the alias-pair bundle through `prove bundle` and `prove verify` (alias-pair is a first-slice kind written by BD-133 and checked by BD-132, both reached through its deps). The bead writes the fixtures N25c-38 reuses. Added dep STD-E2E and an acceptance line. Fixtures written under fixtures/missions/labels/, the directory N25c-38 reads."
+    },
+    {
+      "bead": "N25c-37",
+      "kinds": [
+        "convention",
+        "deadlock",
+        "broken"
+      ],
+      "what": "Conventions 7 and 11: the e2e was N25c-38's script; it now owns `scripts/e2e/mission_label_histories.sh` (cargo tests in `label_histories.rs`; the three-reading fixture: counts (2,2,2) and 3 attained; the deadline fixture's parametric table 3/32, 7/32, 11/32 mm and the late variant 3/32 mm), with STD-E2E added. The acceptance 'Bundles are accepted by frob-verify' could not pass: the fixed-map count and the two-label threshold rest on colouring-bound objects (the triangle of conflicts, which also appears just above w = 7/32 mm), whose bundle writer is BD-364, not a dependency (BD-363's own script avoids bundling them for the same reason). The line now requires the in-process check before the answer returns (N12p2-01 is reached through BD-363) and leaves bundling and frob-verify to N25c-38, which depends on BD-364. All thresholds recomputed: K_i(w) = b_i +/- (11/32 - w). Fixtures written under fixtures/missions/labels/; the deadline fixture is one parametric query (the bead's DESIGN table of labels on time against threshold) plus labels-deadline-late.fmission, instead of an unregistered `--set labels_on_time` amendment."
+    },
+    {
+      "bead": "N25cp1-01",
+      "kinds": [
+        "registry",
+        "broken"
+      ],
+      "what": "The precondition tested for an outcome `killed: fallback adopted`, which N40-03's closed set (not-fired, fired, not-reached, deferred) does not have, so the check could never match. It now reads the KILL-AUGUR-FACILITY row's decision outcome (`not-fired` to start; `fired` or `not-reached` to close; deferred unavailable at M8) and the stop-rule section of docs/adr/ADR-KILL-AUGUR-FACILITY-M8.md, as N25c-35 records them. Derived timings (50/60, 65/75, 105 s) recomputed and correct."
+    },
+    {
+      "bead": "BD-426",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The hand fixture every child reproduces wrote the saltation matrix with 'impact speed v-' and no sign; KA-092, SPEC-C-16 and N25c-08 define v- < 0 (signed, downward). Read as a positive speed, the lower-left entry -(1+r)g/v- has the wrong sign (N25c-08's 7.3575 becomes -7.3575). Now states v- < 0 as in KA-092. Residual -(r_L - r_R)[[1,0],[g/v-,1]] recomputed and correct."
+    },
+    {
+      "bead": "BD-437",
+      "kinds": [
+        "registry"
+      ],
+      "what": "Said the continuation lane is 'the second repair' of FROB-REF-857; N25-REF lists it inside repair (1) ('a smaller template, or the continuation lane with its label'), repair (2) being 'fix parameters'. An implementer ranking repairs from the epic would put it in the wrong rank. Now says the second alternative of the first repair. alpha-test hand cases (1/12, 1/3, 1/36; 7/36) and the 1,442/4,326/286,720 counts checked."
+    },
+    {
+      "bead": "N25d-07",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "Request applied after checking N38a-09 and N25d-40: PILOT-PLACEMENT-01 now fills gated_beads = [N25d-08], the only mechanism bead its falsifier stops (the pilot's own bead is never gated; N25d-38 and N25e-18, the other dependents of N25d-08, are a Solid battery and another mechanism's pilot). Without it, this record's to-register kill gate would block every WP-67 bead through the package answer. Acceptance checks the list, the absent `complete` warning and that `fundable --bead BD-360` does not name this record. Also the record now follows N25d-40's two owner outcomes: if the ruling stands before the protocol is frozen, kill_gate names KILL-SYNTH-PLACEMENT or the record cites the Solid ruling, instead of writing to-register regardless (a to-register record never funds). Fixtures A to D and both controls recomputed."
+    },
+    {
+      "bead": "N25d-08",
+      "kinds": [
+        "contradiction",
+        "deadlock"
+      ],
+      "what": "Said that if the pilot decides 'existing verbs only' this bead 'shrinks to registering the fixtures as known answers'. That verdict is falsifier-holds, which the funding rule blocks (the record gates this bead), and N41-17 closes such beads withdrawn citing the pilot result, so the shrunken work could never start and an implementer who started it would trip not-ready-no-pilot. Now states the withdrawn close and that KA-652 stays in N25d-38's battery. Shared-policy, basis-only and 1/160 control arithmetic recomputed."
+    },
+    {
+      "bead": "N25d-23",
+      "kinds": [
+        "registry"
+      ],
+      "what": "Same FROB-REF-857 rank error as BD-437 ('the second repair'); now the second alternative of repair (1), quoting N25-REF. alpha arithmetic (z^2+1 at 11i/10: alpha = 21/484), the exact threshold test (13 - 4a)^2 > 153 and the reality and distinctness rules checked against N12p1-01."
+    },
+    {
+      "bead": "N25d-29",
+      "kinds": [
+        "broken"
+      ],
+      "what": "Acceptance appended the experiment's outcome as a [[pilot.result]] to the revalidation-by-implication record (PILOT-REVALIDATE-01). N38a-09 rule 2 accepts a result only under that record's registered protocol hash, which is the 30-amendment campaign of N25a-17, so the append would be rejected. Now the outcome goes into the experiment's own `runs` in experiments.toml (N38a-07), and each verdict arm A wrongly kept under an implication rule is filed as a finding for KILL-AUGUR-REUSE's standing reading (N25a-19, step 6)."
+    },
+    {
+      "bead": "N25d-31",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention 11: the bead's e2e was N25d-32's battery, which depends on it. It now owns `scripts/e2e/augur_refusal_payloads.sh`, built only on its dependencies: the refusal unit tests, then `frob mission check` on five admission fixtures whose checks its deps raise (868, 884, 847, 887 through N25a-02, and 877 through N25b-07; 846's check is N25a-11, not a dependency) asserting code, pointer, retry and ranked repairs, and `mission.synthesize --budget wall_s=0 --key` for 701 exit 4. Added STD-E2E and an acceptance line. Convention 14: rule 4 now states that the envelope refusals 704 and 761 come before 701."
+    },
+    {
+      "bead": "N25d-34",
+      "kinds": [
+        "registry",
+        "convention"
+      ],
+      "what": "VERBS-mission registers `--lowering primary|second|<name>` on mission.synthesize at M1 and names this bead as an extender, but the bead called it 'a DESIGN test option' and did not own adding the role values; its e2e also ran the run verb without --key (convention 5), so the primary and second runs compared could return each other's receipt. Scope now owns the role values; e2e runs each template with `--lowering primary` and `--lowering second` under distinct keys, then the grid test and frob-verify on the six invalid fixtures; new acceptance line. Grid counts (11,520 = 9 x 256 x 5; 561 = 17 x 33), 140/3 and x3 = g(5u0/2 + 3u1/2 + u2/2) checked."
+    },
+    {
+      "bead": "N25d-45",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The census runs comparator QE/SMT engines whose numbers feed an owner decision, but named no pin; N38a-04 requires each conventional-solver tool to be an [[oracle]] row of oracles.toml (family conventional-solvers, out-of-process, release pin), as N25c-24 and N25c-38 do. Without it the brief cannot be reproduced and a version drift goes unseen. Added the pin rule and an acceptance line. FM elimination (u >= 2 against u <= 5/8) and 5/12, u - k = 7 checked."
+    },
+    {
+      "bead": "N25e-01",
+      "kinds": [
+        "registry"
+      ],
+      "what": "PILOT-COUPLING-01 is self-registered in WP-66, which holds several upper-tier mechanisms, but named no gated_beads: N38a-09's `complete` warns, and `fundable --bead` for the proposer, checker and gate script would be answered by the whole package, so another mechanism's held falsifier or unregistered record would block coupling work. Now gated_beads = [N25e-02, N25e-03, N25e-05] (the decision N25ex-01 closes either way and is not listed; the tray stage N25e-04 is in WP-79 and exists only on N25ex-01's not-fired branch); acceptance checks the list and the absent warning. TV 49/50, 24/25 and the mean-mutant 3/4 > 1/2 recomputed."
+    },
+    {
+      "bead": "N25e-08",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The e2e classified N25e-07's `triplet.fmission` and expected non-monotone with exit 2, but that fixture evaluates only 0.500 and 0.550 and leaves 0.525 unresolved, which this detector correctly classifies `constant` with one gap (exit 0): the script would fail on a correct build. The variants also had keys but no command or fixture. Now the bead writes `triplet-full.fmission` (all three points evaluated), its -h2, -k2 and -c05 variants, and the one-change and constant sweeps, each run with its own key; N25e-07's triplet is kept as the gap case asserted constant."
+    },
+    {
+      "bead": "N25e-23",
+      "kinds": [
+        "registry"
+      ],
+      "what": "PILOT-WEAKVAR-01 (WP-66, several mechanisms) had no gated_beads, so the product driver N25e-24 and its gate script N25e-25 would be answered by the whole package. Now gated_beads = [N25e-24, N25e-25]; the decision N25e-26 is not listed. Slab boundaries 1/5, 21/100, 79/100, 4/5, shares 0.58/0.40/0.02 and the 0.02 metamorphic case (0.56/0.40/0.04), and the control's 6 < 14 recomputed."
+    },
+    {
+      "bead": "N25e-40",
+      "kinds": [
+        "registry"
+      ],
+      "what": "PILOT-NUISANCE-01 (WP-66) had no gated_beads; now [N25e-38, N25e-39, N25e-41], the nuisance scope, the four-law probe and the gate script that rest on its pinned truth. Whole margin and probe tables recomputed on the 201 x 201 grid: 4.4994, 4.7240, -13.0598/-10.0162 N; independent 0.2836, -0.0776, -15.0751 N; gaps 0.0129, 0.0662, 0.1090 at t = 1/2 s, none at t <= 1/4 s; nominal loads 29.658, 24.715, 41.152 N."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N25c-38",
+      "what": "Step 4 runs `labels-deadline.fmission` four times (keys `labels-deadline-<n>-<run>`) and the fixture list describes that file as having 'variants with zero to three labels on time'. N25c-37, which owns the deadline mechanism and now writes the fixture for its own e2e under fixtures/missions/labels/, defines it as one parametric query whose answer is the deadline table (one, two, three labels on time: 3/32, 7/32, 11/32 mm) plus a separate `labels-deadline-late.fmission` (every label delivered after commitment: 3/32 mm). Please run step 4 as those two queries (keys `labels-deadline-<run>`, `labels-deadline-late-<run>`) and state that `labels-three-readings`, `labels-station-records` and the deadline fixtures are written by N25c-37 and N25c-36 and read here. Otherwise the gate script asserts four runs of a file with no per-count variants, and two beads author the same fixtures."
+    },
+    {
+      "bead": "N25c-26",
+      "what": "The fixture list names `dominance-edge.fmission` as its own. N25c-25, a dependency, now writes `fixtures/missions/dominance/dominance-edge.fmission` for its own script `scripts/e2e/mission_shared_inputs.sh` (convention 11). Please state that step 3 reads N25c-25's file (and may run that script as a stage), so the edge fixture's numbers (cell 0.30 < x_e <= 0.34, mu2 < 0.32, shares 0.100/0.0667/0.080/0.7533) have one author."
+    }
+  ],
+  "unchanged": 9,
+  "notes": "Unchanged (read in full against the registries, the pilot and gate registers, the conventions and the plan; arithmetic recomputed): BD-425 (holonomy poses), BD-435, N25c-48 (calibration 29.658/24.715/41.152 N), N25cp2-01 (passive and active allocations, Farkas dual, null spaces of rectangle, parallelogram and trapezoid), N25d-28 (15/88 m boundary, forces (160, 112, 128, 0), passive 145 + 7.5v), N25d-36 (0.94176 J; y = (0, 1/2, 1/2) giving 165 > 160; battery fixture names match N25a-07), N25d-42 (inventory 9/0/4), N25d-46 (exit table, 4/3 resolution arithmetic), N25e-27 (s_k prefix rule s = 2; weak20 and even-spread values; NJLx-51 row matches). The three requests addressed to the slice (N25c-07, N25c-24, N25d-07) were checked against N40-26, N38a-09 and N25d-40 and applied; the slice file carried no dependency-audit notes for these beads. Suggested redesign, not made: the pilot register has no notion of a bead that a fallback keeps. N25c-25's lowering rule survives KILL-AUGUR-DOMINANCE, yet listing it in PILOT-C-40's gated_beads (better than the package answer when the pilot passes) blocks it when the falsifier holds; a `kept_by_fallback` list in N38a-09's record, answered Fundable on falsifier-holds, would express the plan's fallback exactly. The slice looks close to settled: the remaining edits were gated_beads on the WP-66 and WP-67 pilot records, own e2e scripts for three label/dominance beads and the refusal bead, and registry alignments (FROB-REF-857's repair rank, --lowering, oracle pins, the v- sign)."
+}

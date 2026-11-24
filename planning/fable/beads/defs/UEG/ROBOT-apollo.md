@@ -80,7 +80,8 @@ robot; the fitted-primitive error per body, with the worst reported.
 - `robot_apollo_n_v_against_largest_bucket_recorded`: the manifest records n_v and whether it exceeds 64, the
   largest capacity of the quoted default set (DESIGN data; the set is the planner's, N17a-05 at M2). The
   planner's behaviour on this robot (a bucket chosen, or the no-shape-class refusal FROB-REF-160 by name) is
-  M2 work, requested of N17a-08's script; this M1 bead does not wait on it.
+  asserted at M2 by step 6a of N17a-08's script, which depends on this bead and reads this manifest; this M1
+  bead does not wait on it.
 - `robot_apollo_loss_report_golden`, `robot_apollo_design_id_pinned`.
 
 ### End-to-end script and logging

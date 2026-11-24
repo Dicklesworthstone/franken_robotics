@@ -1,0 +1,164 @@
+{
+ "round": 4,
+ "slice": "F-U31a-1",
+ "reviewed": 29,
+ "changed": [
+  {
+   "bead": "N31a-01",
+   "kinds": [
+    "convention",
+    "request"
+   ],
+   "what": "Mechanical C11 finding checked: true for the wording, but the bead delivers nothing a `frob` command can reach (no handler, option, refusal or output), so it keeps no script of its own and the test plan now says so with the reason; without it an implementer would invent a script with nothing to call. Removed the false claim that the scripts of N31a-53 to N31a-59 all assert `frob doctor --json` lists the foundry cluster (only N31a-55 and N31a-58 call doctor, and doctor has no cluster listing). Label review-notes-open removed."
+  },
+  {
+   "bead": "N31a-03",
+   "kinds": [
+    "broken",
+    "registry"
+   ],
+   "what": "The re-qualification repair was `frob eval qualify <final design>`; eval.qualify is a run verb whose row requires task, claim and the key, so the repair as printed would itself be refused. Now `frob eval qualify <final design> --task <task> --claim '<claim>' --key <new key>` with the task and claim of the request whose verdict admitted the starting design."
+  },
+  {
+   "bead": "N31a-04",
+   "kinds": [
+    "broken"
+   ],
+   "what": "E2E step 5 ran `cargo test -p frob-foundry -- sib::group_absent_refuses_790` as 'the build without the structure group', but `structure` is a default feature of frob-foundry (N31a-01), so the group was compiled in and the 790 path was never tested; now `--no-default-features`. References named FD-FSIM-25 (fs-asbuilt, chapter 30) in the range; now FD-FSIM-26 to -30 as the body says."
+  },
+  {
+   "bead": "N31a-05",
+   "kinds": [
+    "deadlock",
+    "plan"
+   ],
+   "what": "Received the loop-level test of the KILL-LOADS path that N31a-13 could not own (N31a-13's `loop_closes_on_declared_loads` needed this loop machine, which depends on N31a-13 through N31a-61, BD-402 and BD-400: convention 7). The campaign stage now states that a generated declared set is regenerated for each d_k with N31a-13's `declared::regenerate` under the iteration-0 generator parameters (their hash is what the spec-hash guard compares), every record labelled `loads: declared (factor k)` and `fatigue: no-claim`; new acceptance criterion and unit test `loop_closes_on_declared_loads` (planted-gain fixture within five iterations). N31a-13 moved from related to deps (no cycle: graph_check). Without this the declared-load fallback of KILL-LOADS had no test anywhere that the loop closes on it."
+  },
+  {
+   "bead": "N31a-07",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request applied after checking N31-REF's row 167 as it stands: the off-port refusal's repairs now follow the row order (repair 1 left out for a campaign failure; repair 2 rendered as 'declare a contact port on link L' first; repair 3, re-run on the referee for the named worlds; repair 4 in its off-port form, 'review the gait'), in step 6, the acceptance criterion and a new unit test. The bead had no end-to-end script of its own (only N31a-53's, a later bead that depends on it: conventions 7 and 11); it now owns scripts/e2e/foundry_freebody.sh built on N31a-06's campaign::submit, measuring the first clause of GATE-FOUNDRY-02 per tier with the structured logging, and the gate acceptance no longer suggests that this bead records the gate (N31a-53 is the recorder, convention 9). Added dep STD-E2E. Label review-notes-open removed."
+  },
+  {
+   "bead": "N31a-13",
+   "kinds": [
+    "deadlock",
+    "broken"
+   ],
+   "what": "The criterion 'the structure loop runs to convergence on declared loads' and the unit test `loop_closes_on_declared_loads` needed the loop machine N31a-05, which depends on this bead (N31a-05 -> N31a-61 -> BD-402 -> BD-400 -> N31a-13): the bead could never close. It now owns `declared::regenerate(set, design)`, the hook the loop calls, with a criterion and test `regenerate_follows_mass` (each of the four shanks +0.025 kg in one class edit, robot 15.1 kg, centre of mass unchanged: 3 x 15.1 x 9.80665/2 = 222.1206225 N per supporting foot at k = 3); the loop-level test moved to N31a-05. The e2e example wrote `--out <scratch>/declared.toml` for a set whose format `frob.foundry.declared-loads/1` is JSON; now `declared.json`."
+  },
+  {
+   "bead": "N31a-15",
+   "kinds": [
+    "deadlock",
+    "broken"
+   ],
+   "what": "The f_floor term 5 x f99 uses the class's load band, which N31a-12 computes, but N31a-12 was not a dep: added (no cycle). The criterion 'the loop falls back to the beam section' tested the loop N31a-05 (which depends on this bead via N31a-23 and N31a-17) and BD-403's criterion; it now asks for the finding with the governing case, the three repairs and the beam-section mark, and step 8 says the fallback is BD-403's and N31a-05's. E2E step 4 took 'the regions and envelope cases of N31b-06's frozen fixture' for every link class, but that fixture holds one class (the lower leg), so the per-class budget run could not be fed; the example now builds each class's region with N31a-14 and its envelope cases with N31a-10 over N31a-06's small campaign (instances unioned by N31a-11) and logs the class count."
+  },
+  {
+   "bead": "N31a-16",
+   "kinds": [
+    "deadlock",
+    "registry"
+   ],
+   "what": "The plate rung reads the `sheet` process card (stock thicknesses, minimum feature size, kerf radius) defined by N31a-26 and the beam-rung estimate of BD-401, but depended on neither: added both (N31a-26 moved from related; no cycle). Step 3 named a 'cutter's kerf limit' and step 4 a 'sheet stock card' that no card has; now the card's `stock_thickness_m`, `min_feature_size_m` and `kerf_radius_m`. The plate-with-hole known answer claimed it was registered 'as an additional case' by this bead; it is derived value F-12 of N31-KA Part 4 (convention 13)."
+  },
+  {
+   "bead": "N31a-19",
+   "kinds": [
+    "contradiction",
+    "plan"
+   ],
+   "what": "The criterion 'elements within one boss diameter of an interface never govern' contradicted KA-738's planted overstress 'located at the root' when the root is the restrained end; step 3 now says the zone is drawn around declared port bosses and the cantilever fixtures declare none (their wall end is a port face under its affine traction), so the gate's root location can pass. The planted defect `unsigned-load-direction` was said to be caught by 'a combined bending and axial fixture' that no test defined; new unit test `combined_bending_and_axial_signed` (50 N down plus 1,000 N axial tension: +35 MPa top fibre, -25 MPa bottom, governing at the top; the defect moves the peak to the bottom)."
+  },
+  {
+   "bead": "N31a-20",
+   "kinds": [
+    "broken",
+    "plan"
+   ],
+   "what": "The buckling eigenproblem had no stated restraint, and the stress solve's 3-2-1 restraint leaves the distal port free to sway, under which the pinned Euler tube cannot give 8,558 N (lambda1 2.14 at 4,000 N). Step 1 now fixes the stability restraint by the port pattern of BD-401's factor K (pinned ports, K = 1; a single-port member held in full, K = 2), and a fourth planted defect `stability-on-3-2-1-restraint` (lambda1 at most 0.53) is caught by `euler_tube_pinned`; counts of planted defects updated."
+  },
+  {
+   "bead": "N31a-21",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The planted defect `feed-von-mises` is the defect N31-CX row CX-339 registers as `unsigned-von-mises` in this module's spectrum builder; renamed to the registry's name (as `finish-per-window` already follows CX-338), so the control registry does not carry two names for one defect."
+  },
+  {
+   "bead": "N31a-22",
+   "kinds": [
+    "registry"
+   ],
+   "what": "FROB-REF-163's row orders its repairs 1 supply the field, 2 accept `fatigue: no-claim`, 3 use a card that has it. The static-field refusal now says it renders 1 and 3 with 2 omitted as inapplicable (as N31a-52's test `inapplicable_repair_omitted` expects), and the `--require fatigue` refusal, which offered one repair, now renders the row's three in order; the criterion and unit test say so."
+  },
+  {
+   "bead": "N31a-25",
+   "kinds": [
+    "plan"
+   ],
+   "what": "The acceptance criterion requires a planted defect (a re-run that reuses the previous loop's geometry without re-checking) to be caught by the stage-record hash mismatch, but no test or plant of that name existed, so the negative control could not be shown. Added planted defect `reuse-geometry-without-recheck`, caught by `structure_loop_restarts_after_swap`; counts of planted defects updated in the script and known-answer sections."
+  },
+  {
+   "bead": "N31a-26",
+   "kinds": [
+    "contradiction",
+    "deadlock"
+   ],
+   "what": "The dispatcher's `sheet` row omitted enclosed voids, while the plan's table applies the void check to all processes and N31a-27 treats a void in a sheet part as a violation; the row now lists it. The criterion 'a made part without a process declaration cannot be checked or packed' tested packing, which is N31a-43's fab-to-parts consistency check (a later bead depending on this one); it now asks for the schema refusal naming the part and points the packing half to N31a-43."
+  },
+  {
+   "bead": "N31a-27",
+   "kinds": [
+    "contradiction",
+    "plan"
+   ],
+   "what": "N31a-26's dispatcher runs 'corner radius against kerf' on `sheet` parts and names N31a-27 and N31a-28 as the only Foundry evaluators, but neither defined that check, so the sheet row had nothing to run. Step 2 now gives the sheet rule (flat-cutter rule with the sheet normal as the one setup, limit `kerf_radius_m`), with unit test `sheet_corner_against_kerf` (0.3 mm corner against a 0.5 mm kerf radius at h = 0.05 mm: measured 0.3 +/- 0.05, difference 0.2 mm; 0.6 mm passes)."
+  },
+  {
+   "bead": "N31a-29",
+   "kinds": [
+    "broken"
+   ],
+   "what": "xi_full was defined as the fixed point of xi = smin(1, 5^(1/Q)*xi), which is 1.0044881, while the P-norm of five equal supports is 5^(1/Q)*xi^(P/Q) and the dense block actually settles at 1.0044911 (the value the bead and its tests print). An implementer computing xi_full from the stated formula would store 1.0044881, the dense block would output 1.000003 and `output_in_unit_interval` would fail. Formula corrected, with the wrong value named."
+  },
+  {
+   "bead": "N31a-30",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "The clean-margin rule filleted internal edges above 'the card's smallest cutter radius', which a `sheet` card does not have; with the sheet corner check against `kerf_radius_m` (N31a-26's dispatcher, N31a-27) a generator following the rule literally could leave the clean sheet plate (row 18) with corners the check flags. The rule now names `kerf_radius_m` for sheet cards."
+  },
+  {
+   "bead": "N31a-31",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "The sensitivity table and the class rule spoke of Certified results, while INV-FOUNDRY-06 and N31a-01's `FoundryValue` (compile-fail tested) forbid any Foundry result above Estimated and N31b-18 reports boxes as Estimated with Certified inputs. Step 8 now says the table's classes are input classes, every allocation, stack or box built on them is Estimated with `weakest` naming the weakest input, and `weakest_class_rule` adds the all-Certified case (still Estimated, inputs listed)."
+  },
+  {
+   "bead": "N31a-32",
+   "kinds": [
+    "contradiction",
+    "registry"
+   ],
+   "what": "Step 10 gave the verb's result 'the weakest class among sensitivities and inputs', which would be Certified for an all-kinematic stack, against INV-FOUNDRY-06 and VERBS-foundry's tolerance row (evidence class Estimated). The result is now Estimated with `weakest` naming the weakest input; the class criterion says so."
+  },
+  {
+   "bead": "N31a-33",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "A passing worst-case box was called 'class Certified when q's sensitivity inputs are', contradicting INV-FOUNDRY-06, N31a-01's type ceiling and N31b-18 (which reports the same boxes as Estimated with Certified inputs). Now the box is reported Estimated and lists its Certified inputs as justification."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [],
+ "unchanged": 9,
+ "notes": "Slice complete: all 29 beads read in full. Unchanged after review (found right): N31a-02, N31a-06, N31a-12, N31a-17, N31a-18, N31a-23, N31a-24, N31a-28, N31a-34. Both notes addressed to the slice (the C11 finding on N31a-01, the request to N31a-07) were checked and applied. No dependency-audit notes were addressed to this slice. Dependencies added: N31a-13 to N31a-05 (moved from related), N31a-12 to N31a-15, BD-401 and N31a-26 to N31a-16 (N31a-26 moved from related), STD-E2E to N31a-07; graph_check reports no cycle after the changes. N31a-06 lists BD-260 (the GATE-QUAL-01 measurement, M3) as a dep it does not need; harmless since that bead closes long before M5, left as is. Seen outside the slice, not edited: mechanism beads N31a-08 to N31a-11 and N31a-14 have no end-to-end script of their own (convention 11), as N31a-07 lacked before this round. Gate rows: the beads with GATE-FOUNDRY-01, -03, -04, -05, -06, -07, -08 in `gates` were checked against N31b-12; none records a gate itself (recorders are N31a-53, -54, -55, -56 and N31b-13), so no change was needed for convention 9."
+}

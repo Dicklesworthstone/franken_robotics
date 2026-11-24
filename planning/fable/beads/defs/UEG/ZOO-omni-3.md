@@ -44,8 +44,10 @@ Inverse: v_x = (r/3)·(−2ω₁ + ω₂ + ω₃), v_y = (r/√3)·(−ω₂ + �
 det M = (3√3/2)·R, non-zero for every R > 0.
 
 **Symmetry.** Γ_mech as built: D₃ (order 6): the rotation by 120° (wheel 3-cycle) and three reflections, each
-through one wheel. Default Γ_obs: D₃. Breaker: a forward sensor leaves the one reflection through the forward
-wheel (C₂) if a wheel lies on the forward axis, and nothing otherwise.
+through one wheel. Default Γ_obs: D₃. Breaker: the forward axis is +x, and the three reflection axes lie at
+90°, 30° and 150° (each through one wheel and the opposite edge's midpoint), none along x, so a forward
+sensor on +x leaves Γ_obs trivial with the sensor mount as breaker (the expectation row); mounted on +y,
+through wheel 1, it would leave the reflection through that wheel (C₂).
 
 **What preflight must report (stages 1 to 6 at defaults; no refusal).** Stage 3: tree mobility 9. Stage 4: map
 of rank 3; growth vector (3); class `omnidirectional`. Stage 5: D₃ with generators; the assertion accepted.

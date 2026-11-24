@@ -4,11 +4,11 @@ title: "registry: Habitat known answers KA-426 to KA-464 with truths, tolerances
 type: "task"
 priority: 1
 milestone: "M2"
-labels: ["m2", "habitat", "frob-conformance", "frob-scene", "solid", "registry", "test"]
+labels: ["m2", "habitat", "frob-conformance", "frob-scene", "solid", "registry", "test", "review-notes-open"]
 parent: "WP-17"
-deps: ["BD-025", "N38a-12", "N38b-05", "STD-E2E", "STD-TEST"]
+deps: ["BD-025", "N38a-12", "N38b-05", "N38b-53", "N38b-54", "STD-E2E", "STD-TEST"]
 needs: []
-related: ["N19-REF", "N19a-09", "N19a-14", "N19a-15", "N19a-16", "N19a-21", "N19a-22", "N19a-24", "N19a-25", "N19a-26", "N19a-31", "N19a-32", "N19a-35", "N19a-37", "N19b-05", "N19c-16", "N19c-22", "N19c-23", "N19c-27", "N19c-28", "N19c-29", "N38-KA", "N38a-13", "N38b-27", "N38b-28", "N38b-32", "N38b-53", "N38b-54", "NEG-12"]
+related: ["N19-REF", "N19a-09", "N19a-14", "N19a-15", "N19a-16", "N19a-21", "N19a-22", "N19a-24", "N19a-25", "N19a-26", "N19a-31", "N19a-32", "N19a-35", "N19a-37", "N19b-05", "N19c-16", "N19c-22", "N19c-23", "N19c-27", "N19c-28", "N19c-29", "N38-KA", "N38a-13", "N38b-27", "N38b-28", "N38b-32", "NEG-12"]
 gates: []
 plan_refs: ["Appendix M.18", "§19.18", "§19.19"]
 ---
@@ -38,8 +38,9 @@ implementing the tests (each row names the bead that carries it); the counterexa
 registry of this chapter (N19-CX and N19-REF); the runner that executes the chapter's eighteen cases as one
 battery (N19c-28), which also enters the eight late answers of §19.21 and §19.22 (below); the G1 run per milestone and its account (N38a-13); the controls proposed for the 21 rows that
 state none (N38b-32, which depends on this bead and registers them with `seed = "KA-nnn"`); the tolerances of
-the nine rows printed "to set" (N38b-27); the settlement of the two arithmetic discrepancies KA-445 (N38b-53) and
-KA-460 (N38b-54).
+the eight rows still "to set" (N38b-27; the plan printed nine, and the ninth, KA-445, is exact under N38b-53's
+settlement); the settlement of the two arithmetic discrepancies KA-445 (N38b-53) and KA-460 (N38b-54), whose
+settled truths this bead enters.
 
 ## Technical approach
 
@@ -88,7 +89,7 @@ KA-460 (N38b-54).
 | KA-442 | Advected film with pickup and redeposition | Total volume, cells plus reservoirs, is constant (INV-HAB-07); no trace in another world | Relative volume residual at most 10⁻⁶ over 10⁵ steps; no cross-world leak in 10⁶ world-episodes (GATE-HAB-07) | G1 · all tiers | The non-conservative control fails the mass gate | BD-413; later unit |
 | KA-443 | Viscous spreading of a constant volume on a flat floor | Radius ∝ t^(1/8) in the axisymmetric case; front position ∝ t^(1/5) in the planar case | Exponent within 2% of 1/8 (GATE-HAB-07) | G1 · all tiers | Removing the h³ factor changes the exponent | BD-413; later unit |
 | KA-444 | Film thickness limit of the explicit update | h_max = (3ν·Δx² / (4·g·Δt))^(1/3): 2.5 mm for water at Δx = 2 cm and Δt = 2 ms; 10 mm for a 65 mm²/s oil | to set | G1 · host | A 4 mm film of water is refused or sub-cycled at admission (`FROB-REF-307`) | BD-413; later unit |
-| KA-445 | Film tile storage | A tile of 16 × 16 cells is 1,024 bytes of thickness; a 6 m × 6 m floor fully wet at 2 cm: the list says 352 tiles, about 360 kB per world; the chapter counts whole tiles, 19 × 19 = 361, about 370 kB (see discrepancies); a 1 m² spill is about 16 kB | to set | G1 · host | none stated | BD-413; later unit |
+| KA-445 | Film tile storage | A tile of 16 × 16 cells is 1,024 bytes of thickness; whole tiles of side s = 0.32 m at 2 cm, ⌈a/s⌉·⌈b/s⌉ when the area is aligned with the tile grid and at most (⌈a/s⌉ + 1)·(⌈b/s⌉ + 1) when it is not: a 6 m × 6 m floor fully wet is 361 tiles aligned (369,664 bytes, about 370 kB per world) and at most 400 misaligned; a 1 m × 1 m spill is 16 tiles aligned (16,384 bytes, about 16 kB) and at most 25 misaligned (N38b-53, REC-04; derivation `docs/derivations/film-tile-count.md`; the list printed 352 tiles, about 360 kB, see discrepancies) | exact (integers; rule 1 of N38b-27, settled by N38b-53) | G1 · host | none stated | BD-413; later unit |
 | KA-446 | Slosh, first antisymmetric mode of a rectangular container | ω_n² = ((2n − 1)·π·g / L)·tanh((2n − 1)·π·h / L); for L = 0.30 m and h = 0.10 m, ω₁ = 8.96 rad/s (1.43 Hz) | within 3% at three fill depths (GATE-HAB-08) | G1 · all tiers | Halving the fill must lower the frequency | BD-414; cited by N19a-37 |
 | KA-447 | Hanging chain, 1.2 m between supports 1.0 m apart | Sag 0.292 m (the catenary, with parameter a solving 1.2 = 2a·sinh(0.5/a)); 20 links reproduce it | within 2% at 20 links (TARGET, GATE-HAB-08) | G1 · referee | A chain with no bending limit and one link fails | BD-415; later unit |
 | KA-448 | Right-angle corridor: a rectangle of width b and length L between corridors of width a (b < a) | Passes if and only if L ≤ 2√2·a − 2b; derivation: with the outer long side touching both outer walls at inclination θ, L ≤ (a·sin θ + a·cos θ − b) / (sin θ·cos θ), smallest at θ = 45°; 1.346 m at a = 0.90 m, b = 0.60 m (a 1.30 m body passes, a 1.40 m body does not). The complex returns a witness below the limit minus its band and a cut above the limit plus its band | Bracketed by witness and cut within the refined band on 100 (a, b) pairs (GATE-HAB-10) | G1 · host | Inscribed and circumscribed disc tests are both wrong | BD-233; cited by BD-234, N19a-32 |
@@ -103,7 +104,7 @@ KA-460 (N38b-54).
 | KA-457 | Feasibility counts in split manifests | Counts of `witnessed`, `impossible` and `unresolved` scenes equal a recount; no scene resampled (INV-HAB-05) | exact (GATE-HAB-14) | G1 · host | none stated | N19a-26, N19a-45, BD-235 |
 | KA-458 | Mutable-state leak: wet a tile in world i, reset, read world j and the next episode of world i | No trace outside the declared persistence (INV-HAB-03) | exact | G5 · all tiers | A pool indexed without the world address fails | N19a-09, N19a-43 |
 | KA-459 | Dense scene memory, samples = volume / spacing³ and bytes = 2 × samples | Home (300 m³): 9 MB at 4 cm, 75 MB at 2 cm, 0.6 GB at 1 cm. Warehouse (19,200 m³): 0.6 GB, 4.8 GB, 38 GB. Building (57,600 m³): 1.8 GB, 14.4 GB, 115 GB. Band fraction min(1, (A/V)·t·s) for t = 8 to 20 voxels; 2 cm band bricks with labels 45–84 MB, 1.6–3.9 GB, 2.9–7.3 GB. Checked from a recount of compiled bricks | exact for dense figures; band figures are hypotheses measured at GATE-HAB-13 | G1 · host | none stated | BD-164 |
-| KA-460 | Resident scene counts from the dense figures (12–16 GB of a 24 GB card; 85% of the measured working-set limit on the M5 Ultra, about 189 GiB) | One RTX 4090 and M5 Ultra, as listed: home at 2 cm 160–210 and about 2,500; home at 1 cm 20–27 and about 320; warehouse at 4 cm 20–27 and about 320; warehouse at 2 cm 2–3 and about 40; warehouse at 1 cm none and 4; building at 2 cm at most 1 and 13; building at 1 cm none and 1. The chapter's table gives about 2,700, 340, 340, 42, 5, 14 and 1 for the M5 Ultra (see discrepancies) | exact arithmetic; measured counts are recorded against the table (GATE-HAB-12) | G1 · host | none stated | BD-236 |
+| KA-460 | Resident scene counts from the dense figures (12–16 GB of a 24 GB card; 85% of the measured working-set limit on the M5 Ultra, about 189 GiB, whose table budget is the fixture of exactly 203 × 10⁹ bytes that N19c-16 and N36-16 pin) | Whole scenes ⌊budget/size⌋, both in bytes, with KA-459's sizes in decimal units (N38b-54, REC-05). One RTX 4090 at 12–16 GB, then M5 Ultra at 203 × 10⁹ bytes: home at 2 cm (75 MB) 160–213 (printed 160–210) and 2,706; home at 1 cm (0.6 GB) 20–26 (printed 20–27) and 338; warehouse at 4 cm (0.6 GB) 20–26 and 338; warehouse at 2 cm (4.8 GB) 2–3 and 42; warehouse at 1 cm (38.4 GB) none and 5; building at 2 cm (14.4 GB) at most 1 and 14; building at 1 cm (115.2 GB) none and 1. The chapter prints the workstation column as about 2,700, 340, 340, 42, 5, 14 and 1; the list's 2,500, 320, 320, 40, 4, 13 and 1 are kept in `printed` (see discrepancies) | exact arithmetic; measured counts are recorded against the table (GATE-HAB-12) | G1 · host | none stated | BD-236 |
 | KA-461 | One scene per world | 8,192 worlds each with its own 2 cm home is 8,192 × 75 MB = 614 GB, 26 times a 24 GB card and more than twice the working set of the large-memory machine | exact | G1 · host | none stated | BD-164; cited by N19a-03, N19a-09 |
 | KA-462 | Variant directory size | One 32-bit slot and one 16-bit coarse sample per coarse cell, 6 bytes per cell: 0.44 MB for the home and 28 MB for the warehouse at the default spacings | to set | G1 · host | none stated | BD-164 |
 | KA-463 | Brick pool against the dense field | The pooled field equals the dense field bit for bit at 10⁶ points per scene | exact (GATE-HAB-13) | G1 · all tiers | (set: BD-164) a directory remap with an off-by-one slot | BD-164 (the host test), N19c-17 (the G1 entry on the host and on each device tier, and the gate record) |
@@ -112,8 +113,9 @@ KA-460 (N38b-54).
 **Cells set by their owners.** Five of the 21 controls printed `none stated` are named by the rows' carriers and
 carried here marked "(set: <bead>)" (KA-432, KA-433, KA-435 by N19a-24; KA-455 by BD-369; KA-463 by BD-164), and
 BD-231 sets the tolerance of KA-440's free-slab clause. The other 16 controls are N38b-32's to register (its table
-proposes one for each, and, where an owner's record exists, links or adds its own as a second record); the nine
-tolerances stay with N38b-27, KA-440's castor force among them. The fail-closed reading holds for every open cell.
+proposes one for each, and, where an owner's record exists, links or adds its own as a second record); the eight
+tolerances still unset stay with N38b-27, KA-440's castor force among them, and KA-445's is `exact` from
+N38b-53's settlement. The fail-closed reading holds for every open cell.
 
 **A boundary-only control.** KA-444's printed control ("a 4 mm film of water is refused or sub-cycled at
 admission", `FROB-REF-307`) restates a refusal, so the loader flags the row `boundary-only` (N38a-12) until
@@ -140,13 +142,19 @@ through a dry room (recomputed at review: HKA-D and HKA-E agree).
      the film law's own gate) say within 2%. The gate governs: `tolerance = { kind = "gate", value = "2%" }`,
      `printed = "within 1%"`.
    - KA-445 tile count: the list says 352 tiles and about 360 kB; the chapter counts whole tiles of 0.32 m,
-     19 × 19 = 361 and about 370 kB. Whole tiles are what is allocated: 361. The counting rule and the row's final
-     truth are settled by N38b-53 (REC-04); until then the row stays `to-set` with `printed = "352 tiles, about
-     360 kB"`.
-   - KA-460 M5 Ultra counts: the list's figures correspond to dividing 189 by the scene size in GB; the chapter's
-     correspond to about 203 GB (189 GiB), for example 203 GB / 75 MB ≈ 2,700 homes at 2 cm. The budget is stated
-     as 189 GiB, so the chapter's figures are the consistent arithmetic; the record carries them as truth with the
-     list's figures in `printed`, and N38b-54 (gigabytes against gibibytes at 85%) settles the rule.
+     19 × 19 = 361 and about 370 kB. Whole tiles are what is allocated. N38b-53 (REC-04) settles the counting
+     rule as whole tiles: the record's truth is 361 and 16 tiles aligned, at most 400 and 25 misaligned, 1,024
+     bytes per tile, tolerance `exact` (reason: rule 1, integers), derivation `docs/derivations/film-tile-count.md`
+     (which keeps the area ratio 351.6 as a lower bound, not a count), with `printed = "352 tiles, about 360 kB"`.
+   - KA-460 M5 Ultra counts: the list's figures correspond to dividing the number 189 (a budget in GiB) by the
+     scene size in GB (189 / 0.075 = 2,520, printed "about 2,500"); the chapter's correspond to about 203 GB
+     (189 GiB). N38b-54 (REC-05) settles the rule: budgets in binary units with the byte count as the authority,
+     counts as whole scenes ⌊budget/size⌋ in bytes, and the table's workstation budget the fixture of exactly
+     203 × 10⁹ bytes (85% of 222.7 GiB is 189.295 GiB = 203.25 GB, printed 203 GB; N19c-16 and N36-16 pin it, and
+     a run uses the measured budget). The record's truth is the column 2,706, 338, 338, 42, 5, 14 and 1 (the
+     chapter prints about 2,700, 340, 340, 42, 5, 14, 1), with the list's column in `printed`. Dividing 189 GiB
+     itself (202.937 GB) would give 2,705 homes and the rounded 222 GiB of Appendix M.38 2,701: neither is the
+     truth.
    - KA-439 limit label: the list calls Λ ≤ 1 the "dry limit"; the chapter (§19.10.2) says the blend weights
      boundary contact fully below Λ = 1, so it is the boundary limit, μ = μ_b. The dry limit is a different
      clause: a film of thickness h₀ = 0 returns the dry card's μ_d bit for bit, and a squeezed film recovers to
@@ -171,8 +179,12 @@ through a dry room (recomputed at review: HKA-D and HKA-E agree).
       are reported ineligible, never passed; the five owner-set controls carry the owner's text.
 - [ ] The citation lint passes for rows due at M2 and lists, by bead, the later rows not yet cited.
 - [ ] The report of unset tolerances lists exactly the rows marked "to set" (KA-433, KA-435, KA-439, KA-440's
-      force, KA-444, KA-445, KA-449, KA-453's coefficients, KA-462) and shrinks only by a recorded decision
+      force, KA-444, KA-449, KA-453's coefficients, KA-462) and shrinks only by a recorded decision
       (N38b-27).
+- [ ] KA-445 and KA-460 carry the settled truths of N38b-53 and N38b-54: 361 and 16 tiles aligned, at most 400
+      and 25 misaligned, tolerance `exact`, derivation `docs/derivations/film-tile-count.md`; the workstation
+      column 2,706, 338, 338, 42, 5, 14 and 1 from the 203 × 10⁹-byte fixture budget and the card column 160–213,
+      20–26, 20–26, 2–3, 0, 0–1 and 0; each with the list's figures in `printed`.
 - [ ] The four discrepancies with the list are recorded with both readings, the printed value in `printed` and
       the reading in force; KA-439's truth carries the capped viscous term that BD-230 settled.
 - [ ] Expected values in the registry are literals with their derivation cited; none is produced by the code
@@ -193,7 +205,7 @@ loader; planted registries are scratch copies labelled `synthetic`):
   (the GATE-HAB-01 rows KA-426 and KA-427, the brick layout KA-428, and the pool and memory rows KA-459 and
   KA-461 to KA-463 carried by BD-164) is cited once those beads close; the rest are listed by bead and milestone.
 - `habitat_derivation_files_present`: each record's `derivation` exists and lists the record's id.
-- `unset_tolerances_listed`: the unset set equals the expected nine.
+- `unset_tolerances_listed`: the unset set equals the expected eight; KA-445 is not in it.
 - `none_stated_rows_ineligible`: of the 21 rows without a printed control (KA-427, KA-428, KA-432, KA-433, KA-435,
   KA-437, KA-439, KA-445, KA-449, KA-450, KA-451, KA-453, KA-454, KA-455, KA-457, KA-459, KA-460, KA-461,
   KA-462, KA-463, KA-464), the 16 not set by their owners are reported `obligation: control` until N38b-32
@@ -203,8 +215,12 @@ loader; planted registries are scratch copies labelled `synthetic`):
   tan α = 4/3 and 0.75; ω₁ = 8.96 rad/s; 2√2·0.90 − 1.20 = 1.346 m; 35.4 mm + 39.3 mm = 74.6 mm; 240 × 160 × 32 =
   1,228,800 cells and 4.69 MiB; 40 + 780 + 9,880 = 10,700; 8,192 × 75 MB = 614 GB; √(2·9.81·0.020) = 0.63 m/s;
   the catenary sag 0.292 m from 1.2 = 2a·sinh(0.5/a) (a = 0.46954, sag 0.29234 m); h_max = 2.48 mm for water and
-  9.98 mm for the 65 mm²/s oil; 0.44 MB and 28 MB at 6 bytes per coarse cell of 16 cm (KA-462); 189 GiB =
-  202.9 GB and 202.9 GB / 75 MB = 2,706 (KA-460, both readings).
+  9.98 mm for the 65 mm²/s oil; 0.44 MB and 28 MB at 6 bytes per coarse cell of 16 cm (KA-462); ⌈6/0.32⌉² = 361
+  tiles and 361 × 1,024 = 369,664 bytes, ⌈1/0.32⌉² = 16, misaligned 20² = 400 and 5² = 25 (KA-445); KA-460 from
+  the fixture budget of exactly 203 × 10⁹ bytes: ⌊203 × 10⁹ / (75 × 10⁶)⌋ = 2,706 and 338, 338, 42, 5, 14 and 1
+  for 0.6, 0.6, 4.8, 38.4, 14.4 and 115.2 GB, the card column 160–213 and 20–26 from 12–16 GB, while 189 GiB
+  (202.937 GB) / 75 MB gives 2,705 and is not the truth; the list's reading 189 / 0.075 = 2,520 reproduces its
+  `printed` column (both readings).
 - `recompute_catches_planted_value` (negative control): a scratch copy of the registry with KA-448's truth edited
   to 1.400 m and KA-438's first time to 0.0400 s makes `arithmetic_rows_recompute` fail on exactly those two rows.
 - `to_set_row_cannot_support_gate` (negative control): a planted gate citation of KA-433 while its tolerance is
@@ -248,7 +264,7 @@ that carry them.
 
 ## Considerations
 
-- Nine rows have tolerances still to set; setting one is a recorded decision, taken from measured values on the
+- Eight rows have tolerances still to set; setting one is a recorded decision, taken from measured values on the
   fixture, before the gate that needs it.
 - Rows carried by later units (film, slosh, proxies, clearance, retrofit, hygiene, bank) are listed here in full
   so that the registry is complete even if those beads cite only numbers.

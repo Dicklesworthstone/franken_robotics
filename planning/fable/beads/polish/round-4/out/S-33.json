@@ -1,0 +1,305 @@
+{
+ "round": 4,
+ "slice": "S-33",
+ "reviewed": 37,
+ "changed": [
+  {
+   "bead": "GB-01",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Acceptance said the test 'catches both controls' while gb_01_controls defines three (mislabelled retraction, first-order update, rounded boundary comparison); an implementer registering two [[control]] entries would drop one, most likely (c), the only guard of the exact-sign rule at the 0.2 bound. Now 'all three controls'. Every golden recomputed and equal (θ_c, ε, lag, the bisection root, the boundary pair +3.6e-18 / -7.5e-18)."
+  },
+  {
+   "bead": "GB-04",
+   "kinds": [
+    "request"
+   ],
+   "what": "Request from S-34 applied after checking NEG-14 step 3 and the engine (N38b-50: no negative condition; exemption (d) is a marker on the line): every line of registries/cards/GB-04.toml that prints 0.48 um (the uncentred row and the flip's sentence) carries `# stale-as-control: E7-K1`, said in the Technical approach (new paragraph \"Marked lines\"), in acceptance and in gb_04_reference (a text check on the card file; the scan itself is NEG-02's step 7). Otherwise E7-K1's entry (\\b0\\.48 ?[µμu]m in cell/offset/anchor/spacing text, scanned from M0) fires on the card file, which is in the walk set, and stale_values_absent fails on a clean tree at M2. Goldens recomputed and equal (2^-17, 2^-14, 2^-22, 2^-21, 2^-19 m; 0.0813802; 3.18e-4; 0.3% at 1e6 N/m)."
+  },
+  {
+   "bead": "GB-05",
+   "kinds": [
+    "registry",
+    "request"
+   ],
+   "what": "The surface said analyze.maneuverability reports the sideways cost 'for the requested lateral shift'; the verb's row (VERBS-analyze) takes a design and an optional scene and has no shift input, so a [[surface]] entry passing one would be FROB-REF-802. Now: at the analysis's two reference shifts, 0.01 m and 0.10 m (BD-106), which are the card's. Goldens recomputed and equal. Second pass: request from S-34 applied after checking NEG-14 step 3 and the engine (N38b-50: no negative condition; exemption (d) is a marker on the line): every line of registries/cards/GB-05.toml that prints 0.57 m (the small-angle row for d = 0.10 m) carries `# stale-as-control: E7-K2` from M1, said in the Technical approach (paragraph \"Marked lines\") and in acceptance. Otherwise E7-K2's entry (\\b0\\.57 ?m\\b in sideways/lateral/shift text, scanned from M0) fires on the card file, which is in the walk set, because the engine cannot see the exact 0.55 m beside it. Goldens recomputed again (alpha* 0.2240752853 and 0.7227342478 rad; costs 0.1785120583 and 0.5536688302 m; small-angle 0.178885 and 0.565685 m; halving ratio 0.70785, within 2% of 1/sqrt 2)."
+  },
+  {
+   "bead": "GB-07",
+   "kinds": [
+    "contradiction",
+    "registry"
+   ],
+   "what": "Acceptance 3 said sim.estimate 'refuses' the 8,192-private-homes request; BD-219 and the VERBS-sim row say sim.estimate answers the same finding with memory.fits false and exit 2 and that FROB-REF-602 (exit 6) is raised by a run verb at admission. A card test expecting a refusal envelope from sim.estimate could never pass. Now states fits false, exit 2, memory.scenes carrying 614,400,000,000 bytes, shared-variant repair first, and names 602/exit 6 as the run verbs' refusal asserted by BD-219. All thirteen counts recomputed."
+  },
+  {
+   "bead": "GB-09",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The card prints 7.8 on purpose twice (ceiling (a) from the unrounded share, 47/6; ceiling (b) published, 47/6) and gb_09_controls (a) plants it. The card file and the tests are in the walk set from M0, where REC-02's entry (`7\\.8` in step-share or Amdahl text, N38b-51), linked to E7-2, fires on any 7.8 it cannot tell from the withdrawn \"1/(1 - 0.87) = 7.8\"; unmarked, the scans of NEG-03 and N38b-51 fail on a clean M0 tree. Added \"Marked lines\": those lines carry `# stale-as-control: E7-2`. Goldens recomputed and equal (41/47, 100/13, 47/6, 1200/853, 6 and 7/2, 47/6 and 53/12, 205/19, 3/410, 41, 31/410; 7.7 x 10.8 = 83)."
+  },
+  {
+   "bead": "GB-11",
+   "kinds": [
+    "registry"
+   ],
+   "what": "Background and acceptance listed FROB-REF-132's ranked repairs as reduce load, regear, swap-actuator, raise sink conductance; the registry row (N15-REF) and BD-072 rank them swap-actuator, regear, raise the sink conductance, reduce payload or duty. A surface check asserting the card's order would fail against the verb. Order corrected in both places; the largest sustainable load is now stated per call (18.6 A at constant current, 15.9 A cold-equivalent under torque hold: 'here 18.6 A' was wrong for the torque-hold refusal). Lane B named library values that N15a-14 does not have (equilibrium, time_constant, continuous_current, critical_current, torque_hold_tangency): now analyze() and its fields t_eq, tau, time_to_limit, i_cont, i_crit, tangency. All fifteen goldens recomputed and equal."
+  },
+  {
+   "bead": "GB-13",
+   "kinds": [
+    "broken",
+    "registry",
+    "plan"
+   ],
+   "what": "The surface calls `frob actuator bus <design> --demand 1800W` and `--demand 7201W` cannot return the card's figures: without --source-voltage the verb evaluates E from the battery state at end-of-discharge-cold (BD-075, VERBS-actuator), not at the card's 48 V, so neither the 7,200 W ceiling nor the 133 refusal at 7,201 W follows. Added `--source-voltage 48V` (as N15b-30's script uses) in lane B and the e2e section. The stage-6 call on 'the 7,400 W design' was undetermined (stage 6 evaluates E itself; with a low mean current the flat 50 V source gives 7,812 W and no refusal): the fixture's profile now carries a mean current of at least 40 A. FROB-REF-133's repairs given in the registry's order (harness resistance first). The acceptance on FROB-REF-135 had no test and read as if a battery that keeps supplying power were refused: added lane B item 5 and gb_13_mechanism_exhaustion, and reworded the criterion. Goldens recomputed and equal."
+  },
+  {
+   "bead": "GB-18",
+   "kinds": [
+    "registry"
+   ],
+   "what": "Control (b) states 1.345 / 0.94 = 1.4309 in the card file and in gb_18_controls; both are in the walk set from M0, where E7-3's entry (1.345 / 0.94, NEG-03) and REC-01's (`1\\.43` in solver or ceiling text, N38b-50; 1.4309 contains it) fire on an unmarked line, so the scans fail on a clean M0 tree. Acceptance now says that line carries `stale-as-control: E7-3`. Goldens recomputed and equal (20/3; 1/0.07425; 0.92; 20,480,000; 10.24 s; 256/266 and 266/13; 0.7191 and 2.7385; 1.1019283747 and 1.3201320132; 19/131; 8428/5757 = 1.46396; 1,000/50; weak baseline 522/13 = 40.2)."
+  },
+  {
+   "bead": "GB-19",
+   "kinds": [
+    "contradiction",
+    "registry"
+   ],
+   "what": "The M3 half of lane B (the mission-observable digest of BD-285) was specified as an `#[ignore]`d test logged `pending`. NEG-01's card contract has no such state: a lane B check that waits for a later mechanism is a [[mechanism]] entry with its own first_milestone, compiled out and reported `not run (Mn)`, never pass and never hidden (the form GB-25 uses). With #[ignore] the status dump and NEG-02's summary would show GB-19's lane B as pass at M1 and M2 although one check had never run. The card now declares the [[mechanism]] entry `ballast_digest` (first_milestone M3) and the test name; BD-285 writes, enables and passes the body. Request to BD-285. All counts recomputed (86,185; 500,500; 92; 27; 735,471; 24,546 by full enumeration; controls 166,870, 83,935, 129 classes). Second pass, finishing the interrupted step \"align GB-19's staged check with the card contract\": the end-to-end paragraph said NEG-02 calls `frob phylum quotient` \"on the ballast family once that verb exists\" with no command and no card entry, so at M3 NEG-02 had nothing to run and before M3 nothing to report `not run (M3)`. Added the staged [[surface]] entry (first_milestone M3) with N17a-27's exact form `frob phylum quotient --designs @fixture:ballast-24-8 --task ballast-swing --json` (phylum.quotient is kind read, so no key: VERBS-phylum), returning 735,471 designs in 24,546 classes counted over every page; the end-to-end paragraph names the same call. 24,546 re-enumerated for slots 0..23 and 1..24."
+  },
+  {
+   "bead": "GB-20",
+   "kinds": [
+    "request"
+   ],
+   "what": "Request from F-U18b-2 applied after checking N18b-29 (lines 100 and 252), N18a-27 and BD-022's kebab-case rule: the probe line's `--reff 20mm` is an unknown parameter (FROB-REF-802); the input r_eff is spelled `--r-eff`. Goldens recomputed and equal."
+  },
+  {
+   "bead": "GB-21",
+   "kinds": [
+    "registry"
+   ],
+   "what": "Lane B and the acceptance gave the trigger of FROB-REF-242 as 'η outside the interface card's calibrated range'. The registry row (N18-REF) and BD-230 trigger on the Hersey number Π or the ratio h/σ outside the card's calibrated range; the card has no range for η, so a test built on an η range has nothing to refuse. Now states the registry trigger, exit code 3, both repairs, and that without --strict-data the value is returned flagged `extrapolated` (the acceptance said 'warns'). Goldens recomputed; the explicit-Euler control checked (first step drives h negative)."
+  },
+  {
+   "bead": "GB-24",
+   "kinds": [
+    "broken",
+    "convention",
+    "deadlock"
+   ],
+   "what": "(1) The surface call `frob task fixture fixture:docking --layer analytic` names a fixture no bead registers with task.fixture (N20b-13 is a Gauntlet fixture with no manifest and says it calls no verb; N24b-03 answers an unregistered name with FROB-REF-802), so the step could never pass: removed; the counts and the label-vector digest are compared on the mission.synthesize answer, as N25c-22's gate script does. (2) `frob mission synthesize docking.fmission --json` lacked --key (kind run: FROB-REF-805) and the mission file's path: now `fixtures/missions/docking/docking.fmission --key gb24-syn`. (3) Dependencies: added BD-135 (the verb of the surface) and N25c-21 (lane B's third-gain check asserts the three-gain game, which BD-129 lists as out of scope and N25c-21 delivers; convention 7); no cycle (checked both). Exact arithmetic recomputed: commands, 344/217/9, 353 for the non-strict control, 1/65 m."
+  },
+  {
+   "bead": "GB-28",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 14: the bead said without qualification that train.family without an approval token returns FROB-REF-761. That holds for the card's request (in-process handler, a 16-design job below the campaign class), but the 60 GPU-hour pretraining the card is about is campaign-class, and the daemon refuses it at submission with FROB-REF-704 (BD-320, VERBS-train). Added the distinction so that nobody asserts 761 on a campaign-class submission. Goldens recomputed."
+  },
+  {
+   "bead": "GB-29",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The refusal of opening a second campaign without qual:admin was unnamed, so gb_29_mechanism_new_campaign_needs_admin had no code to assert. Named from N24b-15 and the eval.ledger row: FROB-REF-720, exit code 5, through `frob eval ledger --action open`; with qual:admin on a family whose campaign is open the answer is campaign-already-open, exit code 7, index untouched. Goldens recomputed (levels, unit ratios, tie reachability 99/178/266/328)."
+  },
+  {
+   "bead": "GB-30",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Acceptance and control (c) said an interim look that would stop the study 'is refused by the engine'. BD-124's fixed-n engine refuses nothing there: a verdict polled before n returns progress only and no path returns an interim verdict, so a test waiting for a refusal cannot pass. Now states that behaviour, and adds the test gb_30_mechanism_interim_progress_only (the acceptance had none). The whole enumeration recomputed: 2,145/521/521/0/1,103; 3,828/1,031/1,031/1/1,765; 8,385/2,517/2,517/4/3,347; 33,153/11,384/11,384/39/10,346; first tie 86; 15, 17, 19, 21, 23; 99 and 178; 13/256 and 0.17418; power 0.12 and 0.96."
+  },
+  {
+   "bead": "GB-31",
+   "kinds": [
+    "request",
+    "broken",
+    "deadlock"
+   ],
+   "what": "Request from F-U25a applied after checking VERBS-mission (mission.synthesize is kind run), N25c-11 (the --set policy_class.authority amendment and the authority models lane B calls) and the graph (neither BD-135 nor N25c-11 depends on GB-31): deps BD-135 and N25c-11 added; both synthesize calls carry distinct keys (gb31-active, gb31-passive: without --key each is FROB-REF-805, and compared runs must not share one). Beyond the request: `frob prove verify <bundle>` had no bundle to read, since the synthesize answer carries a bundle root and not a file; added the `frob prove bundle a:<answer> --out <dir> --key gb31-bundle` step (prove.bundle, BD-133, reached through BD-135), as N25c-11's script does. The mission file is named as the fixture that carries the card's values (tests/fixtures/mission/stance-family-400N.fmission, N25a-21). Arithmetic recomputed, including the grid by brute force: 2,304 bodies, 11,520 states, 2,254 feasible, 114 covering, 1,596 false accepts of the weak screen."
+  },
+  {
+   "bead": "GB-33",
+   "kinds": [
+    "plan",
+    "registry"
+   ],
+   "what": "Acceptance 3 required that a rare-failure bound on battery-selected episodes be refused, with no code and no test. Named from N26b-11 and N26a-23 (both reachable through BD-278): FROB-REF-560, exit code 3, on the proposal law BatterySelected; added the test gb_33_mechanism_bound_refuses_battery_episodes with its control (the same episodes labelled nominal are admitted). The worked instance recomputed from N26b-10's construction: greedy 31, 22, 14, 9, 6, 4; certificates 53, 77, 90, 91, 94, 98; optima 31, 57, 71, 80, 86, 90 over the 18,564 six-subsets."
+  },
+  {
+   "bead": "GB-34",
+   "kinds": [
+    "deadlock",
+    "registry",
+    "plan"
+   ],
+   "what": "Lane B's joint-against-alternative check asserts Shapley summaries and repair sets (minimal rescuing coalitions), which BD-281 delivers and the bead listed as out of scope without depending on it (convention 7): dep BD-281 added (M3, no cycle). The null-fork refusal was unnamed: FROB-REF-583, exit code 3, no table (BD-280, N27-REF). 'No label without a placebo arm' had no test and no stated behaviour: BD-280 prints contrasts as null with the flag `no-placebo`; added gb_34_mechanism_no_placebo_names_nothing. p-values recomputed exactly (5.8926e-5, 0.17576), 78 coalitions, 689 forks, Shapley values."
+  },
+  {
+   "bead": "GB-37",
+   "kinds": [
+    "broken",
+    "registry"
+   ],
+   "what": "The e2e step expected FROB-REF-165 from `frob foundry tolerance <design> --json` on a zero-sensitivity feature. Under the verb's default `--method auto` that call does not refuse: N31a-33 and the registry row box the feature (exit 2, reason zero-sensitivity), and 165 is raised only under `--method statistical` (or when no box exists). The step could never pass. Now `--fixture quadratic --method statistical` for the refusal and the default call for the box; lane B and the acceptance say the same. The two allocations were to run on 'synthetic designs carrying the card's sensitivities', which a positional design cannot (sensitivities come from the model): the surface now uses the named fixtures BD-406 drives (`--fixture worked-case`, `--fixture quadratic`); the 1-and-8 cost case stays in lane B (its verb fixture cost-1-and-8 is N31a-56's). KA-171, the known answer of that row, named. All goldens recomputed."
+  },
+  {
+   "bead": "GB-38",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Background gave FROB-REF-260's repairs as 'the beam rung, or an under-relaxed step'; the registry row (N31-REF) ranks: accept the beam rung's section; for cycling lock the heavier stock size; reduce the governing load. The under-relaxed step is what the loop tries itself before refusing a cycle, not a repair. Acceptance said 260 'on the first two' although the surviving cycle is also refused with 260 (reason cycling): all three reasons now named. The surface compared 'the iterates' with a golden vector of five, but the verb run stops at iteration 4 with four plain iterates (BD-404, N31a-24): the entry maps four, the fifth stays in lane A. Iterates, bounds and convergence iterations recomputed in rationals."
+  },
+  {
+   "bead": "GB-40",
+   "kinds": [
+    "registry",
+    "deadlock"
+   ],
+   "what": "The ordering rejection had no code: BD-216's validator raises it under FROB-REF-862 with detail rates-violate-unit-ordering, pointer rates.ordering, exit 3; stated so that the test asserts that form. Acceptance 3 ('every throughput figure in every schema carries a unit') could not be shown by any test of the card and has no end as schemas keep landing: narrowed to what gb_40_mechanism_unit_required checks, with the schema-wide property attributed to N36-03's typed units. Goldens recomputed (0.50% return difference, 2.56%)."
+  },
+  {
+   "bead": "GB-41",
+   "kinds": [
+    "broken",
+    "registry"
+   ],
+   "what": "(1) The world-count golden gave 457,143 quadruped worlds on 16 GB at 35 kB; 457,143 x 35,000 B = 16,000,005,000 B does not fit, and the count of whole worlds that fit (BD-219's largest_worlds_that_fit is a floor) is floor(16e9/35,000) = 457,142, so gb_41_reference_world_counts would fail on a correct floor or bless a count that does not fit. Now 457,142, with the floor stated (the other three counts were floors already). (2) Control (a) states the older pairs C = 24, R = 128 and C = 40, R = 224 in the card file and in gb_41_controls; E7-A's pair entries (NEG-03) fire on them and the scan fails on a clean tree at M2. Added \"Marked lines\" and an acceptance clause: those lines carry `stale-as-control: E7-A`. Every other golden recomputed and equal (30,556; 90,704; 0.2831 and 0.7922 GB; 0.3334 and 0.4633; 102,400 and 409,600; 24,096; 18.35 GB; 18.1 GB against 17.18 GB)."
+  },
+  {
+   "bead": "NEG-03",
+   "kinds": [
+    "request",
+    "registry",
+    "broken",
+    "deadlock"
+   ],
+   "what": "The bead writes all twelve items with their stale entries at M0 but gave an entry only for E7-1; the owners state theirs informally, and several cannot load or would fail a clean tree: E7-3's patterns and E7-4's second have no scope (the engine searches no value without a scope or all_of, N38b-50); E7-7's \"unless labelled as the undamped control\" is a negative condition the engine cannot express; E7-A's 27 kB / 72 kB entries fire on KA-348's correct byte figures and on the adjoint store arithmetic (N16-KA, N16b-26, N16c-25, N23b-38); E7-C's \"0.10 J ... reserve\" fires on correct text (GB-26's row \"Same with 0.10 J reserve\"), since after the settlement the reserve is a further 0.10 J. Added the twelve entries in the engine's form, E7-K1 and E7-K2 exactly as NEG-14 step 3 states them (the S-34 request), each with a scope or all_of, anchored where a neighbouring number would match (10.48 um, 12.6 h, C = 240, 7.83), the E7-C entry bounded so \"gravity 0.25 J; stored 0.10 J\" (N22c-04) does not match; and the rule that every walk-set line stating a withdrawn value on purpose carries `stale-as-control: <id>`, naming the ten card files that hold such lines. The test linked_hit_names_both planted \"1/(1 - 0.87) = 7.8\" with no scope word, on which neither E7-2's nor REC-02's entry can fire, so it would fail on a correct engine; the plant now carries \"Amdahl\". New test stale_entries_engine_form. Every entry simulated (200-character window on collapsed text): each fires once on its plant and not on the listed correct texts."
+  },
+  {
+   "bead": "NEG-04",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Edit of the interrupted reviewer, read whole and completed. Without `--finalist` every `frob nemesis bound` call of the script is refused by N26a-26's finalists-only rule (rare-bound-not-finalist, exit 3, VERBS-nemesis) before the count is reached, and under the adopted table policy the nominal share is 80% of the budget, so step 2's budgets of 2,995 and 2,994 would not decide at the count; the script now passes --finalist and a scratch configuration nemesis.bound.policy = baseline, and N26a-26 (M3, no cycle) is a dependency. Step 2 called --estimate on the refused case, but FROB-REF-760 (exit 4, N26-REF) is raised at admission and an estimate admits nothing; the 2,994 call now drops --estimate and the 2,995 call reports required 2,995 and design fixed-n. Recomputed: 29,956, 299,572, 2,995,731, 76,959 exact; approximations 29,958, 299,574, 2,995,733, 76,963; at p = 1e-3, 2,995 against 2,996; the undercount 29,955 with (1 - p)^n = 0.0500041 > delta."
+  },
+  {
+   "bead": "NEG-05",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "Only the formatter's labelled 7.8 was marked. The tests report_lint_rejects_mixed_line (plants \"1/(1 - 0.87) = 7.8\") and ceiling_from_exact_share (asserts 7.8) are test files in the walk set when under crates/*/tests/, where E7-2's entries and REC-02's `7\\.8` (step-share or Amdahl text) fire; the acceptance \"the scan finds no hit for E7-2\" would fail at M0 on a clean tree. Step 4 now says those lines carry `stale-as-control: E7-2`. Values recomputed (41/47; 47/6; 100/13; 347/1200 gives 1.408 and 1.407, both 1.4)."
+  },
+  {
+   "bead": "NEG-07",
+   "kinds": [
+    "registry"
+   ],
+   "what": "Edit of the interrupted reviewer, read whole and completed. The rate read was ambiguous between row 7's tolerance figure, the interim floor and the ambition planning value: an implementer calling planning_value(row 1) gets 4.0 M for the quadruped and 0.06 to 0.3% instead of 0.12 to 0.6%. Step 1 now names the binding figure (row 7's 1.7 M; row 1's interim floor 2.0 M from threshold(row, None)) and the tests pin it (4.8/8,000 must differ). This session: step 4's second stale pattern `0.5 to 2.4%` had no scope, which the engine refuses (N38b-50); both patterns now carry the referee/shadow/coverage scope as NEG-03 writes them, and GB-16's planted wrong golden carries `stale-as-control: E7-4`. Shares recomputed: 0.1412 to 0.7059%, 0.12 to 0.6%, 0.48 to 2.4%, 0.0941 to 0.4706%."
+  },
+  {
+   "bead": "NEG-09",
+   "kinds": [
+    "deadlock",
+    "registry"
+   ],
+   "what": "Edit of the interrupted reviewer, read whole and completed. \"Reports print counts only from the function\" had no decidable check; step 6 now defines the report lint by type (one formatter taking the u64 of count_firings) and by name (count, *_count, *_firings, *_decisions, *_instants must be JSON integer), with tests count_fields_are_integer and report_count_only_from_function. This session: step 5 gave the stale entry informally; it is now `\\b615\\b` in decision/thirteenth/30 Hz/20 s text (engine form), linked to REC-06, and since the pattern also matches 615.38 and the engine reads no label, the lines of count_is_not_rate_times_duration and GB-23's mis-count control carry `stale-as-control: E7-6`; unmarked, they fail the acceptance \"no hit for E7-6\" on a clean tree. Values recomputed: 600, 616, closed window 601 and 616, 2.564%, 2.667%, 615.38, KA-471 steps 0, 14, 27, 40."
+  },
+  {
+   "bead": "NEG-10",
+   "kinds": [
+    "contradiction",
+    "deadlock"
+   ],
+   "what": "Step 5 registered `2.7075` in wheel-loop/spectral text \"unless labelled as the undamped control\" and Scope called the label \"the label the scan accepts\", but the engine (N38b-50) has no negative condition and reads no label. The bare 2.7075 is the correct undamped control that about a dozen beads print on purpose (KA-610, CX-262, CX-308, N24b-04, N24b-20, N28a-09, N28a-11, BD-117, N24c-10, N38a-11, NAB-15), so the entry would fail the scan on a clean tree, or invite a label exception the engine forbids. The entry is now `0\\.9207[^0-9]{1,160}2\\.7075` with scope wheel|spectral|radius|instantaneous: the withdrawn print, 2.7075 after 0.9207 with no damped value between (DESIGN, reason stated); acceptance reads \"no hit for E7-7\"; new test e77_stale_entry_matches_the_withdrawn_print (one hit on the withdrawn row, none on the labelled row with 2.6917 or on the closed form). Request to N38a-11. Radii recomputed: 1.4820290, 0.9207185, 2.6916731; undamped 1.4783906, 0.9275234, 2.7074584; explicit order 1.8540689 and 1.4972495."
+  },
+  {
+   "bead": "NEG-11",
+   "kinds": [
+    "registry",
+    "deadlock",
+    "broken"
+   ],
+   "what": "Edit of the interrupted reviewer, read whole and completed. Its stale entries for E7-A, made pairs so that a legitimate C = 24 does not fire, also had 27 kB and 72 kB entries in per-world text: those are the byte model's correct values at the earlier capacities, which KA-348 keeps as a known answer with both capacity sets (N16-KA, N16b-26), and the adjoint store arithmetic prints 160 x 27 kB = 4.32 MB per world (N16c-25, N23b-38), so the scan would fail on a clean tree. The kB entries are removed with the reason; the pair entries are anchored (\\bC = 24\\b, \\bC = 40\\b); the lines that state an earlier pair on purpose (GB-41's control rows, KA-348's row in that form, N38b-58's byte_model_example, this bead's plants) carry `stale-as-control: E7-A`. The test said \"C = 24, R = 128 (27 kB per world)\" gives one hit, a text two entries matched; it now uses one text per entry, each \"exactly one hit\", plus \"160 x 27 kB = 4.32 MB per world\" giving none. Byte model recomputed: 30,556 and 90,704; superseded 25,948 and 70,352."
+  },
+  {
+   "bead": "NEG-12",
+   "kinds": [
+    "registry",
+    "contradiction",
+    "deadlock"
+   ],
+   "what": "Edit of the interrupted reviewer (written seconds before the cutoff), read whole and completed. KA-404's tolerance was the gate's 2% and KA-438's `{ kind = \"gate\", value = \"2%\" }`: two numbers, while the bead's rule is one registration; step 1 now puts `rel 0.02` with owner GATE-TRAC-05 on KA-404 and makes KA-438 a `same_as` twin with KA-404's fixture and a new tolerance kind `same-as` (DESIGN, additive; checked against N38a-12: same_as names a lower-numbered row with the same fixture; eligibility counts it); the lint scope (more than one citing gate) keeps single-gate rows untouched; the E7-B entry is in the engine's form, `(^|[^0-9.])1 ?%` with all_of squeeze and GATE-HAB-06, so 0.01%, 11% and 21% do not match. Checked against N40-08: numbers_frozen reads the effective threshold through the registration and still finds 2% for both rows. This session: the test file registry_single_tolerance.rs is in the walk set and its planted 1% strings (registry_lint_rejects_local_tolerance, e7b_stale_entry_is_anchored) stand beside squeeze and GATE-HAB-06, so they would fire and fail \"no hit for E7-B\"; those lines now carry `stale-as-control: E7-B`. Windows recomputed: [0.036945, 0.038453], [2.216708, 2.307186], [0.748139, 0.778675] s."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-285",
+   "what": "Its acceptance and unit test say GB-19's assertion gb_19_mechanism_ballast_digest is 'compiled #[ignore] and logged pending since M1' and 'has its #[ignore] removed in this bead'. GB-19 now declares the check in the card format's own form (NEG-01): a [[mechanism]] entry `ballast_digest` with first_milestone M3 in registries/cards/GB-19.toml, compiled out and reported `not run (M3)` before M3. Say instead that this bead writes and enables the body of that test and passes it (`cargo test -p frob-conformance --test cards gb_19_mechanism_ballast_digest`; --include-ignored is not needed). Otherwise two beads describe the staged check differently and the card status hides a check that never ran."
+  },
+  {
+   "bead": "NEG-02",
+   "what": "The surface table lists `task.fixture` for GB-24. No bead registers a docking fixture with task.fixture (N20b-13's is a Gauntlet fixture; an unregistered name is FROB-REF-802, N24b-03), and GB-24 now has one surface entry, `mission.synthesize` (with --key). Drop `task.fixture` from GB-24's row."
+  },
+  {
+   "bead": "GB-16",
+   "what": "Your acceptance says the stale figure (0.5 M world-steps/s, 0.5 to 2.4%) appears only as a planted wrong golden. E7-4's entries (NEG-03: \\b0\\.5 ?M world-steps and \\b0\\.5 to 2\\.4 ?%, in referee/shadow/coverage text) fire on that line of registries/cards/GB-16.toml, since the engine (N38b-50) has no negative condition. Say that each line of the card file and of gb_16_controls that states it carries `stale-as-control: E7-4`; otherwise stale_values_absent fails on a clean tree at M2."
+  },
+  {
+   "bead": "GB-23",
+   "what": "The card holds the mis-count 615 (615.38 truncated) as the planted wrong golden. E7-6's entry (\\b615\\b in decision/thirteenth/30 Hz/20 s text, NEG-03; NEG-09 step 5) and REC-06's retired `615` (N38b-55) match both 615 and 615.38. Say that each line of registries/cards/GB-23.toml and of gb_23_controls that prints 615 or 615.38 carries `stale-as-control: E7-6`; otherwise the scan fails on a clean tree at M1."
+  },
+  {
+   "bead": "GB-26",
+   "what": "The card plants the superseded labelling (0.25 J stored, 0.10 J reserve) as the wrong reading. E7-C's entry (NEG-03: \\b0\\.25 ?J[^0-9;,.]{0,12}stored in budget/energy/absorber/stop text) fires on a line that prints 0.25 J labelled stored. Say that such lines of registries/cards/GB-26.toml and gb_26_controls carry `stale-as-control: E7-C`; otherwise the scan fails on a clean tree at M4. (No entry is written for \"0.10 J reserve\": your row \"Same with 0.10 J reserve\" is correct.)"
+  },
+  {
+   "bead": "GB-32",
+   "what": "Your golden row prints \"76,959 (the approximation gives 76,963)\" and control (a) plants 76,963. E7-1's entry (76[, ]?963 in nemesis/rare/qualif/episode text, NEG-03) and REC-07's fire on both lines. Say that those lines of registries/cards/GB-32.toml and gb_32_controls carry `stale-as-control: E7-1` (NEG-04 and N38b-56 list labelled controls as the one place 76,963 may stand); otherwise the scan fails on a clean tree at M3."
+  },
+  {
+   "bead": "GB-35",
+   "what": "Your acceptance keeps 2.6 h as the planted wrong golden. E7-5's entry (\\b2\\.6 ?h\\b in ladder/survivor/audit text, NEG-03) fires on it. Say that the lines of registries/cards/GB-35.toml and gb_35_controls that print 2.6 h carry `stale-as-control: E7-5`; otherwise the scan fails on a clean tree at M4."
+  },
+  {
+   "bead": "NEG-06",
+   "what": "Step 5 lists E7-3's stale patterns (`1.345 ÷ 0.94`, `1.345/0.94`, \"94% of the batch was shared\") with no scope; the engine (N38b-50) searches no value without a scope or all_of, so the register would not load. NEG-03 now writes them as { pattern = \"1\\\\.345 ?[÷/] ?0\\\\.94\", scope = \"solver|ceiling|share\" } and { pattern = \"94 ?% of the batch was shared\", scope = \"solver|ceiling\" }. State the same, so the owner and the register agree."
+  },
+  {
+   "bead": "NEG-08",
+   "what": "Your tests quote the stale figure on purpose (ladder_cost_no_reading_gives_156: \"156 min (2.6 h)\"; the report lint's planted bare \"2.6 h\"). Test files under crates/*/tests/ are in the walk set and E7-5's entry (\\b2\\.6 ?h\\b in ladder/survivor/audit text, NEG-03) fires on them, failing your acceptance \"no hit for E7-5\". Say those lines carry `stale-as-control: E7-5`, as NEG-06 does for its test."
+  },
+  {
+   "bead": "NEG-13",
+   "what": "Step 5's stale phrasing \"0.10 J ... reserve\" fires on correct text after the settlement (the reserve is a further 0.10 J: GB-26's row \"Same with 0.10 J reserve\"), and \"0.25 J ... stored\" is not in the engine's form. NEG-03 now writes E7-C as { pattern = \"\\\\b0\\\\.25 ?J[^0-9;,.]{0,12}stored\", scope = \"budget|energy|absorber|stop\" } and no reserve entry: the superseded labelling of the 0.10 J term is caught by the checker on your superseded fixture, not by the scan. State the same, and say that lines of the superseded fixture and of your tests that print 0.25 J labelled stored carry `stale-as-control: E7-C`."
+  },
+  {
+   "bead": "N38a-11",
+   "what": "You label the 2.7075 line `undamped control` \"so that the stale-value scan of NEG-10 passes\", and your negative control is \"a wheel-loop record that prints 2.7075 without the label ..., which the stale-value scan must flag\". The engine reads no label (N38b-50: no negative condition). E7-7's entry is now 0\\.9207[^0-9]{1,160}2\\.7075 (NEG-10 step 5): the withdrawn print, 2.7075 after 0.9207 with no damped value between. Keep the label as your own convention, print 2.7075 after 2.6917 in every record, and make the control a record that prints 2.7075 directly after 0.9207 with no damped figure between; as written the control is never flagged and its assertion fails."
+  },
+  {
+   "bead": "N16-KA",
+   "what": "KA-348 keeps both capacity sets as truth (C 24, R 128 and C 40, R 224 beside the current ones). E7-A's pair entries (NEG-03, NEG-11: \\bC = 24\\b with all_of \"R = 128\"; \\bC = 40\\b with \"R = 224\") fire where the row states an earlier pair in that form, for example `C = 24, R = 128` in known_answers.toml, which is in the walk set. Say that such a line carries `stale-as-control: E7-A`. (27 kB and 72 kB get no entry, so the byte figures need no marker.)"
+  },
+  {
+   "bead": "N38b-58",
+   "what": "byte_model_example evaluates the formula at n_v = 18, n_b = 13, C = 24, R = 128 and at C = 40, R = 224. In a test file under crates/*/tests/ those lines fire E7-A's pair entries (NEG-03). Say they carry `stale-as-control: E7-A`; otherwise the stale scan fails on a clean tree."
+  },
+  {
+   "bead": "SPEC-C-07",
+   "what": "s8_shift_cost prints \"d = 0.10 m -> 0.57 m small-angle and 0.55 m exact\". E7-K2's entry (\\b0\\.57 ?m\\b in sideways/lateral/shift text, NEG-03 and NEG-14) fires on any such line in the walk set (a test source, a CONTRACT.md), because the engine cannot see the 0.55 m beside it. Say those lines carry `stale-as-control: E7-K2`."
+  }
+ ],
+ "unchanged": 7,
+ "notes": "Resumed after the interrupted reviewer (cutoff 2026-11-24 11:30). Its 18 changed entries are kept; GB-05 and GB-19 are amended with the second pass. Files modified after the cutoff (GB-01, 05, 07, 11, 13, 19, 20, 21, 24, 28, 29, 30, 31, 33, 34, 37, 38, 40; NEG-04, 07, 09, 11, 12) were read whole; all parse (front matter, one-line JSON lists, seven sections) and the five NEG edits not in the partial result were completed and recorded. GB-04, GB-09, GB-18 and GB-41, listed unchanged before, were reopened for the S-34 requests (GB-04) and for findings the partial result does not account for (stale-scan markers; GB-41's world count). Unchanged after full check: GB-02, GB-12, GB-14, GB-17, GB-27, GB-36, GB-39. All requests of the slice file answered: GB-04, GB-05 and NEG-03 (S-34) applied; GB-20 and GB-31 applied by the earlier reviewer and verified. No dependency-audit notes in the slice file. Deps of all 37 beads checked against the index: none on a later milestone, no cycle introduced (only NEG-04 gained a dep, N26a-26, M3). Lines that may also need the marker but did not get a request, because their walk-set form is uncertain: BD-106 and N10a-15 (0.57 m, E7-K2), N35-30 (0.48 um, E7-K1), N36p1-02 (0.5 M world-steps/s, E7-4); NEG-03's general rule covers them."
+}

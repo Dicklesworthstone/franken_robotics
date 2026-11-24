@@ -1,0 +1,290 @@
+{
+  "round": 4,
+  "slice": "F-U37",
+  "reviewed": 30,
+  "changed": [
+    {
+      "bead": "BD-258",
+      "kinds": [
+        "request",
+        "registry",
+        "broken",
+        "convention"
+      ],
+      "what": "Act lint takes scope kind from the catalogue (N32bx-02) and states the three registry forms it admits (public rows, scene.import and prove.bundle spending their named write scope, cert:write as prove's export publish scope); design.export must cite export:report; minting restated from N32b-01 (principal choice, 802/723, root open under a token 723, MCP derive-only); e2e uses e2e_session grant/open; planted controls built with gauntlet-mutations."
+    },
+    {
+      "bead": "BD-304",
+      "kinds": [
+        "deadlock",
+        "convention"
+      ],
+      "what": "GATE-SAFE-02 value measured by the g4_chaos tier entry with the four controls caught; the record is N37-10's (the one recorder), not this bead's."
+    },
+    {
+      "bead": "BD-305",
+      "kinds": [
+        "deadlock",
+        "convention"
+      ],
+      "what": "Records GATE-SAFE-04/-05 from its own g1_known_answers tier run instead of N37-21's script (a dependent); planted controls built with gauntlet-mutations."
+    },
+    {
+      "bead": "BD-306",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Step 8 runs N37-22's script with m3_rules, takes the receipt from e2e_tier g1_known_answers GATE-SAFE-06 --mutations and records the M3 part with record_gate --part M3; control built with gauntlet-mutations."
+    },
+    {
+      "bead": "BD-307",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "The script ends with its receipt step (e2e_tier g4_chaos GATE-SAFE-07 --mutations) and records nothing; BD-307 records the M3 part with record_gate --part M3; acceptance names the part."
+    },
+    {
+      "bead": "N37-02",
+      "kinds": [
+        "request",
+        "registry",
+        "convention"
+      ],
+      "what": "Adds the principal.owner table (the one table listing owner-only scopes, minted only for a root open through the CLI adapter) and the start-up error for two tables naming one namespace, with acceptance and unit test; environment list names FROB_SESSION and FROB_DISPATCH; mutants feature renamed gauntlet-mutations."
+    },
+    {
+      "bead": "N37-05",
+      "kinds": [
+        "broken",
+        "convention"
+      ],
+      "what": "e2e design import calls carry --key via e2e_key (mutate verb, else 805); negative controls built with gauntlet-mutations."
+    },
+    {
+      "bead": "N37-06",
+      "kinds": [
+        "broken",
+        "convention"
+      ],
+      "what": "Weights step gives eval run a population (--battery smoke) so it reaches admission instead of 802; keys written with e2e_key; planted_defects and acceptance use gauntlet-mutations."
+    },
+    {
+      "bead": "N37-07",
+      "kinds": [
+        "broken",
+        "convention"
+      ],
+      "what": "e2e weights step gives eval run --policy a population (--battery smoke) and an e2e_key key; negative controls built with gauntlet-mutations."
+    },
+    {
+      "bead": "N37-10",
+      "kinds": [
+        "broken",
+        "convention"
+      ],
+      "what": "Sessions opened with e2e_session grant/open and scopes read from frob schema --verbs; import calls carry keys; module file through module check; card placed in assets/cards; controls built with gauntlet-mutations."
+    },
+    {
+      "bead": "N37-11",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Adds the read-only fixtures root for @fixture: references only (N34p3-01 resolver; no write path), with acceptance and unit test; deps add N34p3-01; controls built with gauntlet-mutations."
+    },
+    {
+      "bead": "N37-12",
+      "kinds": [
+        "broken",
+        "convention"
+      ],
+      "what": "artifact export and design import in the swap step carry keys via e2e_key (805 without); controls built with gauntlet-mutations."
+    },
+    {
+      "bead": "N37-21",
+      "kinds": [
+        "deadlock",
+        "convention",
+        "broken"
+      ],
+      "what": "Script re-runs the tier entries BD-305 records from and writes no row; sessions via e2e_session grant/open with explicit scopes; planted writer built with gauntlet-mutations."
+    },
+    {
+      "bead": "N37-22",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Control 3 is N38a-24's seeded GATE-GAUNT-06 record naming GATE-SAFE-06, built with gauntlet-mutations,frob-kernels/nc-<nnnn>; deps add N38a-24."
+    },
+    {
+      "bead": "N37-18",
+      "kinds": [
+        "request",
+        "convention",
+        "contradiction",
+        "deadlock"
+      ],
+      "what": "Scope step takes cert:write as the publish scope of export kind certificate (renamed from bundle to match VERBS-prove and N21c-08), with a unit test; stale 'requested of N24a-41 and N29a-02' replaced by the fact that both handlers already use the door's order; GATE-SAFE-05 acceptance measured by this bead's tier entry, not N37-21's later script; controls built with gauntlet-mutations."
+    },
+    {
+      "bead": "BD-308",
+      "kinds": [
+        "convention",
+        "deadlock"
+      ],
+      "what": "Writes no gate row: the M3 part of GATE-SAFE-08 is N37-27's (one recorder per part); acceptance is the g0_laws tier entry with the five controls caught; e2e names N37-25's script and N37-27's later m3 profile; controls built with gauntlet-mutations."
+    },
+    {
+      "bead": "N37-27",
+      "kinds": [
+        "broken",
+        "registry",
+        "convention"
+      ],
+      "what": "Grants and opens its session with e2e_session (from M2 a tokenless call is 723); step 3 no longer offers to a nonexistent leaderboard-submission verb; step 6 uses report design --cite (report.run reads a run); step 7 repeats under a new key so the memo store answers; prove bundle gets --out and --key; planted builds use gauntlet-mutations."
+    },
+    {
+      "bead": "N37-09",
+      "kinds": [
+        "broken",
+        "registry",
+        "convention"
+      ],
+      "what": "Deps add N37-06 (it adds calls to that script's step); the smuggled task file is named with a registered .ftask view (.ftask.json), not .toml; control built with gauntlet-mutations."
+    },
+    {
+      "bead": "N37-13",
+      "kinds": [
+        "contradiction",
+        "convention"
+      ],
+      "what": "704 restated per N36-20 and convention 14 (size classifier at submission before envelope admission, scheduler at dispatch; admit never builds it), replacing the rejected alternative; max_wall_ms stated as N32a-02's field without narration; the 257th session.open's 703 stated as listed on the row; controls built with gauntlet-mutations."
+    },
+    {
+      "bead": "N37-14",
+      "kinds": [
+        "broken",
+        "convention"
+      ],
+      "what": "e2e sim run names its positional design and duration (VERBS-sim); quota-ignoring and verification-skipping workers built with gauntlet-mutations."
+    },
+    {
+      "bead": "N37-15",
+      "kinds": [
+        "request",
+        "broken",
+        "registry",
+        "convention"
+      ],
+      "what": "Grants written with e2e_session grant before frobd starts (every cited non-owner-only scope plus budget scopes); root opens through e2e_session open with no token and named scopes; owner_only scopes checked on the refusal side only; public mutate session rows admitted by the scope-free check; controls built with gauntlet-mutations."
+    },
+    {
+      "bead": "N37-16",
+      "kinds": [
+        "request",
+        "registry",
+        "deadlock",
+        "broken"
+      ],
+      "what": "Ledger actions written as VERBS-eval has them (--action open|close, admin, no key); owner and discovery sessions granted and opened with e2e_session (owner through principal.owner); acceptance no longer waits on BD-261, a dependency that records before this bead's controls exist."
+    },
+    {
+      "bead": "N37-17",
+      "kinds": [
+        "registry",
+        "convention"
+      ],
+      "what": "e2e mark listing uses artifact list --private (private objects are absent otherwise, BD-305); controls built with gauntlet-mutations."
+    },
+    {
+      "bead": "N37-19",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Negative controls built with gauntlet-mutations."
+    },
+    {
+      "bead": "N37-23",
+      "kinds": [
+        "request",
+        "deadlock",
+        "registry",
+        "convention"
+      ],
+      "what": "Adds the list form frob schema --exports through BD-022's SchemaListing (exports property in frob.schema.in/1, member in frob.schema.out/1, one entry per locator row) with acceptance and tests; names artifact.import beside artifact.read among readers; BD-097 moved from deps to related; the URDF sidecar item and INV-SAFE-05 property moved to N37-24, keeping a synthetic-view sidecar test; GATE-SAFE-01 acceptance states the mechanisms, not the exporters' measurement; control built with gauntlet-mutations."
+    },
+    {
+      "bead": "N37-24",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Takes the URDF sidecar acceptance and the INV-SAFE-05 property over 10^3 random M1 export requests (its deps reach every M1 exporter), with tests; planted builds use gauntlet-mutations."
+    },
+    {
+      "bead": "N37-25",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Negative controls built with gauntlet-mutations."
+    },
+    {
+      "bead": "N37-28",
+      "kinds": [
+        "broken",
+        "convention"
+      ],
+      "what": "The D2 re-evaluation command gets eval.run's policy-form population (task, --stream dev, --seeds 1) and distinct keys; controls built with gauntlet-mutations."
+    },
+    {
+      "bead": "N37-29",
+      "kinds": [
+        "broken",
+        "registry",
+        "convention"
+      ],
+      "what": "Sessions granted and opened with e2e_session (agent and owner for the test campaign, opened with eval ledger --action open); train start names its design and gives the budget in --steps (no --updates input); the re-evaluation uses the policy-form population and --key instead of the nonexistent --seed; planted builds use gauntlet-mutations."
+    },
+    {
+      "bead": "N37p1-01",
+      "kinds": [
+        "deadlock",
+        "contradiction"
+      ],
+      "what": "Deps add N37-24, whose script receipt the M2 part is recorded from; diagnostic-file mutants are refused by the shared header reader with 816, not by frob-verify (which audits bundles and .frun files under its own codes)."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "VERBS-design",
+      "what": "design.export cites `export:report` beside `design:read` (it is `exports = true`; plan §37.4 makes an export three acts with an export scope); BD-258's act lint fails every exporting row without an export scope."
+    },
+    {
+      "bead": "N32a-02",
+      "what": "The closed entry schema carries `max_wall_ms` (optional `int53` of milliseconds; absent means the kind default: `read` and `mutate` 30,000, `run` the smaller of its wall-time budget and the envelope class's limit), the per-call wall-clock ceiling N37-13 step 4 reads."
+    },
+    {
+      "bead": "VERBS-session",
+      "what": "`session.open` lists `FROB-REF-703` (`observed: sessions`) for N37-13's cap of 256 open sessions per principal, derived ones counted; the generator appends 701 to 704 to `run` rows only, and this row is `mutate`."
+    },
+    {
+      "bead": "N37-26",
+      "what": "Name the M3 verb argument(s) whose `consumes_evidence` declaration requires minimum standing `established` (step 3's Leaderboard row has no verb, the leaderboard being a daemon-written view of N32b-03, and the Build packet and Prototype spend consumers arrive at M5); N37-27 steps 3 and 4 and N16b-35 step 14 offer the provisional comparison to that argument."
+    },
+    {
+      "bead": "BD-097",
+      "what": "Depends on N37-23, and `artifact.export`'s flags check calls `frob_core::auth::check_carried` (N37-23 step 4, the one reader-side function) instead of its own; N37-23 no longer depends on BD-097 (N37-23's steps call no artifact verb, and the M1 exporters N14a-25 and N29a-02 already depend on it)."
+    },
+    {
+      "bead": "BD-261",
+      "what": "GATE-SAFE-03's tier entry is `g4_chaos` (KA-831 is tier `G4 · daemon` in N37-KA): `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g4_chaos --features gauntlet-mutations -- GATE-SAFE-03` and `e2e_tier g4_chaos GATE-SAFE-03 --mutations`, not `g1_known_answers`."
+    }
+  ],
+  "unchanged": 0,
+  "notes": "Every bead of the slice changed; no unchanged keys. Graph-audit proposal for N37-23/N37-24 applied (evidence holds: N14a-25 and the other M1 exporters depend on N37-23, BD-097 implements its own flags check and reaches N37-23 by no path, so no cycle); BD-097's side is a request."
+}

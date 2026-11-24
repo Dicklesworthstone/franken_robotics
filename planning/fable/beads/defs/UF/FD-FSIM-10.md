@@ -4,7 +4,7 @@ title: "upstream frankensim: correct `fs_g1_train::ppo_update` (clip branch, cri
 type: "task"
 priority: 2
 milestone: "M1"
-labels: ["m1", "suite", "cortex", "upstream", "frankensim", "solid"]
+labels: ["m1", "suite", "cortex", "upstream", "frankensim", "solid", "review-notes-open"]
 parent: "WP-37"
 deps: ["FDEF-01", "N33b-04", "STD-E2E"]
 needs: []

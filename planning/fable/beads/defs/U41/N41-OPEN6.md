@@ -28,9 +28,12 @@ subsystems:
 
 The last column names the bead that decides each question. For four owner questions two beads exist: the chapter
 unit's decision bead, which carries the engineering evidence and the wiring, and this unit's owner packet, which
-carries the question as it is put to the owner with its default, the cost of the default and the ADR:
-OPEN-CHRON-4 (N41-11 and N29b-12), OPEN-GROUND-2 (N41-10 and N30b-26), OPEN-FOUNDRY-2 (N41-13 and N31b-25) and
-OPEN-TETHER-5 (N41-12 and N32a-34). The recorded decision OPEN-TETHER-1 is in N41-14.
+carries the question as it is put to the owner with its default and the cost of the default: OPEN-CHRON-4 (N41-11
+and N29b-12), OPEN-GROUND-2 (N41-10 and N30b-26), OPEN-FOUNDRY-2 (N41-13 and N31b-25) and OPEN-TETHER-5 (N41-12
+and N32a-34). One of the two writes the question's ADR and moves its row: N29b-12 (ADR-PROG-11), N30b-26
+(ADR-PROG-07), N41-13 (ADR-PROG-14) and N41-12 (ADR-PROG-12). The record has one `decision_bead` field (N41-03):
+it names that bead, written first in the last column, and the record's `note` names the other ("owner packet
+N41-11", "engineering N31b-25"), so the printout shows both. The recorded decision OPEN-TETHER-1 is in N41-14.
 
 ## Scope
 
@@ -50,10 +53,10 @@ decisions.
 | OPEN-CHRON-1 | Column compression without a third-party codec | Uncompressed quantized columns | Chronicle lead | Nothing before M2 | M2 | N29b-17 |
 | OPEN-CHRON-2 | The chunk length L and the depth of the device ring | 256 control ticks per chunk and 2 s of ring | Chronicle lead | GATE-CHRON-04 | M2 | N29b-18 |
 | OPEN-CHRON-3 | Whether identifier types are imported from the sibling `franken_kernel` under the single-version rule for asupersync, or defined locally with the same layout | Defined locally in `frob-core` | Suite lead | GATE-CHRON-10 | M1 | N29b-09 (N34-11 and N33c-27 carry the default) |
-| OPEN-CHRON-4 | Retention windows for failure captures and the default store budget on each machine | 30 days and 64 GB | Owner | GATE-CHRON-12 | M2 | N41-11 (owner packet); N29b-12 |
+| OPEN-CHRON-4 | Retention windows for failure captures and the default store budget on each machine | 30 days and 64 GB | Owner | GATE-CHRON-12 | M2 | N29b-12; N41-11 (owner packet) |
 | OPEN-CHRON-5 | Lease granularity: one generation per run, or one per shard with a versioned world-to-shard map | One per run | Tether lead | GATE-CHRON-04 on two devices | M2 | N29b-19 |
 | OPEN-GROUND-1 | Which public paired simulation-and-reality dataset, if any, has enough robots per class to test exchangeability across units; none was identified | The second-simulator stand-in, labelled `synthetic` | Ground lead | GATE-GROUND-10 only | M5 | N30b-25; the owner half is OPEN-GAUNT-1 (N41-10, N38b-26) |
-| OPEN-GROUND-2 | Whether any bench hardware (the six optional bench packages) is acquired | None; Reality stays `no-claim` | Project lead; a question for the owner | Nothing; sourcing may start at M0 | M5 | N41-10 (owner packet); N30b-26 |
+| OPEN-GROUND-2 | Whether any bench hardware (the six optional bench packages) is acquired | None; Reality stays `no-claim` | Project lead; a question for the owner | Nothing; sourcing may start at M0 | M5 | N30b-26; N41-10 (owner packet) |
 | OPEN-GROUND-3 | Calibration expiry by age and operating hours | 90 days or 200 operating hours, whichever comes first, and always on part replacement | Ground lead | GATE-GROUND-10 | M5 | N30b-27 |
 | OPEN-GROUND-4 | The exchange rate between operator time and GPU-seconds in the experiment table | Real episodes are recommended, never scheduled, and no rate is assumed | Project lead | Nothing | none | considerations of N30b-09 and N30b-08 (the experiment table it concerns is BD-351) |
 | OPEN-GROUND-5 | Who is the authenticated authority that could promote a sibling's estimated candidate | Nobody; every Ground output stays `Estimated` | Lemma lead | Any Ground output above `Estimated` | M5 | N30b-28 |
@@ -80,7 +83,8 @@ claim in a published report; OPEN-TETHER-5, the fleet scheduler assigns jobs by 
       status `decided` with its ADR.
 - [ ] OPEN-ATEL-4 has `confirmed_by_gate_register = true`.
 - [ ] Every blocking row names a decision or experiment bead that exists in the tracker; where two beads decide
-      one question the record names one as primary and lists the other, and the printout shows both.
+      one question, `decision_bead` is the one that writes the ADR (N29b-12, N30b-26, N41-13, N41-12), `note`
+      names the other, and the printout shows both.
 - [ ] The owner rows link to N41-10, N41-11, N41-12, N41-13 and N41-14.
 
 ## Test plan

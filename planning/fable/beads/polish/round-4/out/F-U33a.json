@@ -1,0 +1,253 @@
+{
+ "round": 4,
+ "slice": "F-U33a",
+ "reviewed": 23,
+ "changed": [
+  {
+   "bead": "BD-015",
+   "kinds": [
+    "request",
+    "registry",
+    "contradiction",
+    "deadlock"
+   ],
+   "what": "Without N21-REF and N33a-07 in deps the implementer could raise 601/603/612 before their rows load and could not write the INT-CUDA-01 record its seed done-condition requires; both added (N33a-07 moved from related). The 612 acceptance contradicted N21-REF's trigger and step 1: with the compiler hidden and no entry the refusal is 601, and 612 needs a corrupt entry plus no recompilation; step 1 now loads NVRTC lazily so a cache hit needs no compiler, and test no_compiler_no_entry_refuses_601 was added. Took BD-013's audit item (lint findings reachable as a structured list in the refusal through the envelope writer, test lint_refusal_carries_findings), which BD-013 cannot deliver. States that the record is written with N33a-07's writer and the gate row is N33a-28's (one recorder)."
+  },
+  {
+   "bead": "BD-016",
+   "kinds": [
+    "request",
+    "registry",
+    "contradiction",
+    "deadlock"
+   ],
+   "what": "Added N21-REF and N33a-07 to deps (601/603/607 rows; the INT-FT-01 record is a seed done-condition) and the test compile_error_refuses_603 with its acceptance item, as N21-REF's 603 row expects. The absolute ban on library_with contradicted this bead's own contraction control and N21c-30's/BD-020's mutant-contraction and mutant-fast-math builds, which must call it: the scan now refuses any call not gated on a mutant-* test feature. Took the lint-report item from BD-013 as BD-015 did; gate row left to N33a-28."
+  },
+  {
+   "bead": "BD-036",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied H-ka-1 (cites KA-532, the Spark registry's row for the same 2x2 stride case) and H-cx-2 (the CX-353 re-run step on BD-033's pattern: set rerun and rerun_receipt from the INT-FNP-02 record, change nothing else, re-run N38b-05's seeding tool; another convention leaves rerun false and flags changed; cx-entry-absent; tested on a scratch catalogue). Without it CX-353 stays an obligation for ever. N33-CX and N38b-05 added to deps (no level change)."
+  },
+  {
+   "bead": "BD-044",
+   "kinds": [
+    "request",
+    "deadlock"
+   ],
+   "what": "NAB-23 moved from related to deps (its sweep is made before the runner and the runner runs decision-sweep check --exit M0); the attached-check text named NAB-22 for the sweep and now names the command and NAB-23. N34p3-01 (M0 feature) was the one non-upstream M0 bead not an ancestor of the review, against the bead's own rule that every M0 bead is; added. N39-CX was already a dependency."
+  },
+  {
+   "bead": "BD-096",
+   "kinds": [
+    "request",
+    "contradiction",
+    "convention"
+   ],
+   "what": "plant-lost-chunk meant commit-before-durable here but a reorder defect in N33c-17, which re-finds 'the name' at M2, and commit-before-durable is N38a-25's own GATE-GAUNT-06 control: one name for two defects. It now has N33c-17's definition (reordered completions leave a hole below the frontier) with test planted_bug_needs_reorder. The plant used 'the gauntlet-mutations feature', which plants nothing under N38b-04: the four controls are now mutation records (seed GATE-CHRON-11, gates INT-ASUP-02 and GATE-CHRON-11), each with its own nc feature in its owning crate, with test sim_controls_registered. F-U38a request applied: the two-statement binding is one record that MR-36's first mutation reuses (GATE-GAUNT-03 added at M2); N38a-25 adds GATE-GAUNT-06."
+  },
+  {
+   "bead": "BD-105",
+   "kinds": [
+    "registry",
+    "broken",
+    "deadlock"
+   ],
+   "what": "Acceptance asked for 'determinism exact' in the claim product; VERBS-analyze gives D0 (exact is the result's bound type), so a correct envelope would have failed. `cargo test -p frob-analyze a05 a06` passes two test names to cargo, which refuses the second; now `-- a05 a06`. N33a-07 moved to deps (the bead writes the M1 INT-FSYM-02 record; the only path to the writer ran through N34-03 -> N33a-11, which the audit proposes to cut) and the record paragraph says the gate row stays N33a-28's. IK solutions, det J = 0.022014467158738 and the 0.0946427 shortfall verified."
+  },
+  {
+   "bead": "BD-220",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "The INT-FSQL-02 re-run at M2 had no tier command and no recording form (conventions 1 and 9): now the tier run, an M2 admission record citing its receipt, and the row left to N33c-20 (the register dates the gate at M1 only). E2E step 6 enabled a planted shadow mismatch that no bead before this one registers (N28b-42, which depends on this bead, registers the planted kernel and runs the tripwire); the step is dropped and points to N28b-42 and the unit test. The controls said 'registered for GATE-ATEL-12' though N28b-42 registers them; each now names its catching test. Thirteen key inputs and the shadow counts (1,000 of 64,000; 100 each alternating) verified."
+  },
+  {
+   "bead": "BD-380",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The control 'a capsule sealed against a different Mathlib commit is reported as an environment mismatch' had no test and was absent from the e2e's assertions (5 rejections counted, six controls listed): test capsule_env_mismatch_reported added (manifest pin edited in a scratch copy, no second Mathlib build) and the e2e asserts the report. Twin value 2*r*e2*f1 = 60 and the ZMod 2 native_decide case verified."
+  },
+  {
+   "bead": "BD-398",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Scope said the M5 half of INT-FDGR-01 'completes the gate row', with no tier run, record or recorder; N33c-25 records the M3 part and leaves M5 to this bead. Now the tier command, the M5 admission record citing its receipt and record_gate --part M5 by a non-implementing session, with an acceptance item; the script runs the tier and logs the receipt. Error term 85.6 mm and 74.6 mm, tetrahedron ratios 0.0589 and 0.00059, mirrored-room residual 2 m verified."
+  },
+  {
+   "bead": "N33a-05",
+   "kinds": [
+    "deadlock",
+    "contradiction",
+    "broken"
+   ],
+   "what": "check-stack was to be wired into xtask by BD-004, which depends on BD-006 and N33a-06, yet N33a-06/07/08 and BD-006 run `xtask check-stack` (audit's BD-006 proposal): this bead now registers the subcommand in BD-003's surface itself and BD-004 keeps the table, help text and six-subcommand test. Its JSON report used its own schema frob.check-stack/1 while BD-003 fixes one report frob.xtask.report/1 for every check, which N34-14's six-check matrix reads: the report is now the common one with check-stack's data as the facts block frob.check-stack/1 (test report_is_common_form). The facts block gains foundations [{fd, posture}], which N33a-27 and N33a-03 assert and the report lacked. The unit-test command passed two filters to cargo; now after `--`."
+  },
+  {
+   "bead": "N33a-06",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "Lead's audit note applied with corrections: items 1 (doctor prints receipt and lock digest), 3 (envelope, ledger row, .frun) and 5 (memo not served across lock digests) asserted beads that wait on this one; item 1 belongs to BD-022 (doctor's stack_receipt; N34-26 is only the ledger block), item 3 to N32a-03 and BD-090 (already there), item 5 to BD-111 (already there with its mutant). The unit test `cargo test -p frob-fsim stack_key` and its control needed frob-fsim (BD-006, after this bead) and the memo derivation (N33b-15); replaced by a pointer and a frob-core control on require_same_stack. Item 1 now asserts BUILT_UNDER against receipts/HEAD and LOCK_DIGEST."
+  },
+  {
+   "bead": "N33a-07",
+   "kinds": [
+    "deadlock",
+    "convention",
+    "broken"
+   ],
+   "what": "Two acceptance items could not be met at close: one asserted that N33b-01 and N40-07 (which depend on this bead) call never_inherited, the other asked for a real M0 gate's record, which only BD-006 and N33a-28 can write; now the single implementation with the check-stack call, and a record on a synthetic repository. The writer was a library function only, yet N33a-28, N33a-34 and BD-006 write records from shell steps (convention 8): the bead now declares the example `admission` (record --gate <id> --input <path> [--harness-receipt <hash>]) with acceptance and test example_record_matches_library. The never-inherited check enumerated uses from Cargo.lock, which lists every optional dependency whatever the features (checked on a scratch crate), so every structure and multiphysics crate would read unadmitted-use from M0; it now reads the resolved graph of cargo metadata (test never_inherited_ignores_unenabled_optional)."
+  },
+  {
+   "bead": "N33a-08",
+   "kinds": [
+    "deadlock",
+    "broken"
+   ],
+   "what": "Lead's audit note applied (option 1): 'a build from apps/ and worker/ sees the salt' needed N34-01 and N33c-12, which depend on this bead; it is now proved on scratch workspaces rooted at apps/ and worker/ (test nested_workspaces_see_salt), with the real apps/ build in N33a-28's step and worker/'s own entry in N33c-12. The fail-closed item had no test and no crate to build (frob-fsim is BD-006's): test fail_closed_without_salt builds a scratch probe crate on the pinned fs-la."
+  },
+  {
+   "bead": "N33a-09",
+   "kinds": [
+    "request",
+    "deadlock",
+    "contradiction"
+   ],
+   "what": "F-U00-2 request applied: this bead declares examples/sibling_facts.rs and its command (N33a-28's step needs a command and does not depend on N00-16), with acceptance and test example_report_json. Audit move applied: the INT-FSIM-01 facts_reread item and the admission-record half of the stale-fact item went to N33a-28 (writer and record are N33a-07's and BD-006's, not deps); the report now lists stale gates under stale_fact. The old text marked stale-fact 'in the generated admission file', which N33a-07's generator never renders."
+  },
+  {
+   "bead": "N33a-11",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "F-U26a request applied: frob-nemesis added to the optimize consumers (N26a-01 uses fs-eproc, fs-dfo, fs-archive), else check-deps refuses Nemesis. The e2e step ran `frob sim run` without --key on a run verb, which N33a-29's own step carries (ar-absent, ar-present)."
+  },
+  {
+   "bead": "N33a-13",
+   "kinds": [
+    "registry",
+    "deadlock"
+   ],
+   "what": "retry_class_presentation required 'the profile repair first' for NumericalOnly, against N16-REF's 721 fixed-witness order (shorter interval, then --profile strict); now the registry's order. The truncate-and-retry mutant and its catching test are N33a-14's (which depends on this bead); listed as this bead's control it could not be run here; the remaining controls now name their catching tests. N33a-11 added to deps: the refuse module sits in its skeleton, reached today only through N16-REF -> N35-33 -> BD-004 -> N34-03 (no level change)."
+  },
+  {
+   "bead": "N33a-17",
+   "kinds": [
+    "deadlock",
+    "registry"
+   ],
+   "what": "Acceptance required that the fs-session/fs-package record exist, but N33a-34 writes it under --record and depends on this bead: the bead now fixes the record's content and its tests supply every known answer and control; N33a-34's step ledger_group_admission writes and validates it. References cited KA-771, OPEN-ATEL-3 and INV-ATEL-08, which are Recompute's and the memo graph's (N33b-15, BD-111, BD-220) since Recompute left this bead; an implementer would look for a KA-771 test here."
+  },
+  {
+   "bead": "N33a-18",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The null race had no round budget: under the null eliminations almost never happen, so the race would not end and race_null_81_over_512 could not terminate; now 2,000 rounds per replay, and the bound is stated (at most 42 of 512; P(X>42)=0.00076, P(X>41)=0.0014, recomputed). The three negative controls had no plant name and no catching test: now planted:: adapters in frob_fsim::conformance with tests planted_*_caught. 'Admission row' for fs-race contradicted 'writes no row': it is a record (gate INT-FSIM-14) this bead writes with N33a-07's command; N33a-34 re-records at its pin. Binomial(10^4, 0.05) limit 569, the normal 0.0567 and the e-BH thresholds verified."
+  },
+  {
+   "bead": "N33a-21",
+   "kinds": [
+    "request"
+   ],
+   "what": "Round-3 request applied: N33a-34 (M1) added to deps and named as the owner of airlock_groups.sh, its step table and skip logic, into which this bead writes fnp_linalg_admission; level 17 -> 41, harmless for an M2 bead."
+  },
+  {
+   "bead": "N33a-22",
+   "kinds": [
+    "broken"
+   ],
+   "what": "linear_mse_gradients checked 'the five gradient arrays of case 1', which has four (dL/dy, dL/dW, dL/db, dL/dx); now the output and the four arrays. All hand values recomputed and correct (GRU 0.2048242148, -0.4416346193, 0.5567699411, 0.0833793813; tanh' 0.7864477329659274; Adam 0.900000002; no-bias-correction 0.3162)."
+  },
+  {
+   "bead": "N33a-27",
+   "kinds": [
+    "contradiction",
+    "convention"
+   ],
+   "what": "Steps 2 and 3 asserted the foundation count, identifiers and postures from check-stack --json, whose report carried none of them; they now read facts.foundations, which N33a-05 adds. Step 5 passed `--gate E2E` where N33a-05 defines `--gate <INT-...>`; now INT-FSIM-01 on the scratch tree."
+  },
+  {
+   "bead": "N33a-28",
+   "kinds": [
+    "request",
+    "convention",
+    "deadlock"
+   ],
+   "what": "Round-3 request applied: under --record each of the eight gates gets its tier run, the admission record cites that receipt as harness_receipt, and this bead's recording session enters the row with record_gate; the script writes no row (new acceptance items; N38b-19 added to deps). Took N33a-09's facts_reread and stale-fact admission half (step 6 now uses the sibling_facts example). Step 2 builds apps/ (N34-01, now a dependency; no level change). Records are written with N33a-07's admission example."
+  },
+  {
+   "bead": "N33a-29",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Step 3 compared doctor's capacity with the fact probe's reading without a command or a dependency on N33a-09 (convention 8); it now runs the sibling_facts example and N33a-09 moved to deps."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-013",
+   "what": "Drop the clause 'lint findings are reachable as a structured report from `frob --json` wherever a compile is refused' from the CONTRACT.md acceptance item: BD-013 reaches no compile path or verb; BD-015 and BD-016 now carry it (the findings in the 251 refusal through BD-022's envelope writer)."
+  },
+  {
+   "bead": "N21-REF",
+   "what": "Name the M0 v0 raisers: 612 is raised by BD-015's v0 cache (offline_corrupt_refuses_612) and 607 by BD-016's v0 bounded retries; raised_by lists only BD-173 and N21b-07 with first_milestone M2."
+  },
+  {
+   "bead": "N38a-18",
+   "what": "MR-36's first mutation (two-statement lookup and insert) is BD-096's M1 record and nc feature (seed GATE-CHRON-11): add GATE-GAUNT-03 to that record's gate list, write no second record or feature, and let the binding check count it as MR-36's."
+  },
+  {
+   "bead": "N38a-25",
+   "what": "Drop the parenthesis asking BD-096 to merge: the two-statement record is BD-096's, reused as MR-36's first mutation. The five controls are N38a-25's own, MR-36's offset pagination, MR-37's, and BD-096's two (two-statement binding, order-dependent device), GATE-GAUNT-06 added to both; update chaos_protocol_controls_registered."
+  },
+  {
+   "bead": "N33c-17",
+   "what": "plant-lost-chunk is the plant of BD-096's M1 record (which already names INT-ASUP-02), built through that record's nc-<nnnn> feature (N38b-04: a control registered directly uses nc-<nnnn>), not a build flag named plant-lost-chunk; reuse it, no second record."
+  },
+  {
+   "bead": "N00-16",
+   "what": "N33a-09 now declares examples/sibling_facts.rs and its command; the wrapper calls it with --sheet foundation and N00-16 declares no example of its own (keep its acceptance on the output)."
+  },
+  {
+   "bead": "BD-022",
+   "what": "From N33a-06 item 1: doctor's stack_receipt section also prints the lock digest (sl: form of BUILT_UNDER.lock); assert both equal receipts/HEAD and receipts/LOCK_DIGEST. N33a-27's identity_on_results step already asserts the lock digest, which no doctor field holds today."
+  },
+  {
+   "bead": "N32a-03",
+   "what": "From N33a-06 item 3: assert that every envelope carries evidence.stack_receipt equal to BUILT_UNDER.receipt in sr: form, and stack_dev: true when the identity is dev."
+  },
+  {
+   "bead": "BD-004",
+   "what": "Say that the check-stack entry is registered by N33a-05 in BD-003's surface (N33a-06/07/08 and BD-006 run it before BD-004, which depends on BD-006); BD-004 lists it and keeps the table, help text and six-subcommand test."
+  },
+  {
+   "bead": "N33a-10",
+   "what": "classified_by names a check-stack --json report: now frob.xtask.report/1 with check = \"check-stack\", whose facts block has schema frob.check-stack/1 (N33a-05)."
+  },
+  {
+   "bead": "N33-KA",
+   "what": "KA-771 (incremental recomputation through fs-recompute) lists N33a-17 among its carriers; Recompute moved to N33b-15, and N33a-17 (Session only) carries no test of it. Drop N33a-17 from the row."
+  },
+  {
+   "bead": "N33a-34",
+   "what": "(1) Write records with N33a-07's command `cargo run -p frob-conformance --example admission -- record --gate <id> --input <step file> [--harness-receipt <hash>]` (the writer was a library function, unreachable from the script). (2) Name the gate each first-use record of steps 2 to 8 is filed under: N33a-07's schema requires `gate` and files records under receipts/admissions/<gate>/, and N33a-15, -16, -17, -19, -20 and -30 name none (N33a-18 uses INT-FSIM-14). (3) Step 5's record is now asserted only here: N33a-17 fixes its content and no longer asserts that it exists."
+  },
+  {
+   "bead": "BD-006",
+   "what": "Step 7 ('Write the admission record') has no command: use N33a-07's `cargo run -p frob-conformance --example admission -- record --gate INT-FSIM-01 --input <file> [--harness-receipt <hash>]`. N33a-07's acceptance now writes a synthetic INT-FSIM-01 record only, so the first real record is this bead's."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 23 beads were read in full and every one was edited; unchanged: none. Audit notes: BD-006 is in no round-4 slice, so its two proposals were applied only where the slice holds a side (N33a-05 registers check-stack itself; request to BD-004); moving N33a-08 to BD-006's related was not applied. N33a-06's audit note named N34-26 for the doctor item; the doctor's stack_receipt is BD-022's and the envelope N32a-03's, so the items went there (requests). N33a-09's stale-fact half went to N33a-28 as a comparison of the report with the record, since N33a-07's generator renders no stale-fact mark. C1's cut of N34-03 -> N33a-11 was not applied by F-U34, so N33a-11's 'asserted by N34-03' stays; N33a-13 now depends on N33a-11 directly. Open, not fixed (needs one decision across N33a-11, N33a-18, N33a-31 and N33b-12): the optimize feature compiles all ten of its crates, so when BD-124/BD-262 enable it at M1 the never-inherited check finds fs-dfo, fs-bo, fs-ascent, fs-archive, fs-opt, fs-sos, fs-tropical and fs-symmetry with no record (only fs-race and fs-eproc are admitted at M1) and check-stack fails; options are a racing sub-feature or a group-compile record at M1. First-use records of N33a-34's steps have no gate id (request to N33a-34). Checks run: tools/graph_check.py cycles (0), a path check for every added dep, a milestone check (no slice bead depends on a later milestone), a parse of every U33a staging file (front matter, one-line JSON lists, seven sections), and the claim that Cargo.lock lists unenabled optional dependencies, on a scratch two-crate workspace."
+}

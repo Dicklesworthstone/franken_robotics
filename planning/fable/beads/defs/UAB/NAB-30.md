@@ -122,7 +122,8 @@ tournament's report resolves to a source record with a primary reading.
 `crates/frob-conformance/tests/decision_sweep.rs`: `due_m7_has_no_kill_gate_family`;
 `m7_requires_impact_evaluation_for_every_adopted_family` (a record with 99 evaluations fails
 `sweep.row-not-swept`); `impact_change_requires_ledger_reference`; `thin_layer_tie_lists_dependants`;
-`ratio_outside_gate_record_is_refused` (the wording lint's finding is surfaced as a sweep finding).
+`ratio_outside_gate_record_is_refused` (a history entry whose `reason` prints a ratio that no gate record of
+this exit holds fails `sweep.change-without-evidence`: the reason quotes evidence that does not resolve).
 
 ### End-to-end script and logging
 
@@ -143,9 +144,11 @@ sweep record; a `summary` with assertions passed and failed. The log quotes no s
 Known answers: 100 families in the two adopted tables (41 + 59); ceilings 1/(1 − 0.87) = 7.69 and
 1/(1 − 0.29) = 1.41; with one design per agent turn and 300 s of training the loop ratio is at most
 (300 + t)/t (3.5 at t = 120 s, 6 at t = 60 s). Negative controls: an Impact raised for a family whose phase is
-under 5% of our arm's time with a reason that cites no ledger; a sweep performed by a session of one arm
-(`sweep.self-certified`); a decision record that prints "ten-fold" as a result when the gate recorded a
-different value.
+under 5% of our arm's time with a reason that cites no ledger (`sweep.change-without-evidence`, by the
+evidence-kind rule); a sweep performed by a session of one arm (`sweep.self-certified`); a history entry whose
+`reason` prints "ten-fold" as a result when the gate recorded a different value (`sweep.change-without-evidence`,
+as in `ratio_outside_gate_record_is_refused`; the same words in a contract or document are the evidence-label
+lint's headline-multiplier error, N00-01).
 
 ## Considerations
 

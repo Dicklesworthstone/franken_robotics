@@ -40,8 +40,9 @@ asset-anymal-c-<source hash> --json` (NEG-15's import recipe; the verb writes no
 the design's `term` section). Expected loss-report entries (HYPOTHESIS until read): visual
 meshes; fitted collision primitives with recorded error (this model's collision geometry is likely more
 detailed than the small quadrupeds', so the fitting error is reported per body and the worst is flagged if
-above 5 mm); unmapped solver and contact parameters; `armature`, `damping`, `frictionloss` and actuator force
-ranges to an `assumed` card.
+above 5 mm); unmapped solver and contact parameters. Not losses, by BD-066's table: actuator force ranges
+(overrides on the bound `assumed` card), `armature` (an override of that card's rotor inertia), and joint
+`damping` and `frictionloss` (the joint's own damping and friction).
 
 **Validation specifics.** Mass ratio check against `anymal-b`: both imports are compared body by body (trunk,
 hip, thigh, shank) and the ratios are recorded; they feed a property test of the template: scaling the

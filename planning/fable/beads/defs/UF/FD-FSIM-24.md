@@ -4,7 +4,7 @@ title: "upstream frankensim: a cross-ISA statement for the ensemble lane of `fs-
 type: "task"
 priority: 3
 milestone: "M5"
-labels: ["m5", "suite", "ground", "upstream", "frankensim", "frontier"]
+labels: ["m5", "suite", "ground", "upstream", "frankensim", "frontier", "review-notes-open"]
 parent: "WP-68"
 deps: ["BD-037", "BD-388", "BD-391", "BD-396", "N33b-04", "STD-E2E"]
 needs: []
@@ -144,7 +144,9 @@ asserting that the fixture fails with the signature in `expected.toml`; then the
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
 bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. The script is run once on each machine. The first run writes its peer record
 (`--emit-peer`, to `target/e2e-logs/upstream_fd_fsim_24/peer-<target-triple>.json`); that file is copied to the
-second machine and passed with `--peer <file>`, and the second run refuses to compare if the two records name
+second machine and passed with `--peer <file>`, which copies it to `tests/upstream/FD-FSIM-24/peer/<target-triple>.json`
+(the path the fixture's second part reads; without it the fixture never compares) before the fixture runs, and the
+second run refuses to compare if the two records name
 different receipts or toolchains, then compares under the claimed class and logs the first differing member and
 step. Phase `post` also runs `frob ground identify <rehearsal dataset> --stage actuators --key
 fd24-ens-<target-triple>-<run-id> --json` (the dataset is the positional input; the actuator stage is the one

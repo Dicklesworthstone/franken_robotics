@@ -153,7 +153,7 @@ golden-fixture layout: `exact`, `identity`, `structural` or `illustrative`.
                        "checker": "frob-verify/1" },
       "assumptions": ["independent-normal-force authority", "payload wrench observed before allocation",
                       "point feet, coplanar, static", "cap, lam and tau_c are stipulated by the query"] },
-    "evidence": { "class": "Certified", "tier": "static", "determinism": "exact",
+    "evidence": { "class": "Certified", "tier": "static", "determinism": "D0",
                   "claims": ["Proof"], "reality": "no-claim" },
     "cost": { "wall_ms": 41, "cpu_core_s": 0.05, "gpu_s": 0 },
     "budget": { "gpu_s_left": 1800, "cpu_core_s_left": 7199.95 },
@@ -186,7 +186,7 @@ golden-fixture layout: `exact`, `identity`, `structural` or `illustrative`.
       "next_test": null,
       "certificate": { "bundle": "b3:d4a9…", "kinds": ["lp-primal", "lp-farkas", "partition"],
                        "checker": "frob-verify/1" } },
-    "evidence": { "class": "Certified", "tier": "static", "determinism": "exact",
+    "evidence": { "class": "Certified", "tier": "static", "determinism": "D0",
                   "claims": ["Proof"], "reality": "no-claim" },
     "warnings": [ "boundary design has zero reserve at foot.pp (rating, knee-hold) and at foot.mm (unilateral)" ],
     "next_actions": [ { "command": "frob design new quad-tray --from-cell q:3c9d…/c:06a",
@@ -209,7 +209,7 @@ golden-fixture layout: `exact`, `identity`, `structural` or `illustrative`.
 → design_check { "design": "quad-tray" }
 ← { "verb": "design.check", "ok": true, "exit": 0,
     "result": { "closure": "closed", "symmetry": "C2xC2", "findings": [] },
-    "evidence": { "class": "Tested", "tier": "static", "model_id": "m:5d20…", "determinism": "exact",
+    "evidence": { "class": "Tested", "tier": "static", "model_id": "m:5d20…", "determinism": "D0",
                   "claims": [], "reality": "no-claim" }, "bound": { "design": "d:7a3e…" } }
 
 → control_synth { "design": "quad-tray", "idempotency_key": "ctl-1" }
@@ -221,19 +221,19 @@ golden-fixture layout: `exact`, `identity`, `structural` or `illustrative`.
 
 | Step | Call | Class | What is asserted |
 |---|---|---|---|
-| A1 | `tools/list` | exact | Exactly the three base tools and the seven tools of `orient`: `capabilities`, `doctor`, `robot_docs`, `schema`, `design_templates`, `scene_list`, `session_show` |
+| A1 | `tools/list` | exact | Exactly the registered base tools and the registered tools of `orient`, against the registry of the build (BD-138's rule). From M2 that is the three base tools and the seven of `orient`: `capabilities`, `doctor`, `robot_docs`, `schema`, `design_templates`, `scene_list`, `session_show`; in an M1 build `session_focus` and those six other than `scene_list` (VERBS-scene registers it at M2, and VERBS-job the rows of `job_wait` and `job_cancel` at M2) |
 | A2 | `session_show` | structural | A session identifier, a namespace, `focus: "orient"`, a scope list, and a budget with GPU-seconds and CPU core-seconds left; exit 0 |
-| A3 | `session_focus {cluster: "mission"}` | exact | `focus: "mission"`; the seven tools `mission_new`, `mission_check`, `mission_synthesize`, `mission_refute`, `mission_distinguish`, `mission_show`, `result_revalidate`; a following `tools/list` holds these plus the base three |
-| A4 | `mission_new` with the query of artifact L.4, key `mis-1` | identity | `result.mission_id` equals the identity of the query; `bound.family` names the template with its content hash |
+| A3 | `session_focus {cluster: "mission"}` | exact | `focus: "mission"`; the seven tools `mission_new`, `mission_check`, `mission_synthesize`, `mission_refute`, `mission_distinguish`, `mission_show`, `result_revalidate` (all registered from M1); a following `tools/list` holds these plus the registered base tools (the three from M2, `session_focus` alone at M1) |
+| A4 | `mission_new` with the query of artifact L.4, key `mis-1` | identity | `result.mission_id` equals the identity of the query; `bound.family` equals `template:quad-mammal@1#b3:` followed by the BLAKE3 hash of the archetype file `assets/archetypes/quad-mammal/design.fbot` that BD-109 ships (BD-126's resolution rule; BD-126 tests the rule on its own families and leaves this worked-session value to this step) |
 | A5 | `mission_check` | exact | domain `nonempty`; topologies 1; free `["v", "r"]`; quantifiers "∃ policy per nominal design, ∀ worlds, ∀ executions"; fragment "linear static: exact answer available"; horizon `static` |
 | A6 | `mission_synthesize {estimate_only: true}` | structural | An `estimate` with admission, lowering, proposing and checker seconds, a 90% interval and `gpu_s: 0`; nothing is charged (the budget of A2 is unchanged) |
-| A7 | `mission_synthesize`, key `syn-1`, `paving` `v:4,r:3:lu`, `sync_wait_ms` 2,000 | exact | The first answer: inner c:03 = [4, 6] × [2, 5/2]; excluded c:01, c:04 (binding knee-hold at foot.pp), c:07 to c:12 (binding rating at foot.pp); unresolved c:02, c:05, c:06; witness forces (76, 44, 40, 0) N at v = 6, r = 2; cost bounds 1/6, 1/8, gap 1/24, not attained; next test "split c:06 at r = 11/5"; certificate kinds `lp-primal`, `lp-farkas`, `partition`; evidence class Certified, tier `static`, determinism `exact`, claims [Proof], `reality: no-claim`; the warning that the minimum is not established; the three flags false; a `next_actions` command that is a registered CLI path and, run as a CLI twin, reproduces the answer of A9 (it is not compared with the specimen's string `--strategy refine --from`, until the registry freeze settles that spelling). Cost and budget are structural: budget left = budget before − cost |
+| A7 | `mission_synthesize`, key `syn-1`, `paving` `v:4,r:3:lu`, `sync_wait_ms` 2,000 | exact | The first answer: inner c:03 = [4, 6] × [2, 5/2]; excluded c:01, c:04 (binding knee-hold at foot.pp), c:07 to c:12 (binding rating at foot.pp); unresolved c:02, c:05, c:06; witness forces (76, 44, 40, 0) N at v = 6, r = 2; cost bounds 1/6, 1/8, gap 1/24, not attained; next test "split c:06 at r = 11/5"; certificate kinds `lp-primal`, `lp-farkas`, `partition`; evidence class Certified, tier `static`, determinism `D0`, claims [Proof], `reality: no-claim`; the warning that the minimum is not established; the three flags false; a `next_actions` command of the registered path `frob mission synthesize` that refines with `--from` and the first answer and carries no `--strategy` (VERBS-mission: refinement is `--from` alone, and `refine` names BD-362's lane), which, run as a CLI twin (with a `--key` of the script's when the command carries none), reproduces the answer of A9; the specimen's string `--strategy refine --from` is therefore not compared. Cost and budget are structural: budget left = budget before − cost |
 | A8 | `mission_show {set: "outer"}` | exact | Cells c:02, c:03, c:05, c:06; area fraction 1/3; inner within c:03; unresolved within c:02, c:05, c:06 |
 | A9 | `mission_synthesize {from: <answer 1>}`, key `syn-2` (the step file omits the transcript's `strategy: "refine"`) | exact | Inner c:03 and c:06a = (6, 8] × [11/5, 5/2]; unresolved c:02, c:05, c:06b; witness (88, 32, 40, 0) N at v = 8, r = 11/5; cost bounds 1/8 and 1/8, gap 0, attained; `next_test: null`; the zero-reserve warning; a `next_actions` command that creates a design from cell c:06a |
 | A10 | `mission_refute {design: {v: "9", r: "5/2"}}`, key `ref-1` (added by the step file) | exact | Excluded for every allocation; `lp-farkas`; "rating at foot.pp: 94 N required, 88 N rated"; relaxing changes: rating to 94 N, P_y envelope to 32/3 N·m |
 | A11 | `session_focus {cluster: "author"}` | exact | The seven tools of `author` |
 | A12 | `design_new {name: "quad-tray", from_cell: <mission>/c:06a}`, key `des-1` | exact, identity | `at: {v: "7", r: "47/20"}`; `half_width: "1/7 m"`; symmetry mech `C2xC2`, obs `C2`; the design identity |
-| A13 | `design_check` | exact | `closure: "closed"`; `symmetry: "C2xC2"`; no finding of severity high; evidence class Tested, tier `static`, determinism `exact`; `bound.design` is the identity of A12 |
+| A13 | `design_check` | exact | `closure: "closed"`; `symmetry: "C2xC2"`; no finding of severity high; evidence class Tested, tier `static`, determinism `D0`; `bound.design` is the identity of A12 |
 | A14 | `control_synth`, key `ctl-1` | structural | A controller identity, a gait and a standing (`baseline`); one of the three synthesis outcomes, never a bare failure |
 
 **Rules the first half demonstrates** (asserted, not illustrated).
@@ -260,8 +260,9 @@ identities that names resolved to.
 - [ ] `transcript.a.specimen.txt` equals the text above byte for byte (manifest SHA-256).
 - [ ] The fourteen steps run in order against `frob-mcp` in process and every `exact` and `identity` assertion
       of the table holds; every `structural` assertion holds; nothing `illustrative` is asserted.
-- [ ] Rule 1: after each of the two focus changes the listed set is exactly the cluster plus the base three,
-      and `session_show` reports the same scopes before and after.
+- [ ] Rule 1: after each of the two focus changes the listed set is exactly the cluster's registered tools plus
+      the registered base tools (the three from M2; `session_focus` in an M1 build), and `session_show` reports
+      the same scopes before and after.
 - [ ] Rule 2: the outer set of A8 contains the inner cell and the three unresolved cells and is never returned
       with witnesses; rule 3: `attained` is false in A7 and true in A9, with the gap 1/24 then 0.
 - [ ] Repeating A7 with the key `syn-1` returns the same answer with `idempotent_replay: true` and no second
@@ -331,6 +332,9 @@ and first repair; the metrics `tools_listed` (<= 10) and `wait_overrun_ms` (<= 5
   the CLI-only fallback the table is asserted on the CLI twins alone and the MCP half is recorded as not run.
 - Cell and proof labels are the specimen's; comparisons are by box and by proof kind, with the specimen's
   labels mapped in the expectation files.
+- The specimen writes the determinism class of A7, A9 and A13 as `"D0"` where the specification prints
+  `"exact"`: N35-01 fixes the wire form `"D0"` … `"D4"`, and its reader rejects `"exact"` (the name of D0 in
+  prose). This is the owner-spelling re-entry of NJL-07's rule, not a regeneration; every other line is as printed.
 
 ## References
 

@@ -1,0 +1,216 @@
+{
+ "round": 4,
+ "slice": "F-U20a",
+ "reviewed": 41,
+ "changed": [
+  {
+   "bead": "BD-078",
+   "kinds": [
+    "request",
+    "contradiction"
+   ],
+   "what": "Request from F-UEG-1 applied: acceptance line 1 now names its call, `frob sense schedule --clocks physics=400Hz,policy=30Hz --tier lockstep --window 0..20 --json`: the first four policy events have boundaries 0, 14, 27, 40 and lateness 0, 2, 1, 0 and the 20 s window holds 600; the default one-repeat window [0, 120) holds the first three (quanta 0, 40, 80), the fourth opening the next repeat; under `--tier referee` (`split`) every lateness is 0. `hold_schedule_400_30` and `schedule_inputs` say the same. As written, the line could not pass: the default window holds three events, not four or 600, and without a lockstep tier the referee's `split` gives lateness 0, not 0, 2, 1, 0 (GB-23 uses the same lockstep and window form)."
+  },
+  {
+   "bead": "BD-120",
+   "kinds": [
+    "plan",
+    "contradiction",
+    "registry",
+    "convention"
+   ],
+   "what": "Omission fixed: BD-120 is the first implementation of construction C-20 in frob-sense, and SPEC-C-20 gives the implementing bead the duty to move the law suite into the owning crate, bind its production types to the subject trait and run the unchanged suite at acceptance. Nothing did that at M1, and BD-239 (M3) assumes the suite is already in frob-sense. Added an acceptance item and a unit-test entry: laws_c20.rs in crates/frob-sense/tests (moved unchanged if staged in frob-conformance), `C20Subject::{gramian, index, ambiguities}` bound to sections 3, 4 and 6, `empirical_gramian` bound to PO-SENS-09's referee central-difference check until BD-239 binds its batched driver, `cargo test -p frob-sense --test laws_c20` passing, and each registered control failing it, one control per build with its record's feature (N10a-01 section 6). Second omission: N20b-21 (as revised this round) names BD-120 the recorder of GATE-SENS-08's M1 part, the linearized rows, and N20a-47 says the same, but BD-120 never recorded it: the first acceptance item now enters the part from one passing G1 receipt of KA-487 and KA-488 with `record_gate -- --gate GATE-SENS-08 --receipt <hash> --part M1` by a non-implementing session (deps N38a-13 and N38b-19, M1 and M0, no cycle). The e2e line now gives each `frob sense observability` call its own --key (a run verb)."
+  },
+  {
+   "bead": "BD-188",
+   "kinds": [
+    "registry",
+    "deadlock"
+   ],
+   "what": "KA-481 (no blur beyond the segmented motion) is still `to set` in N20-KA, whose `to_set_blocks_gate` test rejects a gate record that cites a `to set` row, and no bead sets it (N20-KA lists KA-481 under 'Still to set'; N20a-07 does not set it). BD-188 records GATE-SENS-06, which cites KA-481, so the gate could never be recorded. BD-188, the row's measuring bead, now sets the tolerance in its acceptance and known-answer list: each row's column offset on the impact fixture within 0.01 pixel of the segmented-history value, no row beyond the true excursion, carried as '(set: BD-188)' with its error budget in the derivation file. Request to N20-KA recorded."
+  },
+  {
+   "bead": "BD-189",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Scope spelled `--tier batch-cpu|cuda|metal` for sense.schedule; the tier spellings are `batch-cpu|gpu-cuda|gpu-metal` (sim.run's --tier row), so `cuda`/`metal` would be 802. The recording was passive ('GATE-SENS-04 recorded on ...'): added an acceptance item stating that BD-189 is the register's recorder of the M2 every-tier parts of GATE-SENS-04 and -05 (N20b-21), with `record_gate -- --gate GATE-SENS-04 --receipt <hash> --part M2` and the same for -05, by a non-implementing session, citing the KILL-SCHED outcome, and the script writing no record (KNOWN_DRIFTS 9)."
+  },
+  {
+   "bead": "BD-239",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request from F-U10a applied: the law-suite acceptance ran `--features controls`, a feature no bead declares; it now runs each registered control of laws_c20 in its own build, `cargo test -p frob-sense --features <feature> --test laws_c20` with the feature its control record names (cx-<nnn> or nc-<nnnn>, N10a-01 section 6). Also made the M3 recording explicit (N20b-21 names BD-239 the recorder of GATE-SENS-08's M3 part): `record_gate -- --gate GATE-SENS-08 --receipt <hash> --part M3` by a non-implementing session, the script writing no record. Its parenthetical named N20a-47 as the M1 recorder; N20b-21 now names BD-120 (N20a-47's script reads the record back), and the text says so."
+  },
+  {
+   "bead": "BD-240",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Three requests applied. F-U20b (align the M1-recorder parenthetical with N20b-21): N20b-21, as revised this round, names BD-134 (M1 docking rows; N20a-48's script reads the record back) and BD-240 (M3); the parenthetical now says exactly that, and the M3 recording is stated with record_gate --part M3. F-U28a and H-cx-2 (one request): new section 6 builds the plant of CX-307, `BD-240:a17-per-reading-accuracy`, as the Cargo feature `a17-per-reading-accuracy` under the umbrella gauntlet-mutations in frob-conformance (N28a-11's plant form), scoring a repeated-read probe from per-reading accuracy instead of the cards' declared dependence class, and binds row 6 of N28a-11's ROWS table at M3 (truth 3/4, mutant 3,807/4,096). Added an acceptance item, the unit test `a17_shared_error_reads_not_redundant` (seven reads at 3/4 through one pane score 3/4 and the alias stands; separate panes 3,807/4,096), and deps N28-CX and N28a-11 (both M1, no cycle). Without it CX-307's control has no builder and row 6 of N28a-11 stays not-yet-due forever."
+  },
+  {
+   "bead": "N20a-10",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 13: the e2e paragraph narrated a pending request to N20a-44 ('the script's stage still spells it same-instant-commute ... and is asked to change'). N20a-44's stage 15 now runs `-- MR-17` (applied in this slice), so the narration is false; it now states the relation as N38a-17 registers it."
+  },
+  {
+   "bead": "N20a-11",
+   "kinds": [
+    "contradiction",
+    "registry",
+    "deadlock"
+   ],
+   "what": "Out said the KILL-SCHED row (with a 'control') is N20b-21's; N20b-21 item 3 writes nothing in a kill record and N40-24 creates it with trigger, fallback, decided, mode and reads: corrected, dep N40-24 added (M1). The bead omitted the kill gate's owner declaration, which N20b-21 assigns to the deciding bead and N40-30's kill_ledger test fails without (owner-declaration-missing): added to step 4 in N20a-27's form with N40-24's text ('The race check misses a planted race'; 'The fixed total order, with no enumeration'), an acceptance item on `cargo test -p frob-conformance --test kill_ledger`, the same command in the script, and dep N40-30 (M1, no cycle). Its first acceptance item required this bead to register the rule before the pilot's first run, which it cannot do because it depends on the pilot (N20a-09): it now applies the rule frozen in N20a-09's protocol, as N20a-27 and N20a-43 do, and the repair cycle is N40-03's (step 5), run by the measuring bead N20a-09."
+  },
+  {
+   "bead": "N20a-18",
+   "kinds": [
+    "request",
+    "convention",
+    "registry"
+   ],
+   "what": "Request from F-U38a applied and the C13 finding fixed: the record's `fallback.kill_gate` was 'to-register' with a proposed wording and the narration 'requested of N38a-37, which registers KILL-TACTILE'. The tactile array has its own row, KILL-TAXEL, entered at M4 by N38a-37 and decided by N38ap3-01; the record now names it, with dep N38a-37 (M4, before this M6 bead, so the row exists at registration and N38a-37 step 3's 'a record registered after this bead names its row directly' applies). Added `gated_beads = [\"N20a-19\"]`: WP-74 holds the other Frontier sensor models (N20a-29's record gates N20a-30), and without it fundable for N20a-19 falls back to the package answer."
+  },
+  {
+   "bead": "N20a-19",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Request from F-U38a applied: dep N38a-37 (M4) added; KILL-TAXEL named as the gate under which the fallback is adopted (Background, section 4, front-matter gates); this bead measures and records the cost fraction and closes on its receipt while N38ap3-01 decides. It now states that the receipt carries paired bounds (DESIGN: median of five paired on/off repeats after warm-up, bounds the smallest and largest), which N38ap3-01 compares by its lower bound, and the one repair cycle in N40-03's form that N38ap3-01 step 3 assigns to this bead, after which a value still above 0.25 closes it `recorded`. Previously the bead said it adopted the fallback itself above 25%, contradicting the decision bead."
+  },
+  {
+   "bead": "N20a-26",
+   "kinds": [
+    "request",
+    "contradiction"
+   ],
+   "what": "Request from F-U20a-2 applied: KILL-EXPOSURE's re-arm (N20a-27 step 5) is carried: the measured added ray-stage cost is in the receipt; above 25% a session that did not implement the bead appends the second entry `fired` (exit M3, docs/adr/ADR-KILL-EXPOSURE-M3.md), and the bead closes `fallback`. The old acceptance required the cost to be at most 25%, which could not pass on the branch the re-arm exists for. Close types aligned with N20a-27: `withdrawn` citing N20a-25's [[pilot.result]] on 'no mask statistic changed', `fallback` on 'cost above 25%' (the old line said `fallback` in every case). The script stage's on/off sim runs now carry their own --key."
+  },
+  {
+   "bead": "N20a-27",
+   "kinds": [
+    "contradiction",
+    "convention"
+   ],
+   "what": "Out attributed the KILL-EXPOSURE row to N20b-21 'from the ledger text of N40-24'; N40-24 creates kill rows and N20b-21 writes none (its item 3): corrected, N40-24 moved from related to deps. Step 5's 'Carrying that check is N20a-26's (... requested)' narrated a request (convention 13); N20a-26 now carries it and the step states that as fact. The unit test `decision_entry_form` pointed at 'the step-6 path'; the ADR is written in step 4."
+  },
+  {
+   "bead": "N20a-41",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 13 and a stale fact: the override `--override-alias diagnosis` was 'requested of its VERBS-train row, which lists 445 but not the override'; VERBS-train's train.start row now lists it (citing N20a-41), so the text states the row's form."
+  },
+  {
+   "bead": "N20a-43",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Out attributed the KILL-ALIAS row to N20b-21 'from the ledger text of N40-24'; N40-24 creates it and N20b-21 writes nothing in a kill record: corrected, N40-24 moved from related to deps (M1). The owner declaration, kill_ledger acceptance and N40-30 dep were already present."
+  },
+  {
+   "bead": "N20a-44",
+   "kinds": [
+    "request",
+    "broken",
+    "convention"
+   ],
+   "what": "Request from F-U20a-1: items 1 and 2 were already applied (--key on every sim run; this bead records the M1 parts); item 3 is not applied because N20b-21 now names N20a-44 as the M1 recorder of both GATE-SENS-04 and -05 (BD-098 records nothing); item 4 applied: stage 15 runs `-- MR-17`, the relation N38a-17 registers. Stage 1 could not pass: it passed a fixture name as the design of sense.schedule (which takes a design and task, or --clocks), asserted lateness 0, 2, 1, 0 on the referee (where `split` gives 0) and 600 decisions from the default one-repeat window (three events). It now calls `--clocks physics=400Hz,estimator=100Hz,policy=30Hz --tier lockstep --window 0..20` for the known answer and the same list with `--tier $T` for the tier's own schedule (referee: lateness 0, INV-SENS-04). Stage 4's placeholder `<Q above 2^40>` is now a concrete list (a probe at 2^40 + 1 Hz, Q = 400*(2^40 + 1)). Stage 8 read 'packets of stage 1's run', but stage 1 has no run: it now runs `frob sim run clock-400-30 --tier $T --key sim-8-<run-id>` and compares lateness with stage 1's tier listing. Stage 14 compares tiers under one intra-step policy. The Considerations line about passing `hold` explicitly (sense.schedule has no policy input) now says why the known answer does not move under OPEN-SENS-1."
+  },
+  {
+   "bead": "BD-134",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "N20b-21 (as revised this round) names BD-134 the recorder of GATE-SENS-09's M1 part, the docking rows, and N20a-48 says BD-134 records it with record_gate, but BD-134 never recorded anything. The first acceptance item now enters the part from one passing G1 receipt of KA-502, KA-499 and KA-500 (`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- KA-502` and the others) with `record_gate -- --gate GATE-SENS-09 --receipt <hash> --part M1` by a non-implementing session (N38b-19). Deps N38a-13 (M1) and N38b-19 (M0) added; no cycle."
+  },
+  {
+   "bead": "N20a-34",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 13 (the mechanical C13 finding, confirmed): section 2 said the row had no λ_warn input and that both spellings were requested of VERBS-sense; VERBS-sense's sense.observability row now lists `--spacing <metres>` and `--lambda-warn <value>` with 802 for a non-positive value, so the text states the row's form. Section 5 said wiring the finding into design.check was BD-244's '(which then depends on this bead; requested)'; BD-244 depends on it, so the parenthetical is now a statement."
+  },
+  {
+   "bead": "N20ap3-01",
+   "kinds": [
+    "contradiction",
+    "registry"
+   ],
+   "what": "The status rule turned a row to `fallback` on any measured cost fraction above 0.25 and to `built` at or below it, which contradicts KILL-TAXEL's decision (N38ap3-01 reads the lower bound of the paired fraction and does not fire on bounds that straddle 0.25): for tactile arrays a fraction of 0.27 with bounds (0.23, 0.31) would be `fallback` here and `built` there. Steps 4 and 5 now let a kill decision in force govern (`fired` gives `fallback`, `not-fired` gives `built`; a row with a fraction but no decision in force stays `funded`); the plain 0.25 rule applies only to rows without such a decision. The `status_rule_table` test gains that case; dep N40-04 (the decision-entry form) added and N38ap3-01 put in related."
+  },
+  {
+   "bead": "N20a-37",
+   "kinds": [
+    "contradiction",
+    "deadlock"
+   ],
+   "what": "The M1 T-junction fixture covered its probes by 'the structural argument', but the checker verifies an `AllBehaviours` argument by its own method and the structural verifier is N20a-38's, at M3, which depends on this bead: the M1 witness (acceptance item 1, KA-489, N20a-48 stage 6 at M1) could not be accepted. Item 7 now covers the probes by an enumerated argument over the abstraction's finite reachable set (junction-graph position and distance travelled in 0.5 m steps: nothing within 0.5 m of a branch end before 9.5 m along it), probe scope `AllBehaviours { argument: enumerated }`, which also matches the class the e2e asserts (`Certified` for the abstraction, the Enumerated row); the structural form for the simulated lidar stays N20a-38's at M3."
+  },
+  {
+   "bead": "N20a-38",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Request from F-U20a-2 applied: its only e2e was N20a-48 stage 7 through `frob sense alias --source structural`, N20a-41's verb, which depends on this bead (KNOWN_DRIFTS 7/11), and N20a-48 already pointed to a script of N20a-38's that did not exist. It now owns `scripts/e2e/sense_alias_structural.sh`, driving the lane through the example binary `alias_structural` of frob-sense (its own options) on the T-junction, the raised plate, the friction patch at 2, 3 and 4 s, the payload mass, the movable door, the 1,000-scene suite, the two verifier mutants and the forgotten-proximity control, with the standard log and summary; the user side stays N20a-48 stage 7 once N20a-41 lands. Dep STD-E2E added."
+  },
+  {
+   "bead": "N20a-46",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Request from F-U20a-1: the --key half was already applied (item 1 gives every run-verb call its own key). Stage 6 asserted the end pose (1, 1) m and π/2, the quarter-circle end at the irrational π/2 s, which no run on N20a-17's 10 ms grid reaches; it now compares the odometry and true pose at the last odometry instant t_e = 1.57 s with the closed form (sin t_e, 1 − cos t_e, t_e) within KA-517's 1 mm and 1 mrad, as N20a-17 does (the quarter-circle end is 0.80 mm and 0.80 mrad away, recomputed)."
+  },
+  {
+   "bead": "N20a-47",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Request from F-U20a-1 (own --key per sense.observability call) was already applied. Stage 13 ran `cargo test -p frob-conformance --test <tier>` with `<tier>` taken from the gate record's tier field, in a script whose `$T` is the backend tier; no test target has a backend name. It now names the target, `--test g1_known_answers -- GATE-SENS-08` (KA-487 and KA-488 are G1), and says it is not `$T`."
+  },
+  {
+   "bead": "N20ap2-01",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 13: Out said the registry row's text was requested of VERBS-telemetry; its telemetry.stills row already carries `--quality standard|hero`, `--spp`, the `tracer` group need and 790, so the text states the row as it is."
+  },
+  {
+   "bead": "N20ax-01",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Request from F-U27a applied: the bead raises FROB-REF-441 at a fork (a new link law beyond the ring capacity) but did not depend on N20-REF, which enters 441 (M1); RL-06 would make the code a load-time error if this bead landed first. Dep N20-REF added; no cycle (checked)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N20-KA",
+   "what": "KA-481's tolerance is still `to set`, and the row's `to_set_blocks_gate` test rejects any GATE-SENS-06 record citing it. BD-188, the row's measuring bead and GATE-SENS-06's recorder, now sets it: each row's column offset on the impact fixture within 0.01 pixel of the segmented-history value, no row beyond the true excursion. Carry it as '(set: BD-188)' and move KA-481 from 'Still to set' to 'Tolerances set'; otherwise GATE-SENS-06 can never be recorded."
+  },
+  {
+   "bead": "N38ap3-01",
+   "what": "N20a-19 now states that its cost receipt carries the fraction with paired lower and upper bounds (median and extremes of five paired on/off repeats). The Considerations item 'Open, with its fail-closed default: whether N20a-19's cost receipt carries paired bounds' is answered: state that the lower bound is compared, as step 2 already reads it."
+  },
+  {
+   "bead": "SPEC-C-20",
+   "what": "The acceptance line 'with `--features conformance` every mutant fails' and the test-plan line using `--features conformance` predate N10a-01 section 6: each law-suite mutant has its own Cargo feature named in its control record (cx-<nnn> or nc-<nnnn>) and the suite runs once per control, `cargo test -p frob-sense --features <feature> --test laws_c20` (in frob-conformance while staged: `--features gauntlet-mutations,<feature>`). BD-120 and BD-239 now run it that way; state the same form here."
+  }
+ ],
+ "unchanged": 17,
+ "notes": "Unchanged (read in full, found right): BD-190, N20a-09, N20a-12, N20a-14, N20a-17, N20a-25, N20a-28, N20a-29, N20a-30, N20a-31, N20a-33, N20a-36, N20a-39, N20a-40, N20a-42, N20a-45, N20a-48. Slice requests found already satisfied and left as they stand: N20a-31 (VERBS-sim's --fault row and the bead's item 1a already spell the trigger `impact:<body>:<impulse>Ns`), N20a-45 (keys and no gate writing already in place), N20a-48 (BD-134's mission variants and a key on every sense alias and train call already in place; it reads BD-134's record), and the key halves of the N20a-46 and N20a-47 requests. N20a-44's item 3 was not applied: N20b-21 names N20a-44 the M1 recorder of both GATE-SENS-04 and -05. N20b-21's recorder list changed during this round (GATE-SENS-08 M1 from N20a-47 to BD-120; GATE-SENS-09 M1 from N20a-48 to BD-134); BD-120, BD-134, BD-239 and BD-240 were aligned with its current text, and N20a-47 and N20a-48 already matched it."
+}

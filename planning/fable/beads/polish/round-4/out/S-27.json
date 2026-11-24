@@ -1,0 +1,260 @@
+{
+ "round": 4,
+ "slice": "S-27",
+ "reviewed": 25,
+ "changed": [
+  {
+   "bead": "BD-377",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "Its first acceptance criterion (GATE-GAUNT-01 for M4: every gate due at M4 has a caught control, from `gauntlet_controls.sh M4`) could never pass: four gates due at M4 are measured on this bead's stores by beads that depend on it (GATE-ATEL-08 N28b-19, GATE-ATEL-09 N28b-31, the M4 part of GATE-ATEL-11 N28b-35, GATE-ATEL-16 N28b-28), so they have no tier entry until it closes, and it could not close until they had one; N28c-20, BET-33, BD-378 and BD-411 wait behind it. Now the recorded M4 part is the run at the M4 exit candidate commit (a recurring part is fresh only there, N40-04; re-run by N40-05 step 4, BD-378), and this bead closes on its own run in which every pair of a gate that has an entry is caught or not-yet-due and the pairs with no outcome belong only to gates without an entry. Section 4, the script's last step and `m4_gates_have_runnable_controls` (defined as a registry check) say the same. Everything else checked and left: categories 3+2+5+3+3+4+2+2+4+2 = 30 as N25a-17; refusals 537, 546, 548, 566 as their rows; 1 - 0.05^(1/30) = 9.5%; verbs exist at M4."
+  },
+  {
+   "bead": "N38b-06",
+   "kinds": [
+    "broken",
+    "convention",
+    "registry",
+    "deadlock"
+   ],
+   "what": "The M0 proof could not pass on a correct system. BD-024's M0 run accepts no design but `g1` (724) and is a free fall under zero torques that draws nothing, so its state digests are equal under every seed (its `rollout_match` compares them with one fixture value): `live_seed_changes_digest` and the design perturbation asserted the opposite. The M0 proof is now on the state (`--perturb-ulp q0`, BD-024's conformance flag; new catalogue row and `depends` value `state`) with the seed as the irrelevant side; the seed and design rows are tested on a `synthetic` run in frob-core, which cannot call the referee. `prove` digested the whole result block, which holds the run identity and the recorded command, so every perturbation 'changed' the output by echo and a stand-in serving a fixed figure passed: it now digests the measured fields named by the caller (test `echo_is_not_change`). An unchanged output is `stand-in-suspected` whether or not `bound` moved, as N38-REF's row has it (the case was undefined). The script's three `sim run` calls carry distinct keys; dep BD-024 added (the script ran its verb without depending on it; no cycle). The bead states that it adds `depends` to the closed gate schema and `live` to the receipt, where an unknown field fails the load."
+  },
+  {
+   "bead": "N38b-08",
+   "kinds": [
+    "contradiction",
+    "plan",
+    "registry",
+    "broken"
+   ],
+   "what": "It required all three controls of every learning gate and made a gate without a shuffled-label control `not-eligible`, with a shuffled-label reinforcement-learning run (permuted advantages) on `frob train start`. The plan (23.23), the owner of the record N23b-15 and BD-198 say a zero-weight and a random policy for every training gate and a shuffled-label student only where distillation is involved; GATE-CORTEX-01 names two controls, so under the old lint it could never be eligible and M2 could not exit; `train.start` has no shuffled-label input (`--control shuffled-labels` is `train.distill`'s, BD-323, M4). Now: zero-weight and random for every `learned` row, shuffled-label for a `distilled` row (GATE-CORTEX-14); the controls are N23b-15's builders and policy forms (`zero:<spec>`, `random:<spec>:<seed>`), kind `planted-design` with seed CX-257 as N23b-15 and N23-CX have it (was `planted-input`); 544 is N23b-15's checker; the script uses the registry forms with distinct keys and tests the controls and the margin rule at a small budget; dep N23b-15 added (no cycle), BD-323 related. The margin rule, the lint, the plumbing-only plant and the stricter-class rule are kept."
+  },
+  {
+   "bead": "N38b-10",
+   "kinds": [
+    "broken"
+   ],
+   "what": "CERT-03's broken certifier (a fixed-n test peeked at eight times, 13/256 = 5.08%) could not fail the self-test it must fail: against the threshold of 551 false rejections in 10^4 campaigns its expected count is 508 and it stays at or below 551 in 97.6% of runs, so the control would read `missed` and GATE-GAUNT-04's row could not be caught. The control is now the same sign test looked at after every pair of 64 (17.4%, KA-618: about 1,742 of 10^4, bound 1,742 +/- 190), and 13/256 is checked exactly by enumerating the 256 sequences. 552 as the first rejecting count rechecked (tails 0.00983 and 0.01106)."
+  },
+  {
+   "bead": "N38b-11",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Scope listed `the gate record` as this bead's, while the M1 part of GATE-GAUNT-04 has one recorder, the receipt of `certifiers.sh M1` (N38bp1-02): an implementer would have recorded the gate a second time from `cert_corpus.sh`. Scope now says who records. Refusals 823, 826, 829, 833, 850, 881, 848, the stance and docking numbers and the generator parameters checked against N12-REF, N25-REF, BD-136 and N12-34: right."
+  },
+  {
+   "bead": "N38b-15",
+   "kinds": [
+    "broken"
+   ],
+   "what": "CERT-15 drew one test residual per resample. With that the mean over 1,000 resamples has standard deviation 0.0093 against a tolerance of 0.01 (a correct band fails in about a quarter of seeds) and the fraction of calibration sets with coverage below 0.80 cannot be measured at all. The coverage of a resample is now the conditional coverage F(margin) from a known law (uniform in the self-test): standard deviations 0.0020 and 0.0080 against tolerances 0.01 and 0.03. Shapley tables, 2^40, k = 19, 19/21, Beta(19,2) below 0.80 = 0.0692, 18/21 rechecked."
+  },
+  {
+   "bead": "N38b-16",
+   "kinds": [
+    "plan",
+    "registry"
+   ],
+   "what": "Fixture A must raise `energy-created` and `contact-active` (plan 29.9, N29a-22); the bead said `the contact-passivity flag`, a name no bead has, and its test and acceptance asserted only the first flag. CERT-17 said a D4 result is refused with 825 on all five paths: true at the boundary function (N37-28), but as an arm of `eval.compare` it is refused with 542 at comparison admission (BD-269's table), so a test through the verb expecting 825 would fail on a correct system; both codes are now stated."
+  },
+  {
+   "bead": "N38b-20",
+   "kinds": [
+    "request",
+    "deadlock",
+    "contradiction",
+    "registry"
+   ],
+   "what": "Applied F-U40's request: the printed gate register is a registered view (output docs/delivery/register/REGISTER.md, generator N40-02's `print_register`), with the plant that hand-edits it and is caught by `cargo xtask check-generated`; dep N40-02 added. Took this bead's side of the three other audit proposals after checking each: dep N40-01 (the table prints the register layer's parts, kill rows and blocked causes, which the bead read without reaching it), and the hand-edited README cell is named as N40-CX RC-06, which this script already planted; dep N40-03 and a script step for a fired gate (`killed` is never stored: it exists only in the output of `apply_decisions`, so the generator as written would have printed a killed capability as FAIL under its own name); dep N40-06 and a step comparing the rubric's milestone names with milestones.toml, which the rubric view reads. Dep BD-004 replaced by N34p4-03, which now owns `check-generated` and its generator interface (F-U34's split): the bead adds generator rows and needs none of the other five checks. Deadlock removed: the acceptance and the script called `frob capabilities --json` for the `gates` section, which BD-022 does not print and N32b-19 adds at M1 while depending on this bead; the feed is now tested on its generator and the verb's section is left to N32b-19. Kill rows had no printing rule (no claim, no measurement, no controls under N40-01): every one would have printed `none registered` in bold and been counted as a gate without a control; they print dashes, their decision in force, and are left out of that count. `blocked: claim reading` (N40-01's second blocking cause) added. No cycle on any added dep (graph_check both ways)."
+  },
+  {
+   "bead": "N38b-23",
+   "kinds": [
+    "convention",
+    "registry",
+    "request"
+   ],
+   "what": "GATE-GAUNT-04's M1 part named two measuring beads (N38b-11 and N38bp1-02); a part has one recorder (N38b-19), and it is N38bp1-02, whose script runs N38b-11's as a stage: stated so. N38b-09 relies on this bead registering GATE-GAUNT-01's two controls with kind `planted-input`, which this bead did not say: registered as `mutation` they would have no feature to build and read `stale`, and the gate could not be recorded. The kind and its reason are now in step 1. Applied S-26's request: 'Measured by' named two beads for GATE-GAUNT-05 and GATE-GAUNT-09 and no recorder for GATE-GAUNT-03 and -07, so an implementer could record a gate twice or not at all; the cells now name the one recorder in GATE-GAUNT-04's form, each checked against the recorder's own bead: GATE-GAUNT-03 N38a-19 (`--part M2` from a release receipt with every site on both hosts, then one part per exit), GATE-GAUNT-05's M0 part N38a-05 (from `e2e_tier g2_parity GATE-GAUNT-05 --mutations`, citing N38a-04), GATE-GAUNT-07 N38a-35 (from `e2e_tier g5_determinism GATE-GAUNT-07 --mutations`, both hosts), GATE-GAUNT-09 N38a-08 (depends on N38a-07; from `e2e_tier g0_laws GATE-GAUNT-09 --mutations`). Thirteen rows, parts, thresholds and the duplicate-id reason checked against the plan, N40-10 and N40-01: right."
+  },
+  {
+   "bead": "N38b-26",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "On the default branch its acceptance required every Reality gate to read `no-claim`, but that row is entered only by the Reality lane's first record (BD-397, form B), which depends on this bead: the decision could not close on the likeliest outcome. The criterion is now what the decision delivers (the record, the register row `defaulted`, the report line), with GATE-GROUND-10 `blocked` at close and `no-claim` after BD-397, in no due set either way (N40-01's words). The test `open_gaunt_1_default_applied` asserted that with no decision record the gates load as `no-claim`, a derived status no loader has; it now asserts the stored states."
+  },
+  {
+   "bead": "N38b-27",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Tests `constructions_part1_already_set` and `burn_down_report` (110 rows, 24 for the constructions) read N10-KA1's 23 tolerance records, but N10-KA1 was not a dependency and was reached by no path: an agent could start this bead first and never get those tests to pass. Dep N10-KA1 added (M1, a registry bead; no cycle). The list recounted from the plan: 133 rows, 70 bare and 63 qualified, the 20 per-chapter counts and every KA number match; the rule-2 roundings and the control gap 0.59 s recomputed."
+  },
+  {
+   "bead": "N38b-28",
+   "kinds": [
+    "contradiction",
+    "broken"
+   ],
+   "what": "The bead gave all fourteen thesis and North-Star controls to N00-33; N00-33 now sets the seven thesis rows at M0 and N00p1-13 the seven North-Star rows at M1 (with its own script `ka_controls_ns_fixtures.sh`). Scope, acceptance, the script's last sentence and `burn_down_by_chapter` say so; that test also loaded `N00-33's fourteen records`, which come after this bead, and now uses `synthetic` records (325, 324, 317, 310). KA-489's replacement was a mutation of the alias search, which lands at M3 (N20a-39), registered with `due` M1 against the checker (N20a-37): at M1 the feature could not exist, the control would read `stale` and GATE-SENS-09 could not be recorded. It is now the checker's disjointness test removed, the control N20a-37 already plants (accepts the 29 m variant); the search mutation is kept as an alternate offered to N20a-39. KA-496's record names its `removed_check` and the bead that holds the tree check (N20b-05). 325 and the 29 per-chapter counts recounted from the plan; 2.48 and 2.73 mm, 29,956 and 29,957 and every ratio in the table recomputed."
+  },
+  {
+   "bead": "N38b-38",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "Finished and checked the interrupted reviewer's edit. The decision had no record in docs/adr/ and no step moving the register row OPEN-GAUNT-8 (N41-03 rule 4: a row decided by measurement needs its record), so the M2 exit would have held on a row left `open`: a `Record` paragraph, an acceptance item and a script assertion now say `docs/adr/ADR-OPEN-GAUNT-8.md`, status `decided` or `defaulted`. N41-OPEN8, the register row this bead moves, was only `related`: now a dep (M1 before M2; no cycle). The G3 command carries `FROB_TEST_SEED` (convention 1). Cost model 5,000 s and 25,000 s, 500 s and 2,500 s, detection 0.2991% and 0.02995% recomputed: right."
+  },
+  {
+   "bead": "N38b-51",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "Its acceptance required KA-818 to carry 100/13, tolerance 0.05 and the derivation file with its ceiling no longer `to set`, but KA-818 is entered by N36-KA, which depends on this bead (graph_check: N36-KA -> N38b-51) and takes the value from REC-02 (`reconciled_truths_match_records`): neither could close. Now REC-02's `settled` and `rows` are what this bead delivers, KA-010 (N00-KA, reached through N00-17) carries them at close, and KA-818 takes them after; Scope says who writes each row, and the rows step logs KA-818 as an `e2e_skip` naming N36-KA until it is entered, never as a pass. 100/13, 94/12, 6.67, 1.85, 1.41, 1.149 and 470/60 recomputed: right."
+  },
+  {
+   "bead": "N38b-53",
+   "kinds": [
+    "deadlock",
+    "contradiction"
+   ],
+   "what": "M1 bead whose acceptance required the film-storage row KA-445 to carry the settled truths, but the row is entered by N19-KA at M2 (no dependency either way), so it could not close at its milestone. REC-04's `settled` (exact truths, tolerance, derivation file) is now the deliverable, the row takes it at M2, and the rows step logs KA-445 as an `e2e_skip` naming N19-KA until then. The script's metric said `status remark until settled`, which reads as a status change and would break N38b-50's `register_has_eleven` (four remarks): now `status remark`. 351.5625, 9.765625, 361, 16, 400, 25 and the byte counts recomputed: right."
+  },
+  {
+   "bead": "N38b-54",
+   "kinds": [
+    "contradiction",
+    "deadlock",
+    "broken"
+   ],
+   "what": "It pinned KA-460's workstation column at 2,701, 337, 337, 42, 5, 14, 1 (from 0.85 x 222 GiB) and said the scene owners assert it, while N19c-16's `fit_table` and N36-16 pin 2,706, 338 for the fixture of exactly 203 x 10^9 bytes (85% of the measured 222.7 GiB is 203.25 GB), stated so that the beads printing the table cannot differ: an implementer of KA-460 would get one of them wrong. The row's truth is now the fixture's counts; 2,701 is kept as the record's `recomputed` reading of Appendix M.38's rounded 222 GiB; the planning limit is KA-546's 222.7 GiB; the budget line no longer prints 189 GiB as 202.6 GB (189 GiB is 202.9 GB). KA-460 is entered by N19-KA at M2: the acceptance now asks for REC-05's settlement, which the row takes, and the rows step skips the row until it exists. `byte_prefix_mismatch_rejected` tested a `quantity parser` no bead delivers (frob-core's qty has no byte type; the scene model takes plain bytes): the parser is now this bead's `frob_conformance::bytes::parse`, named in Scope. 188.7 GiB, 202.6 GB, 176.95 GiB, 79.7%, 2,706, 338, 42, 5, 14, 1, the card column 160-213, 20-26, 2-3 and the 2,520 mixed-unit column recomputed."
+  },
+  {
+   "bead": "N38b-55",
+   "kinds": [
+    "deadlock",
+    "registry"
+   ],
+   "what": "Scope and acceptance made this M1 bead write and check the mutation of the clock re-phasing relation, which is MR-15 of N38a-17 at M2: it could not close at M1. MR-15 is now Out (it names the same record at M2). The planted defect was unnamed, so an implementer would have written a second plant; it is CX-200's plant `BD-078:sched-every-13th` (feature `sched-every-13th` of frob-sense, N20-CX), which both rows reuse (N38b-05's reuse-first rule), and the script's caught line names the build and FROB_TEST_SEED. Deps BD-078, N11-KA, N20-KA, NEG-09 checked (N20-CX and N38b-05 reached through BD-078). 400/13 = 30.769, 2.564%, 616 = ceil(8,000/13), 2.667%, step 7,995 at 19.9875 s, 601 on the closed window, lateness 0, 2, 1 recomputed: right."
+  },
+  {
+   "bead": "N38b-56",
+   "kinds": [
+    "contradiction",
+    "deadlock",
+    "broken"
+   ],
+   "what": "Its Out list gave `the replacement of the control that could not fail` to NEG-04, while N38b-57, N26-KA's KA-664 cell and N38b-28 give it to N38b-57: now Out names N38b-57 and the seeding tool. Its acceptance required KA-664 and CX-290 to carry 76,959 at M1, but both are entered at M3 (N26-KA, N26-CX): now REC-07's `settled` is the deliverable and the rows step skips KA-664 until N26-KA enters it. It claimed `the row's derivation file`, which N26-KA gives to N26b-16 (PO-NEMESIS-04): the file here is REC-07's `settled.derivation`. The reference gains `request_level(alpha, i)` = alpha/[i(i+1)], through which the tenth-request count is computed, so N38b-57's second plant has a site. 29,955.82, 76,958.28, 76,962.13, 0.0500041 and 0.0499991 recomputed: right."
+  },
+  {
+   "bead": "N38b-57",
+   "kinds": [
+    "registry",
+    "deadlock",
+    "convention"
+   ],
+   "what": "Finished and corrected the edit begun at the cutoff. It had this bead register the two replacement records with `due` M1 and features `nc-<nnnn>`, but BD-025 and N38b-05 step 3 say a record seeded `KA-nnn` is written only by the seeding tool from the row's control cell, with its feature named by its plant and its `due` the row's (KA-664: N26-KA, M3); registered by hand they would be second records of one plant. Now the bead delivers two plants, `N38b-57:zf-one-short` and `N38b-57:zf-level-not-spent` (features of frob-conformance in N38b-56's reference), caught at M1 by the reference's check of the exact counts; the records come from KA-664's cell at M3. Its acceptance and script needed KA-664 at M1 (entered at M3, no dependency): now the KA-664 lines are an `e2e_skip` naming N26-KA until then. `Every other counting row declares safe` named rows of four registry beads it did not reach, so it could not be done or checked: deps N22-KA, N24-KA, N28-KA (M1) and N32-KA (M0) added (no cycle), the five rows present by M1 get `safe = \"higher\"` here, later rows (KA-664) carry it from their owner, and `counting_rows_declare_safe` reports a listed row not yet entered as `not-entered`, never a pass. The cannot-fail line uses `e2e_expect_caught` (the interrupted edit). 29,957.32, 29,955.82, 47,003, 0.0500041 and 0.0499991 recomputed."
+  },
+  {
+   "bead": "N38b-58",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "M0 bead whose rows step ran KA-348, a row N16-KA enters at M1 (no dependency either way): the line now runs once the row exists and is an `e2e_skip` naming N16-KA before. KA-816 comes from N36-KA, a dependency. 26,668 bytes (4 x 6,667), 71,752 bytes, 17,452 bytes without the Jacobian term, the four shares, 34.2 kB and 96.4 kB, 1.17% and 3.29%, and 37.5 GiB for two cameras recomputed: right."
+  },
+  {
+   "bead": "N38b-59",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "It listed `a request for a tie verdict at n = 64 (must be refused)` as a negative control: that is a boundary behaviour that passes on a correct build, which N38b-28 rejects as `boundary-not-control` (CX-399); it is now a known answer with its code FROB-REF-532, and the normal-approximation pre-analysis stays the control. The acceptance command lacked the required `--n`. The settlement said the `level` field `is asked of` N24b-06, which now has `level` and `interval_level` (convention 13). 0.06618, 0.05601, 85.43 and 71.92, 0.9^86 = 1.16e-4, t = alpha/4 and the 2,145 pairs recomputed; VERBS-eval row (read verb, no key) checked."
+  },
+  {
+   "bead": "N38b-60",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "Its acceptance and settlement required CX-080's numbers to be `generated from k and d`, but no bead generates case text of the catalogue: nothing could satisfy it. The rows step's recomputation of the two fractions from k = 13 and d = 20 and 10 is now what holds them, and it also checks that the case text names 13 bisections. Its negative control was a refusal on a correct build (a boundary, CX-399) and was run nowhere: now the assertion's own plant (a scratch CX-080 printing 0.63 beside 13 bisections must fail it), with the shortcut's real control named (CX-080's `N10c-04:joint_paving_allowed`, GATE-AUGUR-09). 0.63728, 0.40613, 0.63096, 0.39811, 0.21544 and 13.288 recomputed."
+  },
+  {
+   "bead": "N38bp1-03",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "It registered three new mutation records for the broken certifiers, but two are catalogue plants already seeded: the mis-centred mixture (CX-291) and the noiseless fork (CX-292, feature `nemesis-fork-same-key`). Under BD-025's one plant, one record rule the second records would be rejected as duplicates. Both seeded records are now reused, and dep N26-CX is added (M3, no cycle). Its second control was the refusal FROB-REF-569, which passes on a correct build and which the loader rejects as `boundary-not-control` (N38b-28; N26-KA says the same of KA-666). The control is now CX-292's plant, and 569 is a known answer. The third variant pointed at `the exact rule of N38b-57`, which owns controls, not the rule. It is now a product-side mutation of N26a-21's `required`, registered here (seed CERT-13) because no catalogue plant targets the product's count. The threshold `covers p in at least 95% of 10^4 studies` fails about half the runs of an exactly calibrated bound (sd 0.22%). It is now tested as CERT-03 is: at most 551 misses. Rechecked: 3.167e-5, 1.5^20 = 3,325.26 and 1.504e-4."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N23b-15",
+   "what": "Register the training-gate controls with `defect` exactly `zero-weight`, `random` and `shuffled-label` (kind `planted-design`, seed CX-257 as you have it): N38b-08's lint finds a learning gate's controls by those strings and makes a gate without them `not-eligible`. N38b-08 now marks learning gates with the optional row fields `learned` and `distilled` (GATE-CORTEX-01: learned; GATE-CORTEX-14: learned and distilled); they are the marker your recorder check can read for `a gate whose claim is about a trained policy` and for `involves distillation`."
+  },
+  {
+   "bead": "N38bp1-02",
+   "what": "CERT-03's broken certifier `a fixed-n test peeked at eight times` cannot fail the row's threshold: at 13/256 its expected count is 508 of 10^4 and it is at or below 551 in 97.6% of runs, so the control reads `missed` and the M1 part of GATE-GAUNT-04 cannot be recorded. Use N38b-10's form: the exact one-sided sign test at nominal 5% looked at after every pair of 64 (17.4%, about 1,742 of 10^4, must exceed 551), with 13/256 checked exactly by enumeration instead of `rate consistent with 13/256`."
+  },
+  {
+   "bead": "BD-223",
+   "what": "Same wait as BD-377 had: N32a-18 measures GATE-TETHER-08 (due M2) and depends on you, while your first acceptance criterion needs every gate due at M2 with a caught control in `gauntlet_controls.sh M2`. State, as BD-377 now does, that the recorded part is the run at the exit candidate commit (N40-04's freshness rule, N40-05 step 4) and that you close on a run in which every pair of a gate that has a tier entry is caught."
+  },
+  {
+   "bead": "N40-01",
+   "what": "Your script `gate_register_semantics.sh` plants RC-06 and asserts that `cargo xtask check-generated` fails, but you do not reach that check (N34p4-03; the graph audit's finding, which holds). N38b-20 now depends on you and its `status_views.sh` runs that plant under the name RC-06 with `check-generated` and `tests/status_views` as catchers: drop the step from your script and name N38b-20 as the bead that catches RC-06 (N40-CX's RC-06 row names N40-01 and N40-36 as plant owners)."
+  },
+  {
+   "bead": "N40-03",
+   "what": "Step (4) of `kill_gate_records.sh` regenerates the README table and the register printout with `cargo xtask check-generated`'s generator, which you do not reach (N34p4-03). N38b-20 now depends on you, prints from `apply_decisions`, and its script asserts the fired gate's fallback name in both printouts: assert the renaming on the output of `apply_decisions` itself and drop the check-generated call (the audit's proposal; nobody applied your side because you were reviewed before the audit)."
+  },
+  {
+   "bead": "N40-06",
+   "what": "N38b-20 took its side of the audit's proposal: it depends on you and its script compares the milestone identifiers and names of the rubric gate section with `registries/milestones.toml`. Your script step that runs `cargo xtask check-generated` (which you do not reach) can go."
+  },
+  {
+   "bead": "N20a-37",
+   "what": "KA-489's registered control is the record N38b-28 registers (kind `mutation`, `removed_check = \"success-set disjointness\"`, due M1): your own control `a checker that skips disjointness (accepts the 29 m variant)`. Build it as the feature that record names and say so; your known-answer line still gives `with a 29 m budget the witness is rejected` as the control, which the loader rejects as `boundary-not-control`, and without the feature the control reads `stale` at M1 and GATE-SENS-09 cannot be recorded."
+  },
+  {
+   "bead": "N20b-05",
+   "what": "KA-496's registered control is N38b-28's mutation, due M3: the graph-support check for fault localization removed, so that on a tree the planted 2 degree, 15 mm bump is attributed to an arbitrary node. The check is yours (FROB-REF-446); build the feature the record names (as N19b-08 does for KA-444), or the control reads `stale` from M3 and GATE-SENS-11 cannot be recorded."
+  },
+  {
+   "bead": "N19-KA",
+   "what": "KA-445 and KA-460 take their settled values from REC-04 (N38b-53) and REC-05 (N38b-54), both M1; you are M2 and reach neither. Add deps N38b-53 and N38b-54 (graph_check: no path either way) and enter KA-445 as 361 and 16 aligned, at most 400 and 25 misaligned, tolerance exact, citing docs/derivations/film-tile-count.md, and KA-460's workstation column as 2,706, 338, 338, 42, 5, 14 and 1 from the fixture of exactly 203 x 10^9 bytes that N19c-16 and N36-16 pin. Your `arithmetic_rows_recompute` says 202.9 GB / 75 MB = 2,706, but 189 GiB is 202.937 GB and floor(202.937e9 / 75e6) = 2,705 (202.9 gives 2,705 too): divide the 203 GB fixture."
+  },
+  {
+   "bead": "N26-KA",
+   "what": "KA-664's control cell should name N38b-57's two plants by identifier, `N38b-57:zf-one-short` and `N38b-57:zf-level-not-spent`, and GATE-GAUNT-01, so that N38b-05's seeding tool derives their records (seed KA-664, kind mutation, features `zf-one-short` and `zf-level-not-spent` of frob-conformance, due M3) and attaches GATE-GAUNT-01 as N38b-57 and CX-400 require; the cell now describes the undercounts in prose only, from which the tool cannot take a target or feature."
+  },
+  {
+   "bead": "NEG-04",
+   "what": "Your item 3 and acceptance register an undercounting control for KA-664 (from floor(ln(1/delta)/p*(1 - p*/2))) and withdraw the old one. Both are already done once: N38b-57 provides the two plants (`zf-one-short`, `zf-level-not-spent`), KA-664's cell (N26-KA) names them, the seeding tool writes their records, and the old control is retired in the row's history. A third record of the same defect breaks N38b-05's one-control-per-plant rule. Cite those records, and keep your `undercount_control_caught` as a test of the product function, not a registration."
+  },
+  {
+   "bead": "N38b-50",
+   "what": "Your `rows` step and meta-test (4) do not say what happens to a row named in a record that is not yet in the registry. KA-818 (N36-KA, which depends on N38b-51), KA-445 and KA-460 (N19-KA, M2), KA-664 (N26-KA, M3) and KA-348 (N16-KA, M1, run by M0 N38b-58) are all such rows at their value bead's close. The value beads now log them as `e2e_skip` naming the owner, never as a pass. Please state the same in the step and in meta-test (4): an absent row is `not-entered`, and the row's owner checks the settled value when it enters the row, as N36-KA's `reconciled_truths_match_records` does."
+  },
+  {
+   "bead": "N38b-61",
+   "what": "Row 5 of your table gives KA-460's workstation counts as 2,701, 337, 337, 42, 5, 14, 1 (0.85 x 222 GiB). N38b-54 now settles them as 2,706, 338, 338, 42, 5, 14, 1, the counts N19c-16 and N36-16 pin for the fixture of exactly 203 x 10^9 bytes (85% of the measured 222.7 GiB); 2,701 is the record's `recomputed` reading of Appendix M.38's rounded 222 GiB."
+  },
+  {
+   "bead": "N38a-10",
+   "what": "GATE-GAUNT-08's 'Measured by' cell in N38b-23 names N38a-09 and N38a-10, and no bead states the gate's one recorder (convention 9; S-26 asked N38b-23 to name recorders in GATE-GAUNT-04's form). Its M0 clause needs the plan-time pilot re-runs, and those beads append to your ledger after you, so the recorder must come after all of them. Please name it, with the receipt it records from, so that N38b-23 can cite it."
+  },
+  {
+   "bead": "N26-CX",
+   "what": "CERT-13 (N38bp1-03) now names the seeded records of CX-291's plant (epsilon = 0 proposal centred at -4) and CX-292's plant (`nemesis-fork-same-key`) as two of its broken certifiers instead of registering duplicates. N38b-10's meta-test requires each `broken` record to name GATE-GAUNT-04, and the seeding tool only adds gates from the plant, so please list GATE-GAUNT-04 among the gates of those two plants, as N20-CX's CX-200 lists GATE-GAUNT-03 for MR-15."
+  }
+ ],
+ "unchanged": 2,
+ "notes": "Sweep slice, every bead read in full against its plan sections, its registry rows, the beads that own the rows and records it names, and the 14 conventions. Resumed after the 11:30 cutoff: the interrupted edits (BD-377, N38b-06, -08, -10, -11, -15, -16, -20, -23, -26, -27, -28, N38b-38 and N38b-57) were each read whole and checked complete. N38b-57's was revised because BD-025 gives KA-seeded records to the seeding tool. Unchanged: N38b-25, N38b-52. Systemic finding in the value beads N38b-51 to -60: their acceptance and rows steps required known-answer rows entered by later-milestone or dependent registry beads (KA-818, KA-445, KA-460, KA-664, KA-348). Each now delivers the REC settlement the row takes and skips the row until it exists, and N38b-50 is asked to state the same. N38b-20's four audit notes and F-U40's request were applied by the first reviewer, each checked. S-26's request to N38b-23 is applied, except GATE-GAUNT-08: no bead states its recorder, so that is a request to N38a-10."
+}

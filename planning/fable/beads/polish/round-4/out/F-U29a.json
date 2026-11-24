@@ -1,0 +1,286 @@
+{
+  "round": 4,
+  "slice": "F-U29a",
+  "reviewed": [
+    "BD-024",
+    "BD-092",
+    "BD-095",
+    "BD-097",
+    "BD-148",
+    "BD-203",
+    "BD-204",
+    "BD-206",
+    "BD-207",
+    "BD-208",
+    "BD-209",
+    "N29a-02",
+    "N29a-03",
+    "N29a-05",
+    "N29a-06",
+    "N29a-08",
+    "N29a-09",
+    "N29a-10",
+    "N29a-11",
+    "N29a-12",
+    "N29a-14",
+    "N29a-15",
+    "N29a-16",
+    "N29a-17",
+    "N29a-18",
+    "N29a-21",
+    "N29a-22",
+    "N29a-23",
+    "N29a-24",
+    "N29ap1-02",
+    "N29ap1-03",
+    "N29ax-01",
+    "N29ax-02"
+  ],
+  "changed": [
+    {
+      "bead": "BD-092",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "Applied both round-3 requests: the bead now writes and registers three fixtures in N24b-03's registry (pendulum-damped with its design, scene, task and controller; energy-per-task-a and energy-per-task-b, one design each, because a --fixture run takes every design of its manifest and one per-task read over two designs pools them), each row citing N29-KA's derivation page, with a loader test. The script runs each per-task fixture under its own key with --worlds 2 and reads each run on its own. Section 12 measures the M1 referee part of GATE-CHRON-03 as G1 entries KA-707 and KA-708 in g1_known_answers and records it with record_gate --part M1 from that receipt (conventions 1 and 9). The script's sign-error repeat now reads the control from that receipt, because the control is a per-control mutation feature that the control runner builds on its own (BD-025), so the script does not build a second frob. The fixture loader checks each derivation page's front-matter KA identifiers against the row's ka column. Added deps N24b-03 and N29-KA (N29-KA moved from related). Left undone, --fixture pendulum-damped would be refused (no registered fixture) in this script and in BD-208's. A crate unit test writes no receipt, so the part could not be recorded. The sign-error step named a build that cannot exist."
+    },
+    {
+      "bead": "BD-097",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "Applied the audit note: the run summary sized to a token budget, and its input budget, move to N24a-35 as an extension of this bead's run.show handler, the pattern this bead already uses for --receipt and --phase-ledger. Before that change --budget on run.show is 802. Dep N24a-35 moved to related; Scope Out names it. No test of this bead asserted summary content, so nothing is lost. The exit list also had FROB-REF-840 under exit 3, but N24-REF gives it exit 5 (outside the session's scopes), and it now says so. Left undone, BD-097 would sit 17 levels late behind N24a-35, and agents would test 840 for the wrong exit code."
+    },
+    {
+      "bead": "BD-208",
+      "kinds": [
+        "broken",
+        "contradiction",
+        "convention"
+      ],
+      "what": "The bead recorded the single-precision parts of GATE-CHRON-03 and GATE-SINEW-02 'from the script's receipt', but the script makes plain frob calls and writes no tier receipt, and record_gate takes only tier receipts. New section 9 registers g1_known_answers entries per batched site (lockstep, cuda, metal): KA-707 and the 20 s quadruped closure against GATE-CHRON-03, with KA-707's NC records and this bead's folded-residual control, and KA-295's port balance against GATE-SINEW-02. Each part is recorded once, with --part M2, from one receipt of its gate's filter in N38b-19's multi-machine form. The M1 referee parts are BD-092's and N15a-24's. The script stays the user-side check, and an acceptance item covers the record. The GATE-CHRON-08 note said that N29a-22 records the energy half and 'the dynamics unit' records GATE-FID-06. It now says what N29b-06 and N16b-33 state. Left undone, neither M2 part could be recorded, an unparted record would collide with the referee part, and an agent would look for a second GATE-CHRON-08 record that no bead writes."
+    },
+    {
+      "bead": "N29a-02",
+      "kinds": [
+        "request",
+        "registry",
+        "broken"
+      ],
+      "what": "Applied the F-U37 request: step 3.2 checks flags (816), then privacy (731), then licence (733), then the path (734), N37-18's door order. A new unit test, export_checks_in_door_order, covers a run that fails several checks. The exits now follow the registries: 840 is exit 5 (N24-REF), not 3, and 883, in VERBS-run's run.export block, is added (exit 3). filter_keeps_chains_whole said 'four' selected pairs, but the filter selects two, (0, kinematics) and (2, kinematics). The audit note on N37-23 needs nothing here, because N29a-02 already depends on N37-23. Left undone, the door at M3 would change which refusal an export receives, 840 would be tested for the wrong exit code, and the test would assert a count of four that cannot occur."
+    },
+    {
+      "bead": "N29a-06",
+      "kinds": [
+        "convention"
+      ],
+      "what": "C13: script step 1 said that a world count above 1 on the referee 'is requested of BD-090 and VERBS-sim'. It now states the fact: --worlds takes any count on the referee from M1, BD-090's part of VERBS-sim's row (N29a-06 reaches BD-090 through BD-091). Left undone, the step reads as if --worlds 64 could be refused, and an agent might shrink the 64-world fault run."
+    },
+    {
+      "bead": "N29a-08",
+      "kinds": [
+        "convention"
+      ],
+      "what": "C13: the same fix in step run-*. --worlds 3 on the referee at M1 is BD-090's part of VERBS-sim's row, which N29a-08 reaches through BD-097. It is no longer narrated as a pending request. Left undone, the script's first step reads as unsupported."
+    },
+    {
+      "bead": "N29a-09",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Applied H-owners-2's request: a gate-record line's receipt may be a receipt set (frob.gauntlet.receipt-set/1). The recorded closing rule follows the set to its members and counts the controls across them together, and the repair-cycle order does the same. New unit test: recorded_with_receipt_set. The beadlog-* e2e group ran the recorder, which commits, against the checkout of record. It now runs in a scratch clone under work/ (N38b-19's form), and the checkout's logs and gate register are only read for before and after digests (convention 9). The N40-06 audit note needs nothing in this bead; see the request. Left undone, a gate recorded from G1 and G4 receipts could never close as recorded, and running the e2e would write gate records into the real register."
+    },
+    {
+      "bead": "N29a-10",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "Applied F-U29b's request: new script step 8, ids-wire-*. It checks every identifier against its form's regex (clm:, ev:, name@vN with N34-11's dotted-name grammar, 32 hex for a trace) on the step-2 envelope, the recorded gate row and the bead-log line, and logs the place, class, form and the layout version from ADR-CHRON-10. A matching acceptance item was added. The corpus's design-comparison claims now carry a decided-by edge to a DecisionPolicyId, so a closure contains all four identifier classes; before, no closure in the corpus had a decision policy to check. Step 7 and its acceptance item now run in a scratch clone, and the checkout's logs and registry must be byte-identical afterwards (convention 9). Left undone, the identifier-format check would have no owner, and the script would write gate records into the checkout of record."
+    },
+    {
+      "bead": "N29a-22",
+      "kinds": [
+        "request",
+        "registry",
+        "broken",
+        "convention"
+      ],
+      "what": "Applied F-U29b's request: GATE-CHRON-08 has one record, N29b-06's M2 part. A new section 8 states the bead's entries in g1_known_answers against the gate: KA-709, KA-710, the planted position correction and the four honest fixtures, one per batched site (lockstep, N38a-02's site for batch-cpu, in f64 and in f32; cuda; metal; 'batch-cpu' is a tier, not a site), with their controls. The planted entries are armed through N29a-25's hook. energy_audit.sh stays the user-side stage, and the 'complete only when both halves have a record' consideration is replaced. The fidelity.energy text said 'no chapter refusal of its own' and put 840 under exit 3, but VERBS-fidelity lists 840 and 888, and N24-REF gives 840 exit 5; both are fixed. The e2e key ea-<fixture>-<t> was reused across the strict and lockstep runs on batch-cpu, and the profile is now in the key. Left undone, N29b-06's single tier run would have no energy-half entries to collect, 840 would be tested for the wrong exit, and the strict run would hit a key conflict or get the lockstep run's stored receipt."
+    },
+    {
+      "bead": "N29a-23",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "Applied H-verbs-4's request: every job.list page carries VERBS-job's dispatcher block, a required property of frob.job.list.out/1 with exactly slot_reserve, job_cap_per_environment, quantum_s, ageing_period_s (OPEN-TETHER-4 defaults 0.05, 64, 5 s, 600 s) and config_digest. The handler reads them from the daemon's configuration and keeps no constant of its own. Added an acceptance item, the unit test list_dispatcher_block (a planted handler constant fails it), and an e2e assertion that config_digest equals frob doctor --json's. Left undone, the row's required field would be missing, and the dashboard's Queue and Devices panes and KILL-TUI's fallback would have no source for the reserve."
+    },
+    {
+      "bead": "N29a-24",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "Applied F-U29b's request: GATE-CHRON-11's M2 part is recorded from a -- GATE-CHRON-11 run holding N29b-11's host entries (families P, R, M and L, with their four planted defects caught). N29b-11 moved from related to deps. GATE-TETHER-08's fake and batch-cpu lanes were 'copied' from N32a-18's named lane file, which N40-01 says no part cites, and the recorder cannot take that file. They now enter through a g4 entry, tether08:lanes@host (N29b-06's referee-rows form), which verifies the hash-named lane receipt. Unit test lanes_entry_verifies_receipt added. Step 4 used the filter 'GATE-X @<site>', but N38a-02 takes one filter form, so it now uses the gate filter alone, run on both machines with N38b-19's multi-machine form. frob spark fingerprint, a run verb, now carries --key. Left undone, the part could not be recorded through record_gate, the GATE-CHRON-11 part would miss the second-wave subjects, and the fingerprint call would break convention 5."
+    },
+    {
+      "bead": "N29a-17",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "Section 7 recorded 'one row per (device family, hardware)', each with its own record_gate call on the gate's one part. The second call would replace the first, and N38b-19 refuses that as part-rows-dropped. The part is now recorded once, from the final run on the recording machine, which reads the other machine's collated outputs (N38b-19, BD-142), with one measured line per family. Step 2's 'GATE-CHRON-13 @<site>' is now the gate filter alone (N38a-02). frob spark fingerprint now carries --key (convention 5). Step 1 calls frob sim estimate, but the bead did not reach BD-219, so dep BD-219 is added (no cycle). The 'added row of the gate' at M3 became an entry N29ax-02 registers, since only N29a-17 records this part. Left undone, the gate could not be recorded for both families, and step 1 could run before its verb exists."
+    },
+    {
+      "bead": "N29ax-02",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The bead added 'an added row to the gate's record' of GATE-CHRON-13, whose one part N29a-17 records. It now registers its peak-cost blocks as an entry of the gate's tier run, records nothing, and its acceptance item says so (one recorder per gate). The gap-reason sentence said '(BD-090; requested there)' (C13). It now states that BD-090's CONTRACT.md table and non_exhaustive reason type name episode-incomplete as this bead's. The unclear '(4,096 worlds is too small...)' note now says the cost is measured on workload Q at 8,192 worlds. The --channels spelling (F-U24a-2's request) was already correct. Left undone, a second bead would write GATE-CHRON-13's record."
+    },
+    {
+      "bead": "N29ap1-02",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Applied H-verbs-8's request: dropped 'requested by the registry round' from the --snapshot-every item (C13). It now states that VERBS-sim's row names this bead as owner, with the domain and both 802 cases. An over-long acceptance line was reflowed. Left undone, the item narrates a request that the registry has already settled."
+    },
+    {
+      "bead": "BD-204",
+      "kinds": [
+        "contradiction",
+        "request"
+      ],
+      "what": "Took its side of the N21c-09 audit note, as it can: BD-204 does not depend on BD-177. The report's decisions block is now defined as present on every class: tolerance report and null on an exact teleport. It gains binding_atom_equal, which step 4 listed but the report schema lacked. An acceptance item and a test assert it. Step 2 now names the envelope label tolerance-replay (VERBS-sim, N35-07) beside the report's class tolerance. Left undone, N21c-09's 'passed decision-level test' for one replayed world would rest on a block whose presence and fields were unstated."
+    },
+    {
+      "bead": "BD-206",
+      "kinds": [
+        "registry"
+      ],
+      "what": "FROB-REF-840 was listed as exit 3, but N24-REF gives it exit 5 (outside the session's scopes). Two over-long lines were reflowed. The N16c-15 audit note needs nothing here: BD-206 does not depend on N16c-15, so N16c-15 can add BD-206 as a dep without a cycle. Left undone, the verb's sealed-run refusal would be implemented and tested with the wrong exit code."
+    },
+    {
+      "bead": "BD-203",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The exit list had FROB-REF-840 under 3, but N24-REF gives it exit 5. The sealed_840 test now says exit 5, and the over-long synopsis line was reflowed. Left undone, sim.replay would answer a sealed run with exit 3, and an agent would read it as bad input rather than a missing scope."
+    },
+    {
+      "bead": "N29ap1-03",
+      "kinds": [
+        "registry"
+      ],
+      "what": "FROB-REF-840 is now exit 5, not 3 (N24-REF), and an over-long line was reflowed. Left undone, the failure-capture path would give a sealed run the wrong exit code."
+    },
+    {
+      "bead": "BD-148",
+      "kinds": [
+        "broken"
+      ],
+      "what": "Step 3 generates every column's byte layout from 'the kernel IR's layout descriptor', but the descriptor (frob-lie's GroupLayout table, ADR-MARROW-04's one algebraic description) is N13-12's, which was only related. N13-12 moved to deps (M1; it does not depend on BD-148, so no cycle). Step 3 now names frob-kir (BD-018) as the emitter and N13-12 as the descriptor, and says Se3Packed is the pose layout. Three over-long lines were reflowed. Left undone, an agent could start the packed lowering before the descriptor exists, or write a second layout description, which the decision forbids."
+    },
+    {
+      "bead": "BD-207",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "Step 1 listed 'the state digest' among this bead's emissions after stage 10, while Scope Out gives the digest, the chain and their ring section to N29ap1-01. It now says that N29ap1-01's kernel computes them at that point and writes them into the ring at K-commit, and that this bead only reads them. One over-long line was reflowed. Left undone, two beads would each implement the per-tick digest."
+    },
+    {
+      "bead": "N29a-03",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "Invocation gave exit 3 only for 'an unknown major version', while Considerations says a minor version the auditor lacks (a new column codec) is refused with exit 3. Invocation now covers both. Left undone, an implementer could accept an unknown minor version, or fail it with exit 2 as a check failure."
+    },
+    {
+      "bead": "N29a-14",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "Quantization saturated q to [-(2^m - 1), 2^m - 1], but the bin rule sends a >= 2^m to the overflow bin, and the test overflow_bins expects 2^24 quanta in the overflow slot. After that saturation no value could reach the overflow bin, and an overflowing value would be counted in the top regular bin, unlike the host type of N29a-13. Saturation is now to [-2^m, 2^m], so overflow lands in its side's overflow bin by the shared rule. Two over-long e2e lines were reflowed. Left undone, device and host counts would differ on any out-of-range sample, failing the bead's own differential acceptance item."
+    },
+    {
+      "bead": "N29a-15",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The refusal paragraph ended 'all exit 3', including FROB-REF-840, which N24-REF gives exit 5. It now says so, and the e2e's four refusals carry their exits (898, 888 and 802 exit 3; 840 exit 5). One over-long line was reflowed. Left undone, telemetry.histogram would answer a sealed run with the wrong exit."
+    },
+    {
+      "bead": "N29a-16",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "Section 7 entered 'per backend one row' with a record_gate call per backend's receipt on the gate's one part, so each recording would replace the previous one (refused as part-rows-dropped). The part is now recorded once, from the final run on the recording machine, whose entries read the other machine's collated outputs (N38b-19's multi-machine form, as N29a-17 and BD-142 use it), with one measured line per backend. Absent backends are Skipped, never passed. Step 2's 'GATE-CHRON-07 @<site>' is now the gate filter alone (N38a-02 takes one filter form). Scope and an acceptance item follow. Left undone, GATE-CHRON-07 could hold only one backend's line, and step 2's filter is not a form the runner accepts."
+    },
+    {
+      "bead": "N29ax-01",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The e2e script called frob design new and frob design edit ... migrate without --key. Both are mutate verbs, and the admission transaction refuses a missing key with FROB-REF-805 (NJL-01). Each now carries its own key (rx-des-<s>, rx-mig-<s>, and rx-lossy-mig-<s> for the lossy migration), and the closing sentence covers run and mutate calls. Left undone, the script would stop at step 1 with 805, and N14a-29's step 11, which embeds these commands, would log the clause partial."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N24a-35",
+      "what": "BD-097 applied the audit note: run.show's summary sized to a token budget (input budget, tokens, default 600) is now this bead's extension of BD-097's run.show handler, and the input enters frob.run.show.in/1 in that change (before it, --budget on run.show is 802). Take it into Scope In, add an acceptance item and a test of the summary through run.show, and add dep BD-097; BD-097 has dropped N24a-35 from its deps. Left undone, nothing builds the run.show summary, and the edge points the wrong way."
+    },
+    {
+      "bead": "VERBS-run",
+      "what": "The run.show row lists --budget (default 600) beside --receipt (N19c-35) and --phase-ledger (N21a-27). Name its owner the way those two are named: N24a-35 (M1), which adds the input and the summary to BD-097's handler. Left undone, the registry implies that BD-097 owns an input its bead no longer builds."
+    },
+    {
+      "bead": "N40-06",
+      "what": "The audit proposes moving item 6 and RC-21 to N40-05 and naming N29a-09 there, because the bead-log comparison needs the per-bead logs. N40-05 is M0 and N29a-09 is M1, so N40-05 cannot depend on it (no bead waits on a later milestone). Either keep item 6 where it is, or have N40-05 run the comparison as a check that applies once N29a-09's logs exist, wired in by N29a-09 or a later bead. N29a-09 needs no change either way. Left undone as proposed, the graph gains a dependency on a later milestone."
+    },
+    {
+      "bead": "N29b-01",
+      "what": "BD-092 now registers the KA-708 per-task pair as two fixtures, one design each: energy-per-task-a (10 J completed, 20 J failed) and energy-per-task-b (12 J and 12 J), at assets/fixtures/<name>/. --fixture runs every design of its manifest, so a two-design fixture cannot give one run per design. In step group pertask-*, name these two fixtures (keys t1 and t2), or name two fixtures of your own, one per design, if the group needs other episodes (for example the numerical faults behind the non_physical block). Left undone, the group runs a fixture that pools both designs."
+    },
+    {
+      "bead": "N24a-37",
+      "what": "Scope In registers three fixtures, including 'the two-design per-task fixture'. BD-092 now registers energy-per-task-a and energy-per-task-b, one design each (a --fixture run takes every design of its manifest), and pendulum-damped. Drop the per-task fixture from your registrations, or register N29b-01's own pair under other names if it differs. Your acceptance item 'the sign-error build localized to the pendulum joint' is now read from the g1_known_answers receipt in BD-092's script, because the control is a per-control mutation feature that the control runner builds on its own (BD-025), so the script does not build a second frob. Left undone, two beads register the same fixture name, or a two-design fixture."
+    },
+    {
+      "bead": "N32a-18",
+      "what": "Your lane receipt section says that N29a-24 'cites these entries in the gate row by that hash'. N29a-24 now verifies the lane receipt, by its content address, through the g4_chaos entry tether08:lanes@host (FROB_TETHER08_LANES), and records GATE-TETHER-08 from the g4 receipt. A tier receipt cannot carry another receipt, and the recorder takes only tier receipts. State it that way. Left undone, the two beads describe different citation paths."
+    },
+    {
+      "bead": "N29b-06",
+      "what": "Item 5 says the controls 'owned by the energy-half script' are the tumbling window, the folded residual, per-step passivity and the 1.0 threshold. Those are N29b-02's and N29b-03's controls (N29a-22 lists other mutants: a global ratio, compliance counted as creation, per-axis utilization, flagged episodes filtered from the denominator). Name each owner, or say 'the energy-half beads (N29a-22, N29b-02, N29b-03)'. Left undone, an agent would look for those controls in N29a-22."
+    },
+    {
+      "bead": "N29b-12",
+      "what": "Step (f) says 'GATE-CHRON-12 is then run under the decided policy', and the last acceptance item says 'GATE-CHRON-12's record names the policy version it ran under'. BD-209 is the gate's one recorder (U29a coverage) and records it at M2 under the defaults, before the owner decides. State that (f) re-runs the gate's tier filter (g1_known_answers -- GATE-CHRON-12) under the decided policy, cites that receipt in ADR-PROG-11's measurements and records nothing, and make the acceptance item read 'the re-run's receipt names the policy version'. Left undone, two beads record one part, or BD-209's record must name a policy that is decided after it."
+    },
+    {
+      "bead": "N29b-13",
+      "what": "Your life-cycle table takes a lineage-head pin 'when a run becomes a head', with the orphan test 'a pin whose run is not a head in the lineage table'. BD-209's roots mark 'every object reachable from a lineage head'. No bead says which table records runs as heads (BD-113's lineage tables are over design edits) or which of a head run's objects the pin covers. If it covers all of them, a head run's sampled traces can never be evicted under the budget, and BD-209's e2e assertion that the third run's sampled traces are collected depends on that run not being a head. Define when a run is a head, and state that the pin covers the run's failure captures and record, not its sampled traces (or the reverse, and say so). Left undone, implementers will choose different root sets."
+    },
+    {
+      "bead": "N32-REF",
+      "what": "Your test due_milestones puts FROB-REF-702 at M2, but N32a-08 (M1) raises it at a budget stop, and N29a-05 (M1) asserts it in its stop-budget step (exit 4, budget-stop): at M1 no estimate gates admission, so the run is admitted and stopped when its use reaches the budget. Set 702's Due to M1, keeping 701, which needs admission's estimate, at M2. Left undone, an M1 bead raises a code the registry says does not exist yet, and the due-milestone check fails against the M1 build."
+    },
+    {
+      "bead": "N29a-19",
+      "what": "Your script's ring-* group (N29a-11) and reconstruct-* group (N29ap1-03) need failing worlds in a device run with a planted failure cluster: a ring flush and a reconstruct marker happen only when a failure monitor raises the world's failing bit on a batched tier. That is N29b-05's work, and N29a-19 does not reach N29b-05. Add N29b-05 to deps (N29b-05 depends on N29a-11 and BD-207, not on N29a-19, so there is no cycle). Left undone, the groups could run before any batched monitor exists, find no failing world and fail."
+    }
+  ],
+  "unchanged": 8,
+  "notes": "Unchanged after a full read: BD-024, BD-095, BD-209, N29a-05, N29a-11, N29a-12, N29a-18, N29a-21. Audit notes: BD-097/N24a-35 applied. BD-024/BD-090 needs nothing here (BD-024 already gives the positional g1 form). BD-208/N35-09 needs nothing (no cycle; BD-208 does not depend on N35-09). N29a-02/N37-23 needs nothing (already a dep). N29a-09/N40-06 rejected as proposed (milestone order; see request). BD-204/N21c-09: BD-204 can take its side, and its decisions block is now complete. BD-206/N16c-15: no cycle, nothing needed. N29a-05/N24a-11: the split was not applied (no registry bead exists and N24a-11's deps are unchanged), so N29a-05 has nothing to take. Re-checked and unchanged: BD-209 (verbs, refusals and exits match VERBS-store and N29-REF), N29a-05 (cancel arithmetic 44 discarded ticks, the count mapping), N29a-11 (window 411-510, snapshots 415-510, 5,734,400,000 bytes, 0.36 GB reservoir), N29a-12 (thresholds 6,148,914,691,236,517,205 and 184,467,440,737,095,516; 5.2-sigma band), N29a-18, N29a-21 (720 of 17,400 mutant hits and the probe sequences recomputed). Over-long lines that were the only change in BD-209, N29a-12, N29a-18 and N29a-21 were restored, since a reflow is not a round-4 kind. Program-level observations: receipt files that an entry verifies (N29b-06's referee rows, N29a-24's lane receipt) may need committing or a stated store, so that another machine's final run can read them; BD-025 defines no way to run a mutation control through the product frob binary in an e2e script, so scripts read controls from tier receipts; N38a-02's sites are host, auditor, referee, strict, lockstep, cuda, metal and daemon, and beads outside this slice that name a 'batch-cpu' site should say lockstep. Helpers: scratchpad polish-r4-F-U29a/deps.py (deps with milestones), runkeys.py (run verbs without --key), bisect_check.py (N29a-21's mutant counts), parse_check.py and result.py (this file). Disclosure: I also ran the repository's tools/graph_check.py, which I did not write, for read-only path queries (cycle checks before each added dep); it writes nothing. No br command was run."
+}

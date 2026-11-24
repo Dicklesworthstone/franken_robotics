@@ -4,7 +4,7 @@ title: "upstream frankensim: the `fs-qty` dependency of `fs-evidence` removed or
 type: "task"
 priority: 2
 milestone: "M1"
-labels: ["m1", "suite", "workspace", "upstream", "frankensim", "solid"]
+labels: ["m1", "suite", "workspace", "upstream", "frankensim", "solid", "review-notes-open"]
 parent: "WP-01"
 deps: ["BD-031", "BD-037", "N33b-04", "NF-02", "STD-E2E"]
 needs: []

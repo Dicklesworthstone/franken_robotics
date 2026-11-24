@@ -1,0 +1,191 @@
+{
+  "round": 4,
+  "slice": "F-U22b",
+  "reviewed": 26,
+  "changed": [
+    {
+      "bead": "BD-336",
+      "kinds": [
+        "request"
+      ],
+      "what": "request applied (H-verbs-8): dropped 'the spellings are fixed here, as the registry row leaves them to this bead'; the --run/--grid spellings are now the VERBS-skill row's. Left as it was, the bead contradicted its registry row."
+    },
+    {
+      "bead": "BD-337",
+      "kinds": [
+        "convention",
+        "deadlock"
+      ],
+      "what": "C13: '--shield-budget ... requested of the VERBS-sim and VERBS-eval rows' now states that both rows carry it with BD-337 as implementer. Deadlock: the acceptance demanded 'a recorded PASS' of GATE-SHIELD-01, yet N22b-16 (KILL-ENERGY) depends on this bead and must close whichever way the gate falls; the gate is now recorded by N22b-15 with measured values, a recorded fail is handed on, and this bead closes on it."
+    },
+    {
+      "bead": "BD-338",
+      "kinds": [
+        "convention",
+        "registry"
+      ],
+      "what": "C13: --shield on sim.run/eval.run/train.start stated as the rows' fact. The three worded refusals of shield.fit were 'no number yet ... on no row's list until the ledger numbers them', against N22-REF and N35x-02 (assigned at the M0 run, raised from the start under the assigned number through one named constant); now so, with rule 7's held form; test pending_slugs_uncoded (which asserted the opposite of N22-REF) became worded_refusals_assigned."
+    },
+    {
+      "bead": "BD-340",
+      "kinds": [
+        "broken",
+        "registry"
+      ],
+      "what": "The GATE-SHIELD-04 coverage run 'frob eval run <design> --battery <held-out> --shield <id>' gave no policy or tier, so it ran the baseline controller on the default tier and would be refused with FROB-REF-457 by the shield's own scope key: now --policy (or --controller for the wheeled base), --tier and --profile lockstep. 'Long accounts are paginated' plus a pagination test had no registry form: now the row's paginated = true (cursor, limit, follow, 806, 807), with a request to VERBS-shield."
+    },
+    {
+      "bead": "N22b-05",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "Steps 6 and 7 called 'frob skill check --replay/--refinement' with no skill, design or --key (C5). Step 9 varied a FROB_WORKERS variable that no bead defines, so it could never fail: now lane twice under fresh keys, and the workers lane read from step 8's det evidence lines (STD-TEST). Step 10 could not cancel a CLI call that waits to completion: now --sync-wait-ms 0 (exit 8, job handle), frob job cancel, frob job status. Acceptance asked the real binary to carry planted defects 'by environment switch', which STD-TEST forbids: it now fails on step 8's receipt showing any of the four registered controls not caught (step 8 now asserts all four), on step 5's corrupted bundle accepted, or on the self-test."
+    },
+    {
+      "bead": "N22b-07",
+      "kinds": [
+        "request",
+        "convention",
+        "deadlock"
+      ],
+      "what": "request applied (H-owners-2): files reserved row R27 (not 'the next free identifier from R27') and launches with --request R27; WP-79's Envelope bullet is outside this slice (request below). Added the gate run and its one recorder (g1_known_answers -- GATE-REFLEX-09, record_gate by a non-implementing session; N22c-49 names this bead), which the bead lacked (C1, C9). Added the close for R27 not approved (withdrawn, gate not-run), without which N22b-08, which depends on this bead, could not record not-reached."
+    },
+    {
+      "bead": "N22b-08",
+      "kinds": [
+        "convention",
+        "registry"
+      ],
+      "what": "The decision bead 'updated the rows of KILL-SKILL and GATE-REFLEX-09' and 'recorded' the gate 'not run: pilot negative', against one recorder per gate (C9) and N40-03 (a kill row gets decision = {outcome, adr, date, session, receipts}; gate statuses change only through apply_decisions): now writes the kill row's decision entry only, the gate stays not-run on the pilot route, and the acceptance reads the decision entry; R27 cited for the not-reached route."
+    },
+    {
+      "bead": "N22b-13",
+      "kinds": [
+        "convention"
+      ],
+      "what": "C13: '--shield-budget ... requested of the VERBS-sim row' stated as the row's option implemented by BD-337."
+    },
+    {
+      "bead": "N22b-14",
+      "kinds": [
+        "request",
+        "broken"
+      ],
+      "what": "request applied (H-verbs-6): wires prove.bundle's budget form (positional EnergyBudgetId, optional --run, 802 with pointer /run for a run not under the budget, --run alone 802) and its schema fields, with test bundle_verb_budget_form; e2e commands gain --out (and --run for the replay). Mutant 5 ('rounded to nearest') was said to derive from the drop-stop card or the pass-counter artifact, but T_ub is exactly 640,000 steps there, so the mutant would equal the original and count as a false admission: it now derives from N22b-10's directed-rounding fixture (166,433.415 steps)."
+    },
+    {
+      "bead": "N22b-16",
+      "kinds": [
+        "convention",
+        "registry",
+        "contradiction"
+      ],
+      "what": "Said BD-337 'measures and records GATE-SHIELD-01', against the register (N22c-49: N22b-15 measures and records, BD-337 closes on the receipt); and updated 'the rows of KILL-ENERGY and GATE-SHIELD-01', against C9 and N40-03: now the kill row's decision entry only, receipts named, gate status read from N22b-15's record."
+    },
+    {
+      "bead": "N22b-17",
+      "kinds": [
+        "deadlock"
+      ],
+      "what": "Acceptance required the owner's ADR to exist, yet N22b-18 (M4, and through it GB-26 and NEG-13) depends on this bead while the plan says nothing in M4 waits on OPEN-SHIELD-1: added the escape N22b-27 uses (the M4 exit records the fail-closed default standing; register row N41-OPEN4 shows 'default in force')."
+    },
+    {
+      "bead": "N22b-18",
+      "kinds": [
+        "request",
+        "broken"
+      ],
+      "what": "ANSWER applied (H-verbs-6): step 8 is 'frob prove bundle <budget> --out <file> --key seb-8 --json' and frob-verify reads that file; step 10's replay bundles use the --run form; step 12's frob-verify read 'the bundle of step 2', which writes none (now step 8's). Acceptance asked for planted defects in the real binary by environment switch (STD-TEST forbids it): now STD-E2E declared plants, each feeding a step a defect's output, with the code mutants caught in N22b-11 to N22b-14."
+    },
+    {
+      "bead": "N22b-19",
+      "kinds": [
+        "request",
+        "broken"
+      ],
+      "what": "request applied (H-owners-2): a conditional row takes the next free identifier from R29. The launch kept --scope campaign:pilot-shield while adding --request for a row whose scope is gate:KILL-SHIELD; admission takes the class from the row that admits the job's scope (N44-01), so such a launch would be refused above E0: launches under a filed row now carry --scope gate:KILL-SHIELD --request R<n>."
+    },
+    {
+      "bead": "N22b-28",
+      "kinds": [
+        "convention",
+        "registry"
+      ],
+      "what": "Same as N22b-08: no gate-row update or 'recorded not run: pilot negative' by the decision bead; the kill row receives decision entries. The bead's per-morphology-class decision (DESIGN) could not be stored: a scope on a row without scope_kind fails N40-03's load. The entries now carry scope morphology:<class> with the row's scope_kind = \"morphology\"; requests to N40-03 and N22c-49."
+    },
+    {
+      "bead": "N22b-29",
+      "kinds": [
+        "registry",
+        "convention"
+      ],
+      "what": "INSUFFICIENT_CALIBRATION held 'the ledger's interim form (the slug) until the allocation run assigns the number', against N22-REF (the round runs at M0, the raising bead uses the assigned number from the start) and C13: now the assigned number from docs/generated/refusal_round2.md, held form per rule 7; acceptance and test wording follow (no literal code at the raise site)."
+    },
+    {
+      "bead": "N22b-35",
+      "kinds": [
+        "convention",
+        "registry",
+        "broken",
+        "deadlock"
+      ],
+      "what": "C13: '--table ... requested of VERBS-shield' stated as the row's fact. 'frob prove bundle <ShieldId>' has no form in VERBS-prove: the bead now states the table form (M8, this bead) with test bundle_verb_table_form, and a request goes to VERBS-prove. The campaign's eval runs had no controller or tier (baseline controller, refused 457 by the shield's scope key) and 'explicit seeds' beside --battery (802): fixed; fit gets --tier referee; the bundle path is a .frobcert file. 'GATE-SHIELD-05 is recorded not run: pilot negative' became 'stays not-run'. Added the missing dep BD-340 (M4, no cycle): this bead extends shield.report (VERBS-shield: Extended by N22b-35) and its script calls it."
+    },
+    {
+      "bead": "N22b-41",
+      "kinds": [
+        "broken",
+        "contradiction"
+      ],
+      "what": "Step 7 was 'frob sim run … --verify-reduction' with no design, controller or task and no fixture for the stand-to-trot switch it asserts on: now control synth on a new stand-to-trot fixture task, then sim run with that ControllerId, tier, length and seed. N22b-38 states that this script runs control synth --symmetry use --verify-reduction on stand and stand-tilt-10deg, but step 6 omitted the flag, so the synthesis-time check had no end-to-end coverage: added. Acceptance asked the real binary to carry planted defects by environment switch (STD-TEST forbids it): now STD-E2E declared plants, each replacing a step's output by a defect's, with the code defects caught in N22b-37 to N22b-40 and BD-327's gate entry."
+    },
+    {
+      "bead": "N22bx-01",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "request applied (F-U34, round 3): appends kind absorber to FMT-FCARD's closed kind list in registries/formats.toml with a generator for BD-141's harness (fmt_fcard_roundtrip, fmt_fcard_every_kind_generated), in scope, approach and acceptance; without it BD-141's every-kind test fails or the kind is untested. request applied (H-verbs-1, C13): actuator.list --kind absorber stated as the VERBS-actuator row's fact. The catalog name 'spring-stop-2kN/m-40mm' contained '/', which breaks the card's file name <name>.fcard: now spring-stop-2000Npm-40mm. E2E step 5 ran frob-verify on 'the bundle of step 2', which writes none: now on a prove.bundle --out file."
+    },
+    {
+      "bead": "N22bx-02",
+      "kinds": [
+        "broken",
+        "convention"
+      ],
+      "what": "E2E steps 1 and 2 asserted decay from +1 m/s and 0.4 m/s but gave no initial state, so the bodies would start at rest and the 1, 0.5, 0.25 m/s assertion fails: now --init speed=… (sim.run's named initial condition, declared by the fixtures). The acceptance example of sim.run (a run verb) lacked --key (C5)."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "VERBS-shield",
+      "what": "(1) Drop the 'Pending, uncoded' paragraph of shield.fit and the refusal_lists clause 'the three pending slugs of shield.fit are on no row's list': N22-REF and N35x-02 assign their numbers at the M0 run and each raising bead raises the assigned number from the start, so shield.fit's list must carry the assigned codes of monitored-assumption-not-timely, sampled-damping-above-passivity-bound and insufficient-calibration (or their rule-7 form for a held row); otherwise the list test rejects what BD-338, N22b-29, N22c-28 and N22c-44 raise. (2) shield.report: add paginated = true (NJL-01 variation 1: cursor, limit, follow, 806, 807); BD-340 states that long accounts are paginated and tests it, and without the field --cursor is an unknown parameter (802)."
+    },
+    {
+      "bead": "VERBS-prove",
+      "what": "Register prove.bundle's table form (M8, Extended by N22b-35): a positional ShieldId whose shield record carries a reachable-set table writes one tube-inclusion entry; a ShieldId without a table is 802. N22b-35's script runs 'frob prove bundle <ShieldId> --out ... --key stb-2 --json', which no form of the row accepts today, and the tube-inclusion certificate has no other way to be written from the CLI or MCP."
+    },
+    {
+      "bead": "N40-03",
+      "what": "Add the scope kind morphology (`morphology:<class>`, values `wheeled`, `legged`) to the closed scope-kind table, for KILL-SHIELD (row entered by N22c-49; decided by N22b-28). N22b-28 decides KILL-SHIELD per morphology class (keep shields on wheeled bases, withdraw them on legged bodies); without the kind its per-class entries fail the load (decision-scope-invalid) and a single entry would kill or keep shields for both classes."
+    },
+    {
+      "bead": "N22c-49",
+      "what": "Give the KILL-SHIELD kill row scope_kind = \"morphology\" (with N40-03's new kind), so that N22b-28's per-class decision entries load."
+    },
+    {
+      "bead": "WP-79",
+      "what": "Its Envelope bullet lists R10, R21 and R22 but not R27, the row N44-01 reserves for the gate-scale experiment of GATE-REFLEX-09 (N22b-07, packages = [\"WP-79\"]); H-owners-2 asked for R27 to be cited there. Add R27: the class covering the three treatments' stated budget, scope gate:GATE-REFLEX-09; if not approved, GATE-REFLEX-09 stays not-run and KILL-SKILL records not-reached with the fallback in force."
+    },
+    {
+      "bead": "N22b-39",
+      "what": "State the CLI form by which a caller obtains the controllers your fixtures need, which N22b-41's steps 8 and 9 run: the two-latch tied Pathwise controller and the InLaw controller (with the design the two-latch task runs on), and the one-sided-patch terrain-conditioned controller and its Gamma_mech-tied control. control.synth has no in-law mode, and --symmetry mech on the patch task is refused 461, so neither control can come from it; N14b-06's rule is that a bead registering a fixture controller kind (fixtures/controllers/<name>.toml, frob.controller.fixture/1) adds its builder, which would let both run through --controller fixture:<name> and be read by control.show. Also note that eval.compare's arms are designs, so the patch comparison 'on common world addresses' needs a stated form (two eval.run calls on the same addresses, or a controller-arm comparison); until then N22b-41 cannot write exact command lines for steps 8 and 9."
+    }
+  ],
+  "unchanged": 7,
+  "notes": "Unchanged: BD-327, N22b-06, N22b-11, N22b-34, N22b-37, N22b-38, N22b-40. All their numbers were recomputed (BD-327's group tables; N22b-06's 44.29/22.15/0.95-point arithmetic; N22b-11's 0.251136 J, 250,337 sine mutant, 58 kg and 4.64 J, 50.5 and 45.5 ms; N22b-34's hand fixed points, erosion sign and braking hand points; N22b-37's eleven stabilizer rows and the 0.05 degree tolerance; N22b-38's Reynolds, block and C2xC2 eigenvalues; N22b-40's saltation 8.829 and 7.3575 entries) and their commands checked against VERBS-control, VERBS-skill, VERBS-shield and VERBS-sim. N22b-34's mechanical C13 finding is a false alarm: 'the builder has no verb until N22b-35 adds --table to shield.fit' states the build order (N22b-35 depends on this bead and the VERBS-shield row carries --table, M8), not a pending request; the bead names N22b-35's script as its owner (C11). The register entries named in this slice now point at child beads (N22c-49: GATE-REFLEX-09 by N22b-07, GATE-SHIELD-05 by N22b-35, GATE-SHIELD-01 by N22b-15), so no request goes to N22c-49 for those. The label review-notes-open (BD-336, N22b-07, N22b-14, N22b-18, N22b-19, N22bx-01) is left to tools/open_requests.py, which manages it; every note addressed to this slice was applied. Left for a later round, not edited: BD-336 lists FROB-REF-448 for skill.compile (registry) but never says when compile raises it; N22b-41 steps 8 and 9 (two latches, one-sided patch) still describe their runs without command lines, because the controllers they run have no CLI form yet (request to N22b-39); N22b-18's determinism lanes mention worker counts that no step varies; N36-20 still says the common run inputs are five (the sixth, envelope_scope, is N44-01's), outside this slice. Read-only dependency paths were first checked with tools/graph_check.py, a script not written in this session (against POLISH_PROMPT's rule; read-only, no file written); from then on with the session's own polish-r4-F-U22b/path.py."
+}

@@ -4,7 +4,7 @@ title: "upstream frankensim: an adaptive multilevel splitting estimator beside t
 type: "task"
 priority: 3
 milestone: "M4"
-labels: ["m4", "suite", "nemesis", "upstream", "frankensim", "frontier"]
+labels: ["m4", "suite", "nemesis", "upstream", "frankensim", "frontier", "review-notes-open"]
 parent: "WP-55"
 deps: ["BD-037", "BD-277", "N26a-32", "N33b-04", "STD-E2E"]
 needs: []
@@ -160,8 +160,10 @@ with its agreement statistic below 3) are in N26bp1-01, where the switch-over is
 Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (the registry
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_19 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
-asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob nemesis search … --method splitting --first --key <k> --json` on the planted-trap
+asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, and the registry row must
+read `landed`, with the sibling commit that contains the estimator and a receipt newer than the pin move
+(N26bp1-01 re-runs GATE-NEMESIS-05 before calling this phase and sets the row to `adopted` only after it passes,
+step 7 of its Procedure B). Phase `post` also runs `frob nemesis search … --method splitting --first --key <k> --json` on the planted-trap
 fixture once per estimator and logs episodes to first discovery for each. The two calls are compared, so each
 carries its own idempotency key; which estimator a call uses is selected by the configuration value
 `nemesis.splitting.estimator = ours | upstream`, which the switch-over bead N26bp1-01 defines when it admits the

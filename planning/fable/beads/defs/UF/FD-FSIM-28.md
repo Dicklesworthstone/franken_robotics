@@ -89,8 +89,9 @@ the pin the symbol does not exist without the feature and the build fails.
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
-is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt
-(`frob.stack-receipt/1`) under `receipts/`; (3) re-run that sibling's admission gates, the parity gates and the
+is never rolled back locally); (2) write a new resolution receipt (`frob.stack-receipt/1`) under `receipts/`
+with `cargo xtask check-stack --write-receipt --reason pin-move --gate INT-FSIM-01` (plain `check-stack` only
+verifies and writes nothing); (3) re-run that sibling's admission gates, the parity gates and the
 gates this item names; (4) relock (`Cargo.lock` regenerated and committed, builds `--locked` on the one toolchain
 T) and append the record, with the receipt hash, to `DEPENDENCY_ADMISSION.md`. Only then does the row's `status`
 become `adopted` and the interim posture end. No PASS is recorded on a dirty sibling tree, and neither a pin nor
@@ -134,12 +135,12 @@ In FrankenSim (added, default features):
 Here:
 - `structure_group_has_no_frontier_feature`: parses the resolved feature set.
 - `verb_refuses_without_group`: a binary built without `structure`; expected `FROB-REF-790`.
-- INT-FSIM-15 re-run at the new pin (N33b-14's `crates/frob-fsim/tests/admission/int_fsim_15.rs`, lane `--features structure`), unchanged: KA-770's two-term stack with sensitivities (1, 4), equal costs under the 1/t model, k = 3 and √B = 10 µm returns t = (15.99, 6.35) µm to 10⁻⁹ relative and the variance split 28.41 and 71.59 µm² summing to 100 µm² to 10⁻¹² (N33b-14 sets these values and tolerances; this bead does not restate KA-770 with other numbers); the mesh hash round trip; the over-bound STEP file quarantined.
+- INT-FSIM-15 re-run at the new pin (N33b-14's `crates/frob-fsim/tests/admission/int_fsim_15.rs`, lane `--features structure`), unchanged: its two-term hand case with sensitivities (1, 4), equal costs under the 1/t model, k = 3 and √B = 10 µm returns t = (15.99, 6.35) µm to 10⁻⁹ relative and the variance split 28.41 and 71.59 µm² summing to 100 µm² to 10⁻¹², and KA-770's own fixture (a = (1, 2), σ = (0.03, 0.02) mm) gives contributions 0.0009 and 0.0016 mm², σ_y = 0.05 mm and shares 36% and 64% to 10⁻¹² relative (N33b-14 and N33-KA set these values and tolerances; this bead restates neither with other numbers); the mesh hash round trip; the over-bound STEP file quarantined.
 - `sdf3_twobar_known_answer` (added to that file at the switch-over): the two-bar slab through `sdf3::design` with the feature off: two bars at 45° ± 5°; compliance within 10% of 4·P²·L²/(E·V) at the achieved volume; hand values from N31a-18 (L = 0.10 m, P = 1,000 N; least volume 1.449 × 10⁻⁶ m³ at 138 MPa).
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsim_28.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
-Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (the registry
+Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (its `upstream`
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_28 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this

@@ -66,10 +66,16 @@ symmetry that fixes its state, history, parameters and event.
       r_L − r_R, no certificate is issued, and a forged one is rejected.
 - [ ] Negative controls rejected: ρ(h) with an axial sign missing; Ξ_{h·e} replaced by Ξ_e; mismatched
       transversality numbers.
-- [ ] For the reference quadruped, each generator of Γ_obs and each touchdown event class has a certificate or a
-      `Tested` record with its degree bound and sample set.
+- [ ] For each registered model whose event classes have derived saltation kernels (N22ap2-02's hybrid fixtures:
+      the bouncing ball, the ball on a moving platform, the rimless wheel, the compass-gait heel strike, and the
+      strict planar biped's touchdown classes where its crate feature is on), each generator of Γ_obs and each
+      event class has a certificate or a `Tested` record with its degree bound and sample set. A pair whose event
+      class has no derived kernel (the reference quadruped's whole-robot touchdown classes, which N22ap2-02 lists
+      as `excused(per-body bound)` and keeps on central differences) or is over its node budget is listed on the
+      registry row as `uncovered: <reason>` with its generator and event class; it is neither certified nor
+      tested, and no symmetry is used across it on this card's authority.
 - [ ] Registry row prints the class per pair with receipts; pairs that are not symmetric are listed with the
-      parameter that breaks them.
+      parameter that breaks them, and uncovered pairs with their reason.
 
 ## Test plan
 
@@ -84,7 +90,10 @@ does not equal ρ(h)·Ξ_L·ρ(h)ᵀ, `reject`); `forged_certificate_unequal_rej
 r_L = ½, r_R = ¾: the normal form leaves entries proportional to r_L − r_R = −¼, `reject`);
 `bookkeeping_strata_count` (four feet with states open, stick and slip under the leg-permutation group C₂ × C₂
 give (3⁴ + 3·3²)/4 = 27 strata and 648/4 = 162 one-foot transitions, a related known answer for enumerating the
-event classes this card ranges over).
+quadruped's event classes, which the row lists as uncovered); `excused_class_listed_uncovered` (a model with one
+class marked `excused(per-body bound)` in the kernel coverage listing: its pairs are printed
+`uncovered: excused(per-body bound)` with generator and event class, no bundle or test record is written, and
+the pair never prints a class).
 
 ### End-to-end script and logging
 
@@ -92,8 +101,8 @@ event classes this card ranges over).
 lines (STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-18"), `step` (`T-18/<model>/<generator>/<event-class>`),
 `event`, the exact command line, exit code, wall time, peak memory, the route (`poly-identity` or randomized, with
 d, |S|, k and the error bound), the envelope's `evidence` block (claim, class, certificate hash or test-record
-digest, checker identity), `not symmetric: <parameter>` where it applies, and on a mismatch the first failing
-entry and the path to reproduce.
+digest, checker identity), `not symmetric: <parameter>` or `uncovered: <reason>` where it applies, and on a
+mismatch the first failing entry and the path to reproduce.
 
 ### Known answers and negative controls
 

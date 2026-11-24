@@ -1,0 +1,227 @@
+{
+ "round": 4,
+ "slice": "F-U22a",
+ "reviewed": 33,
+ "changed": [
+  {
+   "bead": "BD-049",
+   "kinds": [
+    "request"
+   ],
+   "what": "The script's log path now names its own directory, target/e2e-logs/algebra_orbits_verb/<utc>.ndjson (charter section 6), and states that N13-17's algebra_orbits.sh, which runs it as a stage, logs under algebra_orbits/. Without this the two scripts would write into one directory and a reader could not tell whose run a log is. All numbers rechecked (86,185; 83,935; 500,500; the lattice counts; 66,439 bits; order 300)."
+  },
+  {
+   "bead": "BD-114",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The C9 finding is valid. The e2e paragraph now says that GATE-REFLEX-03 is recorded with record_gate from the g1_known_answers receipt by N22a-05, the one bead the gate register names, and that neither script writes a gate row. Before, an implementer could have recorded the gate from this bead too, giving it two recorders. The filter mathematics and the binomial figure 0.0032 were rechecked."
+  },
+  {
+   "bead": "BD-251",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Four changes. (1) Step 1 drops --run-seed 1 from the battery form of eval run, which would be FROB-REF-802 (VERBS-eval), and says why two runs of one battery still sit on the same world addresses. (2) A new step 0 creates every design the script names (frob design new e2e-<archetype> --template <archetype> --key ..., e2e-quad, e2e-quad-strong and the planar stance fixture from fixtures/reflex/) and synthesizes each design's baseline; the script used designs that nothing created, so it failed at its first call. (3) Clause 4's task is now fixtures/reflex/tasks/loaded-climb-12s, which this bead adds; no bead defined it before. (4) Steps 3 and 5 pass the task files by path (fixtures/reflex/tasks/...); a bare name is looked up as a registered task and refused with 802."
+  },
+  {
+   "bead": "BD-252",
+   "kinds": [
+    "contradiction",
+    "deadlock"
+   ],
+   "what": "Considerations said KILL-MPC is 'decided at M4 by BD-331'. It now says that GATE-REFLEX-06 is measured at M4 by BD-331 and that the decision is recorded by N22c-16, the decision bead the register names. Otherwise an implementer could write the kill decision from the measuring bead, against convention 10 and the register. Deadlock: nothing said what this bead does if the pilot N22a-22 records falsifier-holds/fallback. It now follows the pilot's item 11: only the single-world CPU debugging aid is built (on the CPU reference of N22a-23's kernels; batched tiers and multi-design requests refused; no synthesis route), and BD-331 is closed not-funded so that N22c-16 can record KILL-MPC as fired. Its twenty-odd dependants keep a verb to call, and none is released onto a verb that was never built."
+  },
+  {
+   "bead": "BD-330",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "On the pilot-falsified path, only the registry switch is applied (R2 and R3 available: false, citing the pilot record), and the bead is closed not-funded citing that record, as N22c-15's rule 1 expects. The criteria that need the runners or the corpus do not apply on that path. Before, the bead could never close on that path, and N22c-15, which depends on it, could not record the fired kill gate. 'If the gate fires': the switch now cites the receipt (or the pilot record) and the draft decision record, not the finished record, which is written by N22c-15 after this bead, a cycle."
+  },
+  {
+   "bead": "BD-331",
+   "kinds": [
+    "broken",
+    "deadlock"
+   ],
+   "what": "(1) The command's --setting <class> became --setting <setting>, the name under which step 2 registers the class setting, because BD-252's --setting takes a registered planner setting and a class name would be FROB-REF-802. (2) New consideration: if pilot N22a-22 records verdict falsifier-holds with decision fallback (the pilot register's spelling), this bead runs nothing and is closed not-funded citing the pilot record. That lets N22c-16, which depends on it, record KILL-MPC as fired. The text says it is the batched controller that is not funded, since BD-252 still delivers the single-world CPU aid. Without it the decision bead waits forever on a bead whose work is never funded. Numbers rechecked (0.4339, τ 0.8 at 41/45, 410 s, 6.8 min)."
+  },
+  {
+   "bead": "BD-334",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The input grammar gave --wrt <fixture parameter>, one key, while this bead's own e2e and N22a-39 call --wrt slope,l,g, and the gate's cosine needs three parameters in one call. An implementer following the grammar would make that call FROB-REF-802 and the closed-form check could not run. --wrt now takes comma-separated continuous keys, as --params does. Rechecked: the affine fixture (λ = (2, 4/7), dJ/dθ = 18/7, dx̄*/dθ = (18/7, 10/7)), the rimless-wheel gradients (29.95984, −4.189992, 0.2135572; ∂/∂α = −11.70220; −2 sin 4α = −2), the planar-fold margins 4πε (1.3, 3.8, 7.5 × 10⁻⁵), and the case counts 80 + 20 and 40 simultaneous."
+  },
+  {
+   "bead": "BD-335",
+   "kinds": [
+    "request",
+    "deadlock"
+   ],
+   "what": "Request applied: a new section fills the continuation part of A-04 under analyze.gait (BD-332 declared --param <name>=<a>..<b> and 431 for it, and it read not-run naming this bead). It covers the input; not-run: unbound without --param or --controller; per-entry typed outcomes through gait.continue's code path; a fold as the outcome fold (exit 2) and never 431; 431 only at grazing, carrying the established entries; and the budget with gait.continue next actions. The output schema is unchanged, and there is a criterion and five a04 tests. Without this nothing would ever fill the part. Deadlock: if pilot N22a-28 records falsifier-holds/fallback, the bead is closed not-funded citing the pilot record, so that N22c-17's rule 0 can fire KILL-GAIT."
+  },
+  {
+   "bead": "N22a-01",
+   "kinds": [
+    "request",
+    "deadlock"
+   ],
+   "what": "Requests applied: rule 3 now says the nominal layer tag carries and prints the controller kind (baseline, mpc-sample, policy, open-loop), so N15ap3-01's open-loop schedule controller is never counted as the baseline in layer counters and layer_fractions. layer_tags_are_exhaustive lists open-loop, still within the plan's five forms. Deadlock: the e2e ran 'the smoke world of the referee with the hold controller (once the referee step is present)', and the determinism lane needed the referee too. Neither the referee step nor the stage calls from the step loop are delivered by this bead's dependencies (they are N22a-03's and BD-116's, which depend on it). The script now runs the host-loop lane (hold controller and privileged source through the per-world host loop, debug and release, command-stream digests), and says that N22a-03's script runs the referee smoke under hold."
+  },
+  {
+   "bead": "N22a-03",
+   "kinds": [
+    "broken",
+    "deadlock"
+   ],
+   "what": "The e2e ran frob sim run <smoke> --state estimated|privileged and expected state_source headers and FROB-REF-464 on an IMU-free design. But sim.run binds a controller only through --controller or --task, both N16ap4-01's inputs, and N16ap4-01 depends on this bead through BD-118. Every such run would therefore have had no controller, ignored --state and failed the script's assertions. The <smoke> world was also defined nowhere. Now: the smoke design fixtures/reflex/smoke-quad.fbot and its IMU-free twin are this bead's fixtures (added to Scope). The binary part checks what the dependencies deliver: no-controller runs with and without --state give equal digests and no state source, and --state truth is 802. The controller runs (each source, the defaulted estimated source, the late IMU packet, 464 at admission) run through the library on BD-081's referee step under hold. The binary-level switch under a synthesized controller is pointed to N22a-05 steps 3, 7 and 8."
+  },
+  {
+   "bead": "N22a-04",
+   "kinds": [
+    "broken",
+    "registry"
+   ],
+   "what": "(1) The e2e ran 'on N22a-03's referee smoke world under the hold controller', a world nothing defined and a controller sim.run cannot bind on this bead's dependencies. It now runs N22a-03's smoke design by path with --seconds 2 and no controller (BD-024's zero-command form; the replay needs only the sensor packets) and says why. (2) VERBS-control's refusal_lists test gives control.estimate the appended 808 (int53 limit) beside 806 and 807. The bead listed only 720, 723, 724, 802, 806 and 807, so the registry-match test would fail against the generated row. It now lists 808 and the cursor and limit inputs."
+  },
+  {
+   "bead": "N22a-05",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Request applied: dependency N16ap4-01 added, the owner of the --task and --controller inputs of sim.run on the referee that steps 3, 5, 7 and 8 use. No cycle results (checked). The task flat-trot-10m is this bead's file fixtures/reflex/tasks/flat-trot-10m. It is now passed by that path; the bare name, which no registry holds, would be refused with 802 at step 3."
+  },
+  {
+   "bead": "N22a-11",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Requests applied. Dependency N16ap4-01 added. stand-10s is aligned with BD-125: the step asserts the task's verdict stands (tilt within 20°, base height ratio at least 0.8 of the settled height, no off-site contact), with the tighter ±10 %, 5° and layer-fraction figures kept as the bead's own separate assertions. The traverse likewise asserts BD-125's traversed verdict beside the bead's own figures. The CLI forms and no-gate-row requests were already met. C9 finding valid: Background said 'the wheeled rows are recorded by the wheeled controller's script and the overall M1 record by the synthesis verb's bead'. It now says that the wheeled cases come from reflex_wheeled_baseline.sh (run by N22c-01) and that N22c-01 alone records the M1 part. Broken: the two traverse task files are passed by path (fixtures/reflex/tasks/traverse-5m-flat-0.3 and -0.6); bare names would be 802."
+  },
+  {
+   "bead": "N22a-12",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "VERBS-control's control.synth row and BD-118 step 5 give the ok outcome an estimated-versus-privileged difference. They also put controller_id, class, tier and the note 'a failure under the baseline is not a verdict on the design' on every outcome. The SynthesisReport type and schema registered here had none of these. BD-118, which serves this bead's records, would have had to change a closed schema, or emit fields the schema rejects. Ok now carries state_difference (N22a-03's paired record; dependency N22a-03 added, no cycle). The top level carries the four common fields. DESIGN: controller_id on not-synthesizable is the identity of the synthesis inputs; class is null for no-class. The acceptance criterion now checks them."
+  },
+  {
+   "bead": "N22a-13",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The e2e ran a mixed batch, frob sim run --designs <e2e-quad, e2e-quad-weak> under the default baseline. But the weak-knee design is not-synthesizable (N22a-11 step 7), so N16ap4-01's binding refuses the whole call with 802 and the planted-infeasible worlds never ran. The script now asserts that refusal (exit 3, 802 with reason static-support and the --controller repair) and states that worlds of mixed end states in one launch are planted in the unit test mixed_end_states_under_masks, as the iteration-starved world already was."
+  },
+  {
+   "bead": "N22a-15",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The runner called --task stand-10s-payload-at-2s by bare name. The task is this bead's file fixtures/reflex/tasks/stand-10s-payload-at-2s, and a bare name is looked up as a registered task and refused with 802, so the planted-fallback run never started. The file is now passed by its path. BD-251's reuse is aligned the same way."
+  },
+  {
+   "bead": "N22a-17",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Requests applied. The consume stage is now run by BD-352's scripts/e2e/opt_cascade.sh (opt.cascade is BD-352's verb; BD-329 could never call it). --run-seed 1 is dropped from the battery form of eval run (802), together with the stale claim that --run-seed is eval.run's one seed spelling. Convention 9: the bead entered the GATE-REFLEX-04 parts itself (record_gate --part M3 and --part M4), while the register names BD-328 as the one bead that measures the gate. It now owns the case gate_reflex_04_standing and its controls under the gate's entry, and writes no gate row. Broken: the 0.55 and 0.72 re-syntheses now carry fresh keys; reusing rs-synth returns the stored screening receipt (convention 5)."
+  },
+  {
+   "bead": "N22a-21",
+   "kinds": [
+    "broken",
+    "deadlock"
+   ],
+   "what": "(1) The e2e said BD-247 'is not a dependency' and that the tier run holds BD-247's archetype cases 'once they exist'. But this bead re-enters GATE-REFLEX-01's M3 part, and N38b-19's part-rows-dropped check refuses a recording that loses an archetype row. Without BD-247's fifteen cases in the build, the re-recording fails. BD-247 is now a dependency (moved from related; no cycle, checked), and the tier run holds its fifteen cases and this bead's case. (2) If the pilot N22c-05 recorded fallback, the bead said it 'is not started', which leaves N22c-50, which depends on it, waiting forever. It now builds nothing, is closed not-funded citing the pilot record, and the legged-predictive row is entered as not funded."
+  },
+  {
+   "bead": "N22a-22",
+   "kinds": [
+    "deadlock",
+    "contradiction"
+   ],
+   "what": "The criterion said that on fallback 'the dependent mechanism beads stay blocked', which would leave N22c-16 unable to record KILL-MPC (it depends on BD-331). It also contradicted the bead's own item 11, under which the single-world CPU aid is kept. Now: on fallback, the production kernels and the batched verb are not built, BD-252 delivers only the single-world CPU aid, and BD-331 is closed not-funded citing the record, which releases N22c-16. Rechecked: Clopper-Pearson 18/30 [0.406, 0.773] (one-sided 0.434), 299 episodes for a 1% bound, and 65,536 / 204,800 / 40,500 model steps per tick."
+  },
+  {
+   "bead": "N22a-24",
+   "kinds": [
+    "request"
+   ],
+   "what": "Request applied: for a method experiment, the episode count is read through experiments::sampling_allowance(id) -> Option<u32> (N38a-07's optional field sampling_episodes_per_design), the twin of pilots::sampling_allowance. The experiment register is looked up first. None (unknown, not admitted, void, or no field) admits the default three. The protocol_exception_counts test covers both registers. Before, the bead named no reader for experiments, so an implementer could not admit a registered protocol's count. Arithmetic rechecked (2,995; 459; 4,050 s; 67.5 min; 23.3 h; 86.4 min)."
+  },
+  {
+   "bead": "N22a-26",
+   "kinds": [
+    "convention",
+    "contradiction",
+    "deadlock"
+   ],
+   "what": "(1) Step 9 ran `frob control synth tripod-x --json` with no key (a run verb; convention 5, and the bead's own idempotence rule). It then 'followed the route' with the class setting, although the fixtures say the published settings are priced and never executed here. It now gives the keyed calls: synth with cm-9-synth, then control mpc tripod-x with S-small and cm-9-mpc. (2) A new consideration covers the pilot's fallback: BD-252 delivers only the single-world CPU form and BD-331 is closed not-funded. The script runs with the M4 kill case's expectations (steps 4, 9 and 10 cite the pilot record) and names no gate clause, instead of waiting on a batched verb that will not be built."
+  },
+  {
+   "bead": "N22a-27",
+   "kinds": [
+    "deadlock",
+    "contradiction"
+   ],
+   "what": "(1) The criterion said that on fallback 'the dependent mechanism beads stay blocked'. N22c-15's rule 1 needs BD-330 closed not-funded to record KILL-RESIDUAL, so the decision would never be written. It now says that BD-330 applies only its registry switch and is closed not-funded citing this record, and that the wrapper N22a-16 waits on the owner decision named in Considerations. (2) The saturation flag was 'default 0.2', while N22c-52 owns phi_sat = 0.10 and the wrapper reads it, so the pilot would have measured against a different threshold. It now cites 0.10 from N22c-52. (3) The secondary sweep ran rho = 0.1 and 0.6, while N22c-52's decision rule reads rho = 0.5 (rule 2) and 0.15 (rule 3). The sweep could not have fed that rule, so it is now 0.15 and 0.5, in Considerations too. Rechecked: the crossing probability 0.785, the ceilings 5 and 2."
+  },
+  {
+   "bead": "N22a-28",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "The criterion said that on fallback 'the dependent mechanism beads stay blocked'. N22c-17's rule 0 needs BD-335 closed not-funded to record KILL-GAIT, so the decision would never be written. It now says that the work package is blocked (N38a-09), that orbit screening and continuation are not built, and that BD-335 is closed not-funded citing this record, which releases N22c-17. Rechecked: the ceiling 410/260 = 1.6 and 410/4 ≈ 100, the thresholds of 10 of 20, 600 s and tau 0.5."
+  },
+  {
+   "bead": "N22a-40",
+   "kinds": [
+    "broken",
+    "deadlock"
+   ],
+   "what": "(1) The saddle-node and logistic families have two branches at the starting lambda (x = ±√λ; x = 0 and 1 − 1/λ). Only one gives the expected event: on −√λ the 0.5 → 1.5 path never doubles, and from x = 0 the logistic path arrives with no event. The parent solve had no seed, so the script could fail on a correct build. The table now names the branch with its multiplier, and each fixture is registered with an initial guess on that branch. (--seed-orbit takes only seeds that gait.continue offers, so it cannot be used.) (2) If pilot N22a-28 falls back, BD-335 is closed not-funded (N22c-17 rule 0), and this bead would be released with no verb. It is now closed not-funded too, and step 10's diagnostic-only case is tied to the measured kill (rule 2). Rechecked: 36/7 and 20/7, the two-cycle (0.513045, 0.799455), the pitchfork ±0.5, the mode change at 0.5, and the ledger modes 0.5 and 0.7."
+  },
+  {
+   "bead": "N22ap2-03",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Requests applied. (1) N24a-38 enters the row as pending: N22ap2-03 (runs admitted with the unmonitored stamp) and states d_floor = 10^-2. Background, Scope, Layering, the Row switch (status from pending to available, version bumped), the criterion and tests now say so. With the gait feature off after the switch, the row computes unavailable and rule (a) refuses. The two Considerations that asked for these are replaced by the settled facts. (2) N29b-06 item 10: the pair is a row of fixtures/e2e/chron08/list.toml with wave = 2, and the script runs scripts/e2e/gate_chron_08.sh as its stage, which produces the receipt from a tier run of the whole list with the referee receipt exported. The recording is record_gate --gate GATE-CHRON-08 --receipt <hash> --part M2. Dependency N29b-06 added (no cycle). Before, an implementer would have recorded without --part from a partial run. C13 finding valid: 'requested of N29b-06' is removed. The planted run now carries --seed 2203. Rechecked: the firing strides 5, 6, 8, 8, never, 99 and their d values; the reset example fires at 7.6."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-gait",
+   "what": "gait.gradient's row writes --wrt <fixture parameter> in the singular. BD-334 (the implementer) and N22a-39 pass several continuous keys at once (--wrt slope,l,g), which the gate's three-parameter cosine needs. Spell it --wrt <k>[,<k>…], comma-separated as --params is; otherwise the generated schema may admit one key and the gate's rimless-wheel calls fail with 802."
+  },
+  {
+   "bead": "N22c-49",
+   "what": "GATE-REFLEX-04's row names BD-328 (milestone M4) as the bead that measures the gate, while the gate's legged and wheeled part is due at M3. As written, the M3 part cannot be recorded at M3, and the M3 exit can only show it not run. Either name a recorder for the M3 part that lands at M3, or state that the M3 part is entered at M4 by BD-328. The M3 recorder could be N22a-17, which depends on the M3 pilot BD-310, whose part A scores the synthesized baseline as rung R1 on batch-cpu against specialists; it would record from its tier run over the pilot's record, and BD-328 would keep --part M4. N22a-17 now writes no row, so that it agrees with the register as it stands."
+  },
+  {
+   "bead": "N22c-50",
+   "what": "N22a-21 is now closed not-funded citing the pilot record when the predictive pilot N22c-05 records falsifier-holds/fallback. You depend on N22a-21 and have no rule for that case. State your outcome when your mechanism dependency is closed not-funded (for example: the experiment is not run and OPEN-REFLEX-1 is closed as moot, citing the pilot record). Otherwise the experiment either waits forever or runs against a controller that was never built."
+  },
+  {
+   "bead": "N22a-23",
+   "what": "BD-252 and N22a-22 (item 11 and its criterion) now say that on the pilot's fallback the device kernels and the batched verb are not funded, but the sampling controller is kept as a single-world CPU debugging aid, built by BD-252 on the CPU reference of your kernels. Your text says only that 'these kernels are not funded'. State what you deliver in that case: the CPU reference at one world, with no device dialect and no batched arena. Otherwise BD-252's fallback form has no planner to run, and BD-252 (which depends on you) cannot close."
+  },
+  {
+   "bead": "N22c-52",
+   "what": "The residual pilot N22a-27 now registers its secondary sweep at rho = 0.15 and rho = 0.5 (one seed each), the two values your decision rules 2 and 3 read, and cites phi_sat = 0.10 from you. Say that those rules read that sweep, noting one seed per value, instead of 'separately registered pilot runs'. Otherwise the rule waits on pilots nobody registers."
+  }
+ ],
+ "unchanged": 8,
+ "notes": "Unchanged: BD-249 (commands valid against VERBS-eval's single-task form and design.check; Clopper-Pearson bounds recomputed); N22a-16 (selector forms, single-task eval form, PO-REFLEX-02 and the KA-557 controls checked; BD-251's zero-residual comparison matches); N22a-18 (ladder forms, keys and the registries/control_ladder.toml binding checked; R2 and R3 marked available: false with the kill decision cited, consistent with BD-330); N22a-25 (the long --candidate design=,controller= form, eval.qualify and eval.promote listing 817, and bind_ahead admission checked against VERBS-eval); N22a-31 (the round-3 request from F-U22b was already in place: group admission cites N22b-37's stride context and the contact-sequence condition, and no 'stance-free context' consideration remains; the twisted affine fixed point (−0.564103, −0.769231) and the 4·n_K + 1 world count recomputed); N22a-38 (rimless-wheel ω*² 2.094996 and 2.719485, multipliers 0.5 and 0.25, uphill b = −1.048, e^±1, the monodromy [[0.25, 0.16], [0, 0.09]] and the 0.7071 negative control recomputed; keys, --section, --form stroboscopic --period and the cargo tier-run form match); N22a-39 (bar impulses 1.5 and 0.75 N·s, 1/16 J, √3/4 and 0.612372, the cosine helper values and the rimless-wheel closed form recomputed; it is the GATE-GAIT-02 recorder consistent with the pending round-3 request to N22c-49); N22ap2-01 (connection values (8.000 and 5.333; −9, 9, −9, 9; −2, 2, 2, −2), 50 Hz at decimation 10, the registered task names stand-10s and traverse-5m-flat, --designs, --world-addr and the N16ap4-01 path checked (all reached transitively)). The round-3 request to N22c-49 (GATE-GAIT-01/-02 measured by 'BD-333 with N22a-38' and 'BD-334 with N22a-39') sits in F-U22c's slice this round and is not yet applied; BD-334, N22a-38 and N22a-39 are kept consistent with it rather than re-requested."
+}

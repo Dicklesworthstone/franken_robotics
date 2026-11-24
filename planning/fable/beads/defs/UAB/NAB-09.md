@@ -4,9 +4,9 @@ title: "registries/sources.toml: the source register (schema frob.sources/1), re
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "workspace", "gauntlet", "delivery", "solid", "registry"]
+labels: ["m0", "workspace", "gauntlet", "delivery", "solid", "registry", "review-notes-open"]
 parent: "WP-01"
-deps: ["BD-002", "BD-004", "BD-005"]
+deps: ["BD-002", "BD-005", "N34p4-03"]
 needs: []
 related: ["NAB-23"]
 gates: []
@@ -60,7 +60,7 @@ for published figures, N00-16 for sibling-code facts, the plan-time pilot ledger
 
 **1. File and schema.** `registries/sources.toml`, schema `frob.sources/1`, JSON-Schema at
 `schemas/registries/sources.schema.json`, hand-written by this bead like every registry-file schema (not a
-`check-generated` output, BD-004). It names every field below, including the kind-specific fields the record
+`check-generated` output, N34p4-03). It names every field below, including the kind-specific fields the record
 beads use (`role`, NAB-11; `group` and `context_only`, NAB-14; `cited_in`, `scripts_retained`, `revisions`,
 `cited_revision` and `limits`, NAB-15); a field outside it fails `src.schema`.
 
@@ -145,8 +145,11 @@ reread_digests = ["<blake3 of the canonical bytes of each reread entry>"]
   and the re-read reviews consume.
 - For `kind = "local"`: the reading is direct, but the statement is "a FACT about the commit it was read at";
   `may_cite_without_reading` requires a `reread` at the commit recorded in the stack lock.
-- For `kind = "plan-check"`: `may_cite_without_reading` requires the re-run record of the plan-time check ledger
-  to say `reproduced`.
+- For `kind = "plan-check"`: `may_cite_without_reading` requires the re-run status of the plan-time check ledger
+  to be `reproduced`. The ledger is N38a-10's (`pilots::status_of_source`), which this loader does not read:
+  `load` takes the status as an argument (a function from a `SRC-CHK-nn` id to `not-run | reproduced | differs`),
+  and with none supplied every plan-check reading is `not-run` and flagged (fail closed). The citation lint
+  (NAB-10) supplies the ledger's function.
 
 **3. Loader and errors.** `frob_core::registry::sources::load`. Typed errors: `src.schema`, `src.duplicate-id`,
 `src.no-reading`, `src.bad-mark`, `src.unlocated-without-flag` (empty `locator` with `unlocated = false`),
@@ -160,8 +163,9 @@ import.
 
 **5. Generated summary.** `xtask::generate::sources_summary` writes the block between markers in
 `docs/SOURCES.md`: counts per kind, per topic and per mark; the list of unlocated sources; the list of readings
-with `reread_before_gate = true` grouped by the gate or bead that cites them. It is one more row of the
-`check-generated` generator table, not a new check.
+with `reread_before_gate = true` grouped by the gate or bead that cites them; for every record with a non-empty
+`limits` (the archive record of NAB-15), its limits text verbatim, one line per entry. It is one more row of the
+`check-generated` generator table (N34p4-03), not a new check.
 
 **6. Readers (the registry-must-have-a-reader rule).** The citation lint (NAB-10); the evidence-label lint
 (N00-01), which resolves every external figure to a source id; the incumbent capability register (N00-13),
@@ -173,16 +177,16 @@ about FrankenRobotics; it is what a claim of kind Parity or Known answer cites.
 
 ## Acceptance criteria
 
-- [ ] `registries/sources.toml` validates and loads; with NAB-11 to NAB-15 landed every record has at least one
-      reading and a kind.
+- [ ] `registries/sources.toml` validates and loads; a record with no reading fails `src.no-reading` and one
+      with no `kind` fails `src.schema`, so every record that NAB-11 to NAB-15 add later has both.
 - [ ] `effective_mark` treats F as S; `weakest_mark` and `merge_marks` follow the order P, S/F, R, M, U, with the
       audit exception.
 - [ ] `reread_before_gate` is true for every reading that is not P and has no confirmed re-read, for every
       local source not re-read at the stack-lock commit, and for every plan-time check not reproduced.
 - [ ] An empty locator without `unlocated = true` is refused; the plan-time sources with no recorded URL load
       only with the flag set.
-- [ ] `docs/SOURCES.md`'s generated block is current under `check-generated`, and `xtask` still has six
-      subcommands.
+- [ ] `docs/SOURCES.md`'s generated block is current under `check-generated`; the generator is a row of its
+      table (N34p4-03) and adds no subcommand (`cargo xtask` with no argument prints the same names, exit 3).
 - [ ] A `reread` entry cannot be edited or removed without the loader failing.
 
 ## Test plan
@@ -206,7 +210,10 @@ about FrankenRobotics; it is what a claim of kind Parity or Known answer cites.
   with `how = "executed"`, and a `planning-record` with two `revisions`, a `cited_revision` and three `limits`,
   load and validate against the hand-written schema; a record carrying an undeclared field `note` fails
   `src.schema` in the loader and in schema validation.
-- `summary_counts`: on a five-record fixture the generated block prints the expected counts per mark.
+- `summary_counts`: on a five-record fixture the generated block prints the expected counts per mark;
+  `summary_prints_limits`: a `planning-record` fixture with three `limits` entries prints all three verbatim.
+- `plan_check_status_is_an_argument`: a `plan-check` reading is flagged when the supplied status is `not-run` or
+  `differs`, and when no status function is supplied; it is citable only with `reproduced`.
 
 ### End-to-end script and logging
 

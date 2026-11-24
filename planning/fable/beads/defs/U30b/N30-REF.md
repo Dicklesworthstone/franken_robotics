@@ -4,7 +4,7 @@ title: "Ground refusal-code registry: FROB-REF-812, -814, -873, -876, -879, -883
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "ground", "frob-ground", "frob-core", "solid", "registry"]
+labels: ["m1", "ground", "frob-ground", "frob-core", "solid", "registry", "review-notes-open"]
 parent: "WP-68"
 deps: ["BD-005", "BD-022", "N35x-02"]
 needs: []

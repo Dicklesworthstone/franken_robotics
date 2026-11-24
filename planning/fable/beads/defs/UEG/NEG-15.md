@@ -166,7 +166,9 @@ pending in an index built for its milestone or later. What a `none` row means to
 references are all still pending:
 the class's baseline scorecard is the archetype's own template, and the archetype mass row of GATE-SKEL-07 (mass
 within 15% of the mass on file for the reference robot, where one exists) is recorded `not applicable` for the
-class, never `passed`.
+class, never `passed`. The same mass-row reader refuses, naming the profile, a robot whose manifest carries
+`profile` (a reduced model: `fsim-g1` under `g1-reduced-30`, N14b-34) when it is offered as the robot whose mass
+on file a mass row reads: such a robot may serve its class as a fixture, never as its mass reference.
 
 ## Acceptance criteria
 
@@ -207,6 +209,9 @@ class, never `passed`.
 - `robot_index_none_means_not_applicable`: the mass-row reader returns `not applicable` for a `none` class and
   for `biped-point` while cassie is pending (the M1 index), never `passed`; an M3 index that still lists cassie
   as pending fails the check.
+- `robot_mass_reference_not_reduced`: the mass-row reader asked for `humanoid`'s mass reference with a
+  `synthetic` manifest carrying `profile` is refused with the profile named; the same manifest without
+  `profile` is read.
 - `robot_manifest_agrees_with_model_record`: a manifest generated from the model record passes; one with a
   different commit, and one with a different `spdx`, each fail with both values named; a robot absent from the
   model record is refused a manifest.

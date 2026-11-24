@@ -71,14 +71,17 @@ and OPEN-ARENA-3 answered or defaulted, because sealed world families are built 
 - The daemon's job engine with device ownership and idempotent submission; `frob sim estimate`.
 - Throughput and training-time figures against the incumbent measured on `trj`, each with its disclosure block.
 
-**2. Gates with a part due at this exit (compiled register tables: 2 admission, 80 convergence).** Rows that had a
-referee or CPU part at M1 close their `strict`, batched or every-tier part here.
+**2. Gates with a part due at this exit (compiled register tables: 2 admission, 81 convergence).** Rows that had a
+referee or CPU part at M1 close their `strict`, batched or every-tier part here. One row carries an M2 part that the
+plan's printed load table (80) does not count: GATE-LEMMA-03 over every proof kind enabled by M2 (`rewrite-trace`
+joins the M1 kinds), recorded by this exit's review, BD-224 (N40-02, step 5). GATE-ARENA-01, GATE-HAB-01 and
+GATE-HAB-13 have their first part here and a later one at M3 (and M4 for GATE-ARENA-01).
 
 | Gate | Claim | Part due | Pass criterion in brief (TARGET) | Defined in |
 |---|---|---|---|---|
 | INT-ASUP-02 | Admission | M2 | Foundation: asupersync lab runtime. The job protocol runs under the lab runtime: 100 of 100 repeats of one seed give identical traces; a planted lost-chunk bug is found within 10,000 explored schedules and replays from its minimized fixture | §33.6 |
 | INT-FJAX-01 | Admission | M2 at the earliest, only if the profile asks | Foundation: frankenjax (pattern) [F]. With rewrite rules that preserve floating-point results under the kernel's determinism class, the extracted kernel matches the baseline bit for bit and the operation count falls by at least 10% on at least three kernels | §33.15 |
-| GATE-ARENA-01 | Known answer | M2 | Every task is reproducible inside its determinism class from its `TaskId`, `SceneId`, `ModelId` and seed; reference-robot baseline scorecards are recorded. | §24.17 |
+| GATE-ARENA-01 | Known answer | M2 (velocity tracking, terrain traversal); M3 (the four M3 task families); M4 (the M4 task families) | Every task is reproducible inside its determinism class from its `TaskId`, `SceneId`, `ModelId` and seed; reference-robot baseline scorecards are recorded. | §24.17 |
 | GATE-ARENA-04 | Known answer | M1 on the referee; M2 on the batch tiers | Fixture 1: every analytic row within tolerance on the referee and inside the fidelity envelope on the batch tiers; the creep rigs flip at the stated thresholds; both negative controls are caught. | §24.17 |
 | GATE-ARENA-06 | Known answer | M2 | Fixture 2: limiting-model rows within 1% on the referee; slip invariance to 10⁻¹² relative in double precision; reflected cases mirror inside the determinism class. | §24.17 |
 | GATE-ARENA-08 | Known answer | M2 | Reset cache: penetration at most 0.5 mm and first impulse within 5% of static support on all 64 states for each reference robot; a design edit invalidates the cache. | §24.17 |
@@ -108,13 +111,14 @@ referee or CPU part at M1 close their `strict`, batched or every-tier part here.
 | GATE-FID-03 | Fidelity | M2 | The referee's coverage reported per robot class at M2 exit, with the breakdown by refusal cause, the `strict` share and promotion wall-clock at the 50th and 95th percentiles; an adjudicator named wherever coverage is below 90%; coverage below 90% in a reference class falsifies BET-34 for that class, and its fallback applies. | §16.17 |
 | GATE-FID-06 | Known answer | M2 | Energy audit: both planted exploits flagged within one episode; an honest policy under CL-1 unflagged; created energy on the standard battery below the frozen bound. | §16.17 |
 | GATE-FID-07 | Fidelity | M2 | Background referee: coverage at least 0.1% of GPU world-seconds, reported; GPU throughput loss at most 5%; a planted single-kernel defect localized to its stage from one-step defects; a planted tier-sensitive policy detected within twice the time §16.11 predicts. | §16.17 |
-| GATE-HAB-01 | Known answer | M2 | Compiled field against source geometry: error at most half a fine voxel at 10⁶ surface samples and never above the brick bound; analytic shapes exact to the interpolation bound and overlays to round-off; quantization ripple on a resting 10 kg block at most 1% of weight on every tier. | §19.19 |
-| GATE-HAB-13 | Known answer | M2 | Brick pool: the pooled field equals the dense field bit for bit at 10⁶ points per scene; measured occupancy and deduplication ratios are recorded for every archetype. | §19.19 |
+| GATE-HAB-01 | Known answer | M2 (host and `batch-cpu`); M3 (the device tiers) | Compiled field against source geometry: error at most half a fine voxel at 10⁶ surface samples and never above the brick bound; analytic shapes exact to the interpolation bound and overlays to round-off; quantization ripple on a resting 10 kg block at most 1% of weight on every tier. | §19.19 |
+| GATE-HAB-13 | Known answer | M2 (the M2 battery of stand-ins); M3 (the seven interior archetypes) | Brick pool: the pooled field equals the dense field bit for bit at 10⁶ points per scene; measured occupancy and deduplication ratios are recorded for every archetype. | §19.19 |
 | GATE-KIN-03 | Parity | M2 | `batch-cpu` in `f64` against `fs-mbd`: kinematics, inverse dynamics, forward dynamics and mass matrix within 10⁻¹⁰ relative on 10⁴ states per reference robot. | §16.17 |
 | GATE-KIN-04 | Known answer | M1 (referee); M2 (`strict`) | The transactional rows of §16.16 on `referee` and `strict`: impact time within 10⁻⁹ s; tied sliders exact to 10⁻¹² N·s; zero uncommitted reads in 10⁵ injected faults; forced-retry digests equal; refinement statistics inside 3σ at 10⁶ draws; the redraw mutation caught. | §16.17 |
 | GATE-KIN-05 | Known answer | M2 | INV-KIN-04: 1,000 episodes with identical digests solo and in 100 random co-tenancies, capacities and slot assignments, per back end; the path-table Jacobian gives the same digests as the dense one. | §16.17 |
 | GATE-KIN-06 | Parity | M2 | A batch of 256 parameter variants of each reference robot equals 256 homogeneous runs bit for bit on `batch-cpu` and on each GPU back end. | §16.17 |
 | GATE-KIN-07 | Known answer | M2 | Under the capacities of §16.6, `Degraded` world-steps ≤ 10⁻⁴ of world-steps per class on the standard battery; every forced overflow flagged; capacities printed in every disclosure block. | §16.17 |
+| GATE-LEMMA-03 | Known answer | M1; M2, M3, M4, M5, M8 (every kind enabled by that exit) | Every proof kind in use has one specimen that `frob-verify` accepts and at least three mutations it rejects; the four stance mutations, an unknown kind with consistent hashes and a changed quantifier are all rejected; the binary has no dependency outside the standard library and runs in an empty environment. | §12.6 |
 | GATE-MARROW-05 | Known answer | M2 | Zero sign errors of `Guarded` predicates against exact rational evaluation over 10⁹ adversarial inputs within 4 ulp of the zero set, on `batch-cpu`, CUDA and Metal; the fallback rate on the standard contact battery recorded (target below 10⁻³ of evaluations). | §13.10 |
 | GATE-PHYLUM-02 | Known answer | M2 | Each of 512 designs in a mixed cohort has the same digests as in a homogeneous batch, on `batch-cpu` and per GPU back end, at three bucket sizes and under slot dispatch with 100 random co-tenancies. | §17.19 |
 | GATE-PHYLUM-03 | Performance | M2 | The head-to-head of §17.14 run and published with all four arms. For the cohort to remain the engine: at least 0.70 of the harmonic mean of the homogeneous rates (§36.3 row 10) at padding waste of at most 25% on cohorts of at least 256 designs; a lower bound above 1 against arm B on edit to first accepted result at K ≤ 128; at most eight buckets. | §17.19 |
@@ -300,7 +304,7 @@ covers too little) → the `strict` profile as named adjudicator, with results t
 
 ### Unit tests
 
-Carried by member beads. Epic check: due counts for M2 are 2 admission, 80 convergence, 14 kill decisions, plus 23
+Carried by member beads. Epic check: due counts for M2 are 2 admission, 81 convergence, 14 kill decisions, plus 23
 late parts and 4 late kill decisions.
 
 ### End-to-end script and logging
@@ -319,7 +323,8 @@ decision in fifty fails the D3 equivalence test; the endpoint-only tunnelling mu
 
 ## Considerations
 
-- M2 has the largest single-exit load of convergence parts (80). The exit runner's control sweep is sharded.
+- M2 and M3 have the largest single-exit loads of convergence parts (81 each). The exit runner's control sweep is
+  sharded.
 - Most Performance gates exceed the default compute envelope; without approval the single-card rows are recorded
   and GATE-SPARK-20 is `not run`.
 - A device result recorded before OPEN-SPARK-1 is ratified is labelled exploratory and supports no claim.

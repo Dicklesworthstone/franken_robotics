@@ -6,7 +6,7 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "skeleton", "frob-design", "solid", "test", "zoo"]
 parent: "WP-38"
-deps: ["BD-054", "BD-055", "BD-056", "BD-062", "BD-074", "BD-102", "BD-104", "BD-109", "NEG-30"]
+deps: ["BD-054", "BD-055", "BD-056", "BD-062", "BD-074", "BD-102", "BD-104", "BD-109", "N14b-34", "NEG-30", "NEG-32"]
 needs: []
 related: []
 gates: []
@@ -65,14 +65,19 @@ nothing), which is itself a row.
 | Mass window of the `@g1` preset | within 15% of 33.34014202 kg: 28.339 kg to 38.341 kg | exact (bounds) |
 | Sibling builder roll-up (FACT, re-read at the pin) | 30 links, 31.96314202 kg: the reduced profile, 1.377 kg (4.13%) below the 38-link source | exact (as recorded) |
 | Coupled pair, torque map | for coupling matrix A (2 × 2, joint torque = Aᵀ·actuator force), the joint-torque set of |fᵢ| ≤ f_max is the parallelogram with vertices Aᵀ·(±f_max, ±f_max); for A = [[1, 1], [1, −1]]·r it is a diamond with vertices (±2·r·f_max, 0) and (0, ±2·r·f_max) | exact |
-| Dense per-world bytes at C = 64, R = 320 | 90,704 before state (cache 9,700; 12·n² 14,700; Jacobian 44,800; rows 15,360; contacts 6,144) | count |
+| Dense per-world bytes at C = 64, R = 320 | 90,704 before state (cache 9,700; 12·n² 14,700; Jacobian 44,800; rows 15,360; contacts 6,144); the byte model and `sim.estimate` land at M2 (N17a-07, BD-219), so the row carries `blocked = "milestone"`, `due = "M2"` (NEG-30's field) and is not evaluated at M1 | count |
 | Shell torso against solid (illustration on a 0.42 × 0.20 × 0.10 m box, 2.5 mm wall, 2,700 kg/m³) | 1.9227375 kg against 22.68 kg | exact |
 
-**Control variants.** (a) `variants/solid-torso.fbot`: the torso's fill changed from shell to `solid`: the
-preset's mass leaves its window (the catalogue's mass control); (b) `variants/joint-limits-on-coupled.fbot`:
+**Control variants.** (a) `variants/solid-torso.fbot`: the `@g1` preset's instance with the torso's fill
+changed from shell to `solid`: its mass leaves the `@g1` window (the catalogue's mass control; the default
+instance approximates no robot and has no window); (b) `variants/joint-limits-on-coupled.fbot`:
 torque limits written on the ankle joints instead of the actuators: the envelope differs from the zonotope
-(a box in joint space) and the test asserts the two differ at a diagonal load; (c) a `g1-reduced-30` import
-used as parity reference without a `reduced` block → refused (mass dropped at import).
+(a box in joint space) and the test asserts the two differ at a diagonal load; (c) the sibling's 30-link G1
+imported without a `reduced` block (`frob design import --format fsim-catalog --builder g1 --name zoo-g1-30
+--key zoo-g1-30-<run> --json`, NEG-32) → refused with N14b-34's mass-dropped refusal (ledger row
+`import-mass-dropped`, raised under its assigned number through `IMPORT_MASS_DROPPED`; exit 3; payload each
+dropped body with its mass and the 1.377 kg total), nothing created; with `--reduced g1-reduced-30` the same
+import succeeds and carries `evidence.reduced`.
 
 ## Acceptance criteria
 
@@ -90,7 +95,9 @@ used as parity reference without a `reduced` block → refused (mass dropped at 
   which the zonotope excludes.
 - `zoo_humanoid_camera_on_plane_keeps_c2`.
 - `zoo_humanoid_self_collision_pairs_listed`.
-- `zoo_humanoid_bytes_per_world`: 90,704.
+- `zoo_humanoid_bytes_per_world`: at M1 the row is reported `blocked: milestone` with `due = "M2"`, counted
+  neither as passed nor as failed; from M2, once the field is removed by a dated amendment, 90,704 through
+  `frob sim estimate --workload H --json`.
 
 ### End-to-end script and logging
 

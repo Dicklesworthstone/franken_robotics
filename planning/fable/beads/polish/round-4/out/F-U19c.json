@@ -1,0 +1,336 @@
+{
+ "round": 4,
+ "slice": "F-U19c",
+ "reviewed": 42,
+ "changed": [
+  {
+   "bead": "BD-235",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "Applied H-owners-3 (checked against VERBS-scene's scene.split row and NJL-01 action rule 1): the operations were spelled `create …`, `add …`, `move-group …`, `show`/`check`/`part-of`/`audit …` as positional words, which the registry refuses with 802, so every scripted call and every agent following the bead would fail. Item 7 now states the `--action <name>` rule (default `create` with no `--action`; positional words and `--action create` are 802) and spells each operation with `--action`; the acceptance item, `create_forms` (now also asserting the positional words are 802) and the smoke script use the registry form. C13: the aside 'an earlier draft wrote `frob.scene.split.result/1`' is restated as the fact that that name is not used."
+  },
+  {
+   "bead": "BD-236",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "Applied H-owners-3 (checked against VERBS-scene's scene.bank row): `show`, `estimate <ids>`, `admit`, `evict`, `pin`, `unpin` were positional action words, refused with 802 by the registry, so the smoke script and every caller following item 6 would fail. Item 6 now states the action rule and spells the default call `frob scene bank [--device D]` and the others `--action <name>`; item 10, the extensions paragraph, the reachability acceptance (now also: `--action show`, `--action status` and positional words are 802), `device_option` and `scene_bank_smoke.sh` use the registry form. C13: three 'earlier draft' asides (the 1,160-byte charge, `status` as an action, three separate schemas) are restated as the facts they carry (the charge is 1,164; `status` is an output variant; the three are variants of one schema)."
+  },
+  {
+   "bead": "N19c-03",
+   "kinds": [
+    "request"
+   ],
+   "what": "Applied F-U19a-1 after checking N19a-19 and N19a-04: Considerations said N19a-19 reads adjacency as 'within one footprint radius' and is 'asked to' inflate the footprint, which is no longer true and narrated a request; it now states that N19a-04 applies this bead's rule at region level (305) and N19a-19 pose by pose at stage 9 (footprint inflated by S, reason `unknown`), and that N19a-19 records `goal_admissible: unknown` (tagged `unresolved` by BD-234) so no impossibility relies on unknown space."
+  },
+  {
+   "bead": "N19c-06",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Applied F-U34: the FMT-FSURVEY row's `decision` field now names `docs/adr/ADR-WS-06-format-rows.md` (N34-27's record, whose table lists the row as an added format at M5) in the body and the acceptance item; without the path the row fails N34-27's load check. Also fixed `fit_inside_tape_error_unresolved`: its witness case (a 0.800 m body in the 0.812 m door, 6 mm a side) could never pass, since the bead's own u_reg = 3 mm plus KA-449's lattice terms (6.0 mm even at Δ = 5 mm and 512 headings) exceed 6 mm; the witness case is now a 0.700 m body (56 mm a side) and the e2e's two fit calls name the two widths."
+  },
+  {
+   "bead": "N19c-10",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The e2e script ran the corridor task under `unknown_contact = \"refuse\"`, whose route passes within a footprint radius of the unknown wall, and asserted both the admission refusal 305 and digest equality of untouched worlds against the degrade batch: a run refused at admission has no worlds, so the script could never pass. The refuse leg is now split: the same task refused at admission (305 with a probe request), and a second pair of tasks with a route clear of the margin and a push disturbance (admitted under both settings), on which touched worlds finish their chunk masked and untouched worlds' digests are equal, which is also where the `mid-chunk-abort` plant is caught. C13: the 'earlier text used `docs/open/`' aside is restated as the fact that `docs/open/` is not a directory of the repository."
+  },
+  {
+   "bead": "N19c-11",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "Applied H-owners-3: `scene split create …`, `add …` and `scene split check --deep` were positional action words (802 by VERBS-scene); the e2e steps and item 5's deep-check spelling now use the default `create` call and `--action add` / `--action check`. The mechanical C13 finding was real: the script paragraph said 'requested of BD-235'; BD-235 carries both the acceptance of these steps and `--deep`, so the bead now states it as fact. C13: the 'Round 2 correction' aside on `fp_exact` is restated as the reason each brick's position enters the hash."
+  },
+  {
+   "bead": "N19c-13",
+   "kinds": [
+    "request",
+    "registry",
+    "broken"
+   ],
+   "what": "Applied H-owners-3: the audit (`frob scene split audit …`), `audit --rule`, and the e2e's `create`/`add`/`audit`/`check` calls were positional action words (802); all now use `--action <name>` and the default `create` call. Also the e2e's planted run inherited eight worlds while asserting 'one violation naming the episode': it now runs one world (`--worlds 1`), so the assertion can pass."
+  },
+  {
+   "bead": "N19c-14",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "Applied H-owners-3: the bank listing was spelled `scene.bank show` / `scene bank show` (a positional action word, 802 by VERBS-scene), so the e2e step and the acceptance item could not pass; they now call the default action with no `--action` (`frob --json scene bank`). Since the script now calls `scene.bank`, BD-236 (its implementer) is added to deps (C8: scripts call what their deps deliver; checked acyclic). C13: the 'earlier draft specified a second commitment' aside is restated as the fact that the one commitment and derivation are N24b-17's."
+  },
+  {
+   "bead": "N19c-15",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "Applied H-owners-3: every `scene split` step (create, add, move-group, check, audit) used positional action words (802); they now use the default create call and `--action <name>`, and reading W7's part now names its call (`--action part-of`). The C13 finding was real: the mirror fixture said the `mirror` parameter \"is requested of BD-225\"; BD-225 carries it (boolean, default false, role `mirror`), so it is now stated as fact."
+  },
+  {
+   "bead": "N19c-18",
+   "kinds": [
+    "plan",
+    "contradiction"
+   ],
+   "what": "On a fired KILL-POOL the bead made `PrivateBand` the default pool mode, contradicting the plan (§19.15), the register row (fallback: dense per-variant fields) and its own Background, and leaving the dense resident table (which the world bank then plans with) describing a mode not in force; the default on fire is now `PrivateDense`, with `PrivateBand` selectable by a job and never the default."
+  },
+  {
+   "bead": "N19c-19",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "C13 finding real: `reread = [\"M3\"]` was \"requested of N40-24\"; N40-24 carries it, so it is stated as fact. The acceptance demanded bit-equality on every tier for the 1 cm warehouses, whose private-dense comparison image is 38.4 GB (43.2 GB with labels) and cannot exist on a 24 GB card, so it could never pass on the CUDA lane; such a scene now has a `not run` row with its byte figure on that tier (never a pass). The bead also now states that it adds the `--battery` argument to N19c-17's script (C8). Item 1 had no way to make its 1 cm scenes: `scene.gen` takes no field settings and returns a compiled pack, so no source could be recompiled at 1 cm; the bead now adds `--fine/--coarse/--truncation` to `scene.gen` and gives the 1 cm gen command (request to VERBS-scene)."
+  },
+  {
+   "bead": "N19c-20",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied H-owners-3: `scene.bank show --segments`, `scene bank admit` and `scene bank show --segments` in the e2e and acceptance were positional action words (802); they now use the default call (`frob scene bank --segments`) and `--action admit`, and the acceptance asserts that the positional form, like `--action status`, is 802."
+  },
+  {
+   "bead": "N19c-21",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied H-owners-3: `scene.bank evict --free`, `scene bank admit`, `show` and `pin` were positional action words (802), so the e2e and the acceptance item could not pass; they now use `--action evict --free`, `--action admit`, `--action pin` and the default `show` call."
+  },
+  {
+   "bead": "N19c-22",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied F-U23 (checked against VERBS-train, whose train.start row lists `--schedule` and `scene-variant-not-resident` as N19c-22's): the bead described the schedule only on sim.run, so training jobs (N19c-25) had no owner for its semantics; item 1 now states that `train.start --scenes <set> --schedule` gets the same admission, reset rewrite, no-recompilation counters and 319 sites, with an acceptance item and the unit test `train_start_schedule_same_semantics`; N23a-14 (train.start) added to deps (acyclic). Applied H-owners-3 to the bank calls (`--action admit|unpin|evict`), and the sampled replays now name `--episode <e> --alone` (with 1,000 episodes per world, a replay without the episode did not replay the sampled episode alone)."
+  },
+  {
+   "bead": "N19c-23",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "Applied H-owners-3: `scene bank admit --recipe` (item 2 and two e2e steps) was a positional action word (802); now `--action admit --recipe`. C13 finding real: \"requested of N21c-08 to state\" is replaced by the fact, checked in N37-18 (every writer outside the store needs the door's grant, so a private pack answers 310 before N21c-08's bundle writer can answer 618); no request is needed. Two review-history asides (\"Round 3 correction\", \"Round 2 correction\") removed under C13."
+  },
+  {
+   "bead": "N19c-24",
+   "kinds": [
+    "request",
+    "registry",
+    "broken"
+   ],
+   "what": "Applied H-owners-3 to the bank calls (default `show`, `--action admit`, `--action evict`). The gate was recorded \"once per lane\": under N38b-19 the second recording replaces the first and, omitting the first lane's rows, is refused with `part-rows-dropped`, so GATE-HAB-12 (PASS needs both lanes) could never be recorded; the script gains a `--combine` mode that re-checks both lane receipts and writes one receipt, recorded once (N38b-19's multi-machine form), with a bats test and an acceptance item. The replays name `--episode <e> --alone`."
+  },
+  {
+   "bead": "N19c-25",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "Applied H-owners-3: `scene split create …`, `add …` and `scene bank admit` were positional action words (802); now the default create call and `--action add` / `--action admit`. C13 finding real: the training form of the schedule was \"requested of N19c-22 and VERBS-train\"; VERBS-train now lists `--schedule` (N19c-22) and N19c-22 now states it, so it is stated as fact."
+  },
+  {
+   "bead": "N19c-29",
+   "kinds": [
+    "contradiction",
+    "registry",
+    "convention"
+   ],
+   "what": "Applied the N19c-29 note (gate rows checked against EPIC-M2/M3, N40-24 and BD-236; GATE-HAB-12 targets agree). The bead said the register gives GATE-HAB-13 one M2 part with N19c-19's M3 measurement 'a further receipt cited in the same part', while N19c-17 records `--part M2` and N19c-19 `--part M3` (and N19a-42/N19a-25 record GATE-HAB-01 as M2/M3 parts); under N38b-19 a second recording of one part by another bead is refused, so the archetype measurement could never be recorded. The Due column and Considerations now state two parts for each (the GATE-MARROW-01 reasoning of N40-02 item 5), and KILL-POOL as one row with `reread = [\"M3\"]`; a request to N40-02 adds the M3 parts. Two review-history asides removed (C13)."
+  },
+  {
+   "bead": "N19c-31",
+   "kinds": [
+    "convention"
+   ],
+   "what": "C13 finding real: `--brick-layout` on `scene.gen` was 'requested of VERBS-scene'; the scene.gen row now lists it (N19c-31's experiment build adds 9), so it is stated as fact; the 'Round 3' and 'earlier text' asides are removed."
+  },
+  {
+   "bead": "N19c-32",
+   "kinds": [
+    "broken",
+    "registry",
+    "convention"
+   ],
+   "what": "The e2e ran `scene gen` and then `scene compile <the generated source> --fine …`, but `scene.gen` returns a compiled pack and no source file, so candidates (B) to (D) could not be built; it now generates each candidate in one call with `--fine/--coarse/--truncation` on `scene.gen` (added by N19c-19, which needs 1 cm scenes first; request to VERBS-scene). An 'earlier path is withdrawn' aside removed."
+  },
+  {
+   "bead": "N19c-34",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Two review-history asides ('Round 3: …') removed under C13; no change of meaning."
+  },
+  {
+   "bead": "N19c-36",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "The 'Round 3: an earlier text …' aside is replaced by the fact it carried (the parent's a is read from `run show --phase-ledger`, never from a fork's envelope). Step 1 recorded the parents without `--profile-kernels`, so `run show --phase-ledger` would print `field_tile_share` (the parent's a) as `unavailable` with exit 2 (N21a-27, VERBS-run), and neither the cost fixture's a >= 0.9 nor the control's a-below-threshold could be read; the parent runs now carry `--profile-kernels` and the bead says why."
+  },
+  {
+   "bead": "N19c-37",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Applied the round-3 C13 note: the aside saying the `-final` ADR name was 'requested of N40-03, which now states it' is removed (N40-03 step 6 states `ADR-<gate>-<milestone>-final.md` and `reading = \"final\"`, checked), and 'split from this bead in polishing round 1' is restated as the reason N19cp1-02 is its own bead."
+  },
+  {
+   "bead": "N19c-38",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The aside 'an earlier text still called it requested' about `scene show --source` is removed; VERBS-scene lists the option with this bead (checked)."
+  },
+  {
+   "bead": "N19c-39",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "The e2e script's step 4 ran the viewer's pick, which is not a dependency of this bead, and logged `not-run` otherwise (C8: a script uses only what the bead and its deps deliver); the step is removed and the bead states that N19c-40 and N33c-46 assert the pick on its vectors file. An acceptance item required the Rust and JavaScript conversions to agree on the vectors file, but the viewer that holds the JavaScript twin is not a dependency, so the item could not pass here; it now asserts the Rust side and names the viewer runner's `ray_param_world_matches_rust_fixture`, run by the gate script N19c-40, for the JavaScript side."
+  },
+  {
+   "bead": "N19c-40",
+   "kinds": [
+    "convention"
+   ],
+   "what": "C13 finding real: the two viewer tests were 'requested of' N32b-10, which does not carry them (checked: only `pick_scaled_instance`); the bead now states the form it needs (tests of N32b-10's runner reading N19c-39's vectors file through the JS `ray_param_world`) and a request goes to N32b-10. Three 'earlier text'/'Round 3' asides removed."
+  },
+  {
+   "bead": "BD-163",
+   "kinds": [
+    "convention"
+   ],
+   "what": "C13: the aside 'an earlier text of this bead wrote `…result/1`' is restated as the fact that that name is not used. Otherwise checked: the eleven stages, refusals 301/302/303/306 against N19-REF, `scene.show` options against VERBS-scene; no further change."
+  },
+  {
+   "bead": "N19c-08",
+   "kinds": [
+    "convention"
+   ],
+   "what": "C13: the aside 'an earlier text spelled the deferral `not-decidable`' is restated as the fact that `not-decidable` is not an outcome name (N40-03's four outcomes checked)."
+  },
+  {
+   "bead": "N19c-16",
+   "kinds": [
+    "convention"
+   ],
+   "what": "C13: two 'earlier draft' asides restated as facts (dividing 203.2 GB would give 2,709 homes and the measured limit 2,710, recomputed: 75 MB per 10 x 10 x 3 m home at 2 cm; either cell count alone is wrong). Every printed figure recomputed; no number changed."
+  },
+  {
+   "bead": "N19c-35",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The enablement rule reads the parent's a from its phase ledger, but N21a-27 prints `field_tile_share` only for a run recorded with `sim.run --profile-kernels` and `unavailable` otherwise; the bead never said what reuse does then. It now states that a parent without a measured a keeps reuse off with `reason: \"a-below-threshold\"` and `a: \"unavailable\"` (refused under `require`), never an estimated a, and `a_threshold` tests that case."
+  },
+  {
+   "bead": "N19c-41",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "Two assertions could fail on a correct build: (1) at M3 the interior and private fixtures would change the 5 + 5 + 2 page count and the fresh count of 13, so they are now created after step 5; (2) `pooled <= band` was asserted on any pack, but pooled bytes are 1,164 per unique brick against 1,152 per band brick (N19c-16), so a terrain pack with little deduplication fails it; the inequality is now on the box room only and every fixture checks the recount identities. A 'Round 3' aside is restated as the fact (a direct read needs `private:read` alone; the flag is the export's, N37-REF row 731)."
+  },
+  {
+   "bead": "N19c-42",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "Action rule: row 2's first repair (`scene.bank admit`), the 'Raised by' column and triggers of rows 5 to 7, the unit tests `evicted_variant_refused_319`, `unmatched_group_refused_324`, `cited_group_move_refused_325` and the e2e steps used positional action words (802 by VERBS-scene); they now use `--action admit|unpin|evict|add|move-group|check`, with `--split`, `--expected-parent` and keys where the rows require them. The e2e's row 2 case evicted a variant and then started a run, which job admission would simply re-admit under the cap; it now follows N19c-22 (unpin and evict after admission, refusal at the first reset). Step 6 said 'requested of the registry beads' (C13); it now names the owning rows as fact and restricts row 2 to the two verbs that take a scene schedule (`sim.run --scenes`, `train.start --schedule`), as VERBS-sim and VERBS-train list it. Five history asides restated as facts. The F-U19b-2 request to enter the scene-edit-invalid row was not applied: N19-REF already enters it among its last five, so a row here would duplicate it."
+  },
+  {
+   "bead": "N19cp1-02",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The stage A profile runs were plain `sim run` calls, on which `run show --phase-ledger` prints `field_tile_share` (the a of trigger 3) as `unavailable` with exit 2 (N21a-27); trigger 3 could not be read. The three runs now carry `--profile-kernels` (built by N21a-27, a dependency), and the script asserts exit 0 and a numeric share. The 'round 3' and 'polishing round 1' asides are restated as facts."
+  },
+  {
+   "bead": "N19cx-01",
+   "kinds": [
+    "contradiction",
+    "registry",
+    "convention"
+   ],
+   "what": "`world_element` was said to return `None` under `spawn_heading = free` for every element but the identity and the half-turn, which contradicts its own formula P_W = R(psi) P R(psi)^T: the quarter turns about z commute with every heading and are their own world element. Corrected. The e2e called `--test` 'the run action' of `sense.symmetry`; by the action rule the run action is `--action test` and `--test` is 802 (VERBS-sense). 'requested of BD-241' is a fact (BD-241's acceptance carries the step, checked) and is stated so."
+  },
+  {
+   "bead": "N19cx-02",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The e2e drove `kitchen-commercial/galley` through `--address` and `--image <mirror>`, but no descriptor sets `orbit_blocks` (N19cx-01's shipped descriptors do not), so `map_address` would return `NotBlocked`, and an interior with rotations only (|G| = 4, the step's own case) has no mirror to map. The script now uses this bead's `synthetic/blocked-d4` family (eight-element group, `orbit_blocks = true`) over a whole block, and the acceptance names it so `verify_image` is not vacuous. Two history asides removed (C13)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-sim",
+   "what": "From N19c-42 (row 1) and N19c-02/N19c-03/N19c-10: the `sim.run` row's refusal list lacks the worded `scene-pack-not-accepted` (proposed 318; raised by BD-228's acceptance check at admission, M3, which no flag skips), and lacks FROB-REF-304 (N19c-02) and FROB-REF-305 (N19c-03, N19c-10) at run admission. VERBS-train already lists the first; list all three, staged at their milestones, so the run verbs refuse the same way."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "From N19c-42 (row 1) and N19c-02/N19c-03/N19c-10: the `eval.run` row lacks the worded `scene-pack-not-accepted` (proposed 318, BD-228, M3) and FROB-REF-304 and FROB-REF-305 at run admission. List them, staged at their milestones."
+  },
+  {
+   "bead": "VERBS-train",
+   "what": "From N19c-02, N19c-03 and N19c-10: the `train.start` row lacks FROB-REF-304 and FROB-REF-305 at run admission (it already lists `scene-pack-not-accepted` and `scene-variant-not-resident`). List them, staged at their milestones."
+  },
+  {
+   "bead": "VERBS-opt",
+   "what": "From N19c-42 (row 1): the `opt.start` row lacks the worded `scene-pack-not-accepted` (proposed 318; BD-228's acceptance check at admission, M3). N19c-42's row 1 trigger names `opt.start`; list it."
+  },
+  {
+   "bead": "VERBS-study",
+   "what": "From N19c-42 (row 1): the `study.submit` row lacks the worded `scene-pack-not-accepted` (proposed 318; BD-228's acceptance check at admission, M3). N19c-42's row 1 trigger names `study.submit`; list it."
+  },
+  {
+   "bead": "N40-02",
+   "what": "Add M3 parts to GATE-HAB-13 (the seven interior archetypes, recorded by N19c-19 with `--part M3`) and GATE-HAB-01 (the device tiers, recorded by N19a-25 with `--part M3`), with the GATE-MARROW-01 reasoning of item 5. N19c-17 and N19a-42 record the M2 parts; under N38b-19 a second bead's recording of the same part is refused, so without the M3 parts `record_gate --part M3` has no part and the M3 measurements cannot be recorded."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "From N19c-19 and N19c-32: the `scene.gen` row should list `--fine <m>`, `--coarse <m>` and `--truncation <m>` (defaults 0.02, 0.16, 0.08, as on `scene.compile`; field settings that enter the SceneId), with N19c-19 under 'Extended by' (M3). `scene.gen` outputs a compiled pack and no source, so a generated scene at 1 cm (N19c-19's warehouse) or at OPEN-HAB-3's candidates (N19c-32) has no other way to be built."
+  },
+  {
+   "bead": "N18b-37",
+   "what": "The e2e runs `frob scene gen … --key ot1-gen-…` and then `frob scene compile … --fine <f> --coarse …` on the generated scene, but `scene.gen` returns a compiled pack and no source file. Generate each (archetype, candidate) in one call, `frob scene gen … --fine <f> --coarse <S> --truncation <T> --key …` (options added to `scene.gen` by N19c-19), as N19c-32 now does, so that the SceneIds of the pairs both beads build are equal."
+  },
+  {
+   "bead": "N32b-10",
+   "what": "From N19c-39 and N19c-40: add the viewer runner tests `ray_param_world_matches_rust_fixture` (the JavaScript `ray_param_world` against N19c-39's vectors file `fixtures/rays/scaled_instances.json`, including its 10^3 seeded cases, to 10^-12 relative) and `pick_two_planes_returns_foreground` (the two-plane fixture: foreground at 2 m to 10^-4 m), beside `pick_scaled_instance`, with N19c-39 as a dependency (no cycle: N19c-39 does not depend on N32b-10; both M2). GATE-HAB-16's script (N19c-40) and the probe N33c-46 read those two tests from the runner's report, and N32b-10 does not define them."
+  },
+  {
+   "bead": "N38a-33",
+   "what": "From N19c-42 (row 10): name the verbs at whose registration `actor-subject-claim` is raised (the verbs that register a requirement atom, a metric, a scorecard column), so that their VERBS rows can list the slug; at present no VERBS row lists it, and the e2e step 4 'registering the scorecard column' names no command."
+  }
+ ],
+ "unchanged": 7,
+ "notes": "Unchanged: BD-164 (the H-ka-1 request is already in the bead: KA-551 is cited in the unit test and the known answers beside CX-227), N19c-01, N19c-04, N19c-07, N19c-17, N19c-26, N19c-33 (cost table, ceilings, cone sums and scale arithmetic recomputed). Request not applied: F-U19b-2 asked N19c-42 to enter the scene-edit-invalid row; N19-REF already enters it among its last five, so a row in N19c-42 would duplicate it. Every bead of the slice was read in full; every edited file keeps its front matter and seven body sections."
+}

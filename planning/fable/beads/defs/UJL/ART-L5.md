@@ -168,7 +168,8 @@ N22b-12's walk).
       request for class Certified on the `assumed` absorber → `FROB-REF-451`; a flag missing or true →
       `FROB-REF-833`. Each is exit 3 with one envelope.
 - [ ] `frob shield check` on a recorded stop of `quad-tray` at the bumper reports no exceedance and a margin
-      trace whose minimum is non-negative (structural: the values depend on the run).
+      trace whose minimum is non-negative (structural: the values depend on the run); the bundle written with
+      `--run` for that stop carries the `run` member and the offline `frob-verify` accepts it.
 - [ ] The integer results are identical on `batch-cpu`, CUDA and Metal and on two runs (the exact-integer
       kernel class), and the canonical bytes are identical in debug and release, on Linux and macOS.
 
@@ -206,12 +207,16 @@ at the readings 0.50, 0.55 and 0.56 m/s through the verb's reading-domain input
 and margins with `e2e_assert_num` (exact); (4) the cutoff pair 42,660 and 42,661 µs
 (`--reading-max 0.50 --cutoff-delay 0.042660s`, then `0.042661s`: exit 0 with margin 0, then exit 2 with margin
 −40, "this boundary cannot be claimed at this speed" being a result and not a refusal; each evaluation with its
-own key, `l5-r050`, `l5-r055`, `l5-r056`, `l5-c42660`, `l5-c42661`); (5) `frob prove bundle <budget> --key
-l5-prove --json` and the offline `frob-verify` on it, `accept`, class Estimated; (6) the three refusals through
+own key, `l5-r050`, `l5-r055`, `l5-r056`, `l5-c42660`, `l5-c42661`); (5) `frob prove bundle <budget> --out
+<scratch>/l5.frobcert --key l5-prove --json` (VERBS-prove's budget form, N22b-14: one `energy-budget` entry with
+`run` null) and the offline `frob-verify <scratch>/l5.frobcert` on it, `accept`, class Estimated; (6) the three refusals through
 `e2e_expect_refusal`, each with its own key; (7) a referee run of a stop at the bumper with the budget attached
 (`frob sim run quad-tray --tier referee --shield-budget <id> --key l5-ref --json`, the option BD-337 defines),
 then `frob shield check <run> --energy-budget <id> --key l5-chk --json` (the registry row's spelling: `--budget`
-is the generated compute budget of every run verb), assert no exceedance; (8) `frob-golden check --artifact L5`. Plants: `payload-only` sets the mass cap
+is the generated compute budget of every run verb), assert no exceedance, and `frob prove bundle <budget> --run
+<run> --out <scratch>/l5-run.frobcert --key l5-prove-run --json` (the entry then carries the `run` member, whose
+replay step N22b-14's checker runs) with the offline `frob-verify` on it, `accept`; (8) `frob-golden check
+--artifact L5`. Plants: `payload-only` sets the mass cap
 to the tray alone and must show an exceedance in step (7); `sum-off-by-one` must be rejected by the auditor.
 The log (`target/e2e-logs/art_l5_fenergy/<utc>.ndjson`) records every command with exit code and wall time,
 the evidence block, each integer term as a metric with its unit (µJ, µs) and expected value, digests, refusals
@@ -219,8 +224,9 @@ with code and first repair, and the `summary`.
 
 ### Known answers and negative controls
 
-- Known answers (exact integers; recomputed for this bead): the tables above. They have no number in the
-  known-answer suite; the unit's coverage file lists them for registration.
+- Known answers (exact integers; recomputed for this bead): the tables above. They are rows JL-13 (the seven
+  terms at 0.50 m/s) and JL-14 (the two boundary pairs) of NJLx-02's known-answer block (a dependency), which
+  this bead's tests cite by number once the block is issued.
 - Related worked card of the owner chapter (kept by its own beads): a cart of 8 kg at 0.4 m/s with a 20 W
   drive, a 25 ms delay and a 2.00 J absorber: 1.49 J delivered; longest delay 50.5 ms, or 45.5 ms with 0.10 J
   of reserve.

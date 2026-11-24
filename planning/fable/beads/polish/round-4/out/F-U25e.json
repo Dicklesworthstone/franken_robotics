@@ -1,0 +1,406 @@
+{
+ "round": 4,
+ "slice": "F-U25e",
+ "reviewed": 44,
+ "changed": [
+  {
+   "bead": "BD-302",
+   "kinds": [
+    "request",
+    "contradiction"
+   ],
+   "what": "H-verbs-6 applied: step 12 now calls report::resolve_cited(id, role) with the role taken from the command line (--cite Established; report.run --claim reality with --cite Reality; lineage statements Described and never through the function), in the order 869, N27b-15's offer(claim, role) guard (so an Autopsy claim cited Established or Reality is 880, not 820, per N27-REF boundary_880_over_820), cite_as_established, 845; removed the compact table mode of report.design, which only report.campaign's row carries; added unit test cite_role_follows_option. Left as it was, the implementer builds a cite path N27b-15 cannot hook and an option the verb rejects with 802."
+  },
+  {
+   "bead": "BD-358",
+   "kinds": [
+    "broken"
+   ],
+   "what": "e2e_expect_refusal 856 3 -> e2e_expect_refusal FROB-REF-856 3; the STD-E2E helper takes the full code, so the bare number fails the step on a correct build."
+  },
+  {
+   "bead": "N25e-02",
+   "kinds": [
+    "deadlock",
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "The e2e used .frobcert transport blocks whose schema and rules are N25e-03's (a later bead, C7): replaced by request fixtures chain10/chance-as-universal.fmission and chain10/noncausal-interface.json; the proposer refuses a chance claim declared universal before any budget (unit test chance_declared_universal_refused); --certificate is checked by the in-tree auditor through BD-133's mapping and asserted by N25e-05 step 7; the refusal is stated as N25e-45 row 1 (slug coupling-budget-missing, held, interim FROB-REF-852 through frob_core::refusal::augur_late), not 'until allocated' (C13); e2e_expect_refusal calls take FROB-REF-852 3 and FROB-REF-847 3 with detail and repairs read from N25e-45's expected.toml; KA tags in KA-number form."
+  },
+  {
+   "bead": "N25e-03",
+   "kinds": [
+    "registry",
+    "convention",
+    "plan"
+   ],
+   "what": "Refusal mapping restated: it applies in mission.transport --certificate through BD-133, while frob-verify and prove.verify report only the Lemma codes 823/826/829/833/834; row 1 is held with interim 852; rule 7 maps to 847; the C13 'until N25e-45 allocates' phrase removed. Added the round-trip test transport_block_roundtrip and the bead's own e2e scripts/e2e/cert_transport_block.sh (C11: cargo tests, cargo tree, the manifest through frob-verify under env -i, the chain10 fixture through mission transport, prove bundle, frob-verify and prove verify, each run verb with its key, NDJSON log); dep STD-E2E added."
+  },
+  {
+   "bead": "N25e-04",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Added the convention 9 recording sentence: the summary carries the receipt hash and the tray part is recorded with record_gate --gate GATE-AUGUR-25 --receipt <hash> --part M8 by a session that did not implement the bead; the gate acceptance line names the recorder. Without it the script would have been the gate's recorder or the part ambiguous between M4 and M8."
+  },
+  {
+   "bead": "N25e-05",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "Step 6 now prove bundle a:<answer> --out ... --key coupling-bundle-<run>-<seed> --json (one answer per call, key on a run verb); step 7(c) is the full mission transport --certificate call with its own key and reads code, detail and repairs from N25e-45's expected.toml instead of the C13 'or its allocated code once...' text; record_gate gets --part M4 (the gate has parts at M4 and M8); KA tags in KA-number form."
+  },
+  {
+   "bead": "N25e-06",
+   "kinds": [
+    "broken",
+    "contradiction"
+   ],
+   "what": "The fallback stage called mission transport on chain10.fmission, a path no bead creates, with an undefined 'fallback flag': it now runs in the dry-run profile carrying the planted fired decision, on N25e-02's fixtures/augur/transport-claims/chain10 with --from/--to/--relation, through e2e_expect_refusal with code, detail and repairs read from N25e-45's expected.toml. The ADR existence check was attributed to xtask check-contracts (BD-004: CONTRACT.md and format rows); it is N40-03's register load check decision-adr-path."
+  },
+  {
+   "bead": "N25e-07",
+   "kinds": [
+    "request",
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "Slice note applied: the CX late entry is cited by slug augur-cx-late-02, plant N25e-07:cx-<nnn> with Cargo feature cx-<nnn> (N38b-05), the tag kept out of plant ids, features and test names (renamed cx_fact_rerun_sill_triplet.rs) since rule 5 of N38a-40 fails them past due; the fill mutant is one branch compiled under the gate's control nc-<nnnn> (runnable now) and the CX plant cx-<nnn> (an obligation until the FACT re-run), so GATE-AUGUR-26 has a caught control whatever the archive re-run measures. nemesis search used --budget worlds=3, not a budget unit (N32a-15): now --method given --worlds triplet-worlds.ndjson. e2e_expect_refusal FROB-REF-852 3. 852 described as Augur's code listed on the nemesis and phylum rows, not an appended code."
+  },
+  {
+   "bead": "N25e-09",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "nemesis search used --budget worlds=10, not a budget unit: now --method given --worlds fixtures/augur/sill-mount-band/worlds-<s>.ndjson, a file the fixture now ships; the late KA row augur-late-03 is cited by its KA number, the tag only in the slug (C13 'until issued' narration removed; a tag in a test name fails provisional-tag-past-due)."
+  },
+  {
+   "bead": "N25e-10",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Removed the C13 narration 'requested of this bead by N25b-01' (stated as the fact that N25b-01 leaves the variant to this bead) and put augur-late-04 in KA-number form; a tag left in test names would fail provisional-tag-past-due at N25-KA's milestone."
+  },
+  {
+   "bead": "N25e-11",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Removed the C13 narration that the whole-family form, --screen and --weights are 'requested of VERBS-mission': the row carries them from M3 with 802 and lists this bead among its extenders; step (6) had no command and a bare e2e_expect_refusal (802, exit 3): now frob mission refute sum-06-06.fmission --screen monomial --weights 1/2,1/3 --key mr-<run>-badw --json through e2e_expect_refusal FROB-REF-802 3; KA tags augur-late-04/05 in KA-number form."
+  },
+  {
+   "bead": "N25e-12",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The generator drew every lambda* in [0, 8], so the 50 planted beyond-caps systems could not exist, and a non-primitive or non-unique lambda* would let the screen legitimately exclude a system the script asserts beyond-caps: those 50 now have a primitive lambda* with one entry in [65, 128], K <= n+1 and exponent rank K-1 (one-dimensional left null space, so every certificate is a multiple), checked by the new unit test beyond_caps_have_no_small_certificate; KA tags in KA-number form."
+  },
+  {
+   "bead": "N25e-13",
+   "kinds": [
+    "convention"
+   ],
+   "what": "augur-late-06 cited in KA-number form instead of 'by tag until N38a-40 issues the block'; a tag in a test name or derivation file fails provisional-tag-past-due at N25-KA's milestone."
+  },
+  {
+   "bead": "N25e-14",
+   "kinds": [
+    "contradiction",
+    "broken",
+    "convention"
+   ],
+   "what": "The example driver that writes the Farkas bundle through BD-133's writer was a frob-mission example, which needs frob-lemma as a dev-dependency and fails N25a-01's cargo tree -p frob-mission check (frob-mission links no bundle code): moved to cargo run -p frob-conformance --example bracket_ends (top layer), with the mutation feature applied on that build; KA tag in KA-number form. Verified 0.622/0.529, Hoeffding 0.607 and the Clopper-Pearson lower end 0.69 (n=100, k=80, level 1/100)."
+  },
+  {
+   "bead": "N25e-15",
+   "kinds": [
+    "broken",
+    "registry"
+   ],
+   "what": "e2e_expect_refusal 551 3 -> FROB-REF-551 3; step (4) compared the advisory run with a four-design eval.compare call without --bracket, which the row does not admit (two designs without --bracket): now asserts every design, the dominated one included, keeps its allocation under --bracket advisory."
+  },
+  {
+   "bead": "N25e-16",
+   "kinds": [
+    "request",
+    "convention",
+    "registry"
+   ],
+   "what": "Slice note applied (convention 9): the script ends with a summary carrying the receipt hashes and GATE-AUGUR-28 is recorded with record_gate by a session that did not implement N25e-14/15. The gate had no registered control, so N38b-19 would refuse the record (pass-without-control): added step 7, an nc-<nnnn> mutant whose relaxation omits approach energy while listing it in encloses (a false stop at 0.529 against 0.60). Run verbs had no --key (eval compare per scenario, mission refute, the 551 call): keys added; the 551 call goes through e2e_expect_refusal FROB-REF-551 3."
+  },
+  {
+   "bead": "N25e-17",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The fallback e2e called eval compare without --task, a required input of the row: added --task ramp-carrier on N25e-16's fixture."
+  },
+  {
+   "bead": "N25e-18",
+   "kinds": [
+    "convention"
+   ],
+   "what": "augur-late-07/08 in KA-number form. Cart numbers (35/654 m, 981/320 m/s^2, 61.3125 N against 80 N, 4.905), the midpoint 1/4 > 2/9 and the voltage-row convexity verified."
+  },
+  {
+   "bead": "N25e-19",
+   "kinds": [
+    "request",
+    "convention",
+    "deadlock"
+   ],
+   "what": "Slice note applied (C11/C7): the bead's only e2e was N25e-21's gate script, a later bead; it now owns scripts/e2e/analyze_regressor_identity.sh (the two cargo test files; the read verb twice per reference robot, exit 0, error <= 1e-12, identical output; the sign-flipped column as a registered frob-kir nc-<nnnn> control exiting 2; NDJSON log); deps STD-E2E and STD-TEST added."
+  },
+  {
+   "bead": "N25e-20",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Removed the C13 narration 'requested of BD-126' (BD-126 carries design_domain.placement); e2e_expect_refusal 868 -> FROB-REF-868 3 with the pointer; KA tags in KA-number form."
+  },
+  {
+   "bead": "N25e-21",
+   "kinds": [
+    "contradiction",
+    "broken",
+    "registry"
+   ],
+   "what": "Cart fixtures were fixtures/augur/cart-placement/accel3/accel4/accel4-awd while N25e-20 (a dependency) creates fixtures/augur/placement-lane/cart-a3/cart-a4/cart-awd-a4 and two-joint: aligned; prove bundle lacked a: and --out: fixed with the standalone frob-verify path; GATE-AUGUR-29 had no registered control for record_gate's same-run rule: Part A step 4 reruns N25e-19's registered flipped-column control; summary with receipt hash and the recorder's control check stated; KA tag in KA-number form."
+  },
+  {
+   "bead": "N25e-22",
+   "kinds": [
+    "convention"
+   ],
+   "what": "C13: 'both requested' / 'requested of N40-29' replaced by the fact that N40-29 gives scope_kind = \"clause\" with screening and comparison, listed in N40-03's table; as written the bead pointed at an unresolved request instead of the register's scope kinds the decision entry must use."
+  },
+  {
+   "bead": "N25e-24",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "Step (5)'s refusals were prose: now full frob mission refute commands through e2e_expect_refusal FROB-REF-856 3 (bisection limit) and FROB-REF-802 3 (pointer /split_cap), so the script can actually assert them; KA tags augur-late-09/10 put in KA-number form (a tag in a test name fails provisional-tag-past-due)."
+  },
+  {
+   "bead": "N25e-25",
+   "kinds": [
+    "contradiction",
+    "broken",
+    "registry",
+    "convention"
+   ],
+   "what": "Part A read fixtures weak20/known and control that no bead creates while N25e-24 (a dependency) ships fixtures/augur/weak-variable/slabs20 and sum20: aligned; prove bundle lacked a: and --out and frob-verify its path: fixed; GATE-AUGUR-30 had no registered control, so record_gate (N38b-19) would refuse the record: Part A step 5 is a registered nc-<nnnn> midpoint-weak control; the gate is one part in the register and is recorded once with the control check; KA tags in KA-number form."
+  },
+  {
+   "bead": "N25e-26",
+   "kinds": [
+    "contradiction",
+    "broken"
+   ],
+   "what": "The fallback e2e ran a 20-parameter fixture path that does not exist and a bare refusal: now N25e-24's fixtures/augur/weak-variable/slabs20.fmission through e2e_expect_refusal FROB-REF-856 3 with --key; as written the fired-gate check could never run."
+  },
+  {
+   "bead": "N25e-28",
+   "kinds": [
+    "request",
+    "convention",
+    "contradiction"
+   ],
+   "what": "Slice note applied: own e2e scripts/e2e/mission_law_class.sh (C11) with keys per call, the no-law refusal read from N25e-45's expected.toml row 2 and 847 for the late argument; dep STD-E2E. The refusal is stated as N25e-45 row 2 (interim 868, detail law-class-missing) instead of C13 narration. Its fixtures now live in fixtures/augur/stance-law/ under the names N25e-30 uses (adjustable, affine, constant, nolaw, late-arg), and b = 1/4 is reached with --set design_domain.free.v=4 as N25e-30 does; two beads had defined the same stance-law queries under two directories."
+  },
+  {
+   "bead": "N25e-29",
+   "kinds": [
+    "request",
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "Slice note applied (C11, C7): the mechanism bead relied on N25e-30's gate script; now owns scripts/e2e/cert_lp_primal_law.sh (cargo test, closure line count, every specimen and per-rule mutation through standalone frob-verify under env -i with rule names and 829, frob prove verify agreement, the 200 seeded law mutations with zero false accepts, NDJSON log); deps STD-E2E and BD-136 (whose generator makes the 200 mutations; no cycle). Refusal mapping corrected against BD-133's table: rule 1 (missing law object) and rule 9 (missing convexity argument) are BD-133's 'another side condition missing' row, 829 on a mission verb, not 851; rules 3 to 7 were mapped to 850/849, which name a typed-field mismatch and an encoding fault and do not list N25e-29 as raiser: now 829 (DESIGN, request to BD-133); rule 9 had no mapping at all; 'exit 3 on both surfaces' replaced by BD-133 step 7 (own proposer's bundle withheld, caller evidence refused with exit 3)."
+  },
+  {
+   "bead": "N25e-30",
+   "kinds": [
+    "contradiction",
+    "broken",
+    "registry",
+    "convention"
+   ],
+   "what": "Fixtures now N25e-28's (only passive.fmission is this bead's); the no-law refusal read from N25e-45's expected.toml row 2 through e2e_expect_refusal instead of from 'once the ledger has assigned it' prose; GATE-AUGUR-31 had no registered control, so record_gate (N38b-19) would refuse the record: step 10 is a registered frob-mission nc-<nnnn> control (affine lowered per vertex, returns 3/14 not 1/2) and the recorder's same-run check is stated; KA tag in KA-number form."
+  },
+  {
+   "bead": "N25e-31",
+   "kinds": [
+    "request",
+    "contradiction",
+    "convention"
+   ],
+   "what": "Slice note applied: own e2e scripts/e2e/mission_docking_interval.sh (polynomial and enclosure <= 1e-9 with sign checks, attained, p* and its polynomial 512p^2-312p-7, 1/40 inner with 5/8, 1/50 excluded, the U = 1, eps = 1/32 instance 8d^2+25d-1, keys di-<run>-<case>); dep STD-E2E. The fixture was docking-tolerance.fmission while N25e-33 used least-tolerance.fmission in the same directory and N25e-32 a third copy: this bead now owns fixtures/augur/docking-gain-interval/ with least-tolerance, tol-1-40, tol-1-50 and least-tolerance-u1; KA tag in KA-number form."
+  },
+  {
+   "bead": "N25e-32",
+   "kinds": [
+    "contradiction",
+    "broken",
+    "registry",
+    "convention"
+   ],
+   "what": "Its e2e used a duplicate fixture set fixtures/augur/docking-certs/ under other names: now N25e-31's docking-gain-interval files; --reuse a:<answer> is not an input VERBS-mission admits (a stored screen, classifier or bundle): the two-gain answer of BD-129's docking.fmission is bundled first and passed as --reuse two-gain/, as N25c-21 does; bare e2e_expect_refusal 854 -> FROB-REF-854 3; the probe-grid call given in full; mutants made with BD-136's library so the rejection comes from a proof rule; KA tag in KA-number form."
+  },
+  {
+   "bead": "N25e-33",
+   "kinds": [
+    "broken",
+    "registry",
+    "convention"
+   ],
+   "what": "GATE-AUGUR-32 had no registered control, so record_gate (N38b-19) would refuse the record: step 9 is the gain-sampling solver as a registered frob-mission nc-<nnnn> control, rerun on steps 2 and 6; the 854 refusal goes through e2e_expect_refusal FROB-REF-854 3; the probe-grid call was a bare '-- --delta' fragment: given in full; fixtures stated as N25e-31's; KA tag in KA-number form."
+  },
+  {
+   "bead": "N25e-34",
+   "kinds": [
+    "request",
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "Slice note applied: VERBS-mission now registers --card <sensor>=<card> on mission.refute and mission.synthesize; the 'requested of that row' sentence replaced by the fact, the e2e refute call uses --card probe=<card> (the bare form was 802), and a step asserts the bare form's 802 with pointer /card. The refusal stated as N25e-45 row 3 (held, interim 846) and read from expected.toml row 3 instead of a bare e2e_expect_refusal 846; the design file probe-bot.fdesign is not a format (ART-L1's design is .fbot, the artifact-input<fbot> VERBS-sense declares): renamed; KA tag in KA-number form."
+  },
+  {
+   "bead": "N25e-35",
+   "kinds": [
+    "convention",
+    "contradiction"
+   ],
+   "what": "Bare e2e_expect_refusal 868 -> FROB-REF-868 3; C13: '(a request to the Lemma unit records this)' removed from the bead; fixture names map3-<channel> spelled (clean, erasure1, flip1) and stated as reused by N25e-37, which had a second copy under other names; KA tag in KA-number form. All code lengths, distances, the distance-sum and sphere-packing bounds, C(15,2) = 105 and the L = 8, t = 2 length 10 recomputed."
+  },
+  {
+   "bead": "N25e-36",
+   "kinds": [
+    "request",
+    "registry",
+    "contradiction",
+    "broken",
+    "convention"
+   ],
+   "what": "Slice note applied: step 5 used the bare --card <card> VERBS-mission no longer admits (802): now --card probe=<card>. Cards and design duplicated N25e-34's under another directory: now N25e-34's fixtures/augur/error-dependence/ (probe-bot.fbot, not the nonexistent .fdesign), keeping its own mission and truth.json; keys lacked the run id, so a rerun would replay the stored receipts: el-<run>-…; the refusal read from expected.toml row 3 through e2e_expect_refusal (N25e-45 names this script as row 3's reader); GATE-AUGUR-33 had no registered control, so record_gate would refuse the M3 part: step 7 is the per-read-accuracy A-17 build as a registered frob-analyze nc-<nnnn> control; KA tag in KA-number form."
+  },
+  {
+   "bead": "N25e-37",
+   "kinds": [
+    "contradiction",
+    "broken",
+    "registry",
+    "convention"
+   ],
+   "what": "Fixture queries duplicated N25e-35's under other names (deadline4 vs d4): now N25e-35's fixtures/augur/label-length/; prove bundle lacked a:, --out and --json: fixed; generated instances had no command: given with keys; the mutant code is now made with BD-136's library so the rejection comes from the finite-game rule, not integrity; GATE-AUGUR-33's M4 part had no registered control: step 8 is the channel-blind frob-mission nc-<nnnn> control and the recorder's same-run check is stated (--part M4 already present); KA tag in KA-number form."
+  },
+  {
+   "bead": "N25e-38",
+   "kinds": [
+    "convention",
+    "broken",
+    "contradiction"
+   ],
+   "what": "Refusal stated as N25e-45 row 4 (held, interim 850) instead of 'no registry number yet'; e2e reads row 4 from expected.toml instead of a bare 850; prove bundle given a:, --out and the frob-verify path, and the scope-rule mutant made with BD-136's library; the Considerations said N25e-41 adds a dated reading to N25c-16's ADR, which N40-03 and N25c-16 forbid: now a new ADR-KILL-AUGUR-PROBE-M4.md and an exit M4 entry; KA tag in KA-number form. Every margin of the table (4.4994, 4.7240, -13.0598, -10.0162, 0.2836, -0.0776, -15.0751, 29.66/24.72/41.15) recomputed."
+  },
+  {
+   "bead": "N25e-39",
+   "kinds": [
+    "convention"
+   ],
+   "what": "KA tag augur-late-16 in KA-number form (a tag in a test name fails provisional-tag-past-due); fixtures stated as reused by N25e-41. The probe table (0.8206/0.7677/0.0129, 0.8937/0.7874/0.0662, 0.9509/0.8019/0.1090), the three-law gaps 0.0158 and 0.0312, the one-error 0.0329 and the 5/3 ratio recomputed."
+  },
+  {
+   "bead": "N25e-41",
+   "kinds": [
+    "request",
+    "contradiction",
+    "broken",
+    "registry",
+    "convention"
+   ],
+   "what": "Slice note applied: step 10 had the recording session append the clause C reading to N25c-16's ADR, which N40-03 forbids: now a clean battery adds nothing, and an accepted bundle re-opens the decision by a new docs/adr/ADR-KILL-AUGUR-PROBE-M4.md and an exit M4, outcome fired entry by a session that did not run the measurement (criterion added). Fixture queries duplicated N25e-38's and N25e-39's under other names: aligned; run-verb commands carried no --key inline and experiment suggest no a:: fixed; the refusal read from expected.toml row 4 through e2e_expect_refusal; GATE-AUGUR-34 had no registered control: step 10 is the auditor without the scope rule as a registered frob-cert nc-<nnnn> control; KA tags in KA-number form."
+  },
+  {
+   "bead": "N25e-42",
+   "kinds": [
+    "broken",
+    "convention",
+    "registry"
+   ],
+   "what": "Arithmetic: with x_k = 100(1 - 0.99^k) a stop on 'increment below 10 g' fires after 459 iterations at about 99.0 kg, a kilogram short, not 99.5 kg; the 99.5 kg / 527 iterations / F(99.5) = 99.505 numbers belong to a 5 g threshold, which BD-360 (a dependency) and N25-KA late-17 use: background, acceptance and control now say 5 g (the mutant check 'about 99.5 kg' would otherwise fail). Refusal stated as N25e-45 row 5 (held, interim 853) and read from expected.toml; candidate calls given in full; the lowered-witness mutant made with BD-136's library (dep added, no cycle); KA tag in KA-number form."
+  },
+  {
+   "bead": "N25e-43",
+   "kinds": [
+    "request",
+    "convention",
+    "deadlock"
+   ],
+   "what": "Slice note applied (C11, C7): the mechanism bead relied on N25e-44's gate script; now owns scripts/e2e/synth_pareto_coverage.sh with fixtures/augur/pareto-coverage/ (three builds, budget 4, an unresolved option, an added option), the discrete partition accepted and missing/duplicate/absent-dominator mutants rejected, revalidation after a catalog edit, the weights-only mutant registered; criterion 7 relies on mission.revalidate (N25a-16, M3), which was not a dependency: added after a path check (N25a-16 does not depend on N25e-43), with unit test catalog_edit_withdraws_pareto_claim; deps STD-E2E, STD-TEST, BD-136; KA late-18 named in KA-number form."
+  },
+  {
+   "bead": "N25e-44",
+   "kinds": [
+    "contradiction",
+    "broken",
+    "registry",
+    "convention"
+   ],
+   "what": "The increment-stopping control used a 10 g threshold yet asserted 99.49 to 99.51 kg, which a 10 g stop (about 99.0 kg) fails: threshold 5 g; pack and three-build fixtures duplicated N25e-42's and N25e-43's: aligned, keeping the generated catalogs and a pinned unresolved variant (step 9 had no way to withhold an exclusion); prove bundle given a:, --out, --json; budget, generated and unresolved calls given in full with keys; the 853 refusal read from expected.toml row 5 through e2e_expect_refusal; the recorder's same-run control check stated; KA tags in KA-number form."
+  },
+  {
+   "bead": "N25e-45",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Slice note applied (C13): '(BD-243, N25c-43, N25c-44 and the analyze.curvature row are asked to use the constant)' replaced by the fact that they raise through CONNECTION_OUTSIDE_STRATUM and VERBS-analyze (and VERBS-mission) list it by the assigned number with five kinds and no interim; step 4's 'by request to those beads' replaced by what the registry rows state, and the switch-over now updates fixtures/augur/late-refusals/expected.toml in the same change so the raising scripts follow without edits."
+  },
+  {
+   "bead": "N25ex-01",
+   "kinds": [
+    "request",
+    "contradiction",
+    "convention"
+   ],
+   "what": "Slice note applied: the fallback transport calls named no fixture and typed the refusal: now N25e-02's fixtures/augur/transport-claims/chain10 paths and e2e_expect_refusal with the code, detail and repairs read from expected.toml row 1, mirroring N25e-06; step 1 names N25e-05's receipt as the record read. Planted fixture arithmetic checked: (997/1000)^10 x 99/100 = 0.96070 against a transported 0.98."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-mission",
+   "what": "mission.transport's refusal list lacks the codes its --certificate input raises through N25e-03's mapping (BD-133): 849 (certificate arithmetic malformed) and 834, and the Lemma codes 848/833/826/829 that the in-tree auditor reports on a caller-built certificate. Without them the generated-artifact check and the error-path tests of N25e-05 step 7(c) assert codes the row does not list."
+  },
+  {
+   "bead": "N24-REF",
+   "what": "FROB-REF-843's raiser list lacks the utility bracket's lower end (N25e-14: confirmation addresses overlapping the frozen controller's lineage, surfaced through eval.compare --bracket, N25e-15, M4); VERBS-eval's eval.compare row lists 843 only for the item-bank refit. Without both, the refusal N25e-14's acceptance requires is raised by a verb whose row does not list it."
+  },
+  {
+   "bead": "BD-133",
+   "what": "The rule-to-code table has no row for a failed recomputation (an equation, rating, bound or geometry fact of a kind's rule that fails exactly, e.g. lp-primal's law.affine or law.vertices): 849 and 850 name an encoding fault and a typed-field mismatch. N25e-29 now maps such failures to 829 on both surfaces (DESIGN, like the 'another side condition' row); without a row each kind bead picks its own mission code."
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "The params paragraph says 'a design given as a .fdesign path to mission.refute or mission.distinguish'; the design format is .fbot (ART-L1, frob.design/1), which VERBS-sense declares as artifact-input<fbot> and N25e-34/N25e-36 now pass. No bead defines .fdesign, so the generated 891/734/828 rows would attach to an extension nothing produces."
+  },
+  {
+   "bead": "BD-052",
+   "what": "Its negative control says a stop rule 'increment below 10 g' returns 99.5 kg on the pack fixture. With x_k = 100(1 - 0.99^k) the step is 0.99^k kg, so a 10 g stop fires after 459 iterations at about 99.0 kg; 99.5 kg (527 iterations, F(99.5) = 99.505) is the 5 g threshold BD-360 and N25-KA late-17 use. A test asserting 99.5 kg under the 10 g rule fails. (Plan §25.39 has the same slip.)"
+  }
+ ],
+ "unchanged": 1,
+ "notes": "Complete. Unchanged: BD-294 (read in full; nothing to fix). Program patterns for the coordinator: (1) about twenty slice beads cite N25-KA late rows augur-late-01..18 by the KA number N38a-40 issues, but do not depend on N25-KA or N38a-40; a test named by that number cannot be written before the block is issued: recommend the dep (not added here: it is a program-wide choice). (2) Mechanism and gate beads of one rule each defined the same fixtures under two directories (N25e-28/30, -31/32/33, -34/36, -35/37, -38/39/41, -42/43/44): aligned on the mechanism bead's directory, the gate bead keeping only what it alone uses. (3) Every gate script in the slice lacked a registered control, so N38b-19's record_gate would have refused every record: each now reruns a registered nc-<nnnn> control in the same run. (4) Plan §25.39 says a 10 g increment stop returns 99.5 kg; the arithmetic gives about 99.0 kg (99.5 kg is a 5 g stop, as BD-360 says): fixed in N25e-42/44, request to BD-052. Redesigns left as notes: N25e-25 Part B does not say how arm R (per-constraint paving restricted to constraints of at most six parameters) is invoked through the verb, nor whether N25e-24's driver treats narrow constraints exactly as BD-358 does; N25ex-01's e2e step 2 ('apply the reading rule') names no command (the rule lives in the frob-conformance test kill_coupling_m4); N25e-29's acceptance says its 200 law mutations feed BD-136's M1 campaign, but BD-136 cannot depend on N25e-29 (N25e-29 now depends on BD-136 and adds its law operators to BD-136's table)."
+}

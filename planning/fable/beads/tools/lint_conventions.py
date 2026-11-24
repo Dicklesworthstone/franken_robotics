@@ -82,6 +82,34 @@ for k, b in live.items():
         hits.append(body[max(0, m.start() - 60):m.end() + 60].replace("\n", " "))
     if hits:
         flag("C13-pending", "%d place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. \"…%s…\"" % (len(hits), hits[0]))
+    # forms the registries dropped in round 4 (NJL-01's action rule, VERBS-eval's battery form, the six run properties)
+    hits = [ln.strip()[:150] for ln in lines if "--battery" in ln and re.search(r"--run-seed\b|--worlds\b", ln) and not_negated(ln)]
+    if hits and k != "VERBS-eval":
+        flag("R4-battery", "passes `--run-seed` or `--worlds` beside `--battery`: the battery form of `eval.run` takes neither (VERBS-eval; it is refused with 802, "
+             "because a battery's items carry their own world addresses), e.g. `%s`" % hits[0])
+    hits = [ln.strip()[:150] for ln in lines if re.search(
+        r"frob ground band [^`\n]*--retire\b|frob spark cache [^`\n]*--(?:evict|list)\b|frob task check [^`\n]*--coupling\b|frob scene bank (?:admit|retire|list|show)\b|"
+        r"frob nemesis hardset (?:add|remove|list|show)\b|frob eval ledger (?:open|close|seal)\b|frob nemesis audit (?:prepare|run)\b", ln) and not_negated(ln)]
+    if hits and not k.startswith("VERBS-") and k != "NJL-01":
+        flag("R4-action", "selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin "
+             "takes no `--key`): check the verb's row in its VERBS bead, e.g. `%s`" % hits[0])
+    if re.search(r"variations 10 to 13|\bfive (?:common )?run properties", body) and k != "NJL-01":
+        flag("R4-count", "says 'variations 10 to 13' or 'five run properties': NJL-01 now has variations 10 to 16 and six common run properties (with `envelope_scope`)")
+    hits = [ln.strip()[:170] for ln in lines if re.search(r"exit(?:s| code| status)? 8\b", ln) and "frob " in ln and "sync-wait" not in ln and "MCP" not in ln]
+    if hits and k not in ("BD-022", "NJL-01"):
+        flag("R4-exit8", "expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), "
+             "so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `%s`" % hits[0])
+    hits = [ln.strip()[:170] for ln in lines if "check-stack" in ln and "--write-receipt" not in ln
+            and re.search(r"writes? (?:a |the )?(?:new |fresh )?(?:stack |resolution )?receipt|new (?:resolution|stack) receipt", ln)]
+    if hits and k not in ("N33a-05", "N33a-04", "BD-004"):
+        flag("R4-receipt", "says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate "
+             "(see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `%s`" % hits[0])
+    hits = [ln.strip()[:170] for ln in lines if "--release" in ln and re.search(r"gauntlet-mutations|--features[ =]\"?[a-z0-9,-]*conformance", ln) and not_negated(ln)]
+    if hits:
+        flag("R4-release", "builds planted defects or conformance features in a release build, where they do not compile (convention 17), e.g. `%s`" % hits[0])
+    if re.search(r"exits? non-?zero (?:when|if|whenever)[^.\n]{0,80}falsifier (?:holds|is met|fires)", body):
+        flag("R4-pilot", "its script exits non-zero when the falsifier holds: a pilot's verdict is data (convention 15), so the script exits zero once the measurement is made and the pilot record written, "
+             "and logs falsifier values with `e2e_metric … --observe`")
     if is_epic:
         continue
     # run verbs without a key: only whole commands inside fenced blocks, continuation lines joined
@@ -116,6 +144,10 @@ if "--write" in sys.argv:
     d = BEADS / "polish" / ("round-%d" % rnd)
     d.mkdir(parents=True, exist_ok=True)
     (d / "lint_findings.json").write_text(json.dumps(find, indent=0, ensure_ascii=False), encoding="utf-8")
+if "--out" in sys.argv:      # --out <path> [--only <code prefix>] : findings of some codes to a file of their own
+    only = sys.argv[sys.argv.index("--only") + 1] if "--only" in sys.argv else ""
+    sel = {k: [t for t in v if t.startswith("[" + only)] for k, v in find.items()}
+    Path(sys.argv[sys.argv.index("--out") + 1]).write_text(json.dumps({k: v for k, v in sel.items() if v}, indent=0, ensure_ascii=False), encoding="utf-8")
 print("live beads: %d; beads with at least one finding: %d; findings: %d" % (len(live), len(find), sum(count.values())))
 for c, n in count.most_common():
     print("  %-12s %d" % (c, n))

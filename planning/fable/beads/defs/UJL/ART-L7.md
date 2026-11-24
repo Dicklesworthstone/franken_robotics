@@ -4,9 +4,9 @@ title: "golden fixture L.7: the `.frobcert` bundle listing of six entries, entry
 type: "task"
 priority: 2
 milestone: "M3"
-labels: ["m3", "lemma", "frob-cert", "frob-lemma", "frob-conformance", "solid", "test", "e2e", "review-notes-open"]
+labels: ["m3", "lemma", "frob-cert", "frob-lemma", "frob-conformance", "solid", "test", "e2e"]
 parent: "WP-54"
-deps: ["ART-L4", "BD-026", "BD-132", "BD-133", "BD-259", "N12-13", "N24b-19", "NJL-07", "NJLx-02", "STD-E2E"]
+deps: ["ART-L1", "ART-L3", "ART-L4", "BD-026", "BD-132", "BD-133", "BD-259", "N12-13", "N24b-15", "N24b-19", "NJL-07", "NJLx-02", "STD-E2E"]
 needs: []
 related: ["ART-L9", "BD-027", "BD-136", "BD-141", "BD-303", "BD-364", "BD-383", "N12-03", "N12-06"]
 gates: []
@@ -113,6 +113,16 @@ qualification receipts), and `authorization` (the three no-authorization flags, 
 `argument`, `forces_newton_at_v8` and `forces_newton_at_v6` extend the one-vertex key `forces_newton` to a
 cell.
 
+**Two placeholders of the specimen.** Besides its abbreviated identities (`b3:3c9d…`, `b3:e17a…` and
+`b3:d4a9…`, resolved through NJL-07's map), e2 carries two prose placeholders that no abbreviation rule
+replaces: `query.bytes` ("…the canonical bytes of L.4…") and `checker.build` ("…"). The resolved e2 holds in
+`query.bytes` the canonical bytes of L.4's resolved query, in the container's byte encoding, whose BLAKE3 is
+the resolved `query.blake3` (asserted by `l7_e2_query_bytes_hash`), and in `checker.build` the build identity
+of the `frob-verify` binary named by the blessing log. Both enter `IDENTITIES.toml` as rows of their own
+(`defined_by = "L4"` and `"L7"`), so that `frob-golden resolve` writes them like any other value and leaves no
+`…` in a resolved file; `fields.toml` declares `query.bytes` `exact` and `checker.build` `structural` (a build
+identity string, which differs between builds).
+
 **What the auditor recomputes.**
 
 | Entry | Recomputation |
@@ -133,10 +143,12 @@ its weakest entry (e6). The offline verdict line is: `accept 6 of 6 entries; cla
 in right-handed axes with +z upward is (P_y, −P_x, 0) = (12, −16, 0) N·m; (m3) an unreported positive force
 floor; (m4) a passive-authority tag on a certificate that assumes independent normal forces; (m5) a cell end
 certified closed where the partition lists it open (v = 6 for c:06a); (m6) a flag missing or true. The
-refusal codes: m1 and m2 `FROB-REF-850` (a frame, unit, sign or port order that does not match the
-definitions); m3 and m4 `FROB-REF-851` (an authority the design does not declare, or an omitted force floor);
-m5 `FROB-REF-829` (a missing side condition or a wrong field); m6 `FROB-REF-833` (a no-authorization flag
-missing or true).
+refusal codes are those of the Lemma column of BD-133's mapping, which `prove.verify` and `frob-verify` always
+use: m1 and m2 `FROB-REF-829` (a frame, unit, sign or port order that does not match the definitions); m3 and
+m4 `FROB-REF-829` (an authority the design does not declare, or an omitted force floor); m5 `FROB-REF-826` (a
+cell end that differs from what the proof establishes); m6 `FROB-REF-833` (a no-authorization flag missing or
+true). The mission verbs answer the same defects of caller-supplied evidence with their own codes (850 for m1
+and m2, 851 for m3 and m4); this fixture checks the auditor's.
 
 **Two notes on naming.** The mission answer and the bundle name proof kinds from one closed registry
 (`frob.cert.kinds/1`), under the same names, so the writer maps nothing. The schema writes one claim per
@@ -174,11 +186,14 @@ bundle file while a mission answer cites one bundle hash: the per-claim entries 
 `cargo test -p frob-cert --test golden_l7` (the auditor's real reader and checkers; exact rational arithmetic)
 and `cargo test -p frob-lemma --test golden_l7` (the real writer):
 - `l7_e2_specimen_parses`; `l7_manifest_hash`; `l7_entries_reserialize_identically`.
+- `l7_e2_query_bytes_hash`: the resolved e2's `query.bytes` hash to its `query.blake3`, which carries the hex
+  digest of the mission identity `q:3c9d…`; one changed byte breaks the equality.
 - `l7_e2_eight_vectors`: sums 160; moments (±16, ±12); capacities ≤ 88; knee 8.8 ≤ 8.8 at v = 8 and
   7.6 ≤ 8.8 at v = 6.
 - `l7_e2_affine_between_ends`: the vector at v = 7 interpolated from the ends is (82, 38, 40, 0).
-- `l7_e2_cell_rationals`: lo = (6/1, 11/5), hi = (8/1, 5/2); a non-reduced rational `["12", "2"]` is refused
-  (`FROB-REF-849`).
+- `l7_e2_cell_rationals`: lo = (6/1, 11/5), hi = (8/1, 5/2); a non-reduced rational `["12", "2"]` is rejected
+  by the auditor naming the encoding rule (BD-133: rule only on `prove.verify` and `frob-verify`; 849 is the
+  mission verbs' code).
 - `l7_e1_ends`: (64, 56, 40, 0) at v = 4 and (76, 44, 40, 0) at v = 6; knee 7.6 ≤ 8.
 - `l7_e3_dual`: yᵀA = (1, 0, 0, −1); gap 4 N at (4, 3/2); `l7_e4_dual`: 40 + 6v − 88 > 0 for v = 8 + 1/1000.
 - `l7_e5_partition_thirteen`: union equals the box; interiors disjoint; a planted overlap and a planted gap
@@ -196,20 +211,22 @@ and `cargo test -p frob-lemma --test golden_l7` (the real writer):
 `scripts/e2e/art_l7_frobcert.sh` (header: `bead=ART-L7 milestone=M3 labels=golden,appendix-l,lemma,
 verb:prove.bundle,verb:prove.list,verb:prove.verify seed=1 needs=cpu,frobd,second-host
 plants=torque-as-moment,flag-true`). Steps: (1) run the mission steps of artifact L.4's script to obtain the
-refined answer; (2) `frob prove bundle <a:… of the refined answer> --out quad-tray.m1.frobcert --key l7-b1 --json` (the
+refined answer, create `quad-tray` from artifact L.1's fixture and the task of artifact L.3 from its fixture,
+in the scratch root; (2) `frob prove bundle <a:… of the refined answer> --out quad-tray.m1.frobcert --key l7-b1 --json` (the
 mission-slice form: the answer is positional),
 assert five entries and `in_tree_check: "accept"`; (3) `frob prove list quad-tray.m1.frobcert --json`, compare
 the rows with the first five of the listing (`e2e_assert_json` per cell of the table); (4) `frob prove
-verify`, then the offline `frob-verify quad-tray.m1.frobcert`, both `accept`, class Certified; (5) M3 lane:
-the script's owner session opens a scratch campaign for the task of artifact L.3 in the scratch root, so that
-no production campaign's index moves (`frob eval ledger --open --task <L.3 TaskId> --world-family <its sealed
-family> --clusters-per-request 200 --key l7-open --json`, N24b-15's admin action; while OPEN-ARENA-3 is
-undecided the open is refused with `qualification-undecided` and the M3 lane is logged as blocked), commits and
-runs a qualification request for `quad-tray` (`frob eval qualify … --key l7-q1`), then `frob prove bundle
+verify quad-tray.m1.frobcert --json`, then the offline `frob-verify quad-tray.m1.frobcert`, both `accept`, class
+Certified; (5) M3 lane: the script's owner session opens a scratch campaign for the task of artifact L.3 in the
+scratch root, so that no production campaign's index moves (`frob eval ledger --action open --task <L.3 TaskId>
+--world-family <its sealed family> --clusters-per-request 200 --json`, N24b-15's admin action, which takes no
+key; the fixture's task family carries the `synthetic` label, so the open succeeds while OPEN-ARENA-3 is
+undecided, and the script asserts `qualification-undecided`, exit 3, once on a non-synthetic family and logs
+which posture held), commits and runs a qualification request for `quad-tray` (`frob eval qualify … --key l7-q1`), then `frob prove bundle
 --design quad-tray --mission <q:…> --receipt <hash> --out quad-tray.open.frobcert --key l7-b2 --json`
 (N24b-19's form, which adds the campaign section), assert six entries and that e6 carries no counts, with the
 in-tree check's note that the decision is not recomputed; (6) as the owner close the campaign (`frob eval
-ledger <campaign> --close --key l7-close --json`), re-bundle to `quad-tray.frobcert` under `--key l7-b3`,
+ledger <campaign> --action close --json`), re-bundle to `quad-tray.frobcert` under `--key l7-b3`,
 run `frob-verify quad-tray.frobcert`, assert the verdict line's three facts (six of six, class Tested with the
 receipt as weakest entry, flags false) and recompute the receipt bound from the revealed counts with
 `e2e_assert_close` against the bundle's value; (7) copy the post-close bundle to the second host and repeat
@@ -217,7 +234,7 @@ the offline check of step (6);
 (8) the six mutations and the two extra rejections through `e2e_expect_caught`; (9) `frob-golden check
 --artifact L7`. Plants: `torque-as-moment` and `flag-true` must each be rejected. The log
 (`target/e2e-logs/art_l7_frobcert/<utc>.ndjson`) records every command with exit code and wall time, the
-evidence block (claims [Proof], class, tier `static`, determinism `exact`), the Merkle root and entry digests,
+evidence block (claims [Proof], class, tier `static`, determinism `D0`), the Merkle root and entry digests,
 each recomputed value against its expectation as an exact rational, each rejection with the rule named, and
 the `summary`. In the M1 lane the M3 steps are logged as skips.
 
@@ -228,7 +245,8 @@ the `summary`. In the M1 lane the M3 steps are logged as skips.
   error budget of the blinded lane: Σ over i = 1…n of α/[i·(i + 1)] = α·n/(n + 1) < α; exact) gives the level
   spent.
 - Known answers of this bead (exact; recomputed for it): the eight force vectors and their sums and moments;
-  the dual values; thirteen cells; the least gap 4 N. They have no number in the known-answer suite.
+  the dual values; thirteen cells; the least gap 4 N. They are row JL-16 of NJLx-02's known-answer block (a
+  dependency), which this bead's tests cite by number once the block is issued.
 - Counterexample kept alive: passing a first moment as a torque. For P = (16, 12) N·m the support torque is
   (12, −16, 0) N·m; a packet that passes (16, 12) as the torque must be rejected.
 - Negative controls: the six mutations; the unknown kind; the changed quantifier; the planted overlap and

@@ -4,7 +4,7 @@ title: "upstream franken_drone_geometry_reconstruction: published metric geometr
 type: "task"
 priority: 3
 milestone: "M5"
-labels: ["m5", "suite", "habitat", "upstream", "franken_drone_geometry_reconstruction", "frontier"]
+labels: ["m5", "suite", "habitat", "upstream", "franken_drone_geometry_reconstruction", "frontier", "review-notes-open"]
 parent: "WP-32"
 deps: ["BD-037", "N33b-04", "N33c-25", "STD-E2E"]
 needs: []

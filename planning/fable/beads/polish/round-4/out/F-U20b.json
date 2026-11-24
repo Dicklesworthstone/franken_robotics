@@ -1,0 +1,352 @@
+{
+  "round": 4,
+  "slice": "F-U20b",
+  "reviewed": 42,
+  "changed": [
+    {
+      "bead": "BD-099",
+      "kinds": [
+        "request",
+        "registry",
+        "broken",
+        "convention"
+      ],
+      "what": "Applied F-U20b's request: the acceptance said the referee rows of GATE-SENS-01 are recorded in gates.toml, but the register has no M1 part and N20b-22 is the gate's one recorder, so the bead would have written a second record; it now produces a G1 receipt (`--features gauntlet-mutations --test g1_known_answers -- KA-466 KA-467 KA-468 KA-469`, batched sites Skipped, both controls caught) and writes no record. Also: the script called `frob design templates` and the profile acceptance used `quad-mammal`, which come from BD-109, a higher seed this bead cannot depend on (the step could never run); it now names its committed fixture designs under fixtures/sensorium/proprio/ (listed in the module layout). The `sim.run` calls lacked `--telemetry T2`, so the packet queries would return a `level-not-enabled` gap. The note that `sense:read` 'stays a proposal until BD-258' was stale: BD-258's naming rule is stated."
+    },
+    {
+      "bead": "BD-102",
+      "kinds": [
+        "deadlock",
+        "convention",
+        "registry"
+      ],
+      "what": "Acceptance said this bead records the A-03 rows of GATE-ATEL-02 and the M1 rows of GATE-MARROW-03; their recorders (BD-110 and N13-21) depend on this bead, so the item could not be met without a second writer (convention 9). It now produces the measured known answers and writes no record, naming the two recorders; the 150 ms timing is logged by its own script. The registry paragraph said tier S and omitted 263/852 and the task clusters, so the generated row would fail `check-generated` against VERBS-analyze's S/F row; it now matches the row (S/F, the M6 codes as N25d-02's, clusters analyze-body and symmetry)."
+    },
+    {
+      "bead": "BD-187",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "Removed '(the registry row is asked to list it)': VERBS-telemetry lists `--digests` (convention 13). Script step 2 gave `--telemetry T2` only to the lidar, but all three sensors' packets are queried, so depth and height-scan queries would hit a `level-not-enabled` gap; all three now carry T2, and the fixture designs the script names are stated as committed here (N20b-22, which depends on this bead, reuses them). The G1 receipt command lacked `--features gauntlet-mutations` although the acceptance requires its controls `caught`. 'Gate rows ... `not run`' replaced by the receipt's `Skipped` entries. Its control step ran the plants 'on a gauntlet-mutations build'; the umbrella never lists a plant's own feature (BD-025), so no plant would be armed and every control would report 'not caught'; each control is now built with the umbrella plus that plant's own feature."
+    },
+    {
+      "bead": "BD-215",
+      "kinds": [
+        "broken",
+        "convention"
+      ],
+      "what": "The M2 part of GATE-SENS-12 was to be recorded 'from the G3 receipt of each tier' with no `--part`: three receipts of one tier target are refused by N38b-19 (`receipt-set-invalid`) and a split gate needs `--part M2`, so the record could never be entered. It is now recorded with `--part M2` from one G3 receipt of KA-497 (one run covers every site, unavailable device sites Skipped), by a non-implementing session; the step-8 command uses `--features gauntlet-mutations` (the control runner adds the leak feature), and 'recorded `not run`' became the receipt's Skipped entries. The harness filters `-- nonint` and `-- nonint_batch` are not a gate, row, site or milestone (N38a-02), so the G3 and G5 runs would select nothing and the script and test plan could not pass; both are `-- GATE-SENS-03` (KA-505..507 and KA-509 in G3, KA-508 in G5). N38b-19 added to deps, since its acceptance enters a gate part with record_gate."
+    },
+    {
+      "bead": "BD-241",
+      "kinds": [
+        "request",
+        "registry",
+        "broken",
+        "convention"
+      ],
+      "what": "Applied H-owners-3 (checked against VERBS-sense's sense.symmetry row and NJL-01 action rule 1): every `--test` was a per-action flag, refused 802, so the signature, the key rule, the unit test, the acceptance item and script steps 3, 4, 6 and 8 would all fail; they now use `--action test --key`, and the acceptance and script assert that `--test` is 802. The G3 filter `mr_25` is not a gate, row, site or milestone (N38a-02's filter forms) and would select nothing; it is `MR-25`. Its control step ran the plants 'on a gauntlet-mutations build'; the umbrella never lists a plant's own feature (BD-025), so no plant would be armed and every control would report 'not caught'; each control is now built with the umbrella plus that plant's own feature."
+    },
+    {
+      "bead": "BD-242",
+      "kinds": [
+        "deadlock",
+        "convention"
+      ],
+      "what": "N20b-06's self-check (which BD-242 depends on) reads 'the same edges sense.calibrate uses', produced by the synthetic front end this bead owned, and N20b-06's tests and script used this bead's rig4 gate fixture: N20b-06 waited on what waits on it (convention 7). The front end and the rig4/rig4-bumped/tree-rig/rig-sweep fixtures now belong to N20b-06; this bead consumes them (scope, front-end paragraph, gate-fixture note, and the unit test now checks the verb reads the front end's edges bit for bit). Its control step ran the plants 'on a gauntlet-mutations build'; the umbrella never lists a plant's own feature (BD-025), so no plant would be armed and every control would report 'not caught'; each control is now built with the umbrella plus that plant's own feature."
+    },
+    {
+      "bead": "N20b-01",
+      "kinds": [
+        "request",
+        "plan",
+        "convention"
+      ],
+      "what": "Applied F-U20b's request (convention 11): its only e2e was N20b-03's script, which depends on it. It now owns scripts/e2e/sense_obs_predicates.sh over its cargo targets (hand cases with expected breakers, the 358/3,600 s lidar mismatch, closure, three controls), with an acceptance item and STD-E2E in deps. The third planted failure the bead names (card equality by kind) had no test, so nothing would catch it; `card_by_kind_mutant_caught` is added. Its controls ran with `--features gauntlet-mutations` alone, which arms no plant (BD-025); each is now built with its own plant feature."
+    },
+    {
+      "bead": "N20b-03",
+      "kinds": [
+        "request",
+        "registry",
+        "broken",
+        "convention",
+        "plan"
+      ],
+      "what": "Applied H-owners-3: `--test` became `--action test --key` in steps 3, 4 and 6 (802 otherwise). Step 2 used `design edit` flags (`--card`, `--parent`, `--mount`, `--readout`) that VERBS-design does not have; it now uses the row's positional form. The gate record cited a receipt 'under target/e2e-logs/sense_symmetry/', which N38b-19's recorder cannot load (it reads target/gauntlet/receipts/), and claimed a G1 row 'wraps the script'; a step 7 now runs the G1 (KA-493, KA-494) and G3 (MR-25) targets and the gate is recorded from those two receipts. Step 6's 'conformance feature flag' is named (`gauntlet-mutations` plus the control's feature). N38b-19 (the recorder) added to deps: the acceptance enters the gate with record_gate, which otherwise is not among its dependencies."
+    },
+    {
+      "bead": "N20b-04",
+      "kinds": [
+        "request",
+        "convention",
+        "registry"
+      ],
+      "what": "Applied F-U20b's request in part: it now owns scripts/e2e/sense_calib_solver.sh over its cargo targets (one-edge values, 1,000-rig recovery, covariance, the two 446 refusals, the mutant), with STD-E2E and N20-REF (whose 446 it raises) in deps. Not applied: the KA-849 conformance entries, which are N38b-42's and N38b-42 depends on this bead (convention 7). The mutant feature was named `mutants`; it is the plant `N38b-42:cx-398` of CX-398, Cargo feature `cx-398` of frob-sense, enabled only under `gauntlet-mutations` (convention 1). A sentence narrating a dropped earlier plan was removed (convention 13)."
+    },
+    {
+      "bead": "N20b-05",
+      "kinds": [
+        "request",
+        "contradiction",
+        "convention"
+      ],
+      "what": "Applied F-U20b's request (convention 11): it now owns scripts/e2e/sense_calib_consistency.sh over its cargo targets (KA-495 patterns, the anisotropic case, q and d_v², support reports, the two 446 refusals, the CX-211 and CX-212 controls), with N20-REF and STD-E2E in deps. Acceptance said 'the 100-seed record is BD-242's', contradicting N20b-07 as the gate's one recorder; corrected. Its CX-211/CX-212 controls ran with the umbrella alone, which arms no plant (BD-025); each is now built with its own plant feature."
+    },
+    {
+      "bead": "N20b-06",
+      "kinds": [
+        "convention",
+        "deadlock",
+        "broken"
+      ],
+      "what": "C13 finding confirmed: step 5 narrated a pending request for an impact trigger, which N20a-31 and VERBS-sim now spell `@impact:<body>:<impulse>Ns`; step 5 now runs `rig-drop` with `@impact:base:5Ns` and asserts the bump fires at the first committed boundary at 5 N·s. The self-check needed BD-242's front end and BD-242's rig fixtures, and BD-242 depends on this bead (convention 7): the synthetic pairwise front end and the rig4, rig4-bumped, tree-rig, rig-sweep and rig-drop fixtures are now this bead's (scope, approach, acceptance, a front-end noise test). Script runs lacked `--telemetry T2` although they read lidar packets and their flags; added. An acceptance item for the script was added. Its two controls ran with the umbrella alone, which arms no plant (BD-025); each is now built with its own plant feature."
+    },
+    {
+      "bead": "N20b-07",
+      "kinds": [
+        "broken",
+        "contradiction",
+        "plan"
+      ],
+      "what": "The gate record came from a script-made receipt and a G1 row that 'wraps the script', which N38b-19 cannot record from; step 10 now runs `--features gauntlet-mutations --test g1_known_answers -- KA-495 KA-496` and the gate is recorded from that receipt. The 100-seed runs lacked `--telemetry T2`, so step 9's packet flags would be a gap. Step 8a's 'same call without --claim reality' reused key `cal-real` with a different request; it has its own key. Fixture ownership now matches BD-242 and N20b-06. N38b-19 (the recorder) added to deps: the acceptance enters the gate with record_gate, which otherwise is not among its dependencies."
+    },
+    {
+      "bead": "N20b-11",
+      "kinds": [
+        "broken",
+        "convention"
+      ],
+      "what": "The M1 record lacked `--part M1` for a gate the register splits (the recorder needs the part), and said the M2 part comes from 'the receipts of this same script run with --tier …', which N38b-19 refuses (two receipts of one tier target). Both now follow the one-receipt form. Step 8 used `--features conformance-leaks` for a tier run with controls; convention 1 and BD-025 give `--features gauntlet-mutations`, the control runner adding the leak feature per control."
+    },
+    {
+      "bead": "N20b-12",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The acceptance said the M2 part of GATE-SENS-12 is recorded 'from those receipts' (one per tier run), which N38b-19 refuses (two receipts of one tier target); it now cites one G3 receipt whose run covers every site. The interim of the 5xx refusal is restated as the owner's form (N35x-02's interim for the slot, N20b-45's fail-closed default) rather than as 'if the owners have not answered when this bead is worked'."
+    },
+    {
+      "bead": "N20b-08",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "Said the artifact.read row 'does not yet list 883; that is requested of it' (convention 13); the row lists 883 from M5 (BD-387), so this now states it. The script ingested one bundle without `--task-family`, which ground.ingest refuses with 873 (cell undetermined), and cells A and B were one dataset although a dataset has one cell; it now ingests two bundles (`cellA/`, `cellB/`) with `--task-family tf:none`, the rehearsal built on N20b-06's rig4. The acceptance's negative control had no test; `mount_assignment_control_fails` added."
+    },
+    {
+      "bead": "N20b-13",
+      "kinds": [
+        "request",
+        "broken"
+      ],
+      "what": "Applied F-U25c-1's request: the script's guarded leg called `frob mission synthesize`, a verb of BD-129 which is not a dependency, and said BD-129's script asserts the comparison, which BD-129 cannot do (BD-135 depends on it); the leg is removed and N25c-22's gate script, step 2, is named as the public-verb comparison. The receipt assertion said each of KA-498 to KA-502 `pass`, but KA-501 and KA-502 are all-tier rows whose device sites are Skipped on a host run; it now asserts host entries. A sentence narrating an earlier draft's second derivation file was reduced to the rule."
+    },
+    {
+      "bead": "N20b-14",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "The two local controls (`reuse-ignores-support`, `narrow-guard`) were said to run 'under --features gauntlet-mutations', which enables only registered plants, so the step would not plant them; they now run as the named unit tests (a test for the reuse control is added, it had none). The G1 command lacked the umbrella feature although KA-504's registered control (unguarded single precision) is asserted; added, with KA-504's device sites Skipped on a host."
+    },
+    {
+      "bead": "N20b-15",
+      "kinds": [
+        "broken",
+        "convention"
+      ],
+      "what": "The gate record said the gate row 'wraps the script as `-- gate_sens_03`': not a gate, row, site or milestone filter (N38a-02), and the recorder cannot load a script's receipt. GATE-SENS-03's rows span G3 (KA-505, -506, -507, -509) and G5 (KA-508), so a step 8 runs both targets with `--features gauntlet-mutations -- GATE-SENS-03` and the gate is recorded from the two receipts of one commit. 'Recorded per tier ... `not run`' became Skipped entries. Control builds are named per convention 1 (umbrella plus the control's own feature). The stills call used `--at <instant>` where the row's selector is `t=<s>`."
+    },
+    {
+      "bead": "N20b-16",
+      "kinds": [
+        "broken",
+        "plan"
+      ],
+      "what": "Script step 4 profiled `ft-chain` with no `--task`, but undecidable atoms are those of the bound task, so the peak-load atom could never be listed; it now binds N20b-29's `peak-load-limit`. It also claimed the symmetry script depends on this bead; N20b-03 does not, so the sentence names the three that do. N20b-30's acceptance required this verb's profile to list the resolvable pulse duration, which no bead provided; section 7 now lists it from N20b-30's `resolvable_pulse_s`, with N20b-30 in deps."
+    },
+    {
+      "bead": "N20b-19",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "Applied H-owners-3: the script's `frob sense symmetry --test` is FROB-REF-802 under NJL-01 action rule 1; it is `--action test --key`."
+    },
+    {
+      "bead": "N20b-22",
+      "kinds": [
+        "broken",
+        "contradiction",
+        "convention"
+      ],
+      "what": "The gate rows 'wrap the script' as `-- gate_sens_01` / `gate_sens_02` (no such filter; the recorder cannot load script receipts); a step 8 runs `-- GATE-SENS-01` (G1) and `-- GATE-SENS-02` (G5) with `--features gauntlet-mutations` at one commit, and both gates are recorded from those receipts. Steps 2, 3, 5 and 6 queried sensor packets of runs without `--telemetry T2` (a level-not-enabled gap). The bead claimed to commit the IMU, encoder, depth, lidar and height-scan designs already committed by BD-099 and BD-187 (two identities for one case); it now reuses them and commits only the scenes and `quad-suite-noisy`. 'Not run' became Skipped; control builds named per convention 1."
+    },
+    {
+      "bead": "N20b-28",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "The script ran the plant `N20b-28:chain-order-swapped` 'under --features gauntlet-mutations'; the umbrella never lists a plant's own feature (BD-025), so the plant would not be armed and the control step would fail as 'not caught'. It now names the frob-sense feature `chain-order-swapped` and runs `--features gauntlet-mutations,chain-order-swapped`."
+    },
+    {
+      "bead": "N20b-30",
+      "kinds": [
+        "request",
+        "plan",
+        "contradiction"
+      ],
+      "what": "Applied F-U20b's request: its only e2e was N20b-31's script (which depends on it) with tier names `cuda|metal` (802); it now owns scripts/e2e/sense_ft_kernel.sh over its cargo targets per backend, with STD-E2E in deps. The acceptance said 'the profile lists the resolvable pulse duration', but sense.profile (N20b-16) did not depend on this bead and listed no such field; the bead now exposes `resolvable_pulse_s` and N20b-16 lists it. The accumulator-drop control had no test; added."
+    },
+    {
+      "bead": "N20b-32",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "Its controls ran 'under --features gauntlet-mutations', which arms no plant (BD-025), and N20b-34's control builds `visibility-no-self` and `visibility-counts-masked` named features no bead defined; the bead now declares the four frob-sense plant features (scene-only L-b, no-self, no-payload, counts-masked) with the test each must fail. Acceptance claimed CUDA and Metal identity that its tests could not show; the device leg is now the backend tests where present, the user-side tier row N20b-34's."
+    },
+    {
+      "bead": "N20b-33",
+      "kinds": [
+        "convention",
+        "registry"
+      ],
+      "what": "Said `--trajectory` 'is requested of that row' (convention 13); VERBS-sense's sense.visibility row lists it, so this states it. Repairs were spelled `move-sensor <id> --dz +Δ`, a per-field flag design.edit does not have (802); they are described as typed edits with positional target and value. The horizon-only control ran on 'a gauntlet-mutations build', which arms nothing; it names its frob-analyze feature."
+    },
+    {
+      "bead": "N20b-34",
+      "kinds": [
+        "broken",
+        "convention"
+      ],
+      "what": "The gate record came from a script receipt and a G1 row that 'wraps the script' (the recorder loads only gauntlet receipts); a step 9 runs `-- GATE-SENS-16` and the gate is recorded from that receipt. Step 6 applied `move-sensor <camera> --dz +0.4`, a flag design.edit does not have (802); it now runs the repair command the check returns. Control builds now name N20b-32's plant features, and the glass-front fixture the masked-returns control needs is committed. Mast arithmetic (1.62 m view, 1.42 s lead) verified."
+    },
+    {
+      "bead": "N20b-37",
+      "kinds": [
+        "broken",
+        "plan"
+      ],
+      "what": "The harness tests used `--test g1_known_answers -- gate_sens_17_harness`, a filter that is not a gate, row, site or milestone (N38a-02 refuses it); they are library tests now. The record line lacked the non-implementing session and the controls of the same run (INV-GAUNT-02/05); stated, following BD-322's experiment-receipt form. N38b-19 (the recorder) added to deps: the acceptance enters the gate with record_gate, which otherwise is not among its dependencies."
+    },
+    {
+      "bead": "N20b-39",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Applied F-U20b's request: its only e2e was N20b-42's script, which depends on it; it now owns scripts/e2e/sense_imu_integrating.sh over its cargo targets (200 and 0, the boundary window, lever arm, two impacts) with `imu-no-jump` (its own frob-sense plant feature, armed outside the umbrella) and CX-201's `window-closed-closed` caught, and STD-E2E in deps. Without the feature, N20b-42's `imu-no-jump` control build had nothing to arm."
+    },
+    {
+      "bead": "N20b-40",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The plant `unwrap-nearest-always` ran 'under --features gauntlet-mutations', which arms no plant (BD-025); it now names the frob-sense feature and runs it with the umbrella. The slow-encoder alias call reused the first call's key; it has its own."
+    },
+    {
+      "bead": "N20b-41",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The plant `loadcell-contact-sum` ran 'under --features gauntlet-mutations', which arms no plant (BD-025); it now names the frob-sense feature. The batched kernel-form acceptance item had no test; `batched_kernel_form_matches_referee_rows` added. Values verified: 100 − 19.62 = 80.38 N; −19.62 − 4 = −23.62 N; tared −104.00 N; origin 4.019 N·m."
+    },
+    {
+      "bead": "N20b-42",
+      "kinds": [
+        "broken",
+        "convention"
+      ],
+      "what": "Every run whose packets the script reads lacked `--telemetry T2` (a level-not-enabled gap on every query); added. The gate record came from a script receipt and a G1 row that 'wraps the script', which the recorder cannot use; a step 9 runs `--features gauntlet-mutations -- GATE-SENS-18` and the gate is recorded from it. Control builds now name the plant features of N20b-39, N20a-06, N20b-40 and N20b-41."
+    },
+    {
+      "bead": "N20b-27",
+      "kinds": [
+        "broken"
+      ],
+      "what": "Its unit tests and script ran rule (L) 'behind a feature switch', but no bead builds (L) (scope Out: the glass rule) so `latent_mixture_*` and the L prediction could not run; the bead now owns an (L) prototype behind the frob-sense feature `glass-latent-mixture`, off in release. `ground.predict` lacked `--json`."
+    },
+    {
+      "bead": "N20b-21",
+      "kinds": [
+        "request",
+        "contradiction"
+      ],
+      "what": "Applied both F-U20a requests: GATE-SENS-04 and -05 now name N20a-44 as the M1 measuring bead (BD-078 and BD-098 write none). Without that, the bead's own `one_recorder_per_part` test (the recorder must be in measured_by) failed. recorded_by named N20a-47 and N20a-48 for the M1 parts of GATE-SENS-08 and -09, but those scripts say BD-120 and BD-134 record them, and the two were not in measured_by; corrected. The GATE-SENS-01 note said N20b-22's record 'cites' BD-099's M1 receipt, which the recorder refuses (receipts of two commits); restated. The record_gate form now shows the repeatable `--receipt` and `--part`."
+    },
+    {
+      "bead": "N20b-29",
+      "kinds": [
+        "request",
+        "plan"
+      ],
+      "what": "Applied F-U20b's request: no verb or option asserted a peak-load claim, so the plan's refusal (§20.23) could not be reached from the user's side. It is now `task.verdict --assert` (DESIGN, M2, this bead; requested of VERBS-task): refused with the code N20b-45 applies to `sens-peak-load-ungraded` when a None-grade window leaves the binding atom undetermined, other undetermined reasons unchanged. Also its own script scripts/e2e/sense_force_grades.sh (convention 11) with fixtures N20b-31 reuses, and deps N24c-02, VERBS-task, STD-E2E. Its two local controls had one test; `overload_no_control_fails` added."
+    },
+    {
+      "bead": "N20b-31",
+      "kinds": [
+        "request",
+        "broken",
+        "convention",
+        "plan"
+      ],
+      "what": "Step 4 narrated a skip 'until a row spells' the peak-load option (convention 13); it now asserts the refusal through N20b-29's `task verdict … --assert`. The gate record used a script receipt and a G1 row that 'wraps the script', which the recorder cannot use; step 8 runs `-- GATE-SENS-15` and the gate is recorded from that receipt. Runs that read sensor packets lacked `--telemetry T2`. The drop fixtures and peak-load task are N20b-29's, reused. 'Recorded `not run`' became Skipped. N38b-19 (the recorder) added to deps: the acceptance enters the gate with record_gate, which otherwise is not among its dependencies. The control build for `chain-order-swapped` used the umbrella alone; it is `--features gauntlet-mutations,frob-sense/chain-order-swapped`."
+    },
+    {
+      "bead": "N20b-45",
+      "kinds": [
+        "convention",
+        "contradiction"
+      ],
+      "what": "C13 finding confirmed: the acceptance narrated 'requested of N20b-29, and is logged as skipped … until then'. It now names `task.verdict --assert` (N20b-29) as the user-side trigger in N20b-29's and N20b-31's scripts, adds task.verdict to the rows step 4 updates, and adds VERBS-task to deps (step 4 edits that row's refusal list)."
+    },
+    {
+      "bead": "N20b-02",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The plant `guard-checks-mech-group` (CX-209) ran 'under --features gauntlet-mutations', which arms no plant (BD-025), so the CX-209 control would report 'not caught' and the script fail; it is now the frob-sense feature, run as `cargo test -p frob-sense --features gauntlet-mutations,guard-checks-mech-group symmetry::guard`."
+    },
+    {
+      "bead": "N20b-43",
+      "kinds": [
+        "request",
+        "plan"
+      ],
+      "what": "Applied F-U20b's request (convention 11): its only e2e was N20b-22's sense_suite.sh, which depends on it, so the bead had no script it could pass with its own deps. It now owns scripts/e2e/sense_ray_kernels.sh over its cargo targets (analytic-scene range errors against 1 mm plus the brick bound, overlay ulp, primitives, two-plane fixture, per-backend digests with Skipped devices, the three controls), with an acceptance item and STD-E2E in deps."
+    },
+    {
+      "bead": "N20b-44",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Script step 2 ran the controls `gravity-twice` and `sequential-generator` 'under --features gauntlet-mutations', which arms no plant (BD-025), so both would report 'not caught'; they are the in-process unit-test controls, run by name. An unbuilt backend was logged `not run`; it is `e2e_skip`, never a pass. The memory note 'under 2 MB' is now shown (8,192 × 12 × 5 counts at 4 bytes = 1.97 MB, plus 0.39 MB per IMU)."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "BD-120",
+      "what": "State the recording line for the M1 (linearized) part of GATE-SENS-08: `cargo run -p frob-conformance --example record_gate -- --gate GATE-SENS-08 --receipt <hash> --part M1`, by a session that did not implement the work. N20a-47 and N20b-21 name BD-120 as that part's one recorder, but BD-120 carries no record_gate line, so the M1 part would never be entered and the M1 exit check of N20b-21 fails."
+    },
+    {
+      "bead": "BD-134",
+      "what": "State the recording line for the M1 (docking rows) part of GATE-SENS-09: `cargo run -p frob-conformance --example record_gate -- --gate GATE-SENS-09 --receipt <hash> --part M1`, by a non-implementing session. N20a-48 and N20b-21 name BD-134 as that part's recorder, but BD-134 has no record_gate line."
+    },
+    {
+      "bead": "VERBS-task",
+      "what": "Add to the task.verdict row the flag `--assert` (M2, N20b-29): the verdict asked as an asserted claim; when the binding atom is a peak-load or sensor-overload atom left `undetermined` by a force-history grade `none`, it is refused with the slot `sens-peak-load-ungraded` (number from N20b-45; exit 3; repairs: add a pulse model to the interface card; evaluate on a compliant tier; drop the claim); other undetermined reasons keep exit 2. Without it the plan's refusal (§20.23) has no user-side trigger and N20b-29's, N20b-31's and N20b-45's steps fail with 802."
+    },
+    {
+      "bead": "N25c-22",
+      "what": "Step 2 says 'This is the leg N20b-13's own script skips as \"needs BD-129\"'. N20b-13's script no longer has that leg (it calls no mission verb; round 4); reword to 'N20b-13's script stops at the Gauntlet rows; this step is the public-verb comparison of its committed label vector'. Otherwise the text points at a skip that does not exist."
+    }
+  ],
+  "unchanged": 3,
+  "notes": "Unchanged: BD-119, N20b-09, N20b-10. Labels `review-notes-open` were left for tools/open_requests.py to recompute."
+}

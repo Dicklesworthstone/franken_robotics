@@ -4,7 +4,7 @@ title: "upstream frankensim: articulated-dynamics derivatives and hybrid multipl
 type: "task"
 priority: 3
 milestone: "M4"
-labels: ["m4", "suite", "reflex", "upstream", "frankensim", "frontier"]
+labels: ["m4", "suite", "reflex", "upstream", "frankensim", "frontier", "review-notes-open"]
 parent: "WP-64"
 deps: ["BD-037", "BD-333", "BD-334", "N22a-33", "N33b-04", "STD-E2E"]
 needs: []
@@ -42,8 +42,9 @@ In: in FrankenSim, (i) derivatives of articulated forward dynamics in state, inp
 (ii) a hybrid multiple-shooting solver in `fs-orbit` over articulated models with guards and resets, using the
 existing saltation correction. Here: the referee orbit route and the re-run of the two gait gates on it. Out:
 the compliant-tier route (BD-333, BD-334, BD-335); the referee adapter of `frob-gait`, which answers
-`route-not-available: referee` naming this item until the switch-over enables it (N22a-33); the gate records on
-the other routes (N22a-38, N22a-39); reverse-mode adjoints (FD-FSIM-05). BD-334 (`gait.gradient`, GATE-GAIT-02)
+`route-not-available: referee` naming this item until the switch-over enables it (N22a-33); the gate records of
+GATE-GAIT-01 and GATE-GAIT-02 (N22a-38, N22a-39, their one recorder each; this bead's referee-route re-run is a
+check that records nothing); reverse-mode adjoints (FD-FSIM-05). BD-334 (`gait.gradient`, GATE-GAIT-02)
 and N22a-33 are dependencies, because the switch-over enables that adapter and re-runs both gates through them.
 
 ## Technical approach
@@ -122,7 +123,7 @@ rollout (a fixed point is re-simulated and its return error reported), not by a 
 - [ ] In FrankenSim: the four derivative entries agree with central differences to 10⁻⁶ relative on 10³ states of a two-link arm and of the G1 model; ∂q̈/∂τ equals M⁻¹ to 10⁻¹⁰.
 - [ ] In FrankenSim: the multiple-shooting solver converges on the rimless wheel and the compass gait to the values below and refuses the grazing control.
 - [ ] Here: the airlock exposes the referee orbit route behind the `spectral` and `referee` groups at the new pin; `gait.orbit --tier referee` returns multipliers with the label `saltation` and the event margins.
-- [ ] Here: GATE-GAIT-01 and GATE-GAIT-02 pass on the referee route, with measured values recorded; compliant-tier and referee multipliers for the same gait are tabulated side by side.
+- [ ] Here: GATE-GAIT-01 and GATE-GAIT-02 pass on the referee route, with every measured value inside its threshold in the re-run's receipt, whose hash is logged; no `record_gate` call is made (the rows stay those N22a-38 and N22a-39 recorded); compliant-tier and referee multipliers for the same gait are tabulated side by side.
 - [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
 - [ ] Nothing in this repository patches, forks or vendors the sibling; `cargo xtask check-stack` reports it on-pin and clean under the new receipt, and the record in `DEPENDENCY_ADMISSION.md` cites that receipt.
@@ -158,11 +159,12 @@ parameter set), `frob gait orbit fixture:compass-gait --section auto --tier refe
 <case orbit> --params <case parameters> --metrics <case metrics> --tier referee --check fd --key
 fdfsim20-gg-<case>-<run-id> --json`. The gate values are recomputed with
 `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- GATE-GAIT-01 GATE-GAIT-02` (the
-Gauntlet has no `frob` command), and the script stops at that receipt: it writes no gate record. The referee-route
-values are entered from the receipt afterwards, by a session that did not implement the work, with `cargo run -p
-frob-conformance --example record_gate -- --gate GATE-GAIT-01 --receipt <hash>` and the same for GATE-GAIT-02
-(N38b-19's recorder; the rows stay those of the gates' recorder beads N22a-38 and N22a-39, which gain the referee
-route beside the routes they recorded).
+Gauntlet has no `frob` command), and the script stops at that receipt: the re-run on the referee route is a check
+whose receipt hash the script logs, and it is not entered with `record_gate`. Each of the two gates has one
+recording bead, N22a-38 (GATE-GAIT-01) and N22a-39 (GATE-GAIT-02), as N22c-49's register declares, and N38b-19
+admits a second recording only as the lift of a row recorded against a fallback named in advance, which these
+rows are not (their rows record the tier that adjudicated each clause and say the clauses are re-run on the
+referee route when it exists); their rows are unchanged by this bead.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_20/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

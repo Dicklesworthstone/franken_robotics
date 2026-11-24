@@ -87,8 +87,10 @@ one-hour envelope, so INT-FSIM-01 fails; the KILL-FSIM outcome is read from N33b
 not "more than 20%"); `bet04_defect_test_passing_on_defect_commit_is_untested`.
 
 ### End-to-end script and logging
-`scripts/e2e/bet_04_decide.sh` reads the admission records and the drift log, recomputes the verdict and checks
-the ADR; it then confirms that `frob doctor --json` lists the admitted foundations with the same records. Logged
+`scripts/e2e/bet_04_decide.sh` reads the admission records and the drift log, recomputes the breakage share per
+four-week window, reads the verdict of BET-04 from the bet register's report (`cargo run -p frob-conformance
+--example bets -- status --json`, example `bets` of N00-28, the one verdict rule; no second verdict rule in the
+script) and checks the ADR against both; it then confirms that `frob doctor --json` lists the admitted foundations with the same records. Logged
 per STD-E2E: gate, commit, toolchain, check time and memory against the envelope, digest equality, drift share
 per window, defect tests' results on the defect and fixed commits; `summary` naming the gates and KILL-FSIM.
 

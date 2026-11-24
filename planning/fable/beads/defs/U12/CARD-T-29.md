@@ -32,21 +32,24 @@ monolithic model file plus a sizing spreadsheet, where conservation is whatever 
 
 ## Scope
 
-In: statement document, registry row, the per-design wiring certificate bound to this card (identity plus
-acyclicity witness), fixtures and mutants. Out: the design compiler and its refusals (a power sign mismatch, a
-copied power port or an algebraic loop is refused at design check); ideal transmission elements (CARD-T-15);
-component passivity and the run-time energy balance (the actuator and ledger beads); time correlation in port
-contracts.
+In: statement document, registry row, the wiring certificate format bound to this card (identity plus
+acyclicity witness), specimens and mutants. Out: the compiled wiring graph of a design and the design compiler's
+refusals (a power sign mismatch, a copied power port or an algebraic loop is refused with `FROB-REF-108` at
+design check; N15b-01); the wiring certificate of each compiled design, written in this card's format at design
+check (stage 5) by N15b-01; ideal transmission elements (CARD-T-15); component passivity and the run-time energy
+balance (the actuator and ledger beads); time correlation in port contracts.
 
 Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
-the `.fmodule` format with its ports (BD-060) and the design compiler's port-junction checks (N15b-01) are
-`related`, not dependencies (a card that waited for its implementer would close a loop, because the implementer's
-own acceptance runs the card's law tests). What the card does depend on is in `deps`: the card registry, its specification, its pilot where the route
-is Frontier, and Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens
-and mutants, and every acceptance line that its own fixtures decide. An acceptance line that can only be observed
-on live output (the wiring certificate of each archetype design and the design compiler's matching refusal) is run
-inside the implementing bead, with this card's law tests, as part of that bead's acceptance; the receipt produced
-there is what moves the registry row for that output.
+the `.fmodule` format with its ports (BD-060) is `related`, not a dependency, and the design compiler's
+port-junction checks (N15b-01) depend on this card, not the reverse (a card that waited for its implementer would
+close a loop, because the implementer's own acceptance runs the card's law tests). What the card does depend on is
+in `deps`: the card registry, its specification, the gear-law card T-15 and Lemma's own proof machinery. It
+closes on its statement document, its registry row, its specimens and mutants, and every acceptance line that its
+own fixtures decide. An acceptance line that can only be observed on live output (the wiring certificate of a
+design as compiled) is run inside N15b-01, with this card's law tests, as part of that bead's acceptance: it
+writes the certificate of each design it checks at stage 5, `frob-verify` accepts it, and that receipt moves the
+registry row. The design compiler's refusal of the same defects is N15b-01's (`FROB-REF-108`), measured by
+N15b-33's script; neither is a condition of this card's close.
 
 ## Technical approach
 
@@ -73,17 +76,24 @@ there is what moves the registry row for that output.
 5. Relies on it: construction C-12 (the five functors over one data structure); the energy ledger; module
    substitution (a module's port signature and local passivity results are reused only with the wiring
    re-certified).
-6. Artifacts: `docs/math/cards/T-29.md`; registry row; per-design certificates; specimens and mutants.
+6. Artifacts: `docs/math/cards/T-29.md`; registry row; specimens `poly-identity/accept-T-29-*.frobcert` and
+   mutants.
 
 ## Acceptance criteria
 
-- [ ] For each archetype design at M1 the wiring certificate exists and `frob-verify` accepts it.
+- [ ] `frob-verify` accepts the card's wiring specimens: a common-flow and a common-effort junction, and the
+      battery–driver–motor–gear–wheel chain of an archetype drive with the gear ratio as a rational entry, each
+      with its topological order.
 - [ ] Rejected mutations: a power port copied to two consumers without a junction (the product CᵀB is nonzero); a
       reversed port sign at one junction; a wiring relation of the design missing from B and C; a dependency
       cycle with a claimed order (some edge goes backward).
-- [ ] The design compiler refuses the same defects at `frob design check` with its own refusal, before any
-      certificate is attempted, and the two verdicts agree on the fixture set.
-- [ ] Registry row `checked`, class `Certified`, with hashes and checker identity.
+- [ ] The auditor's verdicts on the four mutations are recorded per fixture, with the design-side defect each
+      corresponds to (`FROB-REF-108` in N15b-01: reversed sign, copied power port, algebraic loop), so that the
+      design compiler's refusals measured by N15b-33 can be compared fixture by fixture.
+- [ ] Registry row at this card's close: the route registered and `hypothesis`, printing no class. N15b-01, which
+      depends on this card, writes the wiring certificate of each design it checks (at least its worked
+      leg-on-quadruped design) in this card's format; `frob-verify` accepts them, and that receipt moves the row
+      to `checked`, class `Certified`, with certificate hashes and checker identity.
 
 ## Test plan
 
@@ -103,10 +113,12 @@ the claimed order is then checked against the full list).
 ### End-to-end script and logging
 
 `scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) includes the wiring specimens;
-`scripts/e2e/module_verbs.sh` (bead N15b-33) runs `frob design check` and logs the certificate hash per archetype.
-For this card their NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-29"), `step`
-(`T-29/<design-or-mutant>`), `event`, the exact command line, exit code, wall time, the number of power ports and
-junctions, the shape of B and C and whether CᵀB = 0, the number of algebraic edges and the order's length, the
+`scripts/e2e/module_verbs.sh` (bead N15b-33, step 8) runs `frob design check --json` on the reversed-port,
+copied-bus and gear-ring-loop designs and logs the design compiler's `FROB-REF-108` refusals at stage 5.
+For this card their NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead` and `step` ("CARD-T-29" and
+`T-29/<design-or-mutant>` on N12-34's per-card lines; N15b-33's own key and step names on its script's lines,
+since a line carries its owning bead), `event`, the exact command line, exit code, wall time, the number of power
+ports and junctions, the shape of B and C and whether CᵀB = 0, the number of algebraic edges and the order's length, the
 bundle's BLAKE3, the expected and observed verdict (and the design compiler's own verdict on the same fixture),
 and on a mismatch the first nonzero entry of CᵀB, the first missing relation or the first backward edge, with the
 path to reproduce.

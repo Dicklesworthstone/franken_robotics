@@ -1,0 +1,264 @@
+{
+  "round": 4,
+  "slice": "F-U24c",
+  "reviewed": 33,
+  "changed": [
+    {
+      "bead": "BD-122",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "The randomization rule admitted only card uncertainties and hazard entries, so a task drawing from the disturbance registry (N24cp3-02, N24c-36 rule 5) would be refused by the admission that is meant to accept it; and the coupling stage was named `task.check --coupling`, a per-action flag NJL-01's action rule does not admit."
+    },
+    {
+      "bead": "BD-125",
+      "kinds": [
+        "request",
+        "plan",
+        "broken",
+        "convention"
+      ],
+      "what": "No family rows were written to registries/task-families.toml, so N24a-23's computed status stayed `planned` and N24ap1-01's families-status step failed; the docking plant had no way through eval.run (no exact-plant entry, no witness controllers), so its reference scorecards could not be produced; and the bead claimed to record GATE-ARENA-01 rows, a second recorder of an M2 gate (convention 9)."
+    },
+    {
+      "bead": "N24c-02",
+      "kinds": [
+        "convention",
+        "deadlock",
+        "broken",
+        "registry"
+      ],
+      "what": "Its only e2e was steps of N24c-06's script, and N24c-06 depends on this bead (conventions 7 and 11); the CX-269 mission task had no labelled examples, so task.new would refuse it with 539 and every `--task cx269-mission` test could not run; and verdict-task-mismatch's numbering was credited to the registry owner instead of N35-33's allocation ledger."
+    },
+    {
+      "bead": "N24c-04",
+      "kinds": [
+        "request",
+        "plan",
+        "deadlock",
+        "convention",
+        "broken"
+      ],
+      "what": "Scorecards ignored N24a-38's `unmonitored` stamps (admitted pending stamps unprinted, waiver stamps not barred); the exact docking plant could not be dispatched; its acceptance and e2e leaned on BD-125's tasks, which depend on this bead (convention 7) and it had no script of its own (convention 11); and its long-tool criterion used exit 8 and `frob job cancel`, which do not exist at M1."
+    },
+    {
+      "bead": "N24c-06",
+      "kinds": [
+        "request",
+        "broken"
+      ],
+      "what": "The referee run's --task input is N16ap4-01's and was not a dependency; the settle step waited on exit 8 with `frob job wait`, which do not exist at M1; and registry_rows asserted that every one of the five verbs lists the nine refusal codes, which task.show, task.list and task.verdict do not."
+    },
+    {
+      "bead": "N24c-07",
+      "kinds": [
+        "request",
+        "broken",
+        "convention"
+      ],
+      "what": "traverse-5m-flat was not run; run calls had no --key, so run_b would replay run_a's stored receipt and compare a run with itself; settle and docking commands used options the verbs lack; cancel used an M2 job verb; and the script wrote GATE-ARENA-01 rows, a second recorder (convention 9)."
+    },
+    {
+      "bead": "N24c-08",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The table plants ten defects (two for INV-ARENA-04) but the acceptance and test plan counted nine controls, so a registry-count check would fail on a correct build or one control would go unregistered."
+    },
+    {
+      "bead": "N24c-10",
+      "kinds": [
+        "convention",
+        "registry"
+      ],
+      "what": "Controls were run in a build with a `mutants` feature that does not exist (the one feature is gauntlet-mutations), and row 9's control was credited to N24c-08, which registers no confidence-sequence control, so row 9 could not support a gate."
+    },
+    {
+      "bead": "N24c-14",
+      "kinds": [
+        "broken"
+      ],
+      "what": "Input 2's dry-case run was `frob sim run <template>` with no course, soles or controller: fixture 2's course is BD-202's, which depends on this decision, so the input could not be measured and the decision could not be taken on it."
+    },
+    {
+      "bead": "N24c-16",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "The hexapod row was written `reference: none` in a register form NEG-15 does not have, so `robot_index_check` (the check the acceptance relies on) would not accept it and the `decision` field would never be set."
+    },
+    {
+      "bead": "N24c-17",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Its only e2e was N24c-19's script, and N24c-19 depends on this bead, so the bead could not close on its own script (conventions 7 and 11)."
+    },
+    {
+      "bead": "N24c-22",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "The verb was said to return exit 8 on a long call, while NJL-01's CLI default waits to completion, so scripts written from it assert an exit code the CLI never gives."
+    },
+    {
+      "bead": "N24c-23",
+      "kinds": [
+        "broken"
+      ],
+      "what": "`list_bodies_runs_nothing` asserted five bodies while the listing 'instantiates every foil kind', six with the relaxed member, so the test failed on whichever reading the implementer chose."
+    },
+    {
+      "bead": "N24c-24",
+      "kinds": [
+        "broken"
+      ],
+      "what": "Its script expected exit 8 and `frob job wait` from a CLI call that waits to completion (NJL-01), so the first step's assertion fails on a correct build."
+    },
+    {
+      "bead": "N24c-27",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The gate step waited on job handles that a CLI call waiting to completion never returns."
+    },
+    {
+      "bead": "N24c-28",
+      "kinds": [
+        "broken"
+      ],
+      "what": "audit_hand_case called `frob job wait` on a handle the CLI never returns, and qualify_admitted accepted exit 8, which a CLI call without --sync-wait-ms cannot give."
+    },
+    {
+      "bead": "N24c-30",
+      "kinds": [
+        "registry"
+      ],
+      "what": "eval.items took an optional pair of designs, against the registry's `--comparison <id>` (VERBS-eval: the weights belong to one comparison), so the verb would be built with an input the registry and N24c-32 do not use."
+    },
+    {
+      "bead": "N24c-31",
+      "kinds": [
+        "registry",
+        "broken"
+      ],
+      "what": "Its four symbolic refusals were said to be numbered by the refusal registry rather than raised by slug until N35-33's allocation ledger numbers them; and its script crossed three fits with two ε values, leaving (flat, 0) and (wrong, 0) with no expected variance (wrong at ε = 0 has none), so the step could not be asserted as written."
+    },
+    {
+      "bead": "N24c-32",
+      "kinds": [
+        "convention",
+        "registry"
+      ],
+      "what": "It narrated `--comparison` as a spelling requested of VERBS-eval, which now lists it (convention 13), kept a hedge that the options may be renamed, and compared runs in nominal_equals_plain and schedule_invariance without distinct keys, so a rerun would return the stored receipt."
+    },
+    {
+      "bead": "N24c-33",
+      "kinds": [
+        "request",
+        "registry",
+        "broken"
+      ],
+      "what": "record_matrix passed --run-seed beside --battery, which eval.run refuses with 802, so the matrix could not be recorded; and it waited on `frob job wait` handles the CLI never returns."
+    },
+    {
+      "bead": "N24c-36",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Its scope named `task.check --coupling`, a per-action flag that NJL-01's action rule does not admit (only `--action coupling`)."
+    },
+    {
+      "bead": "N24c-37",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "The title, repair command, acceptance and script selected the action with `--coupling`, which the CLI refuses (only `--action coupling`); and the script expected exit 8 and `frob job wait` from a CLI call that waits to completion (NJL-01), so its first step failed on a correct build. The bounded-wait path is now exercised with `--sync-wait-ms 0`."
+    },
+    {
+      "bead": "N24c-38",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "Every coupling step used `--coupling` (refused by the action rule), the coupling and control steps waited on exit 8 handles that a CLI call waiting to completion never returns, and study_admitted accepted exit 8, so the M2 fixture half of GATE-ARENA-14 could not be recorded from this script."
+    },
+    {
+      "bead": "N24c-40",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "refuse_pre_lock_addresses called `eval.compare --run-seed`, an input the row does not have (802, not the lock refusal), and narrated the spelling as requested of VERBS-eval (convention 13), so the lock's refusal was never exercised; the pre-lock-study form had no way to plan a study before the lock. The choice used `--coupling` and waited on exit 8 and `frob job wait`, which a CLI call waiting to completion never gives."
+    },
+    {
+      "bead": "N24c-41",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The fallback definition and the user-side check of the stored choice used `task.check --coupling`, which the action rule refuses, so the not-fired check would fail on a correct build."
+    },
+    {
+      "bead": "N24cp1-01",
+      "kinds": [
+        "broken"
+      ],
+      "what": "fallback_arms_listed audited with no `--design`, so the idle and actual-design arms (which need one) could not run, and its assertion that the record's arms are the fallback's could not pass on a correct build."
+    },
+    {
+      "bead": "N24cp1-02",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The withdrawal, the kept checks and the choose_refused step used `task.check --coupling`, a form the action rule refuses, so choose_refused would observe 802 instead of `coupling-choice-not-built`."
+    },
+    {
+      "bead": "N24cp3-01",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "The acceptance and the script passed `--run-seed 17` beside `--battery`, which eval.run refuses with 802; the script settled BD-125's stand-10s, a task outside the smoke battery and not a dependency, so the smoke items had no cache; it waited on exit 8 with `frob job wait`; and it narrated 248 and conformance_plant as requests of VERBS-eval, which lists them (convention 13)."
+    },
+    {
+      "bead": "N24cp3-02",
+      "kinds": [
+        "convention"
+      ],
+      "what": "`disturbance-registry-invalid` was narrated as requested of N24-REF, which holds the row (convention 13)."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "to": "N24a-22",
+      "ask": "Add the header member `unmonitored: [{stamp, episodes}]` to frob.scorecard/1, which N24c-04 prints for every pending N24a-38 stamp."
+    },
+    {
+      "to": "BD-254",
+      "ask": "Carry N24c-04's monitoring-stamp handling (pending stamps printed with episode counts, waiver stamps refused with 802) and its exact-plant dispatch into the full scorecard and batched form."
+    },
+    {
+      "to": "N24-KA",
+      "ask": "Add N24c-10 (battery row 7) to KA-615's carrying beads and N24c-10 (battery row 9) to KA-618's, since N24c-10 writes their Gauntlet entries and derivation files as it does for KA-594, -595, -596, -598 and -619."
+    },
+    {
+      "to": "VERBS-eval",
+      "ask": "eval.compare's `epsilon`: domain [0, 1], with 0 admitted only beside `explain-variance` (which draws nothing) and refused with 802 in a study, as N24c-31 item 1 states and N24c-32's exact_variances step (ideal fit at ε = 0, 3/400) uses; the row's (0, 1] would make that step a 802."
+    },
+    {
+      "to": "VERBS-eval",
+      "ask": "List `item-bank-with-tier-correction` (N24c-31, N24-REF, exit 3) among `eval.promote`'s pending refusals: it is raised where the tier-correction estimator is applied, a promotion offered an item-bank result or its episodes (N24c-32's refuse_tier_correction calls `frob eval promote`; N24c-31's plant arena-i2 is caught there). Only `eval.compare`, which has no tier-correction input, lists it now."
+    }
+  ],
+  "unchanged": 4,
+  "notes": "Unchanged: N24c-09, N24c-29, N24c-35, N24c-39. Numbers recomputed: 13/256, 8.76%, 12.9%, 17.4%; 0.512; 1.23/2.57/4.08/5.15; ties at 99/178/328; 478 of 2,145; 39/400, 3/400, 309/36,400 (weight 10/91), 399/400, ratios 13 and 3549/309 = 11.49, 10.23; the 10^-6 floor's 759/100,000 and 9.18; 3.75 N·s and 75 N; σ in m·s^-3/2; Var(D) = 2σ²(1 − ρ) and the factor 10 between ρ = 0.50 and 0.95; toy (1 − s)/2 = 3/8, 1/4, 1/8; pooled R = 0.3/0.6 = 1/2; KILL-FOIL 18 of 30 and 9 of 30; the strip closed forms 0.3486 and 0.3731; the PO-ARENA-03 counts and 0.117/0.406/0.962 power. The exact-plant site is written `site: host` (the existing site vocabulary). Dependency audit, N24cp3-01 as counterpart of N16c-15: agreed; N24cp3-01 does not reach N16c-15, both are M2, so N16c-15 may take N24cp3-01 as a dependency with no change on this side. N24c-40's pre-lock form plans one study per candidate table before the choice and submits the chosen candidate's plan after the lock; N24c-40 reaches BD-124, N33b-19 and N24c-02 for the study and task verbs."
+}

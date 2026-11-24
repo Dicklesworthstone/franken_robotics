@@ -6,7 +6,7 @@ priority: 2
 milestone: "M3"
 labels: ["m3", "tether", "augur", "frob-verbs", "solid", "registry", "verb", "test"]
 parent: "WP-26"
-deps: ["BD-022", "NJL-01", "NJL-02", "NJL-03", "NJL-04", "NJL-05", "STD-E2E", "VERBS-analyze"]
+deps: ["BD-022", "BD-139", "N32a-14", "NJL-01", "NJL-02", "NJL-03", "NJL-04", "NJL-05", "STD-E2E", "VERBS-analyze"]
 needs: []
 related: []
 gates: ["GATE-TETHER-02"]
@@ -114,11 +114,14 @@ The remaining fields follow the rule of the cluster: `input_schema` is `frob.<ve
 true`; `cost_model = "static: …"` with the bound of the implementing bead; `purpose` is the Purpose column;
 `refusals` is the chapter list above, and the generator appends the surface-wide codes of a `read` verb (720
 scope missing, 723 token invalid, 724 not implemented in this build, 802 schema failure including an unknown
-parameter, 808 an out-of-range integer) and the codes its fields imply (NJL-01): the mission family of
-`analyze.constraint-graph` is a `params` entry of kind `artifact-input<fmission>` (it accepts a path to a
-`.fmission` file, read by the format's owner), so that row also gets 891 (`format-version-unsupported`), 734
-(`path-outside-roots`, exit 5) and 828 (`code-payload-or-weight-format`, exit 3); the other two rows take an
-identifier and a robot name, no path and no artifact input, and get none. One entry in full:
+parameter) and the codes its fields imply (NJL-01's variation table): 808 (an out-of-range integer) only on
+`analyze.regressor-identity`, whose `--states` is an `int53` input (arm 4; the other two have no integer input);
+and the mission family of `analyze.constraint-graph` is a `params` entry of kind `artifact-input<fmission>` (it
+accepts a path to a `.fmission` file, read by the format's owner), so that row also gets 891
+(`format-version-unsupported`, arm 7), 734 (`path-outside-roots`, exit 5) and 828
+(`code-payload-or-weight-format`, exit 3) (arm 9), and, as an artifact reader, the reality guard's 814, 816,
+819, 873, 889, 895 and 897 (arm 15, BD-139); the other two rows take an identifier and a robot name, no path
+and no artifact input, and get none of these. One entry in full:
 
 ```toml
 [[verb]]
@@ -211,9 +214,10 @@ them); the block shows the kinds as the specification prints them.
    moves one from `read` to `two_kinds` once both changes are in, whichever lands second recording the combined
    figure.
 
-**Before the milestone.** The rows are entered with this bead; until M3 (M4 for the regressor identity) each
-verb answers one envelope with `FROB-REF-724`, exit 5, on both surfaces, and `frob capabilities --json` lists it
-as absent.
+**Before the handler.** The rows are entered with this bead; until its implementing bead lands (N25e-08 and
+N25e-27 at M3, N25e-19 at M4) each verb answers one envelope with `FROB-REF-724`, exit 5, on both surfaces, and
+`frob capabilities --json` lists it as absent. Whether a verb answers is decided by its handler being in the
+build, never by comparing the build's milestone with `first_milestone` (NJL-03's rule).
 
 ## Acceptance criteria
 
@@ -222,7 +226,7 @@ as absent.
 - [ ] `frob-surface-diff parity --cluster analyze` exits 0 in process and through `frobd --mcp`: registry, CLI and MCP each count 29.
 - [ ] After `session_focus {cluster: "audit"}` the list holds seven tools plus the base three; `analyze-evidence` holds six plus three; the list budget of 12,000 bytes holds for both.
 - [ ] `frob <verb> --help --json` equals `fixtures/golden/verbs/analyze/<verb>.help.json` byte for byte for each of the three, twice, in debug and release, on Linux and macOS.
-- [ ] Before its milestone each verb answers `FROB-REF-724`, exit 5; from its milestone its registry example runs with the result its implementing bead specifies; a misspelt parameter is `FROB-REF-802`, exit 3.
+- [ ] While its handler is not in the build each verb answers `FROB-REF-724`, exit 5; once its implementing bead has landed its registry example runs with the result that bead specifies; a misspelt parameter is `FROB-REF-802`, exit 3.
 - [ ] The three lints fire on their planted defects and name them.
 - [ ] `frob robot-docs --json` and `frob capabilities --json` list exactly the rows the file holds, `[counts].total` of them (247 once the registry is complete); the alias lint finds no second spelling of the three.
 - [ ] Every older statement of a moved count (the reconciliation test, the task-cluster test, the `analyze` cluster test, the known-answer rows of the registry) reads the new value in the same commit.
@@ -237,15 +241,18 @@ mocks; planted registries are TOML strings labelled `synthetic`):
 - `kinds_milestones_tiers`: all three `read`; M3, M3, M4; S, F, F.
 - `schemas_scopes_owners`: the machine-fields table, field for field.
 - `refusal_lists`: chapter codes none, 868, none; appended for its kind and fields (NJL-01): {720, 723, 724,
-  802, 808} for each, plus {891, 734, 828} for `analyze.constraint-graph` (its `artifact-input<fmission>`
-  parameter); the full list of `analyze.constraint-graph` is the set {868, 720, 723, 724, 802, 808, 891, 734, 828}.
+  802} for each, plus 808 for `analyze.regressor-identity` (its `int53` input `--states`), plus {891, 734, 828,
+  814, 816, 819, 873, 889, 895, 897} for `analyze.constraint-graph` (its `artifact-input<fmission>` parameter);
+  the full lists are {720, 723, 724, 802} for `analyze.sweep-monotone`, {868, 720, 723, 724, 802, 891, 734,
+  828, 814, 816, 819, 873, 889, 895, 897} for `analyze.constraint-graph` and {720, 723, 724, 802, 808} for
+  `analyze.regressor-identity`.
 - `mcp_names_one_to_one`: `analyze_sweep_monotone`, `analyze_constraint_graph`, `analyze_regressor_identity`, with no collision in the whole registry.
 - `seats` (on NJL-05's target file): `audit` has seven tools, `analyze-evidence` six, no cluster above seven, 244 seated verbs.
 - `registry_total_247` (on the baseline list plus the additions, and on the registry once it is complete): the count table; the per-kind and per-milestone sums both equal 247.
 - `counts_equal_rows`: `[counts]` equals the totals of the rows the file holds at this commit.
 - `additions_equal_registry_minus_baseline`: exactly the four names, `artifact.import` and the three of this bead.
 - `lint_count_mismatch` (a fourth row without a count change), `lint_unrecorded_addition`, `lint_unregistered_command` (a script line `frob analyze constraint-graf …`).
-- `unimplemented_answers_724`: with the build milestone below M3 each verb returns code 724, exit 5, one envelope.
+- `unimplemented_answers_724`: in a build without the verb's handler (the capability report lists it absent) each verb returns code 724, exit 5, one envelope.
 - `integer_types`: `--states` is `int53` and `--seed` is `u64str` in the generated input schema.
 
 ### End-to-end script and logging
@@ -297,8 +304,9 @@ failure; the `summary`.
   lints, not this table, are the contract. The seats are written into NJL-05's target file
   (`fixtures/golden/verbs/task_clusters_target.toml`) and into the two `[[task_cluster]]` tables in the same
   change, so `assignment_is_target_restricted` holds.
-- The `[counts]` and `[[addition]]` tables are new top-level tables of the registry file, whose strict reader is
-  N32a-02's build script (an unknown key fails the build); that bead is asked to admit both with these two lints.
+- The `[counts]` and `[[addition]]` tables are top-level tables of the registry file, whose strict reader is
+  N32a-02's build script (an unknown key fails the build); N32a-02's closed list of top-level tables admits both,
+  and this bead adds the lints `count-mismatch` and `unrecorded-addition` on them.
 
 ## References
 

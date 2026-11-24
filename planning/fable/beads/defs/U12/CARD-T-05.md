@@ -6,7 +6,7 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "frob-lemma", "solid", "test"]
 parent: "WP-05"
-deps: ["BD-027", "CARD-T-04", "N12-06", "SPEC-C-02"]
+deps: ["BD-027", "CARD-T-04", "N12-06", "N12-33", "SPEC-C-02"]
 needs: []
 related: ["CARD-T-15", "CARD-T-16", "CARD-T-29", "N12-41"]
 gates: []
@@ -32,7 +32,8 @@ function accepts one where another is expected. Rejected alternative: one "trans
 
 ## Scope
 
-In: statement document, registry row, instance certificate on the frame-map kernels, specimen and mutants.
+In: statement document, registry row, specimen and mutants. The instance certificate on the frame-map kernels
+is produced in BD-047's acceptance (order of work below).
 Out: the typed API (the frame-typed transform bead); the certificate machinery; the port energy balance check
 (the actuator and ledger beads); the reflection case (the parity map of CARD-T-16).
 
@@ -62,9 +63,11 @@ what moves the registry row for that output.
 
 ## Acceptance criteria
 
-- [ ] `frob-verify` accepts the T-05 bundle and rejects: the wrench moved by the twist map (pairing changes by
-      the lost moment-arm term); one changed coefficient; a missing rotation side relation.
-- [ ] Registry row `checked`, class `Certified`, with certificate hash and checker identity.
+- [ ] `frob-verify` accepts the T-05 specimen bundle and rejects: the wrench moved by the twist map (pairing
+      changes by the lost moment-arm term); one changed coefficient; a missing rotation side relation.
+- [ ] Registry row at this card's close: the `poly-identity` route registered and `hypothesis`, printing no
+      class. BD-047, which depends on this card, produces the certificate bound to the frame-map code as built,
+      and its receipt moves the row to `checked`, class `Certified`, with certificate hash and checker identity.
 - [ ] The planar two-link fixture reproduces by both routes of computing power.
 - [ ] The statement document states the same-frame hypothesis explicitly.
 
@@ -84,7 +87,7 @@ joint torques Jᵀ·f = (−3, −3) N·m; joint rates (0.2, −0.1) rad/s give 
 ### End-to-end script and logging
 
 At M1, when the card closes, the T-05 specimen and its mutants join the specimen set that
-`scripts/e2e/lemma_kernel_cert.sh` (bead N12-33) replays offline with `frob-verify`; at M5
+`scripts/e2e/lemma_kernel_cert.sh` (bead N12-33, a dependency) replays offline with `frob-verify`; at M5
 `scripts/e2e/lemma_coverage.sh` (bead N12-36) covers the frame-map kernels as built and logs this identity's
 status. Both log, per specimen and mutant, NDJSON lines (STD-E2E helper) with `ts`, `script`, `bead`
 ("CARD-T-05"), `step`, `event`, the exact command line, exit code, wall time, the envelope's `evidence` block

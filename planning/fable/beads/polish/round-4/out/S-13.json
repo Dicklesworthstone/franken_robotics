@@ -1,0 +1,332 @@
+{
+ "round": 4,
+ "slice": "S-13",
+ "reviewed": 39,
+ "changed": [
+  {
+   "bead": "BD-339",
+   "kinds": [
+    "broken",
+    "convention",
+    "registry"
+   ],
+   "what": "The script's `frob eval run` calls named neither the policy nor the tier, so every run took the `baseline` controller and the default tier and the shield of the subject's scope key (design class, policy, task family, tier) would have refused them with FROB-REF-457 or, worse, measured the wrong controller: added `--policy <policy>` (or `--controller <id>` for the wheeled subject) and `--tier <tier>`, and named the penalty-trained policy of the comparison arm. Convention 9: the script ran the controls as a separate optional build and handed its receipt to `record_gate` itself (STD-E2E's linter fails that as `self-recording`); it now runs `e2e_tier g1_known_answers GATE-SHIELD-03 --mutations` once (controls caught in the same run, INV-GAUNT-02) and this bead records the part outside the script, from a non-implementing session. Resumed session: the controls section now says which records the gate's controls are, so that no second record is written for a plant that has one (BD-025): the self-labelling control is the record seeded from CX-241 (feature `self_labelled_miss_rate`, built by N22b-26), listed for this gate through the catalogue entry's gates, and the margin-removed control is N22b-20's `no-inter-sample` record, to whose `gate` list this bead adds GATE-SHIELD-03. Request to N22-CX recorded (its CX-241 entry names GATE-SHIELD-04 only)."
+  },
+  {
+   "bead": "BD-440",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Acceptance said GATE-SHIELD-05 is 'recorded `not run: pilot negative`', a status the register does not have and a write by a bead that is not the gate's recorder; now: recorded by N22b-35 only, or stays `not-run` on a negative pilot, and KILL-TUBE's kill row carries a decision entry (fired, not-fired or not-reached, N40-03) with receipts."
+  },
+  {
+   "bead": "N22b-01",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Convention 11: the format bead's only end-to-end evidence was N22b-05's later script (which waits on BD-336); added its own `scripts/e2e/skill_format.sh` on its own dependencies (test binary plus an example program over the committed sketch: SkillId golden, round-trip digests, rename and mu_min identity, five planted defects refused with their codes and pointers), with STD-E2E in deps; N22b-05 keeps the verb-level path. Convention 13: '802 is the default in force until the registry assigns a code' is now stated as fact. Registry: every validation failure was 802, but N34-REF assigns an unknown field or unread major version to FROB-REF-891 (raised by N34-19's version gate for every owner without its own code) and N37-REF a missing or non-false flag to FROB-REF-816 (N37-23's shared reader check); the validation order, the script's controls and the considerations now give 891, 816 and 802 for the rest."
+  },
+  {
+   "bead": "N22b-02",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Convention 11: only N22b-05's later script exercised the map; added `scripts/e2e/skill_map.sh` (test binary and example program: two-link B and torques, cart-tip front-normal row 98.1 − 2F against the fixed-base 6 N·m, non-unique four-point rest, ill-conditioned unknown, 10³-state one-step consistency on the referee, the space-frame mutant caught), STD-E2E in deps. Numbers rechecked (J⁻ᵀ, space rows, 49.05 N). Code-mutant controls run through the suite's one mutation mechanism: `e2e_expect_caught <control> -- cargo test -p <crate> --features nc-<id> --test <suite>` (N38a-14), not a run-time switch in the example program. Resumed session: the script's mutant build named the feature `nc-<id>`, but this control is seeded from CX-236 and N38b-04/N38b-05 name a seeded control's feature after its plant (`space_frame_rows_as_point_jacobian`); a second `nc-` feature for the same defect would leave the seeded control `stale` and GATE-REFLEX-08 not eligible. The command now names the plant's feature."
+  },
+  {
+   "bead": "N22b-03",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 11: added `scripts/e2e/skill_alloc.sh` on its own dependencies (example program plus `frob-verify`: arm 25/3, 5/3 gap, feasible (−3, −3) at 7/2, friction certificate (1/2, −1) and −5 N, cart-tip 49.05 N and the front-only 21.8 N traction case, wheel-speed 40 N, nudged certificate and unconverged-as-witness controls), STD-E2E in deps. All witness arithmetic recomputed and correct."
+  },
+  {
+   "bead": "N22b-04",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Convention 11: added `scripts/e2e/skill_refine.sh` (stable/fall refusal FROB-REF-444 with x′ and repairs, all-stable `refines`, sampled verdict labelled with draws and seed, swing phase out of scope, the ∃d mutant of CX-242 caught), STD-E2E in deps. Code-mutant controls run through the suite's one mutation mechanism: `e2e_expect_caught <control> -- cargo test -p <crate> --features nc-<id> --test <suite>` (N38a-14), not a run-time switch in the example program. Resumed session: the mutant build's feature was written `nc-<id>`; the control is seeded from CX-242, whose feature is its plant's name `refine_by_selecting_branch` (N38b-04, N38b-05), declared by this bead, which owns the checker."
+  },
+  {
+   "bead": "N22b-09",
+   "kinds": [
+    "broken",
+    "registry"
+   ],
+   "what": "The script ran `frob sim run <cell design> --tier referee` with no way to choose the contact law or the cell, and read absorber work with `frob telemetry energy`, whose implementer N24a-37 was not a dependency; `--law` (N18b-28) was not one either. Now each grid cell is a conformance fixture `energy/pilot-c31-<cell>` run with `--fixture … --law <law> --seed <s> --key …`, and N18b-28 and N24a-37 are in deps (no cycle). Registry: the verdict words positive/negative/uninformative are now written in N38a-09's vocabulary (`falsifier-rejected`, `falsifier-holds`, `inconclusive`) and the result's receipt is committed at `receipts/pilots/<hash>.json` (rule 2a), where N22b-16's decision cites it. All card figures (1,490,000; 50,500 and 45,500 µs; product 1,491,136 and 50,443.2 µs; card B 3,993,600, 506,400, 42,660 µs; 50 kg; 2.19 J) recomputed."
+  },
+  {
+   "bead": "N22b-10",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Convention 11: its only e2e was N22b-18's later verb script; added `scripts/e2e/energy_format.sh` (example program over the committed card and pass-counter documents: the integer terms at 0.39 and 0.40 m/s, the reserve case, 42,660 µs, round-trip digests and identity, the directed-rounding case, and the round-to-nearest, float-literal, flag, negative-term, class and bit-budget controls), STD-E2E in deps. Registry: validation said only 'refused with a pointer'; it now names the codes the registries assign (891 unknown field or version, 816 flag, 451 class, 215 bit budget, 802 for the rest). Numbers recomputed (48,880 µs, 166,433.415 steps, 2^291 and 2^86). Code-mutant controls run through the suite's one mutation mechanism: `e2e_expect_caught <control> -- cargo test -p <crate> --features nc-<id> --test <suite>` (N38a-14), not a run-time switch in the example program."
+  },
+  {
+   "bead": "N22b-12",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "Convention 11: added `scripts/e2e/energy_premises.sh` (example program on the unit-test fixture designs: classification table and digest stability, the three FROB-REF-451 refusals with pointers and repairs, the probabilistic cutoff 0.9179 and its class clause, `unverified`, digest change on edit, the mechanical-edges-only walk caught), STD-E2E in deps. An acceptance item required `shield.budget` (BD-337, which depends on this bead) to refuse the planted spring; it now requires the walk's refusal, which BD-337 returns. p = 1 − e^(−5/2) = 0.917915 checked. Code-mutant controls run through the suite's one mutation mechanism: `e2e_expect_caught <control> -- cargo test -p <crate> --features nc-<id> --test <suite>` (N38a-14), not a run-time switch in the example program."
+  },
+  {
+   "bead": "N22b-15",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Request from F-U22c applied after checking N38b-19, STD-E2E and N22c-49 (this bead is GATE-SHIELD-01's recorder): the script ran the controls in a separate build and ran `record_gate` itself; it now runs `e2e_tier g1_known_answers GATE-SHIELD-01 --mutations` once, asserts the count and both controls from the receipt, runs MR-22 with its control, and the part is recorded outside the script by a non-implementing session. Added STD-E2E to deps. The hand check of control 2 used one rotor (½·58·0.16 = 4.64 J) for a fixture with two geared drives: now each drive's rotor is KA-569's and the true energy is ½·108·0.16 = 8.64 J (one rotor alone 4.64 J)."
+  },
+  {
+   "bead": "N22b-20",
+   "kinds": [
+    "convention",
+    "contradiction"
+   ],
+   "what": "Convention 11: added `scripts/e2e/shield_rows.sh` (both test binaries including N10c-02's law tests, the 1-D wall row and its 0.90 m/s tightening, braking threshold 0.7196 m, FROB-REF-454 on the quantifier fixture, the split-cone 80 N case, D2 digests across worker counts, the three registered mutants caught), STD-E2E in deps. The bead states every margin part has the dimension of the row (the rate of h) while its braking test writes δ_is = v·Δt in metres: the test now says the fixture is the chapter's sampled-domain case written at the level of h (sup|ḣ|·Δt), and the row-unit δ_is is N10c-02's `inter_sample_margin` case. Numbers recomputed (0.6796, 0.0204, 0.0196, 0.7196 m). Code-mutant controls run through the suite's one mutation mechanism: `e2e_expect_caught <control> -- cargo test -p <crate> --features nc-<id> --test <suite>` (N38a-14), not a run-time switch in the example program."
+  },
+  {
+   "bead": "N22b-21",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 11: added `scripts/e2e/shield_templates.sh` (the three worked rows, the look-ahead velocity, selection and TemplateId stability, the rotation-translation relation, the body-point and reversed-normal mutants), STD-E2E in deps. All worked rows recomputed (u₁ ≥ −0.2, p_z ≥ 2ξ − 0.10, ω₀ = 4.4294, ξ(0.1 s) = 0.0663 m). Code-mutant controls run through the suite's one mutation mechanism: `e2e_expect_caught <control> -- cargo test -p <crate> --features nc-<id> --test <suite>` (N38a-14), not a run-time switch in the example program."
+  },
+  {
+   "bead": "N22b-22",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Convention 11: added `scripts/e2e/shield_project1.sh` (the worked, weighted, negative-coefficient and infeasible instances in rationals, f64 and f32; the 10⁶-instance PO-SHIELD-02 sweep with zero box violations; kernel digests across worker counts; project-then-clip, no-feasibility and unstable-sort mutants caught), STD-E2E in deps. All instances recomputed. Code-mutant controls run through the suite's one mutation mechanism: `e2e_expect_caught <control> -- cargo test -p <crate> --features nc-<id> --test <suite>` (N38a-14), not a run-time switch in the example program. Resumed session: of the three mutant builds, `project-then-clip` is the control seeded from CX-240, whose feature is the plant's name `project_then_clip` (also CX-074's plant in N10c-02's law suite), not an `nc-` feature; the other two stay `nc-<nnnn>`."
+  },
+  {
+   "bead": "N22b-23",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Convention 11: added `scripts/e2e/shield_project_n.sh` (compile-fail and N10c-02 laws, the two hand cases with their multipliers, conflict, box-infeasible and planted non-convergent backups with reasons, the 10⁵-instance sweep, FROB-REF-454 at five coupled rows and acceptance of 3 + 2, lockstep masking, two mutants), STD-E2E in deps. Hand cases recomputed. Code-mutant controls run through the suite's one mutation mechanism: `e2e_expect_caught <control> -- cargo test -p <crate> --features nc-<id> --test <suite>` (N38a-14), not a run-time switch in the example program. Resumed session: N22b-32 step 6 forces the iteration budget to 1 at a chosen tick of a real run `with the test switch`, which no bead defined and no product build may carry. This bead now registers the conformance-only plant kind `shield-iterations` in N29a-25's `registries/plant-kinds.toml` (entry `{world, tick, iterations}`, hook at the entry of its batched solve, admission checks, `applied`/`skipped`), with an acceptance item and the unit test `plant_shield_iterations` that call the batched solve directly (no run, so nothing waits on BD-338); N29a-25 is reached through BD-251."
+  },
+  {
+   "bead": "N22b-24",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 11: added `scripts/e2e/backup_controllers.sh` (slider at 50, 100, 200, 300 N·s/m with −0.375, −0.5, 0, +1.5 J and the rational verdicts, wheeled hand-over on the referee with the ledger non-increasing, brake domain, posture hold, latency `TestedOnly`, bit-identical wrapped laws, three controls), STD-E2E in deps. Convention 13: 'Until N22c-44 lands … reports TestedOnly' now states the condition (no A-22 certificate). Gain bounds and the √(3/2) spectral radius recomputed. Code-mutant controls run through the suite's one mutation mechanism: `e2e_expect_caught <control> -- cargo test -p <crate> --features nc-<id> --test <suite>` (N38a-14), not a run-time switch in the example program."
+  },
+  {
+   "bead": "N22b-25",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "Convention 11: added `scripts/e2e/shield_monitors.sh` (two-world braking: alarm at the first braking tick plus latency, backup from that tick, identical pre-slip outputs, silent at μ = 0.8; a breach and a 10⁴-tick nominal fixture per monitor (χ² 16.27 with persistence 3, 2 N·s against 1 N·s, 0.12 m, sixth tick); alarm recomputation; the access-check and reversed-inequality controls), STD-E2E in deps. Two acceptance items required later beads: `shield.check` (BD-338, which depends on this bead) recomputing alarms, and 'refused at fit' for a calibrated threshold, which BD-340's adaptive-element checklist enforces; they now require this bead's `recompute_alarms` (which `shield.check` calls) and a `Monitor::companions()` entry that names a missing companion (which BD-340's checklist reads)."
+  },
+  {
+   "bead": "N22b-26",
+   "kinds": [
+    "convention",
+    "broken",
+    "registry"
+   ],
+   "what": "Convention 11: its e2e was N22b-32's `shield.report` (BD-340) and BD-339's campaign, both later; added `scripts/e2e/violation_bound.sh` (hand table: 6.0e-4, 0.075, 1/36, 2.0e-4 and the Clopper–Pearson bounds 1.867e-3, 1.209e-3, 8.19e-4, B̂ = 3.89e-3; zero-event table 2.73e-4 per term and 8.19e-4; hidden-state labels on the blind-tracking fixture; the 457 scope refusal and shifted row; the self-labelling and Bernstein-in-bound mutants), STD-E2E in deps. All figures recomputed, including 1.4e-3, 12.3/n and the 27 and 45 strata. Resumed session: the new script asserted the Clopper–Pearson bounds and B̂ `at 10⁻⁶ relative` against figures rounded to three or four digits (1.867e-3, 1.209e-3, 8.19e-4, 3.89e-3), which a correct estimator fails (true values 1.866837e-3, 1.208777e-3, 8.185337e-4, 3.894148e-3: up to 1.1e-3 relative away); the script now compares the exact point estimates as rationals and the bounds at 10⁻⁵ relative against six-digit values (and 2.72919e-4, 8.18757e-4 for the zero-event table). The `self-labelling` mutant build named an `nc-` feature; it is the control seeded from CX-241 and takes its plant's name `self_labelled_miss_rate`."
+  },
+  {
+   "bead": "N22b-27",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Lead's graph-audit note checked and applied (first alternative): step 1 ran `frob --json doctor` (N34-26, not reached) and the `shield_levels` example honoured `FROB_REGISTRIES_ROOT` (N32ax-03, not reached). Step 1 now records the commit hash and toolchain; the example takes `--root <dir>` by explicit path, as N41-03's register subcommands do, and prints the OPEN-SHIELD-2 row read through N41-03's loader (a dependency through N41-OPEN4); the unit test and the planted missing-field copy use `--root`. No edge added, so the bead stays at its layer. Arithmetic rechecked (999, 110 of 10⁴, 5.99e-4, 2.10e-3, 8.19e-4)."
+  },
+  {
+   "bead": "N22b-30",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "Convention 11: added `scripts/e2e/shield_drift.sh` (hand p-values 0.3, 0.25, (2 + 2θ)/7 and M₁ = 4.451; 10⁴ null streams against β; 10³ drift streams with no early alarm and the median delay; regime retirement with FROB-REF-457 and the `margin-recalibrating` fallback; offline recomputation; four mutants), STD-E2E in deps. Acceptance said removing a companion makes `shield.fit` refuse the alarm, but that check is BD-340's (which depends on this bead) and BD-338 does not depend on it; the item now requires the four companions linked from the contract entry that BD-340's checklist reads. Correlation 0.16 and the mixture integral recomputed."
+  },
+  {
+   "bead": "N22b-31",
+   "kinds": [
+    "convention",
+    "broken",
+    "contradiction"
+   ],
+   "what": "The intervention term was written w·‖u − u_π‖ per tick, which is not rate-invariant and fails the bead's own test (−20 at 50 Hz, −40 at 100 Hz, not −0.4): now w·‖u − u_π‖·Δt. Convention 11: its only e2e was N22b-32's later script, which also used `shield.report` (BD-340, not a dependency); added `scripts/e2e/shield_training_stage.sh` on its own dependencies (example program for the five fields, the stored likelihood −2.3639, the flag, backup marks and batch independence; rate invariance; `shield fit` and a short `train start --shield` with `train status`; the two mutants caught), STD-E2E in deps. Code-mutant controls run through the suite's one mutation mechanism: `e2e_expect_caught <control> -- cargo test -p <crate> --features nc-<id> --test <suite>` (N38a-14), not a run-time switch in the example program. Resumed session: the script's step 4 and N22b-32's step 11 start a training job with a shield, but BD-338's start check refuses a run whose controller-or-policy identity differs from the shield's key (FROB-REF-457) and a training policy has no stable identity, so both steps would be refused and §22.12.6 would be unreachable from the surface; the plan requires both rules and does not reconcile them. DESIGN stated here with its reason and rejected alternatives: `train.start --shield` compares design class, task family and tier, records the fourth component (`shield_fitted_for`, label `shield: training-stage`) and claims no coverage or bound for the job; `sim.run` and `eval.run` keep the full check. Acceptance item and unit test `training_key_three_components` added. Step 4 fitted the shield for an undefined `<policy>` and left the backend to the planner (a GPU host would give a tier mismatch): now `--controller baseline` and `--backend batch-cpu`, with the manifest field and label asserted and a 457 on a task outside the family. Requests to BD-338 and N22-REF recorded."
+  },
+  {
+   "bead": "N22b-32",
+   "kinds": [
+    "convention",
+    "broken",
+    "registry"
+   ],
+   "what": "The acceptance planted code mutants in the `frob` binary 'by an environment switch', which no product build can carry (N38a-14); now STD-E2E plants (header `plants`, `E2E_PLANT_FAILURE`, `run-all.sh --verify-plants`) each feeding a step one defect's output, with the code mutants caught where they live and in GATE-SHIELD-02's tier run. Step 9's `eval run` lacked the controller and tier of the shield's scope key (refused with FROB-REF-457 otherwise); added. Step 14 used `FROB_REGISTRIES_ROOT` for the `shield_levels` example, which now takes `--root` (N22b-27). Resumed session: (1) step 6's undefined `test switch` is now `frob sim run … --conformance-plant \"$(e2e_fixture shield/runtime iter1-w3-t50.json)\"` on the conformance build with N22b-23's plant kind, after a fit for the three-row task, against an unplanted run with its own key; (2) step 3 passed `--instance fixtures/shield/runtime/row1.json`, a path that does not exist from the script's scratch `work/` directory: now `@fixture:shield/runtime/row1.json`; (3) step 14 made its own scratch registries copy with `frob --registries-root`, but STD-E2E allows a registry change only through `e2e_registries_scratch` (the summary would otherwise read `of-record` over override envelopes): the helper is used, the restore removes the variable for one command, and the logging section says no assertion carries a `--gate` tag under the override; (4) step 11's training job names `--backend batch-cpu` and asserts N22b-31's manifest field and label; (5) `POSIX shell` contradicted STD-E2E (bash; `lib.sh` is bash); (6) convention 13: `requested of the VERBS-sim, VERBS-eval and VERBS-train rows` now states that the rows carry `--shield` (checked in all three)."
+  },
+  {
+   "bead": "N22b-33",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The verdict words positive/negative/uninformative are now written in N38a-09's vocabulary (`falsifier-rejected`, `falsifier-holds`, `inconclusive`), and the result's receipt is committed at `receipts/pilots/<hash>.json` (rule 2a), where N22b-36's decision entry cites it. All hand points, areas, grid steps and erosion cases recomputed and correct."
+  },
+  {
+   "bead": "N22b-36",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "Convention 10 and N40-03: the decision wrote GATE-SHIELD-05 as 'recorded `not run: pilot negative`' and 'updated the rows of KILL-TUBE and GATE-SHIELD-05 with the same receipt', i.e. a second writer of the gate's record; now the kill row gets `decision = {outcome, adr, date, session, receipts}` (gate receipt, or the pilot result's receipt under receipts/pilots/), GATE-SHIELD-05 stays with its one recorder N22b-35 and becomes `killed` only through apply_decisions. The KILL-SHIELD-consequence case was 'fired by consequence' although neither half of the trigger was evaluated: now `not-reached` (N40-03: mechanism not funded), as is an unfunded pilot; tests and acceptance follow. Fallback numbers (0.6796 + 0.04 = 0.7196 m) recomputed. Resumed session: the script passed `--table fixtures/shield/table/braking.json`, a repository-relative path that does not exist from the script's scratch `work/` directory; now the fixture reference `@fixture:shield/table/braking.json`, which `frob` resolves for the `artifact-input` parameter (VERBS-shield)."
+  },
+  {
+   "bead": "N22b-39",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request from F-U22b applied after checking N14b-06, VERBS-control, VERBS-eval and N22b-41: section 5 states that the four controllers are fixture controllers in N14b-06's form (`fixtures/controllers/{latch-tied,latch-in-law,patch-terrain,patch-mech-tied}.toml`, `frob.controller.fixture/1`, with their kinds' builders), run with `--controller fixture:<name>` on `sim.run` and `eval.run` (control.synth has no in-law mode, and `--symmetry mech` is refused with 461); registers the two-latch design and task; adds the manifest's `equivariance` block to `control.show`; and gives the patch comparison's form (two single-task `eval.run` calls with the same `--worlds` and `--run-seed`, paired per address, since `eval.compare`'s arms are designs). Convention 11: added `scripts/e2e/control_equivariance.sh` on its own dependencies (0 of 256 and 256 of 256, the report wording, `control show`, replay, parity signs, the patch through the example, three controls), STD-E2E in deps."
+  },
+  {
+   "bead": "N22c-35",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "The record step gave no verdict vocabulary or receipt: now `falsifier-rejected`, `falsifier-holds` or `inconclusive` (N38a-09) with the receipt committed at `receipts/pilots/<hash>.json` (rule 2a, which the loader enforces), where N22c-39 cites it. Convention 13: 'the default until then is compliant tiers only' now states the condition. Closed forms recomputed (e^(−π), e^(−2π), ω*² = 1.2000, the bouncing-ball saltation matrix and its determinant r²)."
+  },
+  {
+   "bead": "N22c-37",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 13: an acceptance item narrated 'an earlier draft named the rimless wheel'; it now states why the rimless wheel cannot be the planted fold. Fold arithmetic recomputed (r*² = 0.6 and 0.4 at θ = −0.24, multipliers 0.221360 and 2.733, dr*/dθ = 3.2275, dT/dk = −π·k^(−3/2))."
+  },
+  {
+   "bead": "N22c-40",
+   "kinds": [
+    "broken",
+    "registry"
+   ],
+   "what": "The script ran `frob sim run quad-ref --scene terrain:<n> --tier batch-cpu` for each nonlinear sequence, but `sim.run` takes no arbitrary initial state (no way to start from the perturbed state) and with no length runs 2 s, not 50 strides; the prototype also 'shot' through `frob sim run`. Both now go through BD-159's batched step (a dependency) inside the prototype, which the script runs. Record: verdict in N38a-09's vocabulary and the receipt committed at `receipts/pilots/<hash>.json`, cited by N22c-43. Counterexample figures recomputed (B·A, 1.457107, 1.207107, Lyndon counts 2, 1, 2, 3, diag(0, 5/36))."
+  },
+  {
+   "bead": "N22c-45",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Touched by the interrupted reviewer and not in its result; read whole, the edit is complete: convention 11, its only e2e was a stage of N22c-46's later gate script, so it now owns `scripts/e2e/held_work.sh` on its own dependencies (test binaries and an example: +1.5 J against the naive −3 J, t* = 0.044949 s and `None` at h = 0.02 s with 0.21 J, the 10⁴ random holds, the source scan, two mutants), STD-E2E in deps. Fixed in this session: the mutant build of `work-as-initial-power` named an `nc-` feature; it is the control seeded from the catalogue entry `reflex-held-work`, whose feature is its plant's name `work_as_initial_power` (N38b-04, N38b-05). Reviewed in full against §22.25: formula, slider figures and the exhaustion time recomputed and correct."
+  },
+  {
+   "bead": "BD-042",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Touched by the interrupted reviewer and not in its result; read whole, the edit is complete and checked against N38a-10: results are appended through the ledger's one append path (`cargo run -p frob-conformance --example pilots -- append-result PILOT-PT-01 --result <file.json>`, `--registry <scratch>` in the script) and read back with `rerun-status` (also for SRC-CHK-01 and -02) instead of a hand edit of the register and a `pilots::rerun_status` call no script can make; the ledger seeds the `expected` lists, so the unit test compares with them; the archive is named by its repository path, not by one user's absolute path; `no-verb` stated for the evidence block. Reviewed in full: every figure recomputed (3/14 m, the four witnesses, 165 N, 150 to 160 N, (155, 135, 105, 5), (175, 115, 85, 25), the weak-screen example, the swapped-order rows 180 and 80 against 140), the KA rows of Appendix M agree, and both archive revisions exist in git with the stated sizes and digests (a635b91: 241,568 bytes, 0326e89d…; working tree: 275,178 bytes, 9620da42…)."
+  },
+  {
+   "bead": "N23a-04",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "The hidden-state acceptance criterion of rule E-7 ran `with a GRU policy`, but the GRU is N23a-12's, which is built on this layer through BD-192 and lands after it (graph_check: N23a-12 depends on N23a-04), so the criterion could never be met when this bead closes. It now uses a recurrent fixture policy written in the test tree (`synthetic`: one tanh recurrence and a linear read-out with fixed weights). Everything else read against §23.3 E-7 and VERBS-sim's `sim.replay` row (`--capture snapshots`, `--from-snapshot`, `--alone`) and found right; its e2e is step 8 of N23a-34's shared script, as the unit's other beads have it."
+  },
+  {
+   "bead": "BD-301",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 9: the script's summary said `step 7 records the adapter rows` of GATE-CORTEX-19, which reads as the script writing a gate record (STD-E2E's linter fails that as `self-recording`). It now says the step measures them and that this bead, which N23b-16's register names for those rows, enters them outside the script from the run's receipt in a non-implementing session. Checked and left: `sim.run --policy … --episodes 1000 --seed 5 --tier … --key …` against VERBS-sim; the 786,432-byte copy; the docking witnesses (both reach x = 1, v = 0); `actor-read-undeclared` in N23-REF's own form (request slug with proposed 559); §23.18 complete."
+  },
+  {
+   "bead": "N23b-12",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The script said that on a machine without the device it `logs skipped: capability absent and exits zero`. Under STD-E2E a script skipped as a whole exits 77 and is reported `not-run`, a skip is never a pass, and a script that ends with no assertion exits 2: exit 0 cannot happen and would have counted a skipped transport as tested. Now `needs=cuda` in the header and exit 77. Stride numbers (element strides (2, 1) to byte strides (8, 4); origin 1 with (2, −1) unrepresentable) and KA-580 checked."
+  },
+  {
+   "bead": "N23b-17",
+   "kinds": [
+    "registry",
+    "deadlock"
+   ],
+   "what": "All thirteen identifiers were registered as rows of `obligations.toml` `in the schema N29b-16 states`. That ledger's schema, loader and row checks are N28cp2-01's (N29b-16 only appends to it), its loader admits only ids of the form `PO-<CHAPTER>-NN`, so the seven `INV-CORTEX-0n` rows would fail the load, and N28cp2-01 was not a dependency. Now: the seven invariants are rows of `registries/invariants.toml`, section `cortex`, the one invariant register in the format its Spark, Habitat, Chronicle and Tether sections use (N21c-27, reached through BD-215), INV-CORTEX-06 reading `pending (M4)` with owner BD-328; the six obligations stay in `obligations.toml` with the schema's eleven fields; dep N28cp2-01 (M1) added, no cycle; test `cortex_register_rows_bound` added. Acceptance said `the battery passes` and `each test has a planted defect that it catches`, which the INV-CORTEX-06 test cannot do before BD-328 (M4): the criteria now require the twelve tests due at M2 and a `pending` report for the thirteenth. Tables compared with §23.20 line by line; hand table agrees with N23a-07's."
+  },
+  {
+   "bead": "N23b-31",
+   "kinds": [
+    "registry",
+    "deadlock"
+   ],
+   "what": "N23-REF's row 524 says the code is `extended to rewards, flags, masks and info by N23b-31`, but the bead never named it: a policy reading the previous reward on a task that leaves reward `trainer-only` just `fails task admission`. Now stated: FROB-REF-524 when the actor schema is frozen (`pointer` the field, `observed` its class, `required` `actor`), in the approach, the acceptance item and the unit test, which freezes a schema naming `reward` and needs no recurrent network (N23a-12 is not a dependency). An acceptance item required N23b-32's causal test and planted leaks to `run against this type`, but N23b-32 depends on this bead: it now requires what the type must carry for them. Docking arithmetic (x₃ = g·(5u₀/2 + 3u₁/2 + u₂/2), v₃ = g·Σu) and §23.26 checked."
+  },
+  {
+   "bead": "N23b-35",
+   "kinds": [
+    "request",
+    "broken",
+    "convention",
+    "deadlock"
+   ],
+   "what": "Request from F-U16b applied after checking BD-265 (a dependency) and VERBS-eval's `eval.rank-agreement` row, which name this bead as the implementer of the fixture form: `--fixture <name>` resolves to `crates/frob-opt/fixtures/rank_agreement/<name>.toml` in BD-265's format, serves every file of that directory (so N16b-32 steps 3 and 4 reach BD-265's four tables), and this bead registers `forty-design-winner-third.toml` there (`selective`, `measured`, with a test that BD-265's rule recomputes that mode); `--class` optional and equal to the file's; unknown name 802. Broken: the script's two `eval rank-agreement` calls had no `--key` (the verb is of kind `run`: FROB-REF-805), and steps 3 and 4 ran `frob opt cascade --plan-only where it exists, otherwise the stub caller`: `opt.cascade` is BD-352's (M4, later than this M3 bead) and the stub caller was undefined. The retention rule is now the function `winner_check::admit_selection`, reached through the example program `winner_check` in the script and called by BD-352 later. Convention 9: the gate had no tier run, so no receipt existed to record it from: the script now runs `e2e_tier g1_known_answers GATE-CORTEX-21 --mutations` (the three controls caught in the same run) and this bead, the recorder in N23b-16's register, records it outside the script. Fixture arithmetic recomputed (41/45, 776/780, k_c = 3, 3, 3, 4, regret +1 and −3, 27 of 81, ⌈3·120/40⌉ = 9)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N22b-28",
+   "what": "Its downstream table says KILL-TUBE (N22b-36) 'is recorded as fired by consequence' when KILL-SHIELD fires. Under N40-03 `fired` means the trigger was met, and neither half of KILL-TUBE's trigger is evaluated then; N22b-36 now records `not-reached` (mechanism not funded) with the reason 'by consequence of KILL-SHIELD'. Say 'recorded `not-reached` by consequence' so the two decision beads agree."
+  },
+  {
+   "bead": "BD-336",
+   "what": "`skill.compile` step 2 refuses every `.fskill` validation failure with FROB-REF-802. N34-REF assigns an unknown field or an unread `schema` major version to FROB-REF-891 (raised by N34-19's version gate for every owner without its own code) and N37-REF a missing or non-false authorization flag to FROB-REF-816 (N37-23's shared reader check); N22b-01 now states 891, 816 and 802 for the rest. State the same three codes so the format and the verb agree."
+  },
+  {
+   "bead": "ART-L5",
+   "what": "Acceptance says 'a flag missing or true → FROB-REF-833' without naming who refuses. 833 is the auditor's flag rule (`frob-verify`, N12-REF); a reader of the `.fenergy` (`shield.check --energy-budget <file>`, N22b-10) refuses with FROB-REF-816 (N37-REF). Name the tool: 816 from the reader, 833 from `frob-verify`."
+  },
+  {
+   "bead": "VERBS-control",
+   "what": "`control.show`: N22b-39 now adds the controller manifest's `equivariance` block (mode `none`, `pathwise` or `in-law`, the draw's stream address and `shared_by`) to the outputs, as N28c-33 adds `family` and `budget`, and its fixture controllers (`fixture:<name>`, N14b-06) are read by it. Add the block to the Outputs and `N22b-39` to 'Extended by'."
+  },
+  {
+   "bead": "N22b-41",
+   "what": "Steps 8 and 9 can now name exact command lines from N22b-39 section 5: `frob eval run two-latch --task two-latch --controller fixture:latch-tied|fixture:latch-in-law --worlds 256 --run-seed <s> --key …` (the design and task are N22b-39's), `frob control show <ControllerId>` for the `equivariance` block, and for the patch two single-task `eval.run` calls on `quad-sym` with `--controller fixture:patch-terrain` and `fixture:patch-mech-tied`, the same `--worlds` and `--run-seed`, paired per address from the verdict records (not `eval.compare`, whose arms are designs). Name the patch task on the slippery-strip scene, which your fixture list does not yet name."
+  },
+  {
+   "bead": "BD-338",
+   "what": "Your `--shield` attachment says the scope check of step 4 runs at start on `sim.run`, `eval.run` and `train.start` alike and refuses a key mismatch with FROB-REF-457. A training job's policy has no stable identity, so every `train.start --shield` of a new policy would be refused and shields in training (plan §22.12.6, N22b-31, N22b-32 step 11) could never run. N22b-31 now states the form (DESIGN): for `train.start` the check compares design class, task family and tier (the job's `--backend`), records the fourth component in the manifest as `shield_fitted_for`, labels the job `shield: training-stage` and claims no coverage or bound for it; `sim.run` and `eval.run` keep the four-component check. State the same in your attachment paragraph, or answer with the form that holds."
+  },
+  {
+   "bead": "BD-338",
+   "what": "`shield.check --instance <file>` is in the VERBS-shield row (credited to N22b-32, an end-to-end bead that only calls it at step 3) and in no implementing bead: your `shield.check` contract has the run and `--shield` forms only. Carry the `--instance` form (the instance file's format with R, u_π, the box and the rows; the applied command and multiplier compared with the rational reference; no run positional), or N22b-32 step 3 has nothing to call."
+  },
+  {
+   "bead": "N22-REF",
+   "what": "Row 457's trigger says the key 'differs from the run's in any component' for 'any run with a shield stage'. For a training job the controller-or-policy component is recorded and not compared (N22b-31's DESIGN, requested of BD-338): say so in the trigger, so the row and the two beads agree."
+  },
+  {
+   "bead": "N22-CX",
+   "what": "CX-241's entry lists GATE-SHIELD-04 only, but BD-339 (GATE-SHIELD-03's recorder) asserts the self-labelling plant caught in its own tier run, and the control runner plants a control only for the gates its record names: add GATE-SHIELD-03 to the entry's `rule_ids`, or BD-339's receipt can never show that control. Also the planting-bead list names BD-339 for CX-241 and BD-336 for CX-242, while the components and their flags are built by N22b-26 (the estimator; feature `self_labelled_miss_rate`) and N22b-04 (the refinement checker; feature `refine_by_selecting_branch`), on which those two depend: name the builders."
+  },
+  {
+   "bead": "BD-328",
+   "what": "Your acceptance moves INV-CORTEX-06's `row of the obligations ledger obligations.toml (N29b-16's row schema)` from `open` to `discharged`. That ledger's schema and loader are N28cp2-01's and admit only ids of the form `PO-<CHAPTER>-NN`, so an `INV-` row fails its load. N23b-17 now registers the seven Cortex invariants in `registries/invariants.toml`, section `cortex` (the invariant register the Spark, Habitat, Chronicle and Tether sections use), with INV-CORTEX-06 `pending (M4)` and `owner_bead = \"BD-328\"`: say that your test makes that row `passing` there."
+  }
+ ],
+ "unchanged": 4,
+ "notes": "Resumed slice, complete: 39 of 39. Every file the interrupted reviewer touched (29) was read whole: all parse and none held a half-finished edit; N22c-45 and BD-042, touched but missing from its result, are recorded with what was done. Unchanged after a full read against their plan sections, registry rows and the 14 conventions: N23a-02, N23a-07, N23a-11, BD-439 (numbers recomputed: the eight-row GAE table, γ 0.99000 and 0.99499, 2.000·r and 1.995·r, λ 0.95; ages 0 to 80 ms; 90 GPU-hours). The three requests of the slice file and the graph-audit note are answered: N22b-15 and N22b-27 by the interrupted reviewer (checked), N22b-39 complete as it left it (section 5, the `control.show` block, the comparison form, its own script; checked against N14b-06, VERBS-control and VERBS-eval), N23b-35 in this session. A defect that ran through the interrupted reviewer's new scripts: mutant builds named an `nc-<id>` feature for every control, but a control seeded from a catalogue entry takes its plant's name as its feature (N38b-04, N38b-05); corrected in the five beads where the control is a seeded one (N22b-02, N22b-04, N22b-22, N22b-26, N22c-45) and left where the bead registers the control itself. The Cortex beads N23a-02, -04, -07 and -11 keep their end-to-end checks as named steps of N23a-34's and N23a-35's shared scripts (one owning bead named in each, the form the unit's other beads have after this round), and were not given scripts of their own. Open design points, not edited: (1) BD-339's comparison arm needs a penalty-trained unshielded policy, and no bead before the KILL-SHIELD decision delivers barrier rows as a training penalty (N22b-28 provides it only on its fired branch); the arm has no threshold, so no gate row depends on it. (2) Gate rows measured by an end-to-end script and not by a tier run (BD-301's clauses 1 and 2 of GATE-CORTEX-16, which N23b-13's `g2_parity` entries read as `BD-301's receipts`, and the adapter rows of GATE-CORTEX-19) have no defined receipt form anywhere I read; BD-301 states who enters them and from what, not the file. (3) N22b-31's rule for a training job's shield key is a DESIGN choice the plan leaves open (§22.12.4 against §22.12.6); BD-338 must take it or answer. No dependency of the slice points to a later milestone or to an epic; graph_check finds 0 cycles after the one added edge (N23b-17 to N28cp2-01). Helpers: scratchpad polish-r4-S-13/ (check.py for the parse check, cp.py for the Clopper–Pearson figures, res.py for this file)."
+}

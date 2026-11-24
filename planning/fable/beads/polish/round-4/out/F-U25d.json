@@ -1,0 +1,359 @@
+{
+ "round": 4,
+ "slice": "F-U25d",
+ "reviewed": 42,
+ "changed": [
+  {
+   "bead": "BD-043",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied F-U38a's request (checked against N38a-10): results reach pilots.toml only through `pilots -- append-result <record> --result <file.json>` and statuses are read with `rerun-status <record> --json`; step 8, step 10, an acceptance criterion and the e2e log now say so (otherwise a script would write the ledger by hand and bypass the owner and limit checks). Applied H-cx-2's request (checked against N38b-05 step 2 and N25-CX): the CX-283 control is built under the feature `cx-283` named by its plant, not an NC number, and the plant is stated in N25-CX's full form; the stale 'completed when built' narration is gone (an implementer would have named the feature after the NC number and the control runner would not find it)."
+  },
+  {
+   "bead": "BD-360",
+   "kinds": [
+    "broken",
+    "contradiction"
+   ],
+   "what": "An unknown `--catalog` set had no refusal code (an implementer would invent one the mission.synthesize row does not list); it is now FROB-REF-802, exit 3, pointer /catalog (DESIGN, the schema code every verb lists). The lane script now asserts the answer's three `authorization` flags false (BD-135), which N25d-10 counts on as a measured value of this stage."
+  },
+  {
+   "bead": "BD-361",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The e2e asserted 'mobility 1' from `module.check`, whose output has no mobility (VERBS-module): the lane now runs A-01 (BD-101) on each module body before emitting it, writes the count into contract.guarantees, and the script reads it with `module show`; the acceptance criterion follows. Without this the step could never pass."
+  },
+  {
+   "bead": "BD-362",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The e2e ran 'the gear-ratio fixture from ratio 1 and from ratio 4' on one fixture with no seed, which starts both calls at the same nominal θ; added the fixture `gear-ratio-from-4` (base design at N_g = 4) and stated `gear-ratio`'s base at N_g = 1. Step 1 said the slug was 'requested': it is filed by N35x-02 in family 8xx and held; the interim 857 with detail is the one N25e-45 and VERBS-mission carry (convention 13)."
+  },
+  {
+   "bead": "N25d-01",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Applied F-U25d-2's request (checked against N25d-40 row 17a and N38a-09): the bead registers PILOT-SYMEVENT-01 (protocol at docs/pilots/, its hash, freeze date, ledger sequence; cost and tool) instead of writing a second record, which would fail N25d-40's linkage test and leave row 17a unregistered; acceptance names the id; fallback text is N40-26's. The nominal `sim run tray-4` had no task, so no drop initial state and no mirror side: it now runs the case design with a base and a mirror task from this bead's fixture directory, with distinct keys per side. Also fills `gated_beads = [N25d-02, N25d-03, N25d-04]`: BD-426 holds rows 17a and 17b, and without the list the amortization experiment N25d-04 (row 17b's own bead) would not wait for this falsifier."
+  },
+  {
+   "bead": "N25d-03",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "controls_registered now has the six numbers appended to GATE-AUGUR-21's `controls` by this bead. Control numbers: appends its registered controls to the gate's `controls` in gates.toml, the division N25d-41 now states (an M1 register bead cannot list numbers an M4-M8 carrier creates)."
+  },
+  {
+   "bead": "N25d-04",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Applied F-U25d-2's request: the record is N25d-40's PILOT-SYMEVENT-02 (row 17b), registered by committing the protocol and hash, never a second record; a close without a run sets it `withdrawn`. Added deps (convention 7) N25d-40 (the record) and N38a-09 (the register's registration rules); no cycle."
+  },
+  {
+   "bead": "N25d-05",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The `deferred` outcome did not carry `deferred_to` and `reason`, which N40-03 requires (it refuses a deferred entry without them): now deferred_to the next exit (M7, re-deferred to M8 by a new entry and ADR) and a reason naming OPEN-AUGUR-10; the unit test asserts both."
+  },
+  {
+   "bead": "N25d-06",
+   "kinds": [
+    "broken"
+   ],
+   "what": "E2E step 1 compared the strategy-less answer with 'a call through the pre-dispatch path', which no public verb offers: it now compares the cell sets with the fixture's pinned `dispatch-min.expected.json`. Step 7 said 'the same four refusals' where steps 2 to 4 have three."
+  },
+  {
+   "bead": "N25d-09",
+   "kinds": [
+    "contradiction",
+    "convention",
+    "broken",
+    "deadlock"
+   ],
+   "what": "The bead wrote the whole PILOT-CODESIGN-01 record (and said N25d-40 'is asked to confirm it') while N25d-40 enters that record at M0 as row 18: it now registers N25d-40's record (protocol, hash, cost, tool) and keeps N25d-40's texts, so the register does not get two records for one mechanism. The referee rollout had no task or controller: it now passes the mission task and `--controller baseline`. Fills `gated_beads = [BD-360, N25d-10]`: WP-67 holds four upper-tier mechanisms, so without it a held falsifier or the `to-register` placement row would block BD-360 too."
+  },
+  {
+   "bead": "N25d-10",
+   "kinds": [
+    "broken",
+    "deadlock"
+   ],
+   "what": "The determinism lane 'one and eight workers' was a CLI step, but mission.synthesize carries no worker option: the workers lane now runs in process in the tier entry through testkit::det::lane; the CLI lanes are twice and debug/release. Control numbers: appends its registered controls to the gate's `controls` in gates.toml, the division N25d-41 now states (an M1 register bead cannot list numbers an M4-M8 carrier creates)."
+  },
+  {
+   "bead": "N25d-11",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "The decision test `rule_matches_ledger_trigger` reads N40-26's row and the owner declaration is N40-30's block, but neither was a dependency (convention 7): added N40-26 and N40-30 (M1, no cycle). The owner declaration had no place: now `frob-synth`'s contract.toml, as N25d-41 names it, so N40-30's comparison finds it."
+  },
+  {
+   "bead": "N25d-12",
+   "kinds": [
+    "contradiction",
+    "convention",
+    "deadlock"
+   ],
+   "what": "Wrote the whole PILOT-TRAJOPT-01 record and said N25d-40 'is asked to confirm' it (C13), while N25d-40 enters it at M0 as row 19: now registers N25d-40's record and keeps its texts, with the fallback in N40-26's words ('Continuous optimization of §28 ...'). Fills `gated_beads = [N25d-13, BD-362, N25d-14]` so that the WP-67 package answer does not cross-block the other lanes."
+  },
+  {
+   "bead": "N25d-14",
+   "kinds": [
+    "broken",
+    "registry",
+    "deadlock",
+    "convention"
+   ],
+   "what": "The fixed-n comparison used `study plan` with a manifest that 'binds the battery', but frob.study.manifest/1 has no battery member, so the held-out worlds could not be drawn; and it said eval.compare is anytime-only, while its row takes a `fixed_n` block with `--battery`. Now `eval preanalyze --rule --n --margin 0 --level` before the first solve and `eval compare <nominal> <candidate> --task --battery --fixed-n ... --declared-verdicts <reachable>` per candidate, verdict `promote`. The tier entry was 'the tier the gate record names', which N25d-41 fills from this bead: circular, so no tier could be filled; now `g1_known_answers` (DESIGN, with reason). Stage 1 names the two gear-ratio fixtures BD-362 now carries. The four controls are now registered in controls.toml against GATE-AUGUR-18 (kinds a-a, planted-design, mutation) before the tier entry is written; the bead never said they were registered. Control numbers: appends its registered controls to the gate's `controls` in gates.toml, the division N25d-41 now states (an M1 register bead cannot list numbers an M4-M8 carrier creates)."
+  },
+  {
+   "bead": "N25d-15",
+   "kinds": [
+    "broken",
+    "convention",
+    "registry"
+   ],
+   "what": "The pilot branch waited for `fundable(WP-67) = Blocked{falsifier-holds}`, which never happens while WP-67's other mechanisms are fundable (N38a-09 then answers `Partial`): now `fundable --bead BD-362`. Added deps N40-26 and N40-30 (the ledger row its test reads, the declaration's checker) and the declaration's place."
+  },
+  {
+   "bead": "N25d-16",
+   "kinds": [
+    "contradiction",
+    "broken",
+    "convention",
+    "deadlock"
+   ],
+   "what": "Wrote a second PILOT-C-34 record whose falsifier carried both statements, against N25d-40's rule that the record's texts stay as entered: now registers row 20 and puts both falsifier statements in the protocol. The referee step `sim run <rig> --scene <pose drive>` had no drive (a scene is not a controller) and `design check` prints no mobility: now `analyze mobility` and `--controller open-loop:pl-drive-<i>-<c> --seconds`, with the schedule rule frozen in the protocol; dep N15ap3-01 added. Fills `gated_beads = [N25d-17, N25d-18, BD-361, N25d-19]`."
+  },
+  {
+   "bead": "N25d-17",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The e2e ran `dyad_enumerate --workers 1/8` but the example program defined no such option: it now takes `--workers <n>`."
+  },
+  {
+   "bead": "N25d-19",
+   "kinds": [
+    "broken",
+    "convention",
+    "deadlock"
+   ],
+   "what": "'Import the module into linkage-rig' named no verb and `sim run <rig> --scene <pose drive>` had no drive: now `module substitute linkage-rig --at /linkage --with <module@hash> --expected-parent --key` and `--controller open-loop:lk-drive-<i>-<c> --seconds`; deps BD-077 and N15ap3-01 added. The 'one and eight workers' lane went through mission.synthesize, which has no worker option: it now runs in process in the tier entry. Control numbers: appends its registered controls to the gate's `controls` in gates.toml, the division N25d-41 now states (an M1 register bead cannot list numbers an M4-M8 carrier creates)."
+  },
+  {
+   "bead": "N25d-20",
+   "kinds": [
+    "broken",
+    "convention",
+    "registry"
+   ],
+   "what": "Same as N25d-15: the pilot branch now reads `fundable --bead BD-361` (the package would be `Partial`, never `Blocked`); deps N40-26 and N40-30 added; the owner declaration's place stated."
+  },
+  {
+   "bead": "N25d-21",
+   "kinds": [
+    "request",
+    "convention",
+    "contradiction"
+   ],
+   "what": "Applied F-U25d-2's request (checked against N25d-40 row 21 and N10c-10): registers PILOT-C-34-cont (protocol at docs/pilots/, hash, cost under N25d-49's envelope, tool), never a second record, and names it in an acceptance criterion; otherwise row 21 stays unregistered and C-34's lane-2 check finds no result. The falsifier lacked the trigger's '>0.1% lost paths' clause that the record carries: added. The e2e had no STD-E2E log fields and the bead no STD-E2E or N38a-09 dependency: added."
+  },
+  {
+   "bead": "N25d-22",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Mechanical C13 finding checked: 'until N25d-23 adds the strategy' states a dependency fact, not a pending request (false alarm as C13), but the bead had 'None' as its e2e, against convention 11: it now owns `scripts/e2e/synth_continuation_engine.sh` driving the example `continuation_track` on its hand-family fixtures (the six known answers and the planted removal), with STD-E2E logging and the STD-E2E dependency."
+  },
+  {
+   "bead": "N25d-24",
+   "kinds": [
+    "broken",
+    "convention",
+    "deadlock"
+   ],
+   "what": "Step 8 is now a g1_known_answers tier entry tagged GATE-AUGUR-22 run with `e2e_tier ... --mutations`, so a receipt exists for record_gate (none could before); controls registered and appended to the gate's `controls`; second-run keys `ag22-<k>-d2` so the determinism lane recomputes; STD-E2E log fields; dep N38b-19."
+  },
+  {
+   "bead": "N25d-25",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "Closing used reasons outside N41-17's set (`decided: kept`, `not reached`): now `pass`, `fallback` or `withdrawn: not funded: OPEN-AUGUR-10`; the kill row gets N40-03's `decision`; declaration placed in frob-synth's contract.toml; deps add N25d-49, N40-03, N40-26, N40-30 (used, were only related)."
+  },
+  {
+   "bead": "N25d-26",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Acceptance and e2e asserted release cells through `frob capabilities --json`, which prints capability records, gates and devices (N00-02, N32b-19), not release cells; now `xtask check-contracts` on the real manifest (N41-29)."
+  },
+  {
+   "bead": "N25d-27",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Step 5 ran `mission.refute` on the whole family with `--set`, which refute accepts only from M3; now N25c-22's single-cell fixture `docking-point.fmission` (mode = scope). The 1/8-worker lane could not be varied through any verb; it is BD-129's; second-run keys added."
+  },
+  {
+   "bead": "N25d-32",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "858 is raised only by the facility query's stage chains (N25c-30, M8; VERBS and BD-135), but the battery was re-run only at M3 and M4 'where pending rows must be asserted'; now M3, M4 and M8, and the 858 row and acceptance name N25c-30, M8."
+  },
+  {
+   "bead": "N25d-33",
+   "kinds": [
+    "broken"
+   ],
+   "what": "INV-AUGUR-10's 50 schedules/proposer seeds and INV-AUGUR-06's fault injection have no M1 verb input (`--scheduler`/`--hints` arrive at M4, N25b-12): now driven in process through frob-mission's solve entry, answers read back through the verbs; worker-count lane in process (testkit::det::lane); acceptance updated."
+  },
+  {
+   "bead": "N25d-35",
+   "kinds": [
+    "broken"
+   ],
+   "what": "PO-AUGUR-05's 1- and 8-worker encodings were run through `mission.synthesize`/`prove.bundle`, which carry no worker option: the worker lane is now the in-process test po_augur_05_worker_counts; the verbs vary only the host, with keys po05-<mission>-<host>."
+  },
+  {
+   "bead": "N25d-37",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Determinism lane 'one and eight workers' had no verb to vary it: now in process (`ka_m1_workers_lane`, testkit::det::lane), with own keys for the second run."
+  },
+  {
+   "bead": "N25d-38",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Deps add N25c-14 (KA-640's pad family query) and N25c-36 (KA-646's encoder premise), both used (convention 7; graph_check: no cycle). Acceptance named a nonexistent 'quotient verb': it is `mission.synthesize --quotient on` (BD-357). Worker lane moved in process (`ka_m4_workers_lane`)."
+  },
+  {
+   "bead": "N25d-39",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Script logged a killed or unfunded epic's row `pending` while the acceptance requires `not run` with the ADR; now `not run`, and `pending` only for an M8 row in a `--milestone M6` run."
+  },
+  {
+   "bead": "N25d-40",
+   "kinds": [
+    "request",
+    "convention",
+    "deadlock"
+   ],
+   "what": "Requests from F-U25c-2 (rows 16a/16b with bead N25c-42 and ids PILOT-PHASE-01/-02, rows 11 and 13 with N25c-24 and N25c-39) were already in the bead; F-U40's note checked: KILL-AUGUR-SOS and -FAMILYKERNEL are N40-26's introduce amendments for self-registered records, now noted. C13 fixes: `plan_time_records` is stated as N38a-09's field (it is in N38a-09's schema), not 'requested'; KILL-SYNTH-PLACEMENT is stated as N40-26's owner question with both rulings, not 'asked of'. Added deps N00-02 (capabilities.toml read by linkage test item 3), NJL-01 (verbs.toml rows read by item 3) and STD-E2E (its script sources the helper); all M0, no cycle. States that `gated_beads` (N38a-09's optional field) is filled by each carrier on registration, and names the packages that hold several upper-tier mechanisms (WP-37, WP-59, WP-66, WP-67, BD-425, BD-426): without it every bead of such a package is answered by the whole package, so one held falsifier or one `to-register` record blocks the beads of the others."
+  },
+  {
+   "bead": "N25d-41",
+   "kinds": [
+    "request",
+    "deadlock",
+    "convention",
+    "registry"
+   ],
+   "what": "Applied both round-3 requests after checking each recorder's record_gate line: Carrier column names the one recorder (16 N25c-26, 19 N25c-38, 23 N25c-02 recorded by N25c-04; 17 N25d-19, 18 N25d-14, 21 N25d-03, 22 N25d-24), and likewise the stale ones found by scan (08 N25a-25, 11 N28c-16, 12 N25a-26, 14 N25ax-02/N25a-27 by part, 15 N25a-28, 20 N25c-45, 24 N25c-34). New table of tiers (g1_known_answers) and controls for 17 (4+4 mutants), 18 (four), 21 (four mutations, two builds), 22 (four); `measured_by` names the recorder. Deadlock: an M1 bead could not fill `controls` with numbers M4-M8 carriers create; now M1 fills what exists (N38b-05's seeds from N25-CX/N25-KA, deps added) and carriers append theirs (N32b-25's division), with linkage-test parts 8-9 and two unit tests."
+  },
+  {
+   "bead": "N25d-43",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Uses `--lowering scenario-tree`, N25c-20's lowering, without depending on it: dep N25c-20 added (no cycle); N41-OPEN5 (the row it moves) moved from related to deps. The worker-count lane had no verb input: now in process (`oa2_counts_workers_lane`); the register row goes `defaulted` when the ADR is 'default at deadline'."
+  },
+  {
+   "bead": "N25d-44",
+   "kinds": [
+    "deadlock",
+    "registry",
+    "convention"
+   ],
+   "what": "The register row was to 'keep `open (default in force)`' after the ADR, a status N41-03 does not have; an `open` row past its M4 deadline reads `silent` and holds the M4 exit (N25d-48's linkage test also fails it). Now `decided` with the ADR (or `defaulted` at deadline); a later M8 answer supersedes by a new ADR. Deps add N41-03 and N41-OPEN5 (the register and the row it writes)."
+  },
+  {
+   "bead": "N25d-47",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "Close forms outside N41-17's set ('closes on that ADR'; 'recorded as not needed; default stands'): now `withdrawn` citing the default ADR, and `withdrawn: not funded: OPEN-AUGUR-10` citing N25d-49, which became a dep (no cycle), as did N41-OPEN5. Keys `oa9-<variant>` gave the determinism repetition the stored receipt: now `oa9-<variant>-<run>`; the worker-count lane moved in process."
+  },
+  {
+   "bead": "N25d-48",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Group 8 ran `frob prove bundle` on a query; the verb bundles an answer `a:...` (VERBS-prove): now synthesize, then bundle each answer. Other numbers (1/3 and 1/7 of the chart example) and the probes were checked and hold."
+  },
+  {
+   "bead": "N25d-49",
+   "kinds": [
+    "request",
+    "registry",
+    "deadlock",
+    "contradiction",
+    "convention"
+   ],
+   "what": "Applied the request: the typed reason is `withdrawn: not funded: OPEN-AUGUR-10`. Pilot-first now uses `fundable --bead <key>` (gated_beads; package answer otherwise). The bead (M6) required an ADR at the M7 exit, after its own milestone, and the register (N41-OPEN5) sets the deadline at M6 for all six items: now every item is answered or defaulted by M6, the row is `decided` or `defaulted` before the M6 exit, and an owner's M7 funding of an M8 item is a superseding ADR through N41-09; unit test `later_answer_supersedes`; N41-OPEN5 moved to deps."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N25d-07",
+   "what": "When registering PILOT-PLACEMENT-01 (row 22), fill `gated_beads` with the placement lane's own beads (N25d-07 and N25d-08 as they apply). WP-67 holds four of the chapter's mechanisms (rows 18, 19, 20 and 22) plus N25e-18's PILOT-REGRESSOR-01; without `gated_beads` a held falsifier or an unregistered record answers `fundable --bead` for every WP-67 bead through the whole package, which fails closed and blocks the other mechanisms. N25d-09, N25d-12 and N25d-16 now fill theirs; N25d-40 states the rule."
+  },
+  {
+   "bead": "N25e-18",
+   "what": "When registering PILOT-REGRESSOR-01, fill `gated_beads` with the regressor lane's own beads. WP-67 holds four of the chapter's mechanisms (rows 18, 19, 20 and 22) plus N25e-18's PILOT-REGRESSOR-01; without `gated_beads` a held falsifier or an unregistered record answers `fundable --bead` for every WP-67 bead through the whole package, which fails closed and blocks the other mechanisms. N25d-09, N25d-12 and N25d-16 now fill theirs; N25d-40 states the rule."
+  },
+  {
+   "bead": "N25a-17",
+   "what": "PILOT-REVALIDATE-01: its package WP-59 holds several mechanisms, each with its own pilot record; N38a-09's `complete` warns on records without `gated_beads` in such a package, and `fundable --bead` otherwise answers for the whole package (N25d-40 states the rule). Fill `gated_beads` with the beads this pilot's falsifier stops when registering the record."
+  },
+  {
+   "bead": "BD-289",
+   "what": "PILOT-C-32: its package WP-59 holds several mechanisms, each with its own pilot record; N38a-09's `complete` warns on records without `gated_beads` in such a package, and `fundable --bead` otherwise answers for the whole package (N25d-40 states the rule). Fill `gated_beads` with the beads this pilot's falsifier stops when registering the record."
+  },
+  {
+   "bead": "N25b-25",
+   "what": "PILOT-SEPARATE-01: its package WP-59 holds several mechanisms, each with its own pilot record; N38a-09's `complete` warns on records without `gated_beads` in such a package, and `fundable --bead` otherwise answers for the whole package (N25d-40 states the rule). Fill `gated_beads` with the beads this pilot's falsifier stops when registering the record."
+  },
+  {
+   "bead": "N25b-16",
+   "what": "PILOT-CUTS-01: its package WP-66 holds several mechanisms, each with its own pilot record; N38a-09's `complete` warns on records without `gated_beads` in such a package, and `fundable --bead` otherwise answers for the whole package (N25d-40 states the rule). Fill `gated_beads` with the beads this pilot's falsifier stops when registering the record."
+  },
+  {
+   "bead": "BD-357",
+   "what": "PILOT-QUOTIENT-01: its package WP-66 holds several mechanisms, each with its own pilot record; N38a-09's `complete` warns on records without `gated_beads` in such a package, and `fundable --bead` otherwise answers for the whole package (N25d-40 states the rule). Fill `gated_beads` with the beads this pilot's falsifier stops when registering the record."
+  },
+  {
+   "bead": "N25c-24",
+   "what": "PILOT-C-40: its package WP-66 holds several mechanisms, each with its own pilot record; N38a-09's `complete` warns on records without `gated_beads` in such a package, and `fundable --bead` otherwise answers for the whole package (N25d-40 states the rule). Fill `gated_beads` with the beads this pilot's falsifier stops when registering the record."
+  },
+  {
+   "bead": "N25c-39",
+   "what": "PILOT-LABELS-01: its package WP-66 holds several mechanisms, each with its own pilot record; N38a-09's `complete` warns on records without `gated_beads` in such a package, and `fundable --bead` otherwise answers for the whole package (N25d-40 states the rule). Fill `gated_beads` with the beads this pilot's falsifier stops when registering the record."
+  }
+ ],
+ "unchanged": 4,
+ "notes": "All 42 beads read in full. Unchanged (checked, correct): N25d-02, N25d-13, N25d-18, N25d-30. Both requests to N25d-41 and the one to N25d-49 applied after checking each recorder's record_gate line and N41-17's close forms. Recurring defects fixed across the slice: pilot carriers writing a second record instead of registering N25d-40's row; multi-mechanism packages (WP-67) without gated_beads, so fundable fails closed for every sibling; worker-count lanes asked of verbs that carry no worker option (moved in process to testkit::det::lane); gate beads without a tier entry, so no receipt for record_gate; close reasons outside N41-17's set; an M1 register bead (N25d-41) asked to list control numbers M4-M8 carriers create (now carriers append them, N32b-25's division); an M6 decision bead (N25d-49) waiting on the M7 exit against the register's M6 deadline. Added deps were checked with graph_check (no cycles; graph has 0 cyclic components) and none is on a later milestone. All 42 files parse (front matter, JSON lists, seven sections). Kind counts: broken 23, contradiction 8, convention 21, deadlock 12, registry 11, request 7."
+}

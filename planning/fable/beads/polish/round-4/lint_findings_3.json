@@ -1,0 +1,348 @@
+{
+"NS-20": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `long steps return a job handle with exit 8 and are awaited with `frob job wait`):`"
+],
+"N14b-28": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `or exit 8 and `frob job wait <job>`): 26 directions, outer support downward at least 40 N, inner at most 40 N,`"
+],
+"N15b-19": [
+"[R4-pilot] its script exits non-zero when the falsifier holds: a pilot's verdict is data (convention 15), so the script exits zero once the measurement is made and the pilot record written, and logs falsifier values with `e2e_metric … --observe`"
+],
+"N15b-22": [
+"[R4-pilot] its script exits non-zero when the falsifier holds: a pilot's verdict is data (convention 15), so the script exits zero once the measurement is made and the pilot record written, and logs falsifier values with `e2e_metric … --observe`"
+],
+"N16a-20": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `VERBS-eval's row; the battery fixes the seeds) → a job that completes (exit 8, then `frob job wait`); each`"
+],
+"N16ap4-01": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `<TaskId> --model e2e-srm-quad --key srm-3b --json` (waiting with `frob job wait` on exit 8); (4) the acceptance`"
+],
+"N16bp4-01": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N16bp4-02": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N16bp4-03": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N17bp4-01": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"BD-165": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `- [ ] `frob scene gen --family terrain/stairs --difficulty 0.5 --seed 7 --key sg-1 --json` returns the envelope with the evidence block; the same call without `--key` is `"
+],
+"BD-367": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `5. `job`: a 64-column batch as a job (exit 8 with a handle), `frob job wait`, cancellation mid-batch (no column`"
+],
+"N18ap4-01": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N18ap4-02": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N18bp4-01": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N18bp4-02": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N18bp4-03": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N19a-30": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `--key sgt-grid-cancel` (exit 8, a job handle), then `frob --json job cancel <job>` and `frob --json job wait`"
+],
+"N19a-45": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `N19a-26; one key per archetype) → exit 8, job handle; `frob --json job wait <id>`.`"
+],
+"N19ap4-01": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"BD-236": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. `positional place (`frob scene bank admit …`), `--action show` and `--action status` are `FROB-REF-802`.`"
+],
+"N19c-24": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `wb-cuda-hold` (BD-198; a training job, exit 8 with its handle), with `frob --json train status <run>` polled until`"
+],
+"N22b-05": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `--json` (a 10⁵-state grid; exit code 8 with a job handle), cancel with `frob job cancel <job> --json`, then`"
+],
+"N22b-32": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `13. Cancellation: start `frob shield fit … --calibration 20000 --key sr-13 --json` (job handle, exit code 8),`"
+],
+"BD-198": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. ``scripts/e2e/cortex_train.sh` (bead N23a-35), step `reference-training`, per available backend: `frob train start …` as above (exit 8, a job), `frob job wait`, `frob trai`"
+],
+"N23a-14": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `Registry rows (the verb registry of the specification; the rows of record are in the registry bead VERBS-train, which this bead implements and does not restate differentl`"
+],
+"N23a-17": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. ``scripts/e2e/cortex_train_fallback.sh` (run only on the fired branch): `frob train start <reference quadruped> --trainer cpu-readback --task <reference flat velocity> --b`"
+],
+"N23a-20": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. ``scripts/e2e/learn_residual.sh`, this bead's own script (N23a-36's `cortex_amortize.sh` runs it as its stage `residual`): `frob control synth <reference> --key residual-c`"
+],
+"N23a-25": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. ``scripts/e2e/policy_apply.sh`, this bead's own script (N23a-36's `cortex_amortize.sh` runs it as its stage `policy-apply`): `frob design edit <quad> set-param femur_lengt`"
+],
+"N23a-35": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `10. `verbs-lifecycle`: `frob train start <reference quadruped> --task <reference> … --key e2e-1 --json` (exit 8); `frob train status` polled through `frob job wait`; a ki`"
+],
+"N23a-36": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `5. `fine-tune-rung`: `frob policy apply class:quadruped --design <edited> --task <velocity> --fine-tune fraction:0.05 --key am-ft --json` (exit 8, then completion through`"
+],
+"N23a-37": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. ``scripts/e2e/cortex_offpolicy.sh`, owned by this bead (N23a-38 adds its step `td3`), step `sac`: (1) the battery, `FROB_TEST_SEED=7 cargo test -p frob-conformance --test `"
+],
+"N23a-38": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. ``scripts/e2e/cortex_offpolicy.sh`, step `td3` (the script is owned by N23a-37; on the branch where SAC was killed it is carried by this bead): (1) the battery, `FROB_TEST`"
+],
+"N23a-39": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. ``scripts/e2e/cortex_es.sh`: `frob train start <reference quadruped> --algo es --params policy --network mlp:32,32 --optimizer local:antithetic --population 256 --task <fl`"
+],
+"N24a-29": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `exit 8); `frob eval scorecard <run> --json`. Asserts the rig flips, the checks and the scorecard rows. NDJSON`"
+],
+"N24a-30": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `--battery <b> --tier <tier> --key rc-<task>-<tier> --json` (with `frob job wait <job> --json` on exit 8; the`"
+],
+"N24ap1-01": [
+"[R4-battery] passes `--run-seed` or `--worlds` beside `--battery`: the battery form of `eval.run` takes neither (VERBS-eval; it is refused with 802, because a battery's items carry their own world addresses), e.g. `their own world addresses (`--run-seed` or `--worlds` beside `--battery` is FROB-REF-802). A returned job handle`",
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `(exit code 8) is followed by `frob job wait`.`"
+],
+"N24bp4-01": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N24c-04": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `job handle and exit code 8, and `frob job cancel`, come with the daemon at M2 (N24cp3-01).`"
+],
+"N24c-06": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `| `verdict_examples` | `frob design new cart-a --file assets/fixtures/cart-sill-dock/design-a.fbot --key atf-design-a --json`; `frob task settle cart --model cart-a --key`"
+],
+"N24c-22": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `- [ ] The verb is a long tool with budget admission, exit code 8, cancellation tested, and is reachable through `frob --json` and the `audit` task cluster.`"
+],
+"N25ap4-01": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"BD-293": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `- [ ] The verb is reachable through `frob --json` and the generated tool, accepts `--estimate`, returns exit 8`"
+],
+"N25bp4-01": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N26b-24": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `xtask check-stack` writes a new resolution receipt (`frob.stack-receipt/1`) under `receipts/`; (3) the`"
+],
+"N26bp1-01": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `change (a pin only moves forward); (2) `cargo xtask check-stack` writes a new resolution receipt`"
+],
+"BD-262": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `cart-sill-dock --backend batch-cpu --max-pairs 256 --key ec-cpu-1 --json` (then `frob job wait` on exit 8);`"
+],
+"N28a-17": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `acceptance is a pass on `batch-cpu`), then `frob job wait` if it returns exit 8; (3) `frob`"
+],
+"N28a-20": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `cart fixture of BD-123 (on exit 8, `frob job wait <job> --json` until terminal, then the result is read from`"
+],
+"N28a-21": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. ``frob job wait` on exit 8); (2) `frob study compare <id> --json`: validate the record against `frob schema`"
+],
+"N28a-30": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `then `frob job wait` on exit 8). Assert: exit 0 or 2; a disposition among the five; e-value and confidence`"
+],
+"N28b-28": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `| `run` | `frob opt cascade --spec <task> --population seeded-81 --budget … --seed 3 --key csp-run --json` (exit 8, then `frob job wait`); `frob opt status` while running`"
+],
+"N28b-32": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `doorway verdict; a fixture design with `--since`, its summary counts checked against the per-verdict entries; a long check returning a job, exit 8, then `frob job wait`);`"
+],
+"N28c-18": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `--json` → exit 8 with a job handle; `frob job status <job> --json` shows both prediction identifiers in the`"
+],
+"N28c-19": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `otherwise wait to completion and never show exit 8; then `frob job wait <job> --json`), then`"
+],
+"N28c-39": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `bc-cancel-$FROB_E2E_SEED --json`, exit 8 with a job handle) and cancel it with `frob job cancel <job> --json``"
+],
+"BD-206": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `returns exit 8 with a job handle and is re-read afterwards). `frob telemetry divergence <a> <b> [--world <w>]`"
+],
+"N31a-54": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `(assert exit 8 and a job handle), then `frob job wait`. Assert the functional properties: the ceiling line precedes the`"
+],
+"N31a-57": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `--json` (exit 8 with a job handle), then `frob job wait`. Assert the envelope's packet identity, class Estimated with`"
+],
+"N31ap3-51": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `- [ ] For each of the four M5 `run` verbs, `sync_wait_ms=1` on the long call exits 8 with a job handle whose progress denominator is in the verb's unit, and `frob job wai`"
+],
+"N32a-13": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `--json` (exit 8; `bound` shows the planned version); `frob job wait <job> --json`; `frob study compare <study>`"
+],
+"N32a-17": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `envelope: with `leave`, the deferred form (exit 8, the job handle, `next_actions` naming `frob job wait`); with`"
+],
+"N32b-15": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `result of rule 5) returns exit 8 with a job handle whose `progress` has a denominator; `frob job wait <job>`"
+],
+"N33b-04": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `4. *Receipt.* `cargo xtask check-stack` writes the new receipt: revisions, `dirty`, features, the hash and`"
+],
+"N34p4-01": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N34p4-02": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N34p4-03": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N34p4-04": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N37p4-01": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N39bp4-01": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"N44-02": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `assert it is accepted (exit code 8 with its job handle), then cancel it before its first chunk (`frob job cancel`"
+],
+"FD-ASUP-01": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-F3D-01": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FDGR-01": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FKER-01": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FLN-01": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FLN-02": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FMCP-01": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-02": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-03": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-04": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-06": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-08": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-10": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-11": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-12": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-13": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-14": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-19": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-20": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-21": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-22": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-23": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-24": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-25": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-31": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSIM-33": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSS-01": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"FD-FSYM-03": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt`"
+],
+"NFp1-51": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `--reason pin-move --gate INT-FT-01` writes a new receipt (`frob.stack-receipt/1`; plain `check-stack` only`"
+],
+"NFp1-52": [
+"[R4-receipt] says plain `cargo xtask check-stack` writes a new stack receipt: plain `check-stack` only checks, and a receipt is written by the `--write-receipt` form with its reason and gate (see N33a-05 for the exact options; the same error was corrected in thirteen upstream beads this round), e.g. `--reason pin-move --gate INT-FT-01` writes a new receipt (`frob.stack-receipt/1`; plain `check-stack` only`"
+],
+"NFp4-01": [
+"[C11-std] names an end-to-end script but does not depend, directly or through its dependencies, on `STD-E2E`"
+],
+"NJL-02": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `handle (exit 8, then `frob job wait`), or `FROB-REF-724` exactly when `frob capabilities --json` says the verb`"
+],
+"VERBS-algebra": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `registry example verbatim, expecting a result (exit 0 or 2), a job handle (exit 8, then `frob job wait`) or`"
+],
+"VERBS-analyze": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `job handle (exit 8, then `frob job wait`) or `FROB-REF-724` exactly when the capability report says the verb is`"
+],
+"VERBS-eval": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `verbatim, expecting a result (exit 0 or 2), a job handle (exit 8, then `frob job wait`) or `FROB-REF-724` exactly`"
+],
+"VERBS-experiment": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `registry example verbatim, expecting a result (exit 0 or 2), a job handle (exit 8, then `frob job wait`) or`"
+],
+"VERBS-fleet": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `example verbatim, expecting a result (exit 0 or 2), a job handle (exit 8, then `frob job wait`) or `FROB-REF-724``"
+],
+"VERBS-predict": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `registry example verbatim, expecting a result (exit 0 or 2), a job handle (exit 8, then `frob job wait`) or`"
+],
+"VERBS-result": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `example verbatim, expecting a result (exit 0 or 2), a job handle (exit 8, then `frob job wait`) or `FROB-REF-724``"
+],
+"VERBS-scene": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `(exit 8, then `frob job wait`) or `FROB-REF-724` exactly when the capability report says the verb is absent; (5) for`"
+],
+"VERBS-sense": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `wait on each surface, expecting a job handle with exit 8 and, after `frob job wait`, structured content equal to`"
+],
+"VERBS-sim": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `verb's registry example verbatim, expecting a result (exit 0 or 2), a job handle (exit 8, then `frob job wait`) or`"
+],
+"VERBS-store": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `example verbatim, expecting a result (exit 0 or 2), a job handle (exit 8, then `frob job wait`) or `FROB-REF-724``"
+],
+"VERBS-telemetry": [
+"[R4-exit8] expects exit 8 (a job handle) from a `frob` call that shows no `--sync-wait-ms`: the command line waits to completion by default (BD-022's flag table; convention 16), so either pass `--sync-wait-ms <n>` or drop the exit-8 expectation and the `frob job wait`, e.g. `a job handle (exit 8, then `frob job wait`) or `FROB-REF-724` exactly when the capability report says the verb is`"
+]
+}

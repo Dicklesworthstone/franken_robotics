@@ -6,9 +6,9 @@ priority: 1
 milestone: "M2"
 labels: ["m2", "suite", "kinesis", "upstream", "frankensim", "frob-fsim", "solid"]
 parent: "WP-10"
-deps: ["BD-037", "BD-061", "N33b-04", "STD-E2E"]
+deps: ["BD-037", "BD-061", "BD-089", "BD-110", "N16a-17", "N29ax-01", "N33b-04", "STD-E2E"]
 needs: []
-related: ["FD-FSIM-04", "N16a-05", "N16a-17", "N33b-07"]
+related: ["FD-FSIM-04", "N16a-05", "N33b-07"]
 gates: ["GATE-KIN-02", "GATE-KIN-03"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§16.4", "§33.8", "§33.3"]
 ---
@@ -36,7 +36,9 @@ robots); waiting for the upstream change before M1 (no milestone waits on a sibl
 In: the four joint kinds in FrankenSim, either in `fs-mbd` or in the `fs-kinematics` crate proposed there; the
 airlock's use of them; the re-run of the two parity gates. Out: the lowering itself and the referee model
 compiler (BD-061); loop closures and rolling constraints (FD-FSIM-04); joint subgroups on the batched tiers
-(BD-046).
+(BD-046). The switch-over re-runs the two parity gates through their own harnesses and drives a fixture robot
+through `design.check` and `sim.run`, so the beads that own those are dependencies: BD-089 (GATE-KIN-02),
+N16a-17 (GATE-KIN-03), BD-110 (`design.check`) and N29ax-01 (`sim.run` on a stored design on the referee).
 
 ## Technical approach
 
@@ -101,8 +103,9 @@ is native (false at the pin) and runs the spherical known answer below on the na
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
-is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt
-(`frob.stack-receipt/1`) under `receipts/`; (3) re-run that sibling's admission gates, the parity gates and the
+is never rolled back locally); (2) write a new resolution receipt (`frob.stack-receipt/1`) under `receipts/`
+with `cargo xtask check-stack --write-receipt --reason pin-move --gate INT-FSIM-01` (plain `check-stack` only
+verifies and writes nothing); (3) re-run that sibling's admission gates, the parity gates and the
 gates this item names; (4) relock (`Cargo.lock` regenerated and committed, builds `--locked` on the one toolchain
 T) and append the record, with the receipt hash, to `DEPENDENCY_ADMISSION.md`. Only then does the row's `status`
 become `adopted` and the interim posture end. No PASS is recorded on a dirty sibling tree, and neither a pin nor
@@ -147,12 +150,14 @@ Here:
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsim_01.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
-Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (the registry
+Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (its `upstream`
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_01 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob design check` and `frob sim run --tier referee --json` on a fixture robot with
-one joint of each class, and asserts that the envelope reports the classes as native and that the parity
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob design check <fixture> --json` and `frob sim run <fixture> --tier referee
+--seconds 2 --seed 0 --key fd01-post-run --json` on a fixture robot with one joint of each class (`<fixture>` is
+its design file; `sim.run` is a `run` verb, so the call carries its idempotency key and is `FROB-REF-805`
+without one), and asserts that the envelope reports the classes as native and that the parity
 gates' measured values are inside their thresholds.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to

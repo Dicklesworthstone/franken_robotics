@@ -4,7 +4,7 @@ title: "Ground counterexample registry: CX-326 to CX-335 and the chapter's unnum
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "ground", "frob-ground", "frob-conformance", "solid", "registry", "test"]
+labels: ["m1", "ground", "frob-ground", "frob-conformance", "solid", "registry", "test", "review-notes-open"]
 parent: "WP-68"
 deps: ["BD-025", "N38a-40", "N38b-05", "STD-TEST"]
 needs: []

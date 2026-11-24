@@ -1,0 +1,230 @@
+{
+ "round": 4,
+ "slice": "S-31",
+ "reviewed": 29,
+ "changed": [
+  {
+   "bead": "WP-03",
+   "kinds": [
+    "registry"
+   ],
+   "what": "GATE-MARROW-01 is recorded in two parts (BD-011 `--part M0` for SO(3) and SE(3); N13-19 `--part M1` for the full Marrow law table), but 'What lands at M1' named only GATE-MARROW-02. The M1 line now names the M1 part and its recorder, and the M0 line its recorder; without it the M1 exit reviewer read GATE-MARROW-01 as finished at M0 and did not look for the full-table record."
+  },
+  {
+   "bead": "WP-05",
+   "kinds": [
+    "plan"
+   ],
+   "what": "'What lands at each milestone' had only an M0 line although the package holds five M1 beads and one M2 bead (header: M0 17, M1 5, M2 1). Added the M1 line (theorem cards T-02, T-05, T-15, T-16 and the card for PO-SINEW-01, N12x-01) and the M2 line (the upstream bead FD-FSYM-02: no switch-over rule, no milestone waits on it, interim posture the explicit matrices of derive/frob-derive), and one sentence on the M0 upstream bead NF-04 (INT-FSYM-01 does not wait for it; NF-05's switch-over re-runs the gate). Left as it was, the epic read as an M0-only package and an exit reviewer at M1 or M2 found six children the body never accounted for."
+  },
+  {
+   "bead": "WP-09",
+   "kinds": [
+    "contradiction",
+    "broken"
+   ],
+   "what": "Out of scope said the single-precision row of GATE-SINEW-02 is WP-45's. It is measured and recorded at M2 (`--part M2`) by the batched energy ledger BD-208 of WP-50 (BD-076, N15b-35 and BD-208 all say so); no bead of WP-45 records it. Corrected, so the M2 exit reviewer looks for the record where it is. Child list: N15-REF's title updated to the live one."
+  },
+  {
+   "bead": "WP-13",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Request from F-U44-2 checked against plan §40.8 (row §29: GATE-CHRON-14 (§29.22; M1, M2)) and applied: both citations of GATE-CHRON-14 read §40.8, not §40.9, so a reader looking up the governing row finds it. Child list: N29-REF's title updated (three uncoded refusals, not one)."
+  },
+  {
+   "bead": "WP-18",
+   "kinds": [
+    "registry"
+   ],
+   "what": "None of the package's three key gates is recorded by one of its children: the Spark gate register (N21c-32) gives GATE-SPARK-02 to N21b-35 (WP-46, on the clauses BD-176 and BD-177 measure), GATE-SPARK-03 to BD-217 (WP-47) and GATE-SPARK-06 to N21b-25 (WP-46) on BD-175's mechanisms. 'What lands' now names them, and the KILL-PARITY bullet no longer says the physics rows are 'measured here' (BD-217 of WP-47 measures them on this backend). Left as it was, the exit reviewer looked for the records among the children and found only an upstream item and a bet decision carrying the gate ids."
+  },
+  {
+   "bead": "WP-19",
+   "kinds": [
+    "registry"
+   ],
+   "what": "'What lands' now names who records the two key gates the epic did not attribute: GATE-SPARK-02 by N21b-35 (WP-46) and GATE-SPARK-04 by BD-217 (WP-47), which KILL-METAL's decision bead N21b-08 reads together with N21b-39's determinism lanes (the gate register N21c-32: 'N21b-08 (measurement: BD-217)'). GATE-SPARK-06's attribution was already right."
+  },
+  {
+   "bead": "WP-20",
+   "kinds": [
+    "registry",
+    "plan"
+   ],
+   "what": "'The every-tier part of the causal-policy test' now names what it is: BD-215 of this package records the M2 part of GATE-SENS-12 (WP-49's key gate; N20b-12 there builds the batched form; N20b-11 in WP-40 records the M1 part). Added the package's share of the later gate GATE-HAB-16 (§19.22, §40.9): N19c-39's ray-parameter conversion and adapter contracts, measured and recorded by N19c-40 in WP-17. Without the first, nobody reading WP-20 or WP-49 could tell which package owes the M2 record."
+  },
+  {
+   "bead": "WP-21",
+   "kinds": [
+    "plan"
+   ],
+   "what": "GATE-CORTEX-05 was stated without the amendment that §23.27 makes to it (plan §40.8 lists it among the four amended gates): a time to threshold is an attainment time, never a first crossing, with both arms scored by the same rule on the same stream sizes (`attained` in `train.status`, N23b-33 in WP-48; BD-218 records the gate so). Added to the training-time bullet. Left as it was, the package's acceptance could be read as met by a first-crossing time, which the plan's own counterexample shows reports attainment about four times in five for a policy that never attains."
+  },
+  {
+   "bead": "WP-24",
+   "kinds": [
+    "plan",
+    "registry"
+   ],
+   "what": "'What lands' gained the M2 line (six M2 children had none) and now states GATE-ARENA-01 as it is recorded: in parts, one recorder per part (BD-201 the M2 part from N24a-24's receipt, BD-253 the M3 part, BD-368 of WP-30 the M4 part); the old sentence said the gate 'is closed by the M2 task-family bead', so an M3 exit reviewer expected no M3 record. The M3 line now names GATE-CORTEX-10 and KILL-SPEC-REWARD, and the five gates defined after the package table that eighteen children carry and the prose never named: GATE-ARENA-11 (N24c-25), -15 (N24c-27), -12 (N24c-32), -13 (N24c-33) and the battery half of -14 (N24c-40; fixture half WP-41), with the deciders of KILL-FOIL, KILL-ITEMBANK and KILL-EXPODOMAIN. The fallbacks of KILL-FOIL and KILL-EXPODOMAIN were abridged against §24.20 and §24.22 (`task.audit` runs the actual design alone; the four coupling checks are kept as a test): completed."
+  },
+  {
+   "bead": "WP-25",
+   "kinds": [
+    "plan",
+    "registry"
+   ],
+   "what": "'What lands' now names two things the children deliver and the prose omitted. (1) `report.campaign` lands here only in its M3 form (the phase ledger for the partial ten-fold gate, BD-302); VERBS-report dates the row M4, where BD-352 of WP-62 completes it, and the epic had listed it as an M3 report without qualification. (2) The package's share of the later gate GATE-FOUNDRY-15 (§31.23, §40.8; WP-38's gate, measured by N31b-43): the promotion refusal under `structure-unchecked` (N31b-40) and the fifteen-campaign corpus comparison (N31b-42)."
+  },
+  {
+   "bead": "WP-28",
+   "kinds": [
+    "plan",
+    "registry"
+   ],
+   "what": "'What lands' now says that GATE-AUGUR-11 closes in this package: N28c-16 is its one recorder (its own Scope, and WP-59's text since this round), yet WP-28 never mentioned the gate, so the M4 exit reviewer of WP-59's key gate was sent to a package that did not acknowledge it. Also named: the later gate GATE-SENS-17 (§20.24, §40.8; measured by N20b-37) with its mechanisms (mounts as optimizer variables N20b-36, Gramian placement N20a-36) and the decider of KILL-VISIBILITY (N20b-38). The Frontier paragraph listed only the value-of-information chooser and `solve.run`; it now lists the two sensing mechanisms and their one pilot (N20a-35 in WP-49, one record per mechanism)."
+  },
+  {
+   "bead": "WP-31",
+   "kinds": [
+    "plan"
+   ],
+   "what": "'What lands' had no M4 line although the package holds an M4 bead (header: M4 1, M5 27): the pilot of the algebraic-route budget for Frontier theorem cards (N12-22), on record before coverage is funded. Added."
+  },
+  {
+   "bead": "WP-33",
+   "kinds": [
+    "broken",
+    "registry",
+    "plan"
+   ],
+   "what": "Child list regenerated from the live files: 26 beads (was 24); the two kill-gate decision beads created this round, N15bp4-01 (KILL-SINEW-SEA) and N16bp4-02 (KILL-RUNTIMECLOSURE), added. Considerations gained those two gates as the register carries them (entered by N40-23 and N40-24, mode pilot-before-funding, decided at M6) with trigger, fallback and decider; without them the epic's kill-gate list missed two of the six decisions its children take. KILL-SOILLIFT was stated with no trigger and with the fallback 'plan on the full model': now the three clauses of §22.20 and its fallback (`mpc-sample` on the compiled model; no lifted model for any other regime), with its decider N22c-26. 'What lands' names the two later gates measured here, GATE-REFLEX-10 (N22c-25) and GATE-CORTEX-22 (N23b-39); References follow. The Envelope bullet's not-approved branch of R17 now has N44-01's form (the pilot is closed `withdrawn` with the reason `not run: no envelope`, citing R17), and KILL-SHORTGRAD names both readings (first N23b-37, final N23b-39 with GATE-CORTEX-22)."
+  },
+  {
+   "bead": "WP-35",
+   "kinds": [
+    "broken",
+    "registry"
+   ],
+   "what": "'One bead lands at M1' contradicted the bead's own list (M1 2): BD-053 and N21a-17, the exact-integer math mode BD-053 depends on. Now an M1 line naming both. The M0 line now says who records: GATE-SPARK-07 by N21c-06, and the cross-host script N21b-40 of this package records GATE-SPARK-08 and also GATE-SPARK-01, a key gate of WP-04 measured there by BD-017 (the Spark gate register N21c-32), which neither epic said."
+  },
+  {
+   "bead": "WP-43",
+   "kinds": [
+    "contradiction",
+    "registry",
+    "plan"
+   ],
+   "what": "(1) 'GATE-TETHER-04 is closed by a bead of WP-26' left the M2 exit, where the register dates the gate, without a recorder: it is first recorded here at M2 by N32a-19 on the M2 surface and again at M3 by BD-299 of WP-26 over the full registry, both records kept (BD-299 says so); stated. (2) Out of scope gave 'capability scopes' to WP-58 while the package's own children build the capability token, the scope catalogue and the session verbs at M2 (N32b-01, N32b-04); now: attenuation and namespaces are WP-26's, the capability layer over the full surface with GATE-SAFE-10 and the path jail are WP-58's, and the M2 line names the two beads. (3) Named the records its children make for other packages' key gates, which WP-63 already attributes to this package: the analysis part of GATE-ATEL-12 (N28b-40, with the Memo trait N28b-37 and the store policy N28b-38) at M1 and its episode part (N28b-42) at M2, and the M2 record of GATE-TETHER-02 for the M2 verb set (BD-222). The hedge 'where its bead is carried here' became the fact (BD-220)."
+  },
+  {
+   "bead": "WP-45",
+   "kinds": [
+    "request",
+    "contradiction",
+    "registry"
+   ],
+   "what": "Request from F-U18b-2 checked (N18bp4-01 exists, parent WP-45, M2) and applied: the child is listed in the generated order (after N18b-30) and the counts read 26. 'What lands' claimed the single-precision row of GATE-SINEW-02 for this package: it is measured and recorded by BD-208 of WP-50 (`--part M2`) over this package's kernels (BD-151) and reference arithmetic (N15a-07); corrected, as in WP-09. GATE-SPARK-18 now names its measurement (N21b-38 here) and its recorder (the precision capstone BD-179 of WP-22)."
+  },
+  {
+   "bead": "WP-49",
+   "kinds": [
+    "registry",
+    "plan"
+   ],
+   "what": "(1) The M2 line said 'the every-tier row of GATE-SENS-12' lands here; the package builds the batched form of the test (N20b-12), and the M2 part is recorded by BD-215 of WP-20 (N20b-12's own acceptance: 'recorded ... by BD-215, not by this bead'), the M1 part by N20b-11 of WP-40. Stated. (2) 'What lands' had no M1 and no M4 line (SPEC-C-20; the decision OPEN-SENS-4, N20a-32): added. (3) Four gates defined after the package table that fourteen children carry were never named: GATE-SENS-15 (N20b-31) and GATE-SENS-18 (N20b-42) at M2, GATE-SENS-16 (N20b-34) and the error-law rows of GATE-AUGUR-33 (N25e-36, `--part M3`; WP-66 already points here) at M3; also the pilot N20a-35 whose record KILL-VISIBILITY reads in WP-28."
+  },
+  {
+   "bead": "WP-53",
+   "kinds": [
+    "plan",
+    "registry"
+   ],
+   "what": "'What lands at M3' now names three parts of other packages' gates that children of this package record and that neither side mentioned: the M3 part of GATE-HAB-13 on the seven interior archetypes with the re-read of KILL-POOL (N19c-19; the M2 run and decision in WP-17 use stand-ins), the M3 part of GATE-HAB-01 (the device-tier entries of the ripple row, N19a-25), and the GATE-WS-02 rows of `.fclear` and `.fmcw` (N34p1-02). Without them the M3 exit reviewer has no package that owns those records."
+  },
+  {
+   "bead": "WP-57",
+   "kinds": [
+    "plan"
+   ],
+   "what": "'What lands' had no M2 line (the pilot N23b-11) and did not say that KILL-GYMADAPT is read twice (N23b-14 on the pilot's record, which decides funding; N23b-13 at the gate). Added, with the adapter rows of the later gate GATE-CORTEX-19 (§23.26: 'adapter rows at its release'), which BD-301 measures here and the epic never named; WP-48 holds the gate's M2 rows."
+  },
+  {
+   "bead": "WP-58",
+   "kinds": [
+    "broken",
+    "plan",
+    "registry"
+   ],
+   "what": "Child list regenerated: N37p4-01, created during this round (the M1 profile of the injection script, an early partial measurement of GATE-SAFE-02 that records no gate), added; 47 beads, M1 11. 'What lands' now names the part records its children make and the prose omitted: GATE-SAFE-01 `--part M2` (N37p1-01) and `--part M3` (BD-303), GATE-SAFE-08 `--part M3` (N37-27), and the M3 parts of GATE-SAFE-06 and -07 (BD-306, BD-307; the M2 parts are N37-22's and N37-06's)."
+  },
+  {
+   "bead": "WP-63",
+   "kinds": [
+    "plan",
+    "registry"
+   ],
+   "what": "'What lands at M3' now names the reuse ledger and its gate GATE-ATEL-19 (§28.26, §40.8; measured by N28c-45), carried by four children and absent from the prose, and says who records GATE-ATEL-11's parts: M3 by N25a-26 of WP-59 on the engine BD-292 of this package, M1 by N25a-13 of WP-42, M4 by N28b-35 here. The epic had implied the M3 record is made in this package."
+  },
+  {
+   "bead": "WP-65",
+   "kinds": [
+    "plan"
+   ],
+   "what": "'What lands at M4' now names two gates defined after the package table that six children carry and the prose never mentioned: GATE-SHIELD-06 (§22.21: pre-slip aliasing fixture, timeliness rule, sampled-data backup domain; measured by N22c-29) and GATE-SHIELD-07 (§22.25: sampled-damping passivity bound, work bound of a held command; measured by N22c-46)."
+  },
+  {
+   "bead": "WP-67",
+   "kinds": [
+    "plan"
+   ],
+   "what": "The epic described three lanes and three kill decisions; its children also build a fourth lane (`--strategy placement`, on the inertial-parameter regressor) with the later gate GATE-AUGUR-29 (N25e-21) and the decision KILL-SYNTH-REGRESSOR (N25e-22), sizing witnesses and Pareto coverage in the co-design lane with GATE-AUGUR-35 (N25e-44), and exact mass placement (N25d-08). 'What lands' now names them; the kill gate was already in Considerations."
+  },
+  {
+   "bead": "WP-70",
+   "kinds": [
+    "plan"
+   ],
+   "what": "'What lands at M5' now names GATE-FOUNDRY-14 (§31.22, §40.8): referee re-extraction of the load cases that enter a build packet and the referee check of fatigue spectra (N31b-35, N31b-36; measured by N31b-37), three children the prose never mentioned."
+  },
+  {
+   "bead": "WP-78",
+   "kinds": [
+    "plan"
+   ],
+   "what": "KILL-INTERACT's fallback was abridged against §16.20: it omitted that a fleet scene beyond the coupled world's capacity is refused by name (never a truncated contact set). Completed, with the two readings and their beads (N16cp2-91 at the paper pilot, N16c-22 at the gate)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N20b-37",
+   "what": "Its campaign for GATE-SENS-17 (20 designs × 3 arms × 2 state sources × 3 scene types × 256 worlds, plus 20 optimizer runs) is said to exceed the default envelope and to wait for approval, but it names no row of the envelope register and no scope. Under convention 14 a run above E0 is admitted only under an approved scope it cites (`--envelope-scope`), so as written nothing can approve or admit it and the gate can only be measured in its reduced form. Either cite R8 (WP-28's design campaigns, E2 per campaign) with a `campaign:` scope of its own, or file a new row from R29 on through N44-01 (WP-28's Envelope bullet must then cite it, N44-04 check 11c)."
+  },
+  {
+   "bead": "WP-50",
+   "what": "Its prose never names the two records its child BD-208 makes at M2 (`--part M2`): the single-precision row of GATE-CHRON-03 (WP-13's key gate) and the single-precision row of GATE-SINEW-02 (WP-09's key gate). WP-13, WP-09 and WP-45 point to WP-50 for them; add both to 'What lands at M2', or the M2 exit reviewer following those pointers finds nothing."
+  },
+  {
+   "bead": "WP-26",
+   "what": "Two statements against its own children and WP-43. (1) 'What lands at M3' does not say that BD-299 records GATE-TETHER-04 over the full M3 registry (WP-43's key gate, first recorded at M2 by N32a-19); WP-43 now says so. (2) Out of scope gives 'capability scopes, session budgets' to WP-58, but the package's own children build token attenuation, namespaces and their end-to-end test (N32b-02, N32b-03, N32b-05), and WP-43 holds the token and budgets (N32b-01, N32a-15); only the capstone BD-258 with GATE-SAFE-10 and the path jail are WP-58's."
+  },
+  {
+   "bead": "WP-17",
+   "what": "Name the two M3 parts of its key gates that children of WP-53 record: GATE-HAB-13 on the seven interior archetypes with the re-read of KILL-POOL (N19c-19; the M2 run and decision here use stand-ins) and the device-tier entries of GATE-HAB-01's ripple row (N19a-25, `--part M3`). WP-53 now names them; WP-17 reads as if both gates and the decision were finished at M2."
+  },
+  {
+   "bead": "WP-22",
+   "what": "Its child BD-179 is the recorder of GATE-SPARK-18, a key gate of WP-45 (measured by N21b-38 there); name it in 'What lands at M2'. WP-45 now points here."
+  },
+  {
+   "bead": "WP-04",
+   "what": "GATE-SPARK-01 (its key gate, measured by BD-017) is recorded by the cross-host script N21b-40 of WP-35 (Spark gate register N21c-32); name the recorder, as WP-35 now does."
+  }
+ ],
+ "unchanged": 4,
+ "notes": "Unchanged (read in full and found right): WP-08, WP-32, WP-69, WP-80. All 29 are work-package epics. Checked for each: the row against plan §44.1; crates, layers, tiers and caps against §34.2; every acceptance line against §40.2, §40.3 and the defining rows of §40.8 and §40.9; every kill-gate trigger, fallback and milestone against §40.4 and the defining subsections; the Envelope bullet against N44-01 (R2, R4, R8, R11, R17, R18) and convention 14; every worked number in the acceptance lines, recomputed (all hold); every verb and option named in prose against its VERBS row (all exist); the child list against the live staging files (WP-33, WP-45 and WP-58 were stale; two titles changed); every drafted 'Waits for' edge as a `related` link on one end (all present); N44-04 check 6 on the `gates` fields (only WP-19's GATE-SPARK-06 is measured elsewhere, as N44-04 expects; no `gates` field or other front matter was touched). Most edits have one cause: the epics were last read before the part-wise recorders (`record_gate --part`) and the later-subsection gates were settled, so 'What lands' named gates without their parts or recorders, or omitted gates their children measure; a mechanical pass over every `record_gate` line in the children found them. As in F-U44-2, later gates were named in the prose and not added to `gates`. Not edited, noted for the lead: packages with upstream children say nothing about them in prose (WP-18 FD-FT-03, WP-21 FD-FT-02, WP-31 FD-FLN-01/-02 and FD-FSYM-04, WP-32 FD-FDGR-01 and FD-FSS-01, WP-63 FD-FSQL-01, WP-67 FD-FSYM-05, WP-70 FD-FSIM-27/-28/-30); the child beads carry the interim posture and switch-over, so nothing is built wrong. WP-63's Frontier paragraph lists the ballast pilot twice (one bead, N17a-25). N24a-24 and BD-201 both show a `record_gate` line for GATE-ARENA-01; N24a-24's text assigns the parts to BD-201, BD-253 and BD-368, so there is one recorder per part. No `br` command was run; no file was deleted."
+}

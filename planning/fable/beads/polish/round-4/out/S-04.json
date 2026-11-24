@@ -1,0 +1,289 @@
+{
+  "round": 4,
+  "slice": "S-04",
+  "reviewed": 26,
+  "changed": [
+    {
+      "bead": "CARD-T-33",
+      "kinds": [
+        "convention",
+        "deadlock"
+      ],
+      "what": "(Earlier reviewer of this slice; file re-read whole and found complete: front matter, seven sections, the 2R factorization recomputed, N12-20's frob-derive invocation and the kernel names K-crba-level and K-rnea-level checked against their owners.) Its end-to-end section was N12-36's lemma_coverage.sh, a bead that depends on this card, so the card could never run its own script at close (conventions 7 and 11). It now owns scripts/e2e/card_t33.sh: laws (cargo test -p frob-lemma --test cards -- t33), the specimen and four mutants through frob-verify under env -i, the per-limb certify run with N12-20's frob-derive --stage certify and replay of every certificate, and frob prove list; N12-36 kept as a later observer."
+    },
+    {
+      "bead": "CARD-T-35",
+      "kinds": [
+        "broken",
+        "convention",
+        "deadlock"
+      ],
+      "what": "Earlier reviewer: the registered Statement lines could not elaborate (SoundFor takes check : α → Bool, the planned reflectors were curried and replay Option-valued); now packed input types, PosSpec with symmetry inside the spec, FarkasSpec on the packed input, a test that the lines elaborate against packed stand-ins, and the card's own scripts/e2e/card_t35.sh. Finished in this session, because the new `laws` stage (cargo test --test cards -- t35) ran, at the card's close, the eight tests that call prove.reflect, a verb BD-382 builds after this card: the card could not close. Those eight are now named and carry #[ignore = \"needs prove.reflect (BD-382)\"] until BD-382 removes it; all_sub_entries_hypothesis_at_close is stated as an invariant (a sub-entry without a capsule hash and both checker identities reads hypothesis), since BD-382's step 6 re-runs the file after the pilot has moved two sub-entries to checked."
+    },
+    {
+      "bead": "N12-01",
+      "kinds": [
+        "convention"
+      ],
+      "what": "(Earlier reviewer; file re-read whole and found complete.) Had no script under scripts/e2e and named N12-33's later script for the route print, so choose_route and the controls never ran end to end at M0. Now owns scripts/e2e/lemma_prooftools.sh: the re-audit as a stage, the 35 card routes and twelve NotDecidable obligations through a choose_route example, and the three controls (edited pin, blocked module claimed accepted, 9,000-operation and 17-coordinate shapes); acceptance line added."
+    },
+    {
+      "bead": "N12-06",
+      "kinds": [
+        "convention",
+        "deadlock",
+        "contradiction"
+      ],
+      "what": "Earlier reviewer: its e2e was entirely N12-33's script (which depends on it); now owns scripts/e2e/lemma_card_registry.sh through a card_registry example. Added in this session, from the review of N12x-01, N12x-05 and N12-51: (1) the row schema had no field for what N12-52's script and four card beads assert through `frob prove list` (the source obligation of a card numbered from T-36, and the cards it relies on), so each implementer would have invented one or the loader would have refused the rows: optional `source` and `relies_on` are now schema fields printed by list_rows, with a test; (2) the seed listed T-08 with one tier, which reads as one route, while CARD-T-08 has two and N12-51 enters receipts under its instance route at M2: T-08 is stated with two routes and tier [\"F\", \"F\"], with a test."
+    },
+    {
+      "bead": "N12-11",
+      "kinds": [
+        "convention",
+        "broken",
+        "contradiction",
+        "registry"
+      ],
+      "what": "Earlier reviewer: the script wrote registries/gates.toml and used a 'smoke battery at M0' nobody builds; now the script collects the exports itself, sweeps them through an export_sweep example, and the gate is recorded with record_gate; six compile-fail cases plus the run-time companion. Finished in this session, because the recording was 'from the script's summary line as the receipt': the recorder N38b-19 loads target/gauntlet/receipts/<hash>.json, the receipt of a tier run with the gate's line and its controls caught in that run (N38a-02), and BD-025 lets no gate pass without a registered control, so GATE-LEMMA-06 could not have been recorded at M0. Now: the gate's entries are registered in the G0 table (KA-214, KA-216 and KA-221 are G0 rows), the three fixture exporters are registered as planted-input controls with seed GATE-LEMMA-06, the script runs `e2e_tier g0_laws GATE-LEMMA-06 --mutations` and asserts the receipt, and the gate is recorded from that receipt; dep N38b-05 added (reuse of seeded controls; no cycle). The exports directory moved from target/e2e/… to the run's work/exports (STD-E2E: a script writes only inside its scratch directory)."
+    },
+    {
+      "bead": "N12-12",
+      "kinds": [
+        "convention",
+        "deadlock",
+        "broken"
+      ],
+      "what": "Earlier reviewer: its e2e was N12-35's script (which depends on it) and an acceptance line needed the M5 and M7 exit records; now owns scripts/e2e/lemma_cert_effects.sh. Finished in this session: the script wrote the stance fixtures first and then asserted `changed 0` after writing 'again without stance' into the same state root, which cannot hold in a store that is only appended to (changed stays 2). The zero-count step now runs first on the empty state root (consumed 2, changed 0, unchanged 1, unknown 1, the fail-closed text), the stance discards are added after it (4, 2, 1, 1), the recount and the planted missing-row control have their commands, and the control is last because its decision stays in the store."
+    },
+    {
+      "bead": "N12-15",
+      "kinds": [
+        "registry",
+        "convention",
+        "broken"
+      ],
+      "what": "(Earlier reviewer; file re-read whole and found complete: it follows the form of N12-14, N12-16, N12-17 and N12-18 for the enable change, the BD-136 campaign and the candidate row.) Acceptance said 'registry row is enabled; GATE-LEMMA-03's per-kind condition is recorded for the kind' with no ledger change, no six admission items, no campaign operators, and a gate this bead may not record. The unit command was a name filter matching none of the file's tests. Now: step 9 with the complex-connectivity-enable ledger change and its six items; deps BD-136 and N12x-08; --test complex_connectivity; own scripts/e2e/lemma_kind_connectivity.sh."
+    },
+    {
+      "bead": "N12-26",
+      "kinds": [
+        "broken"
+      ],
+      "what": "(Earlier reviewer; file re-read whole and found complete.) The placeholder files were to declare the four reflectors with their curried signatures, which cannot instantiate CARD-T-35's SoundFor template, so the closures measured would not be those of the statements registered. Now the packed one-argument Boolean form, specifications as predicates on the same structure, symmetry inside ldltPos's specification, and the input structures handed off with the specifications."
+    },
+    {
+      "bead": "N12-27",
+      "kinds": [
+        "broken"
+      ],
+      "what": "(Earlier reviewer; file re-read whole and found complete; `decide +kernel` and the discarded `example` checked.) The instance file was an `example … := by decide`, which leaves no declaration in the .olean for fln to re-check and stops at the heartbeat limit long before the 600 s hard stop. Now a named theorem proved by `decide +kernel` under maxHeartbeats 0, the specimen comparison with BD-382 on the fln times, negative controls on the theorem, and a unit test instance_file_form."
+    },
+    {
+      "bead": "N12-31",
+      "kinds": [
+        "contradiction",
+        "convention"
+      ],
+      "what": "(Earlier reviewer; file re-read whole and found complete; outcomes, kill_gate_records.sh --live --ids and lemma_coverage.sh --fallback-config checked against N40-03, N12-36 and N12-21.) Its acceptance had the decision procedure return 'passed', which is not one of N40-03's outcomes, and its e2e described N12-36's script as doing what it does not do. Now the outcomes are not-fired with GATE-LEMMA-01 fail or pass, and the bead owns scripts/e2e/decide_kill_lemma.sh."
+    },
+    {
+      "bead": "N12-39",
+      "kinds": [
+        "plan",
+        "broken",
+        "convention"
+      ],
+      "what": "(Earlier reviewer; file re-read whole and found complete; the docking position formula g·(5/2·p + 3/2·u₁ + 1/2·u₂), the forced commands and the 15/16 boundary recomputed.) Statements and proofs were written in one bead with no order, so a statement could be fitted to its proof: the four statement modules are now written, reviewed and their hashes recorded before any proof. The quaternion control could never reach the binding check (it does not elaborate): replaced by a true ℚ-only theorem refused by check-binding with exit 3. Owns scripts/e2e/lemma_general_cards.sh."
+    },
+    {
+      "bead": "N12-41",
+      "kinds": [
+        "registry",
+        "broken",
+        "contradiction"
+      ],
+      "what": "Earlier reviewer: the plant built a per-control feature with a made-up name and asserted the plant with e2e_expect_caught, which makes the planted run pass where `run-all.sh --verify-plants` requires exit 1; the registry check and the document generator had no command. It then registered a control NC-<nnnn> in controls.toml 'under BD-025's rules, its number from N38a-40'. Corrected in this session: BD-025 refuses a control record without a gate (`no-gate`) and without a seed of an admitted form, the compendium has no gate, and N38a-40 allocates known-answer and counterexample numbers, not NC numbers, so the record could not load. The compendium now registers no control: the rows' controls are the d<N>_nc_<row> tests, and the script's mutant is a test-level control behind the feature `plant-coadjoint-minus = [\"gauntlet-mutations\"]` of frob-conformance (never in the umbrella, not buildable under the release profile), run every time under e2e_expect_caught and, as the plant, failing step 2 with a failed assertion that names the plant. Rows of D.1 recomputed (the wrench arm, π̇ = (0, 0, −1), the quarter turn, the box 64.8 kg and 3.45 kg, the two-link Jacobian, the chord limit (0.8342, 0.5514))."
+    },
+    {
+      "bead": "N12-42",
+      "kinds": [
+        "plan"
+      ],
+      "what": "Touched by the earlier reviewer and not recorded; re-read whole, edit complete. The unit-test list named a test for only some of the rows' negative controls (five of eleven), while the acceptance requires every listed control to be a test and N12-41's registry check fails a row whose listed control has none: one `d2_nc_<row>` test per remaining control, each named in its row's negative_control field. Otherwise right and left as it was: every statement equals the plan's row; the saltation matrix, the clock fixture (L = 1,200; 3, 12, 40; 120), the f32 spacings and the 20 N exposure recomputed; the exposure row agrees with N20a-49 as it stands."
+    },
+    {
+      "bead": "N12-43",
+      "kinds": [
+        "plan",
+        "convention"
+      ],
+      "what": "Earlier reviewer's sentence on `d3_nc_<row>` tests kept (same reason as N12-42). Added: the shared script compendium_laws.sh was used without naming its owner (convention 11); the bead now says it is N12-41's, unchanged by this bead, and which of its steps cover this section (row count ten, laws, document). Rows recomputed: the projection (14/5, (21/25, 28/25)), the one-contact minimizer, (2/3)·μ·N·R, the film closed form, 2√2·a, 3.75°."
+    },
+    {
+      "bead": "N12-44",
+      "kinds": [
+        "plan",
+        "convention"
+      ],
+      "what": "Earlier reviewer's sentence on `d4_nc_<row>` tests kept. Added: the owner of the shared script named (convention 11); the acceptance line 'every oracle carries dimensions and is checked for homogeneity' had only the two dimensionless-number tests behind it, so `d4_dimensions_homogeneous` is added (N12-50 gained its twin from the earlier reviewer). Rows recomputed: I_crit = 35.8 A, the bus ceiling 5,760 W and 40.97 V, the screw efficiencies 0.658 and 0.496, the gear identity and its 2·r·e₂·f₁ control."
+    },
+    {
+      "bead": "N12-45",
+      "kinds": [
+        "plan",
+        "convention"
+      ],
+      "what": "Earlier reviewer's sentence on `d5_nc_<row>` tests kept; the owner of the shared script named (convention 11). Rows recomputed: M³ = I and a² − ab + b² for the C₃ lattice form and its block in the orthonormal basis, the eight subgroups of ℤ₄ × ℤ₂, the bracelet counts 86,185 and 92, 500,500, the wreath count (4k² + 4k)/8 = 6, the similarity exponents."
+    },
+    {
+      "bead": "N12-46",
+      "kinds": [
+        "plan",
+        "convention"
+      ],
+      "what": "Earlier reviewer's sentence on `d6_nc_<row>` tests kept; the owner of the shared script named (convention 11). Rows recomputed against the plan: 841/800, the docking grid 344 + 217 of 561 with nine on the boundary, the twelve polarity moves (tolerance 1/3 m, velocity 1 − 2p, the 33/32 alias and 1/65 m), 27/32, 459/512, 3807/4096, the stance family (3/14 m; (160, 130, 110, 0); 165 N; (155, 135, 105, 5) against (175, 115, 85, 25)), α = 1/1156 and (13 − 4α)² > 153."
+    },
+    {
+      "bead": "N12-47",
+      "kinds": [
+        "broken",
+        "plan",
+        "convention"
+      ],
+      "what": "The bead the earlier reviewer was in when it stopped; its edit is complete and was checked line by line. The invariant-error row said that with X̂ driven by the same ω the error η = X̂⁻¹·X is constant, and that the additive error is state-dependent on the same fixture. Both are false for Ẋ = X·ω̂: η is conjugated (η_k = C⁻ᵏ·η₀·Cᵏ; X·X̂⁻¹ is the constant one), and with the same ω the additive error obeys e_{k+1} = e_k·C whatever the state, so the law test could not pass and the control could not be caught. The row now states the exact Cayley-step recursion with a rate error δ, the δ = 0 known answer (constant angle, rotation vector ξ_{k+1} = C⁻¹·ξ_k), and a control that needs δ ≠ 0, with the equal-error pair (I, R_z(π/2)) and (R_z(−π/2), R_z(π)), which I recomputed; three tests renamed to match. The `d7_nc_<row>` sentence kept; the owner of the shared script named."
+    },
+    {
+      "bead": "N12-48",
+      "kinds": [
+        "plan",
+        "convention"
+      ],
+      "what": "Earlier reviewer's sentence on `d8_nc_<row>` tests kept; the owner of the shared script named (convention 11). Rows recomputed: 16 and 22 pairs, α₇ = 1/1120 and 7/160, 0.512, the savings 1.96, 5.0, 10.1, 2.25, 2/3, the conformal indices 38 of 39 and 19 > 18, 19/21, 29,956, 0.0054 and 7%, both Shapley cases, 0.3989."
+    },
+    {
+      "bead": "N12-49",
+      "kinds": [
+        "plan",
+        "convention"
+      ],
+      "what": "Earlier reviewer's sentence on `d9_nc_<row>` tests kept; the owner of the shared script named (convention 11). The five thesis functions and their names checked against N00-17 as it stands. Rows recomputed: 30, 32, 46 and 49 (with (10/11)⁴⁶ = 0.012472 ≤ 0.0125), 0.28, 1.818, 14.7, 9.09, 1.6 between 1.333 and 1.778, 7.37 and 0.907, 125,000, 75 MB."
+    },
+    {
+      "bead": "N12-50",
+      "kinds": [
+        "plan",
+        "convention"
+      ],
+      "what": "Earlier reviewer added the two tests the bead lacked: `d10_nc_two_bar_stopped_at_30` (the two-bar row's control had no test) and `d10_dimensions_homogeneous` (an acceptance line had none); kept. Added: the owner of the shared script named (convention 11). Rows recomputed: −3/(ρ₁⁴·k₁), 2/√3, 0.5 + 0.0625, 0.0447 and 0.0894 mm, 127.3 against 111.8, 1 : 2√2."
+    },
+    {
+      "bead": "N12-51",
+      "kinds": [
+        "broken",
+        "registry",
+        "users"
+      ],
+      "what": "Step 4 of the script ran `frob contact laws` 'on a fixture law registry holding a law with no receipt', but `frob` takes no registry option and the law registry is registries/contact_laws.toml, so the step could not be written; it also sat before the step that reads the receipts. Now: the receipts and the certified status are read first, and the unreceipted case is last, through e2e_registries_scratch (the one way a script changes a registry) with CL-1's LawConvexity receipt removed from T-08's row. The generator had no command although this script and the later law beads (BD-167) must run it: an example target `law_convexity --law <law> --out <dir> --json` is stated. Item (c) offered an `interval-box` proof object for a multiplier bounded over a parameter box, but that kind is registered for scope `mission` only (N12-02) and a law-convexity bundle is an analysis claim, so the auditor would reject it with kind.out-of-scope: the bead now states the claim's scope and that such a law stays not-certified until a scope-change row widens the kind (none of the four laws here needs it). Script header added. The mathematics is right and untouched: G in the slide region, its sum-of-squares identity with Lagrange's identity, the symmetry condition μ = μ̂·R_n·W_t, the small exact case (γₙ = 8/5; pivots 4/5, 0, 2/5, 2/5) and the joint rows were recomputed; refusal 246 and its repairs equal N18-REF's row."
+    },
+    {
+      "bead": "N12x-01",
+      "kinds": [
+        "broken",
+        "registry",
+        "contradiction",
+        "convention"
+      ],
+      "what": "The recipe certified R ⪰ 0 with a `rational-ldlt` bundle 'with the semidefinite acceptance condition', and its test accepted the rank-deficient conductance [[1, −1], [−1, 1]]. The kind has no such condition: BD-027's checker and the kind registry (as the plan) accept positive pivots only, with no pivoting, so every singular R (that matrix, a lossless element's R = 0, every composite) would be rejected by frob-verify and N15b-09 could not certify the catalog. The recipe now uses the two M0 kinds as they are: a poly-identity bundle for eᵀ·R·e = Σ d_k·(ℓ_kᵀ·e)² over the nonzero pivots and a rational-ldlt bundle on diag(d_k) (DESIGN, with the rejected alternative of a second acceptance condition in an M0 kind that the ldlt-pos reflector could not promote); the skew part is the one identity eᵀ·J·e = 0, since the payload is one pair of scalar expressions. Mutants, tests and specimens restated to match (the indefinite [[0, 1], [1, 1]] fails by 2·e₁·e₂). Also: the row's `source` and `relies_on` in N12-06's schema; the route registered and hypothesis at close, as the other cards say; specimen files with their rows in expected.toml (the directory-driven scripts of BD-132 and N12-34 read it); frob-verify --json under env -i; script header; `related` gains N15b-09, which the body already called related. Specimen arithmetic recomputed (4.5 W, 15 W, 10.5 W; 8 W + 2.5 W; 1 W created by the unequal gyrator)."
+    },
+    {
+      "bead": "N12x-05",
+      "kinds": [
+        "broken",
+        "registry",
+        "deadlock",
+        "convention"
+      ],
+      "what": "(1) Acceptance required `frob prove list` to show the route with class Tested at this card's close; a route in hypothesis prints no class (N12-06) and nothing in this bead produces a live receipt, so the line could not pass. It now reads registered and hypothesis with the class declared in the registry file, and states the receipt that moves it. (2) 'A bundle over the cap is not-decided: size' named a verdict the auditor does not have (accept, reject, unsupported); the owner's rule is `limits.exceeded`, a reject. 'Inside the auditor's size cap as specified by the checker's bead' cited a number no bead states; the bead now says what it needs of the limit (5·10⁶ bits). (3) 'A bundle that offers n·p⋆ ≥ ln(1/δ) as its argument is rejected' contradicted the test that the analytic count 29,958 is accepted: the mutant is now the count 29,900, and the checker reads no argument field. (4) The specimens are placed in N12-13's corpus directory with rows in expected.toml, name their population (rule 8), and are run with frob-verify --json under env -i; script header and test commands added. Counts recomputed: 29,956/29,955, 299,572/299,571, 299/298, 76,959, the operand sizes 50 kB, 0.6 MB and 7.5 MB."
+    },
+    {
+      "bead": "N12x-07",
+      "kinds": [
+        "broken",
+        "registry",
+        "contradiction",
+        "convention"
+      ],
+      "what": "(1) Option 1A puts the claim kind `refinement` in claim.kind and requires its specimen to be accepted by frob-verify, but the auditor's claim-kind table (N12-02) rejects an unlisted claim kind with kind.out-of-scope, so the specimen could never be accepted and 'no registry growth' was not true. 1A now carries one scope-change row, `claim-refinement` (scope mission), entered under a verdict of 1A; until then the candidate row is enabled only under the test feature registry-candidate, as the checker beads do, and the acceptance and the script say which auditor accepts when. (2) The 200-mutant campaign was a test in frob-cert's own test file: a second mutant generator beside BD-136's 'one generator', in a crate that may depend on nothing (the same defect the round found in N12-18). It now runs with BD-136's generator from the conformance crate, with this bead's four operators added to operators.rs; question 2's campaign is the rejection of N25e-03's seeded transport mutations. (3) The script gained what the acceptance lines needed: the check that the frozen rules were committed before the first campaign record, the record and its ledger slugs, frob-verify under env -i, and its header. Budget arithmetic (1/50, 95/100, 1/5, 0.945) rechecked."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "VERBS-prove",
+      "what": "prove.list: name the optional card-row members `source` (the proof obligation a card numbered from T-36 was admitted for) and `relies_on` (card ids) among the outputs of frob.prove.list.out/1. N12-06's row schema now carries both and list_rows prints them; N12-52's script and the card beads N12x-01, N12x-03, N12x-04 and N12x-05 assert `source` through `frob prove list --json`. Without them in the row the schema snapshot has no place for what five beads assert."
+    },
+    {
+      "bead": "N12-52",
+      "what": "Its rows are written 'with the owning obligation' and its script asserts 'the source obligation' without naming a field. N12-06 now has the optional row fields `source` and `relies_on`: write the obligation in `source` (and `relies_on` where the card bead gives one, as N12x-01 does), so that the decision, the registry and the card beads use one name. Also: its dispositions for PO-SINEW-01 and PO-SHIELD-04 name `rational-ldlt` for 'an exact semidefinite elimination' and 'an exact semidefinite check'; that kind accepts positive pivots only (BD-027), and the card recipe is now a factorization identity plus rational-ldlt on the block of nonzero pivots (N12x-01)."
+    },
+    {
+      "bead": "N12-02",
+      "what": "The claim-kind table that fixes a bundle's scope lists `kernel-identity`, `family-inclusion`, `family-exclusion`, `partition`, `qualification-receipt` and 'an analysis claim', and rejects any other claim kind with kind.out-of-scope. 'An analysis claim' is not a value of claim.kind: name the claim kinds that map to scope `analysis` (card-instance certificates such as T-19 and T-38, the law-convexity certificates of N12-51), or state the rule that decides it. Without it each writer invents a claim kind and the auditor rejects the bundle, or the table is read as open and the scope rule checks nothing."
+    },
+    {
+      "bead": "BD-382",
+      "what": "CARD-T-35 now marks the eight tests of crates/frob-lemma/tests/cards/t35.rs that call prove.reflect with #[ignore = \"needs prove.reflect (BD-382)\"], because the card closes before the verb exists and its own script runs `cargo test -p frob-lemma --test cards -- t35`. This bead's change must remove the attribute (or its step 6 must pass --include-ignored); otherwise step 6 runs none of the tests that exercise the enabling rule against the verb."
+    },
+    {
+      "bead": "N15b-09",
+      "what": "It emits '`rational-ldlt` for step 2' (R symmetric positive semidefinite, zero pivots allowed). BD-027's rational-ldlt checker accepts positive pivots only, so the auditor rejects every singular R: a thermal conductance [[1, −1], [−1, 1]], a lossless element's R = 0, every composite blockdiag. T-38's recipe (N12x-01, which this bead says it follows) is now two bundles for step 2: a poly-identity bundle for eᵀ·R·e = Σ d_k·(ℓ_kᵀ·e)² over the nonzero pivots of its own pivoted factorization, and a rational-ldlt bundle on diag(d_k); R = 0 has the identity alone. State that; the in-crate check is unchanged."
+    },
+    {
+      "bead": "N12x-04",
+      "what": "It certifies sym(K_d) and 2·M̄ − h·K_d with 'a rational-ldlt certificate, semidefinite acceptance condition', and its specimen accept-T-39-gain-200 has pivot 0 ('accepted: semidefinite'). BD-027's rational-ldlt accepts positive pivots only, so that specimen and any singular K_d are rejected by frob-verify. Use T-38's reduced form (N12x-01): a poly-identity bundle for the quadratic form as a sum of d_k·(ℓ_kᵀ·y)² and rational-ldlt on the block of nonzero pivots; the boundary case 2·M̄ − h·K_d = 0 is its identity alone."
+    },
+    {
+      "bead": "N12-13",
+      "what": "State the limit on the operands of the sample-coverage rules. It says only 'the size limits of the auditor apply', BD-027 gives 16,384-bit coefficients for poly-identity, and this bead's own test decides n = 29,958 at p̄ = 10⁻⁴ (about 4·10⁵ bits). N12x-05's T-41 specimens need at least 5·10⁶ bits (p⋆ = 10⁻⁵, n = 299,572); under a smaller limit they are rejected with limits.exceeded and the card's acceptance cannot pass."
+    },
+    {
+      "bead": "N26a-21",
+      "what": "No bead writes a live sample-coverage bundle of study type zero-failure: this bead cites card T-41 (N12x-05) 'by path' only, and prove.bundle has no claim source for a Nemesis bound. So T-41's route never leaves hypothesis, and PO-NEMESIS-04's posture 'arithmetic re-checked by the auditor under the card' is true of specimens only. Either write each reported zero-failure bound as such a bundle (n, failures 0, p⋆ and δ as reduced fractions, the population named) so that frob-verify re-checks it and the receipt moves the row, or say here that the bound cites the card's document and is not bundled."
+    },
+    {
+      "bead": "BD-114",
+      "what": "Its test oracle_cross_check_d7_invariant_error asserts, 'matching the oracle' of N12-47, that with the estimate propagated from the same ω both the left error X̂⁻¹·X and the right error X̂·X⁻¹ stay constant, and that the additive error X − X̂ is state-dependent on the same fixture. For Ẋ = X·ω̂ that is false, and N12-47's row is now corrected: the right error (X̂·X⁻¹, equally X·X̂⁻¹) is constant, the left error is conjugated (η_k = C⁻ᵏ·η₀·Cᵏ: constant angle, rotation vector turned by C⁻¹ each step, constant only when its axis is parallel to ω), and with the same ω the additive error obeys e_{k+1} = e_k·C whatever the state, so the control needs a rate error δ ≠ 0. As written the test fails against a correct filter for any initial error not parallel to ω. Restate it to the oracle's three statements."
+    },
+    {
+      "bead": "N12-33",
+      "what": "It records GATE-LEMMA-00 'from the script's summary line as the receipt'. The recorder N38b-19 loads target/gauntlet/receipts/<hash>.json, the receipt of a tier run (N38a-02) that carries the gate's line and its controls caught in the same run, and BD-025 lets no gate pass without a registered control; other units settled on a `gate-receipt` step (`e2e_tier <target> <gate> --mutations`, for example N15b-32, BD-059, N14a-29). As written, record_gate refuses the hash and the M0 gate cannot be recorded. N12-11 was corrected this way for GATE-LEMMA-06 (entries in the G0 table, controls with seed GATE-LEMMA-06, `e2e_tier g0_laws GATE-LEMMA-06 --mutations`); KA-220 is a G0 row, so the same form with g0_laws applies here."
+    },
+    {
+      "bead": "N12-34",
+      "what": "Same as the request to N12-33, for GATE-LEMMA-03 (KA-218 is a G0 row): the gate is recorded from 'the run's receipt, its hash in the summary line', which is not a tier-run receipt that record_gate can load; it needs a gate-receipt step (`e2e_tier g0_laws GATE-LEMMA-03 --mutations`) and registered controls."
+    },
+    {
+      "bead": "N12-35",
+      "what": "Same as the request to N12-33, for GATE-LEMMA-04 (KA-219 is a G0 row) and for BD-364's M4 record of it: recorded 'from the script's receipt'; needs a tier run through e2e_tier and registered controls."
+    },
+    {
+      "bead": "N12-36",
+      "what": "Same as the request to N12-33, for GATE-LEMMA-01: recorded from BD-379's script receipt; needs a tier run through e2e_tier whose receipt carries the gate's line, with the mutated-kernel control registered for the gate."
+    },
+    {
+      "bead": "N12-37",
+      "what": "Same as the request to N12-33, for GATE-LEMMA-02: record_gate is given the script run's receipt; needs a tier run through e2e_tier and registered controls."
+    },
+    {
+      "bead": "N12-38",
+      "what": "Same as the request to N12-33, for GATE-LEMMA-05 (KA-227 is a G0 row): 'recorded from this run's summary receipt'; needs a tier run through e2e_tier and registered controls."
+    },
+    {
+      "bead": "N12x-08",
+      "what": "Two things the ledger's owner does not state and eight beads use. (1) The test feature `registry-candidate` (candidate rows enabled before their ledger change, for the item-4 campaign): N12-14 to N12-18, BD-381, N12-15 and N12x-07 name it and no bead says which crate declares it, what it enables, and that a release build and `cargo xtask check-generated` reject it. (2) A new claim kind in N12-02's claim-kind table (N12x-07's option 1A needs `refinement` with scope mission, or the auditor rejects the bundle set with kind.out-of-scope) is registry scope data: say that it is entered by a `scope-change` row, as N12x-07 now does with the slug `claim-refinement`."
+    }
+  ],
+  "unchanged": 1,
+  "notes": "Sweep slice S-04, resumed. Unchanged (1): N12-25 (reviewed by the earlier reviewer: Burnside counts recomputed, its e2e is a named step of its dependency N12-23's script). All 26 files parse (front matter, JSON lists, seven sections, three test subsections); no cycle; no dependency on a later milestone; the conventions lint reports nothing for the slice. The twelve beads the earlier reviewer had recorded were each re-read whole: seven needed nothing more (CARD-T-33, N12-01, N12-15, N12-26, N12-27, N12-31, N12-39) and five carried an edit that did not hold against an owner bead and was finished here (N12-41's control record, which BD-025 would refuse; N12-11's summary line used as a gate receipt; N12-12's step order in an append-only store; CARD-T-35's stage that ran tests of a later verb; N12-06's schema, from the review of the card beads). The compendium beads N12-41 to N12-50: every one of the 126 statements was compared mechanically with the plan's Appendix D rows and is equal, and every known answer was recomputed; apart from the invariant-error row of N12-47 (wrong, fixed by the earlier reviewer and verified here) the mathematics is right, and the edits are the missing negative-control tests and the named owner of the shared script. The other beads of the unit that record a Lemma gate (N12-33 to N12-38, BD-364, BD-379) all record from a script summary, not from a tier-run receipt: outside this slice, recorded as requests; it affects two M0 gates. N12-11's design choices are labelled DESIGN in the bead (the sweep entry reading FROB_EXPORT_SWEEP_DIR); N12x-01's recipe is the larger change of the session and its reason is BD-027's rule as it stands. Left alone on purpose: N12x-07's sentence that the decision record enables the transport-block row while N25e-03's acceptance has frob-verify accept its specimen at its own close (the two beads were reconciled in round 1 and the decision closes either way); N12-26 and N12-27 list GATE-LEMMA-05 in their summary's gates though they only inform it."
+}

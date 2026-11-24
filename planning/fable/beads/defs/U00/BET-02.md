@@ -6,9 +6,9 @@ priority: 0
 milestone: "M2"
 labels: ["m2", "spark", "frob-kernels", "solid", "bet", "gate"]
 parent: "WP-46"
-deps: ["BD-017", "BD-176", "BD-177", "BD-181", "N00-28", "N21b-34", "STD-E2E"]
+deps: ["BD-017", "BD-176", "BD-177", "BD-181", "N00-15", "N00-28", "N21b-34", "STD-E2E"]
 needs: []
-related: ["BET-08", "BET-09", "BET-18", "BET-23", "N00-14", "N00-15", "N40-31", "NS-02", "NS-10", "NS-14"]
+related: ["BET-08", "BET-09", "BET-18", "BET-23", "N00-14", "N40-31", "NS-02", "NS-10", "NS-14"]
 gates: ["GATE-SPARK-01", "GATE-SPARK-02", "GATE-SPARK-15", "GATE-SPARK-16", "KILL-D1"]
 plan_refs: ["§4 (BET-02)", "§40.5", "§35.1", "§35.5", "§1.2", "§1.6 (N6)"]
 ---
@@ -93,8 +93,11 @@ reports 3 ulp on Metal: family verdict D3, KILL-D1 fired for Metal, bet `HeldInP
 `bet02_control_not_caught_is_untested`.
 
 ### End-to-end script and logging
-`scripts/e2e/bet_02_decide.sh` reads the four gate rows per family, recomputes the verdict and checks the ADR
-and the rendered N6 wording. Logged per STD-E2E: per family the attained class, kernels compared, maximum ulp,
+`scripts/e2e/bet_02_decide.sh` reads the four gate rows per family, reads the per-family verdict of BET-02 from
+the bet register's report (`cargo run -p frob-conformance --example bets -- status --json`, example `bets` of
+N00-28, the one verdict rule; its `HeldInPart` map gives one verdict per device family; no second verdict rule
+in the script), and checks the ADR against it and the N6 wording that the claims-wording registry (N00-15)
+renders for each family. Logged per STD-E2E: per family the attained class, kernels compared, maximum ulp,
 digest-equality counts across co-tenancies, discordance bounds against 1% and 0.5%, controls caught; `summary`
 naming the four gates and KILL-D1.
 

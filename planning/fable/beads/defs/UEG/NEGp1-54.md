@@ -42,7 +42,7 @@ with a per-run private root purged at the end (`scene purge` in its dry-run and 
 NEG-18, NEG-19 and NEG-20 use the keys those beads list (`al-infi-<n>`, `al-gso-…`, `al-rbc-…`), and the HM3D
 and trace steps use `al-m5-<row>-<step>`; a step that compares two results of one request uses two keys, because
 a repeated key returns the stored receipt. Before any run binds a pack the script calls `e2e_scene_ready <pack>`. The scan
-steps import with `--kind place --profile hm3d-scan` (NEGp1-52); the asset steps with `--kind asset` and the
+steps import with NEGp1-52's command (`--kind place --from mesh --declare <declaration> --profile hm3d-scan`); the asset steps with `--kind asset` and the
 row's profile: `populated-interior` (NEG-18), `small-rigid` with `--behaviour free` (NEG-19), `kitchen-fixture`
 with `--behaviour articulated` and `kitchen-layout` (NEG-20). All M1 and M3 steps run again (regression); the M5
 steps are, each exactly as its bead lists it:
@@ -56,7 +56,8 @@ steps are, each exactly as its bead lists it:
    the default pipeline); a scene with five objects dropped on a floor and settled on the referee; export of the pack and of a report, both embedding the attribution and change statement;
    with the `notice` field removed, the pack check fails and the door refuses the report (N37-18).
 3. `robocasa`: import of the five fixtures and one layout; the door that passes through its frame (refused by
-   the sweep); each fixture's sweep through its range read from its import envelope (NEG-20's validation rows)
+   the sweep with `import-articulation-interpenetrates`: the code of `IMPORT_ARTICULATION_INTERPENETRATES`, exit
+   3, the part and the joint value named); each fixture's sweep through its range read from its import envelope (NEG-20's validation rows)
    and a referee run in each fixture pack in which no joint leaves its range; the layout's aisle widths read back
    with `scene show`; export with attribution; the code licence (MIT) recorded apart from the asset licence.
 4. `hm3d` scan profile (NEGp1-52) on its stand-in: unknown fraction, scale label `estimated` and door check,

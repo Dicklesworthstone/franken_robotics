@@ -4,7 +4,7 @@ title: "frob-contact: Traction refusal registry: FROB-REF-240 to -246, -320, -32
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "traction", "frob-contact", "registry", "test"]
+labels: ["m1", "traction", "frob-contact", "registry", "test", "review-notes-open"]
 parent: "WP-10"
 deps: ["BD-005", "BD-022", "N32a-03", "N35x-02", "STD-E2E"]
 needs: []

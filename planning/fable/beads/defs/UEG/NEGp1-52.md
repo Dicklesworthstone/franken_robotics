@@ -39,11 +39,15 @@ profile is reached through that form and shares its machinery, not its licence).
 
 ## Technical approach
 
-`frob scene import --kind place <scan> --source hm3d --user-supplied --licence-ack <statement> --profile
-hm3d-scan --key <k> --json`, refused in default mode (NEG-23). The `kind` is `place`: a scan of a real building
-goes through the real-place lane, which first answers at M5 (BD-398; before it `--kind place` is
-`FROB-REF-724`, which is why NEG-23's M3 import uses `--kind asset --profile scan-store` and stores the scan
-without geometry). This bead adds the import profile `hm3d-scan`. After the licence entry, the profile runs
+`frob scene import --kind place <scan> --from mesh --declare <declaration> --source hm3d --user-supplied
+--licence-ack <statement> --profile hm3d-scan --key <k> --json`, refused in default mode (NEG-23). The `kind` is
+`place`: a scan of a real building goes through the real-place lane, which first answers at M5 (BD-398; before it
+`--kind place` is `FROB-REF-724`, which is why NEG-23's M3 import uses `--kind asset --profile scan-store` and
+stores the scan without geometry). The adapter is N19c-04's mesh-with-operator-scale adapter (`--from mesh`; the
+default `twin` reads a twin package, which an HM3D scan is not), and `mesh` needs `--declare`: the declaration
+file states units (metres, the source's statement), frame and handedness and carries no scale witness, so the
+pack's scale is a declaration (step 1) and its Reality status `no-claim`, as that adapter labels it. This bead adds
+the import profile `hm3d-scan`. After the licence entry, the profile runs
 these steps through the M5 machinery and records each in the loss report:
 
 1. **Scale label.** Scans are metric by the source's construction, but the source's statement is a declaration

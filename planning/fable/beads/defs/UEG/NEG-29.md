@@ -111,7 +111,7 @@ count named "hazards the battery leaves uncovered", the result of that bead's qu
 notice failing, the second a hazard nobody was exposed to. Both counts are fields this bead adds to the output
 of `eval.scorecard` (BD-254, a dependency): `hazards_drawn_unguarded` and `hazards_uncovered`, each with the
 list of row identifiers behind it, an additive change to the schema `frob.scorecard/1` whose help-schema
-snapshot is updated in the same change (the registry bead VERBS-eval is asked to note it). A scorecard over a
+snapshot is updated in the same change (VERBS-eval's `eval.scorecard` row lists both fields). A scorecard over a
 battery with no interior scene prints both as zero with the note "no hazard registry applies".
 
 ## Acceptance criteria

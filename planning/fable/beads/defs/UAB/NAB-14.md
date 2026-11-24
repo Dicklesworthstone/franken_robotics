@@ -119,8 +119,9 @@ confirmed re-read (`read`), or an ADR (`withdrawn`). The citation lint reads `st
 marked M or U" among the public sources; yet no public-source reading carries R or M (the public register has
 163 brackets marked 39 P, 92 F, 30 S and 2 U, which NAB-12 and NAB-13 enter as 174 readings: 43 P, 95 F, 34 S,
 2 U). The recalled sources are the standard references of this bead, which is why they
-are entered with mark M, and the search-summary figures are those of NV-06, entered with mark R when the
-published-anchor bead registers them.
+are entered with mark M, and the search-summary figures are those of NV-06. They are not entered here as
+readings: the published-anchor register of BD-311 (M3) keeps them, refuses at admission an anchor whose reading
+is at search-summary level, and NV-06 is their record until the re-read review (N00-34) settles it.
 
 ## Acceptance criteria
 
@@ -129,10 +130,13 @@ published-anchor bead registers them.
       contract, report template or verb description contains "conform" within the same sentence as its title.
 - [ ] 13 `[[unverified]]` records exist with the statements and settling gates of the table; each `measured_by`
       identifier exists in the gate register, the open-question list or the bead graph.
-- [ ] With every record at `status = "unverified"`, the citation lint fails a planted contract that states NV-01
-      as fact, and passes it after GATE-SPARK-21 has a recorded value and the record is set to `measured`
-      (shown by NAB-16's end-to-end script, which runs NAB-10's lint over these records).
-- [ ] No reference is cited by a recorded gate without a `reread` entry naming edition and location.
+- [ ] Every `[[unverified]]` record has `status = "unverified"`, and a copy with NV-01 set to `measured` and an
+      empty `record` is refused by NAB-09's loader (`src.unverified-status-without-record`). The planted
+      reliance case (a contract stating NV-01 as fact fails NAB-10's lint, and passes once GATE-SPARK-21 has a
+      recorded value and the record is `measured`) is a step of NAB-16's script, which depends on this bead
+      and on NAB-10; it is not this bead's close condition.
+- [ ] Every reference record loads with `reread_before_gate = true` (mark M, no `reread`), which is what makes
+      NAB-10's lint refuse a recorded gate that cites one before a `reread` entry names edition and location.
 
 ## Test plan
 
@@ -148,7 +152,7 @@ published-anchor bead registers them.
   `registries/open.toml` of N41-03, bead ids against the tracker export `.beads/issues.jsonl`; NV-08 resolves
   to N14b-21 and NAB-28).
 - `status_change_requires_record`: `status = "measured"` with empty `record` is refused.
-- `nv06_anchor_figures_are_mark_r` (once BD-311 registers them).
+- `references_need_reading_before_gate`: each of the 43 reference records has `reread_before_gate = true`.
 - `public_register_has_no_r_or_m_reading` (the finding of step 3, pinned so a later change is noticed).
 
 ### End-to-end script and logging

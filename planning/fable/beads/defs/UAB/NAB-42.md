@@ -4,7 +4,7 @@ title: "registries/ideas.toml: the idea-pass register (frob.ideapass/1), four ru
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "delivery", "gauntlet", "frob-conformance", "solid", "registry", "decision-record", "test"]
+labels: ["m0", "delivery", "gauntlet", "frob-conformance", "solid", "registry", "decision-record", "test", "review-notes-open"]
 parent: "EPIC-M0"
 deps: ["BD-002", "BD-004", "BD-005", "BD-025", "N40-01", "N40-02", "N40-10", "N41-16", "NAB-32", "STD-TEST"]
 needs: []
@@ -123,6 +123,8 @@ suggested_home = ""
 standing    = ""
 default_disposition = ""
 trigger     = ""            #   conditional records: the measurement and where it is read
+trigger_exit = ""           #   conditional records: the exit whose sweep reads the trigger ("M2"); the
+                            #   field the due list of NAB-22 reads
 owner_decision = ""         #   empty until the owner decides
 
   [[idea.calculation]]      # CT records: hand-checkable numbers of the arguments, evaluated by the harness of
@@ -187,10 +189,13 @@ went. Determinism class D0.
 
 ## Acceptance criteria
 
-- [ ] `registries/ideas.toml` validates and loads; with NAB-43 to NAB-49 landed it holds 30 `FP`, 88 `IP`,
-      19 `CT`, 27 `BS` and 16 `UP` records.
-- [ ] Every `IP` record has at least one carrier that exists as a bead, and every named gate and kill gate
-      exists in the gate register.
+- [ ] `registries/ideas.toml` validates and loads with the `[tally]` table and no idea record (the state this
+      bead leaves). The counts 30 `FP`, 88 `IP`, 19 `CT`, 27 `BS` and 16 `UP`, and the join of step 3 (90
+      placed, 9 not placed over 99 counted records), are known answers asserted by NAB-50's script once NAB-43
+      to NAB-49 land; those beads depend on this one, so they are not its close condition.
+- [ ] On fixture registries, an `IP` record with no carrier that exists as a bead fails, and a named gate or
+      kill gate absent from the gate register fails unless it is on the frozen list of "Rows that land later",
+      where it is a recorded `skip` until its milestone's exit record exists.
 - [ ] Each of the nine findings is produced by its planted fixture.
 - [ ] `[tally]` satisfies 90 + 13 + 9 = 112 and the generated document prints it with the label FACT.
 - [ ] `docs/decisions/idea-passes.md` is current under `check-generated`; `xtask` still has six subcommands.
@@ -200,13 +205,16 @@ went. Determinism class D0.
 
 ### Unit tests
 
-`crates/frob-conformance/tests/idea_register.rs` (fixture registries, labelled `synthetic`, and the real
-registry for counts):
+`crates/frob-conformance/tests/idea_register.rs` (fixture registries, labelled `synthetic`; the counts of the
+real registry are NAB-50's assertions, made once the record beads have landed):
 
-- `counts_by_prefix`: 30, 88, 19, 27, 16.
+- `counts_by_prefix`: a fixture with two `FP`, three `IP`, one `CT`, one `BS` and two `UP` records counts 2, 3,
+  1, 1, 2; the real registry's 30, 88, 19, 27, 16 are asserted by NAB-50.
 - `tally_adds_up`: 90 + 13 + 9 = 112.
-- `tally_join`: on the real registry the 88 `IP` records plus UP-03 and UP-04 give 90 and the nine residual
-  `UP` records give 9; `counts_toward_tally` is true on exactly 99 records.
+- `tally_join`: on a fixture of three `IP` records and four `UP` records, three with `counts_toward_tally =
+  true` (one of them placed by a later subsection) and one with `false`, the join gives 4 placed and 2 not
+  placed over 6 counted records (on the real registry: 88 `IP` plus UP-03 and UP-04 give 90, nine residual `UP`
+  give 9, over 99, asserted by NAB-50).
 - `placed_needs_carrier_and_gate`; `upper_tier_needs_kill_or_fallback`; `refuted_needs_record`.
 - `ungated_stands_in`: a Frontier record with no kill gate, or a placed record with no gate, fails until
   `ungated` is filled, and passes with it.

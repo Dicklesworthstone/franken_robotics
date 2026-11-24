@@ -73,8 +73,12 @@ rockers.
 is undetermined on flat ground; stage 3 reports the extra freedom and the standing check flags an
 unconstrained body attitude; (b) `variants/actuated-count.fbot`: the passive joints given actuator cards
 without the manifest changing: the actuated count becomes 10 and the catalogue's count row (6) catches it;
-(c) a rigid tie between the rockers in place of the differential (ratio +1 on a loop that cannot satisfy it on
-uneven ground) → refused with FROB-REF-110 when the terrain pose requires opposite angles.
+(c) `variants/rigid-tie.fbot`: a tie of ratio +1 between the rockers in place of the differential (θ_left =
+θ_right relative to the body). It is still one constraint on four passive coordinates, so mobility stays 3, the
+count rows pass and no stage-3 refusal is raised (FROB-REF-110 is for mobility below one); the differential-law
+row is what catches it: on the `synthetic` pose pair (+10°, −10° in the world) the closure has no solution
+(equal relative angles would need 10° − p = −10° − p), so the row reports the closure unsatisfied where the
+golden says "body level".
 
 ## Acceptance criteria
 

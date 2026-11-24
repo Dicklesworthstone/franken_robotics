@@ -1,0 +1,341 @@
+{
+ "round": 4,
+ "slice": "S-15",
+ "reviewed": 35,
+ "changed": [
+  {
+   "bead": "BD-131",
+   "kinds": [
+    "request",
+    "contradiction",
+    "convention",
+    "deadlock"
+   ],
+   "what": "F-U25a's request applied in full after checking N25d-34's register and N25ap4-01: dep N25a-12 replaced by N25ap4-01 (the bead only implements and registers lowerings; its tests call them directly). The bead called the composed solver 'the implementation' and put the closed form in frob-conformance, while the register lists the specialized interval solver as primary and the composed one as second; with the closed form in frob-conformance neither role could be registered, because frob-mission may not depend on frob-conformance (N25a-01). Both lowerings now live in frob-mission (lower/pusher/interval.rs as `pusher-interval`, primary; composed.rs as `pusher-composed`, second), registered through entries(); independence is by file set. Convention 11: its only script was N25a-22's, a later bead: it now owns scripts/e2e/mission_pusher_lowerings.sh on its own deps (mission.check on BD-126's files, the example binary per lowering, the two-lowerings test), dep STD-E2E. Deadlock wording: 'six corrupted certificates rejected' and the gate were stated as if this bead waited on the auditor and on N25a-22 (BD-133 and N25a-22 depend on this bead): the rejection is now by an exact test oracle with the failing check named per corruption (each recomputed), and the gate's record is N25a-22's. All twenty intervals recomputed from A and B: correct."
+  },
+  {
+   "bead": "BD-316",
+   "kinds": [
+    "convention",
+    "users"
+   ],
+   "what": "Convention 14: arm A's agents call run verbs over MCP on the device strata, above E0, and the bead never said under which envelope scope; an agent has no launcher, so every such job would have been `adhoc` and refused with FROB-REF-761, and the arm censored for a reason unrelated to the product. The harness now starts each campaign's frob-mcp and frobd under `frob-launch --scope gate:GATE-TENFOLD-06` (the scope N44-01 admits and N39b-29 approves), so the token reaches every run verb and the agent cites nothing; acceptance item and a negative control added; dep N36-20 made direct. Ledger sum 1,500 s, the levels 0.025, 0.05/6, 0.05/12, the 25/3 ceiling and 288 device-hours rechecked."
+  },
+  {
+   "bead": "N25a-01",
+   "kinds": [
+    "request",
+    "deadlock",
+    "broken",
+    "contradiction",
+    "convention"
+   ],
+   "what": "Lead's note applied: BD-126 moved from deps to related (the skeleton reads no mission type; BD-126 writes admit.rs into the crate this bead creates). Its compile-fail test needed `Verdict` and `ProofRef`, types of BD-128 and N25b-01, which depend on this bead: the test moved to BD-128; this bead keeps the `Candidate` type and a plain-data test. The default-features check matched features by the prefixes frontier-/moonshot-, so the features the registry spells otherwise (shape-atlas, holonomy-query, labels-from-contact, transport-relation) escaped rule L-12's test: the tier is now read from contract.toml's feature rows. `moonshot-atlas` and `moonshot-skill-transport` were second names for features N25c-47 and N25c-03 call `shape-atlas` and `transport-relation`: aligned. Deps added: N34-08 (check-contracts, used by acceptance and script) and STD-E2E (its script sources the helper)."
+  },
+  {
+   "bead": "N25a-02",
+   "kinds": [
+    "convention",
+    "deadlock",
+    "contradiction"
+   ],
+   "what": "Convention 11: its only scripts were N25a-23's and N24b-26's (later beads): it now owns scripts/e2e/mission_admit_semantic.sh, built on mission.check (BD-126) alone, one expected refusal per single-field mutation with code, pointer and first repair; dep STD-E2E. The acceptance 'clairvoyant can never yield an inner cell (property test)' needs the kernel, which this bead does not depend on: restated as the exclusion-only mark on AdmittedMission, with the inner-cell test left to N25a-03. The 874 rule for a stored answer offered for an amended world had no function a caller could use: `admit::same_world` named, called by the driver's --from (N25a-12)."
+  },
+  {
+   "bead": "N25a-03",
+   "kinds": [
+    "contradiction",
+    "convention"
+   ],
+   "what": "It redefined `PolicyScope` with two values (SharedAcrossCell, SelectablePerNominalDesign) while BD-128, which owns the type, has three (PerNominalDesign, PerCell, Family) and N25a-05 prints two strings: an implementer would have had two enums of one name. Now uses BD-128's type and states the printed mapping. Convention 11: own script scripts/e2e/mission_prefix_semantics.sh (mission.check on BD-126's files, the example that offers the per-build proof to the shared query and gets 881, the persistence fixture, the two mutants), dep STD-E2E. Docking command vectors and the pusher bounds rechecked."
+  },
+  {
+   "bead": "N25a-04",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 11: its only script was N25a-24's (a later bead): it now owns scripts/e2e/mission_progress_rules.sh (the test target in debug and release, an example printing each outcome's contribution, the three registered mutants), dep STD-E2E. Numbers rechecked: gap 0 at ε = 5/16 and 1/512 at 5/16 − 1/1024, accumulation at 3/2 s, the enclosure cases."
+  },
+  {
+   "bead": "N25a-05",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Lead's note applied: N25a-04 moved from deps to related (nothing here uses ExecutionOutcome, classify or the comparator rules; the partition check is box arithmetic and the tests build cell lists directly). Convention 11: own script scripts/e2e/mission_answer_artifact.sh (stance and tray renderings, refinement, the refused flip, byte identity), dep STD-E2E. The `policy` rendering now states how BD-128's three PolicyScope values map to the two printed strings. Tray cells, outer set and area fraction rechecked against the worked artifact."
+  },
+  {
+   "bead": "N25a-06",
+   "kinds": [
+    "deadlock",
+    "convention"
+   ],
+   "what": "Acceptance 'the counters are written with the gate record of GATE-AUGUR-02' waited on N25a-21's run and on the gate's recorder, both later than this bead, and asked it to write a gate record it may not write (convention 9): now the counters are kept and readable with their values on the three stance programs, and N25a-21 logs them beside the gate. Convention 11: its only script was N25a-21's: own script scripts/e2e/mission_exact_reconstruction.sh (the three stance programs, the two-solver byte comparison on the 51 docking programs, the two mutants), dep STD-E2E. Recomputed: (160,130,110,0) from five active constraints; t in [150,160] at v = 4; y^T A = (1,0,0,-1), 165 against 160; 90 + 15v."
+  },
+  {
+   "bead": "N25a-07",
+   "kinds": [
+    "deadlock",
+    "convention",
+    "broken"
+   ],
+   "what": "The second pass through `frob-verify` was 'enabled once the auditor exists' and its acceptance 'once the bundle path exists': the writer (BD-133) was not a dependency, so the item could never be closed here, yet N25d-36 reads these outcomes 'from the last log of the battery of N25a-07'. Dep BD-133 added (no cycle; both dependents already need it); the pass is now a frob-conformance test (frob-mission may link neither writer nor auditor) and is scoped to what the M1 auditor checks: ten fixtures; the seven of transport and composition kinds are reported pending by kind and audited by the same test from the build in which N25b-30's writer and the M3 checkers exist. The bead had no script and so no log for N25d-36 to read: own script scripts/e2e/mission_rules_battery.sh with one line per fixture and layer, dep STD-E2E. Fixture count (17) and every fixture number recomputed (witness (160,130,40+15v,70-15v), mirror image (110,0,160,130), 0.95 J, x = 4/5 and 3/2)."
+  },
+  {
+   "bead": "N25a-09",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The two command forms of step 1 and the calls quoted in the test plan carried no `--key`, though `mission.refute` is a run verb (convention 5): keys added, and the forms spelled as the registry's example and the M3 scripts use them (`--cell <box>`, or `--design <design>` alone for one design under any admitted policy; `--design` with `--policy` for controller mode). Convention 11: its only scripts were N25a-21's, N25a-22's and N25c-22's: own script scripts/e2e/mission_refute_core.sh (four fixtures through an example, rollouts-only mode, three mutants), dep STD-E2E. Recomputed: 165 N, v* = 14/3, P_y = 28, y = 1/4 at (g, d) = (1/2, 1/4), x3 = 2 for gain 2."
+  },
+  {
+   "bead": "N25a-10",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "Acceptance required `next_test` 'split c:06 at r = 11/5' from a module that knows cell geometry only: the lower bound 1/8 is attained on v = 8 in c:05 and in c:06 alike, and 11/5 is the family's boundary, so the item could not pass. The module now returns the lower-bound site (cells and face) and the driver writes next_test (N25a-12). Convention 13: 'steps requested in polishing round 1' replaced by N25c-22's steps 5a and 5b, which exist. Convention 11: own script scripts/e2e/mission_cost_claims.sh, dep STD-E2E. Values rechecked (1/6, 1/8, 1/24; U > 3/4; 7/8; gap 1/4; 1/70)."
+  },
+  {
+   "bead": "N25a-12",
+   "kinds": [
+    "request",
+    "contradiction",
+    "plan",
+    "deadlock",
+    "convention"
+   ],
+   "what": "F-U25a's request applied: step 1 uses N25ap4-01's registry (trait code dropped), dep N25ap4-01 added, title no longer claims the registry. The audit's proposal to move N25a-10 to related is NOT applied: the driver builds the answer, and the `next_test` its own refinement honours comes from the cost module; the missing step (cost block and next_test, plan §25.3.1 'cost bounds when an objective is given') is now written, with a test. `--from` an answer of another mission was 802 in every case, against N25a-02's rule and the registry's 874 for a changed world: now 881 (prefix), 874 (world), 802 (other). Its acceptance ran 'the stance family' and the tray query without depending on any family bead: the tests now use two closed-form fixture lowerings in the test file. Added missing dep N25a-03 (step 7 calls its check) and STD-E2E; own script scripts/e2e/mission_driver.sh. The stale note 'the registry freeze must settle the spelling' now states the registered form."
+  },
+  {
+   "bead": "N25a-14",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Its own script gate07_fixture_check.sh sources the STD-E2E helper and the bead did not depend on STD-E2E: dep added. All ten truths recomputed and correct: A1 7/4/5 cell by cell; A2 5/8 and 15/16; A4 the two sequences from u1 = 1/g - 2p, u2 = p - 1/g; A5 64/65, 1/65 and 5/512; A6 165; A7 (175,115,85,25) and half-width 1/2; A8 (160,130,100,10) at v = 4; A9 v = 4; A10 1/6, 1/8, 1/24."
+  },
+  {
+   "bead": "N25a-18",
+   "kinds": [
+    "convention",
+    "registry",
+    "contradiction",
+    "deadlock"
+   ],
+   "what": "Convention 10: the decision named no record path, used three outcomes of its own (tie, not established, advantage) and asked for a register 'status killed' on the kill row. Now `docs/adr/ADR-KILL-AUGUR-TIE-M3.md` with N40-03's fields; the three outcomes mapped to `fired`, `deferred` (to M7, with reason) and `not-fired`; one decision entry per stratum (`cell:envelope`, `cell:sensing`); the owner declaration N40-30 compares, without which kill_ledger fails owner-declaration-missing at the M3 exit; an explicit rule that the bead closes whichever way each stratum falls. Step 5 said the conventional program 'is already the implementation' for stance, docking and pusher: true only for stance; for docking and pusher it is the registered `second` lowering, and the branch exchanges the roles and re-runs N25d-34's comparison. Its script re-ran scripts of N25a-21 and N25a-22 and now of N25d-34 without depending on them, and sourced the helper without STD-E2E: deps N25a-21, N25a-22, N25d-34, N40-03, N40-30, STD-E2E added (all earlier milestones; no cycle). The script writes no register row."
+  },
+  {
+   "bead": "N25a-19",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "Acceptance put per-rule states `standing`/`killed` and 'the date of the last reading' into the gate register row: a kill row has no measurement fields and this row no scope_kind, so the load would refuse it (N40-03). The row now carries one decision entry per reading (`fired` if any rule fired, else `not-fired`); per-rule state is the rule registry's status and the ADR's table. 'A standing reading appends a dated section to the same file' contradicted N40-03's one-file-per-exit rule: later exits get their own ADR, a finding at a decided exit the `-reopened` record. `not-exercised` was called a registry status, which N25ap1-01's schema (enabled | disabled) does not have: it is `disabled` with `disabled_by`. The script 'writes the register row', which STD-E2E's self-recording lint fails: it now leaves the proposed entry for the recording session. Owner declaration and dep N40-30 added (kill_ledger otherwise fails from M3)."
+  },
+  {
+   "bead": "N25a-25",
+   "kinds": [
+    "request",
+    "broken",
+    "convention",
+    "registry"
+   ],
+   "what": "F-U25a's request applied after checking VERBS-mission and BD-288 step 8: the test build is `--features gauntlet-mutations,frontier-transport,conformance-fixtures`; `test-switches` alone leaves the property stripped from the schema and the switch answers 802. Step 10 claimed 'the run's receipt carries the gate line' from log tags: only a tier run writes a receipt, so GATE-AUGUR-08 could never be recorded. The bead now writes the gate's tier entry in g1_known_answers (a through-verb entry that re-reads the stored answers by key, with BD-288's four controls) and runs `e2e_tier g1_known_answers GATE-AUGUR-08 --mutations`; the row is entered from that receipt by the recorder. Keys are written with `e2e_key` (the timestamped keys could not be read back and made two runs' logs differ). The worker-count lane (1 and 8) was asked of `mission.synthesize`, which has no worker option: moved in process (testkit::det::lane). `frob mission show` 'for the transport report' named no registered form: the report is read from the synthesize result, where the row lists it."
+  },
+  {
+   "bead": "N25a-32",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "Its acceptance asserts on `cargo tree -p frob-mission`, adds firewall rules about `frob-mission` and writes the crate contract's 'oracles and owners' section, but it did not depend on the bead that creates the crate: dep N25a-01 added (M1, no cycle). All probe numbers rechecked: Phi(-1) with sigma = 1; 176.58/160 = 8829/8000; three pi-groups and the exponent identity; the e-process 1 then 3/2; nine pin-fact tests."
+  },
+  {
+   "bead": "N25a-33",
+   "kinds": [
+    "deadlock",
+    "broken",
+    "convention"
+   ],
+   "what": "The report was 'computed when the driver stops, stored in the answer', but neither the driver (N25a-12) nor the answer type (N25a-05) depends on this bead, so its implementer would have had to change two finished beads and the answer's bytes. It is now a pure function of an answer's cells and the query's resolution, rendered by the verb (BD-135, which depends on it). `next_test` for `interior` was 'the unresolved cell with the best static margin', which needs a lowering this bead does not have: now the largest unresolved cell, the same cell as the head of the driver's worklist. The acceptance about the verbs' budget-stop rule (BD-135's, a later bead) is restated as this bead's predicate. Convention 11: own script scripts/e2e/mission_resolution.sh, dep STD-E2E. Numbers rechecked (1/3, 3/12, 4/12 against 1/2)."
+  },
+  {
+   "bead": "N25a-34",
+   "kinds": [
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "The script bound option names `--adjustable`, `--observed`, `--catalog` 'read from frob schema': `mission.distinguish`'s row has `--between` and, from M4, `--grammar` and `--scope`, so every case would have met 802. Cases are now query files and the call carries no such option (request to BD-135 for where the query declares them). It ran 'against a daemon', and at M1 there is none (N25a-24, BD-135): now in process at M1. The run and mutate calls had no `--key`; keys added, with distinct keys for the repeat. The worker-count lane (1 and 8) had no verb input: left to BD-135's in-process lane. All eight cases recomputed (window (1/4, 5/8], separation 3/8, [1/2, 3/4] and [9/8, 11/8], 15/16, -1/4 and -3/4, 21/64 > 20/64, 13/8 outside both sets)."
+  },
+  {
+   "bead": "N25ap1-01",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The `result.revalidate` calls of its script carried no change form, no `--key` and no `--grades 3`; with the default highest grade 2 the grader under test would never have run, and a run verb without a key is 805. Calls now carry `--against`, `--grades 3` and distinct keys. The scratch registry is now made with STD-E2E's `e2e_registries_scratch` (the one way a script changes a registry; the process option `--registries-root` of N32ax-03 does exist, so that part was a convention matter, not a broken command); the flag-off comparison runs before the override is switched on, and the script declares no gate, since an override run can be cited for none."
+  },
+  {
+   "bead": "N25ap4-01",
+   "kinds": [
+    "deadlock",
+    "convention",
+    "broken"
+   ],
+   "what": "Acceptance 'builtin() constructs in the build that contains the M1 families' waited on BD-129/130/131, which depend on this bead: now 'constructs (empty at close); each family re-runs the test'. `TemplateId` was used and never defined, so an implementer could not key entries or the DuplicateRole check: defined as the template name `mission.new --template` takes, the key of N25d-34's register, with matching done by `applies` alone (as N25ax-01 already uses it). Convention 11: own script scripts/e2e/mission_lowering_registry.sh, dep STD-E2E. Meter arithmetic and the four partition cases rechecked."
+  },
+  {
+   "bead": "BD-021",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "Its acceptance (the seed's condition 'constructing Proved evidence outside frob-lemma fails to compile') needs a compile-fail runner, which the bead listed as out of scope and N12-11's (N12-11 depends on this bead). It now writes the runner and its two case files (the names N12-11 lists), and N12-11 adds its further cases to the same runner. Every identity and number rechecked: D = 18 and 324 I; N = 4 R(c), D = 4d; norms 30, 30, 900; the normalization cofactor -1; the mutant turning 4 into 3; four certificates for three cards."
+  },
+  {
+   "bead": "BD-026",
+   "kinds": [
+    "request",
+    "contradiction"
+   ],
+   "what": "Lead's note applied: BD-003 moved from deps to related (the seed lists BD-001 only; nothing in the bead runs check-deps or check-layers; N34-25, which guards the rule, depends on this bead). The closing rule said the gate record 'is written by the end-to-end run of N25b-05': since this round N25b-05 produces only the M0 receipt (gate line not-eligible) and the gate's one part is recorded at M1 by N25bp4-01; restated. BLAKE3 empty hash, 2^53 - 1, the rational forms and the stance interval test (1/2 and the 2^-36 slack) rechecked."
+  },
+  {
+   "bead": "BD-128",
+   "kinds": [
+    "request",
+    "deadlock",
+    "broken",
+    "convention",
+    "contradiction"
+   ],
+   "what": "Counterpart of the N25a-12 split: Scope now names N25ap4-01 for the trait and registry. Its script called `frob mission synthesize` 'once the verb exists' (BD-135 depends on this bead), with no --key, on a file `pusher-family.fmission` that BD-126 does not ship: it now drives the kernel through the example binary and BD-126's read verb on pusher-per-build.fmission and pusher-shared.fmission; the verb form is N25a-22's. The PO-AUGUR-06 acceptance required a test against the mutation corpus (BD-136, which depends on this bead): restated as this bead's part, with the obligation carried by N25d-36. `Binder` was defined in three crates (frob-spec by BD-126, here, and inside frob-core's Establishes): prefix.rs now re-exports the document's types and this bead writes and tests the two conversions into frob-core's plain mirrors. Added the named tests the acceptance needed and lacked (cancellation, disjointness, the INV-AUGUR-11 compile-fail case moved here from N25a-01)."
+  },
+  {
+   "bead": "N25b-01",
+   "kinds": [
+    "broken",
+    "deadlock",
+    "convention"
+   ],
+   "what": "`Establishes` holds Binder, Horizon and Cell, which BD-126 and BD-128 define in frob-spec and frob-mission; frob-core is layer 0 and the bead's own acceptance says it gains no dependency, so the types could not be named. They are now this module's own plain types (variants printed), filled through BD-128's tested conversions. With that, nothing of BD-126 is needed to build or test the bead: BD-126 moved from deps to related, which also lets BD-132 (the checkers) start without waiting for the mission schema. Convention 11: own script scripts/e2e/proof_objects.sh, dep STD-E2E. Kind count (27 in N12-02, 17 with mission scope) checked."
+  },
+  {
+   "bead": "N25b-06",
+   "kinds": [
+    "convention",
+    "broken",
+    "deadlock"
+   ],
+   "what": "`frob mission synthesize …` and `frob prove bundle …` were written without `--key` (run verbs: 805). The digest repeat 'with a different worker count' had no verb input: that lane is N25d-35's in-process test. Step 11 wrote 'the gate record' from the script; a script may not record, and no receipt existed for the recorder: the bead now has a receipt assembler (the form N25b-05 and N25a-26 use for measurements that cannot be a tier test), which writes a hash-named receipt with the gate line and the three planted defects caught; the row is entered with record_gate by a session that implemented none of the mechanisms. Dep N38b-19 added."
+  },
+  {
+   "bead": "N25b-09",
+   "kinds": [
+    "broken",
+    "deadlock",
+    "convention"
+   ],
+   "what": "Step 5 stopped bisection when a box is 'below min_width', while its own test expects the box [1/2, 1/2 + 2^-10] to stay unresolved at min_width 2^-10 with decided share 1 - 2^-10; under the rule as written the box is cut once more and the share is 1 - 2^-11. Rule now 'at most min_width'. 'Real auditor in the loop' inside frob-mission's tests is impossible (rule L-9: only frob-verbs, frob-cli and frob-conformance may depend on frob-cert), and taylor-box bundles cannot be written here at all (their writer BD-364 is built on BD-358 and so on this bead): the audited tests move to frob-conformance, with BD-133's writer for interval-box and N12-16's checker in process for taylor-box, as BD-358 does. Deps BD-133 and STD-E2E added; own script scripts/e2e/mission_region_paving.sh. The three enclosure examples recomputed."
+  },
+  {
+   "bead": "N25b-12",
+   "kinds": [
+    "convention",
+    "request"
+   ],
+   "what": "Convention 13: the options were 'requested of the mission.synthesize row'; the row carries `--scheduler` and `--hints` from M4 with exactly these values and defaults, so the sentence now states that. Counterpart of the N25a-12 split: the lowering registry it keeps unchanged is N25ap4-01's. Commands checked (keys, `--sync-wait-ms 0`, `frob job cancel j:…`)."
+  },
+  {
+   "bead": "N25b-13",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "Its unit tests ran 'the real checker' inside frob-mission's test tree, which rule L-9 forbids (frob-mission may not depend on frob-cert, not even for tests): the tests that need the writer and the checker move to a frob-conformance test target. Convention 11: own script scripts/e2e/mission_typed_holes.sh on cargo targets (planted 1,024-leaf family, the bus fixture, order seeds, two mutants), dep STD-E2E. 7.5 kg bound and 4^5 rechecked."
+  },
+  {
+   "bead": "N25b-14",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 11: own script scripts/e2e/mission_projection.sh on cargo targets (ballast counts 735,471 and 24,546, the two-slug split, the added observable, the replay test, quotient off, the planted false merge), dep STD-E2E. Sums rechecked ({0,3}: 3 and 9; {1,2}: 3 and 5; {1,4}: 5 and 17; {2,3}: 5 and 13)."
+  },
+  {
+   "bead": "N25b-24",
+   "kinds": [
+    "registry",
+    "users"
+   ],
+   "what": "It refused a catalog entry without a declared causal path 'with FROB-REF-859' from `mission.refute`, whose row does not list 859 (the code is on mission.separate and mission.distinguish, where the caller supplies the edit); a verb never returns a code its row does not list. The rejection is now per candidate: the entry goes to `rejected_candidates[]` with the code and its first repair and the other candidates are still ranked, so one defective registry entry does not cost the caller the answer. `scene retrofit --apply … --at … --scene … --key …` checked against VERBS-scene; 12 x 12 mm = 144 mm."
+  },
+  {
+   "bead": "N25b-27",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The script's step 'the searched witness offered with scope all-admitted-probes through e2e_expect_refusal' named neither a command nor a code, so it could not be written: now the relabelled bundle, re-sealed with BD-136's mutation library, offered with `--reuse` and refused with FROB-REF-826, exit 3 (the code mission.refute's row has for a scope that differs from what the proof establishes). Deps BD-136, N25c-21 (`--reuse`) and STD-E2E added. Every row of the fixture recomputed: 27/32, 459/512, 3807/4096, 9/10 and 16/5, 27/512, 225/256, TV 203/256."
+  },
+  {
+   "bead": "N25b-30",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "The class rule gave `sample-coverage` the cap `Estimated` for every entry, while its own acceptance requires the writer to reproduce N12-13's accepted specimen byte for byte, and that specimen is a study receipt of class `Tested` (N12-02's cap for the kind is `Tested`). The writer could not pass. The cap is now the registry's, with the scope deciding: `Estimated` for a mission-scope empirical bound (plan §25.5.2), the inputs' class, at most `Tested`, for a study-scope receipt. Rule-to-refusal table, verbs (prove.verify takes several paths; verdicts accept/reject) and the stance transport specimen (165 N at 1/5 m carried down to 1/6 m) checked."
+  },
+  {
+   "bead": "N25bp4-01",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "F-U44-2's request applied: parent WP-42 -> WP-36 (GATE-WS-03 is WP-36's gate and every other carrier is WP-36's; M1 beads such as BD-132 and N12-34 already sit there). Its logging said 'the record_gate call and its output are logged as the last cmd lines': STD-E2E's linter fails a log with such a line as self-recording (convention 9); the call is now made by the recording session after the script, outside its log."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-126",
+   "what": "Add dep N25a-01. BD-126 writes crates/frob-mission/src/admit.rs, and N25a-01 creates that crate; N25a-01 no longer depends on BD-126 (lead's graph note, applied), so without the edge an agent can start BD-126 before the crate exists and create a second skeleton. No cycle: N25a-01 depends on BD-003, BD-005, BD-026, N34-08, STD-E2E."
+  },
+  {
+   "bead": "BD-130",
+   "what": "Scope says both stance lowerings are registered in N25ap4-01's registry (lifted as primary, projected as second), but step 7 puts the projected form in crates/frob-conformance/src/fixtures/stance_projected.rs. frob_mission::lowering::builtin() cannot construct a type of frob-conformance (frob-mission may not depend on it, N25a-01), so `--lowering second` on the stance would select nothing and N25d-34's comparison through the verb could not run. Either move the projected form into a frob-mission module that shares no source file with the lifted one (as BD-131 now does for the pusher), or state that it has no registry entry (as N25ax-01 does)."
+  },
+  {
+   "bead": "N25d-34",
+   "what": "The pusher's two lowerings are registered as `pusher-interval` (primary) and `pusher-composed` (second), both in crates/frob-mission/src/lower/pusher/; use these names and module paths in the lowerings.toml record, and the template key `pusher` (N25ap4-01 now defines TemplateId as the mission.new template name)."
+  },
+  {
+   "bead": "N40-26",
+   "what": "Give the row KILL-AUGUR-TIE `scope_kind = \"cell\"`. Its trigger is read per stratum of the partial ten-fold gate (`envelope`, `sensing`) and its fallback applies 'on those families'; N25a-18 writes one entry per stratum (`scope = \"cell:envelope\"`, `scope = \"cell:sensing\"`). Without the field those entries fail `decision-scope-invalid`, and a single unscoped `fired` would print the fallback over a stratum that did not tie."
+  },
+  {
+   "bead": "N40-03",
+   "what": "In the closed scope-kind table, add KILL-AUGUR-TIE (N40-26; N25a-18) to the `cell` row beside the four per-cell gates of the ten-fold test: it is decided per stratum by N25a-18."
+  },
+  {
+   "bead": "N25d-36",
+   "what": "Your script reads the invalid fixtures' outcomes 'from the last log of the battery of N25a-07' and the rule-status field 'of each fixture bundle'. That log is now `target/e2e-logs/mission_rules_battery/<utc>.ndjson` (script scripts/e2e/mission_rules_battery.sh, one assert line per fixture and layer) and the bundles are under `target/mission-rules/<fixture>.frobcert`. At M1 the auditor pass covers ten fixtures; `r3_reject_widened_sole`, `r3_reject_equivariant_restriction` and `r4_reject_exit_wider_than_entry` are transport and composition kinds and are logged `pending` until M3, so read their kernel line at M1."
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "The `mission.refute` block gives the scope as 'a cell (`--cell`), one design and controller (`--design`, `--policy`), or neither', and BD-135 step 2 repeats it as '`--cell` or `--design` with `--policy`'. Your own example (`frob mission refute q:3c9d --design v=9,r=5/2 --key ref-1 --json`) and BD-290, N25b-27, N25b-28, N25e-34 and N25e-36 call `--design` alone (one design under any admitted policy). State the three forms: `--cell`; `--design` alone (scope mode on one design); `--design` with `--policy` (controller mode); neither from M3. Otherwise an implementer following the sentence answers 802 to the row's own example."
+  },
+  {
+   "bead": "BD-135",
+   "what": "Two points. (1) Step 2 says `mission.refute`'s scope is '`--cell` or `--design` with `--policy`': add `--design` alone as the scope form for one design (the registry example and five M3 scripts use it). (2) Step 10 reads 'the observation and authority fields the query marks adjustable' and 'the declared observations', and N25a-09's repair menu reads 'every quantity the query marks as adjustable', but no bead says how a `.fmission` marks a field adjustable, prices an intervention, lists a catalog for it, or declares an observed reading (BD-126's field table has none of these, and the verb's row has no such option). N25a-34's eight cases write one query file each and need the form; define the fields with BD-126, or register options on the row."
+  },
+  {
+   "bead": "VERBS-mission",
+   "what": "List N25b-24 under 'Extended by' on `mission.refute` and `mission.separate` (M4: the output fields `repairs[]`, `rejected_candidates[]`, `cheapest_world_edit`, `cheapest_robot_edit` and the scope statement), so that the row is the record of what the verbs return."
+  },
+  {
+   "bead": "N25d-41",
+   "what": "Add GATE-AUGUR-08 to the table 'Tiers and controls stated by the carriers': tier `g1_known_answers` (the entry tagged GATE-AUGUR-08, written by N25a-25: a through-verb entry that re-reads the script's stored answers by key), controls the four mutation controls BD-288 registers. And note for GATE-AUGUR-05 that its receipt is N25b-06's assembled receipt (a second host and a wall clock cannot be a tier test), with the three planted defects N25b-06 registers as the gate's controls. Without the tier and the controls on the rows, `record_gate` has nothing to match the receipts against."
+  }
+ ],
+ "unchanged": 1,
+ "notes": "Complete: 35 of 35 read in full; 34 changed, 1 unchanged (N25b-23: reversal arithmetic, 48 of 64, the delta-debugging cases, its own cargo-driven script and its registered controls all hold). Notes applied after checking: BD-131 and N25a-12 (F-U25a), N25a-25 (F-U25a), N25bp4-01 (F-U44-2), and the audit's N25a-01/BD-126, N25a-05/N25a-04 and BD-026/BD-003. One audit proposal NOT applied: N25a-12 keeps N25a-10 as a prerequisite, because the driver builds the cost block and the next_test its own refinement honours; that step was missing and is now written. The split counterparts for BD-128 and N25a-02 needed only a pointer (BD-128) or nothing (N25a-02). Patterns found in this sweep slice, none of them checked since round 2: (1) sixteen mechanism beads had no script of their own (convention 11): BD-131, N25ap4-01, N25a-02, -03, -04, -05, -06, -07, -09, -10, -12, -33, N25b-01, -09, -13, -14; each now has one built on its own dependencies, and the later user-side scripts are kept and named. (2) Tests that put 'the real auditor in the loop' inside frob-mission cannot be built (rule L-9); moved to frob-conformance in N25a-07, N25b-09, N25b-13. (3) Gate scripts that 'write the gate record' or record from log tags (N25a-25, N25b-06, N25bp4-01, N25a-19) now produce a receipt and leave the row to the recorder. (4) Worker-count lanes asked of verbs with no worker option (N25a-25, N25a-34, N25b-06). (5) Acceptance items that waited on later beads (N25a-01, N25a-02, N25a-06, N25a-07, N25a-33, N25ap4-01, BD-128, BD-021, BD-131). Larger matters left as notes, not edited: BD-126's quantifier-order file `pusher-shared.fmission` moves the gain into the world, while BD-131 and N25a-22 keep the gain a design parameter and change only the policy scope (the plan says the two queries differ by one binder); both give the empty shared set, but they are two encodings of one query. `Binder`, `Horizon` and `Cell` now have a document type (BD-126), a kernel re-export (BD-128) and a plain mirror in frob-core (N25b-01) with tested conversions; one definition in frob-core used by frob-spec would be cleaner and needs BD-126 to depend on N25b-01. All 35 files parse (front matter, JSON lists, seven sections); every dep and related key exists; no dep on a later milestone; graph_check reports 0 cyclic components."
+}

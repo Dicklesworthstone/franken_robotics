@@ -42,16 +42,16 @@ other prior-art generators (NEG-27).
    sidecar; no pack's licence manifest has an entry with it.
 2. `procthor_not_importable_by_default`: `frob scene import --kind asset <file> --source procthor --profile
    asset-default --key <k> --json` in default mode is refused by the default-pipeline filter with a message
-   that the dataset licence is not verified; as a user-supplied import (`--user-supplied`, with
-   `--licence-class <class>` when the user declares one: the inputs of `scene.import`, N19a-46) the entry is
-   written with the more restrictive of what the user declares and the row's class, which is `unknown`: a
-   declaration that names a registered row can never make the entry less restrictive than that row, so the
-   entry is `unknown` with `redistribution = NotRead` (N19b-02's mapping for a row with `read = false`)
-   whatever is declared. (An earlier text said "unless the declared class allows it", which would let a flag
-   override a licence nobody read and contradicted this bead's own criterion that the entry cannot be
-   exported. A user who has read the dataset's licence themselves imports with `--source user-supplied
-   --licence-class <class>`, names no row, and owns that declaration.) The pack is written under the private
-   root, as every `unknown` or research-only import is, so
+   that the dataset licence is not verified; as a user-supplied import (`--user-supplied`: the inputs of
+   `scene.import`, N19a-46) the entry takes the row's class, `unknown`, with `redistribution = NotRead`
+   (N19b-02's mapping for a row with `read = false`). A declaration that names a registered row can never make
+   the entry less restrictive than that row: N19a-46 refuses a `--licence-class` that would weaken the row's
+   class with `FROB-REF-802` (exit 3), naming the flag and the row, and since `unknown` is the most restrictive
+   class, every declaration other than `unknown` is refused here. (An earlier text said "unless the declared
+   class allows it", which would let a flag override a licence nobody read and contradicted this bead's own
+   criterion that the entry cannot be exported. A user who has read the dataset's licence themselves imports
+   with `--source user-supplied --licence-class <class>`, names no row, and owns that declaration.) The pack is
+   written under the private root, as every `unknown` or research-only import is, so
    an export of a pack or scene variant containing it is refused by the pack export check with FROB-REF-310
    (exit 3), and any other export whose lineage reaches it (a still, a report, a run bundle) is refused at the
    export door of N37-18, exit 5: with FROB-REF-731, since the pack always sits under the private root and the
@@ -83,6 +83,8 @@ changes.
 - `asset_source_procthor_row_valid`.
 - `procthor_absent_from_tree`: with a planted sidecar naming the source.
 - `procthor_not_importable_by_default`: refusal text names the unverified dataset licence.
+- `procthor_declaration_cannot_weaken`: `--user-supplied --licence-class attribution` naming the row is
+  refused with FROB-REF-802 (exit 3), the flag and the row named; with no class the entry is `unknown`, `NotRead`.
 - `procthor_user_supplied_entry_unexportable`: FROB-REF-310 (exit 3) on a pack export; FROB-REF-731 at the door
   (exit 5) on a still of a scene containing it, and FROB-REF-733 in a session holding `private:export` and the
   flag; never both codes for one request.
@@ -95,8 +97,10 @@ bead; this bead lists the steps of its row), on a `synthetic` stand-in (a small 
 repository, `tests/fixtures/synthetic/procthor-like/`): the absence scan; `frob --json scene import --kind asset
 <stand-in> --source procthor --profile asset-default --key al-procthor-1` (refused by the default-pipeline
 filter, the reason naming the unverified dataset licence); the same with `--user-supplied --licence-class
-attribution --key al-procthor-2` (a private pack whose entry is `unknown`, `NotRead`, although `attribution`
-was declared); `frob --json artifact export <pack> --out exports/ --key al-procthor-3` (`FROB-REF-310`, exit 3);
+attribution --key al-procthor-2` (refused with `FROB-REF-802`, exit 3, naming `--licence-class` and the row: a
+declaration cannot weaken the row); the same with `--user-supplied` and no class (`--key al-procthor-4`: a
+private pack whose entry is `unknown`, `NotRead`); `frob --json artifact export <pack> --out exports/ --key
+al-procthor-3` (`FROB-REF-310`, exit 3);
 a still of a run in a scene containing it, exported (`FROB-REF-731` at the door, exit 5, because the pack lies
 under the private root). Log lines carry `ts`, `script`, `bead: "NEG-21"`, `step`, `event`, the exact command,
 exit code, wall time, the `evidence` block, the source key, class, `read` flag, each refusal code with its exit

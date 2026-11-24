@@ -4,7 +4,7 @@ title: "upstream fastmcp_rust: brought onto the one toolchain T, its test suite 
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "suite", "tether", "upstream", "fastmcp_rust", "solid"]
+labels: ["m0", "suite", "tether", "upstream", "fastmcp_rust", "solid", "review-notes-open"]
 parent: "WP-06"
 deps: ["BD-001", "BD-006", "BD-025", "STD-E2E"]
 needs: []

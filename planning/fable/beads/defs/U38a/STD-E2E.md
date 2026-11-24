@@ -4,7 +4,7 @@ title: "scripts/e2e: end-to-end harness, structured NDJSON log, runner, linter, 
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "gauntlet", "frob-conformance", "solid", "test", "e2e", "delivery"]
+labels: ["m0", "gauntlet", "frob-conformance", "solid", "test", "e2e", "delivery", "review-notes-open"]
 parent: "WP-14"
 deps: ["BD-001"]
 needs: []

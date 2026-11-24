@@ -4,7 +4,7 @@ title: "discrepancy E7-3 resolved: the zero-cost-solver ceiling is 842.8 ÷ 575.
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "tenfold", "augur", "frob-conformance", "solid", "test", "card"]
+labels: ["m0", "tenfold", "augur", "frob-conformance", "solid", "test", "card", "review-notes-open"]
 parent: "WP-34"
 deps: ["BD-043", "N00-17", "NEG-03"]
 needs: []
@@ -93,9 +93,10 @@ Out, with the bead that has it:
 ### End-to-end script and logging
 
 `scripts/e2e/worked_cards.sh` (NEG-02) logs GB-18's FACT row with the three medians, the residual and the
-ceiling, and the stale-value step logs item E7-3. Where the reproduction archive is present the script replays
-its timing check (`python3 -B verify.py` inside the archive, as BD-043 specifies) and logs the freshly measured
-medians beside the archived ones, labelled `re-run`, without asserting equality of timings.
+ceiling, and the stale-value step logs item E7-3. The replay of the timing check (`python3 -B verify.py` inside
+the reproduction archive) and the freshly measured medians, residual and ceiling are logged by BD-043's own
+`scripts/e2e/pilots_rerun_augur.sh` (a dependency), as `metric` lines beside the archived values; this bead
+adds no script and never asserts equality of re-run timings.
 
 ### Known answers and negative controls
 

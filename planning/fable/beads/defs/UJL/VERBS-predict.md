@@ -4,7 +4,7 @@ title: "frob-verbs registry: cluster `predict`, two rows, with parity, e2e and s
 type: "task"
 priority: 2
 milestone: "M4"
-labels: ["m4", "tether", "atelier", "frob-verbs", "solid", "registry", "verb", "test"]
+labels: ["m4", "tether", "atelier", "frob-verbs", "solid", "registry", "verb", "test", "review-notes-open"]
 parent: "WP-62"
 deps: ["BD-022", "N28cx-01", "N30-REF", "NJL-01", "NJL-02", "NJL-04", "NJL-05", "STD-E2E"]
 needs: []

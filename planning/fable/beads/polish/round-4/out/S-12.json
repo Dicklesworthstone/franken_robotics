@@ -1,0 +1,178 @@
+{
+ "round": 4,
+ "slice": "S-12",
+ "reviewed": 22,
+ "changed": [
+  {
+   "bead": "BD-050",
+   "kinds": [
+    "broken",
+    "registry",
+    "convention"
+   ],
+   "what": "(1) Law 5 said the barrier's gradient is −x⁻¹ checked by central differences. In coordinates that holds for the orthant and the semidefinite cone, but for the second-order cone −ln(x₀² − ‖x̄‖²) has gradient −2·x⁻¹ (its trace is 2·x₀), and for a linear image −2·Tᵀ·(T·x)⁻¹; a correct implementation would fail laws_barrier_soc and laws_barrier_friction. The law now states the trace-form statement, the coordinate forms per cone and the hand value (−4/3, 2/3, 0) at (2, 1, 0). (2) Two mutant criteria claimed a catch on 'every' point; the clip mutant's 10⁻⁶ vanishes in rounding next to the boundary set's 10³⁰ eigenvalues and the damped map's 0.09·(x − P(x)) vanishes for points within tolerance of the cone, so a test asserting 'every' fails on a correct mutant. Both now say 'whose planted change exceeds the tolerance'. (3) The four registered mutants had no planting form; under BD-025 a mutation control needs a per-control feature, so the loader would refuse them with feature-missing and N13-19 could not catch them. They are now cfg(feature = \"nc-<nnnn>\") branches of frob-algebra, one build per control, run by the e2e script. (4) The SPEC-C-06 criterion now names laws_c06.rs, its move from frob-conformance if staged there and its per-control builds (N10a-01 section 6 point 3). Rechecked: every projection, Jordan product, PSD and friction value, the oracle's 14/5, the dual boundary (0.5, −1) and the pyramid point."
+  },
+  {
+   "bead": "BD-051",
+   "kinds": [
+    "registry",
+    "contradiction",
+    "convention",
+    "broken"
+   ],
+   "what": "(1) Refusal mapping: the repairs of FROB-REF-104 and -106 differed in content and order from N14-REF (104: accept the nearest consistent matrix, set-fill, correct values; 106: correct inertia or com, enlarge the Region, set-fill), and 104's payload lacked the nearest consistent matrix; now N14-REF's rows, with the matrix computed by the stage-2 caller N14a-13. (2) The f64 round trip was held to 64 ulp while KA-043 sets 10⁻¹² relative; Σ_C = Σ − h·hᵀ/m cancels for offset bodies, so 64 ulp could fail a correct build. Now KA-043's tolerance. (3) Conversion 3 went to fs-mbd::SpatialInertia 'through the airlock adapter', but fs-mbd sits behind frob-fsim's referee group, which frob-algebra may not enable (N33a-11 allow-list, check-deps refuses); the bead now builds the 6×6 spatial inertia M = [[Ī, [h]×], [−[h]×, m·I]] itself and leaves the fs-mbd conversion to BD-062 (request). (4) The bead implements C-03's production cone but never named SPEC-C-03's law suite; new criterion: laws_c03 s1–s4 bound to PseudoInertia, moved from frob-conformance if staged there, with per-control builds; s5–s7 owed by N13-30, BD-062, N13-04; the e2e runs it. (5) mass_support_offset placed the offset on nothing in particular; the negative control 'bound measured from the origin' is caught only if the ball, not the com, is offset, so the fixture now centres the ball at (0.05, 0, 0) and (0.07, 0, 0) m with the com at the origin. Rechecked: Σ_C, the worked body's pivots (0.035, 0.005, 0.005, 6/7), 0.012 vs 0.010, 1/150, 0.0085/0.0109, the ellipsoid 0.1/−0.35."
+  },
+  {
+   "bead": "BD-052",
+   "kinds": [
+    "request",
+    "registry",
+    "contradiction"
+   ],
+   "what": "Request applied after checking: with x_k = 100·(1 − 0.99ᵏ) the step is 0.99ᵏ kg, so a 10 g stop fires after 459 iterations at 99.008 kg, and 99.5 kg (527 iterations, next step 5.009 g) is the 5 g rule of BD-360 and N25-KA late-17; the counterexample paragraph and the negative control now say 5 g (and note what 10 g would give). KA-077's registered control (an iteration cap reported as the fixed point; the divergent loop at L = 0.52 m must be infeasible) is now named with its case (κ = 1.0202, leaves 100 kg at the 15th iterate), and its tolerance is attributed to N10a-11, which set it, instead of 'set here'. The N10a-11 criterion said the C-12 budget law tests 'run in this crate'; the suite is crates/frob-design/tests/laws_c12_budget.rs (or frob-conformance while frob-design does not exist), and layer-1 frob-algebra cannot hold a suite that names frob-design; the criterion now binds kleene to the suite where it lives, b1–b3 only (FROB-REF-116 is BD-103's), with per-control builds. Rechecked: κ = 0.5886, 14.584 kg, 52.6·m_f, L = 0.51 → 1.0006, iterates 6/9.5316/11.6103, 0.5886⁴⁰ = 6·10⁻¹⁰, 50.56 kg, the oracle's NotAscending at k = 1."
+  },
+  {
+   "bead": "BD-116",
+   "kinds": [
+    "convention",
+    "contradiction"
+   ],
+   "what": "(1) Convention 11 and 9: the e2e section described N22a-11's script as this bead's and said it 'records the legged row of GATE-REFLEX-01', while the register names N22c-01 as the M1 recorder and neither script writes a row. The bead now owns scripts/e2e/reflex_legged_controller.sh, built on its own dependencies (no verb binds a controller before BD-118 and N16ap4-01, which depend on it), running the referee-level tests in debug and release twice with the full NDJSON field list; N22a-11 is named as the binary-level script and N22c-01 as the recorder. (2) N22a-01 leaves 'the calls from the referee step loop into the stages and the inclusion of controller state in the restore set' to be asserted in BD-116, which had no such check, so nobody would have caught a baseline whose gait phase or fallback counter escapes save(). New criterion and tests: checkpoint mid-swing and a referee retry give byte-equal command streams, with a planted counter left out of save as the control."
+  },
+  {
+   "bead": "N22a-02",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The consistency criterion could fail a correct implementation. 'Mean NIS and NEES inside their 95% bounds in at least 180 of 200 runs' read as a run-wise conjunction is expected in about 180.5 runs (0.95²·200), so it fails about half of all seed sets; it now counts the two statistics separately (each expected in 190, 180 is 3.2 σ below). 'overconfident is never set' in 200 runs of an exact filter fails on 18% of seed sets, since the NEES clause fires at the 99.9% bound with probability 0.001 per run; now at most 2 of 200 (P = 0.0012 of more). Rechecked: χ² bounds [2.850, 3.154] and [11.698, 12.306], 20.515, the gauge fixture 1 m and 0.2887 m, 2·sin 2.5° = 0.0872 m; KA-554, KA-084, KA-555, CX-234 and FROB-REF-464 agree with their rows."
+  },
+  {
+   "bead": "N22a-06",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The KA-082 criterion bound the production error and gains to SPEC-C-13's s3 statements but did not run their registered controls, which N10a-01 section 6 point 3 requires of an implementing bead; it now runs each once with its own feature (cargo test -p frob-control --features <feature> --test laws_c13 s3_), each failing the test its record names. Rechecked: M̄ = 0.025, ω = 314.16, K_p = 2,467.4, K_d = 15.708, ρ = 0.6387 without delay and 1.2474/1.0976/0.9680/0.8555 with one tick down to 160.85 rad/s; 31.416 and 10.472 rad/s; the transported twist (0, 0.5, 0); FROB-REF-213 against N13-REF; laws_c13 lives in frob-control (SPEC-C-13 depends on N22a-01)."
+  },
+  {
+   "bead": "N22a-07",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "N22a-01 now names `open-loop` as a controller kind, and N15ap3-01 hashes the open-loop schedule controller's identity as 'N22a-07's content hash of the canonical record {form: \"open-loop\", schedule: <bytes>}', a record that is not frob.control.id/1 (no kind; `schedule` is the gait field here, and every field is required). The record's kind list now has `open-loop`, a new field `open_loop` carries the canonical bytes of the frob.openloop/1 file (DESIGN: the file is that controller's only configuration), and a paragraph states which fields are null for open-loop and hold controllers; new test open_loop_record_identity. Request to N15ap3-01 to write its record in this form."
+  },
+  {
+   "bead": "N22a-08",
+   "kinds": [
+    "registry"
+   ],
+   "what": "N22-REF's FROB-REF-424 is raised at synthesis and at run time ('at a control tick ... neither the last feasible command nor a backup controller is admissible'), with a payload of tick, program, active inequalities, residuals, certificate and binding row. The bead covered only synthesis, so a LastFeasible program with no valid last command and no backup had no specified behaviour. The run-time trigger and payload are now stated (no command from the unusable iterate), with a criterion and test run_time_no_admissible_fallback_refused_424. Rechecked: the 50 N / 30 N / μ = 0.5 certificate (−5 N), the certificate cone members (0.6, −1.1) and (0.5, −0.8), the wrong-dual control leaving no certificate, the Farkas forms of both standard forms; KA-556's control example (0.49, −1) is 'for example', so 0.5 − 10⁻⁹ stands."
+  },
+  {
+   "bead": "N22a-09",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The four hand fixtures were said to be 'registered as supplementary rows of the chapter's known-answer registry'; N22-KA carries no such rows and a row needs an allocated number (convention 2), so an implementer would enter unnumbered rows the loader refuses. They are now stated as the bead's unit-test known answers, following KA-556's certificate form. Rechecked: 29.43 N; 73.575/44.145 N (36.7875, 22.0725); the traction limit 58.86 N, shortfall 13.14 N, moment 17.658 N·m, rear/front 103.005/14.715 N, tangentials 25.75125/3.67875 N (and that the regularizer leaves the solution at the cone corner); the single-leg certificate −10 N; the pyramid's 83.24 N."
+  },
+  {
+   "bead": "N22a-14",
+   "kinds": [
+    "broken"
+   ],
+   "what": "free_fall_base_acceleration_is_gravity asserted base q̈ = g while the joints 'track posture'. With no contact only the centre of mass falls at g; a posture task away from nominal accelerates the joints and the floating base reacts (M_bb·q̈_b = −M_bj·q̈_j − h_b), so a correct program fails the test. It now asserts the centre-of-mass acceleration g and zero centroidal angular-momentum rate at every posture, and base q̈ = g only at rest in the nominal posture, where the posture task asks no joint acceleration. Rechecked: 18 + 16 + 12 = 46 variables, 29.43 N per foot, r = 2R/3 = 0.02 m and μ·r·λₙ = 1.0 N·m, 35.36 N and 0.707 N·m, the 41% pyramid overstatement, the look-ahead bounds; KA-083, KA-556, the GATE-REFLEX-05 register row (BD-251 records) and the fallback event (N22a-08)."
+  },
+  {
+   "bead": "N22a-19",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "(1) The e2e passed the bare name `sill-30mm`, a task no bead registers (a task is a registered name, a TaskId or a task file; an unknown bare name is FROB-REF-802), and 'creates the sill-defect quadruped' named no source. The bead now owns two fixtures passed by path: fixtures/reflex/r1/quad-sill-defect.fbot (quad-mammal scaled to ℓ = 0.12 m, so N22a-10's default apex 0.2·ℓ = 24 mm is under the sill and R1's box reaches 42 mm), created with design new --file, and fixtures/reflex/tasks/sill-30mm (traverse-5m-flat with a 30 mm sill at 2 m), beside BD-251's task files. (2) The script expected `synthesized-failed` from a synthesis whose smoke (BD-118 step 4) only stands and walks on flat ground, where a sill defect cannot show, so the step failed on a correct build. The script now synthesizes (`ok`), runs the R0 controller on the sill task with sim.run (fails at the sill, swing tracking first), asks the ladder for that task and then runs R1; the 'no escalation' rule reads the ladder for the named task; request to N22a-18 to classify that task failure. Rechecked: the ISE (1 + 4ζ²)/(4ζω) by a Lyapunov solve (0.260, 0.100, 0.125), ζ* = 0.5 with value 1/ω, the 3·10⁷ world-step budget, VERBS-control's `rung` input and 802 for R2 and above."
+  },
+  {
+   "bead": "N22a-23",
+   "kinds": [
+    "request",
+    "deadlock"
+   ],
+   "what": "Request applied after checking BD-252 (its KILL-MPC item) and N22a-22 (item 11 and its decision criterion): on the pilot's decision `fallback` the bead said only that its kernels 'are not funded', leaving BD-252's single-world CPU aid with no planner and BD-252 (which depends on this bead) unable to close. A new paragraph 'On the pilot's fallback' states the delivery: the batch-cpu reference of K-fork, K-cost and K-weight for one controlled world and its planning worlds, no dialect source, no device kernels, no shared arena; it lists the criteria then owed (row list and missing-row control, fork tests 1 and 3 in f32 and f64, cost and weight, addressed perturbations) and those not built (dialect manifests and lint, device differentials, co-tenancy test 2), with a criterion. Rechecked: the softmax weights (0.6652, 0.2447, 0.0900), 65,536, 204,800 and 40,500 model steps, the 0.01 utilization term."
+  },
+  {
+   "bead": "N22a-30",
+   "kinds": [
+    "broken"
+   ],
+   "what": "As stated, a column goes to the one-sided estimates only when its active-set signatures differ or Richardson fails. For abs(x) at the origin both central differences are exactly 0 and Richardson passes, so with a synthetic fixture that reports no signature a correct build labels the column `finite-difference` with value 0 and fails the `generalized` criterion (and is indistinguishable from the listed negative control). The test plan now has piecewise synthetic fixtures report their branch as active_set_sig (sign of x, sign of x − c), which leaves the column unmatched and gives the selections +1 and −1. Rechecked: the Richardson and one-sided extrapolations, ε against ∛eps ≈ 6·10⁻⁶, 4·57 = 228 worlds and 57,000 world-steps, [[2, 1], [0.540302, 0]], the kink at 0.75·ε (D_ε = 0.125, D_ε/2 = 0), 2⁵ = 32 > 16 selections; FROB-REF-431 and -263, KA-095, KA-097, CX-043 against their rows."
+  },
+  {
+   "bead": "N22a-33",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The referee route was answered at the surface as `route-not-available: referee`, exit 3, a refusal no registry carries (VERBS-gait's gait.orbit lists 431, 461, 443, 790 and one pending slug; N22-REF has no such row), so the verb would emit an unregistered string and BD-333's refusal-list checks would not admit it. The bead now names the slug `route-not-available` in N22-REF, slug-keyed like the chapter's other uncoded refusals, with its payload and repair; requests to N22-REF and VERBS-gait. Rechecked: the ball Ξ = [[−0.8, 0], [8.829, −0.8]], det 0.64, δt = 5·10⁻⁷ s; the wheel c² = 0.5, b = ω*² = 2.094996, ω* = 1.447410, ω⁻ = 2.046947, lower-left −6.065528, det(Ξ·Φ) 0.5 and trace 1.5, the no-time-term control (det c), uphill b < 0; KA-560, KA-092, KA-093, CX-041."
+  },
+  {
+   "bead": "N22a-34",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The criterion's 'registered negative control' (KA-563's: a solver that forces an order reports rocking for the coupled case) had no planting form. A registered control of kind mutation must name its own feature (BD-025), else the loader reports feature-missing and N22-KA's check that every control cell resolves to a registered control fails. The mutant is now a cfg(feature = \"nc-<nnnn>\") branch of frob-gait named in the control record, never in the umbrella, run as cargo test -p frob-gait --features nc-<nnnn> --test simultaneous bar_coupled_rest (must fail) by the bead's runner; the test-plan entry forced_order_mutant_caught says it is that control build. Rechecked the bar: impulses 1, 1.5 and 0.75 N·s, v/4 and 1/16 (0.0625 J), coupling +1/3, 0 and −1/2 kg⁻¹, mass-norm distances 0.353553 and 0.612372 (0.25 and √3/4 normalized), the closed form 2·√β·(1 − β)/(1 + β)², β = 0.99 → 0.0050 and β = 0.98 → 0.0101; KA-563, CX-238 and the GATE-GAIT-02 row."
+  },
+  {
+   "bead": "N22a-35",
+   "kinds": [
+    "broken"
+   ],
+   "what": "At the lower end γ = ρ_max the program has no strictly feasible point (for an eigenvector v of a selection attaining ρ_max, v*·(ρ_max²·P − Mᵀ·P·M)·v = 0 for every P), so an interior-point solve there returns `unconverged` or a P that holds only to tolerance, which the exact re-check rejects (on the commuting fixture any off-diagonal residue in P breaks the singular 2×2 check). A correct build could then miss the criterion 'P = I accepted at γ = 1/2' and report γ slightly above it. The lower end is now tried by sending P = I straight to the exact re-check; bisection with the solver runs on (ρ_max, 1). Rechecked: B·A = [[1/4, 1/2], [1/2, 5/4]], trace 3/2, det 1/16, 1.457107 and 1.207107 (no common norm, the joint radius exceeds 1); P = I at γ = 1/2 passes exactly for the commuting pair and fails for A, B; 57·58/2 = 1,653 unknowns; the Clopper–Pearson bound 0.9543 for 250 of 256."
+  },
+  {
+   "bead": "N22a-37",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "N22a-28 item 11 says that on the pilot's fallback 'orbit screening and continuation are not funded'. This bead said only that its pilot 'must have recorded fund', so on fallback it would stay open for ever while BD-335 and N22a-40, which depend on it, are closed not-funded. It now builds nothing in that case and is closed not-funded citing the pilot record. Request to BD-334, which also depends on it. Rechecked: (36/7, 20/7); the fold at λ = 0 and doubling at λ = 1 (multiplier 1 − 2·√λ); the logistic two-cycle 0.799455 and 0.513045 at 3.2; the pitchfork branch (1, ±0.5); the piecewise switch at 0.5 (the map is continuous at x = 1); KILL-GAIT's thresholds against N22a-28 and the GATE-GAIT-03 row."
+  },
+  {
+   "bead": "N22ap2-02",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request applied after checking N10a-01 section 6 and BD-025: the mutants were 'under the crate feature `controls`', which no bead declares and which would compile the five behaviour-changing mutants into one build. Controls (a) to (e) are now mutation controls, each under its own feature nc-<nnnn> declared by frob-gait and named in its control record, never in the umbrella; the branch sits in frob-gait's binding, so the generated sources of frob-kernels and check-generated are untouched; one control per build (cargo test -p frob-gait --features nc-<nnnn> --test saltation_kernels). Control (f), a planted rewrite trace, is a fixture control run in the default build. E2e step 2 runs them so. Rechecked: N = [[1.6, 0], [−17.658, 1.6]]; the moving platform's τ = −2.5 m/s and 5.6232 s⁻¹; every mutant's printed value (det −0.8; −1.25 and −11.03625; 4.4145; 7.0632; −1.25 and 7.0290); the wheel entry −6.065528."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-062",
+   "what": "BD-051 no longer converts to fs-mbd::SpatialInertia: fs-mbd is behind frob-fsim's referee group, which frob-algebra may not enable (N33a-11's allow-list, refused by check-deps). BD-051 now provides the 6×6 spatial inertia M = [[Ī, [h]×], [−[h]×, m·I]] (angular part first) as a plain matrix and says that you, who fill the referee's inertias from 𝖯, convert M to fs-mbd::SpatialInertia. State that conversion (including the reordering if fs-mbd puts the linear part first) and test its round trip, M → fs-mbd::SpatialInertia → M the identity on random consistent bodies within KA-043's 10⁻¹² relative; otherwise the plan's C-03 test 'round trip between P and spatial inertia' with FrankenSim's type is carried by no bead."
+  },
+  {
+   "bead": "N15ap3-01",
+   "what": "Step 4 hashes the open-loop controller's identity over the record {form: \"open-loop\", schedule: <canonical bytes>}, which is not N22a-07's frob.control.id/1 (that record has a required `kind`, and its `schedule` field is the gait schedule). N22a-07 now carries kind \"open-loop\" and a field `open_loop` holding the canonical bytes of the frob.openloop/1 file, with class, gains, errors, programs, planning and residual null, schedule null, group none and phase_source clock. Write the record in that form; otherwise from_record and the schema validation of frob.control.id/1 refuse the open-loop record and its ControllerId is computed over a second record format."
+  },
+  {
+   "bead": "N22a-18",
+   "what": "N22a-19's R1 is task-specific (it tunes on the task's requirement, and your rule 2 escalates when R1 'still fails the same requirement'), but your rule 1 escalates R0 → R1 only from a `synthesized-failed` synthesis report, and the synthesis smoke (BD-118 step 4) only stands and walks on flat ground. A control defect that shows only on a task (N22a-19's 30 mm sill: the quadruped synthesizes `ok`, then fails `fixtures/reflex/tasks/sill-30mm` under the R0 controller in `frob sim run`) can never reach R1 through the verb, and N22a-19's script, which asks `frob control ladder <d> --task fixtures/reflex/tasks/sill-30mm` for escalation to R1, fails. State that R0's result for a task is the synthesis outcome or, when that is `ok`, the requirement verdict of the R0 controller's runs on that task in the ledger, classified by the same mapping table (the first failed layer read from the run's per-tick layer telemetry), so that a control-cause failure on the task escalates to R1 with its reason; add a test such as `task_failure_after_ok_synthesis_escalates_to_r1`."
+  },
+  {
+   "bead": "BD-332",
+   "what": "You build in frob-gait (the atlas and schedules, `crates/frob-gait/CONTRACT.md` updated, `cargo test -p frob-gait --test atlas`) but do not depend on N22a-29, which creates the crate, its CONTRACT.md and its layer checks; neither bead reaches the other in the graph, so you may start with no crate, or both beads may create it. Add N22a-29 to your deps (no cycle: N22a-29 does not reach BD-332)."
+  },
+  {
+   "bead": "N22-REF",
+   "what": "N22a-33 (and FD-FSIM-20) answer a gait verb's request for the referee route, before FD-FSIM-20's switch-over, with `route-not-available: referee`, exit 3, payload the route and the upstream item FD-FSIM-20, repair 'use `strict` or a compliant tier'. No registry carries this refusal. Enter the slug `route-not-available` beside `fixed-period-shooting-on-free-period` (trigger: `gait.orbit`, and any gait verb whose `--tier` admits `referee`, asked for the referee route before the switch-over; raisers as above; exit 3), with its ledger row in N35x-02, so that N22a-33 and BD-333 emit a registered slug."
+  },
+  {
+   "bead": "VERBS-gait",
+   "what": "List the slug `route-not-available` (N22-REF; a request for the referee route before FD-FSIM-20's switch-over; N22a-33; exit 3) under 'Pending, uncoded' on `gait.orbit` (and on each gait verb whose `--tier` admits `referee`), as `fixed-period-shooting-on-free-period` is listed, so that the generated refusal list carries what the verb emits."
+  },
+  {
+   "bead": "BD-334",
+   "what": "N22a-37 (continuation) now closes `not-funded`, citing the pilot record, when N22a-28 records `fallback` (its item 11: orbit screening and continuation are not funded; orbit code is limited to stability diagnostics and warm starts), as BD-335 and N22a-40 already do. You depend on N22a-37 (multiplier gradients differenced along its path record) and say nothing about that fallback. State what you deliver then: either the gradients that need no continuation path, with the multiplier-gradient part not built, or nothing, closed `not-funded` citing the same record. Otherwise you and N22a-39 stay open on a dependency that will not be built."
+  }
+ ],
+ "unchanged": 4,
+ "notes": "Settled: all 22 beads reviewed in full against the conventions and the current registries. Unchanged: N22a-10 (phase rows checked on all eight cells against ω and κ, KA-072, Froude and stride numbers, a floating clock in f64 already misplaces a switch at tick 12); N22a-29 (affine fixed point (18/7, 10/7), 57 reduced coordinates, the rational stride, the slug row in N22-REF; BD-332's missing dependency on this crate skeleton is a request to BD-332); N22a-32 (A² = [[0.25, 0.16], [0, 0.09]], trace 3.086161, growth gains 10.0249/10.0062/3.1253/0.1953, the temporal indices, fs-spectral's signatures at the sibling's current commit; KA-562, KA-768, CX-237, the GATE-GAIT-01 row); N22a-36 (record fields, 4n + 1 = 229 worlds and 57,250 world-steps, class Estimated, the standing switch). Every touched file re-parsed: front matter with the twelve keys, seven body sections."
+}

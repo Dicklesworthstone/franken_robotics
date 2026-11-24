@@ -6,7 +6,7 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "suite", "gauntlet", "delivery", "solid", "registry"]
 parent: "WP-01"
-deps: ["BD-001", "NAB-09"]
+deps: ["BD-001", "BD-025", "NAB-09"]
 needs: []
 related: ["NAB-15"]
 gates: []
@@ -45,7 +45,12 @@ checks (NAB-15).
 
 1. One record per backticked path. `kind = "local"`, `repo` = the sibling's directory name, `locator` =
    `<repo>:<path>`, `read_on = "2026-11-21"`, `licence = "owner"`, one `reading` with `mark = "P"` (a raw file
-   was read) and `covers` = the line range where the text gives one, or "whole file".
+   was read) and `covers` = the line range where the text gives one, or "whole file". The two workspace rule
+   files lie in no sibling repository, and `/Users/jemanuel/AGENTS.md` lies outside `local_root`: their records
+   have `repo = ""`, `role = "document"`, `commit = ""` and a home-relative `locator` (`~/AGENTS.md`,
+   `~/projects/AGENTS.md`), so that no locator carries the user name; NAB-09's loader accepts an empty `repo` on
+   a `local` record only with a locator of that `~/` form, and refuses any other `local` record whose `repo` is
+   empty with `src.local-path-missing-repo`.
 2. A crate named without a file (`fs-archive`, `fs-bo`, `fs-topopt`) is one record with `locator =
    "<repo>:crates/<crate>"` and `covers = "crate surface, as read"`. A path printed without its crate belongs to
    the crate named last before it in the same item: a bare file name, or a path that does not start with `src/`
@@ -212,9 +217,13 @@ of eight decision families; and the planning reproduction archive of H.5. Their 
 - `machine_record_values`: 36 cores, 80 GPU cores, 256 GB, 222.7 GiB, 167.0 GiB.
 - `audit_counts_add_up`: 36 + 40 = 76 and 58 − 40 = 18.
 - `paths_exist_when_siblings_present`: for each record whose repository is checked out under `local_root`, the
-  path exists at the stack-lock commit (`git cat-file -e <commit>:<path>`); a missing path is a finding
-  `src.local-path-gone` for the fact-sheet review, reported and not failed in this test (the sibling may have
-  moved the file).
+  path exists at the stack-lock commit (`git cat-file -e <git_rev>:<path>`, `git_rev` of the repository's
+  `[[foundation]]` row); a repository with no pinned `git_rev` (a row whose pin enters only at its admission, a
+  pattern row such as frankenjax's, or a repository with no row, such as mcp_agent_mail_rust and
+  franken_mining) is checked at its `HEAD`, and the two `~/` workspace rule files on disk. A missing path is a finding `src.local-path-gone` for the fact-sheet
+  review, reported and not failed in this test (the sibling may have moved the file).
+- `empty_repo_only_for_workspace_files`: the two workspace rule records load with `repo = ""`; a copy of a
+  frankensim record with its `repo` emptied fails `src.local-path-missing-repo`.
 
 ### End-to-end script and logging
 
@@ -225,10 +234,11 @@ checked-out siblings. Logged per STD-E2E: repository, pinned commit, records, pa
 ### Known answers and negative controls
 
 Known answers: thirteen topic groups; five recorded commits; three defect-report paths; the machine figures
-above; the audit arithmetic 36 + 40 = 76 and 58 − 40 = 18. Negative controls: a record whose `repo` is not a
-directory of the stack lock (`src.local-path-missing-repo`); a defect-report crate added to a manifest (the
-dependency test must fail); a local reading cited by a gate before its re-read (NAB-10's
-`cite.local-not-at-pin`).
+above; the audit arithmetic 36 + 40 = 76 and 58 − 40 = 18. Negative controls: a `local` record whose `repo`
+is empty and whose locator is not of the `~/` form (`src.local-path-missing-repo`); a defect-report crate added
+to a manifest (the dependency test must fail). A local reading cited by a gate before its re-read fails NAB-10's
+`cite.local-not-at-pin`; that control needs the citation lint, which comes after this bead, and is a plant of
+NAB-16's script.
 
 ## Considerations
 

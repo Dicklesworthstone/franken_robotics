@@ -4,7 +4,7 @@ title: "frob-conformance: refusal vocabulary of the delivery registers: harness 
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "delivery", "gauntlet", "frob-conformance", "solid", "registry", "test"]
+labels: ["m0", "delivery", "gauntlet", "frob-conformance", "solid", "registry", "test", "review-notes-open"]
 parent: "EPIC-M0"
 deps: ["BD-005", "BD-025", "N38-REF", "STD-E2E", "STD-TEST"]
 needs: []

@@ -4,9 +4,9 @@ title: "frob-analyze: C-07 specified — rolling distributions, growth vectors, 
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "lemma", "atelier", "traction", "frob-analyze", "frob-contact", "solid", "frontier", "spine", "spec", "test"]
+labels: ["m1", "lemma", "atelier", "traction", "frob-analyze", "frob-contact", "solid", "frontier", "spine", "spec", "test", "review-notes-open"]
 parent: "WP-11"
-deps: ["BD-025", "BD-033", "N10a-01", "N28a-01", "STD-E2E", "STD-TEST"]
+deps: ["BD-025", "BD-033", "N10-CX", "N10-KA1", "N10a-01", "N28a-01", "STD-E2E", "STD-TEST"]
 needs: []
 related: ["SPEC-C-08", "SPEC-C-36", "ZOO-ackermann", "ZOO-diff-drive", "ZOO-mecanum", "ZOO-omni-3"]
 gates: ["GATE-ATEL-02", "GATE-TRAC-01"]
@@ -176,9 +176,12 @@ this construction; its certificates are exact rank computations.
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c07.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control; G1 and G3 rows
-KA-058 to KA-063; when the verb exists, `frob --json analyze maneuverability` on the `diff-drive` and `mecanum`
-templates and on the planted mecanum design, asserting growth vectors and the finding text; the envelope's
+`scripts/e2e/spec_c07.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control, one control per
+build with its own feature (N10a-01 section 6); the rows through the helper's `e2e_tier`, that is
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- KA-058` (and `-- KA-059`,
+`-- KA-061`, `-- KA-062`, `-- KA-063`) and `--test g3_metamorphic -- KA-060`; then, logged `pending` until BD-106
+lands, `frob --json analyze maneuverability` on the `diff-drive` and `mecanum` templates and on the planted
+mecanum design, asserting growth vectors and the finding text; the envelope's
 evidence block (class `Certified` for exact inputs, determinism D0) is logged. Log
 `target/e2e-logs/spec_c07/<utc>.ndjson` with transcript: commands, exit codes, growth vectors against
 expected, chord components with units and tolerance, and on failure the first differing rank with the sample

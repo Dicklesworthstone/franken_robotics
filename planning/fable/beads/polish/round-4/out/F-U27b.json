@@ -1,0 +1,76 @@
+{
+  "round": 4,
+  "slice": "F-U27b",
+  "reviewed": 17,
+  "changed": [
+    {
+      "bead": "BD-284",
+      "kinds": ["plan"],
+      "what": "The seed done-condition's second part (an attribution of the session cited as established is refused with FROB-REF-880) was an acceptance criterion with no unit test, so the bead could close with the citation path untested. Added `session_citation_refused_880`: N27b-15's guard in the role Established gives 880, exit 3, with its fields and three ranked repairs, and the role Described is admitted with the permitted wording."
+    },
+    {
+      "bead": "N27b-04",
+      "kinds": ["convention", "broken", "registry"],
+      "what": "The planted failures ran under `--negative-controls`, an option that exists nowhere (STD-E2E), and needed build flags that no product binary can carry (N38b-04), so the script could not be written. They are now the gates' registered mutation controls (the fork stepping past its checkpoint, N27a-06; design changes mapped to exogenous, N27a-07). The script's last step runs them with `e2e_tier g5_determinism GATE-AUTOPSY-01 --mutations` and `e2e_tier g1_known_answers GATE-AUTOPSY-02 --mutations`, asserts `caught` from the receipts, records nothing, and has an acceptance line. The fallback `frob eval run …` is now the full single-task form (task, --worlds, --run-seed, --tier, --key, no --battery), so the implementer cannot drop the task or add --battery, which gives 802."
+    },
+    {
+      "bead": "N27b-07",
+      "kinds": ["registry", "convention"],
+      "what": "The FROB-REF-584 envelope's `required` lacked the class clause that N27-REF's row has (\"at class D2 or better\"), and the repairs lacked the row's class-clause repair (re-run under a profile with a current class-D2 record). The handler would have emitted fields that differ from the registry, and N27b-16's row check would fail. The repair's `frob run fork` command now carries `--key <k> --json` (convention 5)."
+    },
+    {
+      "bead": "N27b-10",
+      "kinds": ["registry"],
+      "what": "The record step omitted N38a-09 rule 2a (the result's receipt committed at receipts/pilots/<hash>.json in the same commit), so the loader would refuse the appended result with `pilot-receipt-uncommitted`. Added to the record step and to acceptance. Corrected the claim that the fallback 'is of a lower tier, as the register requires': for a tier-S record, rule 5 requires a Solid fallback. The C11-script note is a false alarm: the test plan already says that the pilot script runs outside the product."
+    },
+    {
+      "bead": "N27b-18",
+      "kinds": ["request", "convention", "broken"],
+      "what": "Applied H-verbs-6's ANSWER. Step 5 now names the commands: `frob report run <run> --cite <claim> --json` (Established) and `--claim reality --cite <claim>` (Reality), both 880 with exit 3, and the uncited report prints the described wording. Acceptance matches. The ANSWER's `--key` was not applied: report.run is a `read` verb (VERBS-report), where `--key` is FROB-REF-802 (NJL-01). The `--negative-controls` option does not exist; it is now E2E_PLANT_FAILURE plants declared as `plants=dry-patch,altered-verdict`. The 'build flag that lets gear_ratio through' cannot be planted in a product binary; it is GATE-AUTOPSY-02's registered control 'design changes mapped to exogenous' (N27a-07). BD-302 was not added as a dependency: N27b-18 already depends on it transitively (via BD-284 → … → N37-26 → BD-302)."
+    },
+    {
+      "bead": "N27b-20",
+      "kinds": ["convention", "broken"],
+      "what": "The bead said that 'the end-to-end helper gains a step `autopsy_audit`', but the shared lib.sh is reserved for `e2e_` functions (STD-E2E), and a shell step had no way to call the Rust auditor. The hook is now the bead's own library `scripts/e2e/lib/autopsy.sh`, named in scope, whose `autopsy_audit <dir>` calls the example target `cargo run -p frob-autopsy --example autopsy_audit -- <dir> --json` (DESIGN) and logs through the shared functions. The test plan says the auditor is reached by no frob command."
+    },
+    {
+      "bead": "N27b-21",
+      "kinds": ["convention"],
+      "what": "The C11-script note holds in part: the test plan said 'No script of its own' without the reason convention 11 requires. It now says that the bead delivers nothing a frob command can reach (tier entries, binding table, fixture tests, derivations). The rest was checked and is right: every bound test name exists in its bead, the thermal and growth arithmetic recomputes (37.95 s, 113.28 °C, 42.42 s, 81.98 °C; 24.5, 601.6, 3.62e5), and the deps are sound."
+    },
+    {
+      "bead": "N27b-22",
+      "kinds": ["registry", "convention"],
+      "what": "Record step and acceptance lacked N38a-09 rule 2a (receipt committed at receipts/pilots/<hash>.json), so the result would be refused `pilot-receipt-uncommitted`; added. The C11-script note was right that the test plan gave no reason for the absence of a scripts/e2e script; it now states the pilot has no product dependency and delivers nothing a frob command can reach. All figures recomputed and correct (G ≤ 1,666.7; 46.4 steps, 1.16 s; 247 steps; ceilings 4.0, 2.98, 3.24; λ 0.16 per step = 6.4 s⁻¹)."
+    },
+    {
+      "bead": "N27b-26",
+      "kinds": ["broken"],
+      "what": "The gate measurement relied on 'k = 1', but k (one in eight) has no verb input or policy setting, so the script could not set it. The e2e line now says the gate script runs every admitted case's double-precision repeat itself (`--lane f64`) and compares by this bead's rule of step 3; matches N27b-28. Clopper–Pearson bounds (0.851, 0.928, 0.898), the alarm counts and the 800-identity selection band recomputed and correct."
+    },
+    {
+      "bead": "N27b-27",
+      "kinds": ["broken"],
+      "what": "Stage 4 runs the numerical-variant interventions of N27b-25 first for admitted failures that double precision does not reproduce, but N27b-25 was not a dependency, so the bulk planner could be built before the mechanism it calls. Added dep N27b-25 (M3, no cycle: graph_check reports none). Cost model, worked instance (704,000 world-seconds; 176/704/7,040 s) and ceilings (4.0, 2.98, 3.24) recomputed and correct."
+    },
+    {
+      "bead": "N27b-28",
+      "kinds": ["convention", "contradiction", "broken"],
+      "what": "(1) GATE-AUTOPSY-03 had two recorders, this bead and N27b-09 (convention 9; N38b-15 names N27b-09). This bead now records only GATE-AUTOPSY-09 and writes the lane clause into its receipt for N27b-09's entry to read. Scope, background and acceptance are aligned. (2) The 'k = 1' cross-check cannot be set; the script runs the double-precision repeats itself with `--lane f64` and compares by N27b-26's rule. (3) The table's commands lacked the fork or run handle, `--world`, and `--key` on run verbs; they are spelled in full now (read verbs without --key). (4) `--negative-controls` does not exist: the plants are now `plants=self-crosscheck,no-ceiling` under E2E_PLANT_FAILURE. The 'admission bypassed by a build flag' control is the gate's registered mutation control, planted by the tier run (`e2e_tier … --mutations`) and asserted `caught` from E2E_LAST_RECEIPT."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N27b-09",
+      "what": "Test plan line 141: the script's planted failures run 'with `--negative-controls`', an option that exists nowhere (STD-E2E: plants are declared in the header `plants=` and injected under E2E_PLANT_FAILURE), and its build-flag defects cannot be planted in a product binary (N38b-04). Turn the script-level plants into E2E_PLANT_FAILURE plants and assert the build-level ones as the gate's registered mutation controls, `caught` in the tier run's receipt. Otherwise the script calls a nonexistent option and `--verify-plants` cannot exercise it. Also note that N27b-28 now leaves the GATE-AUTOPSY-03 row to N27b-09 alone and writes the lane clause into its GATE-AUTOPSY-09 receipt for N27b-09's entry to read."
+    },
+    {
+      "bead": "N27b-19",
+      "what": "Test plan line 120: 'Planted defects the script must catch (`--negative-controls`): a build flag …' has the same two defects as N27b-09: a nonexistent option and build flags that no product binary carries (N38b-04). Use E2E_PLANT_FAILURE plants for what the script can plant, and the owning gates' registered mutation controls, asserted from receipts, for build-level defects."
+    }
+  ],
+  "unchanged": 6,
+  "notes": "Unchanged, read in full and found right: BD-279, BD-280, N27b-08, N27b-14, N27b-16, N27b-24. Recomputed: BD-279/BD-280 counts and p-values; N27b-08's 505/585 forks and 2.3e5 world-seconds; N27b-14's ddmin trace (15 tests to {c,d,e}); N27b-24's reachability table at R = 16, P = 32 (3,4,5,6 and 5,6,7,8, checked exactly) and fork counts 193 and 913. The H-verbs-6 ANSWER on N27b-18 carried `--key` on report.run, a read verb whose registry example has no key; it was applied without --key (VERBS-report and NJL-01 already agree, so no request). The U27b mechanism beads name the gate bead's shared script as their end-to-end script (e.g. N27b-24, N27b-26 and N27b-27 name N27b-28's autopsy_lane_f32.sh). Convention 11's shared-script clause allows this, and it was left as is. Redesign worth considering (not made): N27b-09 marks GATE-AUTOPSY-03 `not-eligible: lane clause pending` until N27b-28 runs, but cannot depend on N27b-28; the re-run of N27b-09's tier entry after the lane is measured has no owner bead other than the exit review N27b-30."
+}

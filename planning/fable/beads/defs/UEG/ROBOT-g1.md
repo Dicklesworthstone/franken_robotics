@@ -49,9 +49,10 @@ the design's `term` section). The import keeps all 38 links; welded links are fi
 design term and are folded at compile by the pseudo-inertia sum (mass, first moment and second moment add in
 the parent's frame), so the compiled model has 30 bodies and exactly the source's total mass. Expected
 loss-report entries (HYPOTHESIS until read): visual meshes; fitted collision primitives; unmapped solver and
-contact parameters; `armature`, `damping`, `frictionloss` to an `assumed` card; the ankle and waist, if the
-public model writes them as plain serial joints, imported as such, with a note that the real robot's coupled
-linkages are not in the file.
+contact parameters (joint `damping` and `frictionloss` are not losses: BD-066 maps them to the joint's own
+damping and friction, and `armature` to an override of the bound `assumed` card's rotor inertia); the ankle and
+waist, if the public model writes them as plain serial joints, imported as such, with a note that the real
+robot's coupled linkages are not in the file.
 
 **Validation specifics.** (1) Mass conservation under folding: Σ of the 38 source masses equals the compiled
 30-body total exactly in decimal arithmetic. (2) Comparison with the sibling builder's roll-up: the

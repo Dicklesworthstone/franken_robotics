@@ -6,7 +6,7 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["NAB-42"]
+deps: ["NAB-12", "NAB-42"]
 needs: []
 related: ["NAB-44", "NAB-45", "NAB-46"]
 gates: []
@@ -179,12 +179,13 @@ structure-and-manufacture subsystem.
 - [ ] Records `FP-01` … `FP-30` exist; sixteen have a `rank` (ranks 1 to 15; rank 4 is shared by `FP-04` and
       `FP-05`, which the best five treat as one idea); the records of the best five carry `why_it_wins`,
       `confidence` and `since_first_pass` verbatim.
-- [ ] Every record has at least one carrier that exists as a bead; no record cites a bead number of the
-      earlier numbering.
+- [ ] Every record has at least one carrier that exists as a bead; no record's text cites a bead number of the
+      earlier numbering (the list of `stale_numbers_absent`).
 - [ ] The FACT quoted in the reasons (a quadruped policy trains in about 410 s on one RTX 4090 in an
-      incumbent) resolves to a source record, flagged as read by eye with ± 20 s.
-- [ ] The TARGET quoted (preflight in under two seconds at the 95th percentile) is recorded as owned by its
-      gates and not restated as a result.
+      incumbent) resolves to its source record (NAB-12's incumbent training-time figure), flagged as read by eye
+      with ± 20 s.
+- [ ] The TARGET quoted (preflight in under two seconds) is recorded as owned by its gates (`FP-02`'s `gates`
+      hold GATE-ATEL-02 and GATE-ATEL-05) and not restated as a result.
 - [ ] The traceability lint of NAB-42 passes on these records.
 
 ## Test plan
@@ -197,15 +198,20 @@ structure-and-manufacture subsystem.
   `rank_4_covers_ideas_4_and_5`; `rank_15_is_idea_30`.
 - `partition`: the ranked records cover ideas 1 to 15 and 30; the table covers 16 to 29; together 30.
 - `carriers_resolve` (against the tracker export).
-- `stale_numbers_absent`: no record's text contains the pairs that the earlier numbering used for the best
-  five.
+- `stale_numbers_absent`: no text field of an `FP` record contains a bead number that the planning text
+  cited under the earlier numbering: BD-104 and BD-112 (trust ladder), BD-053 to BD-061 (check before you
+  simulate), BD-062 to BD-066 and BD-113 (baseline controller), BD-018 to BD-020, BD-102 and BD-103
+  (teleport), BD-046 and BD-068 (energy ledger). (`carriers` are checked against the table above, where
+  BD-018 to BD-020 carry teleport under the current numbering.)
+- `fact_and_target_owned`: the 410 s figure of FP-02's reason resolves to NAB-12's source record with `how`
+  read by eye and ± 20 s; FP-02's `gates` hold GATE-ATEL-02 and GATE-ATEL-05.
 - `tier_states_of_16_to_29`: ideas 16, 17, 19, 27 and 29 are Frontier; 18, 20 to 26 and 28 are Solid.
 - `text_frozen` against `tests/fixtures/ideas/first_pass.md` (this bead's text).
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh` (NAB-50) asserts 30 records, 15 ranks and zero unresolved carriers for this
-pass, logged per STD-E2E.
+`scripts/e2e/decision_records.sh` (NAB-50) asserts 30 `FP` records and zero unresolved carriers over the
+register, logged per STD-E2E; the ranks are this module's tests.
 
 ### Known answers and negative controls
 

@@ -113,7 +113,8 @@ excluded from the humanoid mass row by rule.
 - `robot_fsim_g1_block_is_the_profiles`: the block in `import.fbot` has exactly the fields of N14b-34's schema
   and the omitted list of the profile file.
 - `robot_fsim_g1_kinematics_match_folded_reference`.
-- `robot_fsim_g1_not_a_parity_reference`: the mass-gate loader rejects a `reduced` profile.
+- `robot_fsim_g1_not_a_parity_reference`: NEG-15's mass-row reader, offered this asset as `humanoid`'s mass
+  reference, refuses it with `g1-reduced-30` named (its manifest carries `profile`).
 - `robot_fsim_g1_provenance_complete`: commit, path, lines, builder present and consistent with the stack lock.
 
 ### End-to-end script and logging

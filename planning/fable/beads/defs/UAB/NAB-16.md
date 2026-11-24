@@ -4,7 +4,7 @@ title: "e2e scripts/e2e/sources.sh: source register counted, archive checked, ci
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "gauntlet", "frob-conformance", "solid", "test", "e2e"]
+labels: ["m0", "gauntlet", "frob-conformance", "solid", "test", "e2e", "review-notes-open"]
 parent: "WP-01"
 deps: ["N40-01", "N40-02", "NAB-09", "NAB-10", "NAB-11", "NAB-12", "NAB-13", "NAB-14", "NAB-15", "STD-E2E"]
 needs: []
@@ -50,11 +50,16 @@ and to the conformance tests by `FROB_LINT_ROOT=<dir>` (NAB-02 step 1; NAB-10 st
    no local reading (before its re-read at the stack-lock commit), reference reading or plan-time check (before
    its re-run) may be cited; and the script logs the number of open reading tasks as a `metric`.
 4. **Archive.** Compute `shasum -a 256` of the single `.zip` under `planning/`; `e2e_assert` that it equals
-   exactly one of the four recorded revisions and log which; extract it into a new, empty scratch directory
-   that holds nothing else; there run `e2e_cmd -- python3 -I -B verify.py` (the runner checks the inventory of
+   exactly one of the four recorded revisions and log which. Then extract two revisions (NAB-15 step 1), each
+   into its own new, empty scratch directory that holds nothing else: the **cited** revision, written from
+   `git show a635b91:planning/astra-10x-reproduction.zip` and asserted to have the digest of the `a635b91` row
+   (when `git cat-file -e a635b91` fails, as in a shallow clone, the script runs `git fetch --unshallow` once
+   and, if the commit is still absent, fails with that reason logged; it never substitutes the working-tree
+   file), and the working-tree revision. In each, run `e2e_cmd -- python3 -I -B verify.py` (the runner checks the inventory of
    released file names and the SHA-256 of each listed file, then replays the standard-library checks; it
-   expects to be started from the directory that holds its README). Then run three of its inner programs and
-   compare their printed counts with the recorded values: `mor/repro/P01-inverse.py` (stance family: 11,520 of
+   expects to be started from the directory that holds its README). Then run three of its inner programs in each
+   revision and compare the cited revision's printed counts with the recorded values, and the working-tree
+   revision's with the cited revision's: `mor/repro/P01-inverse.py` (stance family: 11,520 of
    11,520, half-width 3/14 m), `mor/repro/P05-docking-family.py` (561 cells: 344 admitted, 217 excluded) and
    the promotion-rule enumeration `sill/promotion_rule.py` (2,145 pairs: 521, 521, 1,103, 0; its recorded
    output `sill/promotion_rule.out` is compared byte for byte). Then

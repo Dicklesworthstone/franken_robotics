@@ -1,0 +1,257 @@
+{
+ "list": "C3",
+ "audited": 51,
+ "edges_judged": 485,
+ "real": 455,
+ "proposals": [
+  {
+   "bead": "BD-222",
+   "kind": "false",
+   "edge": "BD-186",
+   "change": "move BD-186 from deps to related; add N17b-04 (the bead that builds verb phylum.sweep) to deps",
+   "evidence": "BD-222 registers verbs; its phylum row reads 'sweep (U) [BD-186 for the head-to-head it serves]', i.e. BD-186 is a consumer of the verb, not its builder (BD-186 Scope: 'Out: the arms' implementations'; its script calls `frob phylum sweep`). No item of BD-222's checklist, unit tests or m2_verbs.sh runs the head-to-head study. Seed-listed edge, but the plan's own wording says the study is what the verb serves",
+   "gain": "with the BD-184 and BD-215 proposals below: BD-222 from level 118 to 112; N16c-15 and the queue chain lose their M2 registry wait"
+  },
+  {
+   "bead": "BD-222",
+   "kind": "false",
+   "edge": "BD-184",
+   "change": "move BD-184 from deps to related (N17b-04, added above, is the verb's builder)",
+   "evidence": "BD-184 is the GATE-PHYLUM-04 latency campaign; its Scope says 'Out: ... the verb (N17b-04)'. BD-222 neither runs the latency campaign nor reads its record",
+   "gain": "part of the BD-222 drop to level 112 (BD-184 is at 114)"
+  },
+  {
+   "bead": "BD-222",
+   "kind": "false",
+   "edge": "BD-215",
+   "change": "move BD-215 from deps to related; add N20b-12 (sense.causal-test on the batched tiers) to deps",
+   "evidence": "BD-215 is the noninterference test bead (Scope: 'Out: the causal test's mechanics (BD-119, N20b-12)'). BD-222 registers sense.causal-test 'on every tier', whose every-tier computation is N20b-12 (reached today only through BD-215); nothing in BD-222 runs the five noninterference properties",
+   "gain": "BD-215 (level 116) is the second binding edge of BD-222; with the two edges above BD-222 goes from 118 to 112"
+  },
+  {
+   "bead": "N16c-15",
+   "kind": "false",
+   "edge": "BD-222",
+   "change": "move BD-222 from deps to related; add the builders of the verbs the bead calls: N17b-04 (phylum.sweep), N24cp3-01 (eval.run at M2), BD-206 (telemetry.divergence), BD-219 (sim.estimate)",
+   "evidence": "N16c-15 adds an option to the rows of sim.run and phylum.sweep (rows owned by VERBS-sim/VERBS-phylum) and calls sim.run, eval.run, phylum.sweep, spark.check, phylum.plan, sim.estimate and telemetry.divergence; nothing reads BD-222's M2 parity record, golden envelopes or daemon-era conformance table. The bead itself calls BD-222 a proxy: 'BD-181, a dependency through BD-222'",
+   "gain": "N16c-15 from level 119 to 117 (then bound by N16c-14 at 116); the M2 registry capstone is no longer upstream of the whole row-queue experiment"
+  },
+  {
+   "bead": "N16c-15",
+   "kind": "false",
+   "edge": "BD-184",
+   "change": "move BD-184 from deps to related (N17b-04 added above supplies phylum.sweep)",
+   "evidence": "BD-184 is the edit-to-first-step latency gate measurement; N16c-15 only needs the verb phylum.sweep, which BD-184 itself lists as 'Out: ... the verb (N17b-04)'",
+   "gain": "needed together with the BD-222 edge (BD-184 is at level 114)"
+  },
+  {
+   "bead": "N16c-16",
+   "kind": "partial",
+   "edge": "BD-186",
+   "change": "N16c-16 keeps arm E's measure (2) in its own receipt (clause 3 already measures the same ratio) and the filing of arm E into the head-to-head record moves to BD-186's report as a `reported or not run` variant read from that receipt, or to a small bead after both; then drop BD-186",
+   "evidence": "only step 5's last sentence ('Submit the same configuration to the head-to-head harness as arm E') and the clause 'arm E's measure (2) is filed with the head-to-head record' of one acceptance item touch BD-186; clauses 1 to 4, the controls and the receipt do not",
+   "gain": "small today (N16c-15 binds at 119); 1 to 2 levels once N16c-15 and N16c-14 shorten"
+  },
+  {
+   "bead": "BD-230",
+   "kind": "partial",
+   "edge": "N16c-17",
+   "change": "split off a small bead 'frob-kernels: K-film index-list entry point for row-class queues (keep branch of KILL-ROWQUEUE)', deps BD-230, N16c-13, N16c-17, taking the keep-branch half of the 'Row queues' paragraph, acceptance item 4 and the unit test `film_index_list_equals_masked`; BD-230 ships the masked form only and drops N16c-17",
+   "evidence": "BD-230 uses the decision only for the keep-branch entry point: 'On its keep branch ... K-film gains the index-list entry point of N16c-13 ... If the gate fired, K-film keeps the masked form only and nothing else changes. Until this bead lands, N16c-14 builds plans with film rows masked.' The law, the thickness state, the channel, the probe and the GATE-TRAC-05/GATE-HAB-06 values use nothing from the decision. Direction rule 7: work that exists on one branch only depends on the decision; the mechanism does not",
+   "gain": "largest in this list: BD-230 from level 122 to 103 (bound by N19b-05 at 102); its 23 dependents (N24a-27, BD-253, NS-04 ...) stop waiting on the M2 row-queue kill gate"
+  },
+  {
+   "bead": "BD-255",
+   "kind": "partial",
+   "edge": "BD-253",
+   "change": "run the batched verdict path on an M2 task with a past-time requirement (the velocity-tracking family of BD-201, whose `on-track` is `H (0 s 1 s)`; BD-201 is already upstream through N24c-15) in cortex_verdicts.sh steps 1 to 4 and the unit tests; move the acceptance clause 'for every past-time requirement of the M3 task families, the streamed final margin ... equals the offline recomputation' to a small e2e bead after BD-255 and BD-253 that runs cortex_verdicts.sh as a stage over the M3 families; then drop BD-253",
+   "evidence": "BD-253 supplies only the fixture: step (1) settles 'an M3 interior-navigation task' and one clause of the second acceptance item names 'the M3 task families'. GATE-CORTEX-10's three clauses (10^4-trace equality from N23ap1-01, the mixed-unit fixture, the refused future-time reward), the verdict object, the boundary re-evaluation and the settled-pose surface are generic over tasks. Seed-listed edge (the plan says the path is built 'for the M3 task families')",
+   "gain": "BD-255 from level 125 to 100 (bound by N23ap1-01 at 99) for it and its 17 direct dependents; BD-259 gains only 1 level because N24b-18 (124) and N24b-17 (123, via N19c-14 and N24a-31) run beside it"
+  },
+  {
+   "bead": "BD-252",
+   "kind": "partial",
+   "edge": "N22a-25",
+   "change": "move acceptance item 2 (the seed's second clause: a planted acceptance request on this verb's episodes is refused with FROB-REF-817) and the negative control 'the planted acceptance request' to N22a-26, which already depends on BD-252, N22a-25, BD-259 and BD-263 and carries 'planted acceptance request' in its title; then drop N22a-25",
+   "evidence": "BD-252 Scope: 'Out: ... the evidence-boundary refusal (N22a-25)'; 'this bead raises no 817 of its own (its episodes are screening results)'. The controller, the verb, pricing, digest independence, latency and demonstrations use nothing of N22a-25; N22a-25 is built to be finished before the controller exists (it tests with a synthetic `mpc-sample` record)",
+   "gain": "BD-252 from level 128 to 120 (bound by BD-247 at 119) for it and its 21 dependents; removes eval.qualify (BD-259) from upstream of the sampling controller"
+  },
+  {
+   "bead": "N23a-25",
+   "kind": "false",
+   "edge": "BD-252",
+   "change": "move BD-252 from deps to related",
+   "evidence": "policy.apply never runs control.mpc: the sampling controller appears only in the ranked repair text of FROB-REF-534 ('screen with the baseline or the sampling controller') and in the Background's fallback sentence; no acceptance item, unit test or step of policy_apply.sh calls it",
+   "gain": "N23a-25 from level 129 to 127 (bound by BD-320 at 126); BD-321 then to 129 (bound by N10b-11 at 127)"
+  },
+  {
+   "bead": "N28b-22",
+   "kind": "partial",
+   "edge": "BD-328",
+   "change": "point the differential test 'Measures equal those of eval.rank-agreement run on the same pairs' at the tier-pair entry of BD-265 (which builds the `frob.rank-agreement/1` record, the `rank_agreement` table, the statistics and the verb, and is already a dependency) or at the shared library function; the rung-pair differential against BD-328's verb moves to the `rank_ledger` step of N28b-28 (which reaches BD-328); then drop BD-328",
+   "evidence": "N28b-22 recomputes measures 'with the shared statistics library (the same code the calibration experiment uses)'; BD-265 says its record type and modes are the ones the rung-pair measurement writes into the same table. Containment rank and regret are N23b-35's, q̂ and the martingale N28b-14/N28b-16's, ρ_ep BD-264's, all dependencies. Its e2e is a step of N28b-28. Only that one differential item names the rung-pair verb",
+   "gain": "N28b-22 from level 132 to 123; the audit-lane ledger no longer waits on the M4 family-policy experiment chain (BD-321, N23a-25, BD-252)"
+  },
+  {
+   "bead": "N28b-23",
+   "kind": "partial",
+   "edge": "BD-328",
+   "change": "write the three planted populations' rows in rung_modes.sh step 1 through N28b-22's ledger append path (fixture score pairs labelled synthetic) instead of `frob eval rank-agreement --pair R1,R3`, and move the clause 'including the 545 refusal and the k survivors wording on BD-328's discard-only record' to the `modes` step of N28b-28; then drop BD-328",
+   "evidence": "the automaton, its exhaustive table test, hysteresis, 545, the wording rule and the KILL-RANK switch are pure functions of ledger rows (N28b-22) and flags; only e2e step 1 and the last acceptance item call BD-328's verb to produce rows",
+   "gain": "with the N28b-22 proposal: N28b-23 from level 133 to 124 (bound by N28b-22 at 123, N23b-35 and N16b-12 at 122); N28b-15, N28b-24 and BD-329 follow"
+  },
+  {
+   "bead": "N17b-17",
+   "kind": "partial",
+   "edge": "N28b-23",
+   "change": "move the per-stratum `selection` standing (the 'Strata and standing' paragraph from 'a selection value read from the ledger' on, the selection half of acceptance item 7, tests `selection_from_ledger` and `selection_capped_by_mode`) to a new small bead 'frob-phylum: selection standing of map elites from the rank-agreement ledger, capped by the ladder mode', deps N17b-17, N28b-22, N28b-23; N17b-18 and BD-342, which print or use `selection`, depend on it. N17b-17 keeps StrataDef and `standing: provisional` and drops N28b-23",
+   "evidence": "the bead's subject (types, exact cell assignment, total order, merge laws PO-PHYLUM-03, canonical bytes, delta, coverage) uses nothing of the ladder; N28b-23 is cited once: 'never more permissive than the mode the ladder has in force for the same key (DC-03's mode automaton, N28b-23)'",
+   "gain": "N17b-17 from level 134 to 99 (bound by the pilot N17b-16 at 98); N17b-29 then 126 (bound by BD-254); N28b-24 can take the map spec from it early"
+  },
+  {
+   "bead": "N17b-17",
+   "kind": "false",
+   "edge": "BD-254",
+   "change": "move BD-254 from deps to related",
+   "evidence": "BD-254 (eval.scorecard and the batteries) appears only in the deps line; the map type takes quantized descriptors and scores as integers and reads no scorecard (scorecards are read by N17b-29, which keeps BD-254)",
+   "gain": "needed for the N17b-17 drop (BD-254 is at level 125)"
+  },
+  {
+   "bead": "N28b-24",
+   "kind": "false",
+   "edge": "BD-342",
+   "change": "move BD-342 from deps to related; add N17b-17 (the MapSpec descriptor grid the default regions are cut from)",
+   "evidence": "the only link is the default region definition: 'by default the blocks of the quality-diversity archive's descriptor grid ... or any partition declared on design fields'. That grid is N17b-17's MapSpec; nothing uses BD-342's campaign loop or GATE-PHYLUM-08. Its e2e is a step of N28b-28",
+   "gain": "N28b-24 from level 138 to 136 now (bound by N28b-15 at 135); to about 127 with the ladder proposals above"
+  },
+  {
+   "bead": "BD-346",
+   "kind": "false",
+   "edge": "BD-329",
+   "change": "move BD-329 from deps to related",
+   "evidence": "stage 5 reads 'From stage 4: the ranked finalists' and is gated on 'stage-4 fixtures: finalist sets built from the planted exploits and planted rankings of N16b-15'; it calls the model-form check (BD-266) and the energy flags (BD-208). Nothing uses layer 2's audit lane, conformal survivors or DC-02/DC-03; the cascade that chains the stages is BD-352, which depends on this bead. Seed-listed edge (plan order of the cascade), not a use",
+   "gain": "BD-346 from level 140 to 127 (bound by N28b-25 at 126); BD-348 then 136 (bound by N28a-16 at 135)"
+  },
+  {
+   "bead": "N30a-15",
+   "kind": "false",
+   "edge": "BD-348",
+   "change": "move BD-348 from deps to related (N28a-13, already a dependency, builds A-25)",
+   "evidence": "the only use of the analysis crate is `fixtures_agree_with_a25` ('the same eight cases through the analysis crate's identifiability analysis A-25'); BD-348 says 'A-25 by N28a-13' and only collects GATE-ATEL-05 rows. The fixtures are closed-form and need no gate record",
+   "gain": "N30a-15 from level 142 to 135 (bound by N30a-08 at 134)"
+  },
+  {
+   "bead": "N30a-17",
+   "kind": "false",
+   "edge": "BD-351",
+   "change": "move BD-351 from deps to related",
+   "evidence": "BD-351 (verb experiment.suggest) is never called: EVSI is construction C-39 (SPEC-C-39, a dependency), the identification and alias tests are 'passed in by the caller', and the studio's work appears only in 'Kill gate KILL-VOI (owned by the studio's experiment-suggestion work)' as a consideration",
+   "gain": "with the N30a-15 proposal: N30a-17 from level 143 to 136; BD-390 to 137"
+  },
+  {
+   "bead": "BD-390",
+   "kind": "false",
+   "edge": "BD-348",
+   "change": "move BD-348 from deps to related",
+   "evidence": "BD-390 'builds on analysis A-25' (N28a-13, a direct dependency); nothing reads BD-348's GATE-ATEL-05 rows or the A-24/A-26 assembly. Seed-listed edge",
+   "gain": "needed with N30a-15 and N30a-17 for BD-390 to drop from 144 to 137"
+  },
+  {
+   "bead": "N30a-31",
+   "kind": "partial",
+   "edge": "N30a-27",
+   "change": "move the computed-interval branch of step 2 ('Computed: simulate the task ... over 256 correlated draws of the cards' identified block (by address)', source `simulated`), acceptance item 5 ('Computed intervals are reproducible from world_addr ... contain the stated share of the 256 simulated draws') and the tests `computed_interval_quantiles` and `replay_digest_matches` to BD-392, whose step 4 already computes each interval 'over correlated draws from the cards' stated uncertainty'; add N30a-27 to the deps of BD-392 and of N30a-34 (whose lineage and refit rules read card versions' parents and today reach N30a-27 only through N30a-31). N30a-31 keeps the record with its `source` field and caller-supplied intervals, and drops N30a-27",
+   "evidence": "only the computed branch uses N30a-27's `card::sampler`; the schema, freezing and tamper detection, tolerances (instrument sigma from N30a-08), the conditions draw (BD-180) and refusals 883, 102 and 802 use nothing of it, and the unknown-card check is the card store's (BD-069, reached through BD-387). The record's `lineage` is defined by N30a-34 ('LineageId = hash(root ModelId, CellId)'), not by N30a-27",
+   "gain": "the largest single cut in this tail: N30a-31 from level 151 to 135, N30a-32 from 153 to 138, the band beads N30a-36 to N30a-38 about 15 levels earlier, BD-391 157 to 154, BD-393 158 to 155. On its own it shortens the program chain from 169 to 166 beads, because prediction and scoring then run beside identification"
+  },
+  {
+   "bead": "BD-392",
+   "kind": "missing",
+   "edge": "N30a-28",
+   "change": "add N30a-28 (and N30a-27, see the N30a-31 proposal) to BD-392's deps",
+   "evidence": "BD-392 step 4: 'The simulated side runs at world_addr with the cell's cards: admitted versions where the cell has them, prior versions otherwise (a candidate version may be named explicitly ...)'. Choosing cards by status is N30a-28's ('the status of a card version and its ledger events'); graph_check reports 'BD-392 does not depend on N30a-28'",
+   "gain": "none (N30a-28 is at 154 and BD-392 at 155); keeps the N30a-31 cut sound"
+  },
+  {
+   "bead": "BD-391",
+   "kind": "false",
+   "edge": "N30a-30",
+   "change": "move N30a-30 from deps to related; add N30a-30 to N30a-26, whose `class` stage ('three rigs of population A declared three units of one part class ... after their versions are admitted, frob actuator show <class card>') is the one place the class card is exercised",
+   "evidence": "BD-391 is 'verb ground.identify: staged identification ...' with 'Out: ... scoring and admission at scoring time (N30b-06)'. A class card is updated from 'k admitted units' (N30a-30 step 4), so only after ground.score; identify writes candidate versions only (N30a-27). No acceptance item, test in tests/identify.rs or verb output of BD-391 touches class cards. The only link is the scope sentence 'candidate cards are written by N30a-27 to N30a-30'",
+   "gain": "with the two edges below, BD-391 goes from 157 to 152 (bound by N30a-25 at 151) and N31a-48, which depends on BD-391, from 158 to 153; in the combined set BD-391 goes from 146 to 144"
+  },
+  {
+   "bead": "BD-391",
+   "kind": "false",
+   "edge": "N30a-29",
+   "change": "move N30a-29 from deps to related (N30b-06 already depends on it; N30a-26 and N30a-35 reach it through N30b-06)",
+   "evidence": "N30a-29 step 1: 'When and where. Inside the scoring of a frozen prediction on the validation part'; its acceptance item: 'cannot be computed by any path other than scoring'. Identification never reads validation data (BD-391 pre-check (a): 'Only the calibration split is readable')",
+   "gain": "part of BD-391's drop from 157 to 152"
+  },
+  {
+   "bead": "BD-391",
+   "kind": "false",
+   "edge": "N30a-28",
+   "change": "move N30a-28 from deps to related (N30b-06, N30a-26 and N30a-35 depend on it directly)",
+   "evidence": "N30a-28: 'It becomes admitted only when ground.score has scored a frozen prediction made with it on sealed data'. The `candidate` status and the event ground.candidate are written by N30a-27 (its step 5), and the CardStatus enum belongs to N30a-24's record type. BD-391's 'cancellation mid-job leaves no candidate card' needs only N30a-27",
+   "gain": "part of BD-391's drop from 157 to 152"
+  },
+  {
+   "bead": "BD-393",
+   "kind": "false",
+   "edge": "BD-391",
+   "change": "move BD-391 from deps to related",
+   "evidence": "ground.band never calls ground.identify. Pools are built 'from scored trials' (N30b-06, a dependency). The in-sample rule ('its episode was not used to identify any card bound in the model') reads the card version's measured provenance and the calibration record (N30a-27 and N30a-24, both reached through N30b-06). No acceptance item, test or script step of BD-393 runs identify. This edge is seed-listed (the seed's order is identify then band); it is not a use",
+   "gain": "none on its own (N30a-38 binds at 157); with the N30a-31 cut, BD-393 goes from 155 to 154 (bound by N30b-06), and BD-397 and BD-409 follow"
+  },
+  {
+   "bead": "BD-393",
+   "kind": "false",
+   "edge": "BD-349",
+   "change": "move BD-349 from deps to related",
+   "evidence": "BD-349 (decision-core tables of DC-02, DC-03 and DC-05) appears only in the deps line. BD-393 says 'Out: the decision-core record and guard table (N30b-08, which depends on this bead)', and DC-07's record is N28a-28 ('Records and tables of DC-07, DC-08 and DC-11 | N28a-28', in BD-349)",
+   "gain": "none on the chain (BD-349 is at 140); removes the M4 decision-core work from upstream of the band verb"
+  },
+  {
+   "bead": "N41-10",
+   "kind": "partial",
+   "edge": "BD-393",
+   "change": "move the band clause of acceptance item 3 ('a band request is refused with FROB-REF-889 (ground.band, BD-393)'), the test `band_request_refused_without_cell` and the owner_reality.sh step 'requests a band with frob ground band <fixture-cell> --json and asserts exit 3 with FROB-REF-889' to BD-397, whose lane record and ground_first_record.sh already depend on BD-393 and run under the same defaults. Then drop BD-393",
+   "evidence": "nothing else in the bead uses ground.band: not the page (generated from the register rows, N30b-25's survey block and N30b-26's options file), not the no-claim reality line (BD-139), not the synthetic labels, not the 873 refusal at ingest (BD-387), not the GATE-GROUND-10 states. The page must exist 'at the M4 exit' ('The page exists at the M4 exit, was put to the owner'), yet the bead waits on the M5 band verb at level 158, against direction rule 1",
+   "gain": "N41-10 from 159 to 133 and the decision N38b-26 from 160 to 134, so the owner question can be put on time; BD-397 from 161 to 160 (then bound by BD-394)"
+  },
+  {
+   "bead": "BD-409",
+   "kind": "false",
+   "edge": "BD-397",
+   "change": "move BD-397 from deps to related",
+   "evidence": "BD-397 registers no verb. Its record is written by the library function 'frob_conformance::ground_lane::write' from a tier target and entered by record_gate. BD-409's verb table only names it ('the Reality lane's first record [BD-397]'). Its checklist, its tests (handlers_m5, registry_complete, golden) and m5_verbs.sh call ingest, excite, identify, predict, score, band and the foundry and prove verbs, never the lane record. Its consideration 'then ground.band returns no-claim everywhere' needs ground.band (BD-393), not the record. This edge is seed-listed",
+   "gain": "BD-409 from 162 to 160 (bound by N20b-08 at 159); on its own the program chain goes from 169 to 167 through N31a-50, N31a-59 and the M6 tail; in the combined set BD-409 is at 150 (bound by BD-376)"
+  },
+  {
+   "bead": "N31a-50",
+   "kind": "false",
+   "edge": "BD-409",
+   "change": "move BD-409 from deps to related",
+   "evidence": "VERBS-foundry, a dependency, owns the row: 'the seven registry entries of cluster foundry, entered here and nowhere else', including '| foundry.lifecycle | run | M8 | M |' with every option N31a-50 fixes. BD-409 enters only 'registry entries (those no cluster registry bead enters)' and checks foundry.lifecycle as a declared entry answering 724; N31a-50 gives the same answer through N00-02's dispatch (`feature_absent_refuses_724`). N31a-50 never names BD-409, and nothing it calls is an M5 verb (eval.run is N24c-04, nemesis.search is BD-273)",
+   "gain": "with the N31a-59 edge below: N31a-50 from 163 to 160 (bound by N31a-49) and N31a-59 from 165 to 162; the program chain goes from 169 to 167"
+  },
+  {
+   "bead": "N31b-28",
+   "kind": "partial",
+   "edge": "N31a-50",
+   "change": "move scripts/e2e/foundry_lifecycle_cards.sh (three `frob foundry lifecycle --fixture slow-wear` calls: the assumed label, FROB-REF-113 under --strict-data, FROB-REF-831 out of domain) into N31a-59's step 9, which already asserts 113 and 831 through the verb. Also move acceptance item 4 ('The gate row for GATE-FOUNDRY-12 states the provenance of the cards it used') to N31a-59: that row is written from N31a-59's receipt (convention 7). N31b-28 keeps its decision record and the `cargo test -p frob-lifecycle cards` tests on N31a-48's laws and card reader, and drops N31a-50",
+   "evidence": "the bead's own reason for the edge is 'both are dependencies, because this bead's tests and script drive that code'. The unit tests run in frob-lifecycle (N31a-48), so only the e2e script needs the verb. The decision itself (options A to D, the record docs/adr/OPEN-FOUNDRY-5.md) uses nothing of it",
+   "gain": "N31b-28 from 164 to 159 (bound by N31a-48); N31a-59 from 165 to 164 (bound by N31a-50), so the program chain goes from 169 to 168; the owner's decision no longer waits for the verb"
+  },
+  {
+   "bead": "N31a-59",
+   "kind": "false",
+   "edge": "BD-409",
+   "change": "move BD-409 from deps to related",
+   "evidence": "N31a-59 never names BD-409. It calls only foundry.lifecycle (N31a-50), eval.run --variants (added by N31a-50), the cluster library (N31ap3-51), assert_refusal (N31a-52) and record_gate (N38b-19). The CLI and MCP agreement of step 12b is N31ap3-51's cluster contract on VERBS-foundry's row; both are dependencies",
+   "gain": "needed with the N31a-50 edge: N31a-59 from 165 to 162"
+  }
+ ],
+ "notes": "C3 is two long single-file runs: the M3/M4 studio and ladder chain (BD-222 to BD-348), then Ground's chain from identification to band and the M6 lifecycle tail (BD-390 to BD-427). Most bold edges are real. The false ones are seed-order or capstone edges (identify to band, the M5 verb set to the lifecycle verb), or edges that a single acceptance item or script step needs. A parallel path runs one to three levels below almost every link, so most single cuts move the program chain by 0 to 3 levels. Simulated together, all proposals (with the four small new beads and the added edges) take the longest chain from 169 to 159 beads. The new longest path leaves this list at BD-259: N24a-31, N19c-14, N24b-17, N24b-18, BD-259, N12-13, N24b-19, BD-302 ... BD-378, BD-434, BD-442. The next binding edges in this third are N24b-18 and N24b-17 beside BD-259, N28b-15 and N28a-33 beside BD-329, BD-387 under BD-305 at the floor of the ground chain, BD-394 to BD-393 under BD-397, and NAB-28 and BD-412 under BD-427. Off-list edges seen: N31a-48 to BD-391 appears only in N31a-48's deps line, and it binds the lifecycle tail once BD-409 is cut. BD-427 to BD-412 looks unneeded ('since M6 runs beside them'; BD-434 keeps BD-427 in related on the same grounds), but cutting it gains nothing while BD-378 to BD-434 binds. Kept as real because in doubt: N30a-21 to N30a-20 (pass A restates N30a-20's L1 model, 'the model that the three estimator passes fit'; worth about 1 level), N30a-15 to N30a-08, BD-397 to N38b-26 and NAB-29 to NAB-28. BD-253 could split its navigation family from its close-out, for 2 levels and 31 dependents to re-point. Convention-7 drifts noticed that need no graph change: BD-393's --status prints BD-394's monitor states; N30a-31's `lineage` field is defined by N30a-34; N30a-29 step 8 reads class floors from N30a-30. Seed-listed edges questioned: BD-222 to BD-186, BD-255 to BD-253, BD-346 to BD-329, BD-390 to BD-348, BD-393 to BD-391, BD-409 to BD-397. No bead of this list is start-ready: the owner packets and decisions (N41-10, N38b-26, N31b-28) generate their pages or run their tests through frob-conformance or frob-lifecycle. BD-222's 34 and BD-427's 88 dependencies were judged against each bead's own account of its list."
+}

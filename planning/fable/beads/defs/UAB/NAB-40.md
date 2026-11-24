@@ -114,6 +114,11 @@ their heading and are joined to a hypothesis only here).
 | H-11 | NARROWED | KI-13, KI-14 | H-23 | NARROWED | KI-41 |
 | H-12 | DEFERRED | KI-58 | H-24 | NARROWED | KI-29 |
 
+The State column prints the register's row as the plan does; a record's `hypothesis_state` is the state word
+alone (`REFUTED` for KI-03, KI-33, KI-34, KI-17 and KI-18, `DEFERRED` for KI-58), the qualifier being the
+row's scope (NAB-33). The six records joined only here (KI-13, KI-18, KI-32, KI-34, KI-37, KI-47) get both
+fields in this bead.
+
 Three notes belong to the index. (a) H-19, that a thin layer over an incumbent engine would do, is ACTIVE and
 has no record: it is the composed-incumbent arm of the ten-fold test, and the thin-layer bet with its kill gate
 (KILL-AUGUR-TIE) state what ships if that arm ties. (b) H-04b, H-12b and H-25 to H-29 are ACTIVE and have no
@@ -167,8 +172,12 @@ under which an idea was proposed, what survives of it, and the record that holds
 
 Each `KD` record has `state = "declined"`, `refutation = ""`, `reason_on_file = "none"`, the default wording
 as `reason_proposed`, `revive_only_if` = "an accepted ADR that states a consumer, an acceptance test and the
-evidence", and `owner_confirmed = false`. Fail-closed default until the owner decides: the idea is not built,
-and the revive lint treats the record like any other.
+evidence", `revive_evidence = "none"`, `revive_gates = []`, and `owner_confirmed = false`; `strong_form` is
+the idea as proposed and `survives` what survives, from the table. Keywords (the revive lint matches nothing
+without them): KD-01: design debate, debates among agents, agent debate as a lever; KD-02: custom stator,
+gearbox co-design, stator design; KD-03: live editing in the viewer, live edit in the viewer. Fail-closed
+default until the owner decides: the idea is not built, and the revive lint treats the record like any
+other.
 
 ## Acceptance criteria
 
@@ -198,14 +207,20 @@ and the revive lint treats the record like any other.
 - `index_matches_hypothesis_register` (the register is N00-10's, a dependency of this bead, so the test runs
   from the start and never records a `skip`): states equal; every REFUTED or NARROWED row has a record; ACTIVE rows H-19, H-04b, H-12b, H-25 … H-29 have none.
 - `alias_table_has_31_rows_and_resolves`.
-- `declined_records_pending_owner`: three records, `owner_confirmed = false`, non-empty `reason_proposed`.
+- `declined_records_pending_owner`: three records, `owner_confirmed = false`, non-empty `reason_proposed`,
+  non-empty `keywords`; a planted bead "Add live editing in the viewer" fails `ki.match-without-citation`
+  naming KD-03.
 - `total_is_67`.
+- `print_summary`: when `FROB_KI_SUMMARY` names a file, writes
+  `{"schema":"frob.ki-summary","ki_records":…,"groups":[…],"mismatches":…,"joined":…,"aliases":…,
+  "aliases_unresolved":…,"kd_records":…,"kp_records":…,"values":{"<record>/<calculation name>":…}}` for the
+  whole register as it stands (KD-04 and the KP records are NAB-49's and are counted when present).
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh` (NAB-50) asserts 67 records, the index join, the 31 aliases and the three
-pending declined records, and looks an idea up by its proposal name ("copy-on-write forks of device state" →
-KI-10). Logged per STD-E2E.
+`scripts/e2e/decision_records.sh` (NAB-50) reads the summary of `print_summary` for its counts and spot
+values, and looks an idea up by its proposal name ("copy-on-write forks of device state" → KI-10). Logged
+per STD-E2E.
 
 ### Known answers and negative controls
 

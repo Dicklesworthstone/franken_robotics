@@ -1,0 +1,301 @@
+{
+ "round": 4,
+ "slice": "F-U28b",
+ "reviewed": [
+  "BD-090",
+  "BD-248",
+  "BD-332",
+  "BD-345",
+  "BD-346",
+  "BD-374",
+  "N28b-02",
+  "N28b-03",
+  "N28b-05",
+  "N28b-06",
+  "N28b-07",
+  "N28b-09",
+  "N28b-11",
+  "N28b-19",
+  "N28b-12",
+  "N28b-17",
+  "N28b-18",
+  "N28b-20",
+  "N28b-23",
+  "N28b-28",
+  "N28b-30",
+  "N28b-31",
+  "N28b-32",
+  "N28b-34",
+  "N28b-36",
+  "N28b-37",
+  "N28b-38",
+  "N28b-40",
+  "N28b-41",
+  "N28b-42",
+  "N28b-43",
+  "N28bx-01"
+ ],
+ "changed": [
+  {
+   "bead": "BD-090",
+   "kinds": [
+    "request",
+    "registry",
+    "plan",
+    "deadlock"
+   ],
+   "what": "Dep BD-080 moved to related (audit evidence holds: BD-080's referee_refusal_passthrough reads BD-090's .frun, BD-090 uses nothing of BD-080; left, the edge made BD-090 wait on its own consumer). Dep N29-REF added (BD-090 raises 888; level unchanged). Took the M1 `--worlds <n>` input on the referee (VERBS-sim names BD-090; without it N29a-04/05/06/08 and the T2 sample had no owner): address (run_seed, i, 0) per world, own chunk sequences, 802 at /worlds for 0, count in RunId, tests worlds_each_own_address and the script step `worlds`. Took N33a-06 item 3 (stack_receipt on run/job/episode rows and in the .frun manifest, writer refuses a record without it; §33.4). Script fixed from `--fixture g1` (802 at M0, N24b-03's input) to the positional `frob sim run g1 --tier referee --seconds 2 --seed 7 --telemetry <L> --key tl-<L> --json`. KA section names CX-322's numbers, the g1 entry KA-715 and the plant `frob-chronicle/mutant-chron-impulse-mean` with its cargo form; test ka715_impulse_window_sum added (ten 0.5 N·s impulses = 5 N·s, not the mean 0.005)."
+  },
+  {
+   "bead": "BD-332",
+   "kinds": [
+    "request",
+    "plan",
+    "broken"
+   ],
+   "what": "Applied BD-333's note: a04_memo_key_follows_reads holds at VERSION = 1 and BD-333 replaces its unchanged-key case when it extends reads() to VERSION 2; a04_parts_not_run then applies to `continuation` alone (left, both tests would fail on BD-333's change with no owner). Dep N10ax-01 added: BD-332 records GATE-ATEL-02 at M4 (N28c-25), which includes A-05/A-06's certified IK and KA-074 that N10ax-01 delivers; no cycle. The gate step now runs with `--features gauntlet-mutations` and asserts every registered control caught (KA-072's abelian-quotient mutant, KA-073's largest-entry eigenvalue), since N38b-19 refuses a receipt without them. Group and max-plus arithmetic rechecked (8 subgroups, 23/6, 26/8, λ = 1/2, interval [1/4, 7/20])."
+  },
+  {
+   "bead": "BD-345",
+   "kinds": [
+    "request",
+    "registry",
+    "broken"
+   ],
+   "what": "NJL-01 action rule: `frob nemesis audit prepare <campaign> …` became `frob nemesis audit <campaign> --action prepare …` and `frob nemesis audit run <campaign> --stage <n> --key <k>` became `frob nemesis audit <campaign> --stage <n> --key <k>` (left, both calls are 802 on VERBS-nemesis's row). GATE-ATEL-09's acceptance cargo form now carries `--features gauntlet-mutations` so the gate's two controls are caught in the receipt N38b-19 requires. Bound arithmetic rechecked (0.0950, 0.0495, m_min 59 and 29)."
+  },
+  {
+   "bead": "BD-346",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "Dep BD-329 moved to related (audit evidence holds: stage 5 reads stage-4 fixtures of N16b-15 and calls BD-266/BD-208, nothing of the ladder layer; the cascade BD-352 depends on this bead). H-verbs-1 applied: A-19.model-conditional is High, declared refusals empty with the generator appending 551 (left, N28a-05's generated block differs from VERBS-analyze's row listing 551 alone and check-generated fails; N28a-04 admits no Refusing severity and 557's raisers are report.design and report.campaign); acceptance now reads 551 alone; a19_generates_row_on_file adds scratch registrations declaring 557 and 830 that must fail; a19_finding_severity_557 renamed a19_finding_severity_high. Narration 'the input is requested of the cascade verb's bead' replaced by the fact: `--mutant` is on VERBS-opt's opt.cascade row (conformance_only), implemented by BD-352, loaded by N21b-42's loader with N35-15's mutants."
+  },
+  {
+   "bead": "BD-374",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The gate was recorded with `--receipt <hash of the gate receipt in docs/delivery/experiments/surface-ab/>`, which N38b-19 cannot load (it reads only target/gauntlet/receipts/<hash>.json), so GATE-ATEL-03 could never be recorded. Section 10 now gives the BD-249/BD-331 form: GATE-ATEL-03's g1_known_answers entries read the per-campaign records, check them against the registration, recompute e-processes, R̂ and L independently of the notebook and run the potency (oracle arm rejects c = 1.5), A/A (F vs F does not reject c = 1.0) and censored-drop analysis-mutant controls in the same run via `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers --features gauntlet-mutations -- GATE-ATEL-03`; record_gate uses that receipt's hash and the notebook output must equal its measured values. The e2e paragraph names N28b-11 as owner of the shared script surface_ab_dryrun.sh (convention 11). Arithmetic rechecked (R̂ = 1.2, 6.25% exclusions, cap 25/3)."
+  },
+  {
+   "bead": "N28b-19",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Applied F-U28a's request: ladder_layer2_gate.sh runs BD-329's own scripts/e2e/ladder_conformal.sh as its first stage and no longer repeats its legs (convention 11). 'GATE-ATEL-08 is recorded with measured values' had no receipt or recorder form (left, two beads could write the row and none from a receipt): step 5 now runs GATE-ATEL-08's g1_known_answers entries with `--features gauntlet-mutations` (controls in the same run) and this bead records with record_gate from that hash; the script's `gates` stage reads the receipt read-only. The registration is entered in N38a-07's method-experiment register (experiments.toml, admitted before the first episode; GATE-GAUNT-09 forbids a gate citing an unregistered method experiment), with its six parts stated: ceiling from N28b-17's headroom, arms C and T, potency (planted over-scored design, drift, and a new A/A pair T vs T whose GPU-second bound must not exceed 1.02, with an acceptance item), paired bound by BD-216, fallback KILL-LADDER, reachability. All targets reachable already (N38b-19, BD-025, N38a-07, N28c-25, N28b-17). The e2e's `frob opt cascade --allocation fixed|conformal` calls had no `--key` (convention 5: the two compared arms would return one stored receipt): each arm and re-run now carries its own key, and `frob evidence trace` takes the row's `<claim> --json` form. Coverage arithmetic rechecked (Beta(38,2): mean 0.95, P(< 0.885) = 0.052)."
+  },
+  {
+   "bead": "N28b-02",
+   "kinds": [
+    "registry",
+    "broken",
+    "plan"
+   ],
+   "what": "CX-313's plant feature renamed from `frob-opt/nc-<nnnn>` to `frob-opt/bisect-last-edit-first-change` (N38b-05 writes a seeded control's feature as the name after the colon of the plant id N28b-02:bisect-last-edit-first-change; left, the control runner builds a feature the crate does not declare and the control is stale). The result record gains `further_changes` (VERBS-design's row and BD-343's acceptance print the second and fifth edits after a scan's first change; the record had no field for them). identical_migration_contracted now states the bad endpoint is stored (otherwise P is 4 and 5, not 3 and 4). The e2e paragraph says 550 is asserted by BD-343's design_bisect.sh run as a stage of the same section (N28b-06 no longer repeats it). Bisect arithmetic rechecked (six-version, eight-version, L = 30 cases)."
+  },
+  {
+   "bead": "N28b-03",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "Mutant features: CX-313's control is the plant-named `frob-opt/bisect-last-edit-first-change` (seeded by N38b-05, built by N28b-02); the three controls this bead registers directly keep `nc-<nnnn>` as BD-025 allows. The gate run had no `--features gauntlet-mutations`, so its receipt held no control lines and N38b-19 would refuse it: the cargo form now carries it and the receipt lists each control caught. Lineage 0 (KA-702) asserted probes 2, 3, 4 only, but a fresh lineage first decides the bad endpoint (P = 4 at α/4): the assertion now names v₅ then 2, 3, 4, and notes L = 5 is outside the drawn set. Binomial 0.99 quantile 551 recomputed."
+  },
+  {
+   "bead": "N28b-06",
+   "kinds": [
+    "request",
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "Applied F-U28a's request: the M4 section runs BD-343's scripts/e2e/design_bisect.sh as stage `design_bisect`; the `bisect` step drops `--require first-change` (550 is the stage's) and `bisect_planted` drops its scan and monotone variants (the stage's twelve-edit lineage covers them), keeping the six-version planted bisect, the default and fuzzed planted runs, merge and gate_query; an acceptance item says no step repeats the stage. Applied H-owners-3: `frob --root` (which no bead defines) replaced by STD-E2E's FROB_STATE under target/e2e-scratch/lineage_queries/<run_id>/state/. The stale parent of design.edit is FROB-REF-804, not 112 (112 is a patch document's; BD-113 asserts 804). `frob --json evidence trace` became the row's `frob evidence trace <claim_id> --json`. Probe count in Considerations corrected to four. The bisect relabelling mutant is named by its feature."
+  },
+  {
+   "bead": "N28b-09",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Removed review narration 'the opt.start row of VERBS-opt now states the same' (convention 13: the bead states the row as a fact). Stencil and split arithmetic rechecked (41 × 64 = 2,624; 25 × 64 = 1,600; 1,000-world capacity gives three dispatches of 7, 7 and 6 arms)."
+  },
+  {
+   "bead": "N28b-12",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The sampling-controller screening cap was 'rejected at admission with the cap, the break-even count and the arithmetic' with no code: it is N22a-24's worded refusal `mpc-episode-cap`, exit 3 (left, the unit test and the e2e step could accept any error). Named in section 3, the unit test and the e2e step. Cost and break-even arithmetic rechecked (300 × 0.33 = 99 GPU-min; 30/60 and 6/12)."
+  },
+  {
+   "bead": "N28b-18",
+   "kinds": [
+    "request",
+    "convention",
+    "registry"
+   ],
+   "what": "Applied F-U28a's convention-3 request: the pilot's registration and results lived under docs/delivery/experiments/chooser-replay/, which is not the register (left, N28b-20 and N28c-17 cite a pilot record that does not load). Section 9 now enters two records in crates/frob-conformance/registry/pilots.toml (a record has one mechanism, fallback and kill gate; this replay informs two): PILOT-LADDER-01 (layer 2; falsifier, ceiling C_table ÷ C_floor from the log's cell costs, fallback the fixed table, KILL-LADDER, integrated_gate GATE-ATEL-08) and PILOT-VOI-01 (knowledge-gradient chooser; falsifier lower bound below 1.5 or zero-value fixture not exact, ceiling against an oracle allocation, fallback VoI as stop rule only, KILL-VOI, integrated_gate GATE-ATEL-15), one frozen protocol docs/pilots/PILOT-LADDER-01.md, readings appended as [[pilot.result]] with receipts under receipts/pilots/. Acceptance updated. EVSI values recomputed (0.00131, 0.00550, 1.0e-5; sixfold)."
+  },
+  {
+   "bead": "N28b-20",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "C4-adr check holds: the ADR was 'DESIGN default docs/delivery/adr/ADR-KILL-LADDER-M4.md', a retired directory (left, N40-03's loader fails the decision entry with decision-adr-path). Now docs/adr/ADR-KILL-LADDER-M4.md with N40-03's required fields and the KILL-LADDER row's decision entry; the rule table names each ruling's N40-03 outcome (not-fired, fired, deferred for not-run); the register wording 'killed: fallback adopted' replaced by N40-03's propagation (outcome fired, GATE-ATEL-08 killed). The pilot record is cited as PILOT-LADDER-01. The switch script's cascade calls gain per-state keys and use STD-E2E's e2e_registries_scratch. The 871 control said 'the core refuses'; 871's row says a governed verb completes on the fallback with 871 in warnings (refusal only when the rule is pinned)."
+  },
+  {
+   "bead": "N28b-23",
+   "kinds": [
+    "deadlock",
+    "request"
+   ],
+   "what": "Audit note applied, evidence holds: the automaton, its table test, hysteresis, 545, the wording rule and KILL-RANK are functions of N28b-22's rows and flags; only e2e step 1 and the last acceptance item called BD-328's verb. Step 1 now appends the three planted populations' rows through N28b-22's ledger append path with synthetic fixture score pairs (the example gains `--append-rows`); the acceptance item reads 'the second planted population's discard-only row'; the 545 and 'k survivors' checks on BD-328's own discard-only record are named as N28b-28's `modes` step. BD-328 moved from deps to related (level 122 to at most 121, bound by N28b-22)."
+  },
+  {
+   "bead": "N28b-28",
+   "kinds": [
+    "request",
+    "convention",
+    "plan",
+    "broken"
+   ],
+   "what": "Applied F-U28a: BD-352's scripts/e2e/opt_cascade.sh runs as stage `opt_cascade` (plan-only, 537, unranked report, consume stage, promote-only charging, passed-on 546/548/549 and 704), not repeated. Applied F-U28c: deps N28c-18, N28c-19, N28c-20 added (none depends on N28b-28) and section 4 names their controls registered against GATE-ATEL-16 as caught in the receipt, with N28c-20's report-clause measurements; the gate-scale cargo form gains `--features gauntlet-mutations` (left, N38b-19 refuses the receipt). Took both audit counterparts: `rank_ledger` is its own row with the rung-pair differential against `eval.rank-agreement` (BD-328, reached through BD-377) under keys csp-ra-<stratum>; `modes` asserts 545 (`--plan-only --finalists-from R1 --key csp-fin-r1`) and '3 survivors' on BD-328's discard-only record; a sentence explains why the new records leave later steps' modes unchanged. Binomial(512, 0.05) 0.99 quantile 38 rechecked."
+  },
+  {
+   "bead": "N28b-30",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "CX-303's plant was a `frob-analyze/nc-<nnnn>` branch; N38b-05 seeds its control from N28-CX's plant `N28a-11:a23-additive-peak`, so the feature the control runner builds is `frob-analyze/a23-additive-peak` (left, the control is stale and GATE-ATEL-09's prune clause has no control). Fixed in section 7 and the e2e cargo line. Arithmetic rechecked (0.94176 J; 45.07% and 9.50%; sample sizes 3, 5, 20)."
+  },
+  {
+   "bead": "N28b-31",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "NJL-01 action rule: `frob nemesis audit run C --stage 3 …` became `frob nemesis audit C --stage 3 --key k --json`, and the scope paragraph says `prepare` is `--action prepare` and `run` takes no `--action` (left, 802 on VERBS-nemesis's row). CX-303's plant feature is `frob-analyze/a23-additive-peak`. The `gates` step's cargo form gains `--features gauntlet-mutations`, the form BD-345 records GATE-ATEL-09 from."
+  },
+  {
+   "bead": "N28b-32",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "Applied H-verbs-6: the change object gains its fifth member `against` (`--against q:…`, mission-answer target only, otherwise 802 at /change/against), in the input section, the exactly-one rule and `one_change_form` (two of the five, or none, is 802 at /change); left, the handler would refuse N25a-13's and mission.revalidate's form that VERBS-result's row admits. Applied H-owners-1: CX-316's plant is `frob-verbs/optimum-kept-on-feasibility`, not nc-<nnnn>. Removed the narration of 'an earlier draft of this bead' and its withdrawn entry (convention 13)."
+  },
+  {
+   "bead": "N28b-34",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied H-owners-1: CX-314's plant is `frob-verbs/support-enlarged-hash-match` (plant-named feature, BD-025), not nc-<nnnn>, in the acceptance item and the negative control. Rule count (16 Preserved cells) and interval-reach fixtures rechecked."
+  },
+  {
+   "bead": "N28b-36",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "C4-adr check holds: the record was 'DESIGN default docs/delivery/adr/ADR-KILL-REUSE-M4.md', a retired directory (left, N40-03's loader fails the KILL-REUSE decision entry). Now docs/adr/ADR-KILL-REUSE-M4.md with N40-03's required fields and the row's decision entry `decision = { outcome, adr, date, session, receipts }`; the ruling table names each ruling's N40-03 outcome (fired, not-fired). The switch script's `frob result revalidate` calls had no `--key` (a run verb: the three registry states would get one stored answer, convention 5) and no scratch registries: each state and fixture now has its own key, under STD-E2E's e2e_registries_scratch. Rule-table and saving arithmetic rechecked (0.25, 0.15)."
+  },
+  {
+   "bead": "N28b-37",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "Applied H-owners-1: CX-315's plant is the `cfg(feature = \"memo-key-no-delivery\")` branch, built `--features gauntlet-mutations,frob-core/memo-key-no-delivery`, not `frob-core/nc-<nnnn>` (left, N38b-05 seeds a control whose feature no crate declares). Applied H-owners-3: memo_keys.sh pointed `FROB_HOME`, which frob does not read, at its store; it now works in the run's FROB_STATE. Removed two narrations of 'an earlier draft' (MemoNode; a key on the set actually read), keeping the second as a rejected alternative. Episode-key count rechecked (9 + 4 = 13)."
+  },
+  {
+   "bead": "N28b-38",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Applied H-owners-3: FROB_HOME became the run's FROB_STATE. The script's steps 1-3 and 7 (and N28b-40's `policy` step) set the rollout mode, the store profile and the byte budget, but the only tool named, the example `memo_counters`, only printed counters (left, the steps cannot be written without inventing a path): it now takes `--profile release|test`, `--set-mode` (through the advance rule, printing its refusal) and `--set-budget`. Step 6 asserts that a claim 'recorded before the deletion' still resolves, but gave no way to record one at M1: a referee run and BD-095's test-support example `graph_fixture --store \"$FROB_STATE\" --run <RunId>` now record it. (63/64)^64 is 0.365, not 0.37. Other figures rechecked: (63/64)^300 = 0.0089; the 2^20-key rate s.d. 0.00012; 6,400 hits give 100 shadows."
+  },
+  {
+   "bead": "N28b-40",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "Applied H-owners-3 (rounds 3 and 4): memo_graph.sh pointed FROB_HOME at its store; it works in the run's FROB_STATE with work/ as the working directory. The four planted mutants' controls.toml rows were said to come 'from N38b-05's seeding', which seeds only catalogue plants and known-answer control cells, none of which names them (left, GATE-ATEL-12 has no registered key mutants and 'four of four caught' has no rows): this bead registers them directly against GATE-ATEL-12, as BD-025 allows with nc-<nnnn> features. The gate run's cargo form gains `--features gauntlet-mutations` (left, N38b-19's recorder refuses a receipt without its controls caught). The `policy` step sets mode and profile with N28b-38's example. Fresh-lane cost rechecked (about 10^5 checks, 2-3 CPU-days at 2 s)."
+  },
+  {
+   "bead": "N28b-41",
+   "kinds": [
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "CX-154's plant was 'BD-285's frob-phylum/nc-<nnnn> branch'. N38b-05 names a seeded control's feature by its plant, and CX-154's N17-CX row carries no plant id, so the feature is `frob-phylum/cx-154`. N17-CX wires CX-154 to N17a-26's digest, and BD-285 declares no such branch (left, the digest step builds a feature nobody declares). The e2e ran `frob phylum quotient` 'in its enumeration form', which counts labelings (k^n) and returns no digest classes for a fixed number of slugs (left, the 182-class assertion cannot be made): it now uses the design-set form `--designs <list file> --task <task>` on this bead's 210-placement fixture. The 'earlier draft' narration became a rejected alternative. Rechecked by enumeration: 24,546 of 735,471 and 182 of 210 classes; 30.0 and 20.6; (63/64)^640 = 4.2e-5; C-22's 86,185 and 500,500."
+  },
+  {
+   "bead": "N28b-42",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "The delivery-instants key mutant is CX-315's seeded plant, so its feature is `frob-core/memo-key-no-delivery` (N28b-37 builds it; N28-CX attaches it to GATE-ATEL-11 and -12), not `frob-core/nc-<nnnn>`. The other two key mutants and the planted nondeterministic kernel are registered directly by this bead against GATE-ATEL-12, because nothing seeds them (left, the receipt holds no rows for them). The gate run's cargo form gains `--features gauntlet-mutations` (left, the recorder refuses the receipt). Checked: --no-memo is generated on sim.run's row; store.status is reached through BD-220 to BD-209."
+  },
+  {
+   "bead": "N28b-43",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Section 5's lower-bound sentence was garbled ('ρ, because r is the registration's count…', from a botched symbol rename, with a broken indent), which left the reader unable to tell which letter is the ratio. It now reads 'the ratio is written ρ because r is…'. The known answer 'ten pairs of constant ratio 1.3 return the lower bound 1.3' had no test, so `paired_bound_constant_ratio` was added. e-BH fixtures rechecked: thresholds 100/k; the three fixtures reject none, two and three."
+  },
+  {
+   "bead": "N28bx-01",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The acceptance list required four planted defects caught, but no build form or test ran them (left, the item cannot be checked and the defects could be planted as runtime switches). Each is now a `cfg(feature = \"<name>\")` branch of frob-opt::flip, one defect per build, and each fails a named test and passes on the normal build. The e2e's `frob opt status` and `frob job cancel` calls now give the rows' positional and `--json`. Arithmetic rechecked: tan α = 4/3, 1.1180, 0.9271, 0.75, 0.6459; sqrt(2gh) = 0.63 m/s; ramp 1/12."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-080",
+   "what": "Add dep BD-090: BD-080's test referee_refusal_passthrough asserts the run envelope and the .frun episode carry the same bytes, and the .frun format and ledger schema are BD-090's. BD-090 no longer depends on BD-080 (the audit's wrong-way edge, applied on BD-090's side), so without this BD-080 could start before the format it writes exists."
+  },
+  {
+   "bead": "N29a-08",
+   "what": "N33a-06 item 3's user-side half: assert that the run envelope's `evidence.stack_receipt` equals the exported .frun manifest's `stack_receipt` (BD-090 now writes it on rows and in the manifest and refuses a record without it)."
+  },
+  {
+   "bead": "N38a-07",
+   "what": "GATE-ATEL-03's surface A/B (N28b-11's frob.registration/1, run by BD-374) is a method experiment by N38a-07's definition (does the studio surface beat doing without it), but it cannot be admitted as the register stands: its success quantity is the largest ratio c an anytime-valid grid of e-processes rejects (L ≥ 1.5), which is not in the closed list of rule 4 (863), and its pairing unit is (brief, campaign index) with LLM agents, which has no determinism class (rule 7 would refuse it with 561). Please either state that agent-campaign A/Bs are outside the register (and that GATE-GAUNT-09 does not apply to them), or add an anytime-valid ratio lower bound with BD-124's estimator and a pairing unit for agent campaigns; N28b-11 then enters its registration (ceiling 1/(q + (1 − q)·t_min/H), i.e. f = 1 − q, r = H/t_min, h = 0)."
+  },
+  {
+   "bead": "N28c-17",
+   "what": "Cite the pilot record by its identifier: N28b-18 now registers the chooser replay in crates/frob-conformance/registry/pilots.toml as PILOT-VOI-01 (mechanism the knowledge-gradient chooser, kill_gate KILL-VOI, integrated_gate GATE-ATEL-15), with the GATE-ATEL-08 pilot row under PILOT-LADDER-01; N28c-17's section 1 says only 'registered in the pilot register'."
+  },
+  {
+   "bead": "N17-CX",
+   "what": "CX-154's row has no plant id, and the record format compiles mutations under the feature `planted-defects`, which convention 1 retires for `gauntlet-mutations` plus a per-control feature (BD-025). Give CX-154 a plant, for example `N17a-26:cx-154` (the digest bead the scope wires it to), so that N38b-05 seeds the feature `cx-154` that N28b-41's `digest` step builds as `--features gauntlet-mutations,frob-phylum/cx-154`."
+  },
+  {
+   "bead": "N17a-26",
+   "what": "Declare CX-154's mutation, a mission digest that omits the second moment, as the `cfg(feature = \"cx-154\")` branch of the digest in frob-phylum, never in the umbrella feature. N17-CX wires CX-154's control to this bead, and N28b-41's `digest` step builds it (`--features gauntlet-mutations,frob-phylum/cx-154`). No bead declares it now: BD-285 does not plant it."
+  }
+ ],
+ "unchanged": 5,
+ "notes": "Reviewed all 32. Unchanged: BD-248, N28b-05, N28b-07, N28b-11, N28b-17. Audit notes: BD-090/BD-080 (wrong-way) applied on BD-090's side with a request to BD-080; BD-346/BD-329 applied; N28b-23/BD-328 applied (evidence held); the N28b-22 and N28b-23 counterparts were taken in N28b-28; the N33a-06 counterpart was taken in BD-090 with a request to N29a-08; the N24a-06 split counterpart needs nothing in BD-090 until the new bead exists. N28b-11 is unchanged pending the N38a-07 request: the agent-campaign A/B cannot be admitted to the experiment register as it stands. Open uncertainties, not edited: (1) per-crate unit tests that build a mutation feature without gauntlet-mutations (N28b-02's `cargo test -p frob-opt --features bisect-last-edit-first-change`, N28bx-01's `--features <defect>`) need gauntlet-mutations too if N38b-04's guard demands it for any mutation feature; (2) N28b-17 registers under studio:saving before N28c-14 supplies the predictor identity; (3) BD-345 and N28b-30: the planted unsound prune needs a mutation build for the gate measure; (4) N28b-38 sets the memo mode, profile and budget through its own example; no bead names the `[memo]` configuration keys that N33c-19 extends."
+}

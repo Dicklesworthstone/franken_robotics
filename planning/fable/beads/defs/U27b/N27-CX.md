@@ -60,12 +60,23 @@ Field values per entry (DESIGN where the catalogue does not state them):
 |---|---|---|---|---|
 | CX-296 | true | GATE-AUTOPSY-04, ADR-AUTOPSY-05, C-29 | `mutation` | build flag `autopsy-label-from-shapley` (labels taken from the largest Shapley value) |
 | CX-297 | true | GATE-AUTOPSY-04, PO-AUTOPSY-01, C-29 | `mutation` | build flag `autopsy-repair-monotone` (a repair search that assumes adding an intervention never loses a rescue) |
-| CX-298 | true | GATE-AUTOPSY-06, INV-AUTOPSY-03, FROB-REF-581, C-29 | `planted-input` | the thermal fixture's request `--do 'model.joint[m].gear_ratio := 16'` at the fork 1 s before the trip, which must be refused, and the build flag `autopsy-forced-fork-answers` for the mutant |
+| CX-298 | true | GATE-AUTOPSY-06, INV-AUTOPSY-03, FROB-REF-581, C-29 | `planted-input` | two plant records: the thermal fixture's request `--do 'model.joint[m].gear_ratio := 16'` at the fork 1 s before the trip, which must be refused with FROB-REF-581, with `removed_check` = "the structural and design-parameter check of the fork classifier" (BD-025's rule 5: a planted input whose expectation is the product's own refusal names the check disabled in its build); and the build flag `autopsy-forced-fork-answers` for the mutant (kind `mutation`) |
 | CX-299 | true | GATE-AUTOPSY-07, PO-AUTOPSY-02 | `mutation` | build flag `divergence-pointwise-midpoint` |
 | CX-300 | true | GATE-AUTOPSY-05, INV-AUTOPSY-05, C-29 | `planted-world` | the doubling-map fixture at forty iterates, with the build flag `autopsy-no-placebo` for the mutant |
-| CX-301 | false | FROB-REF-880, GATE-SAFE-08 | `planted-input` | the request "cite this attribution as established", which must be refused with FROB-REF-880 (the concrete planted defect N38b-05 asks the owning chapter to supply for this word-only entry) |
+| CX-301 | false | FROB-REF-880, GATE-SAFE-08 | `planted-input` | the request "cite this attribution as established", which must be refused with FROB-REF-880, with `removed_check` = "the citation guard's class check (N27b-15's `offer`)" (BD-025's rule 5, as for CX-298) (the concrete planted defect N38b-05 asks the owning chapter to supply for this word-only entry) |
 | late-01 | true | GATE-AUTOPSY-09 | `planted-world` | the pendulum fixture released 5 × 10⁻⁸ rad from upright, with the build flag `lane-admit-reads-1e12` |
 | late-02 | true | GATE-AUTOPSY-05 | `mutation` | build flag `perturb-fixed-size` |
+
+**Planting beads.** Each plant's `id` has N38b-05's form `<planting bead>:<name>`. The planting bead declares
+the build flag as a Cargo feature of the crate that holds the component (a per-control feature, never part of
+`gauntlet-mutations`, BD-025), or writes the planted request as a fixture with its `synthetic` header:
+`N27b-06:autopsy-label-from-shapley` (`frob-autopsy`); `N27b-14:autopsy-repair-monotone` (`frob-autopsy`);
+`BD-279:cx-298-gear-change` (the planted request) and `N27a-17:autopsy-forced-fork-answers` (`frob-autopsy`,
+the same feature as the plant of KA-675's control); `N27a-09:divergence-pointwise-midpoint` (`frob-chronicle`,
+the same feature as the plant of KA-677's control); `BD-282:autopsy-no-placebo` (`frob-autopsy`, the same
+feature as GATE-AUTOPSY-05's first control); `N27b-15:cx-301-cite-established` (the planted request);
+`N27b-23:lane-admit-reads-1e12` (`frob-autopsy`); `N27b-03:perturb-fixed-size` (`frob-autopsy`). A feature
+shared with a known-answer control builds one defect for two controls, one per protected rule.
 
 `defined_in` is §27.7, §27.7, §27.8, §27.10, §27.5, §27.13, §27.19 and §27.5 in table order; `label` is DESIGN for
 every entry (each case is derived in this program, none is imported); `same_as` is empty for all eight (below).

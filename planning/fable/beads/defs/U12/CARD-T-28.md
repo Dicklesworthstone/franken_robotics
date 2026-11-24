@@ -40,20 +40,19 @@ physically false.
 
 ## Scope
 
-In: statement document, registry row, the per-budget `energy-budget` certificates bound to this card, fixtures
-and mutants. Out: the `.fenergy` artifact, its monitor kernel and `shield.budget` (the energy-budget tier bead);
-the auditor's checker (N12-17); tube inclusion and runtime filters (the other two tiers); any claim about a
-physical robot.
+In: statement document, registry row, the `energy-budget` specimens bound to this card, fixtures and mutants.
+Out: the `.fenergy` artifact, its producer (N22b-10 to N22b-12), its monitor kernel (N22b-13) and
+`shield.budget` (BD-337); the kind's bundle writer, run-replay and absorber steps and mutation corpus (N22b-14);
+the auditor's static checker (N12-17); tube inclusion and runtime filters (the other two tiers); any claim about
+a physical robot.
 
 Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
-the energy-budget tier `shield.budget` with its `.fenergy` artifact (BD-337) is `related`, not a dependency (a
-card that waited for its implementer would close a loop, because the implementer's own acceptance runs the card's
-law tests). What the card does depend on is in `deps`: the card registry, its specification, its pilot where the
-route is Frontier, and Lemma's own proof machinery. It closes on its statement document, its registry row, its
-specimens and mutants, and every acceptance line that its own fixtures decide. An acceptance line that can only be
-observed on live output (the certificate `shield.budget` emits for a budget) is run inside the implementing bead,
-with this card's law tests, as part of that bead's acceptance; the receipt produced there is what moves the
-registry row for that output.
+the energy-budget tier `shield.budget` with its `.fenergy` artifact (BD-337) is `related`, not a dependency; it
+reaches this card through the kind's bundle writer N22b-14, which depends on this card. What the card does depend
+on is in `deps`: the card registry, its specification and the kind's static checker (N12-17). It closes on its
+statement document, its registry row, its specimens and mutants, and every acceptance line that its own fixtures
+decide. The certificates that `shield.budget` emits for a design's budget are written by N22b-14 and exercised by
+N22b-18's script; they are not a condition of this card's close.
 
 ## Technical approach
 
@@ -80,10 +79,13 @@ registry row for that output.
 
 ## Acceptance criteria
 
-- [ ] `frob-verify` accepts the tray-cart stop budget: 8 kg at 0.4 m/s is 0.64 J; a 20 W drive over a 25 ms
-      cutoff adds 0.50 J; the external work of gravity on an 8% slope over the 40 mm stroke is
-      8 × 9.81 × 0.040 × 0.08 = 0.25 J; a series spring stores 0.10 J; the total is 1.49 J against an absorber of
-      50 N over 40 mm, 2.00 J.
+- [ ] `frob-verify` accepts the tray-cart stop budget (the drop-stop card of KA-568): 8 kg at 0.4 m/s is 0.64 J;
+      a 20 W drive over a 25 ms cutoff adds 0.50 J; the external work of gravity on an 8% slope over the 40 mm
+      stroke is 8 × 9.81 × 0.040 × 0.08 = 0.251136 J; a series spring stores 0.10 J; the total is 1.491136 J
+      against an absorber of 50 N over 40 mm, 2.00 J. The gravity term is accepted in the three readings of
+      N12-17: the product with its basis (the governing reading), 0.26 J rounded outward, and the declared 0.25 J
+      without a basis (total 1.49 J); 0.25 J offered with the basis it falls short of is rejected
+      (`energy.term-below-basis`).
 - [ ] The same budget without its gravity term over the stroke is rejected by the checker (the omitted-term
       control), as is a budget with a rotor on the path and no reflected inertia in m_cap.
 - [ ] Exclusion accepted: lifting 8 kg over a 12 mm sill needs 8 × 9.81 × 0.012 = 0.94176 J, above a 0.90 J budget
@@ -99,6 +101,8 @@ registry row for that output.
 ### Unit tests
 
 `crates/frob-lemma/tests/cards/t28.rs`: `tray_cart_terms` (0.64, 0.50, 0.251136, 0.10 J; sum 1.491136 ≤ 2.00);
+`gravity_term_readings` (product 1.491136 J, outward 1.50 J and printed 1.49 J accepted; 0.25 J with its basis
+rejected, `energy.term-below-basis`);
 `largest_admissible_cutoff` (with the terms at the two decimals the known answer quotes,
 (2.00 − 0.64 − 0.25 − 0.10)/20 s = 50.5 ms, or 45.5 ms with a further 0.10 J of reserve; the certificate itself uses
 the exact gravity term 0.251136 J, rounded up as an upper end, and the auditor's bound is then
@@ -111,9 +115,10 @@ ends rounded up, absorber work rounded down); `class_capped_by_inputs`.
 
 `scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) runs the specimens and mutants;
 `scripts/e2e/shield_energy_budget.sh` (bead N22b-18) exercises `frob shield budget` and logs each term, the margin
-and the certificate hash. For this card their NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead`
-("CARD-T-28"), `step` (`T-28/<budget-or-mutant>`), `event`, the exact command line, exit code, wall time, each
-term's interval in joules with its load-path element, the absorber's lower work in joules, the margin in joules,
+and the certificate hash. For this card their NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead` and
+`step` ("CARD-T-28" and `T-28/<budget-or-mutant>` on N12-34's per-card lines; N22b-18's own key and step names on
+its script's lines, since a line carries its owning bead), `event`, the exact command line, exit code, wall time,
+each term's interval in joules with its load-path element, the absorber's lower work in joules, the margin in joules,
 the printed class, the bundle's BLAKE3, the expected and observed verdict, and on a rejection the first failing
 rule (the uncovered element, the omitted term or the class above its inputs) and the path to reproduce.
 

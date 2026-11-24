@@ -89,8 +89,11 @@ registry row for that output.
       prefixes" supported by one prefix only.
 - [ ] Registry row `checked`, class `Certified` for exact replays and `Tested` otherwise, with hashes and checker
       identity.
-- [ ] The witness is exported with the three engineering answers named as next actions by the mission verbs (a
-      check on the verb's output, owned there; the card supplies the certificate).
+- [ ] The export of a witness with its engineering answers is checked on the verbs' output by the beads that
+      build them, each of which reaches this card through N20a-37: `sense.alias` with its verified separating
+      changes (N20a-41, M3), and `mission.refute` returning the three engineering answers on the blind payload
+      task (BD-290, GATE-AUGUR-10, M3). The card supplies the certificate; neither check is a condition of its
+      close.
 
 ## Test plan
 

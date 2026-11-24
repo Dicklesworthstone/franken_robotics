@@ -1,0 +1,366 @@
+{
+ "round": 4,
+ "slice": "S-05",
+ "reviewed": 39,
+ "changed": [
+  {
+   "bead": "BD-325",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Request of F-U13 applied (checked against N13-18, N38b-19 and the register type 'Known answer'): the script no longer writes the GATE-MARROW-04 row. It runs the gate's tier entry `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers --features gauntlet-mutations -- GATE-MARROW-04` with N13-18's eight mutation controls in the same run, logs and prints the receipt; the acceptance says the row is recorded from that receipt with `record_gate --gate GATE-MARROW-04 --receipt <hash>` by a session that implemented neither this bead, N13-18 nor BD-048. Left as it was, the script writes a row only the recorder may write, or the M4 part has no receipt with the controls caught in the same run. Also the logged evidence block said determinism `exact`; the wire form is `D0` (N35-01's reader rejects \"exact\"), so the assertion would fail on a correct envelope."
+  },
+  {
+   "bead": "BD-010",
+   "kinds": [
+    "contradiction",
+    "deadlock",
+    "registry"
+   ],
+   "what": "The acceptance said each of the four negative controls 'is registered in the negative-control registry'. Controls (i), (iii) and (iv) are N13-18's mutations M5, M6 and M2, each with one control seeded by N38b-05 (BD-025: one plant, one record; KA-seeded records are written only by the seeding tool), and the registration of (ii) needs KA-256's row (N13-KA, M1), which this M0 bead cannot wait for. Now: the four are mutation features of `frob-lie` under N38b-04's mutation guard (`conformance` feature, release `compile_error!`), each failing `cargo test -p frob-lie --features <feature> --test po_marrow_01`; (i), (iii), (iv) register no second control; (ii) is plant `BD-010:ad-inverse`, named in KA-256's control cell and seeded from it; the bead writes no row of `controls.toml`. Without this an implementer would hand-write four control rows, duplicating M2/M5/M6 and breaking the registry's write rule. Request to N13-KA recorded."
+  },
+  {
+   "bead": "N13-01",
+   "kinds": [
+    "contradiction",
+    "deadlock",
+    "convention"
+   ],
+   "what": "N11-CX states that running the conventions battery with each control active is a stage of this bead's script; the script had no such stage, so CX-098, CX-099, CX-100 and CX-102 would never be observed against the battery. Added a `controls` stage: the battery once per planted defect (each must fail exactly its named rows) and with each control N11-CX attaches to it once seeded. 'Registered against the battery' replaced by the fact that these are the battery's own planted defects (no row of controls.toml written; (i) and (iii) are N13-18's M5 and M1). The acceptance line 'row 6 passes when N13-02 lands (M1)' waited on a later bead (convention 7); it now says row 6 is an ignored test carrying its owner N13-02 and reports `not run`, the battery being closed by N13-07 at M2."
+  },
+  {
+   "bead": "N13-02",
+   "kinds": [
+    "deadlock",
+    "convention",
+    "broken"
+   ],
+   "what": "Its script built a mirrored limb with `frob design new` and `frob design edit ... mirror` 'when the M1 design verbs exist': the design verbs depend on this bead (N14a-21 -> N14a-08 -> N14a-07 -> BD-056 -> N13-02), so the step could never be among its dependencies (convention 7/8), and the mutate call carried neither `--key` nor `--expected-parent`. The check is BD-056's `mirror_axis_is_axial`; the script now says so. `frob prove verify` was asserted to return `accepted`/`rejected`; VERBS-prove's verdicts are `accept`/`reject`, so the assertions would fail on correct output. Script ownership named (N13-08, convention 11)."
+  },
+  {
+   "bead": "N13-08",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Owner of `scripts/e2e/marrow_laws.sh`, which eight other beads extend with `--milestone`, `--suite <name>`, `--groups` and `--gate`, but the bead named only two co-users and defined none of the options. It now names itself owner, lists the contributing beads and fixes the stage interface (an unknown option or a stage whose bead has not landed exits non-zero), so the stages added by BD-011, BD-012, BD-045, BD-046, N13-02, N13-05, N13-09 and N13-19 plug into one parser instead of eight."
+  },
+  {
+   "bead": "N13-09",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Added dep N13-08 (M0, no cycle): this bead adds `testkit::raw_quat_step` to the `frob-lie` testkit module (N13-08's `testkit` feature) and runs its tests as a step of N13-08's script; without the edge an agent could start it before the testkit exists and create a second one. The ADR is now named `docs/adr/ADR-OPEN-MARROW-1.md` (the pattern of ADR-OPEN-MARROW-3), because the script asserts 'whether the ADR file exists' and BD-011 and N13-19 cite it: with no path the assertion could not be written. Script owner named (convention 11)."
+  },
+  {
+   "bead": "N13-10",
+   "kinds": [
+    "contradiction",
+    "convention"
+   ],
+   "what": "N13-31 (M2) claims to create `scripts/e2e/marrow_predicates.sh`, while this M1 bead and N13-11 already run it, and N13-31 depends on both. This bead now states that it creates the file with `--site host` and that N13-11, N13-31, BD-182 and N13-32 add modes; requests to N13-31, BD-182 and N13-32 recorded."
+  },
+  {
+   "bead": "N13-11",
+   "kinds": [
+    "deadlock",
+    "convention"
+   ],
+   "what": "Its script ran `frob sim run` on each tier 'when the batched step exists' (BD-182): `sim.run` and the batched tiers are not among its dependencies (convention 7/8) and the call had no `--key`. The cross-tier limit-activation check is now stated as BD-182's device stage (request recorded, since BD-182 does not carry it), so it is not lost. Script owner N13-10 named."
+  },
+  {
+   "bead": "BD-012",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Its `so2` stage of the shared `marrow_laws.sh` now names the owning bead N13-08 (convention 11)."
+  },
+  {
+   "bead": "BD-045",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Its `--groups` stage of the shared `marrow_laws.sh` now names the owning bead N13-08 (convention 11)."
+  },
+  {
+   "bead": "N13-12",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "Its script ran `frob spark check --json` 'once the verb exists' (BD-176, M2): `spark.check` is not among this M1 bead's dependencies (convention 8), the call had neither `--kernel`/`--backend` nor the `--key` a run verb takes, and the step waited on a later milestone. The device-side buffer-schema check is now stated as a stage of the M2 conventions closure N13-07, which depends on this bead and on BD-176, with the call spelled as VERBS-spark's row (`--kernel K-cay-step --backend <b> --key <key> --json`); the evidence block of spark check is dropped from this bead's log."
+  },
+  {
+   "bead": "N13-13",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "Its four field controls were 'registered against GATE-MARROW-02': a control record seeded by a gate is appended only by the bead that measures it (BD-025; N13-20), and that gate's registered control is KA-258 (N13-18's M8). An implementer would hand-write four records into controls.toml for a gate it does not measure. They are now this bead's own unit-test plants (mutation features under N38b-04's guard), not registry rows."
+  },
+  {
+   "bead": "N13-16",
+   "kinds": [
+    "convention"
+   ],
+   "what": "`scripts/e2e/marrow_symmetry_core.sh` was called 'this bead's runner', but N13-15 (its dependency) creates and owns it; two beads would each create the file. Now names N13-15 as owner and itself as the bead adding `--suite obs` (convention 11)."
+  },
+  {
+   "bead": "N13-24",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "The kill-gate record did not follow N40-03: the ADR had no path (the script 'fails if the ADR file is missing' could not be written, and `decision-adr-path` refuses any other name): now `docs/adr/ADR-KILL-MARROW-BLOCKS-M4.md` with N40-03's required fields (trigger as registered, each input with its receipt beside the number, beads re-read, the recording session). The register was to show `not fired` or `killed: fallback adopted`, values that fail the load: now `decision = { outcome not-fired|fired, adr, date, session, receipts }` on N40-23's row, `killed` being derived only by `apply_decisions`. 'Citing BD-325's log by receipt hash' named no resolvable receipt: now the GATE-MARROW-04 receipts under receipts/gates/. The recording session (not only the reviewer) must not have implemented BD-325. The repair-cycle input is read from N40-03's `note` line form; the shared script's owner BD-325 is named."
+  },
+  {
+   "bead": "N13-25",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "Pilot register path `frob-conformance/registry/pilots.toml` corrected to `crates/frob-conformance/registry/pilots.toml` (schema `frob.gauntlet.pilot/1`). The record lacked N38a-09's mandatory `fallback.kill_gate` (refused at registration) and a numbered falsifier, and had no `gated_beads`, so the package answer would gate every upper-tier mechanism of WP-29 (BD-325 included) on this pilot: now in N38a-09's form with `gated_beads = [\"N13-26\"]`, kill gate `to-register` with proposed wording, protocol/ceiling/cost tables, result verdict and receipt under receipts/pilots/. The conditional `frob analyze symmetry` step called a verb not among its deps and asserted a per-module group that verb does not report; the system-side check is N13-26's script. Dep N14b-03 added (M3, no cycle): the acceptance writes the port conditions for the swerve-4 archetype's actual module and ports, which that template builds."
+  },
+  {
+   "bead": "N13-26",
+   "kinds": [
+    "registry",
+    "broken",
+    "convention",
+    "deadlock"
+   ],
+   "what": "'No separate kill-gate identifier' contradicts N38a-09: the pilot record must name a kill gate, and `to-register` blocks funding until a row exists, so now stated and a request to N40-23 recorded; without it this bead is never fundable. The close reason 'dropped without replacement' is not in N41-17's closed set: now `withdrawn` citing the pilot result (falsifier holds) or `fallback` with the kill gate's ADR (own test fails). Script: `frob design new` (mutate) had no name and no `--key`; the two `frob sim run` calls had no `--key`; `analyze symmetry` was asserted to report a per-module group it does not have; the trail variant was 'expected refusal' though `--nested` exits 0 with condition 1 failed and the flat count (VERBS-algebra), so the assertion would fail on correct output."
+  },
+  {
+   "bead": "N13-27",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Pilot register path corrected to `crates/frob-conformance/registry/pilots.toml`. The record lacked N38a-09's `fallback.kill_gate` (refused at registration), `gated_beads` (so every upper-tier mechanism of its package would wait on this pilot), the ceiling's `none on speed` form and the result's verdict and receipt: now in N38a-09's form, with `gated_beads = [\"N13-28\"]` and kill gate `to-register` with proposed wording; request to N40-23 recorded."
+  },
+  {
+   "bead": "N13-29",
+   "kinds": [
+    "convention",
+    "registry",
+    "contradiction"
+   ],
+   "what": "Pilot register path corrected (twice). The record had no `fallback.kill_gate`, no numbered falsifier, no `gated_beads`, no result receipt: now in N38a-09's form. Its fallback 'log-Cholesky' is built only inside N13-30, which a falsified pilot leaves unfunded (N41-17 rule 7), so it could never ship; the record now names what N10a-13's record of the same work package ships, the projected Euclidean fit (arm B), described as the log-Cholesky equivalent; the decision rule and the N13-30 close (`withdrawn`) follow. Finished the interrupted edit of this record: the parenthetical had been left inside the `fallback` field, which no longer parsed as N38a-09's form; it now follows the field. The record's reason ('log-Cholesky is built only inside N13-30') contradicted N14a-06, which builds a log-Cholesky retraction at M1; it now says the identification step's log-Cholesky chart is N13-30's and that N14a-06's retraction moves inertia levers of a design and is not an identification chart."
+  },
+  {
+   "bead": "N13-30",
+   "kinds": [
+    "deadlock",
+    "convention",
+    "registry"
+   ],
+   "what": "Its acceptance had a branch 'if a pilot's falsifier holds, the default chart is log-Cholesky': under N38a-09's funding rule this bead never starts in that case (it is closed `withdrawn`, N41-17 rule 7), so the branch could never be satisfied; it now says so and names what ships (arm B). 'No separate kill-gate identifier' contradicted N38a-09 (`to-register` blocks funding until a row exists): stated, request to N40-23. Its script called `frob ground identify` 'when it exists', but BD-391 depends on this bead (convention 7): the leg is now stated as BD-391's, which already carries it."
+  },
+  {
+   "bead": "N13-05",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Its `curvature` stage of the shared `marrow_laws.sh` now names the owning bead N13-08 (convention 11)."
+  },
+  {
+   "bead": "BD-062",
+   "kinds": [
+    "request",
+    "contradiction",
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "Request of S-12 applied in the form the airlock allows: BD-051 no longer converts to fs-mbd, and frob-model may name no FrankenSim type, so the referee would have received no inertia. New paragraph 'Referee inertias': each link of BD-061's RefereeModelSpec gets M = [[Ī, [h]×], [−[h]×, m·I]], converted in `frob_fsim::referee` (feature `referee`, which N33a-11 lets frob-model enable), with a FACT read today from fs-mbd/src/articulated.rs at b6efa4f152 (`SpatialInertia::new(mass, center_of_mass, inertia_com)`, its refusals, and `matrix()` in [angular, linear] order equal to M, so no block is reordered; m from the lower-right block, c = h/m, I_C = Ī + m·[c]×²); an upstream refusal is a RefereeRefusal, an internal error. New acceptance line and test `referee_spatial_inertia_round_trip` (10⁴ bodies within 10⁻¹² of max|M|; ordering fixture m = 2 kg, c = (0.1, 0, 0) m, I_C = diag(0.02, 0.03, 0.04) → Ī = diag(0.02, 0.05, 0.06), M[1][5] = −0.2, M[2][4] = +0.2, recomputed). PO-SKEL-02 is C-03.S6, whose law test BD-051 leaves here: the two shell tests are now named as that test. The thin-shell line checked 'within 10⁻⁵' a deviation of 10⁻⁶ and the test had no value: now the exact ratio (3/5)(1−(1−x)⁵)/(1−(1−x)³) at x = 10⁻⁶, below 1 and within 2·10⁻⁶ (SPEC-C-03's bound), with the thin-wall formula (exactly 1) as the case that fails. The earlier reviewer's edits were checked and kept: KA-261 prints 1.923 (153819/80000 kg); GATE-SKEL-07's M1 part is recorded by N14b-06, not here (convention 9); CX-126's plant `BD-062:cx-126` under N38b-04's guard, seeded by N38b-05. The lead's BD-060 audit note needs nothing here: S-06 moved the mass-guarantee recomputation to N15b-02 with BD-062 and BD-100 as its deps (no cycle)."
+  },
+  {
+   "bead": "BD-245",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Over-capacity 'refuses by name' named no code, so one code could be raised on every tier: it now names FROB-REF-721 on the referee (N16-REF), FROB-REF-722 on batch-cpu and FROB-REF-610 on the GPU tiers under the `refuse` policy (N21-REF), not merged (convention 6), and the hexapod acceptance gives 721 with observed 24, required 21, before any step. The earlier reviewer's CX-173 plant (`BD-245:cx-173`, kind planted-design, seeded by N38b-05) was checked against N18-CX and kept. Recomputed the scrub known answers (60 N·m, 94.25 J, 376.99 J; 37.5 N·m, 235.6 J per turn) and checked KA-265, KA-268, KA-282, the `contact.laws` implementers (BD-167, N18b-28) and that every dep is at or before M3."
+  },
+  {
+   "bead": "N14a-02",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The earlier reviewer's edit was checked against N14-REF and kept: FROB-REF-101's repairs were `move-mount` and a port list, which the registry's stage-1 row does not rank; they are now the registry's (replace the component; rebind the `use`), with the payload of the two port paths and kinds."
+  },
+  {
+   "bead": "N14a-05",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "FROB-REF-121's repairs ranked `reshape` third and offered `set-material` for a foreign interface card, an order and a repair N14-REF's row does not give; they now follow the registry's ranking (set-contact-law, including the same law with a card of the end effector's material; reduce the torsion radius; add the missing field), with `reshape` fourth for a Region rule, which the registry lists only for the braked pair (request to N14-REF). Step 5 and the `steel/default` acceptance resolve interface cards at M1, while the interface-card kind is BD-167's (M2) and BD-069 implements only the Sinew kinds: request to BD-167."
+  },
+  {
+   "bead": "N14a-06",
+   "kinds": [
+    "contradiction",
+    "broken"
+   ],
+   "what": "The earlier reviewer's edit was checked and kept: the `inertia-cone` retraction was 'the affine-invariant or log-Cholesky step', but the affine-invariant step is N13-30's Frontier chart (M5, behind its pilots); it is now the log-Cholesky step built here. Added that the step is rounded to exact decimals in L and P = L·Lᵀ is formed exactly, since rounding P itself can leave the cone and the `set-lever` edit carries the exact value. `inertia_cone_retraction_positive` ran 10⁴ steps against the acceptance line's 10⁵; it now runs 10⁵."
+  },
+  {
+   "bead": "N14a-07",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "The earlier reviewer's edits were checked and kept: FROB-REF-101's repairs now follow N14-REF; a module-import acceptance line and three tests on BD-060's specimen `leg-3r-qdd` (four mounts, `bind` thigh 0.24 m, 0.31 m refused with 111 against [0.15, 0.30] m, module digest in the memo key). They falsify the evidence of the lead's audit note ('no acceptance item and no test uses a module'), so BD-060 stays a dep and the `use` branch does not move. `mirror_images_exact` checked mount positions and parity signs only, which CX-124's mutant (P·a kept as the axis) also produces: it now asserts the hip-abduction axes det(P)·P·a, (−1,0,0), (1,0,0), (−1,0,0) at the three images, against the polar (1,0,0), (−1,0,0), (−1,0,0). `--instances` is a section of design.show (N14a-21); counts and the 832 limit checked."
+  },
+  {
+   "bead": "N14a-08",
+   "kinds": [
+    "request",
+    "contradiction",
+    "broken"
+   ],
+   "what": "Requests of F-U14a (check 3h, N14a-03's `init::bind`, the 103, 102 and 107 rows naming it) and F-U35 (\"determinism\": \"D0\") were applied by the earlier reviewer; checked against N14a-03 and kept, except that a `base` without `twist` is refused by N14a-03's typing in step 1 (a missing required member), not by `init::bind`, which N14a-03 does not give that case. N14b-10 row 1, BD-110, N28ap1-01, N14b-18 and N15b-13 have stage 1 raise 108 at binding, but this bead's run order and table had no binding step, so those defects would pass stage 1 (refused by another stage in GATE-SKEL-04, and N15b-13 step 6 fails): 3f now runs N15a-03's bind with every check registered there (N15b-12's witness), new 3i calls N14a-09's `bind::buses` (an actuator on no bus or two), a 108 row, dep N14a-09 (no cycle), the seeded set gains the actuator-on-two-buses defect (24 files: 11 codes × 2 + 1 + 1) and test `bus_membership_checked_at_stage1`; 241 is stated as not a stage-1 check."
+  },
+  {
+   "bead": "N14a-09",
+   "kinds": [
+    "registry",
+    "contradiction",
+    "broken",
+    "convention"
+   ],
+   "what": "The earlier reviewer's edit was checked and kept: FROB-REF-241's repairs are N18-REF's two as N15a-09 returns them, and 108 is one of the stage-1 binding raises of N14b-10's row 1. The 108 repair '`set-bus` membership' is now a `set-bus` that leaves the actuator in exactly one bus's members (N14-REF's copied-port repair; the no-bus case is not in the registry: request to N14-REF), the payload is stated, step 4 is the function `bind::buses` that N14a-08's new step 3i calls, and an acceptance line covers both 108 cases. Negative control 3 named a 'base-unit test on 2997/100' that no test was: added `clock_base_unit_non_integer_rate` (29.97 Hz beside 1,000 Hz: L = 2,997,000, periods 100,000 and 2,997). Removed the 'Correction: an earlier draft' narration (convention 13). Recomputed L = 1,000 (2, 1, 2, 100), L = 1,200 (3, 12, 40), C = T⁻¹ and the mutant's (1/2, 1/2), and π² J."
+  },
+  {
+   "bead": "N14a-10",
+   "kinds": [
+    "registry",
+    "request"
+   ],
+   "what": "The earlier reviewer's edits were checked against N14-REF's raisers of 113 (N15b-06; N41-13 at M5), N41-13 and OPEN-SKEL-2 and kept: 113 is not raised here, dep N14a-09 for the bound cards' CardIds (no cycle), and a cost overrun is advisory while any summed price is `assumed`. FROB-REF-115's repairs lacked the registry's lever edits: `set-lever` added (the registry in turn lacks the `set-fill` that this bead and N14a-27 step 13 assert first: request to N14-REF). KA-262's tolerance was 'to set' with this bead as its owner in N14-KA: set here, exact against the closed form in rationals (κ = 2943/5000, 1/(1 − κ) = 5000/2057, the 20.7572625 kg fill error → 50.455… kg), the printed 2.4 and 'about 50 kg' being its roundings, and the unit test asserts it (request to N14-KA). Recomputed the leaf masses (1.9227375 kg, 0.243·π, 0.0668808·π kg), 22.68 kg, κ = 0.5886, 2.4307, 14.58 kg, 53·m_f and κ = 1 at 0.51 m."
+  },
+  {
+   "bead": "N14a-19",
+   "kinds": [
+    "contradiction",
+    "broken",
+    "deadlock"
+   ],
+   "what": "Its test ran `cargo test -p frob-fsim --features geometry`, but `fs-ir` is in no airlock group (geometry holds fs-query to fs-io) and frob-design is in no group's consumer list (N33a-11), so the test could not link the sibling reader and the reuse branch could never pass check-deps. The experiment now reaches `fs-ir` as a dev-dependency of frob-fsim's `conformance` module (`cargo test -p frob-fsim sexpr_admission`), the reuse branch requires an ADR adding a group that holds fs-ir with frob-design as consumer, and the in-crate branch keeps fs-ir test-only as the oracle; request to N33a-11."
+  },
+  {
+   "bead": "N14a-22",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Request of F-U14a applied: the `summary` log digest is not a receipt N40-03 can resolve; BD-385 attaches the output to its pilot result, whose receipt is committed at receipts/pilots/<hash>.json and listed in the decision's `receipts`, and the KILL-SKEL-PORT ADR cites the log digest (as N14a-24 states); the acceptance line says the same. CX-129's row in N14-CX names the plant `N14a-22:cx-129`, which this bead did not build, so the control could not be seeded: added as the Cargo feature `cx-129` of frob-model (implies frontier-limb-port and conformance, under N38b-04's guard) that regularizes the packet to I_port + 10⁻⁶·1 and gives SymPsd6 an inverse; the identity fixture then fails by value and the compile-fail test builds; the e2e controls step runs it. Recomputed the identity and one-link fixtures."
+  },
+  {
+   "bead": "N14a-23",
+   "kinds": [
+    "contradiction",
+    "registry"
+   ],
+   "what": "It entered its own pilot row with a new identifier, while N14b-26 (M1) enters the six Skeleton pilot rows and the pilot bead adds the protocol hash, which would give two writers or two rows for one pilot. It now freezes N14b-26's row (dep N14b-26 added, no cycle), fixes the counted falsifier in the protocol, and commits its result receipt at receipts/pilots/<hash>.json (N38a-09 rule 2a), the receipt N14a-24 lists (request to N14b-26 for the row's counted falsifier). Recomputed Case A and Case B in exact rationals: the seven packet entries, pivots 9/100 and 8/25, rank 3, bias (0, 0, 0; −10/3, −5/2, 0) and the Newton check q̈₁ = −25/8, q̈₁ + q̈₂ = 100/9."
+  },
+  {
+   "bead": "N14b-02",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The octopod's 'typed over-capacity refusal' and 'refused by name' named no code: now FROB-REF-721 on the referee (N16-REF), observed 24 contacts, required 21, before any step runs (convention 6), in the approach, the acceptance line, the test and the references. Recomputed the orbit counts 86,185, 500,500 and the control 166,870, the thermal case (0.156, 72.4 °C; 1.055 at 26 A) and the n_v buckets."
+  },
+  {
+   "bead": "N14b-04",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Its KA paragraph said the battery lacks the belt-law row that KA-282 names; N14-KA now states KA-282 is caught by BD-245's belt-law scrub known answer, so the text now separates KA-418 (yaw rate zero under no-slip) from KA-282. `turn_in_place_scrub_work_positive` passed on any energy above zero: it now asserts BD-245's belt sum M·π/2 for the template's station count (μ_lat·W·L/4 even, μ_lat·W·L·(1 − 1/m²)/4 odd) within BD-245's 2%. Recomputed the flipper angle 24.62°, the cluster spacing 0.3135 m against the diagonal 0.3134 m and the n_v counts."
+  },
+  {
+   "bead": "N14bp1-01",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The default wheel pair (radius 0.03 m, axle on the body's axis) reached 0.03 m below the axis while the capsule (r 0.035 m) reaches 0.035 m: the chain rests on its bodies with the wheels 5 mm in the air, so the wheel constraints that define the archetype's connection never act on the floor. The wheel ports are now at (0, ±0.05, −0.01) m on the head and every link (the wheels reach 0.04 m, 5 mm below the capsules), with test `snake_wheels_carry_the_chain`. 'An earlier form of this table' rewritten as a statement of the planted case (convention 13)."
+  },
+  {
+   "bead": "N14bx-03",
+   "kinds": [
+    "convention"
+   ],
+   "what": "'As drafted, the first command ... fails' described the plan's drafting history; now 'Without an alias, the first command ... fails' (convention 13). Checked the verbs, the `--key` on design.new and design.edit, the alias rules and the session's exit sequence against BD-103 and NS-01."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N40-23",
+   "what": "Introduce, by `introduce` amendments (N40-03 step 4, as for KILL-SINEW-SEA), kill rows for the Marrow pilots whose records name `to-register` because the plan gives a fallback and no kill gate: PILOT-MARROW-02 (wreath tying, N13-25; trigger: the pilot's falsifier holds or N13-26's simulator equivariance test fails after one repair cycle; fallback: flat Γ_obs tying, nested tying dropped; decided M4), PILOT-C-01 (lattice mobility, N13-27; fallback: the exact rank method alone; decided M1), PILOT-MARROW-03 and PILOT-C-03 (affine-invariant inertia steps, N13-29 and N10a-13; fallback: the projected Euclidean fit, equivalent to log-Cholesky; decided M5), each `mode = \"pilot-before-funding\"` with `reads` the pilot record, and name the bead that decides each. Without the rows `pilots::fundable` never answers Fundable and N13-26, N13-28 and N13-30 can never start even when their pilots pass."
+  },
+  {
+   "bead": "N14b-03",
+   "what": "swerve-4 (a) says 'each module has its own mirror'. The module symmetry that nests under the hub is the half-turn about the steer axis (steer φ ↦ φ + π, drive rate and command ↦ −, zero caster trail), K = C₂, as N13-25 derives and N13-26 tests. A mirror applied to one module alone turns that wheel's no-side-slip direction on the base, so it is not an element of K ≀ H. Left as it is, the template's symmetry block asserts a nested element the algebra will never report."
+  },
+  {
+   "bead": "ZOO-swerve-4",
+   "what": "Same as N14b-03: 'each module's own mirror nested inside' and the golden `zoo_swerve4_nested_mirror_not_a_factor` should name the half-turn about the steer axis (K = C₂ with zero trail; trivial with trail), the element N13-25 and N13-26 compute; otherwise stage 5 and the golden test expect a structure N13-26 never reports."
+  },
+  {
+   "bead": "N13-KA",
+   "what": "KA-256's control cell should name BD-010's control (ii) by its plant `BD-010:ad-inverse` (feature `ad-inverse` of `frob-lie`) beside M2, M5 and M6, and the text should say it is seeded from that cell rather than 'registered by BD-010' (BD-025: a KA-seeded record is written only by N38b-05's seeding tool). Otherwise the seeding tool cannot resolve 'BD-010's control (ii)', KA-256's control.nc cannot hold it as N13-KA's acceptance requires, or BD-010 hand-writes a record the registry forbids."
+  },
+  {
+   "bead": "N13-31",
+   "what": "Its e2e says it creates `scripts/e2e/marrow_predicates.sh`; N13-10 (M1, a transitive dependency through N13-11) creates the file with `--site host` and N13-11 adds `--suite marrow`. N13-31 should say it adds the mode `--open-marrow-3` to N13-10's script; otherwise two beads own one script and the M2 bead may recreate a file two M1 beads already extend."
+  },
+  {
+   "bead": "BD-182",
+   "what": "(1) Its e2e says the script file is created by N13-31 and that it adds the mode `--site`; the file and `--site host` are N13-10's, so it adds the device sites (`--site all`). (2) Add to its device stage the cross-tier limit check N13-11 now assigns to it: `frob sim run` with its own `--key` on a single-joint limit fixture on each batched tier, comparing the step index at which the joint limit activates (a hard stop activating one step apart on two tiers is the divergence the guarded limit predicate exists to prevent); without it that check has no owner."
+  },
+  {
+   "bead": "N13-32",
+   "what": "Its e2e calls `marrow_predicates.sh` 'the shared script owned by N13-31'; the owner is N13-10 (M1), which creates the file. Name N13-10 as owner."
+  },
+  {
+   "bead": "N14-REF",
+   "what": "(1) Row FROB-REF-121: add as the fourth ranked repair, for a Region rule of N14a-05's table (`pad` on a sphere, a wheel that is not a body of revolution), `reshape` the Region to one the law admits; the row gives `reshape` only for the braked pair, and N14a-05 ranks its repairs as the row's. (2) Row FROB-REF-108: add to the stage column 'stage 1 at binding: an actuator on no bus or on two (N14a-09's `bind::buses`, N14a-08 step 3i); a transmission whose signed motion witness disagrees with its authored sign (N15b-12, at N15a-03's bind point)', add 'an actuator on no bus' to the meaning, and add the repair '`set-bus` leaving the actuator in exactly one bus's `members`'; N14b-10 row 1, BD-110 and N28ap1-01 already list these stage-1 raises, so otherwise the code-to-stage parity fails. (3) Row FROB-REF-115: add, ranked by largest contributor first, `set-fill` on a solid body that dominates the mass, `set-material` and `reshape` beside the lever edits, `swap-actuator` and `set-budget`; N14a-10 and N14a-27 step 13 assert `set-fill` first on the solid torso (22.68 kg against 14 kg), a repair the row does not contain."
+  },
+  {
+   "bead": "BD-167",
+   "what": "The `.fcard` kind `interface` (schema, `InterfaceKey`, lookup, missing-pair refusal) is yours at M2, and BD-069 (M1) implements only the container and the three Sinew kinds, but three M1 beads need it: N14a-05 resolves an end effector's interface card and compares its first material (step 5; `steel/default` on a `rubber-60a` foot refuses with 121), N14a-09 records the interface card's CardId in each contact binding (`rubber-60a/default` on `quad-a`), and BD-080 reads foot friction from the interface cards of the foot and floor materials. Move the kind's schema, typing and lookup, and the starter cards those fixtures name, into an M1 bead those three can depend on (or split that part out of this bead); otherwise none of them can meet its acceptance at M1."
+  },
+  {
+   "bead": "N33a-11",
+   "what": "N14a-19's admission experiment reaches FrankenSim's `fs-ir` only as a dev-dependency of `frob-fsim` (module `frob_fsim::conformance::sexpr_admission`); `fs-ir` is in no row of the group table and `frob-design` in no consumer list. List `fs-ir` as a test-only crate of the airlock (as the `harness` row lists its dev-only crates) in the table and in the feature records of `contract.toml`, so that `check-deps` admits the edge; a reuse outcome of N14a-19 is an ADR that adds a group holding `fs-ir` with `frob-design` among its consumers."
+  },
+  {
+   "bead": "N14-KA",
+   "what": "KA-262's tolerance is now set by its owner N14a-10: exact against the closed form in rationals (κ = 2943/5000, 1/(1 − κ) = 5000/2057, the 20.7572625 kg fill error → 50.455… kg), the printed 2.4 and 'about 50 kg' being its roundings. Mark the row '(set: N14a-10)' and drop it from the rows still `obligation: tolerance` (two remain: KA-264 on random limbs, KA-267's chord)."
+  },
+  {
+   "bead": "N14b-26",
+   "what": "The limb-port pilot row (bead N14a-23) must carry a falsifier with a count to pass N38a-09 rule 3: 'any non-zero entry-wise difference between the two routes (0 differing entries required), or a definite matrix (rank 6) from either route', the form N14a-23 freezes in its protocol; with `gated_beads = [\"N14a-22\"]` and the ceiling `none on speed` with its reason (the packet removes no work from a dense solve; it only lets limbs be reduced where the dense mass matrix is too large). N14a-23 no longer enters a row of its own; it freezes yours."
+  },
+  {
+   "bead": "BD-103",
+   "what": "Its 'Envelope output' says determinism `exact`; the wire form is \"D0\" (N35-01, whose reader rejects \"exact\")."
+  },
+  {
+   "bead": "NS-01",
+   "what": "Step (a) expects `evidence` with determinism `exact`; the wire form is \"D0\" (N35-01, whose reader rejects \"exact\"), so the assertion would fail on a correct build."
+  }
+ ],
+ "unchanged": 3,
+ "notes": "Unchanged: N13-03, N14b-23, N14bp1-02. Every request of the slice file is answered: BD-325 (applied, F-U13); BD-062 (S-12's SpatialInertia request applied through frob_fsim::referee; the lead's BD-060 audit note needs nothing here, since S-06 moved the recomputation to N15b-02 with BD-062 and BD-100 as deps); N14a-07 (the lead's audit note is not applied: its evidence no longer holds, the bead now tests module import on BD-060's specimen, so BD-060 stays and nothing moves); N14a-08 (F-U14a's 3h applied, with the missing `twist` left to N14a-03's typing as N14a-03 states; F-U35's D0 applied); N14a-22 (F-U14a applied). Dependency changes: N14a-08 +N14a-09, N14a-23 +N14b-26; graph_check reports no cycle. All 39 staging files parse (front matter, one-line JSON lists, seven sections)."
+}

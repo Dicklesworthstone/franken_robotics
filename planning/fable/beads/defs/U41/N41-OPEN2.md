@@ -51,7 +51,7 @@ decisions (the beads in the last column).
 | OPEN-TRAC-1 | Dense bricks or a sparse brick tree for interior scenes at 1 cm | Dense bricks with a coarse outer level | Traction lead | Measured memory at M3 | M3 | N18b-37 |
 | OPEN-TRAC-2 | The source of the effective patch radius r_eff: sample geometry, a pressure assumption per material, or a card field | 2a/3 from sample geometry (uniform pressure on a disk of radius a), overridden by a card | Traction lead | GATE-TRAC-04 | M2 | N18a-27 |
 | OPEN-TRAC-3 | Provenance for film and soil cards: which measured tables are admitted | Generic ranges labelled `assumed`, which keep every result `Estimated` | Project lead; asked of the owner at M3, one milestone before its M4 deadline, with OPEN-SINEW-1 and OPEN-SENS-4 | Claims of realism for wet floors and soft ground, not validity | M4 | N18b-36 |
-| OPEN-TRAC-4 | The admission bound on scaled stiffness κ·u for `f32` tiers | 0.05 | Traction lead | GATE-TRAC-10 | M2 | N18b-26 |
+| OPEN-TRAC-4 | The admission bound on scaled stiffness κ·u for `f32` tiers | 0.05 | Traction lead | GATE-TRAC-10 | M2 | N18bp4-01 |
 | OPEN-TRAC-5 | Witness-migration tolerances: δ_w and the largest normal rotation transported | The sample radius and 30°; beyond them, reset with an event | Traction lead | The sill fixture at M1 | M1 | N18b-38 |
 
 Status at entry: sixteen `open`. Related questions elsewhere: the bucket set and the capacities of the two
@@ -62,11 +62,10 @@ decided on the pilot alone.
 
 OPEN-KIN-6 is the one row of this part whose decision is a table. N16c-11 records the bound per law and step in
 `docs/adr/ADR-KIN-OPEN-6.md`, sets the row's `adr` to that file and writes the BLAKE3 hash of the bound table into
-the row, where BD-212 reads it for the one re-baseline of GATE-FID-01; a second, different hash on the decided row
-must fail the register's load. The record of N41-03 has the field `adr` and, at this review, neither a field for
-such a hash nor a write-once rule for it; both are requested of N41-03, the schema's owner (proposed: an optional
-`decision_digest`, which may not change while the row is `decided`). This part enters the row `open` with `adr`
-empty and no digest.
+the row's optional field `decision_digest` (N41-03's record), where BD-212 reads it for the one re-baseline of
+GATE-FID-01. The digest is write-once: N41-03's loader rule 9 locks the first digest a decided row carries in
+`registries/open.lock`, and a second, different hash on the decided row fails the register's load. This part
+enters the row `open` with `adr` empty and `decision_digest` empty.
 
 ## Acceptance criteria
 

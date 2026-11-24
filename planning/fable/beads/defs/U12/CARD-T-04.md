@@ -34,7 +34,9 @@ matrices and 6-vectors whose frames live in comments.
 
 ## Scope
 
-In: statement document, registry row, instance certificate on the M0 adjoint kernel, specimen and mutants.
+In: statement document, registry row, instance certificate on the M0 adjoint kernel `K-ad-se3` (the
+three-assignment SE(3) adjoint program BD-021 adds to the derivation list; its certificate is `K-ad-se3.cert`),
+specimen and mutants.
 Out: certificate machinery (BD-021, BD-027); frame typing in the API (the frame-typed transform bead); the
 algebra-level convention ad*_ξ = ad_ξᵀ (CARD-T-16); pairing invariance (CARD-T-05).
 
@@ -60,8 +62,9 @@ algebra-level convention ad*_ξ = ad_ξᵀ (CARD-T-16); pairing invariance (CARD
 
 ## Acceptance criteria
 
-- [ ] `frob-verify` accepts the T-04 bundle for the M0 kernel; GATE-LEMMA-00 (TARGET, M0) records it certified
-      and replaying offline.
+- [ ] `frob-verify` accepts the T-04 bundle for the M0 kernel `K-ad-se3`. That is this card's part of
+      GATE-LEMMA-00 (TARGET, M0); the gate is recorded by N12-33, which depends on this card, from its script's
+      receipt, and recording it is not a condition of this card's close.
 - [ ] Negative controls rejected: a reversed adjoint (Ad(g·h) = Ad(h)·Ad(g)); a coadjoint written as the
       transpose without the inverse; one changed coefficient; a missing rotation side relation.
 - [ ] Registry row `checked`, class `Certified`, with certificate hash and checker identity.

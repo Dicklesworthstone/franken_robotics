@@ -1,0 +1,303 @@
+{
+ "round": 4,
+ "slice": "S-19",
+ "reviewed": 31,
+ "changed": [
+  {
+   "bead": "N28b-01",
+   "kinds": [
+    "registry",
+    "users"
+   ],
+   "what": "`design.diff --invalidation` is stated only here and VERBS-design's `design.diff` row has no such input, so the generated CLI would answer 802 and nothing tested the surface. The bead now states the input property `invalidation` (boolean, enters the row's schema with this bead's change at M3), how the write set is formed over several edits (the union along the lineage path), and the unit test `diff_invalidation_equals_edit`. Request to VERBS-design recorded."
+  },
+  {
+   "bead": "N28b-04",
+   "kinds": [
+    "contradiction",
+    "registry"
+   ],
+   "what": "The archive tie-break was (fitness, DesignId, EvidenceId), but the archive entry is N17b-17's `Entry` ordered by (score, DesignId, EvalId): left, an implementer adds a second elite record or a second order and two merge paths pick different elites. Now names N17b-17's type and `EvalId` and says this bead defines no second order. The refusal of a stale or conflicted head had exit 7 and no code: it is FROB-REF-804, the only conflict code a mutate verb lists beside 803 (left, a verb raising an unlisted code fails RL-06)."
+  },
+  {
+   "bead": "N28b-08",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The e2e's `frob opt start …` was said to return a job with exit 8, but the command line waits to completion unless `--sync-wait-ms` bounds the wait, so the script could never poll `opt status` during the campaign nor kill the worker in generation 2. Added `--sync-wait-ms 0`. Arithmetic rechecked (48/17, 64/19, 32/17, 3456/2312)."
+  },
+  {
+   "bead": "N28b-10",
+   "kinds": [
+    "users"
+   ],
+   "what": "The acceptance rule requires the design to be in the brief's family, inside its constraints and not refused by `design.check`, but no function, test or acceptance item carried that half (the lane sees no brief), so a build that ignored it passed every check and an arm could stop the clock with a design outside the brief. Added `admissible(brief, design)`, its use in `campaign_time` (DESIGN), the test `inadmissible_design_does_not_stop_clock` and an acceptance item. Clopper-Pearson values recomputed (0.9440, 0.9279, 0.9179, 0.8916)."
+  },
+  {
+   "bead": "N28b-13",
+   "kinds": [
+    "registry"
+   ],
+   "what": "VERBS-job names this bead as the extension that makes `job.cancel` raise 546 from M3, but the bead never named the verb or its handler, so the wiring had no owner. Section 6 now says this bead adds the check to the `job.cancel` handler (BD-210), reading lane membership from the campaign controller. Size rule (2 and 27) rechecked."
+  },
+  {
+   "bead": "N28b-15",
+   "kinds": [
+    "registry",
+    "contradiction",
+    "deadlock"
+   ],
+   "what": "545 was stated for any stratum not `selective`; the registry and N28b-23 give 537 to a stratum with no record: division added. The bead asserted that FROB-REF-872 fires and tested 'a result whose verdict field carries an expected-value quantity is refused', which contradicts the owner N28c-12 (the value cannot be placed there at all; 872 is raised on citing an advisory identifier) and had no path to N28c-12. Dep N28c-12 added (no cycle), the wall named as the owner, the test rewritten on a synthetic advisory table."
+  },
+  {
+   "bead": "N28b-16",
+   "kinds": [
+    "registry",
+    "deadlock"
+   ],
+   "what": "The tie-break draw named a stream `conformal-tiebreak` that the stream registry does not hold; a literal stream fails the generated-file check. The bead now appends the row as the owner (N35-23's rule for later rows) with an acceptance item. Two M3 acceptance items waited on M4 beads (a campaign report listing the alarm; allocation decisions not citing a voided margin): restated as what this bead can observe, with the campaign-level checks named as N28b-28's `drift` step. Simulation rechecked (null 0.02; ×3 drift 96% within 120, median delay 25; ×2 73%)."
+  },
+  {
+   "bead": "N28c-12",
+   "kinds": [
+    "broken",
+    "convention",
+    "deadlock"
+   ],
+   "what": "The e2e seeded its advisory result 'into a scratch state root' (a run has one, FROB_STATE, or `frob` cannot resolve the identifier) and ran check-generated 'on a scratch registry' that no tool reads: now FROB_STATE and `e2e_registries_scratch` as the last step. 'Negative controls (registered)' named a mutation build with no build form, no gate and no catching test at M3, and a report-template control with no test: the mutation is now INV-ATEL-12's planted violation in N38b-04's form, registered and run by N28c-22; added `report_statement_refuses_advisory`. The property test's 'suggestions' cannot exist at M3: it uses synthetic advisory values."
+  },
+  {
+   "bead": "N28c-22",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "Twelve planted violations of kind `mutation` were said to run as companions in one `cargo test` invocation; a mutation is one feature per build (N38b-04), so that run cannot exist. The registration paragraph now gives the form (`cfg(feature)`, `--features gauntlet-mutations,<crate>/<feature>`, the companion's command), reuses the controls already declared (CX-315's plant, BD-350's five, N28c-03's ledger-tip core) and registers INV-ATEL-12's; the acceptance item follows. The INV-ATEL-09 demonstration called `frob opt archive <campaign>` (the row takes `--campaign`), absorbed stores with no stated mechanism and said no merge verb exists although `phylum.map --merge` does: it now uses N28b-06's `lineage.merge` subcommand (dep N28b-06 added, no cycle) and `frob phylum map --merge`, with keys on its run and mutate calls."
+  },
+  {
+   "bead": "N28b-22",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Audit note on BD-328 applied, evidence holds: the statistics, the record `frob.rank-agreement/1` and its table exist with BD-265 (M3, a dependency); containment rank is N23b-35's, q̂ and the martingale N28b-14/N28b-16's, ρ_ep BD-264's; only the differential named the rung-pair verb. The differential now compares against the record computation behind BD-265's tier-pair entry and N23b-35's fixture form, the rung-pair differential is named as N28b-28's `rank_ledger` step (already there), BD-328 moved to related (no remaining path). Counterpart of N28b-23 taken: the update is a public `append_version` that accepts fixture pairs with their audit-draw record (N28b-23's rung_modes.sh already calls it; left private, that script cannot run). Counterpart of N17b-17 taken: `read_at` is public for N17bp4-01. CX-318's control names this bead as planter of `rung-selects-unmeasured` and the bead named no fixture (left, the control is stale): fixture and test added."
+  },
+  {
+   "bead": "N28b-24",
+   "kinds": [
+    "request",
+    "contradiction",
+    "plan"
+   ],
+   "what": "Audit note applied, evidence holds: the only link to BD-342 is the default region grid, which is N17b-17's MapSpec; BD-342 moved to related, N17b-17 added (no cycle). The tier-correction switch departed from the plan and from the estimator's owner in two ways: it disabled the estimator below 200 paired addresses (plan §28.10 and §29.11 and BD-264 switch it off only where ρ_ep under 0.7 has been measured on at least 200), and it said a request with the switch off is refused with 811 (BD-264: promotion falls back to referee episodes with the trigger named; 811 has three other cases). Left, the acceptance item could not pass, since promotion is BD-264's. Table, text, acceptance and tests now follow the owner; `switch_agrees_with_estimator` added."
+  },
+  {
+   "bead": "N28b-25",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "The INV-ATEL-01 override was `--override <stage>:<refusal code>` with the condition `override: <stage>`; the surface's one form (N28a-02, NJL-01 variation 10) is `--override <stage>[,<stage>] --override-reason <text>` with the condition `stage-override:<stage>`, and a value that is not a stage name is 802, so the bead's form could not be typed. Section 5 and the test now use the owner's form and record; dep N28a-02 added (no cycle). `opt.cascade` 'accepts a stage range' corrected to the row's `--stage <n> --campaign <id>`."
+  },
+  {
+   "bead": "N28b-26",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Three acceptance items rest on planted mutants with no build form, and the e2e spoke of a second cascade run 'with the planted mutants enabled', which the product binary cannot do. Section 5 now gives N38b-04's form (one feature per build, the cargo lines), reuses the controls the registries already seed (CX-154's `frob-phylum/cx-154`; KA-697's cell) and registers only the dropped bus support directly against GATE-ATEL-16. Burnside counts (86,185; 500,500; 92) and the moment example recomputed."
+  },
+  {
+   "bead": "N28b-27",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The known-answers bullet called 38 of 512 'the same bound' as PO-ATEL-04's; the obligation's gate-scale bound is 42 of 512 (the 0.999 quantile, test level 0.001: BD-350, N28c-23, N28cp2-01) and 38 is this control's 0.99 quantile. Both are now stated with their levels (left, an implementer aligns one to the other and a gate or the control fails wrongly). The e2e's 'second run with each mutant enabled' cannot exist on the product binary: the failure actions are named as the unit tests' and the gate-scale tier run's. Quantiles recomputed exactly (38, 42; 123 of 2,000); α·5/6."
+  },
+  {
+   "bead": "N28b-33",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "The e2e called `frob result revalidate … --estimate-only`; the command line's one spelling of `estimate_only` is `--estimate` (NJL-01), so the step was an unknown parameter, 802. Now `--estimate` with a key per call and `--run` under its own key. The exit-4 refusal of `--run` had no code: it is the kind's FROB-REF-701, with the relation between the plan's lower bound and that row's trigger stated."
+  },
+  {
+   "bead": "N28b-35",
+   "kinds": [
+    "convention",
+    "broken",
+    "registry"
+   ],
+   "what": "This bead is the recorder of GATE-ATEL-11's M4 part (N28c-25) but gave no recording form: now the tier run with `--features gauntlet-mutations` (the recorder refuses a receipt without its controls) and `record_gate --part M4`. Arm G123 needs the polarity rules enabled, which ship `disabled`, so it runs on scratch registries, and a run on scratch registries marks every receipt `override`, which the recorder rejects: one invocation with four arms could never be recorded. Split into phases `measure` (F, G12, I; the gate receipt) and `grade3` (G123; a pilot receipt under PILOT-REUSE-01 that the kill decision may cite). The stale-key mutant is named as CX-315's control (`frob-core/memo-key-no-delivery`), with the gate's two other controls. Keys per call. Composition sums to 30."
+  },
+  {
+   "bead": "N28b-39",
+   "kinds": [
+    "registry",
+    "convention",
+    "deadlock"
+   ],
+   "what": "Section 3 spoke of a request that 'does not pin a run seed' and of a planner that reuses a stored run's schedule; `eval.compare` has no seed input (`--run-seed` is 802) and BD-262 draws the address list from the plan key. The reuse case is kept, because with plan-key addresses alone no stored episode is ever reused and the plan's §28.14 reuse is lost, but it is now stated as the planner's own choice beside the plan-key default, with no verb input, and the acceptance asserts 802 for a seed. Request to VERBS-eval and BD-262 recorded. The bead writes a step of N28b-40's script without depending on it: dep N28b-40 added (no cycle). The e2e's run and mutate calls get their own keys (a repeated key would return the stored receipt and fake a memo hit)."
+  },
+  {
+   "bead": "N28b-14",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Acceptance required the derivation file to be 'cited by the proof obligation's record', but the obligations registry (N28cp2-01, N28c-23) enters PO-ATEL-03 with `derivation = \"none\"`: the plan discharges it by simulation and the registry test pins six derivation paths, none for -03. Left, either this item fails or the implementer edits a pinned registry row. The file is kept and is now cited from the crate's CONTRACT.md. Index rule, isotonic fit, Beta(38, 2) 5th percentile 0.8840 and the survivor-calibration fixture (0.95 against 0.83) recomputed and agree."
+  },
+  {
+   "bead": "N28c-02",
+   "kinds": [
+    "deadlock",
+    "convention",
+    "broken"
+   ],
+   "what": "Acceptance required GATE-ATEL-13's first clause 'recorded for each registered core (DC-01, DC-09, DC-10 at M3 through BD-309; the other eight at M4)': BD-309 depends on this bead and the eight are M4, so this M3 bead could never close, and it would be a second recorder beside N28c-05 and N28cp3-01. It now closes on the toy and DC-01 fixture tables and names the two recorders; the 10 s timing item likewise. The e2e phase planted its edits in a loose copy under target/e2e-scratch/ that xtask never reads: now `e2e_registries_scratch`. Integer inequality and KA-695 (16, 22) recomputed."
+  },
+  {
+   "bead": "N28c-03",
+   "kinds": [
+    "request",
+    "broken",
+    "convention"
+   ],
+   "what": "Applied F-U28c's request: 0.7³ = 0.343 is the chance of three clean pairs, not the exact wrong-promotion probability, which is 0.392 over the 32-pair budget (recomputed by dynamic programming: 0.3921); a test pinned to 0.343 would fail on a correct tree. The rollback 'configuration flag `--core dc-NN=fallback`' is defined by no bead and no process option: stated as what it is, the record's `status = fallback-only` committed with its ADR. The e2e used `$SEED` (never set) and 'a scratch registry' no tool reads: `$FROB_E2E_SEED` and `e2e_registries_scratch`. The four registered negative controls get N38b-04's mutation form."
+  },
+  {
+   "bead": "N28c-04",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The capability script ran 'against a scratch registry under target/e2e-scratch/cores_show/' and 'a fixture ledger', with nothing making `frob` read either: the registry of record has no dc-01 record at this bead's close, so every step would fail. Now the copy `e2e_registries_scratch` makes (FROB_REGISTRIES_ROOT) and decision records written into FROB_STATE through N28c-03's harness subcommand."
+  },
+  {
+   "bead": "N28c-07",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "Phase `rejected` planted its records 'on scratch copies of the registry under target/e2e-scratch/core_contract/', which xtask never reads, so the bandit record would pass unseen: now `e2e_registries_scratch`. Counts (16 + 4; by core 2, 2, 3, 2) and arithmetic (245.76 MB; 2,995,731; 29,958; 0.99998 × 10⁻³) recomputed and agree."
+  },
+  {
+   "bead": "N28c-13",
+   "kinds": [
+    "deadlock",
+    "registry"
+   ],
+   "what": "The last acceptance item asserted the verb's output with the feature off or after KILL-AUGUR-PROBE, but the proposals are generated by N25c-18, which depends on this bead: it is now checked here on a committed synthetic list and through the verb by N25c-18 and N28c-16. CX-317's control names this bead as planter of `suggest-without-direct`; the committed list without a comparator had no name (left, the seeded control is stale): it now carries the plant's name. Friction, drawbar and pad numbers recomputed."
+  },
+  {
+   "bead": "N28c-19",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "Step 1 expected exit 8 from `frob opt cascade … --key sec9-1 --json`; the command line waits to completion unless `--sync-wait-ms` bounds the wait, so an assertion on exit 8 fails on a correct tree: `--sync-wait-ms 0` added. The five negative controls 'registered against GATE-ATEL-16' are wrong generators with no build form: N38b-04's mutation form stated. Audit bounds 0.0950 and 0.0495 recomputed."
+  },
+  {
+   "bead": "N28c-33",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "The surface example of the run verb `control.mpc` had no `--key`. The e2e phase loaded 'a scratch copy' of the ladder registry with planted defects: through `e2e_registries_scratch` that would mark the run `override`, and this script's gate phase (GATE-ATEL-17, N28c-39) runs every phase and must stay of record, so the defects are synthetic files read by the loader test, run by name. The step 'asks for per-level address lists (refused)' cannot be typed, `control.mpc` having no such input: now the unit test by name and the positive assertion from the job records. Efforts 2,048/8,192/32,768, sum 43,008, cost 0.6497 recomputed."
+  },
+  {
+   "bead": "N28c-35",
+   "kinds": [
+    "registry"
+   ],
+   "what": "N28-CX names this bead as the planter of CX-28L-1's control (plant `N28c-35:curve-fit-threshold`, gate GATE-ATEL-17) and the bead named no feature, so the seeded control would be `stale` and the gate unrecordable: the plant is now the `cfg(feature = \"curve-fit-threshold\")` branch of the fit with its build line. Worked case (0.725714, 0.888000, 0.950617, 0.621302; γ 1.085 and 0.350), the clip case 1.04 and the E1 identities recomputed and agree."
+  },
+  {
+   "bead": "N28c-36",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Acceptance required the planted drift (γ 0.8 to 0.3) to trip the alarm 'within 20 further audit designs in at least 95 of 100 runs'. Simulating the stated harness with N28b-16's martingale gives about 12% within 20 and 82% within 120 (median delay near 49; the shift about triples the median residual and refuses a fifth of new fits), so a correct alarm could never meet it. Now within 120 in at least 70 of 100 (TARGET), measured rate and delay recorded; the e2e follows. Beta(96, 5) figures (0.911, 0.090, sd 0.0097, about 10⁻³) and [0.676, 0.776] recomputed and agree."
+  },
+  {
+   "bead": "N28c-43",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied F-U28c's request: the user route is `design.diff --reuse --action run-control --key <k>`; there is no `--run-control` flag. Scope listed `--no-memo` among this bead's extensions of `train.start`; it is the generated common property of rows with `memo = true`, and a row declaring it fails `common-property-shadowed`. Learning-curve known answer (1,609 → 1,700; 500; 1,200 avoided) recomputed."
+  },
+  {
+   "bead": "N28cp1-01",
+   "kinds": [
+    "request",
+    "registry",
+    "deadlock",
+    "broken"
+   ],
+   "what": "Applied F-U28c's request: no control sits behind the `conformance` feature; a wrong formula is a mutation control in N38b-04's form, and for the seeded rows the battery runs N28a-11's plants by their N28-CX names instead of building its own (deps N28a-11 and N10a-08 added, no cycle). The KA-694 control defined here, a two-sided bound 0.0560, lies on the safe side of a row that declares `safe = \"higher\"`, which the loader rejects as `cannot-fail` (N38b-28, N38b-57): replaced by n + 1 in the exponent, 0.04504, the defect N38b-33 proposes. KA-681's control is built at M3, so 'every control caught at M1' could not hold: it is `not-yet-due` there. `last_seen` is the gate recorders', not this bead's. The removed-row check runs the self-test by name instead of a loose copy."
+  },
+  {
+   "bead": "N28cp1-02",
+   "kinds": [
+    "deadlock",
+    "convention"
+   ],
+   "what": "KA-683's control is CX-307's plant, built by BD-240 at M3, and the bead had no path to BD-240: dep added (no cycle). KA-701's control is CX-314's mutation, built by N28b-34 at M4, so 'every control of both stages caught at M3' could not hold: it is `not-yet-due` and N28c-24 catches it. The seeded plants are named; `last_seen` is the gate recorders'; the `result.revalidate` calls of phase `m3` carry keys. Queue arithmetic (2,000.6; 620.9; 0.17; 220.5), 3807/4096 and the DC-01 rows recomputed."
+  },
+  {
+   "bead": "N28cp2-01",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The e2e planted its four defects 'on scratch copies of the file under target/e2e-scratch/registry_n28_po/', which nothing reads (the conformance registry is outside `registries/`, so `e2e_registries_scratch` does not reach it): the step would pass on a broken loader. The four are now the named tests on their own synthetic copies, run by name, as N28c-23 does for the same file. Bounds recomputed exactly: 132, 569, 42; 2,145 and 3,828; 0.8840."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "VERBS-design",
+   "what": "Add to the `design.diff` row the input `invalidation` (`--invalidation`, a flag, from M3, extended by N28b-01): with it the result carries the `frob.invalidation/1` record between the two versions. N28b-01 defines it and the row does not list it, so the generated schema answers 802 and the MCP tool `design_diff` cannot return the record N28b-01's acceptance names."
+  },
+  {
+   "bead": "BD-343",
+   "what": "Section 8 says the archive merge is 'built by the archive bead on N28b-04's `Join`' with the order (fitness, DesignId, EvidenceId). The archive type and its merge are N17b-17's (BD-342 and N17b-17 do not depend on N28b-04; N28b-04 depends on BD-342 and runs its law suite on that type), and the third key is N17b-17's `EvalId`. N28b-04 now says so; please use the same words so nobody builds a second elite record."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "The `eval.compare` row says a study's address list is always drawn from the plan key. N28b-39 (M3) adds the planner case that plan §28.14 needs ('the comparison that follows a 2,048-world run of the previous version on the same scene reuses that version's episodes at the comparison's addresses'): when a qualifying stored run of either arm exists, the plan takes a prefix of that run's schedule and records `seed_protocol: { reused_schedule_of: RunId, prefix: n }`; otherwise the plan-key draw stands. No seed input is added and `--run-seed` stays 802. Please add this to the row (and N28b-39 to 'Extended by'), or rule the other way; as the row stands no comparison can ever be served a stored episode of an earlier run."
+  },
+  {
+   "bead": "BD-262",
+   "what": "Step 2 draws the address list from the plan key unconditionally. N28b-39, which depends on this bead, replaces the source of the list by a prefix of the most recent qualifying stored run's schedule when one exists (recorded in the plan before submission). Please name that hook in step 2 so the two beads do not specify the plan's address list differently."
+  },
+  {
+   "bead": "BD-265",
+   "what": "Step 5 says 'percentile intervals at 95%' with thresholds on the lower interval bound; BD-328 and N28b-22 say the lower 95% bound is the 5th percentile of 2,000 resamples. The three use one statistics function, and N28b-22's differential now compares against this bead's record computation. Please state which percentile the lower bound is (the 5th, as the two later beads have it), or a stratum near 0.5 or 0.7 gets different modes by entry point."
+  },
+  {
+   "bead": "VERBS-opt",
+   "what": "N28a-02's lint `loop-stage-undeclared` requires every `run` entry to have a row in `registries/loop.toml` or to be listed in `outside_loop`, and no bead enters `opt.cascade` or `opt.start` there. `opt.cascade` needs `requires = \"check\"`, so that NJL-01's variation 10 generates `override` and `override_reason`: N28b-25's INV-ATEL-01 enforcement inside the cascade uses exactly those inputs. Please enter both rows with the cluster (or say which bead does)."
+  },
+  {
+   "bead": "N28b-28",
+   "what": "The `run` step expects exit 8 from `frob opt cascade … --key csp-run --json` and then polls `opt status`; the command line waits to completion unless `--sync-wait-ms` bounds the wait (BD-022, NJL-01), so the call returns only when the campaign is done. Please add `--sync-wait-ms 0` (as N28b-08's script now has). Also: N28b-26 and N28b-27 no longer describe a second cascade run 'with a mutant enabled' in the `stage1`, `stage2`, `stage4` and `stage6` steps; their failure actions are asserted by their unit tests and by this script's gate-scale tier run on the registered controls."
+  },
+  {
+   "bead": "N28b-36",
+   "what": "N28b-35 now produces two records: the GATE-ATEL-11 gate receipt (arms F, G12, I, the controls, C₂) from a run on the registries of record, and a pilot receipt under PILOT-REUSE-01 for arm G123 (its four numbers, C₃, the saving, per-rule counts), because G123 needs the rules enabled on scratch registries and such a run cannot be a gate receipt. 'The measurement that decides' should cite both (N40-03 accepts gate and pilot receipts)."
+  },
+  {
+   "bead": "N28c-42",
+   "what": "N28-CX names this bead as the planter of CX-28L-2's control: plant `N28c-42:reuse-summed-or-cold` (a report that sums the columns or prints one cold figure), gate GATE-ATEL-19. No bead declares a feature of that name, so the seeded control is `stale` and N28c-45 cannot record the gate. Please declare it as the `cfg(feature = \"reuse-summed-or-cold\")` branch at the report site, in N38b-04's form (or say which bead builds it, and tell N28-CX)."
+  },
+  {
+   "bead": "N28c-25",
+   "what": "The 'Measured by' column of GATE-ATEL-11 lists BD-292 and BD-347; the M4 part is measured and recorded by N28b-35 (BD-347 and item 2 of this bead say so, and N28b-35 now states the tier run and `record_gate --part M4`). Please add N28b-35 to the column so `measured_by` and `recorded_by` agree."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 31 beads read in full against chapter 28 of the plan, the VERBS rows (design, result, opt, eval, cores, report, control, job, train, phylum), N28-REF, N28-KA, N28-CX, NJL-01, STD-E2E, BD-025 and N38b-04, with every number recomputed; none is unchanged, which is what a slice last read two rounds ago and never held against conventions 5 to 14 should be expected to give. Recurring causes: planted defects with no build form or behind `conformance` (now N38b-04's form, reusing seeded plants by name); scratch registries no tool reads (now `e2e_registries_scratch`, or tests by name where a gate run must stay of record); acceptance items waiting on later beads; scripts expecting exit 8 from a CLI call that waits to completion. Lead's notes: all four applied after checking (N28b-22/BD-328 and its two counterparts; N28b-24/BD-342). Dependencies added: N28b-15→N28c-12, N28b-25→N28a-02, N28b-39→N28b-40, N28b-24→N17b-17, N28c-22→N28b-06, N28cp1-01→N28a-11 and N10a-08, N28cp1-02→BD-240; removed: N28b-22→BD-328, N28b-24→BD-342; no cycle (graph_check). Open, not edited: (1) N28b-04's `conflicted` head can be resolved only by an update naming every candidate, and `expected_parent` takes one identifier, so no verb can submit it; a small surface extension (NJL-01, VERBS-design) would be needed. (2) PO-ATEL-03's band 0.884 ± 0.003 over 10⁴ draws is about 2.5 standard deviations (0.0012), so a correct implementation fails about one seed in eighty; the number is shared by N28cp2-01, N28c-23 and N28c-08 and was left. (3) N28b-27's deps BD-320, BD-322 and N28b-08 look unnecessary for the two controls (stage 4's training content is out of its scope); not removed without audit evidence. (4) N28b-39 keeps the plan's reuse of a stored run's schedule against VERBS-eval's plan-key rule and awaits the registry's ruling. (5) N28b-10's `admissible` and N28b-35's two-phase run with a pilot receipt for arm G123 are DESIGN choices made here; N28c-36's new drift threshold is a TARGET from my simulation and should be re-measured."
+}

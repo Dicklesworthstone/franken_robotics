@@ -6,7 +6,7 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "frob-conformance", "solid", "registry", "decision-record", "test"]
 parent: "EPIC-M0"
-deps: ["BD-025", "N00-17", "N38b-50", "N40-02", "N40-27", "NAB-05", "NAB-06", "NAB-14", "NAB-15", "NAB-21", "NAB-32", "NAB-33", "NAB-34", "NAB-35", "NAB-39", "NAB-40", "NAB-43", "NAB-49", "STD-TEST"]
+deps: ["BD-025", "N00-07", "N00-17", "N38b-50", "N40-02", "N40-27", "NAB-05", "NAB-06", "NAB-14", "NAB-15", "NAB-18", "NAB-21", "NAB-32", "NAB-33", "NAB-34", "NAB-35", "NAB-39", "NAB-40", "NAB-43", "NAB-49", "STD-TEST"]
 needs: []
 related: ["NEG-03", "NEG-05", "NEG-06"]
 gates: []
@@ -118,15 +118,18 @@ record's `value` is compared with the figure the REC record settles, within `tol
 2. *Owner agrees.* For each record with an `owner` registry, the corrected value is read from that registry
    (the killed-idea record, the thesis calculator's fixture, the source register, the glossary) and compared.
 3. *Withdrawn figure in context.* The file is registered as a source of the scan engine of N38b-50, with the
-   finding code `dx.withdrawn-figure` and the killed-idea document as its declared exempt printout, and the
-   engine is run over the records. Over contracts, `docs/**`, `README.md`, registries, test directories and
+   finding code `dx.withdrawn-figure` and, as its declared exempt paths, the killed-idea document, the
+   register it is printed from (`registries/killed_ideas.toml`) and the killed-idea beads' verbatim fixtures
+   (`tests/fixtures/killed/`): the register keeps refuted strong forms and refutations verbatim, and KI-10's
+   refutation states DX-06's original bounds ("about a millisecond", "a quarter of one 4.1 ms batch step") on
+   purpose. The engine is run over the records. Over contracts, `docs/**`, `README.md`, registries, test directories and
    report templates (the engine's walk set), a match of one of `withdrawn_tokens` whose window contains every
    word of `context` is the finding `dx.withdrawn-figure` with the record id, every linked id and the correct
    value. The window is the engine's: 200 characters either side of the match on text with white space
    collapsed (DESIGN: this replaces "within one sentence", so that the three registers match by one rule; a
    sentence splitter breaks on decimal points, and the window keeps the result unchanged under reflow). The
-   killed-idea document, the three register files, a record's derivation file and quoted fixtures are exempt;
-   a quoted fixture is a line that carries the engine's marker `stale-as-control: <id>`.
+   declared exempt paths above, the three register files, a record's derivation file and quoted fixtures are
+   exempt; a quoted fixture is a line that carries the engine's marker `stale-as-control: <id>`.
 4. *Links.* `resolve_links` of the engine is called: DX-02 and DX-03 name REC-02 and REC-01, and their values
    agree with the figures those records settle.
 
@@ -177,6 +180,8 @@ record's `value` is compared with the figure the REC record settles, within `tol
   8428/5757 within 10⁻³); a link to a record that does not exist fails.
 - `quoted_fixture_is_exempt`: a planted sentence on a line marked `stale-as-control: DX-02` passes; the same
   sentence unmarked is the finding.
+- `killed_idea_register_is_exempt`: KI-10's record in `registries/killed_ideas.toml` produces no finding; its
+  refutation sentence copied into a contract is the finding under DX-06.
 
 ### End-to-end script and logging
 

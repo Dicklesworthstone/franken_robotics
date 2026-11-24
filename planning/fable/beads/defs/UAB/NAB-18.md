@@ -6,7 +6,7 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["N40-23", "N40-27", "NAB-17"]
+deps: ["N40-23", "N40-27", "NAB-17", "NAB-33", "NAB-34"]
 needs: []
 related: ["NAB-19", "NAB-20", "NAB-21", "NAB-22"]
 gates: []
@@ -40,10 +40,12 @@ other two tables (NAB-19, NAB-20); re-scoring (NAB-22 and the sweeps).
 column split at semicolons and commas into constructions (`C-nn`), sections, analyses (`A-nn`), decision cores
 (`DC-nn`), gates and bets; `impact`, `confidence`, `effort` the three integers; `score` the printed string;
 `decision_text` the last column verbatim; `decision = "adopted"` for every row of this table; `tiers` the tier
-letters the decision names in order (`["S"]`, or `["S", "F"]` where a Frontier part is named); `kill_gates`,
-`gates`, `bets` the identifiers found in the row; `killed_idea` the `KI-nn` a row points to; `carried = true`
-for families that existed in the earlier version of the matrix. `needed_by` is empty throughout: no row of
-this table is below 2.0.
+letters the decision names in order (`["S"]`, or `["S", "F"]` where a Frontier part is named; EV-S37, whose
+text names no tier, has `["S"]`, the tier of its table); `kill_gates`, `gates`, `bets` the identifiers found in
+the row; `killed_idea` the `KI-nn` a row points to (EV-S08 → KI-01, EV-S19 → KI-11; records of NAB-33 and
+NAB-34, dependencies of this bead); `carried = false` for every row (no row of this table says it comes from
+version 0.2; NAB-17 rule 2). `needed_by` is empty throughout: no row of this table is below 2.0. The frozen
+copy `tests/fixtures/ev/solid.tsv` holds the 41 rows below in the columns of NAB-17 rule 2.
 
 **What the decision column tells an implementer, row by row class.**
 
@@ -123,8 +125,12 @@ Rows in this table: 41.
 - [ ] 41 records `EV-S01` … `EV-S41` exist in table `solid`, in the order above, and the loader and lints of
       NAB-17 pass on them.
 - [ ] Every printed score equals the derived score; five rows score 20.0 and the last row scores 4.5.
-- [ ] 13 rows name at least one kill gate, 14 distinct kill gates in all, and each resolves to a record of the
-      gate register; 28 rows name none.
+- [ ] 13 rows name at least one kill gate, 14 distinct kill gates in all; 28 rows name none. Each of the 14
+      resolves to a record of the gate register, or is on NAB-17's frozen list
+      `tests/fixtures/ev/kill_gates.tsv` and reports a recorded `skip` while the exit record of its ledger
+      group's milestone does not exist (NAB-17 step 6): eleven of them are entered by the M1 ledger groups
+      (N40-24, N40-25, N40-26), and only KILL-MARROW-GUARD, KILL-SINEW-ROWS and KILL-MCP by the M0 groups this
+      bead depends on.
 - [ ] No row is below 2.0 (rule 1 has nothing to excuse in this table).
 - [ ] The generated printout shows the 41 rows with their decision text character for character.
 
@@ -143,9 +149,13 @@ Rows in this table: 41.
 - `kill_gate_rows_are_13` and `kill_gates_are_14`: KILL-STATIC, KILL-SCHED, KILL-MARROW-GUARD, KILL-SPEC-REWARD,
   KILL-RARE, KILL-AUTOPSY, KILL-SINEW-ROWS, KILL-REUSE, KILL-D1, KILL-MCP, KILL-CONTACT, KILL-FILM, KILL-VOI,
   KILL-AUGUR-PROBE.
-- `decision_text_frozen`: byte comparison with `tests/fixtures/ev/solid.tsv` (this table).
+- `decision_text_frozen`: byte comparison with `tests/fixtures/ev/solid.tsv` (this table), for every row whose
+  `history` is empty (a row with history is held to its last entry, NAB-17 rule 2).
 - `cross_references_resolve`: `KI-01` (half precision, named by the power-of-two scaling row) and `KI-11`
   (order-dependent sketches, named by the integer-histogram row) exist in the killed-idea register.
+- `tiers`: 35 rows `["S"]` (EV-S37 included) and 6 rows `["S", "F"]` (EV-S01, EV-S10, EV-S12, EV-S22,
+  EV-S35, EV-S41). EV-S20, listed above among the Solid cores, names only [S]: its Frontier use, equivariant
+  networks, is the row EV-F25.
 
 ### End-to-end script and logging
 

@@ -4,7 +4,7 @@ title: "frob-conformance: known-answer registry rows KA-001 to KA-032 (document 
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "gauntlet", "frob-conformance", "solid", "registry", "test"]
+labels: ["m0", "gauntlet", "frob-conformance", "solid", "registry", "test", "review-notes-open"]
 parent: "WP-34"
 deps: ["BD-025", "N38a-12", "STD-E2E"]
 needs: []

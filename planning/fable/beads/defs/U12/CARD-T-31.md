@@ -41,14 +41,14 @@ enclosure tests behind each cell (the clearance-complex bead); the auditor's che
 for generated scenes; the retrofit search that consumes a named bottleneck.
 
 Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
-the clearance complexes `.fclear` (BD-233) is `related`, not a dependency (a card that waited for its implementer
-would close a loop, because the implementer's own acceptance runs the card's law tests). What the card does depend
-on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and Lemma's own
-proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and every
-acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output
-(certificates on the complexes of each reference interior) is run inside the implementing bead, with this card's
-law tests, as part of that bead's acceptance; the receipt produced there is what moves the registry row for that
-output.
+the clearance complexes `.fclear` (BD-233) and the clearance certificates emitted on them (N19b-31, which depends
+on this card and carries it for BD-233) are `related`, not dependencies. What the card does depend on is in
+`deps`: the card registry, its specification and the auditor's checker (N12-15). It closes on its statement
+document, its registry row, its specimens and mutants, and every acceptance line that its own fixtures decide. An
+acceptance line that can only be observed on live output (certificates on the complexes of each reference
+interior) is run inside N19b-31, with this card's law tests, as part of that bead's acceptance, and the receipt
+produced there moves the registry row for that output; the reference-interior verdicts are the scene side's gate
+GATE-HAB-10 (N19b-35).
 
 ## Technical approach
 
@@ -89,8 +89,9 @@ output.
       rejected against the new complex (digest mismatch).
 - [ ] Rejected mutations: a path with a non-adjacent step; a path through a cell outside the inner complex; a
       cut claim when the recomputed components connect start and goal; a width inside the band.
-- [ ] On each reference interior: no false route and no false impossibility (the scene side's gate; the card's
-      certificates are the evidence).
+- [ ] The reference-interior requirement (no false route and no false impossibility) is the scene side's gate
+      GATE-HAB-10, measured by N19b-35 on certificates emitted by N19b-31; it is not a condition of this card's
+      close.
 - [ ] Registry row `checked` with the class per verdict, hashes and checker identity.
 
 ## Test plan
@@ -117,8 +118,10 @@ under three traversal orders of the cells).
 the clearance complexes) and `scripts/e2e/scene_fit_gate.sh` (bead N19b-35) exercise `frob scene fit` (a `run`
 verb, each call with its own `--key`) and log the critical widths, the band, the bottleneck cell and the
 certificate hash. (`contact_clearance_gate.sh` of N19b-33 tests the pairwise enclosure predicate of
-`contact.clearance`, which emits `lp-farkas` and `lp-primal` entries, not this card's route verdicts.) For this card their NDJSON lines (STD-E2E helper)
-carry `ts`, `script`, `bead` ("CARD-T-31"), `step` (`T-31/<fixture-or-mutant>`), `event`, the exact command line,
+`contact.clearance`, which emits `lp-farkas` and `lp-primal` entries, not this card's route verdicts.) For this
+card their NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead` and `step` ("CARD-T-31" and
+`T-31/<fixture-or-mutant>` on N12-34's per-card lines; N19b-31's and N19b-35's own keys and step names on their
+scripts' lines, since a line carries its owning bead), `event`, the exact command line,
 exit code, wall time, the envelope width and the inner and outer critical widths in metres, the band, the path
 length in cells or the recomputed component labels of start and goal, the `.fclear` digest and the bundle's
 BLAKE3, the printed class, the expected and observed verdict, and on a mismatch the first failing path index (or

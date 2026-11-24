@@ -4,7 +4,7 @@ title: "Owner decision: the sixteen ideas listed as not yet placed (seven since 
 type: "task"
 priority: 1
 milestone: "M0"
-labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record", "owner-decision", "review-notes-open"]
+labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record", "owner-decision"]
 parent: "EPIC-M0"
 deps: ["NAB-32", "NAB-42", "NAB-48"]
 needs: []
@@ -105,7 +105,7 @@ only as a pilot with a falsifier):
 | UP-05 | Correlated contact-material grids (condition-indexed friction cards with correlated uncertainty factors and sparse regional overrides) | Interface cards gain a correlation structure across regions and conditions; randomization drawn from cards samples it jointly | Correlation across regions is not modelled; independent marginals may over- or under-state risk. A pilot would compare design rankings under joint and independent draws |
 | UP-09 | Missing-contact diagnosis (infer feasible reaction envelopes from momentum residuals over a dictionary of candidate contact surfaces) | An `explain` view for runs, or an analysis of real logs in the calibration lane, labelled `Estimated` | Ambiguity grows quickly with the number of plausible surfaces; the view must print how many surfaces are consistent with the residual |
 
-**4. The decision record.** `docs/delivery/adr/ADR-IDEAS-NOT-PLACED.md`: one line per residual idea with the
+**4. The decision record.** `docs/adr/ADR-IDEAS-NOT-PLACED.md`: one line per residual idea with the
 owner's disposition (`confirm default`, `place` with the home and tier, `park`, `decline`), dated. A `place`
 decision creates the idea's pilot bead (with its falsifier and kill gate) in the unit that owns the home; this
 bead does not create mechanism beads on a default.
@@ -123,7 +123,9 @@ idea and requires it to cite its record.
 - [ ] `KP-01` to `KP-04` and `KD-04` exist in the killed-idea register with reason and reopening evidence.
 - [ ] The decision record exists with the owner's line for each of the nine, or the bead is closed as
       "defaults stand" with the owner's explicit confirmation recorded (silence is not a decision).
-- [ ] The two triggers are named in the M2 sweep's due list.
+- [ ] UP-06 and UP-10 carry their trigger and `trigger_exit = "M2"` (the ray-stage share of the M2 profile;
+      the pool gate GATE-HAB-13, recorded at M2), the field from which NAB-22's due list names them at the M2
+      sweep; NAB-50's script asserts that `decision-sweep due --exit M2` lists both.
 - [ ] A planted bead "Bundle coherent rays in the ray kernel" with no citation fails the revive lint naming
       UP-06, and passes when it cites the record and the met trigger.
 - [ ] The tally check of NAB-42 holds: nine residual ideas, equal to the recorded count of ideas not yet
@@ -141,7 +143,8 @@ idea and requires it to cite its record.
   N20b-32 to N20b-34, N20a-35, N20b-36 to N20b-38.
 - `residual_count_equals_tally`: 9.
 - `parked_and_declined_records_exist`.
-- `conditional_has_trigger_and_reader`: UP-06 and UP-10 name a measurement and the sweep that reads it.
+- `conditional_has_trigger_and_reader`: UP-06 and UP-10 name a measurement and have `trigger_exit = "M2"`; a
+  `conditional` record with an empty `trigger_exit` fails.
 - `owner_decision_required_to_close`: with `owner_decision` empty for any of the nine, the close check fails.
 - `proposals`: UP-06 has 3; UP-04 has 2; the five review ideas have 0 with the note.
 

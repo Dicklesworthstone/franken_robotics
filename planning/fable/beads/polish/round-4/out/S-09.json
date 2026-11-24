@@ -1,0 +1,363 @@
+{
+  "round": 4,
+  "slice": "S-09",
+  "reviewed": [
+    "N19a-03",
+    "N19a-06",
+    "N19a-07",
+    "N19a-11",
+    "N19a-12",
+    "N19a-14",
+    "N19a-16",
+    "N19a-23",
+    "N19a-24",
+    "N19a-26",
+    "N19a-27",
+    "N19a-31",
+    "N19a-32",
+    "N19a-33",
+    "N19a-34",
+    "N19a-35",
+    "N19a-36",
+    "N19a-37",
+    "N19a-38",
+    "N19a-45",
+    "N19b-01",
+    "N19b-05",
+    "N19b-08",
+    "N19b-09",
+    "N19b-10",
+    "N19b-22",
+    "N19b-24",
+    "N19b-25",
+    "N19b-28",
+    "N19b-37",
+    "N19b-39",
+    "N19b-41",
+    "N19b-43",
+    "N19c-02",
+    "N19c-05",
+    "N19c-09",
+    "N19c-27",
+    "N19c-28",
+    "N19c-30",
+    "N19cp1-01"
+  ],
+  "changed": [
+    {
+      "bead": "N19a-03",
+      "kinds": [
+        "broken",
+        "contradiction"
+      ],
+      "what": "The enforcement-map example named a test `frob-scene::accept::no_resample_audit` that N19a-26 does not define, so a map written from the example would fail its own meta-test: it now names `audit_detects_dropped_scene` (defined by N19a-26) with its crate, says every entry names a test its bead defines by that exact name, and the meta-test matches per crate (`cargo test -p <crate> -- --list`, last path segment). ADR-HAB-01's enforcement column now also names the hazard register's test `hz06_manual_trilinear` (HZ-06, N35-19), the existing test that holds the manual-interpolation decision."
+    },
+    {
+      "bead": "N19a-06",
+      "kinds": [
+        "deadlock"
+      ],
+      "what": "Acceptance criterion 6 required `scene show` to list optical cards per region from a compiled pack, but the optical map is written by compile stage 7 (BD-229), which depends on this bead (convention 7). The criterion is now the script's show step, logged `e2e_skip \"needs BD-229\"` until BD-229 (whose acceptance reruns the script) is closed; the script says the same for its two compile steps and the show step."
+    },
+    {
+      "bead": "N19a-07",
+      "kinds": [
+        "request",
+        "deadlock"
+      ],
+      "what": "Slice request applied: the gallery fixture gains spawn region `door-approach` across the hinged door's leaf sweep, and the script asserts through `scene show <id> --receipts` that the stage-9 receipt (N19a-19) counts a non-zero number of invalid cells under `interference: <door>`, with its metric line; acceptance criterion 5 names it; these steps are logged `e2e_skip \"needs N19a-18\"` like the script's other compile steps. Deadlock fixed: the unit test `conveyor_instantiates_surface_record` asserted the `MovingSurface` record and its `Prescribed` behaviour, which N19a-08 owns while N19a-08 depends on this bead; it is now `conveyor_expands_surface_parameters` (this bead's parameter table with provenance), naming N19a-08's `moving_surface_record_compiles` as the place of the record."
+    },
+    {
+      "bead": "N19a-11",
+      "kinds": [
+        "broken",
+        "registry"
+      ],
+      "what": "A node scaled to zero on an axis (|det A| below tolerance) had no defined handling: it fits neither class and the classifier's outcome was unstated. `singular` is now refused with `FROB-REF-302`, `observed` the part and det A, nothing of the part baked; the classify test lists diag(1,1,0) refused with 302, exit 3. N19-REF's 302 trigger does not yet name the singular case (request below)."
+    },
+    {
+      "bead": "N19a-12",
+      "kinds": [
+        "deadlock",
+        "contradiction",
+        "plan"
+      ],
+      "what": "Three acceptance items needed later beads (convention 7): the receipt printed by `scene show --receipts` (BD-163 depends on this bead) is now stated as the script's steps that N19a-42 runs once BD-163 serves the verb; 'generated scenes yield zero heuristic tags' (generators are later beads) is now a synthetic constructive source in the generators' form with the new unit test `generated_source_no_heuristic_tags` (and its negative: one tag deleted fails validation, the plan's 'an untagged solid is a bug'); `untagged_import_is_unknown` no longer asserts a clearance witness (BD-233, later) but that the part is in the field input set as solid keep-out, which is what the clearance complex reads. The counterpart note of the N19a-16 split needs nothing here."
+    },
+    {
+      "bead": "N19a-14",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention 9: the criterion 'GATE-HAB-01 surface rows recorded' made this bead a second recorder of the gate; the register's recorder of the M2 part is N19a-42. The criterion now measures and logs the rows and states that N19a-42 records the gate from its own receipt and this script writes no gate record. Arithmetic rechecked (2.4414 µm, 0.1221 N, 17.3 mm, 0.4984 s, 42%, 0.98 against 0.981 N)."
+    },
+    {
+      "bead": "N19a-16",
+      "kinds": [
+        "request",
+        "deadlock"
+      ],
+      "what": "Graph-audit split applied after checking its evidence: step 8 (PO-HAB-06) uses only FrankenSim's airlock chart with its interval range, not N19a-13's stages 1 to 4, yet N19a-16 depended on N19a-13 and so waited on the whole front of the compiler. The chart surface is now the new bead N19ap4-01; deps change N19a-13 → N19ap4-01 (N19a-13 moved to related), and step 8 names `GeometryKernel::signed_distance_chart` and its `Chart` (Lipschitz bound, value kind, `interval_range`) as N19ap4-01's."
+    },
+    {
+      "bead": "N19a-23",
+      "kinds": [
+        "deadlock"
+      ],
+      "what": "Acceptance criterion 1 required `scene.accept` (BD-228, which depends on this bead) to refuse with 317 (convention 7). It now states the refusal by this bead's acceptance check (unit test `compile_lists_accept_refuses`), and the verb form as the script's accept steps, which run once BD-228 serves the verb (the script already logs them `e2e_skip \"needs BD-228\"`)."
+    },
+    {
+      "bead": "N19a-24",
+      "kinds": [
+        "broken",
+        "registry"
+      ],
+      "what": "N19-KA names this bead the carrier of KA-432, KA-433 and KA-435 (G1, all tiers, with the controls '(set: N19a-24)'), and the Habitat known-answer script logs a row `unbound` until its carrier binds it; the bead bound none. A criterion now binds the G1 entries `ka:432`, `ka:433`, `ka:435` to its fixture checks on compiled packs (CPU reference and each device tier present) with its controls registered (0.99 scale, inverted solid, planted step and gap), and the script runs them in the Gauntlet's form, controls under `--features gauntlet-mutations` through `e2e_expect_caught`. The criterion 'all four fixtures pass on the ten terrain families' had no test: new unit test `terrain_families_pass` (BD-165 seed 0 of each family, through BD-163's driver and BD-187's CPU ray kernels)."
+    },
+    {
+      "bead": "N19a-26",
+      "kinds": [
+        "convention",
+        "registry"
+      ],
+      "what": "Convention 13: step 8 said 'the registry bead VERBS-scene is asked to list them'; VERBS-scene carries all three additions, so it now states that it lists them on the rows of `scene.gen` and `scene.list`. Registry: a batch member whose recomputed identity differs is `scene-pack-identity-mismatch` (exit 9) on VERBS-scene's `scene.list` row, while step 8 made it an audit finding (exit 2); the finding now covers missing or duplicated seeds, an absent pack and a differing count, and the identity case is the reader's refusal. Convention 14: the 1,000-seed lane runs above the harness's hour; its `scene gen` calls now cite `--envelope-scope gate:GATE-HAB-02`, without which a batch job above E0 is `adhoc` and refused with 761 with no way to admit it. Probabilities rechecked (0.127, 0.172, 5×10⁻¹⁶)."
+    },
+    {
+      "bead": "N19a-27",
+      "kinds": [
+        "contradiction",
+        "broken"
+      ],
+      "what": "The rejected alternative said bricks for a 60 m × 40 m terrain 'is gigabytes'; at the chapter's own layout it is two or three 1,024-byte band bricks over each of 93,750 coarse columns, about 0.2 to 0.3 GB, which is now stated (the 12 MB heightfield still wins by more than an order of magnitude). The acceptance criterion and the script's metric on the 60 m × 40 m memory fixture named a fixture the script never compiled; `field-60x40.src` is now in the compile list. Other figures rechecked (12 MB, 30.5 µm, 0.995 m, 0.099 mm, 63°)."
+    },
+    {
+      "bead": "N19a-31",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention 13: the row-format step narrated an earlier draft's field names ('an earlier draft named the fields id, quantity, unit, mechanism, failures'); the step now states only that BD-227's schema is used unchanged. Table checked row by row against plan §19.8; KA-440 (4/3, 67 N, 10 N) and KA-453 (4/3, 0.75) recomputed."
+    },
+    {
+      "bead": "N19a-32",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "Convention 13: the row-format step narrated an earlier draft's field names ('an earlier draft named the fields id, quantity, unit, mechanism, failures'); the step now states only that BD-227's schema is used unchanged. The family parameters `corridor_m` and `closer_torque_nm`, which the script sets through `--param`, are defined by no generator bead; the bead now states that it adds them to the apartment family (out-of-range values refused as any family parameter). The door-push run was 'against a closer pinned at 40 N·m' with no scene generated that way; the script now generates seed 5 with `--param closer_torque_nm=40 --key hza-5-c40`. Corridor limit 1.346 m and 1.911 m, door forces 47.1 N and 11.8 N rechecked."
+    },
+    {
+      "bead": "N19a-33",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "Convention 13: the row-format step narrated an earlier draft's field names ('an earlier draft named the fields id, quantity, unit, mechanism, failures'); the step now states only that BD-227's schema is used unchanged. `alias_pair_equal_scans` asserted bit-equal lidar outputs at two poses a whole number of 16 cm coarse cells apart, a translation not exact in binary floating point, so the test would fail on a correct build; it now asserts beam-by-beam agreement within the ray kernels' hit tolerance (and a difference for two non-identical modules), and the script's metric is the largest beam difference instead of the scan digests. R(60°) = 0.07 rechecked."
+    },
+    {
+      "bead": "N19a-34",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention 13: the row-format step narrated an earlier draft's field names ('an earlier draft named the fields id, quantity, unit, mechanism, failures'); the step now states only that BD-227's schema is used unchanged. Dock-lip frictions 1.02 and 0.48, ramp 0.05 and 0.10, 4.8 GB dense and 0.63 m/s rechecked."
+    },
+    {
+      "bead": "N19a-35",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention 13: the row-format step narrated an earlier draft ('an earlier draft named the fields id, quantity, unit, mechanism, failures and the archetype ...'); it now states that BD-227's schema is used unchanged and keeps the one useful fact as a statement: the file carries the registry name and pairs with the generator family by BD-227's pairing table. A second narration ('an earlier text of this example wrote log-uniform ...') now states the fact only: every drawn entry is uniform at plan time, and a logarithmic law for the thickness is a change for N19a-39's promotion path. Squeeze times 2.3 s, 0.038 s, 3.8 s and 0.75 s (20 mPa·s), belt energies 0.25/0.5/0.25 J and the 20 mm placement error rechecked."
+    },
+    {
+      "bead": "N19a-36",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "Convention 13: the row-format step narrated an earlier draft ('an earlier draft named the fields id, quantity, unit, mechanism, failures and the archetype ...'); it now states that BD-227's schema is used unchanged and keeps the one useful fact as a statement: the file carries the registry name and pairs with the generator family by BD-227's pairing table. The family parameters `lane_m` and `fog` set through `--param` are defined by no generator bead; the bead now states that it adds them to the retail family (out-of-range refused as any family parameter). Convention 5: the fog sweep generated two packs and ran two scans with no keys; they now carry `hzr-21-fog0`, `hzr-21-fog1`, `hzr-run-fog0`, `hzr-run-fog1`. Stopping distances 0.085 m and 0.51 m and the 149 mm band rechecked."
+    },
+    {
+      "bead": "N19a-37",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention 13: the row-format step narrated an earlier draft ('an earlier draft named the fields id, quantity, unit, mechanism, failures and the archetype ...'); it now states that BD-227's schema is used unchanged and keeps the one useful fact as a statement: the file carries the registry name and pairs with the generator family by BD-227's pairing table. Squeeze times (0.76 s for R = 60 mm, F = 400 N), steam cutoff ln 20/4 = 0.75 m, slosh mode 8.96 rad/s (1.43 Hz) and the 30 mm drain fall rechecked."
+    },
+    {
+      "bead": "N19a-38",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention 13: step 5 said 'the registry bead VERBS-scene is asked to list them'; VERBS-scene's `scene.hazards` row carries `--uncovered-by` and `--incidence` with this bead as extender, so the step states that. Row totals (59; rows 9, 39, 48 of the consolidated table) rechecked against plan §19.8."
+    },
+    {
+      "bead": "N19a-45",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention 14: the gate lane (six hours, `--approved-envelope`) runs the GATE-HAB-02 measurement through `scene gen` batch jobs that cited no scope, so a batch above E0 would be `adhoc` and refused with 761 even with the owner's approval on record; on the gate lane the batch and regeneration calls now cite `--envelope-scope gate:GATE-HAB-02` (N36-20), and a 761 stops the script with no gate receipt. Probabilities rechecked (0.058, 2×10⁻⁹, 0.98)."
+    },
+    {
+      "bead": "N19b-01",
+      "kinds": [
+        "broken",
+        "contradiction"
+      ],
+      "what": "The sampler's lerp a + t·(b − a) is not exact at t = 1 (checked: about 10% of decoded sample pairs at T = 0.08 m give a + (b − a) ≠ b), so the acceptance criterion and the unit test `face_continuity` (identical bits for a face point evaluated from either adjacent cell) would fail on a correct build; step 4 now uses lerp(a, b, t) = (1 − t)·a + t·b, exact at both ends, still in fixed order with no FMA. The Background named BD-163 as the bead of analytic overlays; they are N19a-16 and N19a-17 (as its own Scope says). The counterpart note of N19c-16's partial move needs nothing here: N19c-16 already depends on N19b-01."
+    },
+    {
+      "bead": "N19b-05",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The KA-438 note said 'an older registry row says 1% and is superseded'; N19-KA's row states the 2% tolerance and keeps the plan list's 'within 1%' in its `printed` field, which the note now says. Stefan's law, the h⁻² update and the three times (0.0377, 2.262, 0.763 s) rechecked."
+    },
+    {
+      "bead": "N19b-08",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The KA-445 note said 'the registry row prints 352 tiles'; N19-KA's row records both counts (the plan list's 352 and the chapter's 361), which the note now says. h_max 2.48 and 9.98 mm, 2.73 mm without the 3/4, n = 5, 42.9 mm, 361 and 16 tiles and 3 GB rechecked."
+    },
+    {
+      "bead": "N19b-09",
+      "kinds": [
+        "deadlock",
+        "registry",
+        "broken"
+      ],
+      "what": "Convention 7: the smoke script ran `fixture:spill-track`, which only N19b-10 (depending on this bead) defined; this bead now delivers the fixture (registered in N24b-03's fixture registry, the same synthetic spill, shuttle base and fractions) and N19b-10 runs it at gate length. Registry: `--task fixture:spill-track` is not a `sim.run` form (VERBS-sim: `--fixture <name>` is 'the one spelling of a fixture', and `--task` takes a task name, `TaskId` or task file); the call is now `frob sim run --fixture spill-track …`. Scope now lists the fixture as a deliverable. Registry and broken: step 7 wrote the audit total to a telemetry stream `film`, which is none of N24a-36's nine streams, so `telemetry query --stream film` is refused (802) and the smoke script could never read `volume_total`; the channel is now declared in the `contact` stream beside BD-230's `film_thickness` (T2, kind State, m³, one value per world per step), and the smoke run records `--telemetry T2 --trace-rate 1/1` (the default T1 and a 1/100 trace sample would leave most of the 64 worlds without samples while the script asserts a constant total per world) and queries `--stream contact --channels volume_total`."
+    },
+    {
+      "bead": "N19b-10",
+      "kinds": [
+        "registry",
+        "broken",
+        "convention"
+      ],
+      "what": "The three runs used `--task fixture:<name>` with a positional design, which VERBS-sim does not admit; they are now `--fixture spill-track` (N19b-09's), `--fixture film-release` (whose design is the static probe) and `--fixture film-leak`, the last two this bead's, registered in N24b-03's registry. Convention 8: 'the same with the slot permutation' named no option of `sim.run`; the permutation check is now 64 sampled world addresses (32 wet, 32 dry) re-run alone with `--world-addr <w>` (N16a-12), each with its own key, whose digests must equal the batch's per-address digests (a change of slot and co-tenants); acceptance and the determinism lane say the same. Broken: the leak run used `--seconds <245 × episode length>` with `--episodes` at its default 1, which is one long episode per world (4,096 world-episodes, not 1,003,520); it is now `--episodes 245` with no length input, so each episode runs to the fixture task's horizon. Registry: the two queries used `--stream film` (no such stream; 802); they now read `--stream contact --channels volume_total` and `rms_radius` (declared by this bead in `contact`), and the mass and release runs record `--telemetry T2 --trace-rate 1/1` so every world has the per-step channel the pass rule reads. Convention 8: the mutant runs named no mutant (a `gauntlet-mutations` build with no `--mutant` runs the clean kernel, so the controls could never be caught); they now pass `--mutant film-masked-transport` and `--mutant film-no-cube-mobility`, registered by this bead as `Control` rows of kind `mutation` with variant kernels of `K-film-advect`, loaded by N21b-42's one loader (a transitive dependency)."
+    },
+    {
+      "bead": "N19b-22",
+      "kinds": [
+        "convention",
+        "registry",
+        "broken"
+      ],
+      "what": "Convention 5 and VERBS-ground: `ground.ingest` and `ground.predict` (mutate) and `ground.score` (run) were called with no `--key`; each now carries its own (`frl-ingest`, `frl-pred`, `frl-score`), and the late prediction that must draw FROB-REF-883 carries `frl-pred-late`, since with the first prediction's key it would return the stored record and never reach the refusal. The `ground.predict` call lacked the row's `--cell` and `--model` inputs; it now names the pad rig's cell and model. The binomial decision rule rechecked: 30 of 40 gives [0.588, 0.873] (supported), 10 gives [0.127, 0.412] (refuted), 20 gives [0.338, 0.662] (undecided); the squeeze times 0.151 s and 0.038 s rechecked."
+    },
+    {
+      "bead": "N19b-24",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention 11: the step `pilot_order` is added to `scripts/e2e/rgb_splat_preparation.sh` without naming the script's owner; it now names N19b-23 (a dependency). Fixture values (32.02 and 11.18 electrons, 19.2 px, 285 px, 15 and 7.5 px, compositing 0.6/0.2 against 0.3/0.5) and the 59-row census counts rechecked."
+    },
+    {
+      "bead": "N19b-39",
+      "kinds": [
+        "registry",
+        "broken"
+      ],
+      "what": "Localization step 1 gave a door's hazard keys as `door-closer` and `door-on-route`; no hazard row has the slug `door-on-route` (BD-227's rows: office `door-closer`, home `interior-door`, kitchen `swing-door`, and so on), and N19b-38's loader refuses an `applies_to` naming an unknown hazard key, so no catalog entry could ever match it. The step now says the keys are the slugs of BD-227's hazard rows, the vocabulary of `applies_to`, with `threshold`, `door-closer` and `interior-door` as examples. Kit counts (10,700; 41), ramp runs (228 and 240 mm) and the tie order rechecked."
+    },
+    {
+      "bead": "N19b-43",
+      "kinds": [
+        "deadlock",
+        "registry"
+      ],
+      "what": "Convention 7: the unit test `report_flags_default` and the script ran on 'the threshold fixture', and the only fixture of that name in the retrofit beads beside N19b-40's is N19b-41's `threshold-20mm`, which is not a dependency (N19b-41 depends on N19b-40); both now name N19b-40's synthetic 20 mm threshold fixture (its `retrofit_plan.sh` section), a dependency. Registry: VERBS-report's `report.mission` row has `--publish` (this bead's) and no `--strict-data`, yet step 3.4, an acceptance item and `publish_refuses_assumed_cost` called it 'with and without `--strict-data`', a call the verb refuses (802); they now say `--publish` applies the strict rule by itself and the verb has no `--strict-data` input."
+    },
+    {
+      "bead": "N19c-02",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The property test `u_scale_bound_holds` scaled the scene about random origins with the footprint left where it was, a change the derivation does not bound (it moves every obstacle by ε times its distance from the origin, not from the reference point), so a correct build fails it; the reference point is now mapped with the scene and the outline kept, which is a scaling about the reference point plus a translation (checked: the bound ε·(ρ + c) then holds both ways). 2.15 mm and 21.5 mm rechecked; every script verb and option checked against VERBS-scene (`scene.gen --seed`, `scene.fit --scene --footprint --route`, `scene.import --kind place --from mesh --declare`) and reached through deps."
+    },
+    {
+      "bead": "N19c-05",
+      "kinds": [
+        "broken"
+      ],
+      "what": "Closure of a request on an authored scene had no link: the recompiled pack (`--name fp-b`) shares neither `SceneId` nor catalog name with fp-a, and the measured card did not name the request, so the ledger could not find which request it closes and the script's `--status closed` step and the closure acceptance item could not pass; the measured value now carries `measured: pr:…` naming the request it answers (as the re-import declaration already does), and the script's edited source says so. Part 2 of the script ran `mission synthesize` on an ingested doorway it never imported; the import (`--key spr-imp-d`) now precedes it. Accuracy rule rechecked on all four worked cases (5, 5, 1 and 0.2 mm; 0.02 twice), the tie case and the loose-accuracy control; verb spellings, exit codes and evidence checked against VERBS-scene's `scene.probe-request` row; FROB-REF-305's first repair checked in N19-REF."
+    },
+    {
+      "bead": "N19c-09",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention 13: the decision-record step narrated 'an earlier text used `docs/open/`, which is not a directory of the repository'; it now states only the path `docs/adr/OPEN-HAB-5.md` (convention 4). The register row, its `defaulted` path through N41-03 and N19c-04's `import_place` example checked."
+    },
+    {
+      "bead": "N19c-27",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "Graph-audit note applied after checking its evidence: the ledger is registry data that loads with every row `pending` and its audit never reads N12-52's outputs (`registries/not-decidable.toml`, the theorem rows); its only link was the 'card pending' status, which it reports whichever way N12-52 decides. N12-52 moves to related, with N12x-03 (the PO-HAB-07 filing); no path joins either to this bead. The consideration on the two cards states the dispositions as they stand (PO-HAB-02 as ND-13, `Tested`; PO-HAB-07 under the next free number at a dated amendment of N12-52's record, T-42 if the recommended dispositions stand, not 'from T-36', which N12-52 gives to PO-SENS-07). Broken: the audit looked for proof files under `docs/math/habitat/`, where no carrying bead files one (N19a-14: `crates/frob-scene/docs/PO-HAB-01.md`; N19b-26, N19b-28, N19b-09: `docs/proofs/po-hab-0N.md`; N12x-03: `docs/math/cards/po-hab-07.md`), so every bound obligation would fail it; rows now carry an `artifact` path that the audit checks, with a synthetic case. The audit test and the synthetic unit test shared the name `habitat_invariants_bound`, so the script's planted-copy step (which must exit non-zero) would run a test that asserts the failure and passes; the synthetic test is now `audit_rules_synthetic`. Convention 13: the file rule no longer narrates 'an earlier path of this bead'."
+    },
+    {
+      "bead": "N19c-30",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention 13: the record step narrated 'an earlier text of this bead used `docs/open/`, which is not a directory of the repository'; it now states only `docs/adr/OPEN-HAB-1.md` (as N19c-09 does). Row counts 10, 5, 7, 10, 8, 8, 11 = 59 rechecked; `scene.hazards <archetype>` names, `report.run --claims-realism`, `e2e_scene_ready` (BD-228, reached) and the promotion path of N19a-39 checked; the calendar of N40-35 reads an owner's ADR as the answer, so no register write is missing."
+    },
+    {
+      "bead": "N19cp1-01",
+      "kinds": [
+        "broken"
+      ],
+      "what": "`pack_has_no_mutators` expected E0594 or E0596 for the field-assignment case, but assigning a private field of `ScenePack` from a test crate fails with E0616, so a correct pack with private fields (the natural immutable design) would not match the stated expectation; E0616 is now listed beside E0594, E0596 and E0599. Row 4 of N19c-42 (`scene-pack-identity-mismatch`, exit 9) is listed on `scene.show`; `xtask check-deps` (BD-003) and N19c-42 are reached through deps."
+    }
+  ],
+  "new_beads": [
+    {
+      "bead": "N19ap4-01",
+      "why": "Split of N19a-13's item 2 proposed by the dependency-graph audit and checked: N19a-16's PO-HAB-06 verification (M2) needs only FrankenSim's airlock signed-distance chart with an interval range (`GeometryKernel::signed_distance_chart` → `Chart`: value, gradient, Lipschitz bound, enclosure, value kind, `interval_range(box)`), which N33a-30's `FieldQuery` does not expose; N19a-13 carries it today together with compiler stages 1 to 4, so N19a-16 waited on all of them. The new M2 task (frob-fsim, parent WP-17; deps BD-007, BD-031, N33a-30, STD-E2E) defines the surface with known answers (sphere and box-edge values, the sphere's interval range), the containment property test, the bound kind of CSG unions, mesh winding sign, the typed internal error for ill-formed graphs, negative controls under `gauntlet-mutations`, and its own script `scripts/e2e/airlock_sdf_chart.sh`. N19a-16 now depends on it; N19a-13's narrowing is requested below. Its containment test plants, on the sphere fixture's boxes, the two points where the closed form attains the ends of its true range ((0.9, 0, 0) and (1.1, 0.1, 0.1) for the stated box), since random samples alone would almost never catch the planted range narrowed by 10⁻¹² m."
+    }
+  ],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N19a-13",
+      "what": "The airlock surface `GeometryKernel::signed_distance_chart` → `Chart` (value, gradient, Lipschitz bound, enclosure, value kind, `interval_range`) is now the new bead N19ap4-01's (its scope and tests). Narrow item 2 to the use of that surface by stage 4 (closure, orientation, self-intersection checks stay N19a-13's), add N19ap4-01 to deps, and drop from its tests any check of the chart itself that N19ap4-01 now owns."
+    },
+    {
+      "bead": "N19a-18",
+      "what": "N19a-07's script `scene_fixtures.sh`, which N19a-18's acceptance reruns, now reads the stage-9 receipt of N19a-19 (invalid cells under `interference: <door>` in spawn region `door-approach`). Add N19a-19 to N19a-18's deps (both after N19a-07; no cycle), or have N19a-18 run that step only once N19a-19 is closed."
+    },
+    {
+      "bead": "N19-REF",
+      "what": "Row FROB-REF-302's trigger should also name a singular composed transform (|det A| below tolerance: a node scaled to zero on an axis), which N19a-11 now refuses with 302 (`observed` the part and det A), since no transform class can be established for it."
+    },
+    {
+      "bead": "N19-REF",
+      "what": "Row FROB-REF-317's trigger names only 'a collidable region's deviation above the pack threshold', while its own repair 2 ('tag the part optical-only') and plan §19.5.3 cover visual parts with no collision counterpart; N19a-23 raises 317 for visual triangles that belong to no collidable region and to no part tagged `optical-only`, `movable`, `jointed` or `deformable-by-proxy`. Add that case to the trigger."
+    },
+    {
+      "bead": "N44-01",
+      "what": "No envelope request row admits `gate:GATE-HAB-02`, yet its measurement (N19a-45: 7,000 interior compiles, TARGET under six hours, batch jobs on the reference host's job array) runs above E0 and its script needs `--approved-envelope <id>`; N19a-26's 1,000-seed warehouse lane cites the same scope. Reserve a row (R29 onward): E1 for `gate:GATE-HAB-02`, each batch at most 2 hours; if not approved, GATE-HAB-02 is `not-run`, never `pass`, unless each archetype's batch fits E0 and the lane is run one archetype at a time."
+    },
+    {
+      "bead": "VERBS-scene",
+      "what": "scene.gen's list of family parameters that other beads define omits the apartment parameters `corridor_m` and `closer_torque_nm` (N19a-32, DESIGN names, pinning a drawn dimension for exposure scenes)."
+    },
+    {
+      "bead": "BD-166",
+      "what": "Step 4 says the kernel interpolates 'with weights computed in the kernel', while HZ-06's test `hz06_manual_trilinear` requires the kernel to equal the host's interpolation bit for bit; state that K-np-sdf uses N19b-01's step 4 exactly: nested lerp (1 − t)·a + t·b in the order x, y, z, no fused multiply-add (the host reference now uses this endpoint-exact form, so face points agree from either cell)."
+    },
+    {
+      "bead": "VERBS-scene",
+      "what": "scene.gen's list of family parameters that other beads define omits the retail parameters `lane_m` and `fog` (N19a-36, DESIGN names: the checkout-lane width and the glass case's fog latent in [0, 1], pinned for exposure scenes)."
+    },
+    {
+      "bead": "N19b-38",
+      "what": "The first entry's `applies_to = [\"threshold\", \"sliding-door-track\", \"dock-plate-lip\"]` names two keys that are no hazard row's slug (warehouse has `dock-plate`; no row has a sliding door track), while acceptance requires the sixteen entries to load and makes an unknown hazard key a load error, so the catalog as written fails its own load. State `applies_to` keys as BD-227 slugs (for this entry `threshold`, `dock-plate`, and the door-track row if one is added through N19a-39's promotion path), and say which slugs `door-holder` and `door-closer-adjustment` name (N19b-39's localization example now uses `door-closer` and `interior-door`)."
+    }
+  ],
+  "unchanged": 5,
+  "notes": "All 40 beads reviewed in full against the 14 conventions and the registry beads as they stand now. Unchanged: N19b-25, N19b-28, N19b-37, N19b-41, N19c-28 (N19c-28: eighteen rows, eight extension rows, the designed controls and every truth rechecked; the per-control feature form `<crate>/nc-<nnnn>` is BD-025's). Slice notes answered: N19a-07 (request applied), N19a-12 and N19a-16 (split applied, new bead N19ap4-01), N19b-01 (counterpart of N19c-16's partial move: nothing to take, N19c-16 already depends on N19b-01), N19c-27 (graph-audit move applied after checking its evidence)."
+}

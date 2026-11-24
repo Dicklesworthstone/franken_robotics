@@ -4,7 +4,7 @@ title: "upstream frankensim: documented build-identity setting for path consumer
 type: "task"
 priority: 2
 milestone: "M1"
-labels: ["m1", "suite", "workspace", "upstream", "frankensim", "solid"]
+labels: ["m1", "suite", "workspace", "upstream", "frankensim", "solid", "review-notes-open"]
 parent: "WP-01"
 deps: ["BD-006", "BD-037", "N33b-04", "STD-E2E"]
 needs: []

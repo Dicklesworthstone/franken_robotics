@@ -4,7 +4,7 @@ title: "upstream franken_lean: its suite lock certified on macOS aarch64 (today 
 type: "task"
 priority: 3
 milestone: "M5"
-labels: ["m5", "suite", "lemma", "upstream", "franken_lean", "frontier"]
+labels: ["m5", "suite", "lemma", "upstream", "franken_lean", "frontier", "review-notes-open"]
 parent: "WP-31"
 deps: ["BD-037", "BD-380", "BD-381", "N33b-04", "STD-E2E"]
 needs: []
@@ -110,8 +110,11 @@ against the new pin.
 
 **Adoption.** The register gives this item **no switch-over rule**: the Linux host keeps working. DESIGN, for
 when it lands: INT-FLN-01 is run a second time on the Mac (`fln` builds, re-checks and seals one trivial
-theorem from `lean/`, and the capsule checks from an empty environment), its record is added beside the Linux
-one, and the Mac becomes eligible as the second machine for capsule re-checks. The Linux host stays the
+theorem from `lean/`, and the capsule checks from an empty environment), and its admission record, written through
+N33a-07's writer under `receipts/admissions/INT-FLN-01/` with `host.class = "m5-ultra"` and the machine
+fingerprint, is added beside the Linux one. The gate's register row stays BD-380's recording: the Mac run is a
+check whose receipt hash is logged and cited by its admission record, and it is never entered with `record_gate`
+(one recorder per gate). The Mac then becomes eligible as the second machine for capsule re-checks. The Linux host stays the
 reference platform for sealing; whether the Mac may also seal is the Lemma lead's decision once both platforms
 have agreeing records.
 
@@ -122,7 +125,7 @@ single-kernel check, remains the fallback of the foundation itself.
 
 - [ ] In FrankenLean: `SUITE.lock` lists `aarch64-apple-darwin` with its conformance receipts; the per-module verdicts on macOS equal those on Linux, with 0 failed on both.
 - [ ] In FrankenLean: a capsule sealed on either platform verifies on the other, and the two capsules sealed from the same inputs are byte-identical (or the differing field is documented as platform metadata outside the hashed content).
-- [ ] Here: INT-FLN-01 has a passing record on the Mac beside the Linux record, each citing its machine fingerprint and the stack receipt.
+- [ ] Here: INT-FLN-01 has a passing admission record on the Mac beside the Linux one, each citing its machine fingerprint and the stack receipt; the gate's register row is still the one BD-380 entered, and no second `record_gate` call was made.
 - [ ] Here: a capsule re-check, seal or verification requested on a platform the pinned `SUITE.lock` does not certify is refused by the platform guard with `lean.platform-uncertified`, before `fln` runs, at every pin.
 - [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet; its `pin_state` field, `unpinned` as BD-037 wrote it, is cleared once the fixture has been re-run at the sibling's first pin.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.

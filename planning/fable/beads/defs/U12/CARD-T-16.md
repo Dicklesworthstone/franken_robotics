@@ -39,19 +39,19 @@ prose and trusting each recursion's author.
 
 ## Scope
 
-In: statement document, registry row, the certificates on the convention kernels (ad, ad*, the parity map),
-specimen and mutants. Out: checking the conventions against the sibling's façade at M0 (the algebra crate's
+In: statement document, registry row, the two specimens (ad* and the parity map) and their mutants. The
+certificates on the convention kernels as built (ad, ad*, the parity map) are produced in N13-02's acceptance
+(order of work below). Out: checking the conventions against the sibling's façade at M0 (the algebra crate's
 obligation); the group-level statements (CARD-T-04, CARD-T-05); step equivariance (CARD-T-10).
 
-Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
-the retractions and coadjoint convention of `frob-lie` (BD-011) is `related`, not a dependency (a card that waited
-for its implementer would close a loop, because the implementer's own acceptance runs the card's law tests). What
-the card does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier,
-and Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants,
-and every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live
-output (certificates bound to the content hashes of the convention kernels as built) is run inside the
-implementing bead, with this card's law tests, as part of that bead's acceptance; the receipt produced there is
-what moves the registry row for that output.
+Order of work. This card is finished before the code that implements or uses its theorem and never depends on it.
+The coadjoint convention of `frob-lie` (BD-011) is M0 and cannot wait for this M1 card, so it is `related`. The
+bead in which both conventions first exist as built is N13-02 (the parity map), which depends on this card. What
+the card does depend on is in `deps`: the card registry, the group-level card T-04 and Lemma's own proof
+machinery. It closes on its statement document, its registry row, its specimens and mutants, and every acceptance
+line that its own fixtures decide. An acceptance line that can only be observed on live output (certificates
+bound to the content hashes of the convention code as built) is run inside N13-02, with this card's law tests, as
+part of that bead's acceptance; the receipt produced there moves the registry row to `checked`.
 
 ## Technical approach
 
@@ -69,15 +69,16 @@ what moves the registry row for that output.
 5. Relies on it: the conventions chapter (adjoint, coadjoint and the Euler–Poincaré sign; reflection parity);
    construction C-04 (dynamics on a tree) and C-09 (the signed-permutation representations of a symmetry follow
    from the parity table); cards T-10 and T-18.
-6. Artifacts: `docs/math/cards/T-16.md`; registry row; certificates; specimen `poly-identity/accept-T-16-*.frobcert`
-   with mutants.
+6. Artifacts: `docs/math/cards/T-16.md`; registry row; specimens `poly-identity/accept-T-16-*.frobcert` with
+   mutants (the certificates on the code as built are N13-02's).
 
 ## Acceptance criteria
 
-- [ ] `frob-verify` accepts both T-16 bundles and rejects: ad* implemented as −ad_ξᵀ (identity (i) fails by a
-      factor −1 on every term); the parity map with axial vectors mapped by P instead of det(P)·P (the bracket
-      identity fails); one changed coefficient.
-- [ ] Registry row `checked`, class `Certified`, with certificate hashes and checker identity.
+- [ ] `frob-verify` accepts both T-16 specimen bundles and rejects: ad* implemented as −ad_ξᵀ (identity (i)
+      fails by a factor −1 on every term); the parity map with axial vectors mapped by P instead of det(P)·P (the
+      bracket identity fails); one changed coefficient.
+- [ ] Registry row at this card's close: the route registered and `hypothesis`, printing no class; N13-02's
+      receipt moves it to `checked`, class `Certified`, with certificate hashes and checker identity.
 - [ ] The free-body check and the mirror check below pass as exact fixtures.
 - [ ] The statement document repeats both conventions as formulas and names the forbidden notation.
 

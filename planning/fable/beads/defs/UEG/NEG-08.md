@@ -4,7 +4,7 @@ title: "discrepancy E7-5 resolved: the six-survivor ladder costs 2.0 h, with the
 type: "task"
 priority: 2
 milestone: "M4"
-labels: ["m4", "atelier", "frob-opt", "solid", "test", "card"]
+labels: ["m4", "atelier", "frob-opt", "solid", "test", "card", "review-notes-open"]
 parent: "WP-62"
 deps: ["BD-329", "GB-35", "N28b-17", "NEG-03"]
 needs: []

@@ -4,7 +4,7 @@ title: "e2e scripts/e2e/decision_records.sh: matrix, queue, killed ideas, idea p
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "delivery", "gauntlet", "frob-conformance", "solid", "test", "e2e", "decision-record"]
+labels: ["m0", "delivery", "gauntlet", "frob-conformance", "solid", "test", "e2e", "decision-record", "review-notes-open"]
 parent: "EPIC-M0"
 deps: ["N40-01", "N40-03", "NAB-17", "NAB-18", "NAB-19", "NAB-20", "NAB-21", "NAB-22", "NAB-32", "NAB-33", "NAB-34", "NAB-35", "NAB-36", "NAB-37", "NAB-38", "NAB-39", "NAB-40", "NAB-41", "NAB-42", "NAB-43", "NAB-44", "NAB-45", "NAB-46", "NAB-47", "NAB-48", "NAB-49", "STD-E2E"]
 needs: []
@@ -85,7 +85,8 @@ Plain shell, sourcing `scripts/e2e/lib.sh`, idempotent, offline, seed-free, on a
 1. `e2e_cmd -- cargo run -p frob-conformance --bin decision-sweep -- due --exit M<n> --json`; assert the count
    of due kill-gate families (1, 2, 7, 19, 21, 7, 8, 0, 7 for M0 to M8, the known answers of NAB-22) and the
    count of family-and-kill-gate pairs, a family due by two kill gates counting twice (1, 2, 8, 22, 24, 11, 8,
-   0, 8, the counts the sweep beads NAB-23 to NAB-31 use), and log the due killed ideas, queue items, ideas and
+   0, 8, the counts the sweep beads NAB-23 to NAB-31 use); assert that the M2 list names the conditional ideas
+   UP-06 and UP-10 (their `trigger_exit`, NAB-49); and log the due killed ideas, queue items, ideas and
    reading tasks.
 2. If `docs/delivery/exits/M<n>/decision-records.json` exists: `… -- check --exit M<n>`; assert no finding;
    log outcomes by kind, `active_after` (threshold `<= 4`) and open reading tasks (threshold `== 0`).

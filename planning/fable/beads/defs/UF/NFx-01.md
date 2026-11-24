@@ -111,8 +111,9 @@ the lists, never from a total typed into the test:
    opened reservation names exactly one row with its `id` and `bead`. `<repository>` is matched
    against the repository names of the register's `repo` values, so the two register writers titled
    `upstream register: …` (N33c-47 and this bead) and BD-037 (`upstream: …`) are not items. Beads that carry a
-   later stage of a registered item (NFp1-51 and NFp1-52, stages 3 to 5 of FD-FT-01) are titled by repository
-   without the `upstream` prefix and are not rows: the item keeps one row and one mirrored bead.
+   part or a later stage of a registered item (NFp1-51 and NFp1-52, stages 3 to 5 of FD-FT-01; NFp4-01, the
+   sibling half of FD-ASUP-01) are titled by repository without the `upstream` prefix and are not rows: the item
+   keeps its one row and that row's mirrored beads.
 2. *No orphan rows.* Every row's `bead` exists in the exported bead data; every `fixture` directory exists.
 3. *Series.* Per prefix (`FD-FSIM`, `FD-FSYM`, …) the identifiers in rows, unopened reservations and
    tombstones form the run 01 to n with no number missing and none twice (an opened reservation is counted by
@@ -120,7 +121,8 @@ the lists, never from a total typed into the test:
 4. *Count follows the lists.* The number of rows equals the size of BD-037's list (53) plus N33c-47's (6) plus
    this bead's (5) plus the reservations that have been opened. Each list is the constant its owner keeps, so a
    new row passes only when exactly one owner lists it.
-5. Counts by repository and by priority are printed.
+5. Counts by repository and by priority are printed, with the numbers of unopened reservations and of
+   tombstones (the script's `reserved` metric is read from this line).
 
 Determinism: the registry and the series file are data; the test is a pure function of them, class D0.
 
@@ -147,9 +149,10 @@ Determinism: the registry and the series file are data; the test is a pure funct
 
 ### End-to-end script and logging
 
-Step `late_rows` of `scripts/e2e/upstream_registry.sh` (the script of BD-037): `frob doctor --json` must list
-64 register rows and one reservation; then the five fixtures are run and must fail with their recorded
-signatures. Logged through the shared helper as NDJSON under `target/e2e-logs/upstream_registry/`: one `cmd`
+Step `late_rows` of `scripts/e2e/upstream_registry.sh` (the script of BD-037): `frob doctor --section upstream
+--json` must list 64 register rows; the one reservation is counted from the output of `cargo test -p
+frob-conformance upstream_register_whole`, because the series file is test data that `doctor` does not read;
+then the five fixtures are run and must fail with their recorded signatures. Logged through the shared helper as NDJSON under `target/e2e-logs/upstream_registry/`: one `cmd`
 event per fixture with exit code and wall time, `metric` events `rows` (64), `reserved` (1), `by_repo` and
 `by_priority`, one `assert` event per rule of the register-wide test, the sibling commit of each fixture, and
 on failure the first offending identifier with the rule it broke.

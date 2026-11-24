@@ -4,7 +4,7 @@ title: "frob-conformance: counterexample registry of the safety chapter (CX-384)
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "safety", "gauntlet", "frob-conformance", "solid", "registry", "test"]
+labels: ["m1", "safety", "gauntlet", "frob-conformance", "solid", "registry", "test", "review-notes-open"]
 parent: "WP-58"
 deps: ["BD-025", "N38b-04", "N38b-05", "STD-TEST"]
 needs: []

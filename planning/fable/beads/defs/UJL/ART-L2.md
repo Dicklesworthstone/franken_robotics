@@ -263,7 +263,9 @@ digests, each assertion with observed and expected values, each refusal with cod
 ### Known answers and negative controls
 
 - Known answers (exact): 4 × 38 A = 152 A; 4 × 0.4 W/K = 1.6 W/K; 22.2 V in [18, 25.2] V; 27 = 21 + 6 scalars;
-  diag(0, 1, 1, 1, 1, 1). They have no number in the known-answer suite; the unit's coverage file lists them.
+  diag(0, 1, 1, 1, 1, 1). They are row JL-08 of NJLx-02's known-answer block (a dependency), which this bead's
+  tests cite by number once the block is issued, with the row's controls (a 1.5 W/K sink, a 26 V bus, a reversed
+  power sign).
 - Counterexample kept alive: adding peak currents on a shared bus. Two consumers each need one powered tick
   and the bus powers one per tick: with a one-tick deadline no joint schedule exists; with two ticks exactly
   two exist; a rule that adds both peaks rejects the two-tick design, which is feasible.

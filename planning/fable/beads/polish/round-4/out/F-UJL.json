@@ -1,0 +1,138 @@
+{
+ "round": 4,
+ "slice": "F-UJL",
+ "reviewed": 13,
+ "changed": [
+  {
+   "bead": "ART-L2",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Its known answers (4 x 38 A, 1.6 W/K, 22.2 V in [18, 25.2] V, 27 = 21 + 6, the selector) said they had 'no number in the known-answer suite', but they are row JL-08 of NJLx-02, a dependency whose acceptance requires each owner's test to cite its row by number. Left as it was, the implementer would not cite the row and NJLx-02's completeness check and script step 3 would fail on JL-08. Now the bead names JL-08 and its three controls."
+  },
+  {
+   "bead": "ART-L4",
+   "kinds": [
+    "broken",
+    "registry",
+    "contradiction",
+    "convention"
+   ],
+   "what": "Step (8) ran `frob prove verify` on 'the bundle of the refined answer', but prove.verify takes file paths, so there was no file to verify. Added `frob prove bundle <a2> --out <scratch>/l4.frobcert --key l4-bun` first (VERBS-prove's mission-answer form, BD-133), with an acceptance item. The sixth 'query mutation' (853) could never pass: 853 is not an admission code, so mission.check and mission.new never raise it. It is now an answer case, as in N25a-23's case a17: a pinned fixture `a1-attained.frobcert` (the first answer's bundle re-sealed by BD-136's mutation library) passed to `mission synthesize --reuse`, giving 853, exit 3. The five real query mutations now run through `frob mission check <file>`. Moved BD-136 from related to deps and added N25c-21 (`--reuse`, M1), with no cycle. Determinism on the wire is `D0`, not `exact` (N35-01's reader rejects \"exact\"). The known answers are JL-11 and JL-12 of NJLx-02, not 'no number'. The next_actions assertion now names the settled spelling (`--from`, no `--strategy`; VERBS-mission) instead of waiting on a 'registry freeze', and the narration that NJL-08 'is asked' is now a statement of fact (convention 13)."
+  },
+  {
+   "bead": "ART-L5",
+   "kinds": [
+    "request",
+    "contradiction"
+   ],
+   "what": "Applied the H-verbs-6 ANSWER after checking VERBS-prove and N22b-14 (which ART-L5 reaches through BD-337). Step (5) had no `--out`, so the bundle went nowhere and frob-verify had no file to read. It is now `frob prove bundle <budget> --out <scratch>/l5.frobcert --key l5-prove`. After the referee stop of step (7) the script adds the run-replay bundle `--run <run> --out ... --key l5-prove-run` and runs frob-verify on it, with an acceptance clause, so the replay step of the energy-budget checker is exercised. The known answers are JL-13 and JL-14 of NJLx-02, not 'no number'."
+  },
+  {
+   "bead": "ART-L7",
+   "kinds": [
+    "request",
+    "registry",
+    "deadlock",
+    "broken",
+    "contradiction"
+   ],
+   "what": "Applied both eval.ledger requests: `--action open` and `--action close` with no key (a `--key` on this admin verb is 802, so steps 5 and 6 would have been refused). The M3 lane was 'logged as blocked' while OPEN-ARENA-3 is undecided, which is a deadlock for an M3 acceptance item. Now the fixture's task family carries the `synthetic` label (N24b-15), so the open succeeds, and `qualification-undecided` is asserted once on a non-synthetic family. Mutation codes now follow BD-133's Lemma column, which prove.verify and frob-verify always use: m1 to m4 are 829 (850 and 851 are the mission verbs' codes) and m5 is 826. The non-reduced-rational test now expects the rule to be named, not 849. Step (4) gains its missing path. Step (1) now creates quad-tray and the L.3 task, with deps ART-L1, ART-L3 and N24b-15 added (no cycle). The two prose placeholders of e2 (`query.bytes`, `checker.build`) now have a resolve rule and a test; without one, resolve would refuse and the 'six resolved entries parse strictly' criterion could not pass. Determinism `D0`; known answers are JL-16."
+  },
+  {
+   "bead": "ART-L9",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "eval.ledger open and close are now `--action open|close` with no key, as VERBS-eval requires (the old `--open/--close --key` lines are 802). Added that BD-298 is GATE-TETHER-12's one recorder and that this script only logs tagged measurements (convention 9)."
+  },
+  {
+   "bead": "NJL-02",
+   "kinds": [
+    "request",
+    "registry",
+    "deadlock"
+   ],
+   "what": "Applied NJL-01's request. There are six run common properties (`envelope_scope` after `on_cancel`) and sixteen variation arms (memo, report surface or artifact reader, admission_check). The refusal sentence now lists the codes of arms 11 to 13 and 15 to 16, and the additive snapshot examples now include envelope_scope, no_memo and diagnostic_override. The annotation and tag rules were not NJL-01's: idempotent was taken 'from the row', destructive was 'only for an admin verb that deletes', and there was one kind tag. They now follow NJL-01, so the harness would no longer flag correct tools. This M0 bead's script needed `frobd --mcp` (needs=frobd), but the daemon lands at M2 (N32a-14). It now uses frob-mcp's own loopback HTTP transport (BD-023), and from M2 it adds a daemon lane, logged as a skip before that, in the tool, verbs_lib step 4 and the script header."
+  },
+  {
+   "bead": "NJL-03",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Script step 4 called `frob robot-docs --cluster <task cluster>` 'for each of the ten new clusters', mixing registry clusters with task clusters, and `--cluster` accepts only a task cluster. Now each verb of the new registry clusters is checked in every task cluster that seats it. All count tables were recomputed against the VERBS tables (244 rows: 139 read-default with the two-kind rows, 84 run, 15 mutate, 6 admin; milestone histogram as stated) and are right."
+  },
+  {
+   "bead": "NJL-06",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "This M1 bead's acceptance and script read the resource 'through `frobd --mcp` (loopback HTTP)' with needs=frobd, but the daemon is N32a-14 at M2, so the bead could not close at M1. It now reads over frob-mcp's own loopback HTTP transport (BD-023). The daemon lane is N32a-25's at M3: that bead depends on this one, reads every resource form through frobd, and re-runs this bead's equality tests. Scope, acceptance and script header are aligned."
+  },
+  {
+   "bead": "NJL-07",
+   "kinds": [
+    "request",
+    "broken",
+    "plan"
+   ],
+   "what": "Applied F-U34's request: the dependency is N34p4-02 (whose layout table gains fixtures/golden/), not N34-01 (checked: N34p4-02 is M0 and closes no cycle). The identity map lacked two identities that L.7's e2 prints, `b3:3c9d...` (the query digest, the same hex digest as `q:3c9d...`) and `b3:e17a...` (L.4's world set). Without them resolve would refuse L.7. They are now added. 'Added to step 4 of the exit runner' did not fit N40-05: the runner attaches checks only through `scripts/exit/checks.toml` records whose command prints the contract object and exits 0. A plain e2e script exiting 1 would be reported not-run rather than as a block. The bead now writes the `appendix-l-story` record (step 4, since M1) with a wrapper, and an acceptance item checks that a planted failed fact appears among the blocking parts. The story facts were recomputed (centre 7, 47/20; 4 x 0.4 = 1.6 W/K; (12 - 17.04)/12 = -0.42; e2 forces)."
+  },
+  {
+   "bead": "NJL-08",
+   "kinds": [
+    "request",
+    "deadlock",
+    "registry"
+   ],
+   "what": "Applied F-U35's request: the specimen and A7, A9 and A13 now carry determinism \"D0\" (N35-01 rejects \"exact\"). A Considerations line records that only those three lines depart from the printed transcript, which was verified by diff. Took its side of the BD-126 audit note, which BD-126 has already applied (BD-109 is in its related list and it names NJL-08). Checked: NJL-08 reaches BD-109 through BD-118 and has BD-126 as a dep. A4 now asserts `template:quad-mammal@1#b3:` plus the hash of BD-109's design.fbot. A1, A3 and rule 1 asserted the three base tools and seven orient tools in an M1 build, but scene_list (VERBS-scene) and job_wait and job_cancel (VERBS-job) register at M2, and BD-138 lists only registered tools. These are now exact against the build's registry, with the M1 and M2 sets stated. The A7 next_actions assertion now states the settled `--from` spelling instead of waiting on a 'registry freeze'."
+  },
+  {
+   "bead": "NJL-09",
+   "kinds": [
+    "request",
+    "contradiction"
+   ],
+   "what": "Applied the eval.ledger requests: open and close via `--action`, with no keys (the `--key` lines would be refused 802), and the agent is refused `--action open`. Its known answers are row JL-18 of NJLx-02, not 'no number'."
+  },
+  {
+   "bead": "NJLx-02",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "The Background said the owner beads 'say that they have no number', which no longer holds: they now cite rows JL-01 to JL-18. Left as it was, an implementer reading it would expect the owners to carry no row citations, while this bead's acceptance requires every owner test to cite its row. All eighteen truths were recomputed (counts 243 and 136/83/15/6/3; the energy sums and margins 4,500,000, 4,500,040, 4,484,100 and 4,587,600; 515 of 2,511) and are right."
+  },
+  {
+   "bead": "NJLx-51",
+   "kinds": [
+    "registry",
+    "deadlock",
+    "convention"
+   ],
+   "what": "The refusal lists did not follow NJL-01. 808 (arm 4) belongs only to regressor-identity, the one row with an int53 input. constraint-graph, as an artifact reader, also gets 814, 816, 819, 873, 889, 895 and 897 (arm 15). The derivation test would have failed on the real generator. Added BD-139 (the arm's owner) as a dep. Its acceptance and script used `frobd --mcp` without reaching the daemon, so N32a-14 (M2) is added, with no cycle. 'Before its milestone ... 724' now follows the handler-presence rule of NJL-02 and NJL-03. The line saying N32a-02 'is asked to admit' the tables is now a statement of fact (convention 13): N32a-02 admits [counts] and [[addition]]."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "ART-L1",
+   "what": "Its known answers (pointer table, twelve coordinates, feet at (+-1/5, +-1/7) m, group orders 4 and 2, the cell centre) say 'no number in the known-answer suite', but they are rows JL-06 and JL-07 of NJLx-02, a dependency whose acceptance requires the owner's test to cite its rows. Left as is, JL-06 and JL-07 stay uncited and NJLx-02's check fails. Its acceptance also asserts 'determinism `exact`' on the design.check envelope; the wire form is \"D0\" (N35-01 rejects \"exact\")."
+  },
+  {
+   "bead": "ART-L3",
+   "what": "Its acceptance (line 225) asserts evidence 'determinism `exact`' on the task.check envelope; the wire form is \"D0\" (N35-01, whose reader rejects \"exact\"), so the assertion would fail on a correct build."
+  },
+  {
+   "bead": "ART-L6",
+   "what": "Its known answers (7 + 21 = 28 tests of 42; 55 >= 48 of 64; -0.42) say 'no number in the known-answer suite', but they are row JL-15 of NJLx-02, a dependency; cite JL-15 by number, or NJLx-02's citation check fails."
+  },
+  {
+   "bead": "ART-L8",
+   "what": "Its known answer (the interval [0.0554, 0.4392] at (a, b) = (2, 19)) says 'no number in the known-answer suite', but it is row JL-17 of NJLx-02, a dependency; cite JL-17 by number, or NJLx-02's citation check fails."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "Reviewed 13; changed 13, unchanged 0 (none: every bead had at least one real defect, most from registry and owner revisions of this round's first half). All addressed notes applied after checking their owners: NJL-01's sixteen arms and six run properties (NJL-02), the eval.ledger action spelling (ART-L7, ART-L9, NJL-09), the prove.bundle ANSWER (ART-L5), N34p4-02 (NJL-07), D0 (NJL-08), and the BD-126 audit counterpart (NJL-08 A4, which BD-126 has already applied). Recurring findings: frobd --mcp used before M2 (NJL-02, NJL-06, NJLx-51); 'no number' text contradicting NJLx-02's JL rows (requests to ART-L1, ART-L6, ART-L8); determinism 'exact' on the wire. The slice looks settled apart from those four requests."
+}

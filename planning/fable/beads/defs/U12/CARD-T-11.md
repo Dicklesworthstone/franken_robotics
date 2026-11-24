@@ -34,9 +34,10 @@ hand-written code path per case, where the class is whatever the author typed.
 
 ## Scope
 
-In: statement document, registry row, the witness format for both verdicts, the certificate per reference joint,
-fixtures. Out: the classification algorithm and generated joint maps (the joint-subgroup bead of the algebra
-crate); lattice-based mobility (Frontier, with its own pilot); joint limits and loop closures.
+In: statement document, registry row, the witness format for both verdicts, specimens and fixtures (the
+certificate per reference joint is produced in BD-046's acceptance; order of work below). Out: the
+classification algorithm and generated joint maps (the joint-subgroup bead of the algebra crate); lattice-based
+mobility (Frontier, with its own pilot); joint limits and loop closures.
 
 Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
 the joint-subgroup classification of `frob-lie` (BD-046) is `related`, not a dependency (a card that waited for
@@ -44,9 +45,10 @@ its implementer would close a loop, because the implementer's own acceptance run
 card does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and
 Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and
 every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output
-(the certificate per reference joint and the design compiler's refusal of a joint whose stated class differs) is
-run inside the implementing bead, with this card's law tests, as part of that bead's acceptance; the receipt
-produced there is what moves the registry row for that output.
+is run inside the bead that produces that output, with this card's law tests, as part of that bead's acceptance:
+the classifier's verdicts and the certificate per reference joint in BD-046, whose receipt moves the registry
+row; the design compiler's refusal of a joint whose stated class differs (`FROB-REF-101`, preflight stage 3) in
+the joint block of the design language, N14a-04, which reaches this card through BD-046.
 
 ## Technical approach
 
@@ -75,14 +77,18 @@ produced there is what moves the registry row for that output.
 
 ## Acceptance criteria
 
-- [ ] Each of the twelve classes is recognized from a rational screw basis, and a non-closed basis is reported as
-      a product (the seed's condition for the classification bead), each with a witness `frob-verify` accepts.
+- [ ] For each of the twelve classes, and for a non-closed basis reported as a product, the card's specimen
+      witness (structure constants or a non-closure covector, with the class invariants) is accepted by
+      `frob-verify`. Recognizing each class from its basis is the seed's condition for the classification bead,
+      observed in BD-046's acceptance with these law tests.
 - [ ] Negative controls rejected: a universal joint (two concurrent perpendicular revolute axes) offered with
       closed-span structure constants; a spherical joint reported as "three independent revolutes" with a
       non-closure covector (none exists); one structure constant changed; a stated class that disagrees with the
       invariants (a helical joint of pitch p ≠ 0 stated as revolute).
-- [ ] The design compiler refuses a joint whose stated class differs from the certified class, naming both.
-- [ ] Registry row `checked`, class `Certified`, with the witness hashes and checker identity.
+- [ ] The design compiler's refusal of a joint whose stated class differs from the certified class, naming both
+      (`FROB-REF-101`), is an acceptance line of N14a-04, not a condition of this card's close.
+- [ ] Registry row at this card's close: the route registered and `hypothesis`, printing no class; BD-046's
+      receipt moves it to `checked`, class `Certified`, with the witness hashes and checker identity.
 
 ## Test plan
 
@@ -108,11 +114,13 @@ produced there is what moves the registry row for that output.
 ### End-to-end script and logging
 
 `scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) includes the witnesses as `poly-identity` specimens;
-design-side scripts exercise the refusal of a mis-stated class through `frob design check`. For this card the
-NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-11"), `step` (`T-11/<class-or-mutant>`),
-`event`, the exact command line, exit code, wall time, the witness hash, the expected and observed verdict, the
-reported class against the stated class, and on a mismatch the first failing rule (the bracket or dot product
-that differs, with both rationals) and the fixture path to reproduce.
+`scripts/e2e/skel_author_compile.sh` (bead N14a-27) exercises N14a-04's refusal of a mis-stated class through
+`frob design check --stages 1-3 --json`. For this card the
+NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead` and `step` ("CARD-T-11" and `T-11/<class-or-mutant>`
+on N12-34's per-card lines; N14a-27's own key and step names on its script's lines, since a line carries its
+owning bead), `event`, the exact command line, exit code, wall time, the witness hash, the expected and observed
+verdict, the reported class against the stated class, and on a mismatch the first failing rule (the bracket or
+dot product that differs, with both rationals) and the fixture path to reproduce.
 
 ### Known answers and negative controls
 

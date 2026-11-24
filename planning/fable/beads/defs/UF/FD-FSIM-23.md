@@ -145,11 +145,11 @@ per route: `frob ground identify <rehearsal dataset> --stage actuators --windows
 `frob ground identify <rehearsal dataset> --stage actuators --windows raw --key fd23-raw --json` (a run verb: the
 dataset is the positional input, the stage is named so that the second call re-fits the same stage and not the
 next one, and the two compared calls carry distinct keys), and asserts the route named in each calibration record
-(`windowed`, `streaming`) and the stored comparison. DESIGN, how a caller chooses the route: by the verb's
-existing option `--windows`. A window definition is the windowed route, as today; the value `raw`, which this
-bead adds and requests of the `ground.identify` row (VERBS-ground, BD-391), sends the raw rows through the
-streaming entry. At a pin whose airlock has no streaming entry, `raw` answers `FROB-REF-724` naming FD-FSIM-23
-before any fit, so the interim posture cannot be bypassed.
+(`windowed`, `streaming`) and the stored comparison. How a caller chooses the route is the `ground.identify`
+row's option `--windows <def | raw>` (VERBS-ground; implemented by BD-391, extended by this bead with `raw` at
+M5): a window definition is the windowed route, as today; `raw` sends the raw rows through the streaming entry.
+At a pin whose airlock has no streaming entry, `raw` answers `FROB-REF-724` naming FD-FSIM-23, exit 5, before any
+fit, so the interim posture cannot be bypassed.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_23/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

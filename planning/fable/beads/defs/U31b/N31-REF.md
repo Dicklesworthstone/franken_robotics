@@ -4,7 +4,7 @@ title: "Refusal registry of Foundry (§31): fourteen codes with triggers, payloa
 type: "task"
 priority: 3
 milestone: "M5"
-labels: ["m5", "foundry", "frob-foundry", "frontier", "registry"]
+labels: ["m5", "foundry", "frob-foundry", "frontier", "registry", "review-notes-open"]
 parent: "WP-70"
 deps: ["BD-005", "BD-022", "N31b-45", "N32a-03", "STD-E2E", "STD-TEST", "VERBS-foundry"]
 needs: []

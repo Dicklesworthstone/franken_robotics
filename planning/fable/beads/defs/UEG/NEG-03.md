@@ -97,6 +97,55 @@ The twelve items:
 | E7-K1 | Worst spacing in an 8 m cell | 0.48 µm | 0.24 µm (centred offset) | NEG-14 |
 | E7-K2 | Sideways cost of a 0.10 m shift | 0.57 m only | 0.57 m small-angle and 0.55 m exact | NEG-14 |
 
+**The stale entries of the twelve items (DESIGN, written here at M0; each owner bead states why its entry has
+its form).** In TOML basic strings, so a regular-expression backslash is doubled:
+
+```toml
+# E7-1 (NEG-04)
+stale = [{ pattern = "76[, ]?963", scope = "nemesis|rare|qualif|episode" }]
+# E7-2 (NEG-05)
+stale = [{ pattern = "1 ?/ ?\\(1 ?[−-] ?0\\.87\\) ?= ?7\\.8\\b", scope = "step share|Amdahl|87 ?%" },
+         { pattern = "about 7\\.8\\b", scope = "step share|Amdahl|87 ?%" }]
+# E7-3 (NEG-06)
+stale = [{ pattern = "1\\.345 ?[÷/] ?0\\.94", scope = "solver|ceiling|share" },
+         { pattern = "94 ?% of the batch was shared", scope = "solver|ceiling" }]
+# E7-4 (NEG-07)
+stale = [{ pattern = "\\b0\\.5 ?M world-steps", scope = "referee|shadow|coverage" },
+         { pattern = "\\b0\\.5 to 2\\.4 ?%", scope = "referee|shadow|coverage" }]
+# E7-5 (NEG-08)
+stale = [{ pattern = "\\b2\\.6 ?h\\b", scope = "ladder|survivor|audit" }]
+# E7-6 (NEG-09)
+stale = [{ pattern = "\\b615\\b", scope = "decision|thirteenth|30 Hz|20 s" }]
+# E7-7 (NEG-10): the withdrawn print, 2.7075 after 0.9207 with no damped value between
+stale = [{ pattern = "0\\.9207[^0-9]{1,160}2\\.7075", scope = "wheel|spectral|radius|instantaneous" }]
+# E7-A (NEG-11): the pairs, never C = 24 or C = 40 alone, and not 27 kB or 72 kB (KA-348 keeps them)
+stale = [{ pattern = "\\bC = 24\\b", all_of = ["R = 128"] }, { pattern = "\\bC = 40\\b", all_of = ["R = 224"] }]
+# E7-B (NEG-12)
+stale = [{ pattern = "(^|[^0-9.])1 ?%", all_of = ["squeeze", "GATE-HAB-06"] }]
+# E7-C (NEG-13)
+stale = [{ pattern = "\\b0\\.25 ?J[^0-9;,.]{0,12}stored", scope = "budget|energy|absorber|stop" }]
+# E7-K1 (NEG-14)
+stale = [{ pattern = "\\b0\\.48 ?[µμu]m", scope = "cell|offset|anchor|spacing" }]
+# E7-K2 (NEG-14)
+stale = [{ pattern = "\\b0\\.57 ?m\\b", scope = "sideways|lateral|shift" }]
+```
+
+Every entry has a `scope` or an `all_of`, as the engine requires. E7-C has no entry for "0.10 J … reserve":
+after the settlement the reserve is a further 0.10 J, so "0.10 J reserve" is correct text (GB-26's row "Same
+with 0.10 J reserve"); the superseded labelling of that term is rejected by the checker on NEG-13's fixture,
+not by the scan.
+
+**Lines that state a withdrawn value on purpose.** The engine reads no label and has no negative condition, so
+in the walk set every line that states a withdrawn value on purpose, or a correct figure its pattern cannot
+tell from the stale one, carries `stale-as-control: <id>` (exemption (d) of N38b-50): a card's planted wrong
+golden or control row, a test's planted string, a fixture in the superseded form. The card files that hold
+such lines, each marked by its own bead: GB-04 (0.48 µm, E7-K1), GB-05 (0.57 m, E7-K2), GB-09 (7.8, E7-2),
+GB-16 (0.5 M world-steps/s, 0.5 to 2.4%, E7-4), GB-18 (1.345 ÷ 0.94, E7-3), GB-23 (615 and 615.38, E7-6),
+GB-26 (0.25 J labelled stored, E7-C), GB-32 (76,963, E7-1), GB-35 (2.6 h, E7-5), GB-41 (the superseded
+capacity pairs, E7-A). Outside the cards, the owner beads name theirs (KA-348's row and N38b-58's
+`byte_model_example` for E7-A, among others). An unmarked line fails `stale_values_absent` from the day its
+file lands.
+
 **The scan (`stale_values_absent`).** A test in `frob-conformance` registers this register as a source of the
 scan engine of N38b-50 and runs the engine over its `stale` entries. The engine's rules are stated once, in
 N38b-50, and are these in outline: it walks `README.md`, `registries/`, `schemas/`, `crates/*/CONTRACT.md`,
@@ -154,8 +203,14 @@ converse and link checks (`pass`, `fail` or `pending (Mn)`).
   bead index, and at a build of M0 exactly E7-2 and E7-3 are due.
 - `links_resolve_and_agree`: E7-1, E7-2, E7-3 and E7-6 name REC-07, REC-02, REC-01 and REC-06; 76959, 100/13,
   8428/5757 and 616 equal the figures those records settle (each asserted once due, as above).
-- `linked_hit_names_both`: a planted "1/(1 − 0.87) = 7.8" is reported once, under E7-2 and REC-02 (and DX-02
-  when the pins of NAB-41 are present).
+- `linked_hit_names_both`: a planted "the Amdahl ceiling 1/(1 − 0.87) = 7.8" (the scope word is part of the
+  plant, since both entries require one in the window) is reported once, under E7-2 and REC-02 (and DX-02 when
+  the pins of NAB-41 are present).
+- `stale_entries_engine_form`: each of the twelve items loads with at least one entry and every entry has a
+  `scope` or an `all_of`; on scratch files, "wheel-loop spectral radii 1.4820 and 0.9207; instantaneous model
+  2.7075" fires E7-7 and "1.4820, 0.9207, 2.6917; undamped control 2.7075" does not; "the quadruped default
+  C = 24, R = 128" fires E7-A and "contact capacity C = 24" does not; "the energy budget files the 0.25 J
+  term as stored" fires E7-C and "energy budget: 0.25 J is external work, 0.10 J is stored energy" does not.
 
 The engine's own tests (the window, reflow invariance, exemptions, de-duplication of linked hits) are in
 N38b-50; the tests above exercise this register's twelve items through it.

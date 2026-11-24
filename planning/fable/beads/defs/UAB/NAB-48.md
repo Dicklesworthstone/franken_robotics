@@ -6,7 +6,7 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["NAB-15", "NAB-42"]
+deps: ["NAB-10", "NAB-15", "NAB-42", "NAB-44", "NAB-45", "NAB-46"]
 needs: []
 related: []
 gates: []
@@ -45,7 +45,11 @@ group) or `mechanism` (third group), `lives` (verbatim), `carriers`, `group` (`a
 `placed_rows` where the text names a row, `plan_checks` (group 2: the `PC-nn` ids of the source register,
 NAB-15, joined as in `group2_checks_resolve`), `counts_toward_tally = false`. `disposition`: `placed` for the
 first two groups; for the third,
-`placed`, `placed-narrowed` or the link to a not-yet-placed record.
+`placed`, `placed-narrowed` or the link to a not-yet-placed record. `gates`, `kill_gates` and `bets` are the
+identifiers the record's text names, plus those of its placed rows and the `gates` of its carrying beads in the
+tracker export (as in NAB-43): ten records (BS-01 to BS-03, BS-05, BS-06, BS-09, BS-11 to BS-14) name no gate
+of their own, and a placed record with none fails `idea.placed-without-gate`. `tiers` is empty and
+`tier_text` is "" (the list states no tier).
 
 **Group 1: named when the passes were asked what no list contained** (`BS-01` to `BS-06`).
 
@@ -113,8 +117,9 @@ with a faster loop or added inertia.
 - [ ] Every carrier key exists as a bead.
 - [ ] Each record of group 2 that cites a plan-time check names the check's source-register id (`PC-nn`), and
       the citation lint treats it as uncitable by a gate until re-run.
-- [ ] Each record of group 3 has a standing (`placed`, `placed-narrowed`) and carriers, and the test that
-      compares group 3 with the not-yet-placed list (NAB-49) finds no idea in both states.
+- [ ] Each record of group 3 has a standing (`placed`, `placed-narrowed`) and carriers. (That no idea is both
+      placed here and `not-placed` in the not-yet-placed list is NAB-49's consistency check: NAB-49 depends on
+      this bead.)
 - [ ] The traceability lint of NAB-42 passes on these records.
 
 ## Test plan
@@ -126,17 +131,17 @@ with a faster loop or added inertia.
 - `twenty_seven_records_in_three_groups` (6, 13, 8).
 - `carriers_resolve`.
 - `group1_placed_rows`: BS-01 ↔ IP-21; BS-02 ↔ IP-71; BS-03 ↔ IP-82; BS-04 ↔ IP-58; BS-05 ↔ IP-29;
-  BS-06 ↔ IP-63.
+  BS-06 ↔ IP-63; every `placed_rows` entry of the 27 records resolves to an `IP` record (NAB-44 to NAB-46).
 - `group2_checks_resolve`: the speed-test ceiling ↔ PC-09; the unreachable verdict ↔ PC-18; the shared bus ↔
   PC-12; the in-family probe ↔ PC-03; the authority model ↔ PC-02; the widened hypothesis set ↔ PC-07.
-- `group3_all_have_carriers`; `group3_consistent_with_not_yet_placed_list`.
+- `group3_all_have_carriers`.
 - `pinned_numbers`: 842.8/575.7 = 1.464; 64 and 86; 675 and 225; 175 > 160.
 - `rows_frozen` against `tests/fixtures/ideas/blind_spots.tsv`.
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh` (NAB-50) asserts 27 records, zero unresolved carriers, and the consistency
-of group 3 with the not-yet-placed list. Logged per STD-E2E.
+`scripts/e2e/decision_records.sh` (NAB-50) asserts the 27 `BS` records and zero unresolved carriers over the
+register, logged per STD-E2E; the group-3 consistency is NAB-49's check.
 
 ### Known answers and negative controls
 

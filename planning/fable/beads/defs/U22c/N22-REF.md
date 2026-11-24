@@ -4,7 +4,7 @@ title: "registry: the refusal codes of Reflex (FROB-REF-421 to -464 and -817) wi
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "reflex", "frob-control", "frob-gait", "frob-shield", "registry", "solid"]
+labels: ["m1", "reflex", "frob-control", "frob-gait", "frob-shield", "registry", "solid", "review-notes-open"]
 parent: "WP-12"
 deps: ["BD-005", "BD-022", "N35x-02", "STD-E2E"]
 needs: []

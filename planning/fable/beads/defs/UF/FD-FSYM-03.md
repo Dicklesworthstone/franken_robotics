@@ -4,7 +4,7 @@ title: "upstream frankensympy: permutation groups and character tables in Rust"
 type: "task"
 priority: 3
 milestone: "M2"
-labels: ["m2", "suite", "marrow", "upstream", "frankensympy", "solid"]
+labels: ["m2", "suite", "marrow", "upstream", "frankensympy", "solid", "review-notes-open"]
 parent: "WP-03"
 deps: ["BD-037", "BD-048", "N13-14", "N33b-04", "STD-E2E"]
 needs: []
@@ -133,8 +133,10 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsym_03 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob algebra irreps <family> --json` for each group of the gate
-(the families `C1` … `C12` and `D1` … `D12`, each also with `xC2`, and `S4`, as `algebra.irreps` spells them) and
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob algebra irreps --family <family> --in natural --out natural --json` for each group of
+the gate (the families `C1` … `C12` and `D1` … `D12`, each also with `xC2`, and `S4`, as `algebra.irreps` spells
+them; the row takes a channel space, `--in` and `--out` or `--rep`, beside the group source, and this is the form
+N13-20's gate loop uses) and
 compares its table with the sibling's, logging the count of entries compared and unequal.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to

@@ -33,8 +33,8 @@ In: one plant record for the fixture; the three radii computed from it; the regr
 A-22 itself (BD-108); the fixture's bodies and motor (BD-123); the tier-integrator variant of A-22 (N16c-42);
 the re-run of the plan-time wheel-loop pilot from the reproduction bundle (row 17 of the plan-time pilot
 ledger: N38a-11, at M0, a dependency of this bead). That re-run reports the same three figures from the plant
-with shaft damping and reproduces 2.7075 only under the label `undamped control`, which is the label the scan
-of step 5 accepts.
+with shaft damping and reproduces 2.7075 only as the labelled `undamped control`, printed after 2.6917; the
+scan of step 5 reads no label, and its pattern does not match a record laid out that way.
 
 ## Technical approach
 
@@ -63,8 +63,17 @@ of step 5 accepts.
    CX-262).
 4. **Rule.** A table row that lists several results for one fixture carries the fixture's plant digest; A-22's
    report prints the digest beside every radius. Two radii with different digests in one row are rejected.
-5. **Register and scan.** Item E7-7: stale pattern `2.7075` in the scope of wheel-loop, spectral or
-   instantaneous-current text, unless labelled as the undamped control; pinned by the test below.
+5. **Register and scan.** Item E7-7, in the engine's entry form (N38b-50: `{ pattern, scope, all_of }`, with
+   no negative condition, so a label cannot exempt a line):
+   `stale = [{ pattern = "0\\.9207[^0-9]{1,160}2\\.7075", scope = "wheel|spectral|radius|instantaneous" }]`.
+   DESIGN: what was withdrawn is a print, 2.7075 standing as the third radius beside 1.4820 and 0.9207, not
+   the number. 2.7075 is the correct undamped control, and about a dozen registry rows, tests and records print
+   it on purpose (KA-610, CX-262, CX-308, the pilot record of N38a-11 among them), with the damped 2.6917 or
+   the undamped closed form standing between it and 0.9207. An entry on the bare number would fire on all of
+   them. The pattern matches 2.7075 only where it
+   follows 0.9207 with no digit between, that is, with no damped value printed before it. A line that must
+   print that sequence on purpose (the planted string of the test below) carries `stale-as-control: E7-7`.
+   Pinned by `wheel_loop_radii_one_plant` and `e77_stale_entry_matches_the_withdrawn_print`.
 
 ## Acceptance criteria
 
@@ -74,7 +83,7 @@ of step 5 accepts.
 - [ ] The explicit current-then-wheel update at 0.5 ms gives 1.854 for (a) and 1.497 for (b), and is flagged as
       the wrong-order control.
 - [ ] A-22's report rejects a row whose entries carry different plant digests; the stale-value scan finds no
-      unlabelled 2.7075.
+      hit for E7-7.
 
 ## Test plan
 
@@ -88,6 +97,10 @@ of step 5 accepts.
 - `wheel_loop_verdicts`: (a) unstable, (b) stable, (c) unstable; the verdict of (a) and (b) is what the
   fixture's dynamic layer shows (growing against decaying oscillation over 50 ticks).
 - `a22_row_requires_one_digest`.
+- `e77_stale_entry_matches_the_withdrawn_print`: through the scan of NEG-03, on one scratch file per text:
+  "wheel-loop spectral radii 1.4820 and 0.9207; instantaneous-current model 2.7075" gives one hit naming
+  E7-7; "wheel-loop spectral radii 1.4820, 0.9207, 2.6917; undamped control 2.7075" and "wheel-loop radius
+  |1 − 0.4 × 0.01 ÷ J| = 2.7075 without the shaft damping" give none.
 
 ### End-to-end script and logging
 

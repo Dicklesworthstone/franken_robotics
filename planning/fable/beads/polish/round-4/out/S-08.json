@@ -1,0 +1,375 @@
+{
+ "round": 4,
+ "slice": "S-08",
+ "reviewed": 39,
+ "changed": [
+  {
+   "bead": "N17-CX",
+   "kinds": [
+    "request",
+    "registry",
+    "convention",
+    "deadlock",
+    "plan"
+   ],
+   "what": "Left as it was, the bead wrote `controls.toml` rows by hand in a superseded `{cx, planted_as, plant, catches}` form under a `planted-defects` feature that N38b-05's seeding tool rejects, gave CX-154 no plant (request F-U28b), named a superseded bead (N17a-15), numbered the two limb-packet cases with no allocation block, and its acceptance waited on later carriers' plant runs; now catalogue entries in the BD-025/N38b-05 form with kind, plant and removed_check per entry, CX-166 as a words-only plan case, one `[[block]]` request to N38a-40, plant runs left to N38b-04 with `stale` reported, and the KA mapping corrected (KA-378/377, KA-380)."
+  },
+  {
+   "bead": "N17b-05",
+   "kinds": [
+    "deadlock",
+    "convention"
+   ],
+   "what": "Left as it was, the M2 test `no_free_slot_queues` needed the daemon queue and `assign` of BD-295 (M3, not a dependency), so the bead could not close at M2; now the controller holds waiting requests itself at M2 (per shape class, arrival order) and defers to BD-295 from M3. The e2e cache eviction is now the admin form `frob spark cache --action evict --all --json` with no `--key`."
+  },
+  {
+   "bead": "N17b-08",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Left as it was, the decision record had no path (convention 4 puts every record under `docs/adr/`) and the row OPEN-PHYLUM-4 of `registries/open.toml` was never set decided or defaulted, so N41-03's exit check would find the question open; now `docs/adr/ADR-OPEN-PHYLUM-4.md`, the row's status and `adr`, the defaulted branch, an acceptance item, and N41-OPEN2 moved from related to deps (no cycle)."
+  },
+  {
+   "bead": "N17b-09",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request F-U17b applied (checked against N36-20 and BD-186): left as it was, the incumbent runners were started directly, so their device time was not metered and under N36-20 a timed repetition of arms C and D was not evidence; now each repetition runs as the child of `frob-launch --scope gate:GATE-PHYLUM-03/arm-C|arm-D --request R3` (`adhoc` for the E0 slice), its record carries the printed meter row, the harness rejects a record without one, and the unit test and e2e check it."
+  },
+  {
+   "bead": "N17b-15",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Left as it was, the e2e called `frob phylum plan` on the three table populations with no inputs; `phylum.plan` requires `--designs` and `--worlds-per-design` (802 without them); now the full form on `synthetic` population descriptors with the table's sizes and weights, reading the nine Ω values from `plan.alternatives.one_bucket`."
+  },
+  {
+   "bead": "N17b-16",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "Left as it was, the pilot record had no identifier, protocol path or kill gate and said the fallback is recorded 'not under a kill identifier', which N38a-09's loader rejects (`pilot-part-missing`, rule 3); now `PILOT-QDMAP-01` in `frob.gauntlet.pilot/1` with `gated_beads = [BD-342]`, `kill_gate = \"to-register\"` and the proposed wording KILL-QDMAP, the receipt under `receipts/pilots/`, verdicts mapped to the schema, dep N38a-09. Also: the bead asserted 'the ratio can never be below 1/B' as an exact bound while its own potency control (optimum in round 1) gives a ratio of 1/rounds(S), below 1/B, so the control could never pass; 1/B is now the published ceiling, printed and flagged `below-ceiling`, and the potency control asserts its exact expected value and the flag."
+  },
+  {
+   "bead": "N17b-17",
+   "kinds": [
+    "request"
+   ],
+   "what": "Lead's audit notes checked and applied: N28b-23 (the ladder's mode automaton) was needed only by the per-stratum `selection` value, which held the map type 35 levels late; the selection standing, its acceptance half and the tests `selection_from_ledger` and `selection_capped_by_mode` moved intact to the new bead N17bp4-01; N17b-17 keeps `StrataDef` and `standing: provisional` (new test `standing_stays_provisional`). BD-254 moved to related: the type reads no scorecard, and TaskId is still reached through N17b-16. The N28b-24 counterpart needs nothing here (no path N17b-17 to N28b-24)."
+  },
+  {
+   "bead": "N17b-19",
+   "kinds": [
+    "broken",
+    "convention",
+    "registry"
+   ],
+   "what": "Left as it was, the e2e ran `frob sim run --designs <stencil list> --seed <s>` with no key, no length and one world per design, so the 25 worlds of a seed got different world indices and therefore different addresses (no shared draws, the opposite of the measurement), and the run was refused 805; now one run per stencil design, `--worlds 64 --intervals 500 --seed <batch seed> --key …`, the 25 shared-arm designs under one seed so world w has address (seed, w, 0), the independent arm under disjoint seeds, edits in the `design.edit` form. The record now follows `frob.gauntlet.pilot/1` (`PILOT-FDGRAD-01`, kill gate KILL-FDGRAD, receipt committed, verdicts mapped); dep N38a-09. Corrected on resumption: the keys it gave the script's run verbs carried the log's UTC stamp (`…-$RUN`), which STD-E2E forbids (a key holds no time and no run identifier, so that two runs of a script send the same commands and their logs compare equal; every run has its own state root, so keys cannot meet across runs); now `--key \"$(e2e_key <label>)\"`."
+  },
+  {
+   "bead": "N17b-21",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Left as it was, the e2e's `frob phylum gradient … --stencil-only` carried no key (805) and the comparison sweep had no command, so its addresses could not be matched to the stencil's; now both calls carry their own keys and the same root seed (`--seed 7`, worlds per design equal to the stencil's seeds). The root seed of the addresses is stated as `--seed` (default 0), which the registry row lacks: request to VERBS-phylum. Corrected on resumption: the keys it gave the script's run verbs carried the log's UTC stamp (`…-$RUN`), which STD-E2E forbids (a key holds no time and no run identifier, so that two runs of a script send the same commands and their logs compare equal; every run has its own state root, so keys cannot meet across runs); now `--key \"$(e2e_key <label>)\"`."
+  },
+  {
+   "bead": "N17b-22",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Left as it was, the e2e's `frob phylum gradient` calls had no key (805), and CX-165's three plants named by the catalogue (N17-CX) were declared nowhere, so N38b-05 would seed plants no bead builds; now each call carries its own key and the bead declares `N17b-22:cx-165-binary` (removed_check), `-grazing` (planted-world) and `-full-horizon` (mutation feature `frob-phylum/cx-165-full-horizon`), each with the test that must fail under it. Corrected on resumption: the keys it gave the script's run verbs carried the log's UTC stamp (`…-$RUN`), which STD-E2E forbids (a key holds no time and no run identifier, so that two runs of a script send the same commands and their logs compare equal; every run has its own state root, so keys cannot meet across runs); now `--key \"$(e2e_key <label>)\"`."
+  },
+  {
+   "bead": "N17b-23",
+   "kinds": [
+    "registry"
+   ],
+   "what": "Left as it was, the pilot record had no identifier, protocol path or receipt and the wrong file path, so the register's loader would reject it and N17b-28 could not cite it; now `PILOT-LIMBKERNEL-01` in `crates/frob-conformance/registry/pilots.toml`, schema `frob.gauntlet.pilot/1`, falsifier, fallback with KILL-LIMBKERNEL, gated beads N17b-25 to N17b-27, receipt under `receipts/pilots/`, verdict mapping; dep N38a-09."
+  },
+  {
+   "bead": "N17b-25",
+   "kinds": [
+    "request"
+   ],
+   "what": "Request F-U17b applied: the script's `frob phylum plan --designs @workload:h2h-512 --json` lacked the required `--worlds-per-design` and would be refused 802; now `--worlds-per-design 16`."
+  },
+  {
+   "bead": "N17b-29",
+   "kinds": [
+    "convention",
+    "broken",
+    "request"
+   ],
+   "what": "Left as it was, every `frob phylum sweep` of the e2e lacked a key (805, or a replay comparing nothing), and the mismatch case passed `--map-spec @fixture:…`, a form the row's `--map-spec <MapSpecId>` does not accept, so the refusal would come from the parser and not from the specification check; now distinct keys per run, the fixture's committed MapSpecId, the resolution rule for an unknown id, and dep N17bp4-01, which now computes the `selection` the block prints (the counterpart of the N17b-17 split). Corrected on resumption: the keys it gave the script's run verbs carried the log's UTC stamp (`…-$RUN`), which STD-E2E forbids (a key holds no time and no run identifier, so that two runs of a script send the same commands and their logs compare equal; every run has its own state root, so keys cannot meet across runs); now `--key \"$(e2e_key <label>)\"`."
+  },
+  {
+   "bead": "BD-161",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "Resumed from the interrupted pass (its edits kept: N18a-35, whose script this bead runs as `traction_referee.sh --profile strict`, moved from related to deps; the `strict` part of GATE-KIN-04 recorded once with `record_gate --part M2`, the M2 parts of GATE-TRAC-01 and -06 left to BD-168). One of those edits was finished: it had written the reachability item as `frob sim run quad-a --tier batch-cpu --profile strict …`, a positional stored design on `batch-cpu`, which VERBS-sim gives to N16b-25, and N16b-25 depends on this bead, so the item could never pass before close; now the fixture form of N24b-03 (`--fixture traction/referee_stand --seed 7 --key …`), with the statement that N16a-02's matrix admits the pair from M1 and answers 724 until this step is registered."
+  },
+  {
+   "bead": "BD-232",
+   "kinds": [
+    "convention",
+    "broken",
+    "contradiction"
+   ],
+   "what": "Resumed from the interrupted pass (kept: its own script `contact_mesh_path.sh`, STD-E2E in deps, the plant `BD-232:cx-170`). Finished and corrected: (1) 'thin routes disabled' and 'a part that declares no admissible thin route' were used by the acceptance, three scripts, N18-REF's 320 trigger and CX-170's fixture and defined nowhere, so each implementer would invent a different switch; now the per-part field `thin_routes` (DESIGN, subset of `primitive`, `mesh-cpu`), with route `none` defined. (2) Step 6 required `frob sim run` to fail 'under the mutant', but the product binary carries no mutation feature (BD-025); now `e2e_expect_caught … cargo test -p frob-contact --features bake-thin-into-field -- thin_plate_probe_true_surfaces`, with that unit test added. (3) Both runs on a compiled pack now call `e2e_scene_ready` first, or BD-228's lint and FROB-REF-318 fail the script from M3. (4) Its keys carried the log's UTC stamp, which STD-E2E forbids; now `e2e_key` labels."
+  },
+  {
+   "bead": "N18a-02",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Lead's audit note checked and applied (by the interrupted pass; verified here): BD-062 moved from deps to related, since ε_g's fitting terms are inputs of `GapBudget` and every test uses synthetic fitting errors; nothing reads a compiled model (BD-079 still reaches BD-062). The step of `traction_referee.sh` it named as its script belongs to N18a-35, which depends on this bead, so it now owns `contact_gap_bound.sh` (convention 11) and depends on STD-E2E. Arithmetic rechecked (0.305 mm, 30.5 N, 2.44 µm, 0.12 N)."
+  },
+  {
+   "bead": "N18a-03",
+   "kinds": [
+    "convention",
+    "registry",
+    "contradiction"
+   ],
+   "what": "Resumed from the interrupted pass (kept: own script `contact_enclosure_predicate.sh` in place of steps of N18a-38, which depends on this bead; plants `N18a-03:cx-167` and `N18a-03:cx-168` declared). Added what was missing: the script's `no_bounds` step had no case in the example's list; CX-168 is an obligation in the catalogue 'until the enclosure bead supplies its fixture' and nothing said who flips it, so its control would never become runnable: the change that commits fixture `cx-168` now sets `numeric = true` and `case_supplied_by`. The Scope said N19b-33 bundles certificates through `frob prove bundle`, which takes no clearance answer (724 for other claim kinds until M5, N19b-33): now the verb's own `.frobcert` bundle."
+  },
+  {
+   "bead": "N18a-10",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Counterpart of the audit note on BD-079 applied (by the interrupted pass; verified: no cycle, BD-062 is M1): BD-062 added to deps, because the sample lists are stored in the compiled model and the script compiles the quadruped layout through the model compiler. Its script was a step of N18a-35's, which depends on this bead: it now owns `contact_samples.sh` (convention 11), STD-E2E in deps. Placement and rim arithmetic rechecked (4/6/8 samples; 0.12% sag, 0.040% deficit, 41 the smallest count under 0.1%)."
+  },
+  {
+   "bead": "N18a-11",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Counterpart of the audit note on BD-079 applied (by the interrupted pass; verified): BD-062 added to deps (the filter is stored in the compiled model and tested on compiled fixtures). Its script was a step of N18a-35's, which depends on this bead: it now owns `contact_broad_phase.sh` (convention 11), STD-E2E in deps. The three-box hand case rechecked."
+  },
+  {
+   "bead": "N18a-12",
+   "kinds": [
+    "convention",
+    "contradiction",
+    "broken"
+   ],
+   "what": "Resumed from the interrupted pass (kept: own script `contact_speculative_margin.sh`, STD-E2E). Corrected: the script passed the planted defect as a run-time argument (`--mutant margin-base-only`), while N18a-36 and BD-166 build 'N18a-12's `margin-base-only` control' as a compiled feature and this bead declared none, so their builds named a feature nobody defines; now a test-only Cargo feature of that name in `frob-contact` and `frob-kernels`, run by the script as `e2e_expect_caught … cargo test -p frob-contact --features margin-base-only -- margin_thin_barrier_activation`. The last acceptance item said this bead supplies 'its row in the gate record' of GATE-TRAC-03, which BD-168 alone records (convention 9): now says so."
+  },
+  {
+   "bead": "N18a-13",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Resumed from the interrupted pass (kept: own script `contact_swept_detect.sh`, STD-E2E, the plant `N18a-13:cx-169` as feature `frob-contact/cx-169` with the test that must fail). Finished: the script's name filter did not select `endpoint_bound_mutant_misses_it`, so one of the bead's unit tests was never run by its own script; filter extended."
+  },
+  {
+   "bead": "N18a-14",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "Resumed from the interrupted pass (kept: own script `contact_witness_migration.sh`, STD-E2E, the plant `N18a-14:cx-183`). Corrected: the control step built `cargo test -p frob-contact … --features gauntlet-mutations,frob-contact/cx-183`; `gauntlet-mutations` is a feature of `frob-conformance` only, so cargo refuses the command; now `--features cx-183` in the crate's own build through `e2e_expect_caught`. The INV-TRAC-06 property test of acceptance item 1 had no name in the unit-test list, so neither the script's filter nor the control could select it: named `migration_inv_trac_06_property`, and the control says that it (not `keep_memory_mutant_detected`, which checks a test-local copy and passes under the feature) must fail."
+  },
+  {
+   "bead": "N18a-16",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Resumed from the interrupted pass (kept: own script `contact_cl1_law.sh` in place of a step of N18a-36, which depends on this bead; STD-E2E; unit test `cl1_probe_names_region` for the acceptance item on `contact.probe`). Finished: the script asserted γₙ = 6/11 N·s 'on the one-contact fixture' with no such case in the example's list; `one-contact` added. All hand values rechecked (1.6 and 0.8; 14/5, 21/25, 28/25; −5/11 and 6/11; 98.1 µm; 20 ms and 19.8 ms)."
+  },
+  {
+   "bead": "N18a-21",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "Resumed from the interrupted pass (kept: own script `contact_clh_conformance.sh`, STD-E2E, the plant `N18a-21:cx-181`). Corrected: the control step built the crate's suite with `--features gauntlet-mutations,frob-contact/cx-181`, which cargo refuses in a `-p frob-contact` build; now `e2e_expect_caught cx-181 -- cargo test -p frob-contact --features cx-181 -- clh_checker_detects_associated_mutant`."
+  },
+  {
+   "bead": "N18a-22",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "Edits of the interrupted pass verified against N38a-09 and N36-20 and kept: the record gains `gated_beads = [\"BD-386\"]` (without it `fundable` answers for the whole of WP-72), the one `verdict` in the register's vocabulary with the committed receipt, and every run of the non-`frob` pilot binary goes through `frob-launch --scope adhoc --devices 0 --cores 8 --mem-gib 16 --wall-s 3600` in shards that fit class E0, with the meter row logged (a run started any other way is not evidence, N36-20); dep N36-20 added. `sim.replay` and `sim.run` forms checked against VERBS-sim."
+  },
+  {
+   "bead": "N18a-38",
+   "kinds": [
+    "broken",
+    "convention",
+    "registry"
+   ],
+   "what": "Step 11 called `frob prove bundle` on clearance certificates; `prove.bundle` takes no clearance answer and answers 724 for it until M5, so the step could not pass: now `frob artifact export <bundle digest> --out … --key …` and `frob-verify --json`, N19b-33's form. Step 13 required steps 6, 9 and 2 (the product `frob`) to fail 'under test-only mutants' with names no bead registers; the product carries no mutation feature: now `e2e_expect_caught` on the builds `frob-contact --features cx-167` and `--features bake-thin-into-field`, with CX-168 and CX-170 run as the planted world and design N18-CX registers. Step 2 had no command and no `e2e_scene_ready`; step 3 names the `thin_routes = []` fixture `cx-170`."
+  },
+  {
+   "bead": "N18a-01",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "Its last acceptance item and its script require `frob capabilities --json` to list the Traction verbs as not yet implemented; those rows are entered in the verb registry by VERBS-contact, which was not a dependency, so on a build without them the item could never pass (an empty list, nothing to assert). VERBS-contact added to deps (no cycle; the bead's level rises from 21 to 25 and no dependent is delayed: N18a-15 and BD-079 are bound by other beads), and the item names the seven rows and their 724 answer."
+  },
+  {
+   "bead": "N18a-27",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "Its only script was a step of N18a-36's, which depends on this bead (convention 11): it now owns `contact_r_eff.sh` (unit tests; `contact.probe --samples` and the registry's `--cone` form; the three-way measurement as its own test target writing `target/open-trac-2/sources.json`), with STD-E2E in deps. The OPEN-TRAC-2 record had no path and nothing set the register row (convention 4; N41-03's exit check would find the question open): now `docs/adr/ADR-OPEN-TRAC-2.md`, written here. The Scope said the ADR is 'written when GATE-TRAC-04 is recorded', which is after this bead (the gate's recorder N18a-36 depends on it), and N41-03 admits `decided` only once the gate is recorded: the bead now closes with the ADR and leaves the row's status to the change that records the gate. Derivations and numbers rechecked (2/3, 3π/16, 20 mm, 17.7 mm, 1.2 N·m, 0.153 s, 0.102 s)."
+  },
+  {
+   "bead": "N18a-28",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Its only script was a step of N18a-36's, which depends on this bead (convention 11), so nothing ran its two battery rows from the user's side before the gate script. It now owns `contact_patch_quadrature.sh`: the crate tests and `traction_patch_rows`, the rows it carries through their tier targets (`e2e_tier g1_known_answers KA-413 --mutations`, `e2e_tier g3_metamorphic KA-414 --mutations`, controls asserted `caught`), and the ledger read through `fidelity.ledger`; STD-E2E added to deps. Arithmetic rechecked (0.525, 0.690, 0.619; point slips; centre of pressure)."
+  },
+  {
+   "bead": "N18b-02",
+   "kinds": [
+    "plan",
+    "deadlock"
+   ],
+   "what": "The bead states that `contact.laws` prints per wheel the roller angle, r̂, μ₁ and μ₂ with provenance, and N18b-30 (M2) asserts those fields on the `mecanum` archetype, but no acceptance item or test of any bead required them and this bead did not depend on the verb, so the output could be left unbuilt until a later script failed. Now an acceptance item, the unit test `laws_view_lists_roller_fields`, a script step, and N18b-28 (the design view of `contact.laws`, M1) in deps (no cycle; level unchanged at 62). Frames and numbers rechecked (r̂ for ±45° and 90°, 10 rad/s, 5.50 rad/s, 2.5 m)."
+  },
+  {
+   "bead": "N18b-25",
+   "kinds": [
+    "registry",
+    "broken",
+    "deadlock"
+   ],
+   "what": "CX-174's plant `N18b-25:cx-174` (N18-CX) and the control KA-422's row sets on this bead were declared nowhere here: the mutant had no feature name, and the script's second pass built `--features gauntlet-mutations` alone, which plants nothing (the umbrella holds no mutation feature, BD-025), so the pass would have succeeded and the control read `missed`. Now the Cargo feature `frob-kernels/cx-174` (decimal scaling) with the test that must fail, and the pass as `e2e_expect_caught … --features gauntlet-mutations,frob-kernels/cx-174`. N18-KA added to deps: this bead binds KA-422, and a test citing a row before the registry enters it is a load error (level unchanged). The script states that BD-156 records GATE-TRAC-10. All eight exponent cases rechecked."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N17bp4-01",
+   "why": "split from N17b-17 on the lead's audit note: the per-stratum `selection` standing of map elites from the rank-agreement ledger, capped by the ladder mode (deps N17b-17, N28b-22, N28b-23), with its tests, negative controls and its own e2e script `phylum_map_selection.sh`; N17b-29 depends on it."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N38a-40",
+   "what": "Add to the cx requests-on-file table: N17-CX, count 2, section §17.21, working names `limb-packet-standing` and `limb-packet-singular` (kept in `slug`); without it N17-CX's two appended entries are `unallocated-number`."
+  },
+  {
+   "bead": "N17a-23",
+   "what": "Declare the planted input `N17a-23:cx-153` (a front-only sensor quotiented under Γ_mech, removed_check: the Γ_obs check), named by N17-CX's CX-153; otherwise N38b-05 seeds a plant no bead builds."
+  },
+  {
+   "bead": "N17a-26",
+   "what": "Declare the mutation features `frob-phylum/cx-154` and `frob-phylum/cx-157` (plants `N17a-26:cx-154`, `N17a-26:cx-157`), named by N17-CX; N28b-41 already builds `cx-154`."
+  },
+  {
+   "bead": "BD-286",
+   "what": "Declare the mutation `BD-286:cx-155` and the planted input `BD-286:cx-159`, named by N17-CX."
+  },
+  {
+   "bead": "N17a-24",
+   "what": "Declare the mutation `N17a-24:cx-156`, named by N17-CX."
+  },
+  {
+   "bead": "N17b-13",
+   "what": "Declare the mutation `N17b-13:cx-158` and rerun the four-state case so that CX-158 (FACT) can be set `rerun = true`."
+  },
+  {
+   "bead": "N17a-05",
+   "what": "Declare the planted input `N17a-05:cx-160` (run with `--max-buckets 1`) and the mutation `N17a-05:cx-161`, named by N17-CX."
+  },
+  {
+   "bead": "BD-186",
+   "what": "Declare the planted input `BD-186:cx-162` with removed_check (the ceiling check of the head-to-head report), named by N17-CX."
+  },
+  {
+   "bead": "N17a-11",
+   "what": "Declare the planted input `N17a-11:cx-163` with removed_check (the matched-work rule), named by N17-CX."
+  },
+  {
+   "bead": "N21c-16",
+   "what": "Declare the planted input `N21c-16:cx-164` with removed_check (the s ≥ 1/3 clause), named by N17-CX."
+  },
+  {
+   "bead": "N17b-28",
+   "what": "Declare the planted input `N17b-28:cx-164-limb` with removed_check, named by N17-CX."
+  },
+  {
+   "bead": "N17a-19",
+   "what": "Declare the mutation `N17a-19:cx-166` and keep the mirror fixture split by seed parity that supplies CX-166's case."
+  },
+  {
+   "bead": "N17b-27",
+   "what": "Declare the mutation `N17b-27:limb-packet-standing` and the planted input `N17b-27:limb-packet-singular` with removed_check (the zero-pivot check), named by N17-CX."
+  },
+  {
+   "bead": "N38a-37",
+   "what": "Enter a kill gate for quality-diversity maps per dispatch by dated amendment, proposed wording KILL-QDMAP: the pilot PILOT-QDMAP-01's falsifier holds, or GATE-PHYLUM-08's upper bound of rounds(M)/rounds(S) is above 0.5, decided at M4; fallback: maps, the map delta and both verbs as reporting and archive surfaces with no claim about rounds; then set N17b-16's record to it. The plan names no kill gate for this Frontier mechanism (§17.19), N38a-09 rule 3 makes the record `to-register`, and until a row exists `fundable --bead BD-342` answers `kill-gate-to-register`."
+  },
+  {
+   "bead": "BD-342",
+   "what": "Add N38a-37 (or whichever bead enters KILL-QDMAP) to deps, since its funding waits on that row (N17b-16's record is `to-register`), and add N17bp4-01, where the `selection` standing it uses for confirmation now lives (split from N17b-17)."
+  },
+  {
+   "bead": "N17b-18",
+   "what": "Add N17bp4-01 to deps: the `selection` value its answers print per stratum now lives there (split from N17b-17); today it is reached only through N17b-29."
+  },
+  {
+   "bead": "N17b-24",
+   "what": "Give the kernel-arm pilot record an identifier (for example `PILOT-LIMBKERNEL-02`, beside N17b-23's `PILOT-LIMBKERNEL-01`), a protocol path and a committed receipt; a record without `id` does not load (`pilot-id-form`)."
+  },
+  {
+   "bead": "VERBS-phylum",
+   "what": "Add `--seed <u64>` (the root of the world addresses, default 0, as on `phylum.sweep`) to `phylum.gradient`: N17b-21 derives the stencil's addresses from it and compares base worlds with a sweep at the same addresses, and BD-353 runs 20 disjoint seed sets; the row has only `--seeds` (a count), so none of these can be written as a command."
+  },
+  {
+   "bead": "BD-201",
+   "what": "46 beads call `--task quad-flat-velocity` (and others `flat-velocity`), while BD-201 registers the tasks `velocity-track-flat` and `velocity-track-rough` instantiated per robot and names no such task; state the registered instance names (or register `quad-flat-velocity` as the reference quadruped's instance), or every one of those scripts is refused at task admission."
+  },
+  {
+   "bead": "N19a-12",
+   "what": "Carry the optional per-part field `thin_routes` (a list drawn from `primitive`, `mesh-cpu`; absent means both) beside the part's tag, in generated sources and in the sidecar tag file, and validate its values; BD-232 defines it. Without it the refused half of BD-232's seed done-condition, CX-170's fixture, N18-REF's `ref320_thin` and N19b-33's 'thin routes disabled' case cannot be written."
+  },
+  {
+   "bead": "N19a-17",
+   "what": "Pass each thin part's `thin_routes` on the thin-route hook, and hand to the hook every part thinner than two fine voxels that a sample can cross (plates, wires, rails: the parts N19a-16 scopes to Traction), not only 'a thin part that no primitive expresses': by emission rule (c) a 2 mm plate is a box and becomes an overlay, so it never reaches BD-232's stage, and then BD-232's seed done-condition (the plate routed to a thin box primitive) and the swept test of `K-np-thin` on the plate (KA-408's lockstep row, BD-166) cannot be met."
+  },
+  {
+   "bead": "N18a-31",
+   "what": "Repeats F-U40's request, which reached no slice of this half: add dep N18ap4-02 (the decision KILL-STRIBECK, read from the pilot alone; N40-30 rule 7). N18ap4-02's acceptance says its record is in place before N18a-31 starts and that it releases or closes N18a-31; without the edge an agent can start the law before the decision exists."
+  },
+  {
+   "bead": "N18-CX",
+   "what": "Three points on rows whose carriers are in this slice. (1) CX-169 is seeded against both gates of its rule, GATE-TRAC-06 and GATE-TRAC-03, with one plant, `N18a-13:cx-169` (the swept broad phase testing endpoint poses only). That plant breaks the transactional detector, which is the tunnelling audit's reference, so under it the fast tiers miss no more than before: GATE-TRAC-03's entries pass, the control reads `missed`, and a missed control fails the gate for ever (N38b-04 rule 2). State the plants per gate (N38b-05's plant list with `gates`): `N18a-13:cx-169` for GATE-TRAC-06, and for GATE-TRAC-03 the lockstep form BD-168 and BD-166 already run, N18a-12's feature `margin-base-only` built together with BD-166's `endpoint-only-thin` (each alone still detects the crossing). (2) CX-168: N18a-03 (M3) supplies the fixture `cx-168` and, in the change that commits it, sets the entry's `numeric = true` and `case_supplied_by = \"N18a-03: fixture cx-168\"`; name N18a-03 in the row's note, which today says 'until the enclosure bead supplies its fixture' and names no one who flips the entry. (3) CX-170: its fixture is a plate whose part declares `thin_routes = []` (BD-232's per-part field), the one defined way for a thin feature to have no route."
+  },
+  {
+   "bead": "N18a-36",
+   "what": "In the change that records GATE-TRAC-04 (you are its one recorder), set the row OPEN-TRAC-2 of `registries/open.toml` to `status = \"decided\"` with `adr = \"docs/adr/ADR-OPEN-TRAC-2.md\"`: N18a-27 writes that record and closes before the gate is recorded, and N41-03 rule 4 admits `decided` only after it. Without this nobody sets the row, and the M2 exit takes the default although the measurement was made."
+  },
+  {
+   "bead": "N18-REF",
+   "what": "Row FROB-REF-321's 'Raised by' names BD-232 and BD-233; the raise site is the enclosure predicate N18a-03 (its test `enclosure_no_bounds_refuses_321`; BD-232 says 'raised by N18a-03') and, through the verb, N19b-33. Set `raised_by` to those two, or N35-33's registry-wide check reads beads that raise nothing."
+  },
+  {
+   "bead": "N19b-33",
+   "what": "Your 320 case 'an explicit 2 mm plate obstacle with thin routes disabled' and its test `verb_ref_320_exit_3` had no defined way to disable routes; BD-232 now defines the per-part field `thin_routes` (absent: `primitive` and `mesh-cpu`; `[]` disables). State the case as an obstacle whose part carries `thin_routes = []`, so that your fixture and BD-232's `cx-170` are one form."
+  }
+ ],
+ "unchanged": 8,
+ "notes": "Resumed slice, complete: 39 beads, 31 changed, 8 unchanged, one new bead (N17bp4-01, by the interrupted pass; read whole here: seven sections, front matter valid, thresholds equal to plan §16.9). Unchanged after a full read: BD-422, N18a-06, N18ap4-01, N18ap4-02, N18b-08, N18bp4-01, N18bp4-02, N18bp4-03. In them the hand numbers recompute (BD-422: 1/4, 4.905 N, 0.01095 m/s, 2.0e-4 s/kg, 8.85 GB; N18b-08: 3.4%; N18bp4-01: 2.86e-4), the four kill-gate decisions match N40-24's rows, N40-03's ADR path and outcomes, N40-30's rule 7 and their pilots' falsifiers, and N18bp4-01 matches N41-OPEN2 and VERBS-contact. All 25 files the interrupted pass had touched were read against their diffs: the 13 of U17b were complete as recorded (the only correction is the key form in four of them); the 12 of U18a had coherent text but no result entries and are recorded above with what was kept and what was corrected (three control builds that cargo would refuse, one mutant passed as a run-time argument, one acceptance item that waited on a dependent). Every request and audit note of the slice file is answered: N17-CX, N17b-09, N17b-17 (three notes), N17b-25, N18a-02 applied; the BD-079 counterparts on N18a-10 and N18a-11 applied on this side (BD-062 added; harmless whether or not BD-079's reviewer moves its own edge). One DESIGN addition to confirm: BD-232's per-part field `thin_routes`, which gives a meaning to 'thin routes disabled', a phrase four beads and CX-170 relied on and none defined; requests to N19a-12, N19a-17 and N19b-33 follow from it. The request to N19a-17 also names a boundary the two chapters leave open: by its emission rule a box-shaped thin plate becomes an overlay and never reaches Traction's stage. A registry point found on the way and sent to N18-CX: CX-169's one plant cannot fail GATE-TRAC-03. Checks after all edits: every touched file parses (front matter, JSON lists, seven sections, three test subsections); no dependency on a later milestone or on an epic; graph_check cycles = 0; levels unchanged except N18a-01 (21 to 25, no dependent delayed)."
+}

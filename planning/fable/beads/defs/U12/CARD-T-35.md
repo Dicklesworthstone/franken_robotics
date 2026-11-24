@@ -62,10 +62,20 @@ bead's acceptance; the receipts produced there are what move each sub-entry from
 1. Registry row with one sub-entry per reflector: name, registered `Statement` (by its definition hash), capsule
    hash, checker identities (stock Lean build, `fln` build), status (`hypothesis`, `checked`, `parked`), and the
    definition hash of the `check` function itself. The registered form (DESIGN), in
-   `lean/Frob/Statements/T35.lean`: one specification per reflector in the elementary form N12-26 recorded as
-   clean (`PosSpec A := ∀ K [LinearOrderedField K] (x : Fin n → K), x ≠ 0 → 0 < x ⬝ᵥ (A.map Rat.cast).mulVec x`
-   for symmetric A, without `Matrix.PosDef`; the Farkas specification is the one of `T21.lean`; the `polyEq` and
-   `replay` specifications are added by N12-28 over its input types, in the form N12-26 recorded), and the template
+   `lean/Frob/Statements/T35.lean`: one packed input type per reflector, and each reflector's Lean entry point is a
+   one-argument Boolean function on it, `Frob.Reflect.<check> : <Input> → Bool`. `FarkasInput` carries m, n,
+   M : Matrix (Fin m) (Fin n) ℚ, and r, y : Fin m → ℚ; `LdltInput` carries n and A : Matrix (Fin n) (Fin n) ℚ;
+   N12-28 adds `PolyEqInput` (p, q) and `ReplayInput` (src, t, tgt, with `replay` returning `true` exactly when
+   replaying t on src yields tgt). Reason: the template below takes a function `α → Bool`, and N12-24 binds its
+   `check` argument as a constant by definition hash, so a curried function with implicit dimensions
+   (`farkas M r y`) or an `Option`-valued `replay` cannot be named in a `Statement` line that elaborates, and a
+   wrapping λ has no definition hash of its own. One specification per reflector, a predicate on the same input
+   type, in the elementary form N12-26 recorded as clean: `PosSpec (i : LdltInput) : Prop := i.A.IsSymm →
+   ∀ K [LinearOrderedField K] (x : Fin i.n → K), x ≠ 0 → 0 < x ⬝ᵥ (i.A.map Rat.cast).mulVec x`, without
+   `Matrix.PosDef` and with symmetry a hypothesis of the specification itself, so that a sealed theorem cannot drop
+   it; `FarkasSpec (i : FarkasInput)` is the conclusion of `T21.lean`'s registered statement at i.M and i.r (for
+   every linearly ordered field K, no x ≥ 0 with M·x = r); the `polyEq` and `replay` specifications are added by
+   N12-28 over its input types, in the form N12-26 recorded. The template is
    `SoundFor (check : α → Bool) (Spec : α → Prop) : Prop := ∀ x, check x = true → Spec x`. A reflector's soundness
    `Statement` is `SoundFor <check> <Spec>` instantiated at the function whose definition hash the sub-entry
    records; the statement binding of N12-24 then requires the sealed theorem's type to be exactly that constant,
@@ -76,8 +86,8 @@ bead's acceptance; the receipts produced there are what move each sub-entry from
    one to one onto four constants; the CLI values `farkas`, `ldlt-pos`, `poly-eq`, `replay` name the same
    sub-entries), each proved by `theorem T35_<check>_sound : Frob.Statements.T35.<check>.Statement`.
    Placement (DESIGN, because a Lean constant cannot name a function that does not exist yet, and this card closes
-   before any reflector is defined): at this card's close `T35.lean` holds the template, `PosSpec`, the re-export
-   of `T21.lean`'s specification as `FarkasSpec`, and nothing that names a `check` function, so it elaborates. The
+   before any reflector is defined): at this card's close `T35.lean` holds the template, `FarkasInput`,
+   `LdltInput`, `PosSpec`, `FarkasSpec`, and nothing that names a `check` function, so it elaborates. The
    exact text of each reflector's `Statement` line is registered data of this card (one line per reflector, with
    the hashes of the template and of the specification it names); the line itself is appended to `T35.lean`, with
    the import of `Frob.Reflect.<check>`, by the bead that defines the function (BD-382 for `farkas` and `ldltPos`;
@@ -115,6 +125,10 @@ At this card's close (M5, before BD-382):
 - [ ] The registered text of the four `Frob.Statements.T35.<check>.Statement` lines is committed with its digest;
       a line differing in one character (a narrowed specification name, the converse template) fails
       `statement_lines_match_registered_text` on a fixture file.
+- [ ] The registered `farkas` and `ldltPos` lines elaborate against never-sealed stand-in declarations
+      `Frob.Reflect.farkas : FarkasInput → Bool` and `Frob.Reflect.ldltPos : LdltInput → Bool` in a test fixture,
+      and each unfolds by one δ-step to `SoundFor <check> <Spec>`; the same line fails to elaborate against a
+      curried stand-in (`farkas {m n} M r y`).
 - [ ] A theorem stating the converse (`Spec x → check x = true`), one with the specification restricted to 1×1
       systems or to y ≥ 0, and one about a function of another namespace each fail the binding check of N12-24
       against the registered `SoundFor` statement (fixture capsules; no reflector proof is needed for this).
@@ -137,13 +151,22 @@ Observed on live output, inside BD-382 (and N12-28), with this card's law tests:
 ### Unit tests
 
 `crates/frob-lemma/tests/cards/t35.rs` (written here; the tests that call `prove.reflect` run in BD-382's
-acceptance): `statement_module_elaborates_with_recorded_closure`; `converse_statement_fails_binding`;
+acceptance: `reflector_requires_sealed_soundness`, `weakened_soundness_statement_refused`,
+`lookalike_function_refused`, `edited_definition_hash_refused`, `native_decide_capsule_refused`,
+`false_result_keeps_certified`, `proved_by_reflection_has_two_receipts` and `parked_card_disables_verb` carry
+`#[ignore = "needs prove.reflect (BD-382)"]` at this card's close, so that the `laws` stage of this card's script
+runs the others and passes before the verb exists, and BD-382's change removes the attribute, so that its step 6
+runs them all; `all_sub_entries_hypothesis_at_close` asserts that every sub-entry without a capsule hash and both
+checker identities reads `hypothesis`, which is all four at this card's close and stays true after the pilot):
+`statement_module_elaborates_with_recorded_closure`; `converse_statement_fails_binding`;
 `restricted_spec_fails_binding` (1×1 only; y ≥ 0 only); `reflector_requires_sealed_soundness`;
 `weakened_soundness_statement_refused`; `lookalike_function_refused` (an instance evaluating
 `Frob.Other.farkas` is rejected by the constant-list check); `edited_definition_hash_refused` (the instance's
 `farkas` has a definition hash other than the recorded one); `native_decide_capsule_refused`;
 `false_result_keeps_certified`; `proved_by_reflection_has_two_receipts`; `parked_card_disables_verb`;
-`all_sub_entries_hypothesis_at_close`; `statement_lines_match_registered_text` (each appended
+`all_sub_entries_hypothesis_at_close`; `statement_lines_elaborate_against_signatures` (the registered `farkas`
+and `ldltPos` lines elaborate against the packed stand-ins and fail against a curried one);
+`statement_lines_match_registered_text` (each appended
 `Frob.Statements.T35.<check>.Statement` line equals the registered text; a fixture line with `Spec` replaced by a
 narrower constant, and one with the arguments of `SoundFor` swapped, each fail); `theorem_names_follow_binding`
 (the sealed theorem for sub-entry `<check>` is `T35_<check>_sound`; a capsule whose theorem is named
@@ -153,14 +176,26 @@ evaluates to `false`, which is allowed; run once `farkas` exists, in BD-382).
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_reflect.sh` (bead N12-38) asserts the enabling rule on the two pilot reflectors and logs the
-three agreeing hashes per reflector and the refusals of the negative controls. For this card its NDJSON lines
-(STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-35"), `step` (`T-35/<reflector>/<case>`), `event`, the
-exact command line, exit code, wall time, per reflector the registered `Statement` hash, the hash of the function
-named in the sealed theorem, the hash of the function the instance evaluates and the recorded definition hash
-(the last three must agree), the sub-entry status, the soundness and
-instance capsule hashes, the class issued, and for each negative control the expected and observed refusal with
-its first failing rule and the path to reproduce.
+This card's own script, `scripts/e2e/card_t35.sh` (header `bead=CARD-T-35 milestone=M5 labels=lemma,frob-lemma
+seed=0 needs=cpu`; on the Linux host, sources the STD-E2E helper, idempotent, writes only under `target/`; NDJSON at
+`target/e2e-logs/card_t35/<utc>.ndjson` with a transcript beside it), built on this card's dependencies only:
+`laws`, `cargo test -p frob-lemma --test cards -- t35`; `statement`, `lake env lean lean/Frob/Statements/T35.lean`
+at the pin, its import closure compared with the one N12-26 recorded (blocked intersection, threshold 0);
+`lines`, the registered text's digest, the stand-in elaboration of the `farkas` and `ldltPos` lines and the
+fixture lines that must fail; `binding`, N12-24's `lean/tools/frob-statement-gen check-binding --capsule <fixture>
+--expect Frob.Statements.T35.farkas.Statement` on the converse, restricted and other-namespace fixture capsules,
+each asserted to exit 3. The live half (sealed capsules, the enabling rule on the two pilot reflectors, the
+refusals of the negative controls, the three agreeing hashes) is exercised by BD-382's own script
+`scripts/e2e/lemma_reflect_pilot.sh` (which depends on this card; its step 6 runs this card's law tests against the
+verb), and by phase 2 of `scripts/e2e/lemma_reflect.sh` (N12-28) for the other two reflectors. The lines of this
+card's script carry `ts`, `script`, `bead` ("CARD-T-35"), `step` (`T-35/<reflector>/<case>`), `event`, the
+exact command line, exit code, wall time, the Lean and Mathlib pins, the module count and closure digest of
+`T35.lean`, per reflector the registered `Statement` line's digest and the definition hashes of the template and
+the specification it names, the sub-entry status (`hypothesis` at close), and for each fixture the expected and
+observed outcome (elaboration failure, `check-binding` exit 3) with its first failing rule and the path to
+reproduce; the `summary` line counts assertions passed and failed. The live lines (the hash of the function named
+in the sealed theorem, of the function the instance evaluates and the recorded definition hash, which must agree;
+both capsule hashes; the class issued) are BD-382's and N12-28's.
 
 ### Known answers and negative controls
 

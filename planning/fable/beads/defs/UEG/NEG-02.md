@@ -27,7 +27,8 @@ milestone and distinguishes three states per card, lane, lane B check and surfac
 run` (the milestone it waits for has not been reached). `not run` is never counted as a pass, and the summary
 prints all three counts. This bead depends on the five M0 cards, so that the script is proven on real cards when
 it closes; every later card plugs its rows in (its `[[surface]]` entries, its refusals) and its own acceptance
-includes passing in this script at its milestone. No card bead depends on this one.
+includes passing in this script at its milestone. No M0 card depends on this one; a later card whose own
+acceptance runs this script depends on it (GB-14 does).
 
 ## Scope
 
@@ -59,7 +60,7 @@ GB-41); the loader (NEG-01); the stale-value scan (NEG-03), which the script inv
    | GB-02 | `algebra.irreps` | GB-22 | `sim.run` (expects FROB-REF-245) |
    | GB-03 | `analyze.closure`, `design.check --stages 6` | GB-23 | `sense.schedule` (`lockstep`, `referee`) |
    | GB-04 | `spark.probe` (records rounding mode only) | GB-24 | `mission.synthesize`, `task.fixture` |
-   | GB-05 | `analyze.maneuverability`, `design.check --stages 4` | GB-25 | `spark.probe`, `prove.kernel` (M2, M4 checks staged) |
+   | GB-05 | `analyze.maneuverability`, `design.check --stages 4` | GB-25 | `spark.probe`, `prove.kernel` (M2; two M2 lane B checks staged) |
    | GB-06 | `study.plan` | GB-26 | `shield.budget`, then `frob-verify` |
    | GB-07 | `scene.compile`, `scene.show` | GB-27 | `gait.orbit` |
    | GB-10 | `design.show --section mass`, `design.check` | GB-28 | `train.family` (expects FROB-REF-761, M4) |
@@ -78,8 +79,9 @@ GB-41); the loader (NEG-01); the stale-value scan (NEG-03), which the script inv
 
 6. Refusal checks: the cards that name a refusal are driven to it and the exit code, refusal code and repairs
    are asserted as their milestones arrive: through a verb, FROB-REF-105, -116, -131, -132, -133, -240, -245,
-   -532 and -565 (exit code 3), -741 and -761 (exit code 4), -602 (exit code 6), and -165, -242, -260, -263 and
-   -802 as each card bead states; through the test lane, FROB-REF-212, -740, -862 and -866. Refusal entries
+   -532, -560 and -565 (exit code 3), -741 and -761 (exit code 4), -602 (exit code 6), and -135, -163, -165, -242,
+   -249, -260, -263, -431, -802, -805 and -821 as each card bead states; through the test lane, FROB-REF-212, -440,
+   -451, -740, -862 and -866. Refusal entries
    are data (`expect` in the card files), so a card bead that adds one adds no code to the script.
 7. Stale-value step: run the scan of NEG-03 and require zero hits.
 8. Determinism: steps 3 to 5 are run twice; the status dumps and the surface outputs' digests must be
@@ -102,8 +104,8 @@ private-scene data can occur: every fixture is `synthetic`.
 ## Acceptance criteria
 
 - [ ] With `--milestone M0` the script passes with GB-01, GB-08, GB-09, GB-18 and GB-25 `pass` in lane A and in
-      every lane B check whose milestone is M0, GB-25's M2 and M4 checks `not run (M2)` and `not run (M4)`, and
-      36 cards `not run` (reported, not hidden).
+      every lane B check whose milestone is M0, GB-25's two M2 checks and its `prove.kernel` surface each
+      `not run (M2)`, and 36 cards `not run` (reported, not hidden).
 - [ ] The milestone rule holds in the script's own arithmetic (unit test below): at milestone Mn the cards
       required to pass lane A are those of the index through Mn (5, 18, 26, 34, 39, 41), and a lane B check or
       surface call is required to pass exactly when its `first_milestone` has arrived. Passing at M1 to M5 is

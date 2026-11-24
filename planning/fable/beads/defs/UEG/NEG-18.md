@@ -102,7 +102,9 @@ that the populate step may place gets a row in `registries/assets.toml` (BD-399)
 - [ ] The dependency lint shows no reference to the tool from any workspace.
 - [ ] One generated home and one generated kitchen import with a loss report, pass validation and carry one
       licence entry per asset with the BSD-3 notice; exports embed the notice.
-- [ ] With `read = false` the default pipeline excludes the source and says so.
+- [ ] With `read = false` the default pipeline excludes the source and says so: the import is refused with
+      `asset-source-not-default-pipeline` (exit 3, nothing written), and an output set without its record is
+      refused with `FROB-REF-303`.
 
 ## Test plan
 
@@ -120,10 +122,14 @@ that the populate step may place gets a row in `registries/assets.toml` (BD-399)
 `scripts/e2e/assets_licences.sh` (the M5 scene-asset loop, owned and run by NEGp1-54, which depends on this
 bead; this bead lists the steps of its row), on the `synthetic` recorded output set, every `run` verb call with
 its own `--key`: with `read = false`, the import as written above (`--key al-infi-1`; refused by the
-default-pipeline filter, which names the reason); after the admission reading, the same import (`--key
-al-infi-2`; a pack with a loss report, one licence entry per asset with source `infinigen-indoors`, class
-`attribution` and the BSD-3 notice); the licence manifest read back with `frob --json scene show <pack>`; an
-output set without its record (`--key al-infi-3`, refused); an imported set whose launch shape exceeds the
+default-pipeline filter of N19b-02 with the worded refusal `asset-source-not-default-pipeline`, exit 3, behind the
+constant `ASSET_SOURCE_NOT_DEFAULT`, whose code is the interim `FROB-REF-802` until the ledger assigns its number;
+`observed` names `infinigen-indoors`, its class and `read = false`; nothing is written); after the admission
+reading, the same import (`--key al-infi-2`; a pack with a loss report, one licence entry per asset with source
+`infinigen-indoors`, class `attribution` and the BSD-3 notice); the licence manifest read back with `frob --json
+scene show <pack>`; an output set without its record (`--key al-infi-3`, refused with `FROB-REF-303`, exit 3,
+the pack reader's one code for an input that cannot be decoded as written, `observed` naming the missing output
+record); an imported set whose launch shape exceeds the
 proxies' (`--key al-infi-4`, refused for the batched tiers with the reason); `frob --json artifact export <pack>
 --out exports/ --key al-infi-5` (the export embeds the notice). Log lines carry `ts`, `script`, `bead:
 "NEG-18"`, `step`, `event`, the exact command, exit code, wall time, the `evidence` block, the source key,

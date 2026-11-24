@@ -64,11 +64,14 @@ usable at the next and is withdrawn when an edit invalidates it. That the compos
 parts is the central HYPOTHESIS; its only test is the end-to-end comparison against a composed incumbent
 (BET-13, BET-14).
 
-**Status (FACT).** Planning stage. No FrankenRobotics code exists; nothing was compiled, run or measured as
-FrankenRobotics; no incumbent GPU simulator was run by this program; the paper-scale pilots used no FrankenSim
-dynamics, contact or sensor pipeline. The repository rule (`AGENTS.md`): work on plans, their evidence and their
-review; building the product or executing implementation beads requires an explicit change of scope from the
-owner. Beads describe work; they are created and changed only with the `br` tool.
+**Status (FACT).** Implementation stage: on 2026-11-23 the owner changed the scope, and implementing these
+beads in dependency order is the work (`AGENTS.md`). The plan's numbers about this system are not measurements:
+the paper-scale pilots of the planning stage used no FrankenSim dynamics, contact or sensor pipeline, and no
+incumbent GPU simulator was run by this program before then; a number about FrankenRobotics becomes a result only
+through a gate record. A bead's description, labels and dependencies are changed in its staging file
+(`planning/fable/beads/defs/<unit>/<key>.md`) and pushed to the `br` tracker by
+`planning/fable/beads/tools/sync_beads.py`; a change made with `br` alone is overwritten by the next sync, and
+status changes are made with `br`.
 
 ## Scope
 

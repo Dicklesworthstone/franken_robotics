@@ -1,0 +1,184 @@
+{
+  "round": 4,
+  "slice": "S-03",
+  "reviewed": 26,
+  "changed": [
+    {
+      "bead": "CARD-T-01",
+      "kinds": [
+        "deadlock"
+      ],
+      "what": "The GATE-LEMMA-00 acceptance line made recording the gate a condition of the card's close, but the gate's one recorder is N12-33, which depends on this card. The line now asks for this card's part only (the T-01 certificate on `K-cay-step` replays in frob-verify) and says N12-33 records the gate after the card closes."
+    },
+    {
+      "bead": "CARD-T-02",
+      "kinds": [
+        "deadlock",
+        "broken"
+      ],
+      "what": "At M1 nothing produces a T-02 certificate on `K-cay-step`: BD-021's M0 certificates are T-01, T-03 and T-04 only, and N12-20 adds T-02 at M5, a later milestone. The acceptance therefore could not pass. Now: the card delivers the specimen bundle and its mutants, and its row is `hypothesis` at close. N12-20's certificate at M5 moves the row to `checked`. The kernel is named `K-cay-step`, and the Out list no longer files N12-20 as this card's machinery. Added the missing dep N12-33, whose script the card's e2e uses at M1 (M0; no path back)."
+    },
+    {
+      "bead": "CARD-T-03",
+      "kinds": [
+        "deadlock"
+      ],
+      "what": "Same as T-01: 'GATE-LEMMA-00 records T-03' was a close condition that only N12-33, a dependent, can meet. The line now asks for this card's part, and N12-33 records the gate."
+    },
+    {
+      "bead": "CARD-T-04",
+      "kinds": [
+        "deadlock",
+        "broken"
+      ],
+      "what": "Same gate fix as T-01. The 'M0 adjoint kernel' is now named as BD-021 names it: `K-ad-se3`, with its certificate `K-ad-se3.cert`."
+    },
+    {
+      "bead": "CARD-T-05",
+      "kinds": [
+        "deadlock",
+        "broken"
+      ],
+      "what": "The acceptance asked for the kernel-bound T-05 bundle and a `checked` row at close. Both come from BD-047, which depends on the card: its acceptance line says its receipt moves the row. Now: the specimen bundle is accepted and the mutants are rejected at close, the row is `hypothesis`, and BD-047's receipt moves it to `checked`. The In scope line was corrected to match. Added the missing dep N12-33, whose script the e2e relies on at M1 (no path back)."
+    },
+    {
+      "bead": "CARD-T-07",
+      "kinds": [
+        "plan"
+      ],
+      "what": "plan_refs named §18.12 for PO-TRAC-01; that obligation is in §18.15. Corrected."
+    },
+    {
+      "bead": "CARD-T-08",
+      "kinds": [
+        "plan"
+      ],
+      "what": "plan_refs had the wrong sections: PO-KIN-01 is in §16.15, not §16.13 (Verbs), and INV-TRAC-01 is in §18.15, not §18.12. Both corrected."
+    },
+    {
+      "bead": "CARD-T-09",
+      "kinds": [
+        "broken",
+        "contradiction",
+        "plan"
+      ],
+      "what": "The M0 card's fourth negative control and two unit tests used stores to a buffer and loop-carried values. The M0 IR (BD-018 v0) has neither; they arrive with N21a-16 at M2, so N12-33's M0 run of the 'four negative fixtures' could not pass. The fourth control is now a force returned on an output port declared as torque (BD-018 rule 5, FROB-REF-250). The loop and store rules are stated as M2 checks of N21a-16. The order-of-work paragraph said BD-018 was kept out of deps because it runs this card's tests. It does not: it does not depend on the card, and it is already upstream (N12-06 → BD-021 → BD-019 → BD-018). It is now a dep, as the checker of the route. The card's own run moves the row, and N12-33 observes it again. Also fixed plan_refs: PO-SPARK-01 is in §21.22, not §21.14."
+    },
+    {
+      "bead": "CARD-T-10",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "The `.idtest` record and the test `randomized_piece_records_bound` asserted that every sample point is stored. N12-21, which owns `frob.identity.test/1`, stores the stream address (b, m, discards) and regenerates the points, so the test would fail against the real record. The test now asserts d, b = 32, m = 4, the address, that the regenerated points reproduce the verdict, and the bound."
+    },
+    {
+      "bead": "CARD-T-11",
+      "kinds": [
+        "deadlock",
+        "contradiction"
+      ],
+      "what": "Its row-`checked` line is moved by BD-046's receipt (BD-046 depends on the card), so it could not hold at close. Now `hypothesis` at close, and BD-046 moves it. Recognizing the twelve classes is BD-046's done-condition; the card's own line is now that its specimen witnesses are accepted. The design-compiler refusal was attributed to the implementing bead and to unnamed 'design-side scripts'. It is FROB-REF-101 at preflight stage 3 in N14a-04 (which reaches the card through BD-046), exercised by `skel_author_compile.sh` (N14a-27) with `frob design check --stages 1-3 --json`. Its e2e paragraph also said the lines of `skel_author_compile.sh` carry `bead` \"CARD-T-11\". STD-E2E gives every line its owning bead's key, and N14a-27 sets no card tag, so no such line would exist. The card tag and the `T-nn/...` step names now belong to N12-34's per-card lines, and N14a-27's lines are found by their own step names."
+    },
+    {
+      "bead": "CARD-T-15",
+      "kinds": [
+        "deadlock",
+        "contradiction",
+        "plan",
+        "broken"
+      ],
+      "what": "The acceptance asked for kernel-bound T-15 certificates and an instance route `checked` at the M1 close. No M1 bead produces them: BD-074 neither depends on the card nor runs its tests, and N12-20's catalogue issues them at M5. Now the specimens are accepted at close, the instance route is `hypothesis`, and N12-20 (M5) moves it. The order-of-work paragraph was rewritten to say so. Added PO-SINEW-03 (§15.13) as a consumer, which N12-52's script asserts on this row, plus its plan_ref. Added the missing dep N12-33 for the M1 e2e (no path back)."
+    },
+    {
+      "bead": "CARD-T-16",
+      "kinds": [
+        "deadlock"
+      ],
+      "what": "The card (M1) required certificates on the convention kernels as built and a `checked` row at close. Those certificates are bound to the code as built, which first exists in N13-02 (the parity map). N13-02 depends on this card and runs the T-16 law tests, bundles and mutants in its last acceptance line. Now the card closes on its two specimens (ad* and the parity map) and their mutants, with the row `hypothesis`, and N13-02's receipt moves it to `checked`. The order of work says BD-011 (M0) stays `related` because it cannot wait for an M1 card, and In scope and artifacts were corrected to match. (Interim edit, checked whole and finished.)"
+    },
+    {
+      "bead": "CARD-T-18",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The card (M5) could never close. One acceptance line asked that the reference quadruped have a certificate or a `Tested` record for each generator of Γ_obs and each touchdown event class. The identity is formed from derived saltation kernels (T-17), but N22ap2-02 lists the whole-robot impact maps of articulated quadrupeds as `excused(per-body bound)` and keeps them on central differences, so neither the symbolic route nor the randomized route has a program to run. The plan's T-18 does not name the quadruped. The line now covers the registered models whose event classes have derived kernels: ball, ball on a moving platform, rimless wheel, compass-gait heel strike, and the planar biped's touchdowns when its feature is on. Pairs with no kernel or over budget are listed on the row as `uncovered: <reason>`; they are never certified or tested, and no symmetry is used across them on the card's authority. Added unit test `excused_class_listed_uncovered`. The strata-count test and the e2e lines now mention the uncovered listing."
+    },
+    {
+      "bead": "CARD-T-19",
+      "kinds": [
+        "broken",
+        "contradiction"
+      ],
+      "what": "The M1 card asked for per-body certificates of every reference robot and a `checked` row at close. It also gave the refusal of a failing body to 'the importer'. Per-body certificates of compiled models are N12-20's (M5, catalogue row 'Inertia tables of a model'). The refusals are FROB-REF-104 and FROB-REF-106 at preflight stage 2, raised by BD-100, with the codes written once in N14a-13. Now the card's specimens (solid box, thin shell at equality, offset centre of mass) are accepted at close, and the row stays `hypothesis` until N12-20's certificates move it. Scope, order of work and references were corrected. The e2e now names BD-100's `analyze_mass_stability.sh` (run as a stage by N28a-29's `atelier_check.sh`). Its e2e paragraph also said the lines of BD-100's script carry `bead` \"CARD-T-19\". STD-E2E gives every line its owning bead's key, and BD-100 sets no card tag, so no such line would exist. The card tag and the `T-nn/...` step names now belong to N12-34's per-card lines, and BD-100's lines are found by their own step names. (Interim edit, checked whole and finished. A request to N12-20 supplies the stage that moves the row.)"
+    },
+    {
+      "bead": "CARD-T-25",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "The e2e named 'the gait work's script' with no owner. It is `scripts/e2e/gait_atlas.sh` of BD-332, which depends on this card and carries the live-atlas lines. Named. Its e2e paragraph also said the lines of that script carry `bead` \"CARD-T-25\". STD-E2E gives every line its owning bead's key, and BD-332 sets no card tag, so no such line would exist. The card tag and the `T-nn/...` step names now belong to N12-34's per-card lines, and BD-332's lines are found by their own step names."
+    },
+    {
+      "bead": "CARD-T-26",
+      "kinds": [
+        "deadlock",
+        "contradiction",
+        "plan"
+      ],
+      "what": "Interim edit, finished and checked whole. The order of work and the acceptance no longer make two outputs of the live verb conditions of the card's close: the refusal of a study that needs an unreachable verdict, and agreement with N24b-06's independent re-implementation. N24b-21's steps `refuse_unreachable` and `independent_enumeration` observe both. `tie_first_reachable_n86` replaced `second_implementation_agrees`. PO-ARENA-02 (§24.15) was added as a consumer, as N12-52 records. Finishing the edit, the e2e step list omitted `independent_enumeration`, and the e2e paragraph said N24b-21's lines carry `bead` \"CARD-T-26\" and the level-series values. N24b-21 computes no level series, and per STD-E2E its lines carry its own key. Now the four steps are listed and found by their step names. The level series is checked by the card's unit tests, and only N12-37's T-26 stage writes lines tagged CARD-T-26. A long line in Technical approach was rewrapped."
+    },
+    {
+      "bead": "CARD-T-28",
+      "kinds": [
+        "contradiction",
+        "registry"
+      ],
+      "what": "The tray-cart acceptance gave the gravity term as 0.25 J with a total of 1.49 J. In fact 8 × 9.81 × 0.040 × 0.08 = 0.251136 J. N12-17, the kind's checker, governs by the product with its basis: it accepts 0.26 J rounded outward and 0.25 J declared without a basis, and rejects 0.25 J offered with the basis it falls short of (`energy.term-below-basis`). The line now states the exact value, the three readings and KA-568, and unit test `gravity_term_readings` was added. Scope and order of work named one unnamed 'energy-budget tier bead' as the issuer. They now name the producer (N22b-10 to N22b-12), the monitor (N22b-13), `shield.budget` (BD-337), the bundle writer and corpus (N22b-14, which depends on the card) and N22b-18's script, and the deps sentence no longer claims a pilot. Its e2e paragraph also said the lines of N22b-18's script carry `bead` \"CARD-T-28\". STD-E2E gives every line its owning bead's key, and N22b-18 sets no card tag, so no such line would exist. The card tag and the `T-nn/...` step names now belong to N12-34's per-card lines, and N22b-18's lines are found by their own step names. (Interim edit, checked whole and finished.)"
+    },
+    {
+      "bead": "CARD-T-29",
+      "kinds": [
+        "broken",
+        "contradiction"
+      ],
+      "what": "The row was `checked`, class `Certified`, at the M1 close, but no bead writes the wiring certificate of a design. N15b-01's Evidence paragraph says its power identity and loop check are 'Certified as instance certificates of T-29 once the checker accepts them', yet it writes no bundle and does not depend on the card. N12-20's catalogue has no wiring row. Now the row is `hypothesis` at close. The card states that N15b-01 depends on it and writes the certificate of each design it checks at stage 5 (at least the worked leg-on-quadruped), and that this receipt moves the row; Scope Out and the order of work say so. The interim edit was kept: the scope names N15b-01's FROB-REF-108 refusals, the four mutations are mapped fixture by fixture to those refusals, and the e2e names N15b-33's step 8. Its e2e paragraph also said the lines of N15b-33's script carry `bead` \"CARD-T-29\". STD-E2E gives every line its owning bead's key, and N15b-33 sets no card tag, so no such line would exist. The card tag and the `T-nn/...` step names now belong to N12-34's per-card lines, and N15b-33's lines are found by their own step names."
+    },
+    {
+      "bead": "CARD-T-30",
+      "kinds": [
+        "deadlock"
+      ],
+      "what": "One acceptance line, 'the witness is exported with the three engineering answers named as next actions by the mission verbs (owned there)', named no owner. It read as a condition of this M1 card's close, but the export exists only at M3, in beads that reach this card through N20a-37. It now names N20a-41 (`sense.alias` with its verified separating changes) and BD-290 (`mission.refute` returning the three engineering answers, GATE-AUGUR-10), and says neither is a condition of close."
+    },
+    {
+      "bead": "CARD-T-31",
+      "kinds": [
+        "deadlock",
+        "contradiction"
+      ],
+      "what": "'No false route and no false impossibility on each reference interior' was a close condition. It is the scene gate GATE-HAB-10, measured by N19b-35 on certificates emitted by N19b-31, and N19b-31 depends on this card. It is no longer a close condition. The order of work names N19b-31 as the bead whose receipt moves the row for live output, and N12-15 as the checker in deps. The e2e names `clearance_certs.sh` (N19b-31) and `scene_fit_gate.sh` (N19b-35), and says that `contact_clearance_gate.sh` (N19b-33) tests another predicate. (Interim edit, checked whole and finished.) Its e2e paragraph also said the lines of the N19b-31 and N19b-35 scripts carry `bead` \"CARD-T-31\". STD-E2E gives every line its owning bead's key, and each of them sets no card tag, so no such line would exist. The card tag and the `T-nn/...` step names now belong to N12-34's per-card lines, and each of them's lines are found by their own step names."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N12-33",
+      "what": "The paragraph 'Lines per theorem card' says that cards T-02, T-05 and T-15 add their specimens and mutants to this script's set at M1, but no numbered step replays them: steps 4 to 9 cover only the M0 certificates. Add a step that runs every `crates/frob-cert/tests/specimens/poly-identity/` file tagged `card = \"T-02\"`, `\"T-05\"` or `\"T-15\"` through `frob prove verify --json` and the standalone `frob-verify`, logging lines with the card's key and asserting the expected verdict. When none is present, the step logs `pending` and does not pass. Those three cards now depend on N12-33. These specimens move no registry row, so step 8's 'no other card changed' still holds. Also note that CARD-T-09's fourth negative fixture is now 'a force returned on an output port declared as torque' (the M0 IR has no stores); step 2's 'four negative fixtures' stays four."
+    },
+    {
+      "bead": "N21a-16",
+      "what": "CARD-T-09 now places its buffer rule at M2 with this bead. Add a negative test `store_dimension_mismatch_rejected`: a force (kg·m·s⁻²) stored into a slot whose component dimension is torque (kg·m²·s⁻²) is refused with FROB-REF-250, naming both vectors. `loop_yield_dimension_fixed_point` already covers the loop rule."
+    },
+    {
+      "bead": "N12-20",
+      "what": "CARD-T-19 (M1) now closes with its row `hypothesis` and states that this bead's catalogue row 'Inertia tables of a model' moves it. Nothing here does that yet. The acceptance lines and the `--stage certify` pass cover kernels, by symbolic execution of straight-line programs, and an inertia table is model data. Please add a stage, an acceptance line and a unit test. For every body of each reference robot's compiled model, write T-19's bundle in the card's format: the `rational-ldlt` factorization of the 4×4 pseudo-inertia with its four pivots, plus the mass-support inequality ρ² − ‖c − o‖² − tr(I_C)/(2m) ≥ 0 over the declared mass envelope. Each bundle must replay in `frob-verify`, and the receipt moves T-19's row to `checked`, class `Certified`. A planted body with a non-positive pivot must yield no certificate. Add CARD-T-19 to deps so the stage reads the card's format (M1; no path back, checked). Without this, T-19 stays `hypothesis` for ever, and so does every result that cites it as `Certified`."
+    },
+    {
+      "bead": "N15b-01",
+      "what": "CARD-T-29 now states that this bead depends on it and writes the wiring certificate of each design it checks. Your Evidence paragraph already promises 'Certified as instance certificates of T-29', but no bead writes those bundles, so that class could never be reached. Please add deps CARD-T-29 and BD-027 (M1 and M0; no path back, checked). At stage 5 (`wiring::check_structure`), for each admitted design (at least the worked leg-on-quadruped and N15b-33's admitted fixtures), write the `poly-identity` bundle in T-29's format: B and C with ψᵀ(CᵀB)φ = 0, the wiring relations as primitive equations, the topological order and the edge list from declared causality. Add acceptance lines saying that `frob-verify` accepts each bundle, that the card's law tests (`crates/frob-lemma/tests/cards/t29.rs`) pass against `check_structure`, and that the receipt moves T-29's row from `hypothesis` to `checked`. Also assert that the auditor's verdict on T-29's mutation fixtures agrees with your FROB-REF-108 refusals. The three design-side defects are reversed sign, copied power port and algebraic loop; the missing-relation mutant has no design-side counterpart."
+    }
+  ],
+  "unchanged": 6,
+  "notes": "Unchanged (6): CARD-T-06, CARD-T-13, CARD-T-21, CARD-T-22, CARD-T-23, CARD-T-32. All 26 cards were read in full, and their arithmetic was rechecked: spot checks, known answers and counts. Every interim edit was read whole, found coherent and finished where it stopped (T-26 e2e, T-29). Same pattern outside this slice: a card's e2e paragraph often says a mechanism script's lines carry `bead` = CARD-T-nn. Per STD-E2E a line carries its owning bead, and only the lemma scripts (N12-33 to N12-37) tag per card. Cards in other slices that cite mechanism scripts may need the same wording fix. The slice file addressed nothing to these beads."
+}

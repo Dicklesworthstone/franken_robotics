@@ -4,7 +4,7 @@ title: "upstream frankensim: a second polarization pair for the battery element 
 type: "task"
 priority: 3
 milestone: "M2"
-labels: ["m2", "suite", "sinew", "upstream", "frankensim", "solid"]
+labels: ["m2", "suite", "sinew", "upstream", "frankensim", "solid", "review-notes-open"]
 parent: "WP-09"
 deps: ["BD-037", "BD-068", "BD-075", "N15b-28", "N15b-30", "N33b-04", "STD-E2E"]
 needs: []
@@ -43,8 +43,8 @@ posture (N15b-03); the power bus, brownout events and the verb `actuator.bus` (B
 the switch-over re-runs GATE-SINEW-07's brownout rows through it) and the battery card schema (BD-069); the
 power-path end-to-end run that measures GATE-SINEW-07 at M1 (N15b-30, a dependency, whose fixtures the phase
 `post` re-runs against the sibling element); temperature dependence of R₀ and ageing laws; the
-decision of OPEN-SINEW-4 itself (N15b-28, a dependency: if it decides "compose", this bead closes as not
-needed).
+decision of OPEN-SINEW-4 itself (N15b-28, a dependency: if it decides "compose", the referee switches to the
+composed element there and this item stays open as a convenience item, a native second pair, at P3).
 
 ## Technical approach
 
@@ -107,14 +107,16 @@ response's drop and both time constants within 1%; the ceiling E²/(4·R) and th
 exhaustion refuses. The in-house reference is then kept as a differential check in tests and removed from the
 referee path.
 
-**Fallback if the change cannot land.** The in-house reference stays on the referee; if OPEN-SINEW-4 is decided
-"compose from existing elements", this bead is closed as not needed and the registry row says so.
+**Fallback if the change cannot land.** The in-house reference stays on the referee, or the composed element if
+OPEN-SINEW-4 was decided "compose from existing elements" (N15b-28's rule: the referee then uses the composed
+element after GATE-SINEW-07 is re-run against it, and this item stays open as a convenience item at P3). The
+row stays `open` in either case: `not-needed` is admitted by BD-037 only on the conditional row FD-FSS-01.
 
 ## Acceptance criteria
 
 - [ ] In FrankenSim: the two-pair element exists, passes its own power-balance test (port power + dH/dt + dissipation = 0 to the crate's residual), and the one-pair element's tests are unchanged.
 - [ ] Here: the airlock exposes it at the new pin and the referee's battery uses it; the model's provenance no longer says in-house for the second pair.
-- [ ] Here: GATE-SINEW-07 passes against the sibling element with the measured drop, both time constants, the ceiling and the brownout count recorded.
+- [ ] Here: GATE-SINEW-07 passes against the sibling element, with the measured drop, both time constants, the ceiling and the brownout count logged beside the receipt hashes of the re-run. The re-run is a check: the gate's row stays the recording of N15b-30, its one recorder, and no `record_gate` call is made here.
 - [ ] Here: the in-house reference and the sibling element agree on the step response to 10⁻⁹ relative over 600 s of simulated time.
 - [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
@@ -168,7 +170,7 @@ gates touched. No private-scene data is logged.
 
 ## Considerations
 
-- The decision bead for OPEN-SINEW-4 comes first: if existing FrankenSim circuit elements compose into a second pair with the energy balance closed, no upstream change is needed, and this item is closed with that record.
+- The decision bead for OPEN-SINEW-4 comes first: if existing FrankenSim circuit elements compose into a second pair with the energy balance closed, the referee needs no upstream change and uses the composed element; this item stays open as a convenience item (a native second pair) at P3, and its switch-over then replaces the composed element, which is kept beside the in-house reference as a differential check.
 - Temperature dependence of R₀, hysteresis and ageing are separate laws both upstream and here; this item does not add them.
 - The battery is a shared resource: an edit that touches the shared bus invalidates every global result of a design, which is why battery parity between tiers is a gate and not a courtesy.
 - No milestone waits on this bead. Its milestone label says when its switch-over gate first exists, not that the

@@ -1,0 +1,308 @@
+{
+ "round": 4,
+ "slice": "S-25",
+ "reviewed": 31,
+ "changed": [
+  {
+   "bead": "BD-149",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Acceptance item 1 said the GATE-KIN-03 kinematics row is 'recorded' here; the gate has one recorder (convention 9), N16a-18's run with all four rows, and the shared harness is N16a-17's: the item now says the row is measured by N16a-17's harness and present in its receipt as `GATE-KIN-03/<robot>/kinematics: pass`, and that this bead writes no gate record. `cargo test -p frob-kernels fk twist` passes two filters before `--`, which cargo refuses: now `cargo test -p frob-kernels -- fk:: twist:: kernels::`. The end-to-end line called `kin_parity_fsmbd.sh --row kinematics`; N16a-17's script has no row option: its `kinematics` rows are the g2_parity entries run through e2e_tier. Recomputed and right: the 2R tool point (0.4, 0.3) and velocity (-0.03, 0.08), the offset-axis p = (1, -1, 0), the helical travel 0.0314159, the memory figures 4,396 and 9,700."
+  },
+  {
+   "bead": "N34-04",
+   "kinds": [
+    "deadlock",
+    "broken",
+    "contradiction"
+   ],
+   "what": "Acceptance item 7 (the GATE-WS-05 clause) required the guard's reports inside N34-21's script, and N34-21 depends on this bead (convention 7): the item now asserts the same thing on a four-binary scratch workspace of this bead's own (new test four_way_fixture_drifts) and names N34-21's step 6 as the script-side assertion. `cargo tree -i serde_json` refuses a bare name when the closure holds two serde_json packages, so two_versions_is_finding could not get 'the serde_json packages in its closure' from the command as written: the check repeats it per `serde_json@<version>`. The test plan said N34-21 runs check-deps in each of four build configurations; N34-21 runs it once with --root on a fixture of four binary packages. If left: an item nobody could tick before a dependent bead exists, and a command that errors in the one case its finding is for."
+  },
+  {
+   "bead": "N34-05",
+   "kinds": [
+    "contradiction",
+    "plan"
+   ],
+   "what": "The bead put its helpers in `frob_core::testkit` behind a feature `testkit`; STD-TEST, the owner, creates that same module behind the feature `test-support`. The bead now uses STD-TEST's feature (text, acceptance, test command) and depends on STD-TEST (level 3, no cost). If left: one module behind two feature names, and a test command that enables a feature the crate does not have. Acceptance item 5 (a planted per-step sink call fails, a per-chunk one passes) had no named test: added per_step_sink_call_is_caught with its numbers (4 worlds, chunks of 64, K = 64 and 128: 1 and 2 calls against 64 and 128). Telemetry level T0 was used undefined: defined in place. The two audit notes (move the counting sink to N34-06; depend on a split N34-06a) are not applied: see notes."
+  },
+  {
+   "bead": "N34-06",
+   "kinds": [
+    "request",
+    "deadlock",
+    "broken",
+    "contradiction"
+   ],
+   "what": "Applied F-U34: dep N34p4-01 instead of BD-003 (the bead uses only check-layers and its L-10 rules; level 8 -> 7), with the pointers in Scope and rule 4. Applied S-18: `fork-service` (N27a-01, M2, ADR-WS-07) among the planned rows; the known answer is ten rows at M1, eleven at M2, twelve at M3. Rule 4 said check-layers verifies 'exactly five standing rows'; N34p4-01 gives the check four L-10 findings and leaves the count to this bead's test: restated. N16a-01, N22a-01 and N27a-01 each raise 'the register's row-count test', which did not exist: added register_row_count. The null implementations in frob-core (and N34-05's counting sink, BD-014's batch-cpu backend) are `impl <Trait> for` outside every row's allowed crates, so the clean tree would fail L-10.unlisted-implementor: the five rows are now written out and the rule admits the defining crate (changed in N34p4-01), with a clean-tree acceptance item and test. Acceptance item 4 made FixedJob return FROB-REF-702 from frob-core at M0: RefusalCode is generated from the registry (BD-005) and row 702 is N32-REF's (eleven levels later, due M2), so the bead could not compile. DESIGN added: frob_core::ports names no refusal code; NullTrace, NullCertificates and FixedJob are constructed with the refusal they return unchanged; tests build it from a code frob-core itself raises. Split N34-06a not applied: see notes."
+  },
+  {
+   "bead": "N34-07",
+   "kinds": [
+    "request",
+    "deadlock",
+    "contradiction"
+   ],
+   "what": "Applied F-U34 and the two audit notes in the form the round's split took: dep N34p4-01 (the xtask surface) instead of BD-003 (check-unsafe reads sources, manifests and capsules.toml; nothing of check-deps or the stack lock), and the clause 'no other check reports anything on that scratch copy' of acceptance item 2 removed (it needs all six checks; BD-004 depends on this bead; N34-14 asserts it as plant 4). Rule 10 guarded overrides of print_stdout and print_stderr but not dbg_macro, the third lint N34-05 denies for rule L-7: added, with the test's cases. If left: the bead waits on the stack-lock beads for nothing and holds an item it cannot tick; a library could opt out of the dbg lint unseen."
+  },
+  {
+   "bead": "N34-08",
+   "kinds": [
+    "request",
+    "deadlock",
+    "plan"
+   ],
+   "what": "Applied F-U34 and the audit's wrong-way note: dep N34p4-01 instead of BD-003 (the check uses the surface and the declared-edge read, no check-deps code), and 'no other check reports anything on that scratch copy' removed from the plant-6 item (N34-14's plant 6). Omission: no bead writes CONTRACT.md, contract.toml or tests/conformance.rs for the `xtask` crate, and most M0 crate beads name CONTRACT.md only, so rules 1 and 3 would fail the clean tree that N34-14 and GATE-WS-01 require to pass, and N34-08 had no clean-tree acceptance at all. Added: the clean-tree item and test; xtask's three contract files written here (layer 7, rank 5, D0); the gap closed for members present when the bead lands; a contract.toml template beside the CONTRACT.md one, named in the findings' repair. Not applied: moving the doorway clause of rule 10 to BD-004 (see notes)."
+  },
+  {
+   "bead": "N34-10",
+   "kinds": [
+    "broken",
+    "plan"
+   ],
+   "what": "The two scratch-copy steps it adds to workspace_checks.sh logged `cargo xtask check-contracts --json` with no --root, which checks the real tree and cannot find the planted contract: `--root <copy>` added. Acceptance item 6 (the rendering of a shadowed result holds both values, the agreement and the mode) had no test: shadow_rendering_has_both_values added with its values."
+  },
+  {
+   "bead": "N34-16",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Applied F-U34: dep N34p4-04, and step 2 now asserts the `## Working rules` section with rows 1 to 12, so the dependency does work (only BD-044 depends on this bead: no level cost). Step 8 ran `cargo check -p <name>` for every directory holding a package manifest; in standing mode that includes the fixture workspaces of xtask and the conformance crate, which are not members of any workspace and are in part broken on purpose, so the step would fail on every later commit: it now walks the members of each workspace and lists fixture manifests without checking them. The N33a-01 counterpart (lifts.toml moved out of BD-002) was not applied by that bead's reviewer: nothing to take here."
+  },
+  {
+   "bead": "N34p2-01",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The script had a step that runs `cargo xtask check-stack` (N33a-05, which depends on this bead) and logs `not due` until that bead lands: convention 7, and the pattern F-U34 removed from N34-15. The script now calls nothing a later bead delivers, and the bead names where the reader is first seen from the user's side (N33a-03's lock_rejects_unknown_field, N33a-05's stack.lock-schema). If left: a dormant step in an M0 script that no acceptance ever exercises. The three audit counterparts (STD-TEST split, BD-003a) change no text here."
+  },
+  {
+   "bead": "N34p4-01",
+   "kinds": [
+    "deadlock",
+    "broken",
+    "contradiction"
+   ],
+   "what": "The report is 'written with frob-core's canonical writer', which is N34-18, a bead this one did not reach (deps BD-001, N34-02, N34-17): N34-18 added (level 5 -> 6, no cycle; BD-003 and N34-06 keep their levels). The report schema was 'kept outside schemas/frob.*.json' with no path, although five beads validate against it: `schemas/xtask.report.schema.json` (DESIGN), and gen.orphan cited as N34p4-03's, not BD-004's. L-10.unlisted-implementor now admits the row's defining crate and L-10.wrong-home is silent for a trait no crate defines yet (the device-backend row precedes BD-014's trait, the member-sizer row N31b-39's); as written, the null ports of N34-06 and the batch-cpu backend would fail the clean tree. Two cases added to l10_rules."
+  },
+  {
+   "bead": "N34p4-02",
+   "kinds": [
+    "request",
+    "contradiction",
+    "plan"
+   ],
+   "what": "Applied S-22: the conditional row `mcp` of the KILL-MCP branch (root surface/frob-mcp, own Cargo.lock, kind annex, entered by N32a-06, surface/frob-mcp leaving the core row) is stated in the table's description and in the Considerations, and the two count tests read constants that N32a-06 raises. Defect: the bead (and N00-23, N21a-01, N21c-24) says `check-deps` reads the forbidden-package list, but no bead defined a rule that does; BD-003's rules see direct edges only, while N00-23's test expects check-deps to report the table row with its nongoal reason and N21c-24 a transitive cudarc. Added the rule `core.forbidden-package` (DESIGN): the core Cargo.lock's packages matched against the list by name, prefix and manifest path, reported with the entry's reason and a dependency path; acceptance items, a test with its transitive, prefix, lockfile-only and annex cases, and a negative control. If left: a deny list that four beads rely on and only an end-to-end grep enforces."
+  },
+  {
+   "bead": "N34x-01",
+   "kinds": [
+    "request",
+    "deadlock",
+    "contradiction"
+   ],
+   "what": "Applied F-U34: dep N34p4-01 instead of BD-003 (only layer rules are used). Applied the audit's [false] note: STD-TEST moved to related (the tests are plain xtask tests on scratch copies). Applied S-18 and the audit's [missing] note in the form that needs no move to N31b-39 (whose reviewer did not take it): acceptance item 1 no longer asserts an eleven-row total that counts rows of N16a-01, N22a-01 and N27a-01, which this bead does not depend on; it asserts its own row, five standing rows and a count one above the count in force (register_row_count raised by one; twelve when the M1 and M2 rows are in), as N16a-01 and N22a-01 do. The rows it adds to N34-14's script are a real use of that script: N34-14 added to deps (M0, level 15; only N31b-39 and N31b-41 at level 100+ depend on this bead; no cycle). If left: an item that fails on any landing order but one, and a script edited before it exists."
+  },
+  {
+   "bead": "N35-14",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The script's key embedded a run identifier (`bc-<Q|H>-<b>-<run-id>`); STD-E2E's rule is that a key is written with e2e_key and holds no run identifier, so that two runs send the same keys and their logs compare equal. Now `\"$(e2e_key bc-<q|h>-<b>)\"`. Everything else checked and right: the eight conditions against section 35.5, the row-2 fixture (1 at both capacities in f32), 0x80000000, the spark.check options against VERBS-spark, KA-786, KA-787, CX-368."
+  },
+  {
+   "bead": "N35-20",
+   "kinds": [
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "HZ-09's script ran `frob sim run <fixture>`, a positional fixture, which the sim.run row rules out (`--fixture <name>` is the one spelling), stored no snapshot (restart snapshots need `--telemetry T3`; the default level T1 has none, so `--from-snapshot` had nothing to name) and put `--mutant snapshot-without-warm-start` on 'the same' pair without saying which verb (sim.replay has no --mutant; it would be 802). Now `frob sim run --workload Q --tier <t> --worlds 8 --seconds 4 --seed <s> --telemetry T3`, the replay from a snapshot of a traced world, and the mutant on the sim run. Keys no longer embed a run identifier (e2e_key). HZ-11's refusal is named (FROB-REF-864, N35-07). Recomputed and right: 31 hazards, the fifteen identifiers, 0.999^1000 = 0.3677, 0x3F800007 against 0x3F800008, 2^-10 m/s, 0.25 against 0.5."
+  },
+  {
+   "bead": "N35-21",
+   "kinds": [
+    "request",
+    "deadlock",
+    "broken"
+   ],
+   "what": "Applied the audit's [missing] note after checking it: deps gain BD-025 (the control record in controls.toml) and STD-TEST (prop::check for the 10^4-case property, control() for the sketch), and the two tests name the kit calls. Also missing: N34-18 (the serialized form frob.hist14/1 is written and read with frob-core's own JSON writer and reader; the crate links no JSON library); level 5 -> 6. Acceptance item 6 asserted that the envelope schema rejects a scalar quantile: that schema and rule are N35-28's, which depends on this bead (convention 7); the item now asserts the definition here and names N35-28. `quantile(q: Rational)` used a type frob-core does not have (the only exact rational is N13-10's, in frob-lie, layer 1): q is now two u64 with the rank in u128, with tests; and the empty-histogram refusal returned `Refusal` with no code named: it is the module's own QuantileError, mapped by the caller. All bin numbers recomputed and right (4,064; 4,063; 4,112; 4,136; 4,164; 8,160; 8,128 positive normal bins; int_bin 32, 63, 64, 95, 639; both sketch end states)."
+  },
+  {
+   "bead": "N35-25",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "The bead's exact rationals (epsilon, the category probabilities, thresholds and finite-form weights, which pass 128 bits) are `Rational` in frob-core and frob-fsim, but the workspace's exact kernel is specified by N13-10 in frob-lie (layer 1), which layer 0 cannot depend on. The bead now states the form it needs (`frob_core::exact`, N13-10's own stated remedy) and that it writes no second exact arithmetic; request recorded. If left: the implementer finds no rational type at layer 0 and writes a private one. Recomputed and right: w(0) = 9.9699, w(2) = 1, w(4) = 3.7272e-4, 10 and 10/181, 12.5, the 0.013 and 2% bands, KA-665."
+  },
+  {
+   "bead": "N35-26",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Rule 2 checked that `frob --json artifact list` 'filtered by the job' shows no artifact of kind `result`. BD-097's kind table has no such kind (column, snapshot, certificate, receipt, report, still, bundle) and the listing filters by --run or --kind, so the assertion was vacuous and the planted job engine that publishes a partial result could pass it. Now: `artifact list --run <run>` shows column (and snapshot) rows and one receipt, no report, certificate, still or bundle, and the receipt read with `artifact read` says budget-stop (N32a-08); the unit test gains a planted report row."
+  },
+  {
+   "bead": "N35-29",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 13: the script said the refinement-count variable 'is also requested as a pass-through option of the precision battery's script'; BD-179 carries it (`--stiff-refine-steps 0|1|2`), now stated as that fact, and Scope no longer speaks of measurements 'to request'. Recomputed and right: kappa*u figures, 3,675 against 14,292 and 972 against 1,944, every case of the two decision rules."
+  },
+  {
+   "bead": "N36-01",
+   "kinds": [
+    "request",
+    "registry",
+    "contradiction"
+   ],
+   "what": "Applied F-U36: `judge(row, figure) -> Result<Verdict, JudgeError>` over the module's own `Figure` returns `JudgeError::PointEstimateOnRatioRow` for a point on a ratio row and names no refusal code (BD-216 maps it to FROB-REF-863); acceptance item and test ratio_row_point_estimate_is_typed_error with row 5's numbers. The registry file had no hand-written JSON-Schema, which BD-002's rule and N34-16's standing mode require of every registry file: `schemas/registries/perf_targets.schema.json` added with an item. Contradiction: judge compared 'an upper bound for at_most rows', with the test 'row 4 with an upper bound of 1.20 passes', while the estimator (N36-06) has no upper-bound variant and orients every ratio so that larger is better, and BD-218 judges row 4 as L >= 1/1.25 = 0.80; PerfRatio converts only into a LowerBound, so an at_most ratio row would have been judged as 'L <= 1.25' and passed at any slowness. Now: a ratio row with value v passes at L >= v (at_least) or L >= 1/v (at_most; rows 4 and 9: 0.80 and 0.667), UpperBound and Point serve absolute rows, and a figure on the wrong side is `JudgeError::WrongSide`; test at_most_ratio_row_judges_oriented_bound (410 s against 480 s gives 0.854, passes; 530 s gives 0.774, fails). All table numbers checked against sections 36.3 and 36.15."
+  },
+  {
+   "bead": "N36-04",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "Acceptance item 'The parity-baseline report (BD-040) contains the limits section' could not be ticked here: BD-040 depends on this bead (convention 7). The item now states the section's content as `LimitsReport` (published and measured values or `unmeasured`, inputs with units, conclusion_changed) and leaves the report-level assertion to BD-040. Everything else checked and right (the seven limits, 47/6, 53/12, 59/9, the adapters)."
+  },
+  {
+   "bead": "N36-17",
+   "kinds": [
+    "request",
+    "deadlock",
+    "broken"
+   ],
+   "what": "Applied F-U36: JobShape gains ray work R (rays per frame x bins x frames over the job's ray sensors, a camera's bins being N36-19's b) and the point model a term R*t_ray(W), t_ray measured by the size sweep with the sensor on and off; a job with R > 0 and no t_ray record is uncalibrated; DESIGN: ray work enters the point model, not the stratum key, with the reason; new test ray_work_term (3,072 rays, 19,200 frames, 58,982,400 and 471,859,200 rays, 0.118 and 0.944 s) and an item. Without it BD-219's bins_change_time_not_bytes could not pass. The admission item named the budget path (BD-297, M3, not a dependency) and no test: it now asserts the envelope path through N36-20's admit (reached through BD-216) in admission_reads_upper_end (ln 1.4 as the largest of 19 residuals, 3,000 s -> 4,200 s, FROB-REF-761 pointer wall under E0's hour). coverage_on_synthetic_exchangeable_residuals had one draw per stratum, which puts the +-0.01 band at 1.5 standard errors at 90% (a seed fails about one time in seven): 100 held-out draws per stratum. Recomputed and right: the conformal indices, [83.5, 119.7] and [82.7, 120.9], 21.44 s, 0.693 M, P = 0.42 and 0.011, 2.3 standard errors."
+  },
+  {
+   "bead": "N36-19",
+   "kinds": [
+    "request",
+    "deadlock"
+   ],
+   "what": "Applied F-U36 (audit counterpart): acceptance item 3 (measured high-water mark within 5%) is N36-32's, and the time half of item 5 is BD-219's (bins_change_time_not_bytes); this bead cannot test the time half (it does not reach N36-17) and the mark needs the camera timing seed. Item 3 dropped, item 5 keeps 'not the byte estimate', Scope Out names both. BD-188 moved to related: nothing left in the bead uses it (the bins are an integer argument; the sensor kernels are BD-187's); one level earlier for N36-19 and BD-219 even after BD-219 takes BD-188 directly (request). Recomputed and right: 2,457,600; 1,258,291,200; 40,265,318,400; 3,255; 41,300; 268,435,456; 142."
+  },
+  {
+   "bead": "N36-23",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "The campaign's launch line `frob-launch --scope campaign:perf-row-19 --cores 8 ...` lacked `--devices`, which N36-20 requires: `--devices 0` added (CPU verbs). `scene gen --param <size>` is not the verb's form: `--param <name>=<value>`, once per size parameter. The interior archetypes are now named as `scene.gen --family` takes them (`home`, `apartment`, `office`, `plant`, `retail`; 'manufacturing plant' and 'retail store' are 802). Recomputed and right: six runs (400; 2,000; 2,000; 1,000; 2,100; 2,100 s), 3.75 x 10^7 voxels, nearest-rank 100th, 190th and 198th of 200."
+  },
+  {
+   "bead": "N36-24",
+   "kinds": [
+    "deadlock",
+    "broken"
+   ],
+   "what": "The amendment item and test amendment_before_measurement_only (no case given) rested on 'the register's lint' and on campaign records; the rule is N40-03's `amendment_precedes_measurement` (amended-after-measurement) and `changed-without-amendment`, which cover the threshold of a convergence gate a kill gate reads: item, test (0.67 -> 0.80 dated before and one second after the earliest receipt) and negative control now cite them, and N40-03 is a direct dep (already reached through BD-142; no level change). The negative control 'rejected by the harness's ratio type' named N36-06's PerfRatio, which this bead does not reach: it is N36-01's judge (PointEstimateOnRatioRow). Recomputed and right: the penalty table (1.143 to 2.766; 1.145 and 1.435) and band_partition."
+  },
+  {
+   "bead": "N36-25",
+   "kinds": [
+    "broken",
+    "contradiction"
+   ],
+   "what": "every_ratio_row_has_a_comparator joins the comparator registry with the target register, which the bead did not reach: N36-01 added (M0, level 6; N36-25 stays at 28, no cycle). As written it failed on every ratio row, including row 6 (weak scaling, a ratio to row 1, no comparator): it now checks rows of kind ratio_to_incumbent only. The acceptance item 'a paired campaign against an unfrozen comparator is refused by the harness' and the test unfrozen_comparator_refuses_pairing had no code behind them: BD-039's schema says an empty frozen_at refuses every paired run, but its launcher steps do not check it, and the campaign runner (BD-216) is later. The freeze rule is now this bead's code (DESIGN names require_frozen, Unfrozen; freeze_order, FrozenAfterRun), and the freeze-order negative control rests on BD-039's run records instead of the pairs record of N36-06, which depends on this bead. Request to BD-216 to call require_frozen before a comparator arm."
+  },
+  {
+   "bead": "N36-28",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "registries/parity_defects.toml had no hand-written JSON-Schema, which BD-002 requires of every registry file (N34-16's standing mode fails it): schemas/registries/parity_defects.schema.json added to the text and an item. The end-to-end mode asserted the parity_defect field 'on a fresh frob sim run --json envelope'; a sim.run envelope carries no disclosure block (the block is the harness's, filled by N36-13's from_receipt), so the assertion could never hold: it now reads the disclosure block of a fresh BD-216 run report of the row. Recomputed and right: lost factor 0.67/0.30 = 2.23, the penalty 3.03 at rho 0.30 and s 0.87, the 0.66 and 0.67 closing cases."
+  },
+  {
+   "bead": "N36-33",
+   "kinds": [
+    "broken",
+    "registry"
+   ],
+   "what": "Its acceptance and script run `--tier batch-cpu` and type the expansion out with `--scene` and `--capacity`, owned by N16b-25 and N16a-14 (M2), which it did not reach; the resolver's scene and capacity fields cannot exist on sim.run before them. Both added (no cycle; N36-33 level 61 -> 75). Cost: the longest chain of the graph grows 142 -> 144, through BD-172, which already depends on N16b-25 directly and on N36-33. The item '--worlds absent runs 8,192 worlds on a device tier' needed a device tier, and the device beads depend on this bead (convention 7): now a batch-cpu run of 0.02 s (8,192 worlds, about 0.28 GB of state, inside E0). The fixed-argument list left out warm start, which resolution step 4 fixes; and fixed_argument_conflicts had a decimation case, but sim.run has no decimation input: the cases are now the sim.run spellings (positional design, --scene, --capacity contacts= and rows=, --step, --newton-iterations, --warm-start). Checked and right: KA-815 (160 and 320), degrees of freedom 18 and 35, h = 1/500 s, the 802 refusal form."
+  },
+  {
+   "bead": "N36-34",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Convention 14: the confirming one-card training (which can pass E0's hour) was started with no scope, so its scope was adhoc and its class in force always E0: it could never be admitted, even after a ruling, and the bead could never close. Row 9 has no gate, and R28 belongs to N36-22, which depends on this bead. Added item 10: this bead files its own request row (next free identifier from R29, packages WP-21, E2, admits campaign:humanoid-task-confirm, not-approved fallback, OPEN-SPARK-2), and the run cites it with --envelope-scope; an item and the Scope say so. `--devices 0` is not train.start's spelling (`--devices cuda:0`, the row's own example and BD-218's), and the two-card form is `--backend gpu-cuda:0,1 --shards 2`. Recomputed and right: 96 actor values, 196,608 samples per update, 2.7e8 env-steps, the quality verdict cases."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-005",
+   "what": "RefusalCode is generated from registries/refusals.toml, which the first commit ships empty, yet this bead's own code and tests raise FROB-REF-881 and name 816, and the registry beads land ten or more levels later. State how those variants exist when BD-005 is built (for example: BD-005 enters the rows its own crate raises, code and meaning as Appendix O gives them, and the chapter registry completes them), or the crate cannot compile. N34-06 now builds its test refusals from 881 on that assumption. Also name the path of the generated enum file and what produces it before N34p4-03's generator exists; and no bead gives frob-core a tests/conformance.rs, which check-contracts rule 3 requires (N34-08 now adds an entry point for members that lack one when it lands)."
+  },
+  {
+   "bead": "N13-10",
+   "what": "frob-core beads use exact integer and rational types that only this bead defines, in frob-lie (layer 1, M1), which frob-core (layer 0) cannot depend on: N34-18 (`Int` in rational_pair), N36-03 (`h: Rational`), N35-25 (`Rational` for the defensive mixture and its exact weights). Apply the remedy this bead's Considerations already names (the kernel moves to frob-core unchanged, as `frob_core::exact`, and frob-lie re-exports it), or answer with the type those beads must use; N35-25 now states `frob_core::exact` as the form it needs. N35-21 no longer needs it (its quantile fraction is two u64)."
+  },
+  {
+   "bead": "N34-18",
+   "what": "`rational_pair(p: &Int, q: &Int)` names an `Int` that no frob-core bead defines (see the request to N13-10); say which type it is."
+  },
+  {
+   "bead": "N36-03",
+   "what": "`h: Rational` in frob_core::perf::units names a type frob-core does not have (see the request to N13-10)."
+  },
+  {
+   "bead": "N27a-01",
+   "what": "N34-06's FixedJob is now constructed with the refusal it returns on exhaustion (`FixedJob::new(budget, on_exhausted)`); the compile test fork_service_object_safe builds it that way. N34-06 was not split (no N34-06a): keep the dependency on N34-06."
+  },
+  {
+   "bead": "BD-001",
+   "what": "The xtask package ships with no CONTRACT.md, contract.toml or tests/conformance.rs; N34-08 now writes them (the schema and template do not exist at BD-001's level). Say in BD-001's Scope that they arrive with N34-08."
+  },
+  {
+   "bead": "N34-22",
+   "what": "Its test command enables `--features testkit` on frob-core; the shared test module `frob_core::testkit` is behind STD-TEST's feature `test-support` (N34-05 now uses that name)."
+  },
+  {
+   "bead": "N00-23",
+   "what": "The check-deps finding that reports a workspace-table row with its reason is `core.forbidden-package` (N34p4-02, which now defines the rule); cite it in rendering_crate_in_core_graph_denied and aero_crate_in_core_graph_denied."
+  },
+  {
+   "bead": "N21c-24",
+   "what": "The rule that denies a forbidden package anywhere in the core's resolved graph, direct or transitive, is `core.forbidden-package` of N34p4-02 (which this bead depends on); name it in core_denies_transitive and in the acceptance item, and keep writing only the rows."
+  },
+  {
+   "bead": "N21a-01",
+   "what": "Rule 1 (INV-SPARK-01) is enforced in check-deps by `core.forbidden-package` (N34p4-02); cite it."
+  },
+  {
+   "bead": "BD-054",
+   "what": "It names the generated design schema `schemas/frob.design-1.json`; N34p4-03's generator writes one file per schema identifier with `/` as `.`, that is `schemas/frob.design.1.json`. As written the file is gen.missing under one name and gen.orphan under the other."
+  },
+  {
+   "bead": "N34-CX",
+   "what": "CX-363's checking bead is N34p4-01 (already requested by F-U34); the L-10 rule now admits the defining crate, which changes no plant."
+  },
+  {
+   "bead": "BD-219",
+   "what": "N36-19 no longer depends on BD-188 (F-U36's audit counterpart: nothing in it used the camera timing seed). bins_change_time_not_bytes builds a camera task with exposure or rolling-shutter bins, which is BD-188's: add BD-188 to deps (level 84, which BD-219 had through N36-19). The ray-work term it hands N36-17 now exists: JobShape's ray work R and the term R*t_ray(W)."
+  },
+  {
+   "bead": "BD-217",
+   "what": "Scope Out says 'time-to-threshold rows 4, 5, 9 (BD-218) and scaling rows 5, 6 (BD-199)'; by N36-01's table row 4 is BD-218's, row 5 is BD-199's only (it is listed twice), and row 9 is N36-22's."
+  },
+  {
+   "bead": "N36-REF",
+   "what": "Row 863's site list names 'the target register's judge on a point estimate (N36-01)'; judge now returns a typed error with no code, and the refusal is raised by BD-216's mapping (as F-U36 already asked). The new JudgeError::WrongSide is a caller's defect and maps to no refusal."
+  },
+  {
+   "bead": "BD-216",
+   "what": "N36-25 now writes the freeze rule as code: `frob_conformance::perf::comparators::require_frozen(registry, name)` refuses a comparator row with state 'default' or an empty frozen_at. Call it before admitting a comparator arm, and record the row `not run` (reason: comparator not frozen) when it refuses; BD-039's launcher does not check frozen_at, so without this an M2 paired campaign can run against an unfrozen comparator."
+  }
+ ],
+ "unchanged": 3,
+ "notes": "Unchanged: N34p4-03, N34p4-04, N36-21. Audit proposals declined, with reasons: (1) split N34-06a: after the BD-003 -> N34p4-01 swap N34-06 sits at the level the split-off bead would have (both bound by N34-11), so the split gains nothing and N27a-01 already depends on N34-06. (2) move the counting sink from N34-05 to N34-06: the sink is test support in STD-TEST's `frob_core::testkit` and the per-step control is N34-05's enforcement of L-7; moving it puts a test sink in production `ports::null` for a gain the auditor calls small (N34-05 blocks only N34-14, held at level 15 by BD-004). (3) move the doorway clause of N34-08's rule 10 to BD-004: BD-004 was reviewed in F-U34 without taking it, the clause is a rule of check-contracts and the doorway table is N34-07's data, so the dependency is real; gain one level. Two program-wide gaps met in this slice and not solvable inside it (requests recorded): refusal codes raised by frob-core beads before any registry bead has entered their rows (BD-005's generated RefusalCode), and exact Int and Rational types used in frob-core while the exact kernel is specified in frob-lie. Resumed review: BD-149 and N36-01 were edited by the earlier reviewer after its last result update; both edits were checked complete and are recorded above (N36-01 with this session's further change). N36-21 checked and right (rows 20 to 22, 17.5 and 43, KA-824, reaches BD-040 through BD-217). N34-08's audit counterpart for N15a-01 (add BD-003 and N34-08 to N15a-01, or move its item) asks nothing of N34-08 and is not applied here. N36-33's two new deps lengthen the graph's longest chain by two levels; they are real (the request fields the resolver fills come from those beads), and the alternative is a split of the sim.run wiring from the resolver, which would not shorten the chain because BD-172 needs the wiring. All touched files pass the parse check; graph_check finds no cycle."
+}

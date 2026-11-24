@@ -1,0 +1,286 @@
+{
+"round": 4,
+"slice": "F-U38b",
+"reviewed": 43,
+"changed": [
+{
+"bead": "BD-146",
+"kinds": [
+"broken",
+"registry",
+"plan"
+],
+"what": "Battery identity is N24b-01's BatteryId (hash of the canonical item set, not of the manifest bytes); smoke's items are (task, world, disturbance, initial), not (robot, scenario, seed) triples, and its content is N24b-01's (four archetypes, three scenarios each, no cart); smoke now runs as `frob eval run --battery smoke --class <class> --tier referee --key conformance-m1-smoke-<class> --json` (N24c-04, added to deps) with the bound BatteryId checked, since the receipt has no battery field; fixtures runs as `frob task fixture --battery fixtures --key … --json` and N38a-22's `-- battery:fixtures` entries. Step 3 adds GATE-GAUNT-11 and GATE-FID-09 (rows 1, 3, 5) from the M1 exit list; the GATE-GAUNT-05 acceptance gains its fourth clause (planted G2 result offered as Reality refused). Unit test and e2e restated to match."
+},
+{
+"bead": "BD-223",
+"kinds": [
+"broken",
+"registry"
+],
+"what": "Registered identity is the per-class BatteryId of N38a-20's battery.freeze row, not a hash of the manifest; `frob fidelity ledger` gains its required --class and --tier-pair (`--class <class> --tier-pair batch-cpu,referee --battery standard --json`); the spark check key is per backend (`m2-check-<k>-<device>`), else the second backend is refused 803; the relation, chaos and determinism scripts are named (metamorphic_g3.sh, chaos_kernel.sh, determinism_g5.sh); GATE-GAUNT-07's acceptance states its first clause (every kernel and verb meets its declared class in the five lanes)."
+},
+{
+"bead": "BD-318",
+"kinds": [
+"broken"
+],
+"what": "e2e: `frob autopsy attribute` and `frob eval ledger` lacked their required positionals; now `frob autopsy attribute <fork> --json` and `frob eval ledger <campaign> --json` (both read verbs)."
+},
+{
+"bead": "BD-411",
+"kinds": [
+"broken"
+],
+"what": "`frob ground band --cell <c> --json` lacked the required --metric and --level; now `--metric <metric> --level 0.90` in the e2e and in section 6 (CERT-15's 19/21 is the level-0.90 coverage); `frob foundry size` on the cantilever is `frob foundry size --fixture cantilever --json`."
+},
+{
+"bead": "N38b-04",
+"kinds": [
+"request",
+"contradiction",
+"plan"
+],
+"what": "Mutation row: the branch and the build use exactly the record's `feature` (named by its plant for a seeded control, `nc-<nnnn>` only for a directly registered one); a law-suite control is built in its owning crate (`cargo test -p <crate> --features <feature> --test laws_c<nn>`, or under gauntlet-mutations while staged); an annex-workspace control goes through a driver hook `control_runner::DRIVERS`, Spark's `negctl::run` (N21c-30, which depends on this bead, so no dep added). Mutation guard restated so it holds in both builds: each mutation feature (cx-*, nc-*, mutant-*) implies its crate's `conformance` feature, release builds with it are compile errors, product binaries carry neither, checked by tests/mutation_guard.rs. A control whose `due` is later than the part is `not-yet-due`, neither blocks nor supports; a part with only not-yet-due controls is not-eligible. The suspect report reads FROB_MILESTONE. Acceptance and six unit tests added."
+},
+{
+"bead": "N38b-05",
+"kinds": [
+"request",
+"registry",
+"contradiction"
+],
+"what": "Added dep N38-REF (H-ref-3). Plant record and the KA control cell gain optional `removed_check`, copied to the control (seeding-table row, test plant_removed_check_copied, acceptance), so planted inputs whose expect is the product's refusal are not rejected boundary-not-control (H-cx-3). Obligation (b) states CX-012 as N00-CX writes it (numeric=false, plan_case=\"numbers\", empty case_supplied_by, plant already named and equal to the supplier's), and step 4 says the tool fills case_supplied_by itself (H-cx-1). The join resolves RISK-nn and the other seed forms in their registers; the tool writes only CX and KA seeds; RISK controls are N41-32 to N41-37's (F-U41-2). The N21b-42 counterpart needs nothing here: F-U21b already applied it on N21b-42's side and this bead's seeding of KA-537 is unchanged."
+},
+{
+"bead": "N38b-07",
+"kinds": [
+"broken"
+],
+"what": "The e2e ran `cargo run … --example record_gate`, which STD-E2E's linter fails as self-recording (only N38b-19 and N38b-21 are exempt); the refusals are now driven by the test target's recorder cases on a scratch repository built by the test, and the checkout's gates.toml digest is logged before and after. Recorder tests state that steps 1 to 6 pass so the refusal is the hook's; added hook_registered."
+},
+{
+"bead": "N38b-09",
+"kinds": [
+"broken",
+"plan",
+"deadlock"
+],
+"what": "Step 3 dropped the stray second filter word `controls` and sets FROB_TEST_SEED and FROB_MILESTONE; step 5 reads the milestone from FROB_MILESTONE (a word after `--` is a test-name filter that selects nothing and passes vacuously). Not-yet-due pairs counted apart. New step 7: the gate's own entry `-- GATE-GAUNT-01` in g1_known_answers reads the matrix and the step-3 receipts and plants the gate's two controls, so a receipt with a GATE-GAUNT-01 line and both controls caught exists; without it the gate could never be recorded (same-run rule). Dep N38b-23 added (it registers those two controls; no cycle). Two unit tests added."
+},
+{
+"bead": "N38b-18",
+"kinds": [
+"registry",
+"plan"
+],
+"what": "Multi-part count 35 → 36 convergence gates (GATE-MARROW-01 M0 and M1; F-U40). Audit notes applied after checking: dep N34-11 dropped (no test or type parses a ClaimId; claim_id kept as the raw string and parsed by N40-01's validator, which owns rule 3(d)); dep BD-002 added (its first-commit JSON-Schema is the file this bead extends; no cycle; layer unchanged). The Considerations now state the text form `clm:<64 hex>` as fact."
+},
+{
+"bead": "N38b-12",
+"kinds": [
+"broken"
+],
+"what": "cert07_threshold_restated asked for the largest F with P(Binomial(2000,0.05) >= F+1) <= 0.01, which is 2,000 (every F above 123 satisfies it); now the smallest F, with the exact tails P(X>=124)=0.00953 and P(X>=123)=0.01228 recomputed."
+},
+{
+"bead": "N38b-17",
+"kinds": [
+"broken",
+"plan"
+],
+"what": "Table forms fixed: CERT-12 `frob eval preanalyze` gains its --rule, --margin and --level and the --declared-verdicts tie request; CERT-14 `frob autopsy attribute <fork> --json` (positional required); CERT-15 `frob ground band --cell … --metric … --level 0.90 --json`. The M3 part now names the tier run that writes its receipt (`FROB_TEST_SEED=0 FROB_MILESTONE=<M> cargo test -p frob-conformance --test g0_laws --features gauntlet-mutations -- GATE-GAUNT-04`), as the M1 mode does; nothing produced a receipt before."
+},
+{
+"bead": "N38bp1-02",
+"kinds": [
+"request",
+"broken"
+],
+"what": "Applied F-U38b r3: CERT-12's tie request is `frob eval preanalyze --rule paired-clopper-pearson/1 --n 64 --margin 0.05 --level 0.05 --declared-verdicts practical-tie --json` (refused 532) and the n=64..256 runs carry their required options. CERT-03 calls `frob study submit`, first milestone M2, which answers at M1 only through N33b-19; CERT-02 calls `frob spark check` (N21b-32); neither bead was reachable, so N33b-19 and N21b-32 added to deps (no cycle). Run verbs carry distinct --key cert-<row>-<n>. The receipt run gains FROB_TEST_SEED, FROB_MILESTONE=M1 and --features gauntlet-mutations, without which the broken certifiers (the gate's listed controls) are not planted and the recorder's same-run rule refuses the part."
+},
+{
+"bead": "N38b-21",
+"kinds": [
+"request",
+"broken",
+"deadlock"
+],
+"what": "Confirmed for H-owners-3 that the script writes only the scratch clone's gates.toml; it now logs the checkout's digest at start and asserts it at the end (acceptance added). Step 2 gains --features gauntlet-mutations (else the mutation control reads stale) and FROB_TEST_SEED; step 1 commits the fixture gate's rows so the receipt is from a clean tree. New step 8: the gate's own G0 entry run in the checkout, because a receipt from the clone names a commit that is not an ancestor of the checkout's HEAD (receipt-commit-unknown), so GATE-GAUNT-10 could never be recorded from 'this script's receipt'. Dep N38b-23 added (it registers the gate's three controls)."
+},
+{
+"bead": "N38b-24",
+"kinds": [
+"broken"
+],
+"what": "The decision entry's receipts were 'the counting test's receipts', but `cargo test --test kill_devoracle` is not a tier run and writes none (and not-fired needs at least one). Now the receipts of the ten [[pilot.result]] entries the count reads, committed at receipts/pilots/<hash>.json (N38a-09 rule 2a), which N40-03 resolves; acceptance and decision_entry_form updated."
+},
+{
+"bead": "N38b-29",
+"kinds": [
+"request",
+"broken"
+],
+"what": "Applied F-U38b r3: the run builds `<crate>/<feature>` from the record's feature field, not nc-<nnnn>; a law row runs in its owning crate (`cargo test -p <crate> --features <feature> --test laws_c<nn>`, N10a-01 section 6). The G1 filter `-- ka:<id>` is not one of N38a-02's forms; now `-- KA-<nnn>`, with FROB_TEST_SEED and --features gauntlet-mutations."
+},
+{
+"bead": "N38b-30",
+"kinds": [
+"broken"
+],
+"what": "Plant uncaught-control built KA-226's mutant 'without its feature' and expected the gate line to fail; under N38b-04 a missing feature is `stale` and the line `not-eligible`, so the script would fail on a correct system. Now the mutant is made a no-op (feature declared, cfg branch removed): `missed`, line `fail`."
+},
+{
+"bead": "N38b-31",
+"kinds": [
+"broken"
+],
+"what": "Same plant correction for KA-362's uncaught-control (no-op mutant: missed and fail, not stale)."
+},
+{
+"bead": "N38b-32",
+"kinds": [
+"broken"
+],
+"what": "Same plant correction for KA-552's uncaught-control (no-op mutant: missed and fail, not stale)."
+},
+{
+"bead": "N38b-35",
+"kinds": [
+"deadlock",
+"broken"
+],
+"what": "The bead wrote ADR-OPEN-GAUNT-4 but never moved the register row OPEN-GAUNT-4 (N41-OPEN8, deadline M0) to decided/defaulted, so N41-03's due query would hold the M0 exit on a question this bead had closed; the move, an acceptance line and an e2e assertion added, N41-OPEN8 moved from related to deps (M0, no cycle). The default's metric pilots_waiting read 'the funding rule's report' with no command and no route to its owner: now `cargo run -p frob-conformance --example pilots -- fundable --all --json`, N38a-09 added to deps (M0, no cycle)."
+},
+{
+"bead": "N38b-37",
+"kinds": [
+"broken",
+"registry"
+],
+"what": "Step 2 asserted that a tier run prints `not-run` for an unfrozen class, but a gate line is one of pass, fail, not-eligible, no-claim (N38a-02) and is per gate, not per class: the assertion could never pass. Now `battery_resolve -- standard <class>` must answer `battery not frozen` (N38a-20's fail-closed answer) and the decision record must read 'no fidelity claim'. Step 3's filter `-- battery` selected one of the six tests; it now names all six and compares each frozen class's recorded identity with the resolved BatteryId."
+},
+{
+"bead": "N38b-39",
+"kinds": [
+"broken",
+"request"
+],
+"what": "The M0 part of GATE-GAUNT-11 is recorded from this script's receipt, but step 1 ran g1_known_answers without --features gauntlet-mutations, so CX-394's control did not run, the line read not-eligible and the recorder's same-run rule refused the part. Step 1 is now the receipt run (FROB_TEST_SEED=0 FROB_MILESTONE=M0 … --features gauntlet-mutations -- KA-845). Step 3 passed `--features gauntlet-mutations,frob-lie/cx-394` to `cargo test -p frob-lie`, which has no such feature (cargo error): now `--features cx-394`. Plant id stated as N38-CX's `N38b-39:cx-394` (the text said the entry names no plant)."
+},
+{
+"bead": "N38b-40",
+"kinds": [
+"request",
+"broken",
+"registry"
+],
+"what": "Applied H-cx-2: N38-CX names the plants N38b-40:cx-385/-387/-389/-391 and the seeding tool writes those names; the bead named none, so an implementer's own names would leave the seeded controls without plants (feature-missing/fixture-missing). Declared features cx-385 (frob-actuate), cx-387 (frob-algebra), fixtures cx-389, cx-391 (planted-design/-input per N38-CX), nc-<nnnn> for the directly registered constant-resistance record; adopted_m1_controls_seeded checks them. e2e: actuator.thermal needs an operating point (`--current 25.4A`); algebra.orbits reports transitions (162, 324) only with `--transitions`. All numbers recomputed (33.49 s, 34.08 s, 39.92 s, 128.6 s, 2,240 K, 58.7 °C, a/b values, Burnside counts)."
+},
+{
+"bead": "N38b-41",
+"kinds": [
+"request",
+"registry"
+],
+"what": "Applied F-U38b r3: `frob --json spark check` lacked --kernel, --backend and --key (a run verb: a planted re-run would get the clean run's stored receipt); now `frob spark check --kernel <statistics kernel> --backend <batch-cpu | gpu-cuda:<n> | gpu-metal> --key aka-841-<b>-<n> --json` (VERBS-spark backend spellings). Applied H-cx-2: declared feature cx-390 and fixture cx-392 (CX-392 is planted-input in N38-CX, the bead called it a mutation), test adopted_m2_controls_seeded."
+},
+{
+"bead": "N38b-42",
+"kinds": [
+"request",
+"registry"
+],
+"what": "Applied F-U38b r3 and H-cx-2: control named seed CX-398, feature cx-398 of frob-sense (built by N20b-04; was 'a feature in the sensing crate'). The requested form `frob sense calibrate <rig edges> --key …` still lacked the required design and edge source: VERBS-sense makes the M3 form a simulated episode (`--edges` is M5's imported-log form), so `frob sense calibrate <two-sensor rig> --episode <its simulated episode> --key aka-849-<n> --json`."
+},
+{
+"bead": "N38b-43",
+"kinds": [
+"request",
+"registry",
+"broken"
+],
+"what": "Applied H-cx-2: features cx-386 and cx-396 in frob-contact declared; the control 'mutation or planted-input card' is a mutation per N38-CX (a card fixture would leave the feature missing). The e2e ran `frob contact soil --wheel <plate>`: the row is two 0.55 m tracks, and the wheel form computes a wheel's sinkage, so it would not reproduce 3.52/9.79/4.96 cm; now `--track 0.55x<b>x2 --load <m·g> --clearance 0.08m` (the clearance is what makes the verb report bottoming). Sinkage and residual-bound values recomputed."
+},
+{
+"bead": "N38b-44",
+"kinds": [
+"request",
+"broken"
+],
+"what": "Applied H-cx-2: feature cx-397 of frob-scene declared (was 'a feature in the scene crate'); the geometric variant takes nc-<nnnn>. The e2e passed the film fixture as sim.run's positional, which is a design (refused); now `--fixture <film fixture> --tier batch-cpu --profile strict` with `--steps 1` or `--seconds 16384`, strict being the profile tests 2 and 3 use."
+},
+{
+"bead": "N38b-45",
+"kinds": [
+"request"
+],
+"what": "Applied F-U38b r3: mission.synthesize and shield.fit are run verbs and carry keys (`frob mission synthesize <query> --strategy continuation --key aka-839-<n> --json`; `frob shield fit <design> --controller <c> --tasks <table> --key aka-846-<n> --json`). Applied H-cx-2: features cx-388, cx-393 (frob-synth) and cx-395 (frob-shield) declared; unit test checks the seeded records. KA-844 numbers recomputed (β 0.001412, γ 1.497, α 0.002114, 1/(20γ) 0.03340)."
+},
+{
+"bead": "N38b-46",
+"kinds": [
+"broken",
+"registry"
+],
+"what": "Its acceptance records both gates' parts 'from this script's receipts', but the script only called verbs (envelopes carry no gate line) and KA-845's tier run had no gauntlet-mutations, so no part could ever be recorded. Added step 5: per gate with a due row, `FROB_TEST_SEED=0 FROB_MILESTONE=<arg> cargo test … g1_known_answers --features gauntlet-mutations -- <gate>`, line pass, due controls caught, later ones not-yet-due. Row commands aligned with the registry: thermal --current, orbits --transitions, contact soil track form with clearance, sense calibrate with design and --episode, sim run --fixture with profile strict."
+},
+{
+"bead": "N38b-50",
+"kinds": [
+"broken"
+],
+"what": "Step 3 asked for 'the claimed ratio 1.5 submitted for locking' with no entry point and no route to the bead that refuses it: the refusal is N36-05's admit_experiment (FROB-REF-866, M0), now a dep (no cycle), exercised by a new unit test rec_01_claimed_ratio_refused (3/2 refused; 7/5 and 29/20 admitted; 29/20 refused under the retired 1.43, so the test pins the settled value). The same step passed several KA ids to g1_known_answers, whose selection takes one filter (N38a-02): now one run per row."
+},
+{
+"bead": "N38b-61",
+"kinds": [
+"request",
+"deadlock"
+],
+"what": "Applied F-U38b r3 after checking N38b-50: REC-12 (KA-837, open, row due M4, settled by N38b-43) made checklist items 1 and 2, closure_all_settled and closure_no_flagged_rows fail OPEN-GAUNT-6 at its M1 deadline. The closure now covers REC-01 to REC-11; appended records are reported with status and due milestone (earliest due of their rows) and block only the gates citing their rows; an appended record still open at its due milestone fails as overdue (new_discrepancy_reopens rewritten on REC-13). Acceptance and decision_tombstoned scoped to the plan-time records. Consistent with the register's per-row kind for OPEN-GAUNT-6 (N41-OPEN8)."
+}
+],
+"new_beads": [],
+"superseded": [],
+"requests": [
+{
+"bead": "N38-REF",
+"what": "Register two harness reasons. `export-format-unreadable`: emitted by N38b-03's close audit when the tracker export lacks or renames a field it reads; exit 101 from its Cargo test; repair: update the audit to the export's fields. `not-yet-due`: a control-runner outcome (beside `missed` and `stale`) for a control whose `due` is later than the milestone of the part being run (N38b-04); it neither blocks nor supports that part; repair: build the plant by its due milestone."
+},
+{
+"bead": "N38a-02",
+"what": "N38a-22 (`-- battery:fixtures`) and BD-146 select tier entries by battery, but your selection accepts four filter forms only (gate, row, site, milestone) and an unknown form is an error. N38a-02 cannot depend on N24b-01 (N24b-01 depends on N38a-02), so please give the selection an extension point (a list of filter forms that later beads append to, each a prefix and a resolver to entry ids), stated next to the four forms."
+},
+{
+"bead": "N38a-22",
+"what": "Your `cargo test … --test g1_known_answers -- battery:fixtures` uses a filter form N38a-02 does not have. Please add it through N38a-02's selection extension point: `battery:<name>` selects the G1 entries of the `ka` items that `battery::resolve(<name>, \"all\")` lists (an item with `task` and no `ka` is not a tier entry), an empty result is an error; BD-146 now relies on that form."
+},
+{
+"bead": "N38b-19",
+"what": "Apply N38b-04's due filter in the same-run rule: a listed control whose `due` is later than the part being recorded is not required in the receipt (it is reported `not-yet-due`); a part whose listed controls are all not yet due has no control and records nothing (`pass-without-control`). Otherwise the M0 part of GATE-WS-07 (controls X41-07 due M2, X41-08 due M3) can never be recorded."
+},
+{
+"bead": "BD-025",
+"what": "Apply N38b-04's due filter in the registry check: rule 3's `uncaught-control` and the no-control check skip a listed control whose `due` is later than the part in question, and a part whose controls are all not yet due is `not-eligible`. Without it multi-part and recurring gates carrying controls seeded at M0 for later milestones (GATE-WS-07, GATE-GAUNT-01 with N41-CX's M1 rows) fail at M0."
+},
+{
+"bead": "N40-01",
+"what": "(1) Pass condition (b) ('any listed control was not caught in the same run') should read the controls due for that part, as N38b-04, N38b-19 and BD-025 now do. (2) Add N34-11 to your deps: N38b-18 dropped it (claim_id stays a raw string there) and your validator now parses claim_id with N34-11's ClaimId; without the dep you lose your path to N34-11."
+},
+{
+"bead": "STD-TEST",
+"what": "`testkit::registry::Counterexamples` must carry the plant field `removed_check` (an optional string), and the known-answer row's control cell `{text, nc}` an optional `removed_check`. N38b-05 now reads both and copies them to the control (BD-025 rule 5), and an unknown field is a load error."
+},
+{
+"bead": "N38a-12",
+"what": "The known-answer row's stated control cell gains an optional `removed_check` beside `text` and `nc` (N30a-15 and BD-390 state it); N38b-05 copies it to the KA-seeded control, as BD-025 rule 5 requires for a planted input whose expectation is the product's own refusal."
+},
+{
+"bead": "BD-311",
+"what": "Your tier entry is selected with `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g2_parity -- anchor`, and N38bp1-01's step 4 follows you, but `anchor` is none of N38a-02's four filter forms (gate, KA row, @site, due:M), and an unknown form or an empty selection is an error, so the anchor runs never start. Register an `anchor:<id>` form (and a bare `anchor` for all) through the selection extension point requested of N38a-02, or select the entries by a form that exists."
+}
+],
+"unchanged": 13,
+"notes": "Unchanged (13): N38b-01, N38b-02, N38b-03, N38b-13, N38b-14, N38b-22, N38b-33, N38b-34, N38b-36, N38b-47, N38b-48, N38b-49, N38bp1-01. N38bp1-01's request (BD-311's Parity sentence) was already applied word for word. Systemic fixes across the slice: gate parts recorded from a receipt need a tier run with --features gauntlet-mutations in the checkout (scripts that only call verbs, or omit the feature, could never record); seeded controls need the plant names N38-CX gives (cx-<nnn>); an uncaught-control plant must be a no-op mutant (missed, fail), not a removed feature (stale, not-eligible). Left as is: KA-837's n = 0.7 value is printed 0.091646 in about fifteen beads where it rounds to 0.091647 (0.0916465); every test compares at 1e-5 m, so nothing fails. Open design question for the owners (not edited): N38-CX gives CX-389, CX-391 and CX-392 kinds planted-design/planted-input while their beads describe a mutated check; N38b-04's runner builds no feature for those kinds."
+}

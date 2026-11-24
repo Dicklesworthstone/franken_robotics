@@ -319,8 +319,9 @@ gates=GATE-TETHER-02 seed=1 needs=cpu,mcp plants=drop-row,policy-rs,fidelity-ran
 registered clusters plus the registered additions (244 and 44 once the registry is complete; before that the
 expected count is computed from the list and logged with the unregistered clusters); (2) `frob robot-docs
 --json`, assert the same set of names; (3) MCP `tools/list` with every cluster enabled, assert the same tools
-under the inverse name map; (4) for each of the ten new clusters that is registered, `frob robot-docs --cluster
-<task cluster> --json` lists its verbs; (5) `frob-surface-diff inventory`, assert the reconciliation lists,
+under the inverse name map; (4) for each verb of the ten new registry clusters that is registered, `frob
+robot-docs --cluster <t> --json` lists it for every task cluster t that seats it (the row's `task_clusters`;
+`--cluster` takes a task cluster of NJL-05, not a registry cluster); (5) `frob-surface-diff inventory`, assert the reconciliation lists,
 `not_in_baseline` and `baseline_mismatch` empty and `additions` equal to the expected records; (6) one call of an operator verb (`frob doctor
 --json`, exit 0 or 2, one envelope) and one of an added verb not yet implemented (`e2e_expect_refusal
 FROB-REF-724 5`); (7) the plants, each through `e2e_expect_caught` with the named error. The log

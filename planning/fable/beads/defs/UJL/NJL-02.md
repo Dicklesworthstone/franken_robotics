@@ -84,8 +84,10 @@ logs under `target/e2e-logs/`, and the snapshots; writes the records `frob.verbs
 files under `fixtures/golden/verbs/`; it runs no tier and writes no gate row. It reads the registry file
 directly with its own strict TOML reader for the entry schema (it does not link the generated table, so a
 generator defect cannot hide itself). It drives `frob` as a
-subprocess and `frob-mcp` over stdio; with `--mcp-url http://127.0.0.1:<port>` it talks to `frobd --mcp` over
-loopback HTTP with a bearer token from `FROB_SESSION_TOKEN`. MCP listing is done with every task cluster
+subprocess and `frob-mcp` over stdio; with `--mcp-url http://127.0.0.1:<port>` it talks to the server at that
+loopback address over HTTP: `frob-mcp`'s own HTTP transport (BD-023, from M0) or, from the build that has the
+daemon (N32a-14, M2), `frobd --mcp`, with a bearer token from `FROB_SESSION_TOKEN` where the server asks for one
+(N32a-27, M3). MCP listing is done with every task cluster
 visible: the tool filters by the tag `cluster:<name>` through `includeTags` and, where the server was built with
 static clusters, is launched with `--clusters all`.
 
@@ -98,20 +100,26 @@ static clusters, is launched with `--clusters all`.
 5. Field comparison per verb, registry against each surface: name under the map; description present and at most
    800 characters; input schema equal to the row's schema plus the common properties NJL-01 derives for the row,
    in NJL-01's fixed order: those of its kind (`run`: `sync_wait_ms`, `idempotency_key`, `budget`,
-   `estimate_only`, `on_cancel`; `mutate`: `idempotency_key`, `expected_parent`) and those of every arm of
-   NJL-01's variation table that applies to the row. The table has thirteen arms (pagination, `estimable`,
-   `key_optional`, an `int53` input, `actions`, `needs_groups`, the three `params` arms, the loop table's
-   `override` and `override_reason`, `from_proposal`, `machine`, `engine`); an arm applies only once the bead
-   that lands it has added its field or table, so a registry without the field expects nothing from it.
+   `estimate_only`, `on_cancel`, `envelope_scope`; `mutate`: `idempotency_key`, `expected_parent`) and those of
+   every arm of NJL-01's variation table that applies to the row. The table has sixteen arms (pagination,
+   `estimable`, `key_optional`, an `int53` input, `actions`, `needs_groups`, the three `params` arms, the loop
+   table's `override` and `override_reason`, `from_proposal`, `machine`, `engine`, `memo`'s `no_memo`, a report
+   surface or artifact reader, and the `[[admission_check]]` rows' `admission_checks` and
+   `diagnostic_override`); an arm applies only once the bead that lands it has added its field or table, so a
+   registry without the field expects nothing from it.
    `idempotency_key` is never in the schema's `required` array and carries `x-frob-key: "required"`, or
    `"optional"` on a `key_optional` entry; for a verb with actions, the `action` property and the flat union of
    the properties of each action's kind; output schema equal to `frob.envelope/1` with `result` specialized;
-   tags `cluster:<c>`, `kind:<k>`, `task:<t>` per task cluster, `tier:<S|F|M>`; annotations (`read_only` for
-   kind `read`, and for a verb with actions only when every action is `read`; `idempotent` from the row;
-   `destructive` only for an `admin` verb that deletes; `open_world_hint: false`); the refusal list (chapter
+   tags `cluster:<c>`, `kind:<k>` once for each distinct kind among the default action and the actions,
+   `task:<t>` per task cluster, `tier:<S|F|M>`; annotations (NJL-01's rule: `read_only` only when every action,
+   the default included, is `read`; `idempotent` the row's field, and false when any action is `run` or
+   `mutate`; `destructive` for an `admin` entry with `destructive = true` and for an entry with an `admin` action
+   whose `destructive` member is true, its default; `open_world_hint: false`); the refusal list (chapter
    codes plus the codes NJL-01 appends by kind and by each applying arm: 806 and 807 for pagination; 808 exactly
    when the generated input schema has an `int53` property at any depth, which every `run` entry has through
-   `sync_wait_ms`; 790 for `needs_groups`; 891 to 893, 734 and 828 for `params`; never 990); at least one
+   `sync_wait_ms`; 790 for `needs_groups`; 891 to 893, 734 and 828 for `params`; 804 for `from_proposal`; the
+   codes of the `machine` and `engine` arms by their owners' constants; 814, 816, 819, 873, 889, 895 and 897 for
+   a report surface or an artifact reader; each guarding admission check's `refusals`; never 990); at least one
    example. DESIGN: the harness computes this expectation from the row with its own table-driven implementation
    of NJL-01's two tables (`src/verbs/expect.rs`), which shares no code with the generator's `derive.rs`, for the
    reason its reader shares none with the build script (a defect in the derivation must not hide itself); the
@@ -209,8 +217,8 @@ examples }`. The canonical JSON of that `result` (keys sorted by code point, no 
 the snapshot, stored at `fixtures/golden/verbs/<cluster>/<verb>.help.json`. `--check` fails on any byte
 difference and classifies it:
 - `additive`: a new optional output property, a new optional input property (as each of NJL-01's later
-  variations adds to many verbs at once: `override` and `override_reason`, `from_proposal`, `machine`,
-  `engine`; and as an option a cluster bead lists with a later milestone), a new appended refusal code, a new
+  variations adds to many verbs at once: `envelope_scope`, `no_memo`, `diagnostic_override`, `override` and
+  `override_reason`, `from_proposal`, `machine`, `engine`; and as an option a cluster bead lists with a later milestone), a new appended refusal code, a new
   example, a longer description. Allowed without a version change; the snapshot is updated in the same change by
   `--update`.
 - `breaking`: a removed or renamed property, a changed type, a new required input, a removed refusal code, a
@@ -224,8 +232,9 @@ and the major version is unchanged.
 steps: (1) `parity --cluster`, asserting each list of the record empty; (2) `snapshot --check --cluster`;
 (3) for each verb of the cluster, its first registry example verbatim, expecting a result (exit 0 or 2), a job
 handle (exit 8, then `frob job wait`), or `FROB-REF-724` exactly when `frob capabilities --json` says the verb
-is absent; (4) for each implemented verb, the same call over MCP in process and through `frobd --mcp`, asserting
-that the two envelopes agree on `verb`, `ok`, `exit`, `result`, `refusal`, `evidence`, `bound`, `warnings` and
+is absent; (4) for each implemented verb, the same call over MCP in process (`frob-mcp` over stdio) and, from the
+build that has the daemon (N32a-14, M2), through `frobd --mcp` (before it, a logged skip naming N32a-14),
+asserting that the CLI and MCP envelopes agree on `verb`, `ok`, `exit`, `result`, `refusal`, `evidence`, `bound`, `warnings` and
 `next_actions` (only `cost`, `budget` and job timing may differ); (5) the three behavioural refusals of step 6
 above through `e2e_expect_refusal` (the missing-key one through `e2e_skip` naming N32a-09 in an M0 build); (6) exactly one envelope on standard output for every call, and no exit
 code 1.
@@ -357,8 +366,9 @@ registries labelled `synthetic`):
 ### End-to-end script and logging
 
 `scripts/e2e/verbs_registry.sh` (header: `bead=NJL-02 milestone=M0 labels=tether,verbs,registry
-gates=GATE-TETHER-02 seed=1 needs=cpu,mcp,frobd plants=extra-tool,missing-cli,renamed-field`). It starts `frobd
---mcp` on a loopback port inside the scratch root, runs the three subcommands for `--milestone` of the build,
+gates=GATE-TETHER-02 seed=1 needs=cpu,mcp plants=extra-tool,missing-cli,renamed-field`). It starts `frob-mcp`
+on a loopback HTTP port inside the scratch root (BD-023's transport; from a build that has the daemon, N32a-14,
+also `frobd --mcp`, whose parity run is then logged as a third transport line), runs the three subcommands for `--milestone` of the build,
 repeats `parity` over stdio and over HTTP, and runs the five stages of `verbs_registry_schema.sh` named above
 (each logged with its stage number, the command, the exit code and, for a skip, its reason). Logged through the shared helper to
 `target/e2e-logs/verbs_registry/<utc>.ndjson`: each command with exit code and wall time; metrics `registry_verbs`,

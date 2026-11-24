@@ -1,0 +1,253 @@
+{
+  "round": 4,
+  "slice": "F-U35",
+  "reviewed": 30,
+  "changed": [
+    {
+      "bead": "BD-177",
+      "kinds": [
+        "broken",
+        "convention"
+      ],
+      "what": "E2E step (3) built the mutation feature under --release without the gauntlet-mutations umbrella (BD-025: the umbrella does not compile under the release profile; N38b-05's runner builds gauntlet-mutations,<crate>/<feature>); now --features gauntlet-mutations,decision-bias-1-in-50 and, for states_only_variant_rejected, gauntlet-mutations,frob-chronicle/states-only-comparator. 'k at least 84' could fail when a pair's own discordance falls on a planted world; restated as 84 plus untouched minus touched step-2 discordances."
+    },
+    {
+      "bead": "BD-181",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "H-verbs-9 applied: --axes solve-queues in a build without N16c-15 answers FROB-REF-724 exit 5 naming the axis (VERBS convention 5), still absent from all; a misspelt axis stays 802. Axis-hook paragraph and axis_hook_registers_axis updated; label removed."
+    },
+    {
+      "bead": "BD-269",
+      "kinds": [
+        "contradiction",
+        "registry",
+        "request"
+      ],
+      "what": "M1-2 applied: study.compare moved out of the licence::check row (VERBS-study lists neither 542 nor 561) into the evidence-boundary row (825 for a stored study with a D4 or unrecorded arm, N37-28 in the dispatcher). The 861 wiring row now states the registry division (861 on eval.scorecard; 542 on eval.compare; 825 on eval.promote/eval.qualify; 867 at eval.detect and eval.run's policy path). Acceptance 'seven planted cases ... exit 3' corrected to cases 1 to 6 (case 7 is identical digests). Label removed. The e2e paragraph said N35-32's script walks the five paths and runs the GATE-SAFE-09 test, which N35-32 (and N37-29, the five-path script) say is N37-29's: restated as GATE-SPARK-17 only, five paths by safe_d4.sh; scope and gate-record sentences name each script's gate."
+    },
+    {
+      "bead": "N35-02",
+      "kinds": [
+        "plan"
+      ],
+      "what": "E2E said sim.run on the Spark tiers is N16b-25's, 'which waits on this bead through N35-04'; N16b-25 no longer depends on N35-04 (F-U16b). Restated: the profile ceilings that enter a run's class are N35-04's, which calls classify_run and depends on this bead."
+    },
+    {
+      "bead": "N35-04",
+      "kinds": [
+        "request",
+        "plan"
+      ],
+      "what": "F-U16b applied: depends on N16b-25 and wires the shared --determinism/--precision admission into both existing sim.run handlers (BD-024 and N16b-25; before this bead the options are 802 there); the e2e drives referee, batch-cpu and device tiers (device steps skipped with capability absent). Audit counterpart split note not applied (see notes). Label removed."
+    },
+    {
+      "bead": "N35-05",
+      "kinds": [
+        "convention"
+      ],
+      "what": "C13: --conformance-lag was narrated as 'requested of VERBS-train'; VERBS-train's train.start row carries it (M3, conformance build), so it is now stated as fact."
+    },
+    {
+      "bead": "N35-06",
+      "kinds": [
+        "request",
+        "broken",
+        "registry"
+      ],
+      "what": "H-verbs-3 answer recorded: 861 on eval.scorecard only, 542 on eval.compare, 825 on eval.promote/eval.qualify, 867 at eval.detect and eval.run's policy path; eval.run --policy <id> --determinism device-replay admitted. E2E train start used --tier (802 on train.start, whose input is --backend) and 'for 20 iterations' with no such option: now --backend batch-cpu with --worlds/--steps-per-collection/--steps. Standing was read through evidence trace <P>, which takes only a clm: identifier (802): now read from the artifact graph. Label removed."
+    },
+    {
+      "bead": "N35-07",
+      "kinds": [
+        "request",
+        "contradiction",
+        "broken"
+      ],
+      "what": "F-U16b and H-verbs-3: eval.promote's stored D4/unrecorded result is 825 at N37-28's boundary, 561 only for unpairable arms; eval.detect 561. M1-2 counterpart: study.compare calls no licence check (825). F-U21b: the override is lifted before the spark check re-check (606 at admission while in force). Label removed."
+    },
+    {
+      "bead": "N35-09",
+      "kinds": [
+        "broken"
+      ],
+      "what": "Step 2 compared joint positions and velocities with 's, the quantity's physical scale from the fidelity ledger', but N16b-02's registry has no such quantities, so no scale and no envelope. Now the walk uses the registry's state quantities with their floors as s (yaw absolute, s = 1 rad); joint positions and velocities are recorded as raw differences and never end the walk (DESIGN). Audit split note not applied (see notes)."
+    },
+    {
+      "bead": "N35-12",
+      "kinds": [
+        "broken",
+        "contradiction"
+      ],
+      "what": "Step 7 ran states_only_variant_rejected without the mutation feature; now with gauntlet-mutations,frob-chronicle/states-only-comparator (never --release). Step 6's '(2.4007% at k = 82)' was the flat-index count; the plant selects by index within design, 84 worlds, 2.4537% (BD-177)."
+    },
+    {
+      "bead": "N35-23",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "F-U17a applied: row 22 generator keyed by entity_of_name(\"generator\", GeneratorId ‖ derivation path); new row 23 generator-mutation (engine, owner frob-phylum, entity over GeneratorId ‖ parent DesignId ‖ derivation path, tick mutation index, component part), matching BD-287. Counts 22 to 23 throughout; the appended conformance row is now the 24th and the retired-id test reuses id 24. Label removed."
+    },
+    {
+      "bead": "N35-31",
+      "kinds": [
+        "request",
+        "broken"
+      ],
+      "what": "F-U21b applied: the override is lifted before spark check --sweeps all re-admits the fork. Step 7 had a device run under the override printing D4 stale-check, but every device verb is 606 at admission under it (N21c-05 rule 4, BD-176): now 606 exit 6 for a new device run, spark check --action list shows stale rows, and record_gate on a step-2 result gives 864; the D4 stale-check class is N35-02's test-level assertion. The memo miss 'after the override' is now 606 while it is in force. 606 added to the acceptance list."
+    },
+    {
+      "bead": "N35x-01",
+      "kinds": [
+        "request",
+        "convention",
+        "contradiction"
+      ],
+      "what": "H-owners-1 applied: the interim-list acceptance and e2e stage (3) are at ledger level (N35-33's ledger check equals the held rows); frob --json schema is BD-022's acceptance; stages (3) and (4) run only when e2e_init resolves FROB_BIN, else e2e_skip binary absent; no dep on BD-022 (cycle). Second-round 8xx counts were stale (N35x-02 now holds 22 after reclassification, with fixture-reference-unresolved): 23/22 and 33 against 4. first_round_8xx_all_held asserted second-round rows that N35x-02 (a dependent) files: now first-round rows real, second-round synthetic. Label removed."
+    },
+    {
+      "bead": "N35-01",
+      "kinds": [
+        "contradiction",
+        "broken"
+      ],
+      "what": "The plan's and registries' evidence examples write determinism \"exact\" while this bead's strict reader accepts only \"D0\" to \"D4\": stated that exact is the prose name of D0 and \"exact\" on the wire is rejected (added to the malformed-input list and det_serde_strict). The e2e asserted equality with 'the weakest class among evidence.inputs', a field the envelope does not have (N32a-03 names only weakest): now asserts \"D0\" for doctor and capabilities."
+    },
+    {
+      "bead": "N35-08",
+      "kinds": [
+        "broken"
+      ],
+      "what": "λ̂ rows were to be listed by frob fidelity ledger, whose output has no such row (strata keyed by model class and quantity; the only intrinsic quantity is coefficient-lag). DESIGN: an intrinsic row of quantity divergence-rate (s⁻¹, sub_key task and controller_or_policy), added by this bead to N16b-02's registry, listed with --quantity divergence-rate as an additive schema change; e2e and acceptance follow. The below-D2 fork had no way to obtain such a source run (every batch-cpu run is D2 or better): now the device family's run under the conformance fingerprint override, skipped without a device."
+    },
+    {
+      "bead": "N35-11",
+      "kinds": [
+        "broken"
+      ],
+      "what": "Item 3 (boundary density) named 'the divergence envelope' without saying which; BD-212 is not a dependency. Now the envelope N35-09's flag uses: BD-212's frozen one where it exists, else the provisional one, recorded in the bundle. All OC values, 149/299/598 and the planted-control bounds verified."
+    },
+    {
+      "bead": "N35-13",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The e2e ran the four plants 'in the conformance build' inside one cargo test invocation that enables no plant feature; now one invocation per plant with --features conformance,<plant>, as N38b-05's runner builds a plant. All bit patterns (0x3F800007/0x3F800008, midpoint-split values at 8 to 64) verified."
+    },
+    {
+      "bead": "N35-15",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The matrix ran cargo test --release in the conformance build; the gauntlet-mutations umbrella does not compile under the release profile (BD-025). Now --features gauntlet-mutations, no --release. Worked values verified."
+    },
+    {
+      "bead": "N35-16",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "C13: --conformance-draw-tap was narrated as 'asked of VERBS-sim'; VERBS-sim lists it with this bead as owner, now stated as fact. The in-situ step (mutants slot-keyed-draws and counter-reset) ran under --release in the conformance build: now --features gauntlet-mutations. The table step ran draw_table_ under --release; its rows become addresses through DrawAddr::from_parts, which exists only with frob-core's conformance feature, and N38b-04's guard makes every conformance feature a compile error under the release profile: now --features frob-core/conformance without --release."
+    },
+    {
+      "bead": "N35-17",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The negative control 'a stale fingerprint in preflight ... must stop before step 3' had no check in preflight; preflight now asserts every device's fingerprint is current from spark devices and stops with the repair logged."
+    },
+    {
+      "bead": "N35-18",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The planted contraction-on tests ran under --release in a conformance configuration: now --features gauntlet-mutations. The OPEN-NUM-1 row was read with frob artifact read, which reads stored artifacts by digest; the row is in the repository file registries/decisions.toml and is read from it. Canary bit patterns verified."
+    },
+    {
+      "bead": "N35-19",
+      "kinds": [
+        "plan",
+        "broken"
+      ],
+      "what": "HZ-29's test needed N35-28's schema lint (tripwire kind, rule 3a), which N35-19 did not reach: bound to N35-28's lint_rule_3a_tripwire under the binding rule and N35-28 added to deps (no cycle). Test count restated (fifteen written here). HZ-25/26/27/31 numbers verified (0x44F7C90F)."
+    },
+    {
+      "bead": "N35-22",
+      "kinds": [
+        "broken"
+      ],
+      "what": "Pinned vectors, Random123 anchors and 0.38644546 recomputed and correct. The e2e fixture and the from_parts pinned-vector tests build DrawAddr through from_parts, which exists only with frob-core's conformance feature, yet the commands enabled none, and the fixture ran under --release, where N38b-04's guard makes conformance a compile error: now --features frob-core/conformance (frob-core: --features conformance), no --release. The name filters rand_/addr_ match none of the named tests' names, so cargo would pass with zero tests: the step now asserts a non-zero test count per filter."
+    },
+    {
+      "bead": "N35-24",
+      "kinds": [
+        "registry",
+        "broken"
+      ],
+      "what": "The keying table had no row for N35-23's link-timing stream (hash of link name, packet index) and gave actuator-noise a sensor's sample index where N35-23's row has the control tick: the private row now covers sensor, actuator and link with N35-23's ticks. E2E step (4) named no build for the sequential-stream plant: now cargo run -p frob-core --features sequential-stream (implies conformance), never --release."
+    },
+    {
+      "bead": "N35-28",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The wording step read back 'the envelopes of steps 2 and 3' with frob artifact read; step 3 is a cargo test with no envelope, and artifact.read reads by digest: now step 2's two envelopes and the run's stored result read by digest. 0.900/0.9128 and the 865 row (exit 3) verified."
+    },
+    {
+      "bead": "N35-30",
+      "kinds": [
+        "broken"
+      ],
+      "what": "Row 4's verb-level form ran spark check --decisions on a batch-cpu:batch-cpu pair 'on the boundary fixture', an input the verb does not take; two placements of one backend never disagree, so KA-788 cannot appear there: now BD-177's aa form (equivalent, k = 0) with the boundary case asserted through N35-09's test in step 2. Row 3 bound N35-14 under N35-15's fixture name two-observers: now N35-14's fixture_two_worlds_one_and_three. KA union, spacings, K-scale worked value, √2 pattern verified."
+    },
+    {
+      "bead": "N35-32",
+      "kinds": [
+        "broken",
+        "contradiction"
+      ],
+      "what": "train start gave no size or backend for the 20-iteration job (N35-06: --backend batch-cpu --worlds 64 --steps-per-collection 32 --steps 40960; train.start takes --backend): aligned. Twin 5′ ran spark check --sweeps all (no kernel selector) while the override made every device verb 606: now the override is lifted, then spark check --all --backend <T> --sweeps all (as N35-31); no-device machines skip case 5. Twin 6′ (scorecard with the re-evaluation) ran in step 4 before step 5's re-evaluation existed: moved to step 5; 'assert P's standing' had no verb (none prints it): stated as N35-06's graph read. Step 6 named no plant: N35-15's scheduling-dependent mutant through sim.run --mutant in the conformance build."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "VERBS-eval",
+      "what": "eval.promote's FROB-REF-561 entry and the DESIGN note '825 and 561 on eval.promote' still name 'the fast-tier result and its higher-tier re-evaluation paired across device families without class D1' as 561. N35-07's Promotion rule admits that pair (§35.3: D3 with a ledger envelope and the decision-level test); keep 561 only for arms that cannot be paired (an undeclared solve-path mismatch, BD-263). Same as F-U16b's request."
+    },
+    {
+      "bead": "N21c-05",
+      "what": "Rule 7 says a historic receipt may not record a gate PASS for the present machine state and refuses 606. The gate-record path is BD-176's citable hook (record_gate), whose acceptance returns FROB-REF-864 under the conformance fingerprint override, and N35-REF's 864 row (repair 2: fingerprint first if it changed) and N35-31 step 7 expect 864. State that a gate citation of such a receipt is 864 at the citable hook, or name the order of the two checks."
+    },
+    {
+      "bead": "BD-205",
+      "what": "N21c-05 rule 4 says every verb that will produce a device result resolves its FingerprintRef at admission (606). run.fork's VERBS-run row lists no 606 and your admission order (245, 247, 604, 562, 894) does not place it. N35-31 step 6 and N35-07's e2e expect 562 for a fork of a device run while the conformance fingerprint override stales its record. State whether run.fork checks the fingerprint, and if it does, where 606 sits in the order (then VERBS-run lists it and the stale-record 562 cannot be provoked through the override)."
+    },
+    {
+      "bead": "N16b-02",
+      "what": "The Approach says 'N35-09, N35-10, BD-177 and N35-11 ... depend on BD-212'; none of them does (graph check). The conclusion holds because each depends on this bead (N35-09 directly); restate the reason. The audit's proposal to split a frob-dyn::fidelity::quantity interface bead from this bead for N35-09 was not applied from F-U35, since only this bead's reviewer can split it."
+    },
+    {
+      "bead": "N32a-03",
+      "what": "The envelope example prints \"determinism\": \"exact\"; N35-01's serialized form is \"D0\" to \"D4\" and its reader rejects \"exact\". Print \"D0\" (NJL-08 and N14a-08 carry the same example form)."
+    },
+    {
+      "bead": "NJL-08",
+      "what": "Three envelope examples print \"determinism\": \"exact\"; the wire form is \"D0\" (N35-01, whose reader rejects \"exact\")."
+    },
+    {
+      "bead": "N14a-08",
+      "what": "The envelope example prints \"determinism\": \"exact\"; the wire form is \"D0\" (N35-01, whose reader rejects \"exact\")."
+    },
+    {
+      "bead": "VERBS-fidelity",
+      "what": "fidelity.ledger: list the intrinsic quantity divergence-rate (N35-08, M3: λ̂ per task, design class, controller or policy and tier, unit s⁻¹, with interquartile range, t*, K, non-divergent count and fork receipts; sub_key {task, controller_or_policy}) as an additive output of the row, extended by N35-08."
+    }
+  ],
+  "unchanged": 3,
+  "notes": "Audit split notes for N35-09 and N35-04 (an interface bead split from N16b-02) not applied: N16b-02 is outside this slice and was reviewed before the audit, so no split exists to depend on; N35-09 keeps N16b-02 and already reaches N35-04 and BD-208 through it. N35x-01's audit note (move item 6 and stage 3 to BD-022) is covered by the H-owners-1 restatement. Its N32-REF counterpart (held-request assertions) is not applied in N32-REF yet; if moved, the two first-round slugs fit N35x-01 and resource-read-over-cap fits N35x-02 (a second-round row that N35x-01 cannot see). N38b-04's guard (every crate's conformance feature is a compile error without debug assertions) means any cargo command that needs from_parts, a plant or a conformance hook must run without --release; the slice's commands now follow it. Outside the slice, N35-14 (batch_conditions:: under --release), N35-20 (hazards_order under --release) and N35-29 may carry the same pattern if those tests use conformance facilities; not checked here. Unchanged: N35-03, N35-10, N35-27."
+}

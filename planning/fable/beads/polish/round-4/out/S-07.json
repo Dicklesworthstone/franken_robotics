@@ -1,0 +1,343 @@
+{
+ "round": 4,
+ "slice": "S-07",
+ "reviewed": 32,
+ "changed": [
+  {
+   "bead": "N16b-02",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request from F-U35 applied after a graph check: the Approach said N35-09, N35-10, BD-177 and N35-11 depend on BD-212; none does. Restated: N35-09 depends on this bead directly and the other three through N35-09, so none is a prerequisite here (an implementer reading the old sentence would look for an ordering the graph does not have). Convention 11/7: the bead's only end-to-end script was N16b-30's, a later bead; added its own scripts/e2e/fidelity_pair.sh (the two named test suites with their values, the order-dependent-mean mutant caught under gauntlet-mutations, STD-E2E logging), an acceptance line for it and dep STD-E2E; N16b-30's script stays the user-side path. The audit's proposal to split a quantity-registry interface bead out of this bead for N35-09 was checked and not applied (see notes)."
+  },
+  {
+   "bead": "N16b-05",
+   "kinds": [
+    "contradiction",
+    "registry"
+   ],
+   "what": "The artifact header was a flat private form ({core: \"DC-01\", version, p0, ..., stratum_key, envelope_id, address_schedule_hash}); N28c-01, a dependency and the schema's owner, fixes frob.core-table/1 with core \"dc-01\", policy, parameters as rational strings, bound_to (stratum_key, envelope_id, model_class, kernel_versions, effort_profile, battery_version, address_schedule_hash) and generator. A table written to this bead's form would fail N28c-02's load and check-generated. Now stated in the owner's form with the default and per-stratum paths of N28c-02 item 7. The null-calibration criterion said 'within the exact binomial acceptance bound'; KA-088's tolerance is alpha*1e4 + 3*sqrt(alpha*(1-alpha)*1e4): now at most 129 wrong promotions at alpha+=0.01 (exact expectation 72.6 inside the budget, recomputed) and at most 565 wrong rejections at alpha-=0.05 (expectation 240). Table values, self-test probabilities 0.00726 and 0.0240 and fallback binomials 0.0021 and 0.81 recomputed and correct."
+  },
+  {
+   "bead": "N16b-06",
+   "kinds": [
+    "deadlock",
+    "broken",
+    "registry"
+   ],
+   "what": "Acceptance 'the honest control promotes under the default promotion table' needs the DC-01 table (N16b-05) and eval.promote (BD-263), neither a dependency (BD-263 depends on this bead): replaced by the measurable gap criterion (inside the frozen displacement envelope on at least 61 of 64 addresses) and named BD-263's acceptance for the promotion itself. The mutation guard said only '(refused)': now the plant is passed as --conformance-plant <penetration-recovery.json> (N16b-15's file, N29a-25's conformance-build input) and a release build answers FROB-REF-802, exit 3, as VERBS-sim states; unit test mutation_needs_conformance_feature made concrete. KA-719 was cited as 'a planted between-tier reversal is not established', which is KA-351's value; KA-719's control (audit bits chosen after seeing failures) and CX-324 are now tied to scripted adversary (b), refused with FROB-REF-811 or caught by the bias check."
+  },
+  {
+   "bead": "N16b-08",
+   "kinds": [
+    "request",
+    "contradiction",
+    "broken",
+    "convention"
+   ],
+   "what": "Request from F-U40 applied: dep N16bp4-01 (KILL-SEGMENT's decision bead) added; the segment mode is built only on its not-fired outcome, and on fired or not-reached it is dropped citing ADR-KILL-SEGMENT-M3 with --method segment answering FROB-REF-724 exit 5 (N16bp4-01's downstream text; VERBS-eval keeps the value); multilevel untouched. N16b-10 says --method multilevel returns the paired label with estimate: null and reason KILL-DR when KILL-DR fires, but no bead implemented that for multilevel: added here with an acceptance line and unit test multilevel_off_under_kill_dr. The e2e was 'scripts/e2e/promotion.sh (N16b-31)', and N16b-31 does not depend on this bead: added its own scripts/e2e/tier_variants.sh on its own dependencies (fast results, multilevel, segment or 724 by the decision, feature-off 724, KILL-DR switch, mutation and planted-input controls) and dep STD-E2E. The snapshot-restore rule now names sim.replay --from-snapshot --tier --comparison and FROB-REF-894."
+  },
+  {
+   "bead": "N16b-13",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Convention 11: its only e2e was N16b-32's script; added its own scripts/e2e/modelform_variants.sh (the unit suite with values, the three planted mutations caught under gauntlet-mutations, the INV-KIN-07 variant half through N16b-28's inv_kin suite) and dep STD-E2E; N16b-32 stays the user-side owner of the variant table. The step arm's refusal of a halved control period was unnamed: it is N16c-43's refusal refinement-study-changes-clock, read by slug from the allocation ledger (a dependency), with observed clocks in seconds."
+  },
+  {
+   "bead": "N16b-16",
+   "kinds": [
+    "request",
+    "convention",
+    "registry"
+   ],
+   "what": "Pilot record now in N38a-09's record form: protocol as {path docs/pilots/PILOT-KIN-03.md, blake3, frozen, ledger_seq} (a bare hash string fails the loader), ceiling as {statement, value, basis} with the literal 'none on speed', cost and tool tables, owner, receipt committed under receipts/pilots/. 'Identifier proposed, the register assigns the next free number' removed: the KIN set numbering is fixed (N16b-11 states it), so the id is a fact (convention 13). The binary pilot-background-referee is declared as a [[bin]] with its CONTRACT.md row (BD-025: autobins = false, an undeclared --bin fails the command-form lint). Arithmetic (coverage shares, 6.912 MB/s, t = 1.833 bound 1.026) recomputed and correct. Request from S-11 applied after a graph check: the script calls `frob doctor --json` and reached BD-022 (M0, the owner of doctor) only through N21b-01, whose edge the lead's audit proposes to drop, after which the call would rest on no dependency; BD-022 added to deps (BD-022 does not depend on this bead). The acceptance recorded the per-arm verdict as `supports` or `falsified`, values the pilot register does not have (N38a-09: falsifier-rejected, falsifier-holds), so the appended result would fail the register's loader and the funding function could not read it: now one [[pilot.result]] per arm in the register's vocabulary, a falsifier-holds on either arm blocking the work package and printing KILL-SHADOW's fallback."
+  },
+  {
+   "bead": "N16b-17",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The e2e line used `frob fidelity shadow status --job <id>`, a positional action word; fidelity.shadow is kind admin with the input property action, so the form is `frob fidelity shadow --action status --job <id> --json` (NJL-01), with no idempotency key (admin kind). Start call written in the same form; the owner (N16b-34 step planted-kernel-defect, which depends on this bead) named."
+  },
+  {
+   "bead": "N16b-18",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "The outcome lane's inclusion probability p_out was 'declared in the shadow configuration', but fidelity.shadow's row has only --p, --cpu-cores and --tier: no agent or script could turn the lane on. Added the input p_out (--p-out on start and configure, (0, 1], absent = lane off; DESIGN) with unit test p_out_input; request to VERBS-fidelity. 'fidelity.shadow status' written as the --action form. The e2e now names N16b-34's M3 steps (planted-policy, honest, ledger-pairs) accepted by BD-268, which depends on this bead, with the start call in the registry form."
+  },
+  {
+   "bead": "N16b-21",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "It said KA-338's control is its planted defect and N16b-30 runs `g1_known_answers -- KA-338` as 'the thin-barrier fixture'; KA-338's row is the ballistic drop under a transactional profile on the referee and strict (GATE-KIN-04, BD-082), so that command never exercises the missed-contact ledger. Restated: the planted endpoint-only check is the control that KA-338 and KA-408 name; thin_barrier_tunnel is this bead's unit test with no KA row; the conformance step is `cargo test -p frob-dyn --features gauntlet-mutations --test missed_contact_audit -- thin_barrier_tunnel`. Request to N16b-30. Tunnel arithmetic (6 cm per step, 0.667 ms, weights, rates) recomputed and correct."
+  },
+  {
+   "bead": "N16b-22",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Pilot record in N38a-09's form (protocol table at docs/pilots/PILOT-KIN-04.md, ceiling table, cost and tool tables, owner, gated_beads [N16b-23], receipt path), the 'identifier proposed' narration removed (convention 13), the binary declared as a [[bin]] with its CONTRACT.md row (BD-025). The falsifier did not say over which mechanisms one stiffness must meet both bounds, so a default good on the parallelogram only could have been chosen: now 'on both mechanisms', with the evaluator test extended. States that kill_gate = to-register blocks funding until the gate exists (N38a-09), which today blocks N16b-23; request to N40-24. Four-bar closed forms (98.857 deg, n = 0.3722, crossed -135.727 deg, -0.1722) and the row's gradient and Hessian recomputed and correct."
+  },
+  {
+   "bead": "N16b-29",
+   "kinds": [
+    "registry",
+    "broken",
+    "deadlock"
+   ],
+   "what": "The registry paragraph wrote rows 'identifier, derivation file hash, test name, route, last result' to an unnamed 'proof-obligation list of the conformance harness'; the program has one obligations file, crates/frob-conformance/registry/obligations.toml, whose eleven-field row schema and loader are N28cp2-01's (not a dependency): rows in the private form fail its loader. Now the five PO-KIN rows in the shared schema with mechanisms, derivation paths, due M2, discharged with claim ids, the report command, and dep N28cp2-01. PO-KIN-05's 'cross-referenced when BD-264 lands' left an action with no owner: now discharged here by its plan route, with PO-CHRON-02 (BD-264) named in the discharge field. The PO-KIN-05 negative control 'audit probabilities logged after the draw (the mean moves)' does not move the mean; replaced by KA-133's control (audit bits chosen after the outcomes), whose shift theta/p - theta at m = 0 was checked. Derivations and f32 counterexample (spacing 8 near 1e8) recomputed and correct."
+  },
+  {
+   "bead": "N16bp4-01",
+   "kinds": [
+    "convention",
+    "plan"
+   ],
+   "what": "Decision form (convention 10, N40-03): the ADR's 'beads re-read (N16b-08)' lacked the status N40-03 requires for each re-read bead; and the decision entry's receipts for a pilot-before-funding row must be the [[pilot.result]] receipt hash committed at receipts/pilots/<hash>.json (N38a-09), which the bead did not say, so the entry could fail N40-30's decision-receipts-differ check. Both stated. Priority was 2, M3's default; the charter makes a kill-gate decision that blocks others one step more urgent, and N16b-08 and BD-319 depend on it: now 1, so the scheduler does not leave the gated mechanism waiting behind ordinary M3 work."
+  },
+  {
+   "bead": "N16bp4-02",
+   "kinds": [
+    "convention",
+    "plan"
+   ],
+   "what": "Same two N40-03 form gaps as N16bp4-01 (re-read status of N16bx-02; receipts from the pilot result). Fixture A arithmetic (0.15 m/s, 1/15 m/s, 0.015 J, 1/24 J) recomputed and correct. N16bx-02 does not depend on this bead although N40-24 says the mechanism bead depends on the decision bead when the trigger is read from the pilot alone, and the acceptance 'in place before N16bx-02 starts' cannot hold: request to N16bx-02. Priority was 3, M6's default; BD-427 depends on it (and N16bx-02 will, by request), so by the charter it is one step more urgent: now 2."
+  },
+  {
+   "bead": "N16bp4-03",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Same two N40-03 form gaps (the template N14b-05's re-read status; receipts from the pilot result). Clause values (1/pi tip, ratios 3/4 to 255/256, omega 1.06012, 5.6% case) checked against N16bx-03 and correct."
+  },
+  {
+   "bead": "N16c-24",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The e2e said device steps 'skip with code 77'; under STD-E2E exit 77 is a whole-script skip and a step skip is an e2e_skip assert, so a script following the bead would exit 77 on a CPU-only host and its batch-cpu assertions would never count. Restated. Verb forms (spark.check with --key, prove.verify positional bundles), the two-link adjoint values and the central-difference error bound recomputed and correct."
+  },
+  {
+   "bead": "N16c-35",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Acceptance and e2e used `frob design check --json` to print maximum depth and factor ratio; design.check's row has no such output (convention 8), so the script would fail. Now through BD-148's `packed` section of design.show (`frob design show <d> --section packed --json`, an `ancestors` object, schema and golden regenerated), with the e2e header and known answers; dep BD-110 (only there for design.check) replaced by STD-TEST. N16-CX row K12 names this bead's plant `N16c-35:kin-k12` (planted-input) and the bead had no such control: added `chain_gain_claim_refused`. All counts (375/969, 216/324, 1,742/7,140, 647/1,225, 117 and 341 anc entries, 286, 144, 276 off-by-one) recomputed and correct."
+  },
+  {
+   "bead": "N16cp4-01",
+   "kinds": [
+    "broken"
+   ],
+   "what": "On fired, 'a compile of the open parallelogram has the same ModelId under auto and rows' named no command, and the archetype was written as a path: now `frob design check design:leg/parallel-knee --json` and `frob sim run design:fourbar/parallelogram-open --closures auto|rows --key ... --json` (N16c-32's sim.run option, N16c-30's fixture), each under its own key, in the acceptance and the script's surface step."
+  },
+  {
+   "bead": "N17a-01",
+   "kinds": [
+    "convention",
+    "contradiction"
+   ],
+   "what": "ADR records had no path; now docs/adr/ADR-PHYLUM-01.md to -06.md (N40-03's one directory). 'Every Frontier mechanism is behind a flag' with six flags omitted the morphology generator (BD-287, Frontier, plan 17.10 [F]), which has no flag and no kill gate: the statement now names each flag's kill gate and says how the generator is released."
+  },
+  {
+   "bead": "N17a-02",
+   "kinds": [
+    "convention"
+   ],
+   "what": "It said it 'contributes the assertions fit.class, fit.state and refusal.160' to N17a-08's script, a later bead's file, with names that script does not use (convention 13 and 11). Restated as what N17a-08 (which depends on it) asserts: step 6 on oversize-70dof and the fit state per bucket. Row arithmetic (152, 314->320, 164->168, 72) and fit cases recomputed and correct."
+  },
+  {
+   "bead": "N17a-03",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Same as N17a-02: 'This bead contributes the steps cohort.form and cohort.permute' to N17a-10's script; restated as what N17a-10's script (which depends on this bead) runs, with the key discipline and replay. Counts (4,800/2,400/992; 24 padding lanes at W = 40) recomputed and correct."
+  },
+  {
+   "bead": "N17a-05",
+   "kinds": [
+    "contradiction",
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "The worked card's shares 'one half, 3/10, 1/5' named no exponent, and N17a-04 states them as half cubic, 3/10 quadratic, 1/5 linear (passed --shares 0.2,0.3,0.5 in exponent order); a reader could pair them the other way and get different costs: now stated. The 741 exit read 'the exit table names the 70x codes explicitly; the registry row governs if it differs', which left the exit open; N17-REF's row gives exit 4: stated. The e2e 'contributes steps bucket.card, bucket.refuse741, bucket.contact_axis' to N17a-08's script, which has no such steps (convention 11): now names N17a-08's steps 3, 3a, 3b, 3c, 6 and 6b. N17-CX registers this bead as the planter of cx-160 (planted-input) and cx-161 (mutation), which the bead never mentioned, so neither plant would have been built: both added with test cx160_one_bucket_overheads (Omega1 = 66*100/2018 = 3.27, Omega2 = 9.59, Omega3 = 23.3, recomputed). The plan record lacked the contact- and row-capacity overheads and the dominant axis step 6 computes, so no caller could see the reported split: added. Break-even, crossover 360/361.3, spread-30 (9 buckets at 8%, 8 at 10%, minmax 2/23) recomputed and correct. The negative control greedy_is_not_min_buckets was built under a feature of its own, mutant-greedy-min-buckets; convention 1 gives every planted defect the one feature gauntlet-mutations, so a battery run with that feature would never build this mutant and its property test could not be seen to fail: now a mutation under gauntlet-mutations."
+  },
+  {
+   "bead": "N17a-07",
+   "kinds": [
+    "registry",
+    "convention",
+    "users"
+   ],
+   "what": "The 740 exit read 'the registry row governs if it differs': N17-REF gives exit 4; stated. The e2e 'contributes steps memory.table, memory.refuse740, memory.caveat' to N17a-08's script, which has no such steps (convention 11): now names N17a-08's steps 5 and 6 with what they assert. Its Consideration required the capacity registry of N16a-14 to agree with this function to the byte but no test held this side to those six values: added capacity_registry_rows (Q 31,276; hexapod 41,404; H 92,104; wheeled 11,860; wheel-leg 37,164; tracked 36,464, all recomputed), and request to N16a-14 to call this function rather than keep a second byte model. KA-814 terms, five_terms and formula sums recomputed and correct."
+  },
+  {
+   "bead": "N17a-08",
+   "kinds": [
+    "request",
+    "registry",
+    "broken",
+    "users"
+   ],
+   "what": "Step 7 asserted no arena lease through `frob spark place --json`; spark.place requires --tier and a workload (--workload or --design --task) with --worlds and plans a workload it is given, so the bare call answers FROB-REF-802 and the step fails on every run; no verb reports arena leases. Now proved by cost.gpu_s == 0 and identical envelopes under the wrapper that denies every device and the batched-step library; spark.place dropped from the command list. The refusal acceptance said 'the registry's exit for 740 and 741' and a Consideration said the exit table 'is silent on 74x'; N17-REF gives exit 4 and N35-33's table has the 74x decade: stated, still read from the registry. The fixture tracked-vs-wheeled was listed but no step used it, and N17a-05's contact-axis report had no e2e: added step 6b (dominant axis contacts, split reported, not applied). The card-detail list now includes the overheads and dominant axis. Mixing ratios, registered-six wastes, Omega tables and break-evens 2,000 and 4,000 recomputed and correct. Request from F-UEG applied after reading NEG-15, ROBOT-talos and ROBOT-apollo: step 6a passed `asset-talos-<source hash>` (and the Apollo equivalent) to --designs; that is the import's idempotency key, not a design, so the step refused on an unknown design. Since STD-E2E gives every run a fresh FROB_STATE, the design would not exist in the run's store either: the step now imports each robot by NEG-15's recipe, asserts the returned DesignId equals the one assets/robots/INDEX.toml pins, and plans on that DesignId; the two imports are the script's only keyed calls, and `frob design import` (BD-066, reached through ROBOT-apollo) is in the command list."
+  },
+  {
+   "bead": "N17a-09",
+   "kinds": [
+    "convention",
+    "users"
+   ],
+   "what": "The e2e said the bead 'contributes the steps admit.warm, admit.cotenant and admit.fallback' to N17a-10's and BD-184's scripts, which have no such steps, and called BD-184's script 'the latency script' without its name (convention 11: a reader looks for steps that do not exist). Restated: the table has no surface, so this bead writes no script; N17a-10's phylum_cohort_invariance.sh, N17b-05's phylum_admission.sh and BD-184's phylum_edit_to_first_step.sh, all of whose owners depend on this bead, cover it, with what each asserts. The fallback switch acceptance (15% trips, 5% does not) had no test: added fallback_switch_thresholds. Slot arithmetic (192/8,192 = 2.3%, 410 reserve, 40 comparisons leave 102, ceiling about 42-fold) recomputed and correct."
+  },
+  {
+   "bead": "N17a-12",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "The e2e said the bead contributes steps to N17a-13's script and that each runs `frob sim run` or `frob phylum sweep` with lanes on and off, with no key; phylum.sweep is a run verb and refuses a call without --key (FROB-REF-805), and N17a-13's script keeps phylum.sweep for both arms. Restated as N17a-13's owned steps lanes.trot, lanes.grazing and lanes.random_schedules, each run under its own --key with and without --family-lanes; this bead writes no script. Trot alternation (8 and 16 contacts) and lane overflow (40 into 32, 8 out) checked."
+  },
+  {
+   "bead": "N17a-14",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken",
+    "deadlock"
+   ],
+   "what": "Convention 10: the decision record was a free-form 'decision record' and a gates.toml row 'read decided'; N40-03's form is required: now docs/adr/ADR-KILL-FAMILYLANE-M4.md with N40-03's fields (beads re-read with their status), the decision entry {outcome, adr, date, session, receipts} with receipts under receipts/gates/ (receipts/pilots/<hash>.json on the pilot branch), the owner declaration in frob-phylum's contract.toml, the four outcomes including not-reached, and kill_ledger passing; deps N40-24 and N40-30 added (no cycle, both M1). The pilot branch said BD-356, N17a-12 and N17a-13 'are closed as not funded' by this bead, which depends on N17a-13 and so would wait for ever: now closed withdrawn by the funding session (N41-17 rule 7), which makes this bead ready. 'Removed from the verb help' contradicted BD-356 (the option stays and answers FROB-REF-724, exit 5). The e2e filter `-- KILL-FAMILYLANE` matches no Rust test name and passes vacuously: now kill_familylane with the tests in that module; the sweep call had no key (805) and used an unregistered @fixture:mixed-64: now N17a-13's workload with --key. STD-E2E header added. decide_overhead and interval arithmetic (0.15, 0.2625, 0.1357) and KA-373's 1.10 to 1.32 recomputed and correct. Checked on resume: the edit was complete; the e2e's workload @workload:h2h-512 with --task flat-stand is N17a-13's mixed workload."
+  },
+  {
+   "bead": "N17a-16",
+   "kinds": [
+    "broken",
+    "convention",
+    "registry"
+   ],
+   "what": "Finished the earlier reviewer's interrupted edit and checked it against BD-371, N21c-18, N21c-20 and VERBS-phylum. (1) Eligibility named no input, so an implementer could not tell how the sweep knows a survivor: the race's mark travels with the population reference in --designs and is never inferred; the option needs KILL-SPECIALIZE's decision in force to be not-fired (N21c-18), else FROB-REF-724, exit 5. (2) 'With no record the option refuses' would refuse a whole sweep because one shape class lacks a gate record: that design is now declined with reason no-record (tests no_record_declines, unmarked_design_never_candidate; negative control (4) caught by the first). (3) The e2e ran only on gpu-cuda, never on the Mac host or in CI, and lacked --task: now batch-cpu (N21c-20 switches on batch-cpu) with --task flat-stand, the gpu-cuda pair when a device is present else e2e_skip, the STD-E2E header and a shuffled-digest plant. (4) The fixture race-survivors was called a 'population descriptor', which is phylum.plan's hypothetical-size file and not runnable designs, with no class and no remaining time, so 'one promoted, one declined' could fail on any record, or both be declined for lack of one: now a design-set fixture in the reference quadruped's class, the class GATE-SPARK-14 measures (BD-371 records g and C_compile for it), with scheduled work of 3,600 s and 1 s, which straddle every threshold a funded record can have (at most 360 s). Thresholds 360, 605.4, 300 and 100 s and 66.7 against 60 recomputed and correct. Request to VERBS-phylum for the @fixture design-set form of phylum.sweep."
+  },
+  {
+   "bead": "N17a-18",
+   "kinds": [
+    "convention",
+    "registry",
+    "plan"
+   ],
+   "what": "Convention 11: the e2e said the bead contributes steps gen.report, gen.flag_50, gen.stratify and gen.report_vs_plan to N17a-21's script, which has none of them and no stratification step, so stratified sampling, an option this bead adds to the verb, had no end-to-end check: now its own scripts/e2e/phylum_generate_report.sh on its own fixtures (3/10 and 7/10 exactly through --enumerate; 60 of 100 flagged provisional at lower bound 0.497; quotas filled and the class-24 stratum equal to the base draws; an unfillable quota reported; the report equal to phylum.plan's), STD-E2E logging, a plant and dep STD-E2E; N17a-21's step 5 named as the gate clause's run. Its --quota and --report-only are not in phylum.generate's row (convention 8): the bead keeps the form and a request goes to VERBS-phylum. KA-385 was cited for 'the clause on rejection reporting', but its row pins identities, probabilities and splits; the clause is GATE-PHYLUM-07's: corrected. The acceptance required the M3 re-run of the generator pilot, which N17a-17's frozen protocol assigns to this bead, but no step said how or where its result goes and the bead did not depend on the pilot: added step 8 (N17a-17's script under the registered protocol for the three remaining family classes and pooled, falsifier re-evaluated, a [[pilot.result]] appended with the registered hash) and dep N17a-17 (M1, no cycle). Clopper-Pearson bounds 0.497 and 0.671 recomputed and correct."
+  },
+  {
+   "bead": "N17a-19",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request from S-08 applied: N17-CX names this bead as the planter of N17a-19:cx-166 (mutation) and the supplier of CX-166's case, which the bead never declared, so the plant would not be built and CX-166's control would stay stale, which blocks its gate: now a cfg(feature = \"cx-166\") branch of the side assignment (sides by seed parity), applied by the control runner to KA-385's row with `--features gauntlet-mutations,frob-phylum/cx-166 --test g5_determinism -- KA-385`, which must fail naming the mirror pair; the mirror fixture split by seed parity kept and named as CX-166's case; the acceptance line now names the mutation. Convention 11: the e2e claimed steps split.mirror, split.straddle and split.admit in N17a-21's script, which has only its step 6 for splits and cannot reach the admission predicate (no verb): restated as N17a-21's step 6 with its command, the predicate covered by admit_score_rules."
+  },
+  {
+   "bead": "N17a-22",
+   "kinds": [
+    "request",
+    "deadlock"
+   ],
+   "what": "Request from F-U17a applied: the call `frob phylum quotient --designs @fixture:scaled-pair --json` lacked --task, required in the design-set form (BD-285; FROB-REF-802), so the similarity step could never pass: now --task flat-stand, the task of the fixture's experiment that image-2-4-2 carries scaled, and the e2e names N17a-27's step 7 as the owner of the call, with what it asserts. Convention 7: the acceptance 'phylum.quotient lists similarity classes' checks BD-285, which depends on this bead, so this bead could never close: the library's class output is now checked here (new unit test similarity_classes_of_set) and the verb-level check is N17a-27's. Request to N17a-27 to write that command. Group values (981/25, l0^2 = 1 m^2, 1/lambda, x16 key value, 3/2) recomputed and correct."
+  },
+  {
+   "bead": "N17a-29",
+   "kinds": [
+    "request",
+    "convention",
+    "contradiction",
+    "deadlock",
+    "broken"
+   ],
+   "what": "Request from F-U17a applied: the fired-branch check `frob phylum quotient --designs @fixture:ballast-24-8 --json` lacked --task (802), so 'prints no digest classes' passed vacuously: now --task ballast-swing (the form N17a-26 and N17a-27 use) in script and acceptance, with exit 0 and orbit representatives asserted. Convention 10: the record was a free-form ADR and a row 'set to decided with the measured values'; now docs/adr/ADR-KILL-QUOTIENT-M3.md with N40-03's fields, the decision entry {outcome, adr, date, session, receipts}, the owner declaration checked by kill_ledger and the four outcomes, deps N40-24 and N40-30 (M1, no cycle). Deadlock: on the pilot branch the bead still depended on N17a-28, which cannot run without the digest, so it would wait for ever: the funding session now closes N17a-26 and N17a-28 withdrawn (N41-17 rule 7), which makes it ready. Contradiction: the outcome fired on BET-31's clauses (planted-winner rank, top-eight overlap), which are not in N40-24's registered trigger (kill_ledger would find the outcome inconsistent with it) and which BET-31, a dependent, evaluates itself: removed from the outcome, with a unit test and a negative control; part C's false equivalences count as false quotients under trigger 1. Broken: the replay filter `-- KILL-QUOTIENT` matches no Rust test name and passes vacuously: now module kill_quotient; STD-E2E header added. Requests to N17a-28 (pilot branch) and N17a-25 (verdict vocabulary)."
+  },
+  {
+   "bead": "N17a-30",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The e2e resolved `@corpus:<set>` with `frob design show` and `frob design check`, whose rows take a design and no corpus reference, so the script had no command that resolves a set and the acceptance 'resolves from the command line' could not be checked: now through `frob phylum plan --designs @corpus:<set> --worlds-per-design 1 --json`, whose row echoes the resolution in `bound` (BD-171, reached through BD-287), then design show and `design check --stages 1-6` on 32 resolved members. Cycle-index counts 92, 378, 86,185 and 500,500 recomputed and correct."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N16b-31",
+   "what": "Step 12 `variants` exercises --method multilevel and segment of N16b-08, which N16b-31 does not depend on (convention 7); N16b-08 now owns scripts/e2e/tier_variants.sh for them, so remove step 12 (or add N16b-08 and N16bp4-01 to deps). Its expectation is also wrong: after KILL-SEGMENT is fired or not-reached, `segment` stays a value of eval.promote's method (VERBS-eval) and answers FROB-REF-724, exit 5 (N16bp4-01), not the schema refusal 802, and the reason is ADR-KILL-SEGMENT-M3, not the pilot's verdict."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.promote: name N16b-08 under 'Extended by' for the method values `multilevel` and `segment` (behind the feature frontier-tier-variants, FROB-REF-724 while it is off; `segment` also 724 when KILL-SEGMENT's decision is fired or not-reached, N16bp4-01) and BD-264 for `dr`; the row names BD-263 only, so the surface check cannot tell which bead lands which value."
+  },
+  {
+   "bead": "VERBS-fidelity",
+   "what": "fidelity.shadow: (1) add the input `p_out` (command line --p-out <probability>, on start and configure, in (0, 1], absent = the outcome lane is off; N16b-18): the episode-level inclusion probability of the outcome lane, recorded with every pair; without it the outcome lane of N16b-18 and the M3 steps of N16b-34 and BD-268 cannot be switched on. (2) The example column reads `frob fidelity shadow start --job j:77c0 ...`, a positional action word; by NJL-01 it is `frob fidelity shadow --action start --job j:77c0 --p 0.002 --cpu-cores 24 --tier referee --json` (kind admin: no --key)."
+  },
+  {
+   "bead": "N16b-34",
+   "what": "Steps 2, 3, 9 and 14 call `frob fidelity shadow start|status ...` with a positional action word; fidelity.shadow's action is the input property `action`, `--action <name>` on the command line (NJL-01), with no --key (kind admin). Step 11 turns the outcome lane on: pass --p-out (N16b-18's input, e.g. --p-out 0.0625) so that pairs also reach the tier-correction ledger."
+  },
+  {
+   "bead": "BD-214",
+   "what": "The verb paragraph writes `frob fidelity shadow start --job <id> ...`, `stop --job <id>`, `configure ...`, `status ...` as positional action words; the row's form is `--action start|stop|configure|status` (NJL-01; kind admin, no --key). The outcome lane's p_out is N16b-18's input --p-out on start and configure."
+  },
+  {
+   "bead": "N16b-30",
+   "what": "Step 9 runs `FROB_TEST_SEED=17 cargo test -p frob-conformance --features gauntlet-mutations --test g1_known_answers -- KA-338` as 'the thin-barrier fixture with the endpoint-only gap check planted in the fast tier'; KA-338's row is the ballistic drop under a transactional profile (G1 referee and strict, GATE-KIN-04, BD-082) and never produces a missed-contact ledger row, so the assertion 'one missed contact classified never' cannot pass. Use N16b-21's ledger-level fixture: `cargo test -p frob-dyn --features gauntlet-mutations --test missed_contact_audit -- thin_barrier_tunnel` (one never contact; control caught), or KA-408 through N18b-23 for the audit's own thin barrier."
+  },
+  {
+   "bead": "N40-24",
+   "what": "Register the kill gate of the compliant closure row on the lockstep tiers (an `introduce` amendment, as for KILL-SEGMENT): trigger 'no stiffness of the sweep meets, on both four-bar mechanisms at h = 2 ms in f32 within the default Newton budget, a maximum loop residual below 1e-4 m and an RMS crank-torque error below 2%' (pilot PILOT-KIN-04, N16b-22), decided at M2 pilot-before-funding, fallback 'loops on lockstep tiers only through closed-form elimination where it applies; other loops refused on lockstep tiers and routed to strict'. Today PILOT-KIN-04 carries kill_gate = to-register, which under N38a-09's funding rule blocks the Frontier mechanism N16b-23 whatever the pilot finds; a decision bead (as N16bp4-01 for KILL-SEGMENT) would then be needed."
+  },
+  {
+   "bead": "N16bx-02",
+   "what": "Add dep N16bp4-02 (decision KILL-RUNTIMECLOSURE): N40-24 says the mechanism bead depends on the decision bead where the trigger is read from the pilot record alone, and N16bp4-02's acceptance requires its record before N16bx-02 starts; today N16bx-02 can start on the pilot verdict alone and could build a lockstep arm a PARTIAL decision refuses. Also cite the release form (PASS or PARTIAL) read from ADR-KILL-RUNTIMECLOSURE-M6. No cycle (checked)."
+  },
+  {
+   "bead": "N14a-21",
+   "what": "design.show's section table: the `packed` row (BD-148) gains an `ancestors` object from N16c-35 (n, maximum depth, is_chain, the four solve-operation counts dense and ancestor-sparse and their ratios); list it in the row's content so the section's schema owner is clear."
+  },
+  {
+   "bead": "VERBS-phylum",
+   "what": "The tier column lists phylum.map and phylum.generate as S; plan 17.12 (quality-diversity maps) and 17.10 (the morphology generator) are [F], and BD-342 and BD-287 are labelled frontier. Set both to F."
+  },
+  {
+   "bead": "N17a-17",
+   "what": "The pilot register step lists mechanism, protocol, falsifier, ceiling, fallback, cost and tool but not N38a-09's record form: id (PILOT-<SET>-<nn>), owner, bead, work_package, protocol as {path, blake3, frozen, ledger_seq}, ceiling {statement, value, basis}, fallback {ships, kill_gate} (the generator has no kill gate in 17.19, so kill_gate must be stated, and to-register blocks funding under N38a-09's rule), the receipt under receipts/pilots/. A record without them fails the register's loader."
+  },
+  {
+   "bead": "N16a-14",
+   "what": "The capacity registry keeps its own byte model (cap::byte_model_values); N17a-07 states there is one byte model, frob_kernels::estimate::per_world_bytes, and now pins its formula sum to the registry's six values (capacity_registry_rows: 31,276; 41,404; 92,104; 11,860; 37,164; 36,464). Call that function instead of a second formula (add dep N17a-07, same milestone M2, no cycle), or state that cap::byte_model_values is a test of the six values against it, so the two cannot drift."
+  },
+  {
+   "bead": "VERBS-phylum",
+   "what": "(1) phylum.generate lists `--stratify` with no value and no `--quota` or `--report-only`; N17a-18, which extends the verb with --report and --stratify, specifies `--stratify shape-class --quota <class>=<k>,...` (quotas per shape class) and `--report-only` (the report without the terms), and its script uses the first: add them, or the stratified call is 802 and no quota can be stated. (2) phylum.sweep's --designs lists identities, names, @archive:, @workload: and @corpus: but no design-set file, so `@fixture:<name>` (resolved to a committed file by N34p3-01) has no admitted form there, while N17a-16 (race-survivors), N17a-24, N17a-27, N17b-10, N17b-18 and N17b-29 pass one: add 'a design-set file or @fixture:<name>, labelled synthetic, listing designs, with the race's survivor mark per entry where present (read by --specialize-survivors, N17a-16)', as phylum.plan admits a file."
+  },
+  {
+   "bead": "N17a-27",
+   "what": "Step 7 (`scaled-pair`) gives no command, and 'each with its fixture's task' leaves the task of scaled-pair unnamed; N17a-22 states the call as `frob phylum quotient --designs @fixture:scaled-pair --task flat-stand --json`, flat-stand being the task of image-2-4-2's experiment (scaled in the fixture). Write that command and record the task in the fixture, or the source and the image are compared under different experiments and the scale-map check cannot pass."
+  },
+  {
+   "bead": "N17a-28",
+   "what": "Say what happens on KILL-QUOTIENT's pilot branch: when PILOT-C-22's falsifier holds, the digest is never funded, and N17a-29 (which depends on this bead) is made ready by the funding session closing N17a-26 and this bead withdrawn (N41-17 rule 7); parts B and C cannot run without digest classes. Then name who records GATE-PHYLUM-01's orbit clauses (orbit known answers and orbit-pair replays need no digest), or that gate has no recorder on that branch."
+  },
+  {
+   "bead": "N17a-25",
+   "what": "Step 10 records the verdict as `funded` or `fallback`; the pilot register (N38a-09) takes an appended [[pilot.result]] with verdict falsifier-rejected or falsifier-holds and its receipt committed at receipts/pilots/<hash>.json. N17a-29 reads that result and receipt on its pilot branch; a result in the private vocabulary fails the register's loader and the funding function cannot read it."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "All 32 beads read in full against the 14 conventions and the registries as they stand. The earlier reviewer's 26 entries were re-checked on resume (each touched file read whole, its diff checked and its arithmetic recomputed); N17a-14's interrupted rewrite was complete; N17a-16 carried an unrecorded half-finished edit, finished and recorded here. All eight requests addressed to the slice applied after their evidence was checked (N16b-02, N16b-08, N16b-16, N17a-05, N17a-08, N17a-19, N17a-22, N17a-29). Unchanged beads: none. Not applied, as a larger redesign: the audit's proposal (F-U35, for N35-09) to split from N16b-02 an interface bead for the fidelity quantity registry. N35-09 uses only the per-quantity scales and nothing of the batched tiers, so the split is sound and would shorten the graph (the auditor's estimate: N35-09 depth 102 to 93, BD-177 105 to 96 with the companion proposals), but it fixes no error (both beads are M2, no cycle); left to the lead, recommended. N16bp4-03 (M8, Moonshot, blocks BD-442) keeps priority 4: the charter makes a Moonshot 4 whatever its milestone, and the one-step rule counts from the milestone default, also 4. N16b-17 keeps no script of its own under convention 11's shared-script clause (N16b-34 owns the script and depends on it). N17a-30 reaches the digest mechanism N17a-26 through BD-287 -> BD-285; the corpus needs nothing from it and on KILL-QUOTIENT's pilot branch N17a-26 closes withdrawn, so nothing waits; noted, not changed. Graph: no cycles after the edits (graph_check cycles = 0); every added dependency is at or before its bead's milestone."
+}

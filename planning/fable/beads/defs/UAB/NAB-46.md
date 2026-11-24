@@ -38,8 +38,8 @@ NAB-45); the contested records (NAB-47); the not-yet-placed list (NAB-49).
 
 **Transcription rule.** As in NAB-44, with `proposals = 1` (or 0 for an idea that arose in an audited
 reasoning pass; the planning table does not distinguish, so 1 is stored and `proposals_note = "single pass or
-audited reasoning pass"`). `contested` links: IP-70 (joint paired-outcome certification) and IP-74 with IP-75
-(catalog co-design by monotone bounds). `ungated` is filled for the eight rows that name no gate or, at an
+audited reasoning pass"`). `contested` links: IP-70 → CT-10 (joint paired-outcome certification) and IP-74 and IP-75
+→ CT-15 (catalog co-design by monotone bounds); NAB-47 depends on this bead and checks that they resolve. `ungated` is filled for the eight rows that name no gate or, at an
 upper tier, no kill gate, from their gates column and the notes below: IP-50 (the [F] screens are never trusted
 without a passed screening audit, GATE-ATEL-09 and GATE-NEMESIS-07, and each cascade stage has its own kill
 gate), IP-60 (a rule checked at compile time; its claim as a throughput lever is KI-08), IP-69 (the pilot
@@ -121,14 +121,18 @@ known-answer gate, GATE-GAIT-01 and GATE-PHYLUM-08).
 
 ## Acceptance criteria
 
-- [ ] Records `IP-49` … `IP-88` exist with the columns verbatim and carriers as listed; with NAB-44 and NAB-45
-      the register holds 88 `IP` records.
-- [ ] Every carrier key exists as a bead; every gate and kill gate named exists in the gate register (23
-      distinct kill gates in these records: 22 in the gates column, plus KILL-ADVECT added to IP-61).
+- [ ] Records `IP-49` … `IP-88` exist with the columns verbatim and carriers as listed. (With NAB-44 and NAB-45,
+      which run beside this bead, the register holds 88 `IP` records; NAB-50 asserts the total.)
+- [ ] Every carrier key exists as a bead; every gate named exists in the gate register (23 distinct kill gates
+      in these records: 22 in the gates column, plus KILL-ADVECT added to IP-61). The three of the M0 ledger
+      groups (KILL-REFLECT, KILL-SKEL-PORT, KILL-TOLERANCE) exist in the kill-gate register; the 20 of the M1
+      groups (N40-24, N40-26) exist or, while the M1 exit record does not, are recorded `skip`s under NAB-42's
+      rule for rows that land later.
 - [ ] The twenty rows with no kill gate are Solid, or state the fallback or the limit in `ungated` (IP-50: the
       screening audit; IP-60: a rule, its lever claim killed; IP-69: the pilot's falsifier; IP-73: a
       hand-computed test; IP-79, IP-80, IP-81, IP-83: gated by a known answer or a convergence gate).
-- [ ] `FROB-REF-877` exists in the refusal registry.
+- [ ] `FROB-REF-877` exists in the refusal registry, or, while the M1 exit record does not exist, is reported
+      as NAB-42's recorded `skip` (its row is Augur's, entered at M1).
 - [ ] The traceability lint of NAB-42 passes on these records.
 
 ## Test plan
@@ -137,20 +141,21 @@ known-answer gate, GATE-GAIT-01 and GATE-PHYLUM-08).
 
 `crates/frob-conformance/tests/idea_register.rs`, module `single_proposal`:
 
-- `forty_records`; `ids_49_to_88`; `total_ip_records_is_88`.
+- `forty_records`; `ids_49_to_88`.
 - `kill_gates_are_23` (22 from the gates column and KILL-ADVECT on IP-61); `rows_without_kill_gate_are_20`;
   `ungated_rows_are_8` (IP-50, IP-60, IP-69, IP-73, IP-79, IP-80, IP-81, IP-83).
 - `tiers`: 19 rows name [S], 23 name [F], 3 name [M] (IP-62, IP-69, IP-76).
 - `ballast_fixture_ratio`: 735,471 / 24,546 = 29.963.
 - `qualification_levels`: αᵢ = α/[i·(i + 1)] at α = 0.05 gives 0.025, 0.00833, 0.004167 for i = 1, 2, 3, and
   the partial sums 1 − 1/(n + 1) times α never exceed α.
-- `carriers_resolve`; `gates_resolve`; `contested_links_resolve`.
+- `carriers_resolve`; `gates_resolve` (M1 kill gates and `FROB-REF-877` resolve or are recorded `skip`s, as
+  in the criteria); `contested_links_are_three` (IP-70, IP-74, IP-75; their resolution is NAB-47's test).
 - `rows_frozen` against `tests/fixtures/ideas/single_proposal.tsv`.
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh` (NAB-50) asserts 40 records (88 in total) and zero unresolved carriers and
-gates, logged per STD-E2E.
+`scripts/e2e/decision_records.sh` (NAB-50) asserts the 88 `IP` records and zero unresolved carriers and gates
+over the register, logged per STD-E2E; this pass's 40 are this module's tests.
 
 ### Known answers and negative controls
 

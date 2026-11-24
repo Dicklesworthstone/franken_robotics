@@ -1,0 +1,174 @@
+{
+ "round": 4,
+ "slice": "F-U26a",
+ "reviewed": [
+  "BD-270",
+  "BD-272",
+  "BD-273",
+  "BD-276",
+  "BD-277",
+  "N26a-01",
+  "N26a-02",
+  "N26a-04",
+  "N26a-05",
+  "N26a-06",
+  "N26a-12",
+  "N26a-16",
+  "N26a-19",
+  "N26a-20",
+  "N26a-21",
+  "N26a-26",
+  "N26a-28",
+  "N26a-30",
+  "N26a-31",
+  "N26a-32",
+  "N26a-35"
+ ],
+ "changed": [
+  {
+   "bead": "BD-273",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Technical approach step 2 narrated the exploration arm of --method as 'requested of VERBS-nemesis' (convention 13); the row now lists `exploration` (and `given`) among the methods, so the bead states the row's form. Left as it was, an implementer would read the arm as pending and could leave it out of the method enum the row already admits."
+  },
+  {
+   "bead": "BD-276",
+   "kinds": [
+    "registry",
+    "convention",
+    "contradiction"
+   ],
+   "what": "The bead narrated `--finalist` as an option requested of the row and listed refusals that differed from the nemesis.bound row (549, 560, 563, 568, 569, 760, 840 and the three ledger-numbered slugs). It now states the row's ten refusals and gives the three slugs (`rare-bound-not-finalist`, `certify-by-importance-sampling` 5xx exit 3; `importance-over-sibling-cap` 76x exit 4) in BD-338's form: N35x-02's M0 run has assigned their numbers, the bead raises them from the start through one named constant each read from `registries/refusal_allocations.toml`, and its tests compare with the ledger's `assigned` field, never a typed number. Left as it was, the verb would have shipped slug-only refusals with no number (or typed literals) against a row and ledger that carry numbers, and the surface-parity check of the row would fail."
+  },
+  {
+   "bead": "N26a-04",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The calibration script reran the three stages through `frob sim run … --tier referee --key <trap>-<stage>`, but the sim.run row has no input that carries a Nemesis world's edits and germ values (its `--param` is M4 and fixture-scoped), and the verb that takes given worlds (`nemesis.search --method given`, BD-273) depends on this bead through BD-271. The script now drives the bead's own registry tool, `cargo run -p frob-conformance --example nemesis_planted -- calibrate --trap <id> --stage in-box|shell|witness --seed <s>` (an example target of BD-025's form, the tool that also computes L), and logs its output record in place of an envelope; the `frob`-side runs of the traps stay N26a-11's, N26a-31's and N26a-33's. Left as it was, the script could not be written: no `frob` call can put a conditioned world on the referee. Recomputed and right: thresholds 2.3263479, 2.7477814, 3.0902323, 4.4171734, 1.2815516; rounded-threshold products 3.0002e-5, 1.0003e-4, 1.0002e-5, 4.9994e-6; union 9.999975e-6; L for 380 of 400 = 0.928 (> 0.9); N26a-12's `--first` check of the potency trap exists (N26a-12 script step 3)."
+  },
+  {
+   "bead": "N26a-01",
+   "kinds": [
+    "contradiction",
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "(1) The dependency rule had `xtask check-deps` gain a forbidden edge `nemesis-forbidden-edge`; BD-003 owns that rule as its proof-boundary table `edge.forbidden` (row `frob-arena` → `frob-nemesis`), and while the layers forbid the edge `check-layers` reports `L-1.upward` and `check-deps` stays silent (`proof_boundary_edge_owned_once`). Section 5, the acceptance line, the unit-test line and script step 2 now say that; as it stood, an implementer would have added a second rule for one defect and a script assertion (check-deps naming `nemesis-forbidden-edge`) that BD-003's check can never satisfy. (2) Script step 4 asserted `frob --json doctor` reports the crate's contract present; no doctor section reports crate contracts (VERBS-operator), so the step could never pass: removed, and the test plan states that the bead delivers no verb (convention 11). (3) `contract.toml` lacked `rank` (N34-08 compares layer and rank with the crate map, 5·3): `rank = 3` added, or `contract.layer-mismatch`/`contract.schema` fails the acceptance's `check-contracts` pass. (4) The airlock groups: the bead now states that `stats` and `optimize` must list `frob-nemesis` (N33a-11), with `check-deps` reporting no `fsim.group-not-allowed` in acceptance; see the request to N33a-11. (5) `frontier-search` named pilot `PILOT-C-28`, now `PILOT-NEMESIS-01` (N26a-06's split); `PILOT-C-27`'s 'verdict `funded`' is not a status of N38a-09: now `falsifier-rejected`."
+  },
+  {
+   "bead": "N26a-06",
+   "kinds": [
+    "registry",
+    "contradiction",
+    "convention"
+   ],
+   "what": "The pilot was one record, `PILOT-C-28`, carrying two mechanisms (search and minimal worlds) and two kill gates (KILL-NEMESIS, KILL-MCW); N38a-09's record has one `fallback.kill_gate` and its funding rule answers per mechanism, so the record could not load as written and the bead's own case 'the search falsifier fires and the shrinker is funded alone' could not be expressed. Now one run and one frozen protocol feed two records: `PILOT-NEMESIS-01` (search; gated_beads N26a-08, N26a-09, N26a-11; falsifier GATE-NEMESIS-02's two clauses at pilot scale; ceiling under ten; fallback card randomization with legality, oracle, guard and ranked contrasts, kill gate KILL-NEMESIS, `also` minimal worlds under PILOT-C-28; integrated gate GATE-NEMESIS-02) and `PILOT-C-28` (minimal counterexample worlds, the record row C-28 names; gated_beads N26a-34; the construction's and chapter's shrinking and witness falsifiers; ceiling `none on speed` with its reason; fallback full failing worlds with ranked contrasts, KILL-MCW; integrated gate GATE-NEMESIS-03). Labelled DESIGN with the reason. Added: rule 2a (each result's receipt committed at `receipts/pilots/<hash>.json`, else `pilot-receipt-uncommitted`), the C11 statement (no `scripts/e2e/` script: nothing a `frob` command reaches; the register is read with `--example pilots -- complete`), and the acceptance lines for both records and `fundable --package WP-55`. Applied the slice note [C11-script] after checking: true, the bead delivers no product code."
+  },
+  {
+   "bead": "N26a-12",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The unfunded branch cited the search pilot as `PILOT-C-28`; after N26a-06's split the search's record is `PILOT-NEMESIS-01` (`PILOT-C-28` is the shrinker's, read by N26a-35). Left as it was, the decision would cite the shrinker's verdict to withdraw the search beads. Otherwise checked and right: trigger and fallback equal N26b-18's KILL-NEMESIS row; FROB-REF-724 is exit 5 (N32-REF); `--first`, `--method card-uniform|given` and `evidence trace clm:…` match their rows; N40-26 and N40-30 are reached through deps."
+  },
+  {
+   "bead": "N26a-16",
+   "kinds": [
+    "registry",
+    "convention",
+    "contradiction"
+   ],
+   "what": "Applied both slice notes after checking the nemesis.hardset row: `frob nemesis hardset add …` is now `frob nemesis hardset --action add <file.fmcw> --class --task --key`, and `hardset show --class --task` (a positional action word, refused 802 by the row) is now the default call `frob nemesis hardset --class <c> --task <t> --json`. The `hard-world-set-inadmissible` refusal was 'the uncoded refusal; its number once the ledger assigns one': the ledger's M0 run has assigned it, so the script now asserts the code equals the slug's `assigned` field, read by slug, never typed. The script did not call `fidelity.ledger --cases` because 'the row does not carry it yet'; the VERBS-fidelity row now carries `--cases` (N16bp1-01 step 10), so step 4 reads the 100 cases with `frob fidelity ledger --class <c> --cases --follow --json` and asserts each guard case is listed (new acceptance line). Background said the script 'records the gate', contradicting item 4 (no script writes a gate record): fixed. As it stood, the script's `add` and `show` calls would have been refused 802 before reaching what they test."
+  },
+  {
+   "bead": "N26a-19",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Applied the slice notes: the narration '(an output label requested of VERBS-sim's sim.replay row)' now states the row's label (convention 13; the row prints `none (first run)`, exit 0, and lists 816). Rule 3 checked that the final world is 'inside the named legality profile', but the file names no profile (plan §26.7 and Appendix L.6 print none), so the reader could not run the rule: `legality.profile` (name and content address, BD-270's rule that the profile identity is in every result) is added as DESIGN, in the sketch, the wire example and the acceptance specimen; see the request to ART-L6. `replay_detects_altered_edit` changed an edit value in the file, which the reader rejects at rule 2 (the `id`) before any replay: the test now recomputes `id` and neighbours so that it reaches `verify_replay` and the digests; as written it could never report a differing step."
+  },
+  {
+   "bead": "N26a-20",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "Applied both slice notes after checking the row: `hardset add|run` are now `--action add|run` with their keys, and `hardset show` is the default call (a positional `show` is 802). The bound misuse probe (step 11) requested a bound for the repaired design without `--finalist`; the design is no finalist of a recorded campaign, so N26a-26's finalists-only rule (`rare-bound-not-finalist`) would refuse first and the assertion of FROB-REF-560 could not pass: the probe and its admissible twin now carry `--finalist`. The scope list lacked `nemesis:read`, the scope of the set's default `show` (VERBS-nemesis machine fields): added. Checked and right: `run fork --before failure --dt`, `autopsy intervene --do`, `design edit set-param --expected-parent`, `result revalidate --since`, `eval qualify --clusters` (567) against their rows."
+  },
+  {
+   "bead": "N26a-26",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "Applied the slice note after checking VERBS-nemesis and N35x-02: the finalists-only refusal was raised with the slug and 'no number, until the registry owner assigns one' (and '570 to 579 are free'). N35x-02's M0 run has assigned it and the `nemesis.bound` row lists it under that number, so the bead now raises the assigned number from the start through one named constant read from the ledger by slug, and `non_finalist_slot_name` compares the code with the ledger's `assigned` field (never a typed number) and checks the `--finalist` twin. As it stood the verb would emit a refusal with no number against a row that lists one. Recomputed and right: 29,956 and 29,958; 0.8 × 37,445 = 29,956; 0.8 × 10,078 = 8,062.4 ≥ 8,062; 10⁻⁶ at 40 episodes/s ≈ 20.8 h."
+  },
+  {
+   "bead": "N26a-02",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Applied the request from F-UF-2 (FD-FSIM-33), its unit-level part: a `Push` carried an impulse and a direction with no frame, so the authored push could reach FrankenSim's mixed wrench (world force, body torque) with body components copied as world ones (hazard FDEF-05). Now `PushFrame { Body, World }` is part of the push and of `WorldId`; realization keeps the direction in its frame and never rotates it; at the tick the push goes through BD-047's frame-typed wrench and the airlock's `apply_external_wrench` (N33c-36, added to deps: M0, no cycle), never a hand-built mixed wrench. New unit test `push_frame_kept` with the requested hand case (2 kg, diag(0.1, 0.2, 0.3) kg·m², at rest, R_z(90°), body force (1, 0, 0) N over one step of 1/480 s: Δp = (0, 0.0020833, 0) kg·m/s, along world +y, never +x) and its mixed-frame negative control. The verb-level script part is declined, and the test plan says why: the bead delivers no verb, and the first verb that takes an authored world (`nemesis.oracle --world`, BD-271) depends on it. Left as it was, the frame of every authored push would have been the implementer's guess, the silent error FD-FSIM-33 exists to remove."
+  },
+  {
+   "bead": "N26a-28",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Applied the slice note [C11-script] after checking: the bead delivers nothing a `frob` command can reach (pilot harness and arms in `frob-conformance`), so the test plan now says so and names the register's own check (`--example pilots -- complete`) that the pilot script runs last; the script keeps `scripts/pilots/` because `scripts/e2e/nemesis_explore.sh` is N26a-31's gate script. Added N38a-09 rule 2a: the result's receipt is committed at `receipts/pilots/<hash>.json`, else the register does not load (`pilot-receipt-uncommitted`), which the record and acceptance omitted and N26a-32 now reads. Recomputed and right: 0.5/(1.5^20 − 1) = 1.504e-4; level probabilities 0.4, 0.07583, 0.008824; conditionals 0.4, 0.3077, 0.1649, 0.03755, 0.1973 (product 1.504e-4); tails 0.010001, 5.0005e-4, 0.099992; F4 1.0003e-4, F5 mode 5.0011e-6; KA-140's 0.0735; overlap 2.5e-11."
+  },
+  {
+   "bead": "N26a-30",
+   "kinds": [
+    "broken",
+    "registry",
+    "convention"
+   ],
+   "what": "(1) Every `nemesis.bound` call lacked `--finalist`; the synthetic candidates are finalists of no recorded campaign, so N26a-26's finalists-only rule (`rare-bound-not-finalist`) would refuse each call before the rule under test: the conventions now add the row's attestation, and step 9 probes the refusal once (without it) with its admitted twin. (2) The budgets and designs of steps 2, 3, 4(b) and 8 (2,995 → fixed-n, 10,000 → sequential at 10⁻³, 10⁵ → sequential at 10⁻⁴, reachable bound 2.996e-5 for 100,000) hold only when the nominal share is the whole budget; once the policy is adopted (`table`, 80% share) 10,000 buys fixed-n, 2,995 is refused 760 and the reachable bound becomes 3.745e-5, so a rerun after adoption would fail. Steps 2 to 9 now run in a scratch configuration `nemesis.bound.policy = baseline` (N26a-26 step 5), with step 10 for the table policy. (3) `certify-by-importance-sampling` was asserted as a 'slot' without a number: now the code the ledger assigns, read by slug. (4) `nemesis.hardset run` is `--action run`. Recomputed and right: 29,956 / 299,572 / 2,995,731; 76,959 at δ = 1/2200; 3.167e-5 and 6.334e-5; exact coverages 0.9599 and 0.9596; 10⁴ × 6,000 episodes."
+  },
+  {
+   "bead": "N26a-31",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The bound arms and the 560 probe called `nemesis.bound` for the reference quadruped without `--finalist`; it is a finalist of no recorded campaign, so N26a-26's finalists-only rule would refuse every bound call (arms 2 and 3 would never run, and step 5 would see the not-finalist refusal instead of 560). The calls now carry the row's attestation. Checked and right: T4 and T5-two-mode thresholds and probabilities against N26a-04, 20 + 10 traps, the T2 potency pair, 569 on the search row for a static-only request, 30 × (3e4 + 1e5) ≈ 4e6 episode-equivalents per arm."
+  },
+  {
+   "bead": "N26a-32",
+   "kinds": [
+    "broken",
+    "registry"
+   ],
+   "what": "Script step 1 read the pilot record with `frob evidence trace <clm:…>` 'on the claim identifier each receipt carries'; a pilot result's receipt is the file committed at `receipts/pilots/<hash>.json` (N38a-09 rule 2a) in the pilot register, not a claim of the evidence store, so the step could not be written: it now reads `PILOT-RARE-01` and `PILOT-C-27` from the register with their committed receipts (and the register's `complete` check) and keeps `evidence trace` for GATE-NEMESIS-05. Step 3's bound call gains `--finalist` (N26a-26's rule would otherwise refuse it). Otherwise checked: trigger, fallback and clauses equal N26b-18's KILL-RARE row; the boundary 6 of 30; 724 exit 5."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N33a-11",
+   "what": "Add `frob-nemesis` to the consumers of the `optimize` group (row: `frob-opt`, `frob-arena`, `frob-dyn`, `frob-mission`, `frob-analyze`). Plan §26.1 has Nemesis use `fs-eproc` (confidence sequences), `fs-dfo` (derivative-free search) and `fs-archive` (quality-diversity archives), all in `optimize`; N26a-01 enables `stats` and `optimize`, and N34-03's `fsim.group-not-allowed` would refuse `frob-nemesis`. The same consumer list is mirrored in N33a-31 and the `contract.toml` feature records of `frob-fsim`."
+  },
+  {
+   "bead": "N26b-18",
+   "what": "N26a-06 now writes two pilot records from its one run, `PILOT-NEMESIS-01` (search; KILL-NEMESIS) and `PILOT-C-28` (minimal counterexample worlds; KILL-MCW), because an N38a-09 record carries one kill gate and funding is per mechanism; N26a-28 writes `PILOT-RARE-01`. The title's '2 pilot records', the 'two pilot rows' paragraph, the 'Search and shrinking' row (fallback 'KILL-NEMESIS's and KILL-MCW's') and `pilot_rows_complete` need to cover the three records, the shrinker's falsifiers and its `none on speed` ceiling."
+  },
+  {
+   "bead": "ART-L6",
+   "what": "N26a-19 adds `legality.profile` (the profile's name and content address, for example `kitchen-commercial/default@b3:…`) to `frob.mcw/1`, because rule 3 checks the world against the profile the file names and the printed file names none. The resolved specimen needs the field beside `one_minimal_verified`, and its invariant row 'legality.inside is true' can name the profile."
+  },
+  {
+   "bead": "VERBS-result",
+   "what": "The summary table gives `result.revalidate` milestone M4, while its block says 'All fields exist from M1' with the surface N28b-32 at M1 and the engine BD-292 at M3. N26a-20 (M3) calls `frob result revalidate <design> --since <old>` with deps BD-292 and N28b-32; the table's milestone should read the first milestone (M1), or the block should say which part waits for M4 (grades 3 and 4, BD-347)."
+  }
+ ],
+ "unchanged": 6,
+ "notes": "Unchanged after a full read against VERBS-nemesis, N26-REF, N26-KA, N26-CX, N26b-18, N38a-09 and the plan sections: BD-270, BD-272, BD-277, N26a-05, N26a-21, N26a-35. Recomputed and right in them: N26a-21's 29,956 / 299,572 / 2,995,731, 36,887 / 47,873 / 63,967 / 76,959, 0.0500041, Clopper-Pearson 0.00299125 / 0.00473499 / 0.00628229, coverages 0.9599 / 0.9596 / 0.9510, 2.996e-5, 75 s / 12.5 min / 2.1 h / 21 h; N26a-35's trigger boundaries and its 7-edit contrasts case (two passing neighbours, edits 2 and 5 first); N26a-05's legality row and recorder (N26a-33) against the gate register. All slice notes were checked and applied: BD-273 [C13]; N26a-02 request (unit-level part; verb-level part declined with the reason in the bead); N26a-06 and N26a-28 [C11-script]; N26a-16 and N26a-20 [R4-action] and the H-owners-3 request; N26a-19 [C13] and the H-verbs-8 request; N26a-26 the H-verbs-5 request. No graph-audit notes were addressed to this slice. Pilot split (DESIGN in N26a-06): `PILOT-NEMESIS-01` (search) and `PILOT-C-28` (minimal worlds), reflected in N26a-01 and N26a-12; N26a-35 already cited `PILOT-C-28` for the shrinker. Deps: one added (N26a-02 → N33c-36, M0); `graph_check.py cycles` reports 0. Every touched file keeps its front matter (JSON lists parse) and seven sections. Prose mentions of `nemesis.hardset add` in BD-270 (step 3) and BD-272 (acceptance) name the action, not a command line, and were left as they are."
+}

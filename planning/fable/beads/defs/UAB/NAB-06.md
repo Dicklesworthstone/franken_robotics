@@ -155,7 +155,10 @@ Rows in this range: 65.
 
 - [ ] The registry contains 66 records whose sort key begins with N to R and loads; `Reflex` sits between
       `Referee coverage` and `Refusal`.
-- [ ] Across the whole registry, the set of records of kind `subsystem` equals the 23 subsystem names.
+- [ ] The three names of the subsystem table (N00-03) whose sort key begins with N to R (`Nemesis`, `Phylum`,
+      `Reflex`) each resolve to a record of this range of kind `subsystem`, and no other record of this range has
+      that kind. The whole-registry check (the set of records of kind `subsystem` equals the 23 names) needs all
+      five ranges and is NAB-08's test `all_23_subsystems_defined`, not this bead's close condition.
 - [ ] The four no-authorization flags, six reality statuses, five postures and four reuse grades are present
       verbatim in their rows.
 - [ ] The generated document prints the 65 plan-time meanings character for character as in the table.
@@ -167,9 +170,11 @@ Rows in this range: 65.
 `crates/frob-conformance/tests/glossary_content.rs`, module `n_to_r`:
 
 - `count_is_66`; `order_matches_frozen_list` (with `Reflex` in place).
-- `all_23_subsystems_defined` (whole registry): the names of the subsystem table (`registries/subsystems.toml`,
-  N00-03; 23 at plan time, equal to the 23 names above) each resolve to a record of kind `subsystem`, and no
-  other record has that kind.
+- `subsystems_in_range`: the names of the subsystem table (`registries/subsystems.toml`, N00-03; 23 at plan
+  time, equal to the 23 names above) whose sort key begins with N to R are exactly `Nemesis`, `Phylum` and
+  `Reflex`; each resolves to a record of kind `subsystem`, and no other record of this range has that kind. (The
+  same check over the whole registry, `all_23_subsystems_defined`, is in NAB-08's module `whole_registry`, which
+  runs once all five ranges have landed.)
 - `pinned_values`: `Qualification lane` contains "α_i = α/[i·(i + 1)]"; `Restricted mean time` contains
   "E[min(T, H)]"; `Robustness` contains "ρ = ψ/s"; `Pseudo-inertia` contains "[[Σ, h], [hᵀ, m]]"; `Paired lower
   bound` contains "95%"; `Reality status` contains the six names; `Reuse grade` contains "1 identity, 2
@@ -187,7 +192,8 @@ and logs both as `metric` and `assert` lines per STD-E2E.
 Known answers: 65 plan-time rows (7 N, 4 O, 29 P, 2 Q, 23 R) plus one added, 66 records. With the budget
 α_i = α/[i·(i + 1)] the levels sum to α over all i (Σ 1/[i·(i + 1)] = 1), and the first three are α/2, α/6 and
 α/12: a test evaluates the formula from the row's text at α = 0.05 and expects 0.025, 0.008333…, 0.004166….
-Negative controls: deleting the `Reflex` record must fail `all_23_subsystems_defined`; writing the budget as
+Negative controls: deleting the `Reflex` record must fail `subsystems_in_range` (and NAB-08's
+`all_23_subsystems_defined`); writing the budget as
 α/i must fail the evaluation test (the sum would diverge); dropping `retired` from the reality statuses must
 fail `pinned_values`.
 

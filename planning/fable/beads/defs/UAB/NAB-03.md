@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "workspace", "delivery", "solid", "registry"]
 parent: "WP-01"
-deps: ["NAB-01"]
+deps: ["NAB-01", "NAB-05"]
 needs: []
-related: ["NAB-04", "NAB-05", "NAB-06", "NAB-07"]
+related: ["NAB-04", "NAB-06", "NAB-07"]
 gates: []
 plan_refs: ["Appendix A"]
 ---
@@ -69,7 +69,9 @@ and generator (NAB-01); the lint (NAB-02); the other ranges (NAB-04 to NAB-07).
 - Subsystem rows: `Airlock`, `Arena`, `Atelier`, `Augur`, `Autopsy`, `Chronicle`, `Cortex`.
 - `Alias witness` is a cross-reference row: its record carries `see = "indistinguishability-witness"` (the
   optional cross-reference field of NAB-01's schema), `defined_in = ["§20.12"]` and its own short meaning (the
-  observation-alias form names two distant states that deliver the same readings).
+  observation-alias form names two distant states that deliver the same readings). NAB-01's loader refuses a
+  `see` that names no `id` in the file (`gloss.see-unresolved`), so the file loads only with NAB-05's record
+  `Indistinguishability witness` (id `indistinguishability-witness`) present: NAB-05 is a dependency of this bead.
 - Formulas and numbers to transcribe exactly: the coadjoint convention ad*_ξ = ad_ξᵀ with no minus sign, so that
   μ̇ = ad*_ξ μ + w; anchored position: cell side 8 m, offset centred in [−4, 4) m; brownout: bus power demand
   above E²/(4·R); Cayley map cay(x) = (I − x/2)⁻¹(I + x/2); compute envelope E0: 16 GiB, 8 cores, one hour, one
@@ -182,7 +184,8 @@ Rows in this range: 73.
 - `pinned_values`: the meaning of `Anchored position` contains "8 m" and "[−4, 4) m"; `Brownout` contains
   "E²/(4·R)"; `Compute envelope` contains "16 GiB, 8 cores, one hour"; `Conformal margin` contains
   "⌈(n + 1)·(1 − α)⌉"; `Cayley map` contains "(I − x/2)⁻¹(I + x/2)"; `Construction` contains "C-01 to C-40".
-- `alias_witness_points_at_indistinguishability_witness` (the target record exists, in NAB-05's range).
+- `alias_witness_points_at_indistinguishability_witness` (the target record exists, in NAB-05's range, a
+  dependency).
 - `meanings_match_frozen_table`: byte comparison of each `meaning` with the frozen fixture
   `tests/fixtures/glossary/a_to_c.tsv` (the fixture is this table, frozen).
 

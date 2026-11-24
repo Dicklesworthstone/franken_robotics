@@ -186,12 +186,16 @@ momentum to 10⁻¹² relative over 10⁶ steps on the variational lane; M1).
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c05.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control; G0 and G1 rows
-KA-052 to KA-054; `frob --json prove kernel K-cay-step` and `frob --json prove verify` on the certificate
-(class `Certified`, hash and checker identity present); `frob --json sim run --tier referee --robot
-builtin:free-body --steps 1000000 --seed 3` with assertions on the momentum and membership residuals from the
-envelope; one deliberately fast-spinning run that must end in refusal FROB-REF-212 or in a substepped run
-whose record shows the substep count. Log `target/e2e-logs/spec_c05/<utc>.ndjson` with transcript, per-step
+`scripts/e2e/spec_c05.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control, one control per
+build with its own feature (N10a-01 section 6); the rows through the helper's `e2e_tier`, that is
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g0_laws -- KA-052` and `--test g1_known_answers --
+KA-053` and `-- KA-054`; `frob --json prove kernel K-cay-step` and `frob --json prove verify` on the certificate
+(class `Certified`, hash and checker identity present; logged `pending` until BD-019 and BD-021 land); the
+free-flight run through BD-087's oracle, `cargo test -p frob-dyn --test free_body_oracle` (no verb runs the free
+body, and `sim.run` has no `--robot` input; logged `pending` until BD-087 lands), with assertions on the momentum
+and membership residuals it reports; the law suite's fast-spin input of `s8_admission_bound`, which must return
+FROB-REF-212 with the admitting substep count. The verb-level path of FROB-REF-212 (`sim.run`, which substeps or
+lists the refusal) is N16b-25's, at M2. Log `target/e2e-logs/spec_c05/<utc>.ndjson` with transcript, per-step
 residuals in ulp against 4, energy-error series summary, measured order against 2, digests of the certificate,
 evidence block, and on failure the first step and state at which a bound was exceeded. Final `summary` line.
 

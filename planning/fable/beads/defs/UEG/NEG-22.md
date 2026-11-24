@@ -62,7 +62,7 @@ N37-18, exit 5, with FROB-REF-731 while the private mark applies (the door check
 and with FROB-REF-733 for the licence set in a session holding `private:export` and the flag; the refusal carries the lineage path to the root asset. A still
    rendered from the scene is itself a derived asset of class `research-only`. Aggregated results (a scorecard,
    a verdict) are no exception: the door's table refuses a scorecard whose runs touched the scene (N37-18), and
-   this bead adds no aggregate path of its own (a request to N37-18 asks whether one is wanted).
+   this bead adds no aggregate path of its own.
 3. Logs and telemetry never contain the scene's geometry (the general rule for private scenes).
 4. `frob scene purge <pack>` is a dry run by default (the lineage closure of the pack and its digest, nothing
    removed); `frob scene purge <pack> --dry-run=false --confirm <digest>` removes the pack and everything derived

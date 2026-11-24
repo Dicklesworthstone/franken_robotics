@@ -4,7 +4,7 @@ title: "risks.toml, part 4: evidence, evaluation, privacy, security (RISK-11, -1
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "delivery", "safety", "arena", "lemma", "registry", "solid", "review-notes-open"]
+labels: ["m0", "delivery", "safety", "arena", "lemma", "registry", "solid"]
 parent: "EPIC-M0"
 deps: ["N40-10", "N41-01", "N41-RISK1", "N41-RISK2", "N41-RISK3"]
 needs: []

@@ -58,7 +58,7 @@ environment of `frob-learn`): that bead is listed in `related` and is not a prer
 over its subject trait and closes on the exact reference model and the mutants in its own test support. If
 `frob-learn` does not exist when this bead starts, the suite and its support files are written under
 `crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
-read `-p frob-conformance` (with `--features gauntlet-mutations` in place of the crate's `conformance`); the bead that implements the construction moves them into the owning crate, binds its
+read `-p frob-conformance` (a control's build there reads `--features gauntlet-mutations,<feature>`, its mutation feature declared in `frob-conformance`); the bead that implements the construction moves them into the owning crate, binds its
 production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
 script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
 and is logged `pending` here until then.
@@ -129,8 +129,12 @@ passes are this project's to build.
   corpus (labelled `synthetic`) of small tree designs with rational parameters; a reference tokenizer; a small
   reference policy that is permutation-equivariant by construction (per-token map, sum pooling over children,
   per-token head) with fixed rational weights; generators of re-descriptions (random relabeling, random frame
-  change per link, axis-sign flips, power-of-two similarity scaling). `tests/support/c23_mutants.rs`: mutants
-  under the crate's cargo feature `conformance` (BD-025; the umbrella `gauntlet-mutations` enables it). The reference policy is a real, small policy, not a stand-in for the
+  change per link, axis-sign flips, power-of-two similarity scaling). `tests/support/c23_mutants.rs`: each mutant
+  compiled only under its own Cargo feature, declared by `frob-learn` and named in its control record's `feature`
+  field (N10a-01 section 6, BD-025): `cx-060` for the plant `SPEC-C-23:cx-060` of CX-060 (the file-order
+  policy), the `nc-` feature of each control this bead registers directly (the SI-feature mutant, the mutant
+  without sign handling). No mutation feature is part of the umbrella `gauntlet-mutations` or of the crate's
+  `conformance` feature: the suite is run once per control, one control per build. The reference policy is a real, small policy, not a stand-in for the
   product network: the product network of BD-320 is bound to the same laws.
 - KA-129 and KA-130, which the appendix printed with tolerance `to set` and control `none stated`, are bound by
   the part bead N10b-14, which sets both tolerances (exact: bit equality of the first action; bit-equal
@@ -151,7 +155,9 @@ passes are this project's to build.
 
 - [ ] `docs/math/C-23.md` has the ten sections, statements C-23.S1 to S6 with classes, the feature list, the
       evidence figures tagged FACT and the pilot statements.
-- [ ] `cargo test -p frob-learn --test laws_c23` passes; with `--features conformance` every mutant fails.
+- [ ] `cargo test -p frob-learn --test laws_c23` passes; built once per registered control with the feature its
+      record names (`cargo test -p frob-learn --features <feature> --test laws_c23`: `cx-060`, and the `nc-`
+      feature of each other control), the test the record names fails.
 - [ ] KA-128: for every design of the synthetic corpus (at least 50 designs) and 20 seeded re-descriptions
       each, the actions after mapping back differ from the original by at most 64 units in the last place in
       `f64` (the bound set here; exact equality for relabelings and power-of-two scalings).
@@ -179,9 +185,13 @@ passes are this project's to build.
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c23.sh` (idempotent; seed 2300 printed): `frob --json doctor`; the law suite with and without
-`--features conformance`; `FROB_TEST_SEED=2300 cargo test -p frob-conformance --test g3_metamorphic -- KA-128 MR-23` on the host site; existence
-of `docs/math/C-23.md`. Sources the STD-E2E helper; writes `target/e2e-logs/spec_c23/<utc>.ndjson` and a
+`scripts/e2e/spec_c23.sh` (idempotent; seed 2300 printed): `frob --json doctor`; the law suite
+(`cargo test -p frob-learn --test laws_c23`), then once per registered control in its own build with the feature
+its record names (`cargo test -p frob-learn --features <feature> --test laws_c23`: `cx-060`, the `nc-` feature of
+each other control), asserting that the test the record names fails; the two rows through the helper's
+`e2e_tier` on the host site, one name filter each: `e2e_tier g3_metamorphic KA-128` and `e2e_tier g3_metamorphic
+MR-23` (`FROB_TEST_SEED=2300 cargo test -p frob-conformance --test g3_metamorphic -- KA-128`, and the same with
+`-- MR-23`), the receipt hashes logged; existence of `docs/math/C-23.md`. Sources the STD-E2E helper; writes `target/e2e-logs/spec_c23/<utc>.ndjson` and a
 transcript; each line has `ts`, `script`, `bead` (`SPEC-C-23`), `step`, `event` (`start`, `cmd`, `assert`,
 `metric`, `refusal`, `end`), command line, exit code, wall time, evidence block (claim Known answer, class
 Tested, tier G3 host, determinism class, seed), the largest action difference in units in the last place

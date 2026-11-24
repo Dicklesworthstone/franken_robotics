@@ -47,7 +47,8 @@ layers and the identity map (NJL-07).
 
 ## Technical approach
 
-**Files** under `fixtures/golden/appendix-l/L8/`: `plan.specimen.json` (the text below); `plan.resolved.json`;
+**Files** under `fixtures/golden/appendix-l/L8/`: `plan.specimen.json` (the text below, with its `preanalysis`
+block in the owner's form, as the paragraph after the text says); `plan.resolved.json`;
 `manifest.json` (the input manifest that yields the plan); `preanalysis.expect.json`; `compare.expect.json`;
 `fields.toml` (the `estimate` block is `illustrative`; `plan`, the design and task identities and
 `preanalysis.hash` are `identity`; everything else is `exact`).
@@ -73,6 +74,25 @@ layers and the identity map (NJL-07).
   "estimate": { "gpu_s": 96, "interval_90": [78, 121], "referee_cpu_core_s": 410 },
   "budget": { "gpu_s": 150, "cpu_core_s": 600 } }
 ```
+
+**The `preanalysis` block is entered in the owner's form (DESIGN, following the owner of the format).** The
+specification prints that block under names of its own, as shown above (`reachable` as a map of counts,
+`unreachable`, `note`, `least_b_at_a_0`), and calls its spellings proposals. The owner has fixed the block:
+`study.plan` embeds the record `frob.preanalysis/1` of `eval.preanalyze` unchanged (N33b-19; the record is
+N24b-06's, with the members `rule`, `n`, `margin`, `level`, `interval_level`, `outcomes`, `counts` per verdict,
+`reachable`, `first_reachable`, `min_b_for_prefer`, `concordance_interval`, `power` and `hash`), so that
+`preanalysis.hash` in a plan equals the hash the verb prints. A plan carrying the printed block would not be the
+owner's `frob.plan/1`, and a specimen that the format's own reader rejected could not be resolved and validated.
+`plan.specimen.json` therefore carries, in place of the printed block, the record that `frob eval preanalyze
+--rule paired-clopper-pearson/1 --n 64 --margin 0.05 --level 0.05 --json` returns, with its `hash` abbreviated
+to `b3:5d10…`. This is the one part of the specimen taken from the owner's writer and not typed from this bead:
+the record's byte form is N24b-06's, and typing it here would state that schema a second time. Its contents are
+the specification's numbers under the owner's names, pinned member by member in `preanalysis.expect.json`:
+`outcomes` 2,145; `counts` 521 promote, 521 inferior, 0 practical-tie and 1,103 inconclusive (the printed
+`reachable` map, with the tie's zero); `reachable` without `practical-tie` (the printed `unreachable`);
+`concordance_interval` [−0.0662, +0.0662] to four decimals and `first_reachable` 86 for `practical-tie` (the
+printed `note`); `min_b_for_prefer` 15, 17, 19, 21, 23, whose first entry is the printed `least_b_at_a_0`;
+`level` 1/20 and `interval_level` 39/40.
 
 **What the plan binds.** `question`: the claim in words. `designs`: arms A and B by immutable identity (A is
 the design of artifact L.1; B is the same design after the edit that sets the foot radius to 0.030 m).
@@ -127,13 +147,14 @@ development result. It is not a qualification.
 
 ## Acceptance criteria
 
-- [ ] The specimen equals the text above byte for byte (manifest SHA-256); the resolved plan parses strictly,
-      validates against `frob.plan/1` and round-trips with zero byte differences.
+- [ ] The specimen equals the text above byte for byte outside its `preanalysis` block, which is the
+      `frob.preanalysis/1` record described above (the manifest SHA-256 covers the whole file); the resolved plan
+      parses strictly, validates against `frob.plan/1` and round-trips with zero byte differences.
 - [ ] `frob study plan manifest.json` returns a plan equal to the resolved fixture on every `exact` field; the
       call runs no physics (no run is created; `cost.gpu_s` is 0) and repeating it returns the same plan
       address (idempotent by construction).
-- [ ] The pre-analysis equals the table: 2,145 outcomes; 521, 521 and 1,103; tie unreachable with the note's
-      interval [−0.0662, +0.0662]; first tie at n = 86; least b at a = 0 equal to 15.
+- [ ] The pre-analysis equals the table: 2,145 outcomes; 521, 521 and 1,103; tie unreachable with the
+      concordance interval [−0.0662, +0.0662]; first tie at n = 86; least b at a = 0 equal to 15.
 - [ ] A manifest that names "tie" among its verdicts is refused with `FROB-REF-532`, exit 3; one that declares
       both study types with `FROB-REF-552`; one whose arms have different determinism classes, or an
       uncontrolled class, with `FROB-REF-533` (the paired-study refusal of `study.plan`: by the layer rule of
@@ -209,8 +230,10 @@ pre-analysis and plan assertions are unchanged, and the log says that nothing is
   B-only pairs of 64, and 17, 19, 21, 23 with one to four A-only pairs; exact; control: a request for a tie
   verdict at n = 64 is refused). KA-090 (perfect concordance at n = 64 gives [−0.0662, +0.0662]). KA-757 (pair
   accounting: a_only + b_only + both + neither + unscored = planned).
-- Known answer of this bead (recomputed for it): the interval [0.0554, 0.4392] at (a, b) = (2, 19). It has no
-  number in the known-answer suite; the unit's coverage file lists it.
+- Known answer of this bead (recomputed for it): the interval [0.0554, 0.4392] at (a, b) = (2, 19). It is row
+  JL-17 of NJLx-02's known-answer block (a dependency), which this bead's tests cite by number once the block is
+  issued, with the row's controls (labels A and B swapped without negating the interval; a one-sided bound
+  printed as two-sided).
 - Counterexample kept alive (CX-266, BD-124): stopping a fixed-n study when its running test first looks good. An exact
   one-sided sign test at nominal level 5%, looked at after every pair, falsely rejects with probability
   13/256 = 5.08% after 8 looks, 8.76% after 16, 12.9% after 32 and 17.4% after 64.
@@ -228,7 +251,12 @@ pre-analysis and plan assertions are unchanged, and the log says that nothing is
   verb answers which: `study.plan`, `study.submit` and `eval.preanalyze` admit through `study::admit` and answer
   532 (and 552, 533); `eval.compare` and `study.compare` admit through `pairing::admit` and answer 555 (and 553,
   542). The artifact names 532, and the script asserts 532 and 533 on `study.plan`.
-- The field spellings of `frob.plan/1` are proposals; when the plan bead fixes others, the specimen is
+- Outside the `preanalysis` block the field spellings of `frob.plan/1` are still the specification's proposals
+  (`plan`, `designs` as a map of A and B, `controller_arm` as a sentence, `scenes`, `seed_protocol` with the
+  unit `building`, `study`). The manifest that `study.plan` reads is not among them: it is the owner's format
+  `frob.study.manifest/1` (N33b-19: `controller_arm` `shared`, `seed_protocol` with `unit: cluster` and its
+  cluster map, the building being the cluster, and a `fixed_n` block), and `manifest.json` is written in it.
+  When the plan beads (BD-124, N33b-19) fix the members of the plan itself otherwise, the specimen is
   re-entered once from the amended artifact bead.
 - The study itself costs GPU time (about 96 GPU-seconds in the story) and needs the kitchen scene family and
   its split; the plan and pre-analysis lanes need neither and run on any host.

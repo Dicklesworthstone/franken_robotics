@@ -30,5 +30,7 @@
 
 ## Addressed to your beads
 
-- `NAB-14`: mechanical check of the conventions: [C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. "…ty `record` is refused. - `nv06_anchor_figures_are_mark_r` (once BD-311 registers them). - `public_register_has_no_r_or_m_reading` (the findi…"
+- `NAB-01`: request from round 4, slice F-U34: Cite check-generated as N34p4-03's (the orphan rule for schemas/frob.*.json).
+- `NAB-09`: request from round 4, slice F-U34: Cite check-generated as N34p4-03's.
+- `NAB-14`: mechanical check of the conventions (can be a false alarm): [C13-pending] 1 place(s) narrate a pending request instead of stating the owner's form (convention 13), e.g. "…ty `record` is refused. - `nv06_anchor_figures_are_mark_r` (once BD-311 registers them). - `public_register_has_no_r_or_m_reading` (the findi…"
 - `NAB-49`: request from round 3, slice F-UAB: Step 4's decision record is at docs/delivery/adr/ADR-IDEAS-NOT-PLACED.md; docs/delivery/adr/ is retired (KNOWN_DRIFTS 4): use docs/adr/ADR-IDEAS-NOT-PLACED.md.

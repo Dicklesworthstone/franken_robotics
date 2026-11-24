@@ -6,7 +6,7 @@ priority: 3
 milestone: "M2"
 labels: ["m2", "suite", "atelier", "upstream", "frankensqlite", "solid"]
 parent: "WP-63"
-deps: ["BD-037", "BD-111", "N33b-04", "N33c-20", "STD-E2E"]
+deps: ["BD-037", "BD-111", "BD-209", "N33b-04", "N33c-20", "STD-E2E"]
 needs: []
 related: ["N33b-08", "N33c-18", "N33c-19"]
 gates: ["INT-FSQL-02"]
@@ -81,8 +81,9 @@ content-hash key; at the pin this does not compile, and the fixture records the 
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
-is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt
-(`frob.stack-receipt/1`) under `receipts/`; (3) re-run that sibling's admission gates, the parity gates and the
+is never rolled back locally); (2) write a new resolution receipt (`frob.stack-receipt/1`) under `receipts/`
+with `cargo xtask check-stack --write-receipt --reason pin-move --gate INT-FSQL-01` (plain `check-stack` only
+verifies and writes nothing); (3) re-run that sibling's admission gates, the parity gates and the
 gates this item names; (4) relock (`Cargo.lock` regenerated and committed, builds `--locked` on the one toolchain
 T) and append the record, with the receipt hash, to `DEPENDENCY_ADMISSION.md`. Only then does the row's `status`
 become `adopted` and the interim posture end. No PASS is recorded on a dirty sibling tree, and neither a pin nor
@@ -126,12 +127,13 @@ Here:
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsql_01.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
-Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (the registry
+Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (its `upstream`
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsql_01 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
 bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also drives a real edit loop through `frob design check --json` 200 times
-on a perturbed design and reads `frob store status --json`, asserting the hit ratio against LRU's on the same
+on a perturbed design and reads `frob store status --json` (BD-209's verb, a dependency, which prints the
+memo-policy statistics of N33c-19), asserting the hit ratio against LRU's on the same
 recorded trace and the byte cap.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to

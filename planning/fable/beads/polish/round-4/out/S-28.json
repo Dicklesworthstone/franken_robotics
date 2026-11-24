@@ -1,0 +1,198 @@
+{
+ "round": 4,
+ "slice": "S-28",
+ "reviewed": 19,
+ "changed": [
+  {
+   "bead": "BD-315",
+   "kinds": [
+    "contradiction",
+    "plan",
+    "convention",
+    "registry",
+    "deadlock"
+   ],
+   "what": "Considerations said that without the owner's campaign-class approval the gate is `not run` and M3 does not exit; N39b-29 (and N41-15) reconcile the default: only campaigns that fit E0 run (the CPU strata), the device strata are `not run`, M3 may exit on that record, and only with no stratum recorded is the gate `not run`. Aligned, and the acceptance line on freeze manifests now covers the four strata in the gate's scope, since under the default the device strata cannot be tuned or frozen and the line could never pass. Step 5 now starts every rival campaign (and tuning and learner-swap runs) as a child of the same launcher as arm A's (`frob-launch --scope gate:GATE-TENFOLD-06`, N36-20, the rule BD-316 already states for 'every arm'), with an acceptance line for the meter rows: unchanged, the rival's device time was unmetered and 'not evidence' under N36-20 and a campaign above the class in force had no 761 refusal. The negative control 'pack changed after freeze' now names `tenfold.frozen-arm-changed` (exit 9, disqualifying) instead of 'flagged'."
+  },
+  {
+   "bead": "BD-428",
+   "kinds": [
+    "plan"
+   ],
+   "what": "Sizes said c = 1 campaign per family only; the plan (§39.7) sets c = 2 where fewer than 24 families exist, which applies to every cell of 12 to 23 families this epic allows. Added; unchanged, a small cell would be run with half the campaigns its pre-analysis assumes. The hidden-consequence acceptance line (at least one consequential edit, neither which nor how many) was kept and N39a-14 aligned to it."
+  },
+  {
+   "bead": "BD-430",
+   "kinds": [
+    "registry",
+    "plan",
+    "convention"
+   ],
+   "what": "'A pin move voids the runs it spans' now reads as N39-REF's `tenfold.protocol-breach` row (N39bp3-01): the runs that span it and their cells are void; unchanged, the short plan would void runs and keep their cells. The four negative controls, which the e2e asserts 'by reason', now name their reasons (`incumbent-pin-drift` exit 9, `freeze-duplicate`, `capability-unexplained`, `ledger-disclosure-missing`). Equal terms now state that every rival campaign, tuning run and standing-asset build is started by the same launcher as arm A's under the tournament's approved scope (N36-20, N39b-29; §43.10 owner input), refused with FROB-REF-761 above the class in force, and a stratum left out of the approval is `not run`; unchanged, the M7 rival arms would run unmetered."
+  },
+  {
+   "bead": "BD-431",
+   "kinds": [
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "The pin-move rule and its negative control now match `tenfold.protocol-breach` (spanned runs and their cells void). The unit test `epic_bd431_pins_frozen` compared a 'stack lock hash' in the first and last campaign records, a field campaign.json does not have (N39a-03), and would miss a move and restore; it now reads the tournament watcher's result at every arm A campaign start and at close (N39bp3-01). How a campaign runs now states that `frob-mcp` and `frobd` are children of `frob-launch` under the tournament's scope, as BD-316 does at M3 (convention 14); unchanged, arm A's M7 runs above E0 would be `adhoc` and refused with 761. The foreign-file control names `tenfold.cold-start-foreign-file`."
+  },
+  {
+   "bead": "N39a-03",
+   "kinds": [
+    "contradiction",
+    "plan",
+    "broken"
+   ],
+   "what": "Considerations said development runs before H is fixed use 'three times the frozen rival's median development time...', which is circular (H is derived from those very runs) and contradicts N39a-12, BD-143 and N39b-30: development runs are censored at the provisional development deadline (14,400 s at M1, then the stratum's `development_deadline_s`), and H is fixed before the suite hash. Fixed. Several beads (N39a-16, -18, -19, -35, N39bp3-01) register checks with `frob-tenfold campaign start`, 'the clock of N39a-03', but this bead named only a process `frob-tenfold campaign` and defined no subcommand or precondition hook, so none of those checks had a place to run before the clock. Added step 1a (DESIGN): `campaign start` as this bead's subcommand with an ordered start-precondition registry run before `card_delivered` (a refusal stamps nothing and writes no record), with an acceptance line and the unit test `start_preconditions_in_order`. Step 1a now also says that what a start refusal means for the scheduled campaign (exclusion, void or later start) is the registering bead's rule and recorded by it; unchanged, a refused start writes no record and the scorer would meet a scheduled campaign with no record (`missing-run`) and no rule for it."
+  },
+  {
+   "bead": "N39a-11",
+   "kinds": [
+    "deadlock",
+    "convention"
+   ],
+   "what": "The bead's milestone is M3 but its acceptance required the M7 ADR, while N39b-13 (the tournament) and N38a-34 (the M7 pilot) depend on it: it could close only after work that waits on it, and it held the M3 exit open. It now fixes the procedure for both readings and closes on its M3 records; the M7 reading is applied unchanged inside the adjudication epic BD-432 (request). The e2e paragraph that added a step `adj-fallback` to N38a-34's script 'under this bead' (a later bead's script, which depends on this one) is replaced by a pointer to the pilot (request to N38a-34). Convention 10: the decision now has the one form of N40-03: `docs/adr/ADR-KILL-TENFOLD-ADJ-M3.md` with one section per stratum, one register entry per stratum {exit, scope = cell:<stratum>, outcome, adr, date, session, receipts} (neutral -> not-fired; cross-home -> fired with fallback_form 'Cross-home adjudication, labelled'; descriptive -> fired), the GATE-TENFOLD-05 receipts, the ADR's required fields, an acceptance line and the unit test `decision_entry_form`; unchanged, its record would fail the register load (`decision-adr-path`) and the M3 due list."
+  },
+  {
+   "bead": "N39a-14",
+   "kinds": [
+    "contradiction",
+    "broken"
+   ],
+   "what": "The hidden-consequence quota said 'exactly one consequential edit', while N39b-41 (warm-campaign rules) and BD-428 say at least one and that the card reveals neither which nor how many; the plan is silent on the count. Chose the latter (DESIGN, reason stated: an arm that knew there was exactly one could stop re-checking earlier verdicts after finding it, the shortcut the control denies), keeping this bead's floor of two inconsequential edits; the sealed record names each consequential edit, and `consequence_hidden` now also refuses a card that states the count and a sequence without a consequential edit. Unchanged, the two generators and the suite check would disagree and the M7 suite would be refused or the shortcut left open. Added deps N39a-06 and N39a-07: the acceptance criteria and the e2e reject mutated missions and tier traps through those acceptance procedures and the submission protocol under them, which this bead did not depend on (no cycle). `frob-tenfold suite check --controls` now states its `--json` form, which BD-428's and N39ax-04's scripts call (convention 9); it was undefined."
+  },
+  {
+   "bead": "N39a-16",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "The cold-start workspace check was 'recorded at clock start' while the acceptance criterion and N39a-17's script require the campaign to be refused before its clock starts; it is now a start precondition this bead registers with `frob-tenfold campaign start` (N39a-03 step 1a), run before `card_delivered`. Unchanged, the check could be placed after t0 and a foreign-file campaign would start a clock and leave a record."
+  },
+  {
+   "bead": "N39a-34",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Applied F-U39b's note after checking N39b-12 and N39b-16: N39b-12 has no step `preanalysis` (the pre-analysis is recorded in step `seal`; `four-family` is a sub-step of `drills`), and N39b-16's pilot runs no campaign, so it cannot assert the opening's precedence; it asserts the four conditions and FROB-REF-532 on the four-family cell. The precedence is now attributed to this bead's own `open` check and to the GATE-TENFOLD-04 record (N39a-40, clause 4). Convention 10: the decision now has N40-03's form: `docs/adr/ADR-KILL-TENFOLD-REACH-M3.md` written at sealing step 5, one entry per proposed cell {exit, scope = cell:<stratum>, outcome, ...} (confirmatory -> not-fired, descriptive: unreachable -> fired), and the pre-analysis record committed under receipts/gates/ as its receipt so that a not-fired entry loads (the GATE-TENFOLD-04 record cannot serve: N39a-40 depends on this bead); acceptance line and unit test `decision_entry_form` added; the M7 reading is named as BD-429's (request). Known answer fixed: m = 6 fails conditions (i) and (ii) (P(withdrawn | 5) = 0.08 in N39a-33's table), not (i) alone."
+  },
+  {
+   "bead": "N39a-19",
+   "kinds": [
+    "contradiction",
+    "convention",
+    "broken"
+   ],
+   "what": "The campaign-start checks (agentpin revision, hardware fingerprint, terms) were run 'before the clock starts' with no hook; they are now start preconditions this bead registers with `frob-tenfold campaign start` (N39a-03 step 1a), run before `card_delivered`. Convention 14: equal terms now include one launcher: every arm's campaign tree is the child of `frob-launch` under the gate's approved scope with the demand the terms give (`--devices`, `--device-ids` the assigned card, `--cores`, `--mem-gib`, `--wall-s` the card's deadline; N36-20), refused alike with FROB-REF-761, with the unit test `one_launcher_per_terms`; unchanged, arms could be metered under different scopes or not at all and the equal-terms check would not see it. Property 1 said the third campaign follows on 'the card that frees first', contradicting property 3 (the schedule assigns the card, balanced per arm); it now follows on the card the schedule assigns it, when that card frees."
+  },
+  {
+   "bead": "N39a-22",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "The e2e ran `OO` as a bare `frob train start`, which cannot run: `train.start` (VERBS-train) takes the design as a positional argument and `--task`, `--scenes`, `--target`, `--seed`, and as a run verb it takes `--key` (convention 6). It now spells the call with those inputs, the key from `e2e_key oo-<s>` (STD-E2E) and `--json`."
+  },
+  {
+   "bead": "N39a-26",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "The e2e runs `frob-tenfold ledger shares`, `ledger levers` and `ledger rows`, which no bead defines (N39a-24 adds no such subcommands; convention 9). They are now stated as this bead's subcommands in the operator tool of N39a-01, one per reading (steps 1 and 2, 3, and 5), each printing the cell's record as canonical JSON and exiting 3 with the reason on a refusal. All figures were rechecked (shares, p_max 19/150 and 16%, savings 7,500 with train 0.636, union 17/75, row 21 = 307.2, parity factors 1.435 and 1.145) and hold."
+  },
+  {
+   "bead": "N39ax-01",
+   "kinds": [
+    "request",
+    "contradiction",
+    "broken"
+   ],
+   "what": "Applied the slice note after checking N39a-05 check 4 and N39a-12: a development card's `deadline_s` is the stratum record's `development_deadline_s` (14,400 s by default), not the stratum's H, which is the record's `deadline_s`, null until N39b-30 decides it; `dev_deadline_is_provisional` now tests inequality with that field and names `card-deadline-mismatch`. Check 1 said 'exactly 12 missions per stratum', but at M7 the pool also holds the families the partial gate retired, which N39ax-03 counts with them ('at least 12'); unchanged, `suite check --development` would refuse every M3 stratum's enlarged pool with `dev-count`. It is now a floor, with a passing case in `dev_pool_counts` (request to N39-REF for the row's text). The pool check now states `--stratum` and `--json`, which this bead's script, N39ax-02, N39ax-03 and N39b-41 call; and the acceptance runs of reference answers and mutants name the path that exists, `frob-tenfold submit` and `frob-tenfold adjudicate` (N39a-09), instead of 'the harness's acceptance command' (convention 9)."
+  },
+  {
+   "bead": "N39ax-02",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The e2e re-ran witness batteries 'through the harness's acceptance command', which does not exist; it now commits the witness with `frob-tenfold submit` and decides it with `frob-tenfold adjudicate` (N39a-09, running N39a-06's battery) (convention 9). Convention 14: a battery above E0 under an approved class is now the child of `frob-launch` under that class's request row and cites its meter row (N36-20); unchanged, such a battery would be unmetered and not evidence."
+  },
+  {
+   "bead": "N39ax-04",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The acceptance line 'no family authored in the pilot appears in any sealed pool (the connectivity check refuses it)' and the unit test `pilot_family_cannot_be_sealed` relied on N39a-13's split rule, whose union reads both pools and every earlier gate's revealed families, not a pilot record; a pilot family was invisible to it and both could not pass. The record now publishes the eight families as rows of the family registry's form with their four keys, read by that union, and names the refusal `family-connected-to-known` (request to N39a-13 for the reading side)."
+  },
+  {
+   "bead": "N39ax-05",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The incumbent re-runs, home tasks and probes were launched 'under the machine-envelope guard or the approved compute class'; N36-20 says a pilot lane runs every arm through `frob-launch` under its envelope request row and cites the meter rows, an arm started any other way is not evidence, and the script guard has no meter and covers no device time above E0. Now each run is the child of `frob-launch` under the pilot's request row (the class approved for the rival audit, FROB-REF-761 above it), the acceptance line requires a meter row per re-run, and the e2e gains step (5) checking that every run cites one; unchanged, the pilot's figures that size the tournament's tuning budget would not count as evidence."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N39a-18",
+   "what": "Add N39a-03 to deps and register the workspace drift check and the pair-freeze check (`frozen-arm-changed`, `pair-arm-not-frozen`) as start preconditions of `frob-tenfold campaign start` (N39a-03 step 1a). The bead runs them 'at every campaign start' but does not depend on the bead that owns that entry point, so it can be ready before the hook exists and place its checks after the clock starts."
+  },
+  {
+   "bead": "N39a-15",
+   "what": "Add N39a-03 to deps and register check 6 (`suite-changed-after-commit`, recomputed 'at every campaign start') as a start precondition of `frob-tenfold campaign start` (N39a-03 step 1a); today it names no hook and has no dependency on the clock bead that runs campaign starts."
+  },
+  {
+   "bead": "BD-432",
+   "what": "State that the M7 reading of KILL-TENFOLD-ADJ is this epic's: apply N39a-11's procedure unchanged to every stratum of the tournament before the tournament's suite hash is committed (step 3 of N39b-13), write `docs/adr/ADR-KILL-TENFOLD-ADJ-M7.md` with one section per stratum, and append one entry per stratum {exit = M7, scope = cell:<stratum>, outcome, adr, date, session, receipts} to the row. N39a-11 (an M3 bead on which N39b-13 and N38a-34 depend) now closes on its M3 records; without an owner the M7 due list of the row has no entry."
+  },
+  {
+   "bead": "BD-429",
+   "what": "State that the M7 reading of KILL-TENFOLD-REACH is this epic's: apply N39a-34's procedure unchanged at the tournament's sealing step 5, write `docs/adr/ADR-KILL-TENFOLD-REACH-M7.md` and append one M7 entry per proposed cell to the row, with the pre-analysis record as receipt (N39a-34 step 4). N39a-34 closes on its M3 records and names this epic; without it the M7 due list of the row has no entry."
+  },
+  {
+   "bead": "N38a-34",
+   "what": "Add to `scripts/e2e/adjudication_dry_run.sh` the step `adj-fallback` that N39a-11 used to add from outside: with the neutral candidate disabled by a plant, run N39a-11's cross-home test on development missions and assert the label `adjudication: cross-home`; with the rival's reference also disabled assert `descriptive`. Log per candidate the four conditions and the planted-answer count against 20 of 20, the outcome and the ADR draft digest. N39a-11 is an M3 bead and cannot add a step to an M7 script whose bead depends on it (convention 11)."
+  },
+  {
+   "bead": "N40-03",
+   "what": "The scope kind `cell` is `cell:<stratum>`, but a ten-fold cell is a stratum and a regime (plan §39.7); at M7 a stratum can hold a cold and a warm cell (BD-428: 32 cells over 11 strata), so two KILL-TENFOLD-SPEED, -TIE or -REACH decisions for one stratum at one exit would share a scope and fail `decision-entry-duplicate`. Give the kind a regime (for example `cell:<stratum>:<regime>`, keeping a per-stratum form for KILL-TENFOLD-ADJ, which is decided per stratum) and update N40-28's text. At M3 every stratum has one cell, so the M3 entries are unaffected."
+  },
+  {
+   "bead": "N39b-41",
+   "what": "Require at least two inconsequential edits per amendment sequence (acceptance line and `sequence_has_both_kinds`), the floor of N39a-14's sealed quota `controls-consequence-exposed`; with 'at least one' the generator can produce a sequence that the suite check at sealing step 2 refuses. The concealment of which and how many is unchanged and is now N39a-14's rule too."
+  },
+  {
+   "bead": "N39a-05",
+   "what": "Make the sealed part's ground truth 'the consequential edit' a list of consequential edits, each with the verdicts it withdraws: N39a-14, N39b-41 and BD-428 allow more than one consequential edit per sequence and conceal how many, which a single-valued field cannot hold."
+  },
+  {
+   "bead": "N39-REF",
+   "what": "Widen the trigger of `controls-consequence-exposed` (the row of the six controls reasons): an amendment sequence with no consequential edit or fewer than two inconsequential ones, or a public card that reveals which edits are consequential or how many. N39a-14 refuses all three under this reason; the row names only 'the consequential edit revealed'."
+  },
+  {
+   "bead": "N39a-12",
+   "what": "Give the stratum record a per-amendment deadline for warm cells (for example `warm_deadline_s`, null until N39b-30 decides it by its step 2d) and let check 6 hold sealed warm amendment cards to it. N39a-16 charges each amendment 'the stratum's warm deadline' and says warm deadlines differ from cold ones, but the record has one `deadline_s` and check 6 refuses any sealed card whose deadline differs from it, so a stratum with a warm cell either shares its cold H or has every warm card refused."
+  },
+  {
+   "bead": "N39a-13",
+   "what": "Two items. (1) Include the families published by the suite-authoring pilot's record (N39ax-04: rows of the family registry's form with their four keys) in the union of known families that step 3 (`family-connected-to-known`) and step 6 (`suite check --commitment`) read; today the union is both pools plus earlier gates' revealed families, so a pilot family is invisible and N39ax-04's acceptance line and `pilot_family_cannot_be_sealed` cannot pass. (2) State `frob-tenfold suite check --families [--json]`, as `--commitment` already does: BD-428's, N39b-42's and N39ax-04's scripts call `--families --json` (convention 9)."
+  },
+  {
+   "bead": "N39a-12",
+   "what": "State `frob-tenfold suite check --grid --strata [--json]` (the JSON form of the check table or the refusal); BD-428's script calls `--grid --strata --json`, which this bead does not define (convention 9)."
+  },
+  {
+   "bead": "N39-REF",
+   "what": "Row `dev-count`, `dev-families`: change the trigger 'does not hold exactly 12 missions' to 'holds fewer than 12 missions' and the repair to 'until the stratum has at least 12 in at least 6 families'. At M7 a stratum of the partial gate carries its 12 missions of M3 plus the families the partial gate retired (N39ax-03, N39a-13 step 5), so the exact count would refuse every enlarged pool; N39ax-01 now states the floor."
+  }
+ ],
+ "unchanged": 3,
+ "notes": "Sweep slice: all 19 beads read in full against the 14 conventions and the registry beads as they stand. Unchanged: N39a-21, N39a-23, N39a-25 (arithmetic rechecked; the verbs they call, `design.check`, `autopsy.attribute`, `prove.bundle`, `eval.qualify`, exist). Slice notes applied after checking: N39a-34 (the e2e attribution to N39b-12's step `seal` and N39b-16's pilot) and N39ax-01 (the development deadline field). Kept as the class rule of the hidden-consequence control: at least one consequential edit, neither which nor how many shown (N39a-14 aligned to N39b-41 and BD-428); the development pool's 'exactly one among at least two' (N39ax-01 check 3, N39ax-03, the N39-REF row `dev-control-coverage`) is a legal instance of it, but a pool that always shows exactly one teaches arms the count, so whether the development pool should vary it is left for the owners of N39ax-03 and N39b-41. Open points for later rounds: (1) if the adjudicator proposes no confirmatory cell, N39a-34 writes no REACH entry for that exit and the row's M3 due list may fail; N40-03 or N40-28 should say whether a not-proposed gate is `not-reached` or needs no entry. (2) N39a-25's wrapper signals its own process group; under `frob-launch`, which owns and kills the group at the wall limit (N36-20), the two group handlers should be checked together when N39a-25 is built. (3) BD-143's M1 baseline (outside this slice) runs rival campaigns without `frob-launch`; N36-20 says a baseline lane runs every arm through it. (4) N39ax-02's e2e re-runs four witness batteries of up to an hour each, so its header needs `timeout_s` above STD-E2E's 600 s default and, above 3600 s, `--approved-envelope`. Requests to N40-03 (cell scope without regime) and N39a-12 (warm deadline) concern beads outside this slice that cells at M7 depend on."
+}

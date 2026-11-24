@@ -1,0 +1,193 @@
+{
+ "round": 4,
+ "slice": "S-30",
+ "reviewed": 25,
+ "changed": [
+  {
+   "bead": "BD-056",
+   "kinds": [
+    "contradiction",
+    "registry",
+    "broken"
+   ],
+   "what": "Controls a, b, c are now guarded mutation features of frob-design (mutant-axis-polar, mutant-inertia-parity, mutant-expand-writer; imply conformance, never default, release compile_error!, N38b-04's rule), each caught by a named test; d stays test-support; the acceptance item names the test that catches each of the four. Left as it was, N41p1-01 builds features this bead never declares and its mutant criteria and the script's step-5 control cannot compile. The scale fixture now holds solid, 2 mm shell and declared bodies each bare and under scale(\"2\"); otherwise N41p1-01 step 7 has no bare twin to take its ratios from. Added dep BD-055 (fill and declared mass the fixture uses). Stated that the mirror expansion raises 123 at stage 1 (N14a-07 expands there); otherwise N14b-10's rule that no stage refuses outside its row makes the refusal fixture a violation. Known answer now cites C-12.S7 as MR-C11, tier G3, site host, N38a-15 at M2 (was G1); otherwise it contradicts the relations registry."
+  },
+  {
+   "bead": "N41p1-01",
+   "kinds": [
+    "contradiction",
+    "broken"
+   ],
+   "what": "Step 7 asserts ratios between each scaled body and its bare twin in one design (solid mass 8, inertia 32; shell mass 8; declared unchanged with its warning); step 8 says 123 is raised at stage 1; the mutant criteria build BD-056's frob-design features one at a time in a debug build (cargo test -p frob-model --features frob-design/<feature>) and the script's control runs against a debug frob built with the axis feature; the known answer is MR-C11 tier G3 site host. Left as it was, step 7 had no unscaled body to compare with, the feature names were undeclared, and a release build would trip the guard."
+  },
+  {
+   "bead": "BD-115",
+   "kinds": [
+    "deadlock",
+    "broken"
+   ],
+   "what": "The f32 admission bound is now Options::b_adm supplied by the caller (corpus test 0.05, OPEN-TRAC-4's fail-closed default; the contact layer passes N18b-26's registry constant), and a classification item returns unconverged with reason conditioning when the scaled normal matrix's condition estimate times 2^-24 exceeds it. Left as it was, the solver read a value owned by N18b-26, a later bead that depends on this one (a wait on what waits on it), and the conditioning outcome had no reason code."
+  },
+  {
+   "bead": "BD-160",
+   "kinds": [
+    "convention",
+    "broken",
+    "deadlock"
+   ],
+   "what": "Audit note applied after checking: dep N29a-23 moved to related (with N16a-18), its e2e cancel step replaced by a pointer to step 15 of N16a-18's script with cancellation tested in process here; acceptance 6 adds no partial state and the drain report (tiles that ran, committed fence step index and state digest). Mutants: fold_by_arrival and tree_by_tile_boundary are test-support; positive_zero_padding is N35-13's feature pad-plus-zero, whose controls.toml row is CX-367's (N38b-05); this bead writes no row. Left as it was, the bead waited on an M2 job-verb bead through its own script, and claimed test-support mutants as registered controls, which would be stale rows that make the gate not-eligible."
+  },
+  {
+   "bead": "BD-344",
+   "kinds": [
+    "contradiction",
+    "registry",
+    "broken"
+   ],
+   "what": "The freeze paragraph said a registration after dispatch is refused by step 2, but step 2 (and the registered 883 interim condition) starts at the first chunk; a record accepted between dispatch and first chunk is now kept outside the freeze set and ends no-outcome: cancelled with reason after-dispatch (DESIGN), with a unit test and dispatches in the identity property test. Left as it was, such a record had no disposition and stayed pending for ever, or was refused under no registered condition. Same key with different content now names FROB-REF-803, exit 7 (N32a-09's binding), not a chapter code. Script: the cancelled run is submitted with --sync-wait-ms 0 (the CLI waits to completion, so a finished run cannot be cancelled), every predict.register carries --key (a missing key is 805 before 883 or 802), and the 803 conflict is asserted."
+  },
+  {
+   "bead": "N41-07",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "The interpreter check now cites BD-003's L-5.python-outside-bindings (cargo xtask check-deps) for dependency edges and keeps only the symbol scan of built binaries as this bead's; the e2e step 4 and negative controls follow. Left as it was, two beads build two dependency scans of one rule with different crate lists, which drift: a planted crate caught by one would pass the other."
+  },
+  {
+   "bead": "N41-08",
+   "kinds": [
+    "broken",
+    "deadlock",
+    "registry",
+    "convention"
+   ],
+   "what": "The M1 script called frob sim estimate (BD-219, M2, unreachable) and frob sim run @fixture:rank-agreement-b without --key, with no registered fixture form and no scope citation; it now drives synthetic arms through N36-20's frob-launch with --scope. The single 45 device-hour job 'needs E2' contradicted N36-20's needed_class (2 hours per run in every class): the unit tests and script now use one 70-minute training (E2 under campaign:rank-agreement; 39 consumed 45.5 + 1.17 <= 48; above every class at 47). Variant A's jobs cite gate:GATE-CORTEX-12, since needed_class never gives a campaign E1 (an E1 row would refuse every campaign job above E0); 11.5 + 1.17 > 12 is refused with the 0.5 remaining. The ceiling and overrun criteria now match admission (refused before start) and the launcher timeout (timed-out)."
+  },
+  {
+   "bead": "N41-11",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "The e2e step now runs frob store collect --key <k> --json. Left as it was, VERBS-store's row makes a store.collect call without a key a dry run that removes nothing, so the asserted budget and tombstones could never appear."
+  },
+  {
+   "bead": "N41-13",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The e2e cost step ran the shared fixtures/quad-a.fbot 'with cost_max set below the assumed sum' with no way to set it (budgets are optional fields of the design); it now runs fixtures/quad-a-overcost.fbot, a copy this bead writes with cost_max below its assumed sum, and quad-a-cited.fbot keeps the same cost_max. Left as it was, the advisory finding and the 115 refusal the step asserts need a limit the command never supplies."
+  },
+  {
+   "bead": "N41-14",
+   "kinds": [
+    "plan",
+    "contradiction"
+   ],
+   "what": "The ADR was docs/adr/ADR-SUITE-02-one-toolchain.md, but ADR-SUITE-02 is the plan's §33.14 decision that the referee moves behind a process boundary (N33c-10, N33c-11, N33b-06, BD-038 cite it) and BD-031's ADRs follow it in that series; renamed docs/adr/ADR-OPEN-SUITE-2.md (DESIGN, the register's usual form). Step 2 also said this bead sets the blocks of the two rows that N41-OPEN6 and N41-OPEN7 write, with a value (both gates for both rows) that differs from OPEN-TETHER-1's part (INT-FMCP-01 only); it now writes no field and reads the parts' blocks. Left as it was, two decisions shared one identifier and two beads wrote one register field with different values."
+  },
+  {
+   "bead": "N41-19",
+   "kinds": [
+    "deadlock",
+    "convention"
+   ],
+   "what": "Steps 1 to 3 ran the scripted steps of scripts/e2e/admission_m0.sh, whose bead N33a-28 depends on this one (N33a-28 -> BD-031 -> N41-20 -> N41-19); they now run BD-006's commands directly, and the script's later steps are named as reruns. Left as it was, the session step called a script that cannot exist when it runs (convention 7)."
+  },
+  {
+   "bead": "N41-OPEN6",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Four owner questions listed two deciding beads in one cell, the owner packet first, but N41-03's record has one decision_bead field and the ADR is written by the chapter bead (N29b-12 ADR-PROG-11, N30b-26 ADR-PROG-07) or the packet (N41-13 ADR-PROG-14, N41-12 ADR-PROG-12). The Background now names the ADR writer of each; decision_bead is that bead, written first in the cell, and note names the other; OPEN-CHRON-4 and OPEN-GROUND-2 were reordered and the acceptance item matches. Left as it was, the loader got two values for one field, and two rows named as decider a bead that writes no decision record."
+  },
+  {
+   "bead": "N41-OPEN7",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "SAFE-2 to SAFE-4 listed the owner packet N41-11 before the chapter beads N37-20, N37-09 and N37-30, which write ADR-PROG-08, -09 and -10; the rows are reordered and a paragraph states that decision_bead is the first bead named and note holds the others. Left as it was, decision_bead (one field, N41-03) named a bead that writes no record for the question."
+  },
+  {
+   "bead": "N41-RISK1",
+   "kinds": [
+    "registry"
+   ],
+   "what": "RISK-01's 'Detected or decided by' named BET-04 beside KILL-FSIM; now KILL-FSIM only, with BET-04 noted as judged on the same trigger. Left as it was, a bet is no gate of registries/gates.toml, so the detects entry fails N41-01's rule 4 (risk-dangling-ref) and the part does not load."
+  },
+  {
+   "bead": "N41-RISK2",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "Stated how the detects column maps to records: RISK-10 (owner decision) and RISK-53 (open-question check) name no gate and take the literal review-listing; RISK-10's admission refusals stay in its text and plant. Left as it was, their prose has no value rule 4 admits, so a transcription fails with risk-dangling-ref. RISK-10's plant used 'a scratch approvals registry'; it is now a scratch copy of registries/compute_envelope.toml, the one envelope record (N21c-35, which forbids another); the M2 observation accepts 704 for a daemon-queued job, in N32-REF's order (convention 14). Left as it was, the plant named a file that does not exist and asserted 761 where the classifier raises 704 first."
+  },
+  {
+   "bead": "N41-RISK3",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "RISK-04's later observation said a cross-family paired statistic without class D1 is refused with 533; N24-REF's trigger also admits D3 with decision-level equivalence recorded, which RISK-04's own mitigation relies on. It now says without D1 and without recorded D3 equivalence. Left as it was, the assertion would demand a refusal the registry does not raise and contradict the row's mitigation."
+  },
+  {
+   "bead": "N41p2-01",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The use-drops-rename mutant and the skip-referrers mutant had no build form; they are now frob-design features mutant-use-drops-rename and mutant-extract-skip-referrers declared under N38b-04's mutation guard (imply conformance, never default, release compile_error!), the unit test runs with the feature, and the e2e plant runs against a debug frob built with it. Left as it was, the control could not be compiled and a plant cannot inject a code mutant into the release binary. The script's keys are now written with STD-E2E's e2e_key and step 6's inverse carries one; otherwise the inverse is refused with 805."
+  },
+  {
+   "bead": "N41p2-02",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "Keys were de-<seed>-<step> and the returned inverses (steps 3, 4, 6, 7, 9) had no key; every design.new and design.edit call, inverses included, now passes e2e_key <label> (inverses <label>-inv), steps 10 and 11 reissue de-7 with --again, step 12 omits the key on purpose. Left as it was, every inverse was refused with 805 and the deliberate replay was an e2e harness error (exit 2). The three plants are now BD-058 mutants built as frob-design features (mutant-inverse-from-child, mutant-split-all-images, mutant-selector-always-instance) into a debug frob; otherwise no plant could be injected and run-all --verify-plants fails every one."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N14b-10",
+   "what": "Stage 1's row of the stage table must list 123 for the mirror constructor's expansion (a limb mounted on the mirror plane, BD-056, expanded by N14a-07 at stage 1), beside stage 3's interpenetration check, as it lists 107 and 108. Otherwise the rule that no stage refuses outside its row is broken by BD-056 and by N41p1-01's step 8."
+  },
+  {
+   "bead": "N14-REF",
+   "what": "Row 123: add the trigger 'the mirror constructor's expansion finds a limb mounted on the mirror plane (BD-056, raised during elaboration, stage 1 of design.check)' and BD-056/N14a-07 to raised_by. Otherwise the registry lacks a site that BD-056 raises and N41p1-01 tests, and the raised_by check fails."
+  },
+  {
+   "bead": "N14a-07",
+   "what": "Its driver applies BD-056's expansion rules, so it surfaces BD-056's expansion refusals: 102 (zero scale), 103 (serial k = 0, radial n = 1, a replace path naming nothing) and 123 (a limb mounted on the mirror plane), beside its own 101 for attach to a missing port; list them among the refusals of the elaborate stage. Otherwise the driver has no stated path for the codes BD-056 and N41p1-01 expect at stage 1."
+  },
+  {
+   "bead": "N14a-08",
+   "what": "Step 2 (Elaborate) of its stage-1 order lists 101, 114, 111, 103 (identifier collision) and 832; add BD-056's constructor-expansion refusals 102 (zero scale), 103 (serial k = 0, radial n = 1, replace path naming nothing) and 123 (mount on the mirror plane). Otherwise stage 1's documented order omits codes it emits and N41p1-01's step 8 has no stated position for them."
+  },
+  {
+   "bead": "N16a-18",
+   "what": "Step 15 (frob job cancel on a 60 s run) is now the command-line cancellation test BD-160 relies on: add the assertions that no partial state is published after the cancel and that the drain report names the committed fence's step index and its state digest. Otherwise those two properties of BD-160's acceptance item 6 are never checked through the frob binary."
+  },
+  {
+   "bead": "VERBS-predict",
+   "what": "predict.register's outputs list the no-outcome reasons next-unbound and target-replanned; add after-dispatch (a record accepted after its target's dispatch and before the first chunk, outside the freeze set; BD-344). Otherwise the registry's reason list omits one that BD-344 emits and the schema check of the output would reject it."
+  },
+  {
+   "bead": "BD-145",
+   "what": "It says the OPEN-PROG-4 ruling is recorded in docs/adr/ADR-OPEN-PROG-4.md; the decision bead N41-08 writes docs/adr/ADR-PROG-04-rank-agreement-compute.md (the ADR-PROG-0n family of every program decision). Cite N41-08's path. Otherwise readers of the pre-registration look for a file that never exists."
+  },
+  {
+   "bead": "N33a-28",
+   "what": "It says it is run by the first implementation session, but it depends on that session (N33a-28 -> BD-031 -> N41-20 -> N41-19); the session runs BD-006's commands directly (N41-19). Say that the script is first run after the session (by the M0 exit review with --strict and by the trains). Otherwise its text invites an implementer to build it before the session that it waits on."
+  },
+  {
+   "bead": "BD-058",
+   "what": "Declare the mutants of its negative controls that N41p2-02's plants use as frob-design mutation features under N38b-04's guard: mutant-inverse-from-child, mutant-split-all-images and mutant-selector-always-instance (imply conformance, never default). Its e2e paragraph also says the final DesignId equals the first, but N41p2-02's step 5 keeps the bare-number edit as head for the stale-parent and stale-value steps 13 and 14; say the script's table is N41p2-02's. Otherwise the plants name features that do not exist and the two beads' fixed script content disagree."
+  }
+ ],
+ "unchanged": 7,
+ "notes": "All 25 beads reviewed. Unchanged (correct as they stand; hand values, registry rows, keys and decision beads checked): BD-153, BD-231, N41-25, N41-OPEN1, N41-OPEN3, N41-OPEN4, N41-OPEN5. Audit-note dependency proposals checked: BD-160's dep N29a-23 moved to related (evidence held). Every touched file re-parsed (front matter, list fields, seven sections) and no changed dependency forms a cycle. Observed, not acted on: no bead binds MR-C11 at site host at M1."
+}

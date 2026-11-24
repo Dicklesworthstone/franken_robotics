@@ -6,7 +6,7 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "tether", "frob-verbs", "solid", "registry", "verb", "test"]
 parent: "WP-06"
-deps: ["BD-022", "NJL-01", "STD-E2E"]
+deps: ["BD-022", "BD-023", "NJL-01", "STD-E2E"]
 needs: []
 related: ["NJLx-51", "STD-TEST", "VERBS-actuator", "VERBS-algebra", "VERBS-analyze", "VERBS-artifact", "VERBS-autopsy", "VERBS-contact", "VERBS-control", "VERBS-cores", "VERBS-design", "VERBS-eval", "VERBS-evidence", "VERBS-experiment", "VERBS-explain", "VERBS-fidelity", "VERBS-fleet", "VERBS-foundry", "VERBS-gait", "VERBS-ground", "VERBS-job", "VERBS-mission", "VERBS-module", "VERBS-nemesis", "VERBS-operator", "VERBS-opt", "VERBS-phylum", "VERBS-policy", "VERBS-predict", "VERBS-prove", "VERBS-report", "VERBS-result", "VERBS-run", "VERBS-scene", "VERBS-sense", "VERBS-session", "VERBS-shield", "VERBS-sim", "VERBS-skill", "VERBS-solve", "VERBS-spark", "VERBS-store", "VERBS-study", "VERBS-task", "VERBS-telemetry", "VERBS-train"]
 gates: ["GATE-TETHER-02"]
@@ -100,8 +100,8 @@ difference between two drafts: this bead had a separate file `registries/verbs-r
 rows; the registry bead N32a-02, whose build script runs the check (its lint `RL-03`), reads a `[[retired_name]]`
 table in the registry file itself. The table lives in the registry file under N32a-02's name, because the
 strict reader of that file is the one that must see it and a second file would be a second build input. Rows:
-`name`, `use` (a list of registered verbs, empty for a file name), `reason` (one sentence; N32a-02 is asked to
-admit the field). FACT (earlier drafts of the chapters, before
+`name`, `use` (a list of registered verbs, empty for a file name), `reason` (one sentence; N32a-02's strict
+reader admits exactly these three fields and rejects a row without `reason`). FACT (earlier drafts of the chapters, before
 the one-name pass): these second spellings appeared in drafts and were removed. The mapping to
 the registered verb follows the mechanisms table; where it is this bead's reading it is marked DESIGN.
 
@@ -113,7 +113,7 @@ the registered verb follows the mechanisms table; where it is this bead's readin
 | `eval.audit` | `nemesis.audit` | The screening audit |
 | `eval.rankcheck` | `fidelity.modelform` for the model-form check; `eval.rank-agreement` for the record between rungs or tiers (DESIGN reading) | The model-form rank check; the rank-agreement record |
 | `fidelity.rank` | `eval.rank-agreement` with a tier pair (default of the open owner decision; the row leaves this table if the owner registers the name) | The rank-agreement record |
-| `nemesis.show` | `nemesis.hardset` (action `show`) (DESIGN reading) | The hard-world set |
+| `nemesis.show` | `nemesis.hardset` with no `--action`: its default read action, `show`, has no name to pass, and `--action show` is `FROB-REF-802` (VERBS-nemesis), so the repair's skeleton is `frob nemesis hardset --class <class> --json` (DESIGN reading) | The hard-world set |
 | `cert.bundle` | `prove.bundle` | Certificate bundles |
 | `ground.import` | `ground.ingest` | Calibration |
 | `foundry.structure` | `foundry.size`, `foundry.optimize`, `foundry.check` | Structure and the build packet |
@@ -137,15 +137,28 @@ unknown names.
 an alias does not build); this bead supplies the table's rows and the planted registries. Test 2 cannot run in
 the build script, which sees no handler: it is a unit test of `frob-verbs` over the dispatch table that binds a
 handler to each row (the handler bindings of the per-milestone surface beads, BD-137 from M1), and it runs in
-every build of `frob`. Test 4 is a unit test in each surface crate. Test 5 is in the conformance crate. No new
-`xtask` subcommand is added (the workspace keeps exactly six).
+every build of `frob`. Test 4 is a unit test in each surface crate (`frob-cli`, and `surface/frob-mcp`, which is
+BD-023's, a dependency: the MCP half of this bead's tests and of its script needs that crate). Test 5 is in the
+conformance crate. No new `xtask` subcommand is added (the workspace keeps exactly six).
+
+**Staging (the rule NJL-03 states for the counts, applied here by cluster).** Rows enter the registry with their
+cluster's `VERBS-<cluster>` bead, from M0 to M4, and those beads depend on this one, so when this bead closes at
+M0 most verbs of the two tables are not registered yet. The checks that say a verb exists are therefore staged:
+a verb of the mechanisms table, or a `use` target, whose cluster (the prefix of its name) has no row yet is
+reported `not-due` naming the cluster, never as a pass and never as a failure; from the first build in which
+its cluster has a row it must be a registered row. The checks that say a name does not exist (no retired name
+is a row, no alias attribute, the lint's tests) hold at every milestone from M0. The refusal of a retired name
+and its first repair are generated from the retired-name table alone, so they hold at M0 whether or not the
+repair's verb is registered yet.
 
 ## Acceptance criteria
 
 - [ ] The `[[retired_name]]` table of `registries/verbs.toml` holds the rows of the table above (twelve names);
-      every `use` target is a registered verb.
-- [ ] Each of the fifteen mechanisms is reachable under its registered name and under no other: the registry
-      has exactly the verbs of the middle column for it.
+      every `use` target whose cluster is registered is a registered verb, and the others are reported `not-due`
+      with their clusters (the staging rule).
+- [ ] Each of the fifteen mechanisms is reachable under its registered name and under no other: no retired name
+      of a mechanism is ever a row, and from the build in which a listed verb's cluster is registered the
+      registry has exactly the verbs of the middle column for it (`not-due` before that, never a pass).
 - [ ] Each of the four lint tests and the fifth check fires on its planted defect and names it (negative
       controls, 5 of 5); the clean tree passes.
 - [ ] `frob autopsy fork …` (a retired name) exits 3 with `FROB-REF-801`, and the first repair is a `frob run
@@ -162,13 +175,16 @@ every build of `frob`. Test 4 is a unit test in each surface crate. Test 5 is in
 
 `cargo test -p frob-verbs --test one_name` (planted registries are TOML strings labelled `synthetic`):
 - `mechanisms_have_one_name`: for each row of the mechanisms table, the listed verbs exist and no retired name
-  of that mechanism does.
+  of that mechanism does; a listed verb whose cluster has no row yet is `not-due` with the cluster named, and a
+  `synthetic` registry that holds the cluster `run` without `run.fork` fails.
 - `lint_retired_name`: a registry with a row `autopsy.fork` fails with `retired-name` and names `run.fork`.
 - `lint_same_handler`: two rows bound to one handler symbol fail with `same-handler`.
 - `lint_same_schemas`: two rows with identical schema identifier pairs fail with `same-schemas`.
-- `retired_targets_exist`: every `use` entry resolves to a registered row.
+- `retired_targets_exist`: every `use` entry resolves to a registered row, or is `not-due` because its cluster
+  has no row yet; a `synthetic` registry whose cluster is registered without the target fails.
 - `two_verbs_one_engine_allowed`: `result.revalidate` and `mission.revalidate`, and `opt.cascade` and
-  `solve.run`, pass (different handlers and schemas).
+  `solve.run`, pass (different handlers and schemas): on `synthetic` rows of those shapes at M0, and on the
+  registered rows from the builds in which their clusters land.
 `cargo test -p frob-cli --test no_aliases` and `cargo test -p frob-mcp --test no_aliases`:
 - `no_alias_attributes`: the source scan finds no alias attribute; a planted `visible_alias` fails.
 - `duplicate_tool_is_build_error`: registering one handler under two tool names fails server construction.

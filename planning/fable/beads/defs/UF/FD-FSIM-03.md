@@ -4,7 +4,7 @@ title: "upstream frankensim: capsule and hull support maps, field pair gaps, con
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "suite", "traction", "upstream", "frankensim", "frob-contact", "solid"]
+labels: ["m1", "suite", "traction", "upstream", "frankensim", "frob-contact", "solid", "review-notes-open"]
 parent: "WP-10"
 deps: ["BD-037", "BD-079", "BD-080", "N24b-03", "N33b-04", "STD-E2E"]
 needs: []
@@ -148,7 +148,8 @@ GATE-TRAC-02` over the enlarged pair set, asserting from its receipt the maximum
 disagreements against their thresholds and a non-zero count for every pair kind; and, from the user's side, runs
 `frob sim run --tier referee --fixture traction/sphere_on_heightfield --seed <s> --key fsim03-hf-<s> --json` (a sphere dropped on a
 flat heightfield, a field pair the referee could not check at the pin; the fixture is registered by this bead as
-`assets/fixtures/traction/sphere_on_heightfield/fixture.toml` in the fixture registry of N24b-03, and the run is
+the conformance fixture `crates/frob-conformance/fixtures/traction/sphere_on_heightfield/fixture.toml` in the
+fixture registry of N24b-03, the form a `<space>/<name>` reference resolves to, and the run is
 the referee step of BD-080, both dependencies), asserting a committed run whose contacts
 carry their ε_g. (No verb takes a raw primitive pair: `contact.probe`, N18b-29, evaluates laws at a contact state,
 and the four fixture queries are asserted by the `upstream_fd_fsim_03` test, not through `frob`.)

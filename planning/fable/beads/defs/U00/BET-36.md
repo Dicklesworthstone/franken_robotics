@@ -104,9 +104,14 @@ hash carried; the trigger is applied there); `bet36_pending_halves_do_not_block_
 N00p1-12's.
 
 ### End-to-end script and logging
-`scripts/e2e/bet_36_decide.sh` evaluates the film law at fixture states with `frob contact probe` (dry limit,
-thick-film limit, one squeeze time), recomputes the changed-outcome share and step cost from the battery's
-ledger records, and the verdict. Logged per STD-E2E: state, film thickness, friction coefficient, squeeze time
+`scripts/e2e/bet_36_decide.sh` evaluates the film law at fixture states with `frob contact probe`, a read verb,
+in the film branch of its row (dry limit: `frob contact probe --film --card <card> --h0 0 --dwell 0s --radius
+20mm --normal 100N --slip 0.10m/s --json`, which must return the card's dry coefficient bit for bit; thick-film
+limit: the same with `--h0 1mm`; one squeeze time: `frob contact probe --film --eta 1mPa.s --radius 20mm --normal
+100N --h0 1mm --until-h 10um --json` against 0.0377 s within 2%), recomputes the changed-outcome share and step
+cost from the battery's ledger records, reads the verdict of BET-36 from the bet register's report (`cargo run -p
+frob-conformance --example bets -- status --json`, example `bets` of N00-28, the one verdict rule; no second
+verdict rule in the script) and checks `docs/adr/bet-36-m3.md` against it. Logged per STD-E2E: state, film thickness, friction coefficient, squeeze time
 against its closed form, outcome counts under film and under patch, step-time ratio; `summary` naming
 GATE-TRAC-05, GATE-HAB-06 and KILL-FILM.
 

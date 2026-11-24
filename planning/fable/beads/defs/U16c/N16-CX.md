@@ -4,7 +4,7 @@ title: "frob-conformance: Kinesis counterexample registry (CX-144 to CX-152 and 
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "kinesis", "gauntlet", "frob-conformance", "solid", "registry", "test"]
+labels: ["m1", "kinesis", "gauntlet", "frob-conformance", "solid", "registry", "test", "review-notes-open"]
 parent: "WP-10"
 deps: ["BD-025", "N38a-40", "N38b-05", "STD-E2E", "STD-TEST"]
 needs: []
@@ -30,7 +30,7 @@ In: catalogue entries in `registry/counterexamples.toml` for CX-144 to CX-152 (t
 
 | CX | Tempting shortcut | Smallest case that breaks it | Rule it protects | Gate; carrier |
 |---|---|---|---|---|
-| CX-144 | A rejected step may redraw its random inputs | A fair sign; a step is rejected when the sign is negative and redrawn once. P(accepted sign positive) = ½ + ½·½ = ¾ | INV-KIN-03 (a random input is a function of its address and interval, never redrawn); the dyadic refinement law (PO-KIN-04); `FROB-REF-223` | GATE-KIN-04; BD-083, N16c-01 |
+| CX-144 | A rejected step may redraw its random inputs | A fair sign; a step is rejected when the sign is negative and redrawn once. P(accepted sign positive) = ½ + ½·½ = ¾ | INV-KIN-03 (a random input is a function of its address and interval, never redrawn); the dyadic refinement law (PO-KIN-04); `FROB-REF-223` | GATE-KIN-04 (the plant also GATE-GAUNT-03, MR-09, and GATE-GAUNT-06); BD-083, N16c-01 |
 | CX-145 | Simultaneous events can be solved one at a time, with constraints imposed afterwards | Two 1 kg sliders joined by a rigid tie reach a wall together at 1 m/s. Stopping both needs 2 N·s. Solving the wall contact for the first slider alone gives 1 N·s; imposing the tie afterwards leaves 1 kg·m/s shared by 2 kg: both move into the wall at 0.5 m/s | Coupled impulses per island with W = J·P·Jᵀ, P = M⁻¹ − M⁻¹Aᵀ(A·M⁻¹·Aᵀ)⁻¹A·M⁻¹; simultaneous touchdowns are ordinary inputs | GATE-KIN-04 (exact to 10⁻¹² N·s); BD-082, N16c-03 |
 | CX-146 | A reduction over a padded axis may group its terms by the buffer's capacity | In `f32`, a = 10⁸, b = −10⁸, c = 1: (a + b) + c = 1 and a + (b + c) = 0, because the spacing near 10⁸ is 8. A grouping that depends on capacity makes a world's bits depend on its neighbours | PO-KIN-03 (pairwise trees aligned to powers of two, real entries in a prefix, canonical padding −0.0); INV-KIN-04 | GATE-KIN-05, GATE-PHYLUM-02; BD-181, N16c-04 |
 | CX-147 | Penetration can be removed by a position-level correction at no cost in energy | Removing depth d in one step gives a velocity d/h from nothing: m = 1 kg, d = 1 mm, h = 2 ms gives 0.5 m/s and 0.125 J per event. The compliant law at k = 10⁵ N/m stores 0.05 J and returns less. A hopping policy that finds the first behaviour gains height from the solver | INV-KIN-06; the flag `energy-created` (above 1% of the absolute work exchanged in any 0.5 s window on a fast tier) | GATE-FID-06 (first planted exploit); BD-208, N16c-04 |
@@ -64,7 +64,7 @@ In: catalogue entries in `registry/counterexamples.toml` for CX-144 to CX-152 (t
 
 | Entry | `control_kind` | `plant` (the planted shortcut) | `label` |
 |---|---|---|---|
-| CX-144 | mutation | `BD-083:cx-144` (a rejected step redraws its random input) | DESIGN |
+| CX-144 | mutation | `BD-083:cx-144` (a rejected step redraws its random input), feature `cx-144`, plant `gates` GATE-KIN-04, GATE-GAUNT-03, GATE-GAUNT-06 | DESIGN |
 | CX-145 | mutation | `N16c-03:cx-145` (each wall contact solved alone, the tie imposed afterwards) | DESIGN |
 | CX-146 | mutation | `N16c-04:cx-146` (a reduction grouped by buffer capacity) | DESIGN |
 | CX-147 | mutation | `N16c-04:cx-147` (penetration removed by a position-level correction) | DESIGN |
@@ -89,19 +89,27 @@ In: catalogue entries in `registry/counterexamples.toml` for CX-144 to CX-152 (t
 | K14 | planted-input | `N16c-44:kin-k14` (a stability label offered for a deadline requirement) | DESIGN |
 | K15 | planted-input | `N16c-43:kin-k15` (a refinement study that halves the control period with the step) | DESIGN |
 
+CX-144's plant is one branch with three readers: GATE-KIN-04 (the entry's own gate); GATE-GAUNT-03, whose
+metamorphic relation MR-09 (redraw on rejection) names this plant as its mutation (N38a-16); and GATE-GAUNT-06,
+whose transaction-fault family uses it as its caught control (N38a-24). Its plant record therefore states
+`gates = ["GATE-KIN-04", "GATE-GAUNT-03", "GATE-GAUNT-06"]` and `feature = "cx-144"` (written
+`plant = [{ id = "BD-083:cx-144", feature = "cx-144", gates = [...] }]`), so the one record the seeding tool
+derives lists all three gates and the control runner runs it whenever any of them runs; no second record exists
+for this plant. Every other entry's control takes the gates of its `rule_ids`.
+
 A FACT entry's control is written by the seeding tool as an `obligation` (not runnable, makes no gate eligible) until `rerun = true` with a receipt; CX-151's rule is checked against the constant read at the sibling's pin, never a literal.
 
 **Numbers for the appended entries.** This bead files one request in the allocation ledger `crates/frob-conformance/registry/allocations.toml` (N38a-40): `[[block]]` with `registry = "cx"`, `count = 15`, `owner = "N16-CX"`, `section = "§16.19 to §16.24"`; the allocator fills `first` and `last`. When the block is issued, K1 to K15 are mapped to its numbers in table order in one commit; a tag still used as an identifier at this bead's milestone exit fails the ledger check `provisional-tag-past-due`.
 
 **Corrections to the printed catalogue.** (1) The CX-146 row prints "canonical zero +0"; the chapter and the Numerics chapter require −0.0 as the neutral padding for sums, because (−0.0) + (+0.0) = +0.0 changes the bits of a sum that is −0.0. The registry row says −0.0. (2) The CX-151 row prints "below 80%" for the coverage under which `established` must name its adjudicator; the gate register (which governs) says 90%. The registry row says 90%.
 
-**Linkage test.** A G0 entry of `frob-conformance` (`FROB_TEST_SEED=0 cargo test -p frob-conformance --test g0_laws -- registry::kinesis_cx`, the ADR-GAUNT-01 form of BD-025) asserts for every entry: it has a `control_kind` and a `plant` that names its carrier; every gate among its `rule_ids` exists in `registries/gates.toml`; no number is duplicated. Whether the owning test exists, tagged with the entry's id or slug, and whether a `mutation` entry's `plant` is a feature declared in the owning crate's manifest, are checked only once the carrier has built it: before that the entry is reported `pending: <carrier>` with the carrier's milestone, not failed (the rule BD-025 states for unbuilt plants), and a carrier whose milestone has passed with the plant still missing fails the test.
+**Linkage test.** A G0 entry of `frob-conformance` (`FROB_TEST_SEED=0 cargo test -p frob-conformance --test g0_laws -- registry::kinesis_cx`, the ADR-GAUNT-01 form of BD-025) asserts for every entry: it has a `control_kind` and a `plant` that names its carrier; every gate among its `rule_ids` and its plants' `gates` exists in `registries/gates.toml`; no number is duplicated. Whether the owning test exists, tagged with the entry's id or slug, and whether a `mutation` entry's `plant` is a feature declared in the owning crate's manifest, are checked only once the carrier has built it: before that the entry is reported `pending: <carrier>` with the carrier's milestone, not failed (the rule BD-025 states for unbuilt plants), and a carrier whose milestone has passed with the plant still missing fails the test.
 
 ## Acceptance criteria
 
 - [ ] Twenty-four entries (nine numbered, fifteen appended) are in `counterexamples.toml` with every field of the N38b-05 schema filled; CX-149 and CX-150 carry `plan_case = "words"`, `numeric = true` and a non-empty `case_supplied_by`; no row of `controls.toml` is written by hand.
 - [ ] The fifteen appended entries carry numbers from the block issued to N16-CX in `allocations.toml`, in table order, with their tags in `slug`; `registry::alloc::validate` passes, and the numbers are recorded back into the beads that cite the tags.
-- [ ] After the seeding tool of N38b-05 is re-run, each of the 24 entries has exactly one control in `controls.toml` whose `seed` names it, attached to the gates of its `rule_ids`; the tool's second run changes no byte; the join passes and no entry of this bead lands in `seed_findings.toml`.
+- [ ] After the seeding tool of N38b-05 is re-run, each of the 24 entries has exactly one control in `controls.toml` whose `seed` names it, attached to the gates of its `rule_ids` (CX-144's to the three gates its plant names: GATE-KIN-04, GATE-GAUNT-03 and GATE-GAUNT-06, with feature `cx-144`); the tool's second run changes no byte; the join passes and no entry of this bead lands in `seed_findings.toml`.
 - [ ] Every entry carries the `control_kind`, `plant` and `label` of the table above; CX-151 is FACT with `rerun = false` until BD-035's reading; K5 and K6 carry D-10 and KILL-INTERACT in `rule_ids`.
 - [ ] The linkage test passes, reports a carrier not yet built as `pending` (not failed), and fails when a built row's owning test is deleted (planted).
 - [ ] The two corrections are in the registry and the regenerated appendix shows them.
@@ -115,7 +123,7 @@ A FACT entry's control is written by the seeding tool as an `obligation` (not ru
 - `cx_registry_rows_complete`: schema check, unique ids, every field present.
 - `cx_arithmetic_recomputed`: the list of numbers above, in exact rationals or certified double precision (for example (1 + √3)/2 enclosed in [1.36602, 1.36603]).
 - `cx_linkage`: owner tests, mutant features and gates resolve for every built carrier; the others are listed `pending` with their carrier and milestone.
-- `cx_kinds_and_plants`: the 24 `control_kind` and `plant` values equal the table; every `plant` names its carrier; CX-151 is FACT with `rerun = false` and a source.
+- `cx_kinds_and_plants`: the 24 `control_kind` and `plant` values equal the table; every `plant` names its carrier; CX-144's plant carries `gates` GATE-KIN-04, GATE-GAUNT-03 and GATE-GAUNT-06 and `feature = "cx-144"`; CX-151 is FACT with `rerun = false` and a source.
 - `cx_block_request`: the ledger holds `registry = "cx"`, `count = 15`, `owner = "N16-CX"`; after issue the fifteen numbers are contiguous and in table order, with `kin-k1` … `kin-k15` in `slug`.
 - `cx_k9_branches`: at θ = 90° the crossed branch's coupler end is (1.2, −0.6) and φ = −143.13° (atan2(−0.6, −0.8)); the open branch gives 90°.
 - `cx_planted_missing_owner_fails`: negative control of the linkage test itself.

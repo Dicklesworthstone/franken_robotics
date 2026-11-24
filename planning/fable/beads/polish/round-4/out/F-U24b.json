@@ -1,0 +1,304 @@
+{
+ "round": 4,
+ "slice": "F-U24b",
+ "reviewed": 33,
+ "changed": [
+  {
+   "bead": "BD-067",
+   "kinds": [
+    "request",
+    "deadlock"
+   ],
+   "what": "Both audit notes held and are applied. BD-066 moved to related: the capture scripts read the models through the pinned oracle alone and never an importer, and BD-066 closes on hand-captured fixtures. The two URDF rows were the only use of BD-065, so they are split into the new bead N24bp4-01 (after BD-067 and BD-065): the [[model]] rows g1-urdf and iiwa7-urdf, the fusestatic-off capture, the 38-body check, mimic sampling, the URDF conventions, the old acceptance item 2, the three oracle_urdf_* tests and the URDF steps of the hygiene script. BD-065 also moved to related. BD-067 now names N24bp4-01 in its Out list and keeps the MJCF fixtures, the pin and admission of mujoco-c-f64, models.toml and the no-regeneration checks. Before this, the MJCF fixtures and the hygiene gate could not start until the URDF importer was finished, about 36 layers later than needed. Pendulum periods 2.00608 s and 2.00710 s recomputed."
+  },
+  {
+   "bead": "BD-123",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The planted-defect build feature is now gauntlet-mutations, not mutants, in four places: the controls paragraph, the receipt runs, the control tests and e2e step 5 (convention 1; VERBS-task's task.fixture row accepts --control only in a gauntlet-mutations build). An implementer following the old text would add a cargo feature that the conformance harness never enables, so neither control would be built. The script option --mutants stays. All rig numbers recomputed and correct: 40/32 N, 2000/9 and 1280/9, 36.000/40.694 mm, the four slip ratios, 1.270 N·m, 0.94998 at δ = 0.023, 0.471 J and 0.378 J."
+  },
+  {
+   "bead": "BD-126",
+   "kinds": [
+    "request",
+    "deadlock",
+    "broken"
+   ],
+   "what": "The audit note held. Acceptance item 8 asserted the worked session's L.4 stance-and-knee query, with free [v, r] and fragment 'linear static: exact answer available'. Item 9 asserted mission.new on that query with key mis-1 and template:quad-mammal. Neither could pass from BD-126's deps: L.4 is ART-L4, the fragment comes from N25a-02, which depends on this bead (a convention 7 deadlock), and quad-mammal comes from BD-109. Both items now assert BD-126's own stance document: free [v], fragment 'unclassified' until N25a-02 is in the build, and bound.family equal to template:four-point-stance@1#b3:<hash>. The worked-session assertions are left to NJL-08 rows A4 and A5, which reach BD-109 and N25a-02. BD-109 moved to related. bound.family had no lookup rule, so an implementer had nothing to hash. It now has a DESIGN rule (ADR-TETHER-11): try the archetype layout assets/archetypes/<name>/design.fbot with its manifest.toml version, then the fixture families under assets/fixtures/mission/families/; this bead ships four-point-stance@1 and its templates' families; a family not found is 868 at /design_domain/family. A new test, bound_family_lookup, covers this. Item 7's pusher wording, which read bound.family as the mission template, now names the pusher's design family."
+  },
+  {
+   "bead": "BD-194",
+   "kinds": [
+    "broken"
+   ],
+   "what": "E2E step 3 ran e2e_tier g1_known_answers KA-579 and e2e_tier g3_metamorphic MR-21 --mutations. KA-579 is carried by N23a-07 and BD-197, which both depend on this bead. MR-21 is due at M4 (N38a-17), and this bead is M2. Neither row is bound when BD-194 closes, so the tier run would select no tests and pass vacuously, and nothing would be checked. The step now checks the figures through this bead's own example target task_terms_eval: discounted-return at 20 ms and 10 ms (2.0001·r and 1.9951·r), the per-step γ control (2.0·r and 1.0·r), action-law-ratio (3.15149 and 1.64872) and curriculum. It also runs cargo test for the reward totals (500 and 1,000) and the margins (0.5 and 1.2). The tier rows are left to N23b-18, N24b-27 and the carrying beads. The dependency question was checked: N23-REF is already reached through BD-192 → N23a-01. All numbers recomputed and correct (0.990000, 0.994988, 0.949994, 3.15149, 1.64872, 30,000 samples)."
+  },
+  {
+   "bead": "BD-254",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Quantile rule (3) and its acceptance printed a probability 0.049 and 'withheld' the figure. N24a-17, which governs by this bead's own Scope, answers with the cell {status: not-observable, n, p_max, n_needed} and no value. An implementer had to choose between the two, and whichever cell they built would fail one bead's test. The rule, acceptance item 6 and metric_quantile_observability now state N24a-17's cell: n = 5 gives p_max 0.5493 and n_needed 299; n = 298 gives p_max 0.98999; n = 299 is answered. The bead also said 'N24b-16, which builds on this bead' reads the hard battery's discovery record. N24b-16 does not depend on BD-254, and its 567 check refuses any world set a caller names. Only BD-275's is_discovery_world reads the record; the text now says so. Recomputed: 150/189 = 79.4%, Clopper-Pearson [0.684, 0.808], 1 − 0.99^299 = 0.9505, 0.94996, CVaR 5.5, restricted mean 5.5, CoT 0.1019, Froude 0.3398, the 10/12/30/12 J energy figures and fourteen metrics in seven columns."
+  },
+  {
+   "bead": "BD-259",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "E2E step 1 opened the campaign with eval ledger --open … --key, and step 7 closed it with --close --key. Both now use the registry form: frob eval ledger --action open --task … --world-family … --json, and frob eval ledger q:e2e-coin/1 --action close --json, with no key. Under the old form the dispatcher answers 802 to an unknown flag and to --key on an admin action, so the script stops at step 1 (NJL-01 action rule 1; VERBS-eval). The BD-252 counterpart was not applied: F-U22a's reviewer left BD-252's 817 item and N22a-25 in place, so this bead has nothing to change. Recomputed: α_i and cumulative levels at indices 1 and 7; the decision_mapping Clopper-Pearson bounds (0.0275, 0.0432, 0.0504; 0.0284, 0.0428, 0.0553); 1 − 0.95^14 = 51%."
+  },
+  {
+   "bead": "BD-261",
+   "kinds": [
+    "request",
+    "registry",
+    "broken"
+   ],
+   "what": "All four requests checked and applied. (1) The bead now says how a session gets the role owner: it is the root session of principal owner, minted from the principal.owner table of safety.toml (N37-02), only through the command-line adapter (N32b-01), opened as frob session open --principal owner --scopes eval:read,qual:admin --key <k> --json. Before this, nothing in the bead said how the owner's acts could be performed at all. (2) The planted leak is named as N38a-26's planted leak too: N38a-26 plants no second leak and adds GATE-GAUNT-06 to this control record. (3) The seal action is now frob eval ledger <campaign> --action seal --name <name> --file <path> --json, an admin action with no key (--key is 802); the e2e open and close are --action open / --action close with no keys. The old --open/--seal/--close … --key forms all answer 802, so the script failed at its first step. (4) Seal idempotency is stated and tested (battery_object_seal_idempotent): the same name with the same bytes writes nothing and returns the stored name and digest; the same name with other bytes is refused with the pending slug sealed-object-exists (exit 7) and nothing is overwritten. The e2e battery step opens its own battery campaign and exercises all three cases. Both gate rows checked against EPIC-M3 (M3; this bead is the one recorder); the 34 named read paths are more than the 25 required."
+  },
+  {
+   "bead": "N24b-01",
+   "kinds": [
+    "broken",
+    "deadlock"
+   ],
+   "what": "The fixtures battery's items are task.fixture rows, but the manifest had only the episode form, task/world/disturbance/initial, and the loader refused any item whose task resolves to no task file. The fixtures manifest this bead must ship (acceptance item 1) therefore could not be written or loaded without the fixture registry (N24b-03) and the KA records (N24-KA), neither of which is a dep. Added a fixture item form (DESIGN): [[item]] ka = \"KA-602\" with an optional fixture = \"fixture:<name>\", checked only for form at load; existence is checked when the battery runs (N24c-10, N24-KA). The schema kind covers both-or-neither and malformed values, with a test (battery_fixture_items). The M1 content is the twenty records of the M1 rows N24c-10 runs: KA-594 to 596, 598, 602 to 615, 618 and 619. KA-616 and KA-599 join at M2 by an addition event."
+  },
+  {
+   "bead": "N24b-03",
+   "kinds": [
+    "convention",
+    "request",
+    "registry",
+    "deadlock"
+   ],
+   "what": "(1) The feature mutants is now gauntlet-mutations in the input text, the controls paragraph, the acceptance item and the test name (fixture_control_requires_gauntlet_mutations_feature); a mutants feature would never be enabled by the harness. (2) The fixture registry now states VERBS-sim's two forms: <name> → assets/fixtures/<name>/fixture.toml, and <space>/<name> → crates/frob-conformance/fixtures/<space>/<name>/ (BD-080's traction/, BD-083's kin/). Both are looked up and never joined into a path. Before this, an implementer had no rule for BD-080's and BD-083's conformance fixtures. (3) VERBS-task's row accepts --analytic as a spelling of --layer analytic; the bead did not, so scripts using it would get 802. (4) The test said the chapter refusals were exactly [529, 530], but the registry row also lists 136, 222 (N24bx-01) and 726 (N15b-18), so the test would fail as those beads land. It now checks that 529 and 530 are present and that no code is outside the row. (5) E2E step 4 ran sim.run --task, --controller and --param behind an e2e_skip until --help listed them. --task and --controller come from N16ap4-01, which depends on this bead (convention 7), and --param from N22c-29 at M4. The step now runs the in-process tests, and the binary runs belong to those beads. The BD-090 counterpart needs nothing here: BD-090 already uses the positional g1 form, and the edge it reverses does not touch this bead."
+  },
+  {
+   "bead": "N24b-04",
+   "kinds": [
+    "convention"
+   ],
+   "what": "E2E step 3 built the control on a frob with the mutants feature; it is now the gauntlet-mutations feature (convention 1), or the wheel-loop control is never built. All ten rows recomputed and correct, including the wheel-loop spectral radii 1.48203/0.92072, 2.69167, 2.70746 and the Euler mutation 1.8541/1.4972, rechecked by matrix exponential."
+  },
+  {
+   "bead": "N24b-05",
+   "kinds": [
+    "request",
+    "deadlock",
+    "broken"
+   ],
+   "what": "(1) Request applied: dep N16ap4-01 added. The user-side nominal run, frob sim run <A|B> --task <TaskId> --tier referee --seed 17 --key …, now runs unconditionally; its verdict, margin and binding atom must equal the example target's. The e2e_skip 'until --help lists --task' (C13) is dropped, and the stale claim that --task is N16b-25's at M2 is corrected. (2) The N24a-08 counterpart was not applied by F-U24a's reviewer, so nothing is taken. (3) Omission: N24b-09 must run the rigs at --precision f32 and --profile strict/lockstep, but fixture 1's manifest declared no axes, so every such run was FROB-REF-530 (N24bx-01: an undeclared axis value), or needed a new fixture version. The manifest now declares axes.precision (f64, f32; default f64) and axes.profile (referee, strict, lockstep; default referee) before its first registration, with dep N24bx-01, an acceptance item and the test f1_manifest_axes_declared."
+  },
+  {
+   "bead": "N24b-09",
+   "kinds": [
+    "request",
+    "deadlock",
+    "convention",
+    "broken"
+   ],
+   "what": "Round-3 request applied. The bead recorded 'the batch-tier half of GATE-ARENA-04' with rows 'inside the frozen fidelity envelope', but BD-212 freezes the envelopes and depends on this bead (conventions 7 and 9). It now compares against provisional bands, writes a receipt per tier and records no gate; BD-212 re-evaluates the rows and records --part M2. The bead had no e2e script of its own: it pointed at N24b-20's rigs_batch step, which an M1 script cannot run. It now has scripts/e2e/arena_fixture1_batch.sh, with BD-123's script as a stage, keyed --precision/--profile calls per tier, brackets, boundary flags, the Euler control, composition and the receipt. Deps N24bx-01 (the --precision and --profile axes) and STD-E2E added. The feature mutants is renamed gauntlet-mutations."
+  },
+  {
+   "bead": "N24b-20",
+   "kinds": [
+    "request",
+    "convention",
+    "deadlock"
+   ],
+   "what": "Round-3 request applied in full. The script now runs as stages N24b-03's fixture_registry.sh, N24b-04's arena_fixture1_host.sh, N24b-05's arena_fixture1_model.sh and BD-123's arena_fixture1_rigs.sh. It puts --key on every task.fixture and eval.run call, with distinct keys for compared runs (convention 5), and passes the design positionally to eval.run. It records no gate: 'the script from which the referee rows are recorded' and 'the gate record cites this script's log' are dropped, because BD-123 records --part M1 and BD-212 records --part M2 from tier receipts (convention 9). The rigs_batch and variants steps drove M2 beads (N24b-09, N24b-08) that this M1 script does not depend on, and skipped them at run time (convention 7). They are removed; N24b-09 now has its own script. The feature name is gauntlet-mutations."
+  },
+  {
+   "bead": "N24b-10",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Slice request applied. E2E step 1 opened the campaign with 'frob eval ledger --open … --key …' and step 6 closed it with '--close --key …'. Both forms answer 802 (eval.ledger's actions are admin: --action open|close, no key), so the script failed at its first step. They are now 'frob eval ledger --action open --task <fixture TaskId> --baseline-class … --world-family family:cart-sill-dock-holdout@1 --slug f1-holdout --json' (a repeated open answers campaign-already-open, exit 7) and '<campaign> --action close --json'. Recomputed the sizing table at 0.05/2 (0.2687, 0.8237, 0.9985; 0.0671, 0.6073, 0.9925), the cost ratios and 0.0457: all correct."
+  },
+  {
+   "bead": "N24b-11",
+   "kinds": [
+    "contradiction",
+    "registry"
+   ],
+   "what": "(1) Both this bead and N24a-20 claimed the registry record slip-distance. N24a-17's table assigns it to N24a-20, whose Scope takes it with the floor and the undefined case, and N24a-20 depends on this bead. This bead's 'entry in the metric registry' claim, its Registration paragraph and its acceptance item are replaced by: N24a-20 writes the record from this bead's definition, channels and floor. (2) The channels had 'kind accumulator', which is not one of BD-090's channel kinds. slip_distance/<patch> is now cumulative-counter (reduced by its last value). slip_distance_stance/<patch> resets at touchdown, so a counter's last-value reduction would lose the worst stance; it is now interval-extremum with reduce max (N24a-44, already a transitive dep), which keeps the value reached just before a touchdown that falls inside a tick. The acceptance item and the stance test now state both kinds. Hand cases rechecked (0.18 m/s; 0.045 m; 0.40 → 0.50/0.70)."
+  },
+  {
+   "bead": "N24b-12",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "(1) Slice request applied: the tests f2_rig_control_* named the feature 'mutants'; the feature is gauntlet-mutations. (2) Conventions 7 and 11: the e2e section was 'steps of N24b-22's script', which depends on this bead, so the bead had no script it could run. It now has scripts/e2e/arena_fixture2_model.sh [--mutants]: the host model rows, the referee plate-drag rows with quadrature counts, the slip-invariance row, the release refusal of --control (724), both controls caught on a gauntlet-mutations build, determinism, and the KA-616 receipt (G1) logged for BD-202, with no gate row. Keys are on every task.fixture call. Added: an acceptance item, dep STD-E2E, and related N18a-28 and N24b-22. (3) The KA-413 sentence now says that N18a-28, which depends on this bead, adds the Traction row to the fixture's rows; this bead's tests do not run it. All table values recomputed (capacities, moments, the 77-point bound, the 16/18-sample layout, 5.9% for the non-conforming 8-cell case, 36.6% for the box cone)."
+  },
+  {
+   "bead": "N24b-13",
+   "kinds": [
+    "broken"
+   ],
+   "what": "(1) The holdout call passed only '--tier <adjudicator>'. The registered adjudicator under the capacity rule is batch-cpu under the strict profile, and batch-cpu's default profile is lockstep, so the holdout would run on the wrong step. The bead now adds to the manifest the contact_law axis (rigid, compliant) and, when the adjudicator is batch-cpu, the profile axis value strict, and every held-out call names the adjudicator in full: --tier batch-cpu --profile strict, or --tier referee. Test f2_holdout_adjudicator_single updated to match. (2) The negative control 'a run of the holdout before registration (530)' could not happen, because the first call registers. It is now the changed held-out cell after registration (step 6, which now runs under its own key, exit 3). Decision-rule tables and the 512× cost rechecked."
+  },
+  {
+   "bead": "N24b-14",
+   "kinds": [
+    "convention",
+    "request"
+   ],
+   "what": "Slice request (C13) applied: 'requested of BD-124 to declare it so' is removed, and the paragraph says what BD-124 now defines: Resources { fields: Vec<(String, String)> }. The same convention removed four more narrations: 'requested there' for StudyPlan (BD-124 defines it); 'N33b-19, asked to route study.plan through study::admit' (N33b-19 does: its step 3); 'N24-REF is asked whether to assign dedicated codes' (N24-REF registers 802 for checks 5 to 7); and the Considerations item 'Until study.plan routes through admit (requested of N33b-19) … N24b-21's step fails until then'. The peeking fractions were recomputed exactly: 13/256, 2869/32768, 0.12946, 0.17418."
+  },
+  {
+   "bead": "N24b-15",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "Slice request applied in full. The admin actions now use VERBS-eval's form: 'frob eval ledger --action open … --json', '--action open --kind battery --label <name> --json' and '<campaign> --action close --json', with no keys. The text 'each action takes its own idempotency key … 803' is replaced by idempotence by effect: a repeated open answers campaign-already-open (exit 7, the index untouched) and a repeated close campaign-not-open (exit 3); --key and per-action flags are 802. 'ground.band --retire' is now '--action retire'. The one-open rule now covers battery labels, with the test campaign_single_open_per_battery_label. Updated to match: acceptance item 3, the tests ledger_admin_actions_cli_and_mcp, ledger_admin_action_idempotent (no 803) and campaign_close_irreversible, e2e steps 2, 3, 4, 6 and 7, and References (803 → 802). C13: 'requested of N24-REF' and 'registered by N24-REF' are removed. E2E step 1 now opens the owner and agent sessions with e2e_session grant/open, as the owner's root session must be. Level arithmetic, cost ratios and KA tiers rechecked."
+  },
+  {
+   "bead": "N24b-16",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "(1) Slice request (C13) applied: 'requested of N24-REF' is removed from the 567 row; N24-REF already registers 567 with this meaning. (2) The type sketch gave clusters: u32, yet the tests submit a world list, a battery name or addresses in clusters and expect 567. The schema would refuse those with 802 first. The bead now says the submission schema admits those forms in clusters only so that they are refused by name with 567 before commitment; the committed request holds a count. Dry-run bounds 0.0432/0.0504 and the 842 case at 0.05/110 (304/304/0/1,537: prefer and inferior reachable, no tie) were recomputed."
+  },
+  {
+   "bead": "N24b-17",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Slice request applied. E2E step 5 now opens the campaign with 'frob eval ledger --action open --task <synthetic TaskId> --world-family <family> --json', closes it with '<campaign> --action close --json', and re-opens it to get FROB-REF-886 (exit 3), all with no keys; the --open/--close --key forms answer 802. The owner session is opened with e2e_session grant/open, as the owner's root session on the command line."
+  },
+  {
+   "bead": "N24b-18",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Slice request (from H-cx-2) applied. leak-per-world-outcomes is now the plant of CX-384 (N37-CX), plant id N24b-18:leak-per-world-outcomes, with gates GATE-QUAL-01 and GATE-SAFE-03 and its own nc-<nnnn> feature. N38b-05's seeding tool derives its control (seed CX-384), and the bead writes no controls.toml row of its own; it previously registered a separate record, which would have been a second control for one plant. Changed to match: the e2e controls step, the test mutant_leak_caught and References. Dep N37-CX added (M1, no cycle), because the test reads the seeded record. Every number recomputed: null sizes 2.14e-4/1.95e-3/1.32e-2, the 500-retry fractions 0.101/0.623/0.9987, the reuse expectations 0.034/0.126, the α_i sum 0.0083, the bounds 123 and 18 with their tails, and the planted sizing 121/153/194/225."
+  },
+  {
+   "bead": "N24b-19",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Slice request applied. E2E step 1 opens with 'frob eval ledger --action open --task task:qual-sim-coin@1 --world-family family:qual-sim-coin@1 --json', and step 4 closes with '<campaign> --action close --json', with no keys; the old forms answered 802. The sessions are now e2e_session grants and opens. The agent's scopes were not stated, and the script could not pass without them: they are eval:read, qual:run, cert:write and prove:read, which eval.qualify, prove.bundle and prove.verify cite in VERBS-eval/VERBS-prove."
+  },
+  {
+   "bead": "N24b-22",
+   "kinds": [
+    "request",
+    "convention",
+    "deadlock"
+   ],
+   "what": "Round-3 request applied in full, with the rewrite it needed. The script no longer records or feeds GATE-ARENA-06: BD-202 records it from its receipt (convention 9), and the summary only names the gate as touched. It now runs the fixture beads' own scripts as stages: model_rigs (N24b-12's new arena_fixture2_model.sh), slip_metric (N24b-11's arena_slip_metric.sh) and, under --holdout, holdout (N24b-13's arena_fixture2_holdout.sh). Before, N24b-12 had no script and its e2e named steps of this script, which depends on it (conventions 7 and 11). Every task.fixture and task.settle call now carries --key with its own label, and compared runs use distinct labels (convention 5). Two more fixes. (a) The invocation offered '--tier referee|batch-cpu|cuda|metal'. A tier other than the registered adjudicator breaks the single-adjudicator rule of BD-202 and N24b-13, so the option is gone. (b) development_set passed '--tier <the selected adjudicator>' alone, and on batch-cpu that takes the tier's default lockstep profile, not the strict profile the capacity rule names. It now passes --tier referee or --tier batch-cpu --profile strict, as step 4's preflight selects. The acceptance criteria, the --list-steps/--selftest test and the Known answers were restated to match."
+  },
+  {
+   "bead": "N24b-23",
+   "kinds": [
+    "request",
+    "registry",
+    "broken"
+   ],
+   "what": "(1) Both slice requests applied. Step 8 opened the campaign with 'frob eval ledger --open … --key …'. It now uses '--action open --task <synthetic TaskId> --world-family <family> --json', an admin action with no key (--key is 802). The owner session is opened the STD-E2E way: e2e_session grant owner --scopes eval:read,qual:admin before frobd starts, then e2e_session open owner. (2) The invocation offered '--tier batch-cpu|cuda|metal', which are task.fixture's spellings. eval.run's tiers are referee, batch-cpu, gpu-cuda and gpu-metal, so a cuda run would be 802. The tier now defaults to batch-cpu and is passed to every eval.run, with compared runs on the same tier. (3) Step 7 asserted a 99th-percentile figure 'withheld with probability 0.049 printed'. BD-254 (fixed this round per N24a-17) answers with the cell {status: not-observable, n: 5, p_max: 0.5493, n_needed: 299} and no value. Recomputed: 1 − 0.99^5 = 0.049 < 0.95; 0.05^(1/5) = 0.5493; ln 0.05 / ln 0.99 = 298.1, so 299."
+  },
+  {
+   "bead": "N24b-24",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Both slice requests applied (NJL-01 action rule 1; VERBS-eval M1-4). Step 1 opens with 'frob eval ledger --action open … --json', with no key. A second identical open now asserts campaign-already-open (exit 7), not a keyed replay, and the same open with --key asserts 802. Step 14a opens the battery label with '--action open --kind battery --label e2e --json' and seals with '<campaign> --action seal --name key-1 --file … --json'. Step 15 closes with '--action close' and asserts that a new '--action open' on the same family is refused with 886. The sessions paragraph now uses e2e_session grant/open, with the role of each session (owner, agent, bystander), and the E2E commands paragraph says admin actions carry no key."
+  },
+  {
+   "bead": "N24b-25",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "(1) Step 4 asserted the printed levels for indices 1 and 7 of 'the sample campaign'. The only campaign the script has is the one in N24b-19's stage, and nothing guarantees it reaches index 7. The step now checks every index i in the post-close bundle against the reduced rationals 1/(20·i·(i+1)) and i/(20·(i+1)): 1/40 and 1/40 at i = 1, and 1/1120 and 7/160 at i = 7 when reached (recomputed). It logs how many indices were checked. (2) N24b-24 moved from deps to related. It is an e2e script that this script neither runs nor uses (step 0 runs only N24b-19's script; convention 11)."
+  },
+  {
+   "bead": "N24b-26",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Step 1 asserted bound.family as 'template:four-point-stance@1#' followed by 'a content hash'. The form BD-126 now fixes is 'template:four-point-stance@1#b3:' followed by the BLAKE3 hash of the family file it ships, assets/fixtures/mission/families/four-point-stance@1.toml, so the step names that file and prefix. The second repeat, with a changed document, said only 'the same key'. It now uses 'e2e_key new-1 --again' once more, as the first repeat does. A newly minted key would be accepted as a new request, so the FROB-REF-803 assertion would never fire."
+  },
+  {
+   "bead": "N24b-27",
+   "kinds": [
+    "request",
+    "registry",
+    "broken"
+   ],
+   "what": "(1) Step 0 passed --mutants through to BD-194's task_terms_compile.sh, which takes no options. It now runs the script bare. (2) Step 11 ran 'e2e_tier g1_known_answers KA-578'. N23-KA registers KA-578 as G3, and BD-192 binds it in tests/g3_metamorphic.rs, so the g1 filter selects nothing. It is now e2e_tier g3_metamorphic KA-578. (3) Step 11 described KA-578's control as a mutation, 'rate terms integrated per control step', but no bead plants one. The registered control is CX-247's planted input (BD-192's per-step-penalty task, 500 against 1,000). KA-582's control is now named as CX-249's mutation (N23a-08). (4) Step 4 forced a retry with '--chaos faults=1,seed=…,point=<sub-step>', but point takes only t4, t5-t6, checkpoint, restore or any, so the call was 802. It now uses BD-083's --chaos-plan with one frob.chaos.retry/1 entry {world 0, base_interval <the event's interval>, fail_attempts_below 1}. BD-083 is a transitive dep through N16b-25. Acceptance, Known answers, References and plan_refs now name KA-578, KA-582, CX-247 and CX-249. Every figure was recomputed: −1,000 at both rates against −500/−1,000; 2.00006 and 1.99505 against r/β = 1.99005; 3.15149; e^0.5 = 1.64872; the truncation horizon ln(10^6)/0.5025 = 27.5 s."
+  },
+  {
+   "bead": "N24bx-01",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "(1) E2E step 5 runs the axes-demo motor at --actuator-level L2 for the electrical time constant (2 ms = L/R). L2 is BD-071's (M1), which was not a dep, transitive or direct, so dep BD-071 is added (no cycle; BD-071 does not reach this bead). (2) Step 6 ran '--tier batch-cpu --precision f32' in a script that must pass at M1. batch-cpu is an M2 tier (N16b-25). It is now '--tier referee --precision f32', refused with FROB-REF-136, because the referee is f64 only (N16a-02 rule 5). The f32 tolerance stays covered by precision_tolerance_lookup and N24b-09's batch runs. (3) The negative control free-seed named a 'mutants' build; the feature is now gauntlet-mutations (convention 1). (4) The domain-failure step now names its refusal, FROB-REF-802. The actuator-level domain points at sim.run's --actuator-level row (L0/L1 BD-070, L2 BD-071), not at a 'level' field that does not exist. plan_refs gains §38.1 (ADR-GAUNT-06), which the References cite. Recomputed: stall 0.9·10·0.05·40 = 18.0 N·m; no-load 24/(0.05·10) = 48 rad/s; L/R = 2 ms."
+  },
+  {
+   "bead": "N24b-21",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Step 9 asserted 'frob study status … at 30 of 64 units', but a script cannot stop a running study at a chosen unit count, so the step would fail by timing. It now polls while units done is below 64, logs the count, and checks the verdict once after completion. All tables were recomputed: 64/86/128/256 counts, ±0.0662, min_b 15 to 23, powers, levels 1/40, 1/2200, 1/5010000, and the 0.0457/0.0432/0.0504 values."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N24bp4-01",
+   "why": "Split from BD-067 (audit note, kind split): the forward-kinematics captures of the two URDF sources that BD-065 vendors, g1-urdf and iiwa7-urdf. Deps: BD-065, BD-067, STD-E2E. It is the only part of BD-067 that needs BD-065's vendored files and PROVENANCE.toml. It covers the [[model]] rows, capture_fk_urdf.py (fusestatic off, the 38-body check, mimic sampling), the URDF conventions block, five tests and its own script, oracle_urdf_fixtures.sh, which runs BD-067's hygiene script as a stage. Without the split, BD-067's MJCF fixtures and the hygiene gate waited on the URDF importer."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N14b-24",
+   "what": "Add dep N24bp4-01, and say that the URDF rows' oracle captures of g1-urdf and iiwa7-urdf come from N24bp4-01 (split from BD-067 this round), not from BD-067. BD-067 no longer depends on BD-065 and no longer captures the URDF files. Without the dep, N14b-24 can start its URDF rows before any capture exists, and they are logged 'not run' instead of measured."
+  },
+  {
+   "bead": "BD-065",
+   "what": "The Out list (line 46) and line 122 name BD-067 for 'the captures of the two URDF sources'. They are now N24bp4-01's, which depends on this bead; name it there. Otherwise a reader looks in BD-067 for the URDF capture rows, which it no longer has."
+  },
+  {
+   "bead": "BD-066",
+   "what": "Lines 127-128 say the fixture-capture bead 'follows this one in the bead graph (it needs an importer to name the bodies it captures)'. BD-067 no longer depends on BD-066: its scripts read the models and body names through the pinned oracle alone (audit note, applied). Restate the order of work: this bead closes on its hand-captured fixtures, and N14a-31 measures the full MJCF rows once BD-067's captures exist. As written, an implementer of BD-067 would wait for the importer, or build against it, against INV-GAUNT-01's rule that capture scripts read no workspace artifact."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "eval.ledger's pending refusals: add sealed-object-exists (8xx, exit 7: a seal of a name already sealed in the campaign with different bytes; nothing is overwritten; observed the name and the stored digest), which BD-261 now raises. The row says only that such a seal 'writes nothing' and that the same bytes return the stored digest. Without a listed slug, an implementer has no code to return for different bytes and may overwrite the sealed answer key."
+  },
+  {
+   "bead": "N24-REF",
+   "what": "(1) Register the pending refusal sealed-object-exists (8xx, exit 7; BD-261's seal of an already-sealed name with other bytes). (2) The text for eval.ledger still cites FROB-REF-803 for a reused key on --open/--close, and qualification-undecided still spells --open. The actions are now --action open|close|seal of kind admin, with no key (--key is 802): a repeated open is campaign-already-open (exit 7, also for a battery label) and a repeated close is campaign-not-open (exit 3). Otherwise a reader of the registry tests for an 803 that the verb can never raise."
+  },
+  {
+   "bead": "N16ap4-01",
+   "what": "N24b-03 adds the declared-input check of sim.run --fixture (a declared --task is 802; an open --controller runs and is recorded), but the options it guards on the referee are yours at M1, and you depend on N24b-03. N24b-03's script can therefore test the check only in process. Add a sub-step to your script: frob sim run --fixture registry-demo --tier referee with --task <t> (expect 802) and with --controller <c> (runs; ControllerId in the run record), each under its own key. Otherwise no script ever exercises the check through the binary."
+  },
+  {
+   "bead": "N24b-08",
+   "what": "Your e2e section names N24b-20's steps variants_register and variants_run. N24b-20 (M1) no longer has them: an M1 script cannot depend on an M2 bead or skip its steps at run time (convention 7). Give the variants their own script, or a step in N24b-09's scripts/e2e/arena_fixture1_batch.sh if you depend on it. Otherwise the five variants have no end-to-end run."
+  },
+  {
+   "bead": "BD-202",
+   "what": "Your capacity rule makes batch-cpu under the strict profile the adjudicator of the development set until FD-FSIM-13 lands. But the gate record's call 'frob task fixture quad-split-grip --layer batch --set development --reflect' names no tier or profile, and the manifest declares no axes.profile (N24bx-01). A batch-cpu run would therefore take the tier's default lockstep profile, and '--profile strict' would be 530. Declare axes.profile (strict, and referee if used) in the manifest. Then pass '--tier batch-cpu --profile strict' (or '--tier referee') on the development call and name that adjudicator in the gate row. N24b-13 does the same for the holdout. Otherwise the development set runs on a step that is not the registered adjudicator. Two more defects in your e2e section. (a) It has no script of its own (convention 11). It names N24b-22's steps check_task, settle, development_set and reflection, but N24b-22 depends on you (convention 7). Give BD-202 its own script built only on its deps, for example scripts/e2e/arena_fixture2_sets.sh, and N24b-22 will run it as a stage. (b) Its calls frob task fixture … --set development --tier referee --json (and --reflect) carry no --key, and compared runs need distinct keys (convention 5). They also hard-code --tier referee, against your own capacity rule."
+  }
+ ],
+ "unchanged": 2,
+ "notes": "Unchanged: N24b-02 (checked in full: the stratified split arithmetic (9 strata of 10 give 3 or 4 held out), swap-actuator in BD-058's catalogue, the freeze and evaluation-read rules and the e2e steps against its deps); N24b-06 (every table recomputed: the counts at n = 64/86/128/256, the power table, the levels 0.05/2, 0.05/110 and 0.1 (first ties at n = 99, 178 and 72; 478/478/0/1,189; 721 and 740), the Clopper-Pearson endpoints, min_b 15 to 23 and the absolute-rule bounds; one recorder of GATE-ARENA-05 at M1, as the register says)."
+}

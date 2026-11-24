@@ -4,7 +4,7 @@ title: "registry: Sensorium counterexamples CX-200 to CX-215 and the late-subsec
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "sensorium", "frob-conformance", "solid", "registry", "test"]
+labels: ["m1", "sensorium", "frob-conformance", "solid", "registry", "test", "review-notes-open"]
 parent: "WP-14"
 deps: ["BD-025", "N38b-05", "STD-E2E", "STD-TEST"]
 needs: []

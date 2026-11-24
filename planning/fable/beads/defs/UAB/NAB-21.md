@@ -4,7 +4,7 @@ title: "registries/ev_matrix.toml: the Moonshot queue: 21 waiting items, order o
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record", "test"]
+labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record", "test", "review-notes-open"]
 parent: "EPIC-M0"
 deps: ["NAB-17", "NAB-19"]
 needs: []
@@ -207,7 +207,10 @@ item is their [M] part, which is why the check reads this field and not the word
       plan-time value with an empty `adr`, fails to load.
 - [ ] `waits_for` is set for MQ-08 (on MQ-02) and MQ-15 (on MQ-14); `frontier_part_first` for MQ-09, MQ-10 and
       MQ-11; MQ-21 is `deferred`.
-- [ ] Every kill gate named exists in the gate register; the seven items with no kill gate (MQ-04 tactile
+- [ ] Every kill gate named resolves in the gate register, or is on NAB-17's frozen list
+      `tests/fixtures/ev/kill_gates.tsv` and reports a recorded `skip` while the exit record of its ledger
+      group's milestone does not exist (NAB-17 step 6; the M1 sweep requires that no such skip remains); the
+      seven items with no kill gate (MQ-04 tactile
       hands, MQ-05 persistent ruts, MQ-06 link-chain tracks, MQ-07 hydraulic actuation, MQ-08 the continuum
       arm, MQ-15 Study-quadric synthesis, MQ-21 general Lean theorems) each have a non-empty `fallback`.
 - [ ] `next_entries` returns the known answers of the test plan.
@@ -215,8 +218,8 @@ item is their [M] part, which is why the check reads this field and not the word
       queue record, `family` follows the mapping of step 8 (seventeen items name one row each, sixteen of them
       in that table and MQ-21 in the parked table; MQ-05 to MQ-08 none),
       and the lint `ev.queue-mismatch` passes in both directions.
-- [ ] With four Moonshot pilots `running` in the pilot register, `next_entries` returns nothing and a fifth
-      funding request is refused there.
+- [ ] `next_entries(queue, now_milestone, active_count = 4)` returns nothing at every milestone. The refusal of
+      a fifth `running` Moonshot pilot is the pilot register's (N38a-09), which this bead does not depend on.
 
 ## Test plan
 
@@ -230,7 +233,8 @@ item is their [M] part, which is why the check reads this field and not the word
 - `next_entries_at_m6`: at `now = M6`, MQ-01 passed, nothing active → `[MQ-02, MQ-03, MQ-04, MQ-05]`.
 - `next_entries_respects_cap`: same, with two active → the first two of that list.
 - `continuum_arm_waits_for_islands`: at M6 with MQ-02 `queued`, MQ-08 is never returned; with MQ-02 `killed`,
-  MQ-08 is still not returned (it is not built without item 2) and its state becomes `killed` in the sweep.
+  MQ-08 is still not returned (it is not built without item 2). `next_entries` is pure and writes no state:
+  recording MQ-08 as `killed` is the `release` transition of N41-09, which the sweep cites.
 - `frontier_part_first`: MQ-09 is returned only when the geometric-phase gate on kinematic fixtures
   (GATE-AUGUR-20) has a recorded pass.
 - `lean_theorems_never_returned`.

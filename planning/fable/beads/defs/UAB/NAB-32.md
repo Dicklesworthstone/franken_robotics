@@ -4,7 +4,7 @@ title: "killed-idea register: registries/killed_ideas.toml, docs/decisions/kille
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "delivery", "gauntlet", "frob-conformance", "solid", "registry", "decision-record", "test"]
+labels: ["m0", "delivery", "gauntlet", "frob-conformance", "solid", "registry", "decision-record", "test", "review-notes-open"]
 parent: "EPIC-M0"
 deps: ["BD-002", "BD-004", "BD-005", "BD-025", "N00-10", "NAB-17", "STD-TEST"]
 needs: []
@@ -159,7 +159,13 @@ gaps section and every feature flag in `contract.toml`; work-package funding rec
    segmented reduction mentions the unordered scatter it replaces.
 2. It cites the record and a **revival ADR** `ADR-REVIVE-KI-nn` exists, is accepted, and states (a) the new
    evidence, (b) its kind, which must equal the record's `revive_evidence`, (c) the measured values against
-   `revive_only_if`, (d) the gate records or pilot records it rests on. A record with `revive_evidence = "none"`
+   `revive_only_if`, (d) the gate records or pilot records it rests on. Item (c) is typed so that it can be
+   evaluated: one line `threshold: <name> <op> <value>` per comparison of the condition, each `<value>` a number
+   that the record's `revive_only_if` states (in digits, or in words the lint reads as a number: "one third" is
+   1/3, "a fifth" is 1/5), and one line `measured: <name> = <value> (<receipt>)` per threshold name. The lint
+   evaluates the comparisons; one that fails, a threshold with no measured line of the same name, or a threshold
+   value that `revive_only_if` does not state is `ki.adr-condition-not-met`. The sweeps state
+   killed-idea conditions in the same form (NAB-22 step 3). A record with `revive_evidence = "none"`
    cannot be revived by measurement; its ADR must instead show that the refuting argument no longer applies
    (for example the profile on which a replay claim is made has changed class) and needs the owner's decision.
 3. It is inside the register, its generated document, the counterexample catalogue, or a test fixture.
@@ -169,7 +175,10 @@ gaps section and every feature flag in `contract.toml`; work-package funding rec
 condition as written); `ki.strong-form-as-goal` (a goal, bet, gate threshold or claims-registry wording states
 the strong form's claim of a REFUTED or NARROWED record); `ki.strong-form-duplicated` (the strong-form text
 occurs verbatim outside the register, its printout and quoted fixtures; no pattern is involved); `ki.refusal-missing` (a record names a refusal
-code that the refusal registry lacks); `ki.carrier-missing` (a carrier key that no bead has).
+code that the refusal registry lacks); `ki.carrier-missing` (a carrier key that no bead has). A record is never
+deleted (revival appends history): `ki.record-removed` is an id present in the file at the base commit and absent
+now, the base being `HEAD` when the working tree differs from it and `HEAD~1` otherwise (the base rule of the
+identifier lint, N00-03).
 
 *One rule, one pattern list (DESIGN; stated identically in N00-10).* The hypothesis verdict register has a
 wording lint for the same rule as `ki.strong-form-as-goal`: a match of a `banned` pattern of a REFUTED or
@@ -195,7 +204,8 @@ The M1 sweep (NAB-24) requires that no such skip remains.
 
 **5. The revival ADR template** (`docs/adr/ADR-REVIVE-KI-nn.md`, in the directory and form the kill-gate
 decision ADRs use; every decision record lives in `docs/adr/`): record id; the strong form quoted; the refutation's numbers; the new evidence
-with receipts; the condition as written and as measured; what is proposed (usually the strong form at a lower
+with receipts; the condition as written and as measured, with its typed `threshold:` and `measured:` lines
+(step 4, case 2); what is proposed (usually the strong form at a lower
 tier with its own pilot and kill gate); the owner's decision. An accepted revival appends a history entry to
 the record; the record is never deleted.
 
@@ -205,9 +215,10 @@ reader map's path for a sceptical reviewer. Determinism class D0.
 
 ## Acceptance criteria
 
-- [ ] `registries/killed_ideas.toml` validates and loads; with NAB-33 to NAB-40 landed it holds 67 `KI`
-      records, the `KD` and `KP` records those beads define, and every record has `strong_form`, a refutation
-      or a stated reason, `survives`, `revive_only_if` and at least one carrier or the note "nothing survives".
+- [ ] `registries/killed_ideas.toml` validates and loads with no records (the state this bead leaves), and the
+      loader refuses a record that lacks `strong_form`, a refutation or a stated reason, `survives`,
+      `revive_only_if`, or at least one carrier or the note "nothing survives". The 67 `KI` records and the `KD`
+      and `KP` records are NAB-33 to NAB-40's, which depend on this bead; their count is asserted by NAB-50.
 - [ ] The harness recomputes every `calculation` within tolerance.
 - [ ] `docs/decisions/killed-ideas.md` is current under `check-generated`; `xtask` still has six subcommands.
 - [ ] Each of the eight findings of the revive lint is produced by its planted fixture, and the surviving-form
@@ -227,7 +238,8 @@ reader map's path for a sceptical reviewer. Determinism class D0.
 - `expr_evaluator`: `0.999^1000` → 0.3677; `1 + 48/0.01` → 4801; `C(62, 2)` → 1891; `ln(20)/1e-5` → 299573;
   `(13 − 3·sqrt(17))/4` → 0.157671; `log2(1e4)` → 13.29; `2^(−13.29/20)` → 0.631.
 - `fact_calculation_requires_source`; `design_arithmetic_has_no_source`.
-- `every_record_is_complete` (once the entries exist).
+- `every_record_is_complete`: on fixture records, each missing required field is refused by name, and the
+  register's every record passes (vacuously on the empty file this bead leaves; NAB-50 runs it with 67).
 
 `crates/frob-conformance/tests/revive_lint.rs` (fixture trees, labelled `synthetic`):
 
@@ -238,7 +250,10 @@ reader map's path for a sceptical reviewer. Determinism class D0.
 - `adr_kind_mismatch_fails`: a revival of KI-03 (evidence kind `gate`: the M2 profile's specializable share)
   whose ADR cites only a published paper.
 - `adr_condition_not_met_fails`: KI-03's ADR reporting a share of 0.25 where at least one third is required.
-- `adr_accepted_passes`: the same with a share of 0.36 and the profile's receipt.
+- `adr_accepted_passes`: the same with a share of 0.36 and the profile's receipt (the ADR's lines
+  `threshold: specializable-share >= 1/3` and `measured: specializable-share = 0.36 (<receipt>)`); with the
+  threshold typed as `>= 0.30`, a value KI-03's `revive_only_if` ("at least one third") does not state, it fails
+  `ki.adr-condition-not-met`.
 - `none_kind_needs_owner_decision`.
 - `strong_form_as_goal_fails`: a gate threshold "no-adaptation return at 70% of specialists on any unseen
   design" (the strong form of KI-27).
@@ -247,6 +262,8 @@ reader map's path for a sceptical reviewer. Determinism class D0.
   pattern index, and removing the pattern from the hypothesis row (in a fixture copy) removes the finding;
   `hypothesis_state_must_agree`: a record whose `hypothesis_state` differs from the register's is refused.
 - `refusal_missing_fails`; `carrier_missing_fails`.
+- `record_removed_fails`: on a two-commit fixture repository whose second commit drops one record,
+  `ki.record-removed` names it; dropping none passes.
 - `register_and_fixtures_are_exempt`.
 
 ### End-to-end script and logging
@@ -260,8 +277,8 @@ findings (expected 0), digests of the registry and the document.
 
 Known answers: 67 entries in the groups 9, 7, 9, 7, 14, 10, 3, 4 and 4; the evaluator values above. Negative
 controls: the eight findings; plus a calculation whose stored value was altered (2.75 for the refinement ratio
-at n = 18, k = 6, where 9k/n = 3.0); plus a record deleted from the file (the loader compares ids against the
-frozen id list and fails `ki.record-removed`). Metamorphic relation: reordering records changes no lint result.
+at n = 18, k = 6, where 9k/n = 3.0); plus a record deleted from the file (the removal check compares ids with the
+file at the base commit and fails `ki.record-removed`). Metamorphic relation: reordering records changes no lint result.
 
 ## Considerations
 

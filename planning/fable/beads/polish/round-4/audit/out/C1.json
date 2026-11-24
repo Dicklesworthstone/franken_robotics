@@ -1,0 +1,265 @@
+{
+ "list": "C1",
+ "audited": 53,
+ "edges_judged": 293,
+ "real": 267,
+ "proposals": [
+  {
+   "bead": "N34-03",
+   "kind": "partial",
+   "edge": "N33a-11",
+   "change": "move acceptance item 4 (the planted frob-dyn -> structure fixture of N33a-11 refused), the test airlock_fixture_frob_dyn_structure_refused and the assertions on the real manifest (default_groups_are_three, fsim.default set on the real records) to N33c-29, which already depends on both N34-03 and N33a-11; N34-03 tests its group rules on synthetic records in the form it already restates (default, consumers, test_consumers); move N33a-11 to related and change N33a-11's 'asserted by N34-03' to N33c-29",
+   "evidence": "N34-03 needs only the shape of an airlock group record, which it restates; only the planted fixture and the real-manifest assertions read N33a-11's crate",
+   "gain": "N34-03 level 13 -> 8, BD-004 14 -> 10; whole chain 169 -> 166"
+  },
+  {
+   "bead": "BD-004",
+   "kind": "missing",
+   "edge": "N33a-07",
+   "change": "add N33a-07 to BD-004's deps (or, with the split below, to the new generator bead's dependents: N33a-07 adds its row and depends on it)",
+   "evidence": "N33a-07 says its admission-doc generator row is 'BD-004, which depends on this bead'; BD-004's table cites xtask::generate::admission_doc, N33a-07; today the edge exists only transitively through N34-03 -> N33a-11 -> BD-006, which the proposal above removes",
+   "gain": "none; keeps the graph correct once N34-03 is freed"
+  },
+  {
+   "bead": "BD-004",
+   "kind": "split",
+   "edge": "N34-03",
+   "change": "split check-generated into a component bead: the generator interface (input globs, gen.* findings, --write) with the rows for schemas, the stack-lock schema, RefusalCode, the status table and kernel digests; deps BD-002, BD-003, BD-005, N33a-03; N33a-07 adds its own row and depends on the new bead; BD-004 keeps the six-entry table, exactly_six_subcommands, the ownership rule, the plant matrix and the timing; retarget N35-33, N32a-02 and the other generator-row beads to the new bead",
+   "evidence": "BD-004 already split the other five checks into component beads (N34-03, N34-07, N34-08, N33a-04, N33a-05) and assembles them; check-generated is the one check still written inside the capstone, so every bead that only needs a generator row waits on all six checks",
+   "gain": "N35-33 and the refusal-registry segment (N35x-01, N35x-02, N32-REF, N32a-03 ...) no longer wait on the capstone; with the N34-03 proposal about 2 to 4 levels on the chain's head"
+  },
+  {
+   "bead": "N35x-02",
+   "kind": "wrong-way",
+   "edge": "N35x-01",
+   "change": "move the hold mechanism (an 8xx request stays 'requested' until the decision) into N35-33, whose schema already names 'held' and whose rule 8 keeps 8xx requested until the hold; then reverse the edge: N35x-01 (the owner decision) depends on N35x-02 (the filed and numbered requests)",
+   "evidence": "rule 7: a decision depends on the measurement it decides on; N35x-01's ADR counts the requests and its test first_round_8xx_all_held needs N35x-02's rows",
+   "gain": "one level off the chain (N35x-01 leaves it)"
+  },
+  {
+   "bead": "N35x-01",
+   "kind": "missing",
+   "edge": "BD-022",
+   "change": "move acceptance item 6 and e2e stage 3 (frob --json schema shows the held list) to BD-022 (convention 7); do not add the edge",
+   "evidence": "the item and the stage call frob --json schema, which BD-022 delivers; N35x-01 does not depend on BD-022 and BD-022 is later on the chain",
+   "gain": "keeps the bead finishable; no level change"
+  },
+  {
+   "bead": "N32-REF",
+   "kind": "partial",
+   "edge": "N35x-02",
+   "change": "move the held-request assertions (packet-over-byte-cap, packet-frames-not-retained, resource-read-over-cap held; the planted 836 under hold) to N35x-02 or N35x-01; drop the frob --json schema interim-list clause of held_requests_have_no_interim (BD-022's, convention 7); keep BD-005, N35-33 (the first round assigns 726 and 990) and STD-E2E",
+   "evidence": "N32-REF's own codes 701 to 704, 720, 723 to 726, 801 to 810 come from the first round in N35-33; only the assertions about the still-held second-round requests read N35x-02's rows",
+   "gain": "N35x-01 and N35x-02 leave the chain: two levels for N32-REF, N32a-03, BD-022 and everything after"
+  },
+  {
+   "bead": "N32a-04",
+   "kind": "false",
+   "edge": "N33c-35",
+   "change": "move N33c-35 to related",
+   "evidence": "dispatch is in frob-verbs (layer 6) and takes asupersync's Cx under every option of OPEN-SUITE-6 (A; B, the daemon adapts Cx; C, Cx at layer >= 6), and the fail-closed default is A; BD-014 uses Cx without this edge",
+   "gain": "none today (N32a-03 binds); once N32a-03 drops, N33c-35 at level 16 would bind"
+  },
+  {
+   "bead": "N32a-04",
+   "kind": "false",
+   "edge": "BD-008",
+   "change": "move BD-008 to related",
+   "evidence": "no item reads the gate record BD-008 writes; asupersync reaches the workspace through BD-001's patch, and the edge is redundant through N33c-35",
+   "gain": "none on the chain; removes a redundant edge"
+  },
+  {
+   "bead": "N32a-04",
+   "kind": "missing",
+   "edge": "N21-REF",
+   "change": "add N21-REF to deps",
+   "evidence": "the test refusal_601_no_daemon asserts FROB-REF-601, and there is no path from N32a-04 to N21-REF (convention 2/13: codes come from their registry bead)",
+   "gain": "correctness; N21-REF is low in the graph, no level change"
+  },
+  {
+   "bead": "N21b-01",
+   "kind": "partial",
+   "edge": "BD-022",
+   "change": "move the 'kernels' doctor section, acceptance item 9 and the doctor stages of spark_manifest_registry.sh to a small new bead (or to a later bead with both, such as BD-017); N21b-01's script keeps cargo test plus xtask check-generated; BD-017 and N21b-36's script then need BD-022 explicitly",
+   "evidence": "the manifest type, the stage signature and footprint and alias validation are a frob-kernels library (layer 3) and use nothing of frob-verbs; only the doctor section reads BD-022",
+   "gain": "the Spark segment (N21b-01, BD-014, BD-015, BD-017 ...) no longer waits on the verb layer: about 3 to 4 levels"
+  },
+  {
+   "bead": "N21b-01",
+   "kind": "missing",
+   "edge": "N21-REF",
+   "change": "add N21-REF to deps",
+   "evidence": "the manifest validation refuses with FROB-REF-617, whose registry bead is N21-REF; no path from N21b-01 to N21-REF",
+   "gain": "correctness"
+  },
+  {
+   "bead": "N21b-36",
+   "kind": "partial",
+   "edge": "BD-017",
+   "change": "move the canary suite run through spark.probe (acceptance item 6) and the e2e script to BD-029 or a new later bead; f32dd and the split product stay here",
+   "evidence": "the double-float accumulators are a library; only the canary run via the spark.probe verb reads BD-017",
+   "gain": "one level"
+  },
+  {
+   "bead": "N21c-02",
+   "kind": "partial",
+   "edge": "N21b-36",
+   "change": "move steps 5 and 6 (copy the IEEE digest and class, the canaries) and the fast-math canary control to the capstone BD-029, which adds a dep on N21b-36; the same moves free the BD-017 edge",
+   "evidence": "step 5 already allows 'unavailable: probe not run'; the integer, atomic and language-version probes use neither N21b-36 nor BD-017",
+   "gain": "one level"
+  },
+  {
+   "bead": "BD-029",
+   "kind": "missing",
+   "edge": "N32a-09",
+   "change": "log fingerprint_requires_key and the e2e steps missing_key and replay as skipped until N32a-09 (as BD-017 does), or move them to a later M1 bead",
+   "evidence": "these need the key machinery of N32a-09 (M1) while BD-029 is M0; convention 7",
+   "gain": "keeps the bead finishable at M0"
+  },
+  {
+   "bead": "N36-13",
+   "kind": "false",
+   "edge": "BD-029",
+   "change": "move BD-029 to related",
+   "evidence": "N36-13 is in frob-core (layer 0) and cannot name frob-kernels' fingerprint type; the disclosure holds the fingerprint as a b3: digest compared with a supplied machine record, its fixtures are synthetic, and its scripts belong to N36-29 and N36-30",
+   "gain": "N36-13 level 29 -> 17; its 29 dependents (BD-039, BD-216, N36-29, N39b-08, N40-12, N41-23 ...) leave the Spark chain"
+  },
+  {
+   "bead": "N14a-26",
+   "kind": "false",
+   "edge": "BD-039",
+   "change": "move BD-039 to related",
+   "evidence": "BD-039 is the incumbent harness (comparators, containers, disclosure adapter); N14a-26 is a standalone reference canonicalizer under tools/oracle/design_canon with its corpus in frob-conformance fixtures, uses only N38a-04's oracle layout, and never names BD-039",
+   "gain": "N14a-26 level 31 -> 8; chain 169 -> 167 on its own; BD-054 is then bound by N14a-01 (BD-022 > N16-REF > N33a-13 > N33a-14 > BD-035 > BD-037 > N41-20 > BD-031 > N14a-01)"
+  },
+  {
+   "bead": "N14a-03",
+   "kind": "false",
+   "edge": "N33a-30",
+   "change": "move N33a-30 to related",
+   "evidence": "a mesh Region is only parsed here, as a b3: hash (acceptance: 'A mesh Region is accepted only as a b3: hash'); mesh d_min, bounding box and the closed-surface check are N14a-14's ('union, difference, mesh ... (N14a-14)'), and N14a-14 depends on N33a-30 itself; min_dimension_exact compares six fixtures as rationals, which a mesh inradius with an error bound is not",
+   "gain": "none on the chain (BD-054 binds); removes an edge"
+  },
+  {
+   "bead": "BD-060",
+   "kind": "missing",
+   "edge": "BD-062 / BD-100",
+   "change": "move the recomputation of the 'mass' guarantee (check_module step 5) and the test guarantee_recomputed to a later bead that has both the module format and the mass functor: BD-077 (reaches BD-062 through N14a-12) or N15b-02 with BD-062 and BD-100 added; BD-060 keeps parsing and type-checking the guarantees. Adding the edge instead would close a cycle (BD-062 -> BD-061 -> N14a-07 -> BD-060)",
+   "evidence": "step 5: 'the mass roll-up is evaluated in exact rational arithmetic at the default and at every corner of the parameter box'; the specimen leg has a capsule thigh and a spherical foot, whose masses are multiples of pi, i.e. BD-062's p + q*pi arithmetic and moments by fill, and the roll-up is BD-100 (A-02); BD-060 reaches neither",
+   "gain": "keeps BD-060 finishable; no level change"
+  },
+  {
+   "bead": "N14a-07",
+   "kind": "partial",
+   "edge": "BD-060",
+   "change": "move the 'use' branch of step 2 ('delegated to the module bead'), the FROB-REF-111 row (bind outside bounds) and module digests in the memo key to a later bead that has both: a small 'frob-model: elaborate use imports' bead (deps N14a-07, BD-060) or BD-077; then drop BD-060 from deps",
+   "evidence": "no acceptance item and no test of N14a-07 uses a module: quad-a has no 'use', and the tests are counts, mirrors, radial, serial, scale, replace, selectors, source paths, the tracked view and three refusals",
+   "gain": "N14a-07 and BD-061 one level earlier; chain 169 -> 168 alone"
+  },
+  {
+   "bead": "BD-061",
+   "kind": "false",
+   "edge": "N33a-14",
+   "change": "move N33a-14 to related",
+   "evidence": "BD-061 lowers kinematics through RefereeDynamics (BD-007) and states 'Out: ... contact sets on the referee (BD-079)'; no item uses RefereeContact or its capacities",
+   "gain": "none on the chain (N14a-07 binds); removes an edge"
+  },
+  {
+   "bead": "BD-079",
+   "kind": "false",
+   "edge": "BD-062",
+   "change": "move BD-062 and BD-061 to related; add BD-047 (frob-lie SE(3) poses, today reached only through BD-061); add BD-062 to N18a-10 and N18a-11, which store their sample lists and self-collision filter in the compiled model and test them on the reference quadruped (today they reach the model only through BD-079)",
+   "evidence": "BD-079 scope: 'Out: ... fitting primitives to Regions (BD-062)'; its Primitive enum is its own type in frob-contact; contact_candidates(poses, prims, halfspaces, margin) takes posed primitives and the pair filter as inputs ('That list is the model compiler's ... contact_candidates takes it as input'); every acceptance item and test uses synthetic or hand primitives (10^6 random pairs, hand cases, INT-FSIM-08 boxes)",
+   "gain": "with the N18a-02 edge below: BD-079 level 40 -> 29, BD-080 C1 level 42 -> 40; chain 169 -> 167 alone"
+  },
+  {
+   "bead": "N18a-02",
+   "kind": "false",
+   "edge": "BD-062",
+   "change": "move BD-062 to related",
+   "evidence": "'Out: ... recording the primitive fitting error (the model compiler's geometry functor, BD-062)'; fit_a and fit_b are input terms of GapBudget, and the tests use 'fitted spheres of fitting error 1 mm' as synthetic values; nothing reads a compiled model",
+   "gain": "part of the BD-079 gain above"
+  },
+  {
+   "bead": "BD-090",
+   "kind": "wrong-way",
+   "edge": "BD-080",
+   "change": "reverse the edge: BD-080 depends on BD-090; and change BD-090's script to BD-024's positional form 'frob sim run g1 --tier referee --seconds 2 --seed 7 --telemetry <L>' (it writes '--fixture g1', which BD-024 says is FROB-REF-802 at M0 and is owned by N24b-03, a dependent of BD-090)",
+   "evidence": "BD-090 defines the ledger schema and the .frun format; BD-080 writes its capacity and sibling refusals 'unchanged into the run envelope and the .frun episode' (test referee_refusal_passthrough: 'the envelope and the .frun episode carry the same bytes'); BD-090's own script 'needs only sim.run (BD-024) and this bead', its unit tests are synthetic runs, and the contact stream is only declared",
+   "gain": "BD-090 level 44 -> 26 (C1 43 -> 25); its 109 direct dependents (BD-091, N29a-04, N32a-10, N24a-36, BD-094, BD-097 ...) leave the contact chain; chain 169 -> 165 alone"
+  },
+  {
+   "bead": "N24a-44",
+   "kind": "partial",
+   "edge": "N24a-36",
+   "change": "move the acceptance item 'frob telemetry query returns the kind, sense and coverage of each such column' to the extremum-* step group of N24a-39, which already asserts kind, sense and coverage through frob telemetry query and depends on both; drop N24a-36 from deps",
+   "evidence": "that item is the only use of N24a-36; the bead's own e2e steps are already N24a-39's; everything else is the kind in frob-chronicle and the fold in the transactional step (BD-081)",
+   "gain": "N24a-44 bound by BD-081 instead of N24a-36: chain 169 -> 165 alone (same segment as the BD-090 proposal)"
+  },
+  {
+   "bead": "N24a-06",
+   "kind": "split",
+   "edge": "N24a-44",
+   "change": "split N24a-44: a small early bead 'frob-chronicle: channel kind interval-extremum' (the kind with sense and coverage in BD-090's kind table, its downsample rule, the composition, dominance and refinement laws on sequences, the registration rule, the declarations of tilt, i_max and env_min_x, the CONTRACT.md item; tests extremum_downsample_matching_only, composition_law, dominance_law, fold_registered_or_refused; deps BD-090, STD-TEST); N24a-44 keeps the producer contract and the fold in the transactional referee step (rollback, swept bounds, published with commit, producers at the requirement clock, the spike) with deps on the new bead and BD-081; N24a-06 depends on the new bead instead of N24a-44",
+   "evidence": "N24a-06 uses only the kind and its admitted reductions (its table: 'Interval extremum, minimum ... min only'); N24a-44 itself says the requirement-side admitted reductions are N24a-06's; N24a-06's tests are static task checks and window arithmetic and read no recorded run",
+   "gain": "the requirement-language chain (N24a-06 to BD-122, 2,471 dependents) leaves the referee and contact segment; with the BD-090 and N24a-44 proposals chain 169 -> 160"
+  },
+  {
+   "bead": "N24a-08",
+   "kind": "missing",
+   "edge": "BD-081 (transitive through N24a-06)",
+   "change": "move acceptance item 5 (online signals written to the Task stream by the referee task stage, on a synthetic one-body referee run) and e2e step 'referee' to N24b-05, which has both the monitor (through N24a-12) and the referee step; N24a-08 keeps the pure frob-spec monitor",
+   "evidence": "the script says it reaches 'the referee step, reached through N24a-06', i.e. only through N24a-06 -> N24a-44 -> BD-081; after the split above there is no path, and the rest of the bead is a pure monitor tested against the definitional evaluator",
+   "gain": "needed for the N24a-06 split to hold; no extra level"
+  },
+  {
+   "bead": "N24a-11",
+   "kind": "split",
+   "edge": "BD-094",
+   "change": "split from BD-094 a registry bead: registries/failure-classes.toml with the class and kind types and the kind mapping (BD-094 sections 1 to 3; deps BD-005); N24a-11 and N29a-05 depend on it; BD-094 keeps the monitors, first-cause ordering, fixtures and telemetry.failures (deps BD-022, BD-080, BD-090, N24a-36, STD-E2E)",
+   "evidence": "N24a-11 reads only 'reason: Option<FailureClass /* BD-094's registry */>'; rule 5, registries come first; BD-094's own text says a class without monitor or fixture is simply not marked available, so the registry stands alone",
+   "gain": "N24a-11 no longer waits on BD-080 through BD-094: chain 160 -> 157 with the proposals above"
+  },
+  {
+   "bead": "N24a-12",
+   "kind": "partial",
+   "edge": "N24a-13",
+   "change": "move the syntactic derivation hard_limit_atoms (the verdict's invariant part: atoms in the left operand of an outermost until and in the body of an outermost always from 0, plus atoms marked as shared with a shield) and its acceptance item for fixture 1 and the kitchen-tray verdict from N24a-13 into N24a-12; N24a-13 re-exports it and depends on N24a-12; drop N24a-13 from N24a-12's deps",
+   "evidence": "N24a-12's only use of N24a-13 is 'Hard-limit atoms are those of the verdict's invariant part, as derived in N24a-13'; the derivation is syntactic over a CheckedRequirement and uses none of N24a-13's verdict-record accessors, decision signal or freeze rule",
+   "gain": "BD-121 two levels earlier (it depends on N24a-12 and N24a-11, not on N24a-13), BD-122 one; chain 169 -> 167 alone"
+  },
+  {
+   "bead": "N14a-11",
+   "kind": "partial",
+   "edge": "N24ax-02",
+   "change": "move the task-level restriction of step 3 ('When a task is supplied, its terms restrict the group further ... stored under the task's digest' and the repair naming a missing transformation declaration) to N20b-01, which composes the task clause of Gamma_obs and already depends on N24ax-02 and, through BD-102, on N14a-11; then drop N24ax-02",
+   "evidence": "no acceptance item or test of N14a-11 supplies a task: all are design-level groups, breakers and INV-SKEL-07; N24ax-02 itself says 'Out: ... composing the five clauses into Gamma_obs and storing it (N20b-01, BD-241)'",
+   "gain": "N14a-11 level 60 -> 43 and N14a-12 61 -> 44 (C1 levels 59 -> 42, 60 -> 43); the chain then runs through N24b-03 into N29b-01, so no chain change alone"
+  },
+  {
+   "bead": "N29b-01",
+   "kind": "false",
+   "edge": "N14a-12",
+   "change": "move N14a-12 to related",
+   "evidence": "limbs here are BD-092's ('by limb (the joints of one kinematic branch below the base)'); N29b-01 never names LimbView or a lowering, and its unit tests run on the synthetic fixture ledger-quad-38",
+   "gain": "one level for N29b-01 alone; with the N24b-03 proposal 61 -> 57"
+  },
+  {
+   "bead": "N29b-01",
+   "kind": "partial",
+   "edge": "N24b-03",
+   "change": "move the registration of the step-group fixtures with N24b-03's manifest (the breakdown-*, bus-* and pertask-* runs of energy_ledger_referee.sh) to N24a-37, which already runs the whole script to a pass; N24a-37 adds N24b-03; N29b-01 keeps the library rules and their unit tests",
+   "evidence": "N24b-03 appears only in the e2e paragraph ('the fixtures are registered with N24b-03's manifest'), and those steps are logged not-run until N24a-37 exists",
+   "gain": "N29b-01 no longer waits on the task-file chain (BD-122 -> N24b-03); no chain change alone, because N29b-22 binds N24a-37"
+  },
+  {
+   "bead": "BD-097",
+   "kind": "partial",
+   "edge": "N24a-35",
+   "change": "move 'the run summary sized to the budget' of run.show (and its budget input) to N24a-35 as an extension of BD-097's run.show handler, the pattern BD-097 already uses for its later extensions ('each through this bead's handlers and each in its owner bead'); reverse the edge: N24a-35 depends on BD-097",
+   "evidence": "the summary is one output field of one of the five verbs; no acceptance item or test of BD-097 asserts summary content (run_show_standing_fields checks the manifest, standing, k of n and frontier); BD-097 lists summaries as Out",
+   "gain": "BD-097 level 65 -> 48 (C1 64 -> 47); its 18 dependents (N37-23, BD-137, N29a-08, N34-24 ...) and the long tail behind N37-23 start 17 levels earlier; chain 169 -> 166 alone"
+  }
+ ],
+ "notes": "All 53 beads audited; 26 of 293 edges are not real as written. Combined effect of every proposal, simulated on the graph with graph_check's loader (new split beads added as nodes): longest chain 169 -> 144. Largest single gains: BD-090/BD-080 reversed (169 -> 165; BD-090's 109 dependents leave the contact chain), N24a-44/N24a-36 partial (-> 165), and with the N24a-44 kind split for N24a-06 the whole requirement-language chain N24a-06..BD-122 leaves the referee segment (-> 160, -> 157 with the BD-094 registry split); N34-03, the BD-004 generator split and BD-097 each -3; N14a-26/BD-039, the BD-079 cluster and N24a-12 each -2. Shape: the chain is long mainly because capstone-like beads (BD-004, BD-022, BD-090, BD-094, BD-097) were made prerequisites of beads that need only one registry, schema or type from them, and because frob-chronicle and frob-spec were hung behind the referee contact step. Edges judged real but worth a second look: BD-080/BD-070 (no actuator is named in BD-080; tau is an input; not binding once N18a-10 moves); BD-054/BD-031 is redundant through N14a-01. After all proposals the longest chain runs through the actuator and energy segment (BD-061 > N15a-03 > BD-070 > BD-071 > BD-075 > N15b-04 > N15b-05 > BD-076 > BD-092 > N16a-08 > N29b-21 > N29b-20 > N29b-22 > N24a-37 > BD-093 > N18b-01 ...), outside this list. Proposal counts: false 9, missing 7, partial 11, split 3, wrong-way 2"
+}

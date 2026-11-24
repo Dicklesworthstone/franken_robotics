@@ -42,9 +42,10 @@ to 88 (NAB-46); the contested records these rows point to (NAB-47).
 IP-10, IP-20; IP-20 also names no gate); `carriers` from the last column (keys before a
 semicolon are the carrying beads; keys after it, with a kill gate in parentheses, are the decision beads);
 `disposition = "placed"`, or `"placed-narrowed"` where the row says so or is marked contested;
-`contested` = the matching record of NAB-47 for the seven rows marked "Contested": IP-03 (sampling-based
-control), IP-04 (family policy), IP-12 (the batch unit), IP-13 (fused step kernel), IP-16 (derivatives through
-the contact solve), IP-18 (clearance complexes), IP-21 (observation-alias witness).
+`contested` = the matching record of NAB-47 for the seven rows marked "Contested": IP-03 → CT-02
+(sampling-based control), IP-04 → CT-03 (family policy), IP-12 → CT-01 (the batch unit), IP-13 → CT-05 (fused
+step kernel), IP-16 → CT-04 (derivatives through the contact solve), IP-18 → CT-18 (clearance complexes),
+IP-21 → CT-09 (observation-alias witness). NAB-47 depends on this bead and checks that the links resolve.
 
 **Notes the one-line rows compress.**
 
@@ -115,9 +116,12 @@ the contact solve), IP-18 (clearance complexes), IP-21 (observation-alias witnes
 ## Acceptance criteria
 
 - [ ] Records `IP-01` … `IP-22` exist in five themes with the columns verbatim and carriers as listed.
-- [ ] Every carrier key exists as a bead; every gate and kill gate named exists in the gate register (25
-      distinct kill gates in these rows).
-- [ ] Seven records carry a `contested` link that resolves.
+- [ ] Every carrier key exists as a bead; every gate named exists in the gate register; of the 25 distinct
+      kill gates in these rows, those of the M0 ledger group (KILL-SKEL-SUBST, KILL-SKEL-ALIAS, N40-23;
+      KILL-ASBUILT, N40-27) exist in the kill-gate register, and the 22 entered by the M1 ledger groups (N40-24
+      to N40-26) exist or, while the M1 exit record does not, are recorded `skip`s under NAB-42's rule for
+      rows that land later.
+- [ ] Seven records carry the `contested` link listed above (its resolution is NAB-47's test).
 - [ ] The five rows with no kill gate (IP-08, IP-10, IP-17, IP-20, IP-22) are either Solid or state why no kill
       gate applies (IP-08: its gate labels or refuses every hard case; IP-10: nothing beyond a small explicit
       graph is built; IP-20: no claim rests on it).
@@ -132,7 +136,8 @@ the contact solve), IP-18 (clearance complexes), IP-21 (observation-alias witnes
 - `twenty_two_records_in_five_themes` (2, 9, 4, 2, 5).
 - `proposal_counts`: IP-12 has 6; IP-02, IP-08 and IP-14 have 5; none has fewer than 2.
 - `contested_links_are_seven`; `kill_gates_are_25`.
-- `carriers_resolve`; `gates_resolve`.
+- `carriers_resolve`; `gates_resolve` (kill gates of the M1 ledger groups resolve or are recorded `skip`s, as
+  in the criteria).
 - `tiers`: 11 rows name [S], 17 name [F], 3 name [M] (IP-05, IP-11, IP-13).
 - `ungated_rows`: exactly IP-08, IP-10 and IP-20 carry `ungated`, and removing it from any of them fails
   `idea.upper-tier-without-kill`.
@@ -140,8 +145,8 @@ the contact solve), IP-18 (clearance complexes), IP-21 (observation-alias witnes
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh` (NAB-50) asserts 22 records, zero unresolved carriers and gates, logged per
-STD-E2E.
+`scripts/e2e/decision_records.sh` (NAB-50) asserts the 88 `IP` records of NAB-44 to NAB-46 and zero
+unresolved carriers and gates over the register, logged per STD-E2E; this pass's 22 are this module's tests.
 
 ### Known answers and negative controls
 

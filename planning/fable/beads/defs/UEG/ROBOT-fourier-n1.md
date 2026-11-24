@@ -46,7 +46,11 @@ inertias are given in full, as diagonal inertia with an orientation, or inferred
 and whether a body's frame is at its joint or its centre of mass. The validation records, for this file, each
 convention in force and where the importer read it, and then proves the reading by a metamorphic test: a
 `synthetic` rewrite of the same file into the opposite convention (degrees ↔ radians; full inertia ↔ diagonal
-with orientation; a different but equivalent Euler sequence) must import to the same `DesignId`. Because the
+with orientation; a different but equivalent Euler sequence) must import to the same design up to the
+rewrite's rounding: every canonical quantity atom of the rewritten import equals the original's within one unit
+in the last stored digit of the source. The `DesignId` is not the comparison: a rewrite writes new decimals
+(π/2 rad for 90°, the eigen-decomposition of a full inertia), so its exact atoms and its hash differ even when
+the reading is right. Because the
 design language stores exact quantity atoms with units, an angle range read in the wrong unit is a factor of
 57.3 and would also show as a joint range wider than a full turn, which the limit check flags.
 
@@ -58,7 +62,8 @@ design language stores exact quantity atoms with units, an angle range read in t
 - [ ] `assets/robots/fourier-n1/` passes the licence check (Apache-2.0) and validation; `mark = "P"`.
 - [ ] `import.fbot` has a pinned `DesignId`; loss report equals its golden; counts equal the manifest.
 - [ ] The convention record lists angle unit, Euler sequence, inertia form and frame convention with the
-      source location of each; the three convention rewrites import to the same `DesignId`.
+      source location of each; each of the three convention rewrites imports to quantity atoms equal to the
+      original import's within one unit in the last stored digit of the source, joint by joint and body by body.
 - [ ] The robot appears in no mass row and no scorecard.
 
 ## Test plan
@@ -68,9 +73,10 @@ design language stores exact quantity atoms with units, an angle range read in t
 - `robot_fourier_n1_manifest_valid`, `robot_fourier_n1_licence_apache2_notice`.
 - `robot_fourier_n1_counts` (as computed at the pin).
 - `robot_fourier_n1_conventions_recorded`.
-- `robot_fourier_n1_rewrite_degrees_radians_same_id`, `…_inertia_form_same_id`, `…_euler_sequence_same_id`
-  (inertia and Euler rewrites compared after canonical rounding of the rewritten decimals; tolerance one unit
-  in the last stored digit of the source).
+- `robot_fourier_n1_rewrite_degrees_radians_same_atoms`, `…_inertia_form_same_atoms`,
+  `…_euler_sequence_same_atoms` (each rewrite's canonical quantity atoms compared with the original's after
+  canonical rounding of the rewritten decimals; tolerance one unit in the last stored digit of the source; a
+  rewrite with a range planted in the wrong unit differs by the factor 57.3 and fails).
 - `robot_fourier_n1_no_range_over_full_turn_unless_continuous`.
 - `robot_fourier_n1_mass_properties_consistent`, `robot_fourier_n1_loss_report_golden`,
   `robot_fourier_n1_design_id_pinned`.
@@ -78,7 +84,8 @@ design language stores exact quantity atoms with units, an angle range read in t
 ### End-to-end script and logging
 
 `scripts/e2e/assets_licences.sh` (NEG-16): import, both checks, golden comparison, the three rewrites; logs
-commit, licence, counts, the conventions in force and the identity comparison.
+commit, licence, counts, the conventions in force and, per rewrite, the largest atom difference in units of
+the last stored digit.
 
 ### Known answers and negative controls
 

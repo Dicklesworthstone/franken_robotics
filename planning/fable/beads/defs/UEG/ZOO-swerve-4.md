@@ -16,9 +16,10 @@ plan_refs: ["Appendix G.4 row 11", "§14.10", "§13.6", "§18.6", "C-37", "Appen
 
 `swerve-4` is a square base with four identical modules, each of which steers a wheel about a vertical axis
 and drives it. It can move in any direction after reorienting its wheels, and it brings three tests that no
-other archetype has. Nested symmetry: each module has its own mirror, and the hub permutes four modules, so
-the group of the whole is built from the group of the part, a structure the algebra must report rather than
-flatten. Scrub: steering a stationary wheel twists its contact patch, and the resisting moment comes from the
+other archetype has. Nested symmetry: each module has its own symmetry, the half-turn about its steer axis
+(K = C₂ with zero caster trail, trivial with trail; N13-25), and the hub permutes four modules, so the group of
+the whole is built from the group of the part; at M3 the hub group alone is Γ_mech, and the nested group is
+the Frontier mechanism of N13-26 (M4), never an extra factor of Γ_mech. Scrub: steering a stationary wheel twists its contact patch, and the resisting moment comes from the
 spin component of the four-dimensional contact cone; a three-dimensional cone predicts zero steering torque,
 which undersizes every steering actuator. And a singular pose: when all four wheel axes pass through one
 point the base can only rotate about that point, and at a generic set of fixed steering angles it cannot move
@@ -40,8 +41,13 @@ steered-base controller (N14b-07).
 wheel end effector with law `wheel-rolling` and a finite patch. Actuated 8; n_v = 14 (floating base 6 plus
 four steer and four drive coordinates); bodies 9; end effectors 4.
 
-**Symmetry.** Γ_mech as built: D₄ on a square base (order 8), with each module's own mirror nested inside
-(the module's mirror through its steer axis maps the module to itself at zero steer). Default Γ_obs: D₄.
+**Symmetry.** Γ_mech as built: D₄ on a square base (order 8). Default Γ_obs: D₄. The module's own group K is
+the half-turn about its steer axis, the element N13-25 derives and N13-26 computes: it sends the steer
+coordinate (c, s) to (−c, −s) (steer angle plus π) and the drive rate ω to −ω, and with zero caster trail the
+wheel occupies the same place and rolls the same way, so K = C₂; with trail it is trivial. K is not a factor of
+Γ_mech: `analyze.symmetry` reports the hub group D₄ and no per-module group, and the nested group C₂ ≀ D₄
+(order 2⁴·8 = 128) is reported only by `algebra irreps --nested` (N13-26, M4, Frontier, dropped without
+replacement if its pilot falsifies it). This M3 golden therefore asserts D₄ of order 8 and no nested row.
 
 **Constraint at fixed steering.** Wheel i at pᵢ with axle direction aᵢ (unit, horizontal) imposes no lateral
 slip: aᵢ·(v + ω_z·ẑ × pᵢ) = 0. Stacked for four wheels this is a 4 × 3 matrix in (v_x, v_y, ω_z).
@@ -49,7 +55,7 @@ slip: aᵢ·(v + ω_z·ẑ × pᵢ) = 0. Stacked for four wheels this is a 4 × 
 **What preflight must report (stages 1 to 6 at defaults; no refusal).** Stage 1: one module by hash, used
 four times. Stage 3: tree mobility 14. Stage 4: with steering free, the distribution has full rank after one
 bracket and the class `omnidirectional (steered)` is confirmed; the singular set (all axles concurrent) is
-named. Stage 5: D₄ with the nested module mirror reported as nested, not as an extra factor. Stage 6: steering
+named. Stage 5: D₄ of order 8, with no factor for the module's half-turn. Stage 6: steering
 torque at standstill includes scrub; drive and steer points inside the envelope.
 
 **Known answers.** Fixture: wheels at (±0.25, ±0.25) m.
@@ -67,7 +73,7 @@ torque at standstill includes scrub; drive and steer points inside the envelope.
 
 **Control variants.** (a) a three-dimensional friction cone (no spin component): steering torque at standstill
 is zero and the steering actuator passes an envelope it should fail; the test asserts 0.32 N·m is required;
-(b) the design asserting `D4 x C2` (the module mirror counted as an independent factor) → FROB-REF-109;
+(b) the design asserting `D4 x C2` (the module's half-turn counted as an independent factor) → FROB-REF-109;
 (c) a controller command at the concurrent pose asking for pure translation is infeasible (rank 2): the
 analysis names the singular pose and the test asserts the report, not a silent least-squares answer.
 
@@ -75,7 +81,7 @@ analysis names the singular pose and the test asserts the report, not a silent l
 
 - [ ] The zoo instance equals the template default; `DesignId` pinned and platform-independent.
 - [ ] Scrub torque is 0.32 N·m in the fixture through the contact probe; the rank rows hold exactly.
-- [ ] Γ_mech is D₄ of order 8 with the nested structure reported; the three controls behave as stated.
+- [ ] Γ_mech is D₄ of order 8 with no factor for the module's half-turn; the three controls behave as stated.
 
 ## Test plan
 
@@ -85,12 +91,13 @@ analysis names the singular pose and the test asserts the report, not a silent l
 - `zoo_swerve4_scrub_torque`: 50 N, 0.8, 0.008 m → 0.32 N·m; with sliding at v = ρ·ω → 0.226274 N·m.
 - `zoo_swerve4_rank_generic_locked`, `zoo_swerve4_rank_concurrent_two`, `zoo_swerve4_rank_parallel_two`.
 - `zoo_swerve4_strata_bruteforce`: 81 tuples under the 8 elements give 21 classes.
-- `zoo_swerve4_nested_mirror_not_a_factor`.
+- `zoo_swerve4_module_half_turn_not_a_factor`: `analyze.symmetry` reports D₄ of order 8 and no per-module group;
+  the variant asserting `D4 x C2` is refused with FROB-REF-109.
 
 ### End-to-end script and logging
 
 `scripts/e2e/zoo_goldens.sh` (NEG-31) at M3: instance, symmetry, stages 1 to 6, `frob contact probe` at the
-scrub state (spin only, and spin with sliding); log lines carry the group and its nesting, the ranks at the
+scrub state (spin only, and spin with sliding); log lines carry the group and its order, the ranks at the
 three poses and the scrub torque with its provenance class (Estimated radius).
 
 ### Known answers and negative controls

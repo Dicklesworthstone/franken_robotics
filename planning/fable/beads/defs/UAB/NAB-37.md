@@ -6,7 +6,7 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "atelier", "nemesis", "augur", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["NAB-32"]
+deps: ["N00-11", "N00-12", "NAB-12", "NAB-13", "NAB-15", "NAB-32"]
 needs: []
 related: ["NAB-38"]
 gates: []
@@ -43,6 +43,15 @@ sub-records of KI-45. Out: the schema, harness and lint (NAB-32); the surviving 
 **Transcription rule.** As in NAB-33. KI-45 is a table of nine methods; it becomes one record with nine
 `[[idea.method]]` sub-tables (`method`, `core`, `why_not`, `used_instead`, `keywords`), so that the revive lint
 matches each method separately and the expected-value matrix's rejected rows can point to the method.
+`hypothesis_state` is the state word alone (KI-33 `REFUTED`; KI-40 names H-22a and H-22b, both `ACTIVE`; KI-35,
+KI-36, KI-38, KI-39, KI-41 to KI-43 `NARROWED`; KI-34, KI-37 and KI-44 to KI-46 name none here, and NAB-40's
+index joins KI-34 to H-09 and KI-37 to H-07); rows H-03 and H-06 to H-10 are N00-11's, H-13, H-22a, H-22b and H-23 N00-12's. Revival
+fields by NAB-33's rule: KI-33 `gate` (GATE-ATEL-19); KI-34 `primary-source` (KILL-AUGUR-REUSE); KI-35 `pilot`
+(GATE-AUGUR-30, KILL-WEAKVAR); KI-36 `pilot` (KILL-RARE); KI-37 `none`; KI-38 `gate` (GATE-AUTOPSY-03); KI-39
+`gate` (GATE-ATEL-15); KI-40 `gate` (GATE-ATEL-07, KILL-RANK, KILL-DR); KI-41 `pilot` (KILL-FDGRAD,
+GATE-PHYLUM-08); KI-42 `gate` (GATE-PHYLUM-03, KILL-PHYLUM); KI-43 `pilot` (KILL-SPEC-REWARD); KI-44 `none`;
+KI-45 `none` (each method's condition is a change in the system's situation, judged by the owner's ADR);
+KI-46 `none`.
 
 **Machine-checked arithmetic of this group.**
 
@@ -131,7 +140,7 @@ adversary.
 - *Survives.* Certificates per constraint, with bisection confined to a split set of about six parameters and the
   rest enclosed at full range, combined by products, monotonicity and witnesses (C-32; §25.6, §25.34;
   KILL-AUGUR-REGION; BET-20).
-- *Revive only if.* The weak-variable enclosure measurement (GATE-AUGUR-30, KILL-WEAKVAR) and the region pilot on the 12-parameter box.
+- *Revive only if.* The weak-variable enclosure measurement (GATE-AUGUR-30, KILL-WEAKVAR) and the region pilot on the 12-parameter box: at most 90% of the box undecided in the best arm, and at most 95% of the decided volume from one monotone bound.
 - *Carried by.* BD-289, BD-358, N25e-23 to N25e-26.
 
 **KI-36. A rare-event engine with bounds from splitting** (H-07, NARROWED)
@@ -194,7 +203,7 @@ adversary.
 - *Survives.* The rank-agreement experiment decides, and it reports containment and regret beside τ. A cheap rung
   selects at τ ≥ 0.7 with the winner check passed, discards only between 0.5 and 0.7, and may do neither below 0.5
   or with no record (C-26; §16.9, §23.28, §28.10; GATE-ATEL-07; KILL-RANK; BET-17).
-- *Revive only if.* The rank-agreement experiment (GATE-ATEL-07, KILL-RANK) and the measured tier correlation (KILL-DR). The assumption is never revived as an assumption.
+- *Revive only if.* The rank-agreement experiment (GATE-ATEL-07, KILL-RANK: a cheap rung selects at Kendall τ ≥ 0.7 with the winner check passed, and discards only between 0.5 and 0.7) and the measured tier correlation (KILL-DR: ρ_ep of at least 0.7 on 200 paired addresses). The assumption is never revived as an assumption.
 - *Carried by.* BD-145, BD-264, BD-310, BD-328.
 
 **KI-41. A family per dispatch, with long-horizon finite-difference gradients** (H-23, NARROWED)
@@ -205,7 +214,7 @@ adversary.
   unproven beyond short horizons and smooth metrics.
 - *Survives.* Families per dispatch, and short-horizon paired differences as a sensitivity report (§17.12,
   §17.13; KILL-FDGRAD).
-- *Revive only if.* The paired finite-difference pilot (KILL-FDGRAD) and the measured rounds saved per dispatch (GATE-PHYLUM-08).
+- *Revive only if.* The paired finite-difference pilot (KILL-FDGRAD: a variance ratio of at least 2 at some horizon of 50 steps or more, and sign agreement of at least 70%) and the measured rounds saved per dispatch (GATE-PHYLUM-08: at most 0.5 times the serial rounds of one-design-per-turn search at equal compute).
 - *Carried by.* BD-342, BD-353, N17b-20.
 
 **KI-42. Topology as data, as a capability claim** (H-03, NARROWED)
@@ -219,7 +228,7 @@ adversary.
 - *Survives.* Per-world model variants inside padded capacities and size buckets, claimed only as two measured
   numbers and one property (run-to-run replay and forks inside the mixed batch) from a head-to-head with a
   per-family-template control arm (§17.5, §17.14; GATE-PHYLUM-03; KILL-PHYLUM; BET-18).
-- *Revive only if.* The four-arm head-to-head (GATE-PHYLUM-03, KILL-PHYLUM). The capability wording is not revived: an incumbent documents the capability.
+- *Revive only if.* The four-arm head-to-head (GATE-PHYLUM-03, KILL-PHYLUM): the mixed batch at 0.5 or more of homogeneous throughput on 512 designs, in at most eight buckets. The capability wording is not revived: an incumbent documents the capability.
 - *Carried by.* BD-185, BD-186, N17b-10.
 
 **KI-43. Requirements replace rewards** (H-13, NARROWED)
@@ -275,8 +284,10 @@ is not built; §28.19.4 holds the full list.
 
 - [ ] Records `KI-33` … `KI-46` exist with the paragraphs verbatim, revival conditions, carriers and keywords;
       KI-45 has nine method sub-records.
-- [ ] The harness recomputes the thirteen calculation rows; the enumeration of KI-44 is reproduced by a test
-      that enumerates count pairs.
+- [ ] The harness recomputes the thirteen calculation rows; a test enumerates the count pairs of KI-44 at
+      n = 64 (2,145) and checks that the four recorded verdict counts sum to it. (Classifying the pairs under the
+      frozen rule, and the first tie at n = 86, is known answer KA-612 of the Arena registry, N24-KA, at M1, and
+      the re-run of the plan-time check ledger, N00-06; neither is a dependency of this bead.)
 - [ ] The revive lint fails a planted bead "UCB bandit for ladder allocation" with
       `ki.match-without-citation` naming KI-45 (method 1), and passes the bead for the fixed halving table,
       which cites it.
@@ -298,16 +309,19 @@ is not built; §28.19.4 holds the full list.
   the crude-sampling floor on all n draws.
 - `ki40_control_variate`: 1/(1 − 0.49) = 1.961; 1/(1 − 0.81) = 5.263; 1/(1 − 0.9025) = 10.256; √0.8 = 0.8944.
 - `ki42_padding`: 64/18 = 3.556; squared 12.64; cubed 44.95; 256 × 2,048 × 60,000 B = 31.46 GB.
-- `ki44_enumeration`: the number of pairs (a, b) of non-negative integers with a + b ≤ 64 is 2,145; under the
-  paired rule with a five-point margin the verdict counts are 521, 521, 1,103 and 0 (the rule's definition is
-  read from the study bead's fixture; this test asserts the totals and that the first n with a tie is 86).
+- `ki44_enumeration`: the number of pairs (a, b) of non-negative integers with a + b ≤ 64 is 2,145 =
+  (64 + 1)(64 + 2)/2, and the recorded verdict counts 521 + 521 + 1,103 + 0 equal it.
 - `ki45_has_nine_methods`.
+- `ki45_revive_case`: the planted bead "UCB bandit for ladder allocation" fails `ki.match-without-citation`
+  naming KI-45 and its first method.
+- `revival_fields`: `revive_evidence` and `revive_gates` per record as listed; KI-40's state is `assumed` with
+  `hypothesis_state = "ACTIVE"`.
 - `records_complete_and_verbatim` against `tests/fixtures/killed/g5.md`.
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh` (NAB-50) recomputes the calculations and runs the planted revive cases.
-Logged per STD-E2E.
+`scripts/e2e/decision_records.sh` (NAB-50) runs this module with the rest of `killed_ideas` and recomputes the
+calculations. Logged per STD-E2E.
 
 ### Known answers and negative controls
 

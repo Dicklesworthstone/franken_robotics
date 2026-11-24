@@ -40,9 +40,12 @@ pitch axis in the public model.
 **Import path.** `frob design import assets/robots/h1/source/<entry> --format mjcf --name h1 --key
 asset-h1-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
 the design's `term` section). Expected loss-report entries (HYPOTHESIS until read): visual meshes;
-fitted collision primitives with recorded error; unmapped solver and contact parameters; `armature`,
-`damping`, `frictionloss` to an `assumed` card; foot collision geometry (boxes or several spheres) mapped to a
-foot patch with a stated patch radius, the mapping listed with its error.
+fitted collision primitives with recorded error; unmapped solver and contact parameters. Not losses, by
+BD-066's table: joint `damping` and `frictionloss` (the joint's own damping and friction) and `armature` (an
+override of the bound `assumed` card's rotor inertia). Foot collision geometry (boxes or several spheres) is
+imported as collision shapes of the foot bodies; BD-066 infers no end effector and no contact law from it, so
+the report says "no contact law declared" and no foot patch exists in the import (stage 1 refuses with
+`FROB-REF-121` until one is declared by edit).
 
 **Validation specifics.** Preset by locking: `humanoid@h1` is the template with joints locked so that the
 actuated count equals this robot's; the validation records which template joints the preset locks and checks
@@ -68,7 +71,9 @@ up to the template's conventions). Arm and leg mirror consistency as for every b
 - `robot_h1_counts`: actuated, bodies and n_v as computed at the pin (n_v = actuated + 6).
 - `robot_h1_mass_properties_consistent`, `robot_h1_joint_limits_valid`, `robot_h1_limb_mirror_consistency`.
 - `robot_h1_preset_tree_isomorphic`.
-- `robot_h1_foot_patch_mapping_reported`.
+- `robot_h1_foot_geometry_no_law_inferred`: the foot geoms are collision shapes of the foot bodies with their
+  source sizes (MJCF half-sizes doubled); the import has no end effector and the report says "no contact law
+  declared".
 - `robot_h1_loss_report_golden`, `robot_h1_design_id_pinned`.
 
 ### End-to-end script and logging

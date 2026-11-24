@@ -4,7 +4,7 @@ title: "Nemesis counterexample registry: CX-288 to CX-295 with the shortcut, the
 type: "task"
 priority: 2
 milestone: "M3"
-labels: ["m3", "nemesis", "frob-nemesis", "frob-conformance", "solid", "registry", "test"]
+labels: ["m3", "nemesis", "frob-nemesis", "frob-conformance", "solid", "registry", "test", "review-notes-open"]
 parent: "WP-55"
 deps: ["BD-025", "N38a-40", "N38b-05", "STD-TEST"]
 needs: []

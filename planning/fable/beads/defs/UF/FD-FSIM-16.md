@@ -37,7 +37,7 @@ and this project's tooling never moves a sibling checkout).
 In: in FrankenSim, the constellation lock brought into agreement with what its `Cargo.lock` builds, through its
 own lock procedure, with its preflight passing. Here: `check-stack` reporting on-pin. Out: choosing and
 aligning the one asupersync version (FD-ASUP-01, a prerequisite: the asupersync entry is fixed there); the
-receipt and `check-stack` (BD-004); FrankenSim's toolchain pin (NF-03).
+receipt and `check-stack` (N33a-04, N33a-05); FrankenSim's toolchain pin (NF-03).
 
 ## Technical approach
 
@@ -102,8 +102,9 @@ in this project's newest resolution receipt, which is the tree the build used. A
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
-is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt
-(`frob.stack-receipt/1`) under `receipts/`; (3) re-run that sibling's admission gates, the parity gates and the
+is never rolled back locally); (2) write a new resolution receipt (`frob.stack-receipt/1`) under `receipts/`
+with `cargo xtask check-stack --write-receipt --reason pin-move --gate INT-FSIM-01` (plain `check-stack` only
+verifies and writes nothing); (3) re-run that sibling's admission gates, the parity gates and the
 gates this item names; (4) relock (`Cargo.lock` regenerated and committed, builds `--locked` on the one toolchain
 T) and append the record, with the receipt hash, to `DEPENDENCY_ADMISSION.md`. Only then does the row's `status`
 become `adopted` and the interim posture end. No PASS is recorded on a dirty sibling tree, and neither a pin nor
@@ -143,7 +144,7 @@ Here (`tests/upstream/FD-FSIM-16/`):
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsim_16.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
-Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (the registry
+Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (its `upstream`
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_16 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this

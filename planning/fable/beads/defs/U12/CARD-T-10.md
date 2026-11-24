@@ -68,9 +68,11 @@ dependencies; the receipt of that run moves the registry row, and the coverage r
    kernels that cannot be split, with the residual test's identifier. Route (b) uses the Schwartz–Zippel lemma: a
    nonzero polynomial of total degree at most d, evaluated at a point drawn uniformly from Sⁿ for a finite set
    S ⊂ ℚ, vanishes with probability at most d/|S|; k independent draws that all vanish leave an error bound of
-   (d/|S|)ᵏ. The record (`.idtest`) holds d (a bound computed from the straight-line program, products adding
-   degrees and the cleared denominators included), S, k, the seed of the addressed random draws, every sample
-   point and the bound; the implementation of the test itself is N12-21's.
+   (d/|S|)ᵏ. The record (`K-<name>.idtest`, schema `frob.identity.test/1`, N12-21's) holds d (a bound computed
+   from the straight-line program, products adding degrees and the cleared denominators included), S as
+   {0, …, 2ᵇ − 1}, k (N12-21's m), the stream address of the addressed random draws, from which every sample point
+   is regenerated (the points are not stored), the discards and the bound; the implementation of the test itself
+   is N12-21's.
 4. Class: `Certified` for pieces decided by (a), with a `poly-identity` bundle per generator; `Tested` for (b)
    and (c), stated as such. The card's printed class for a model is the minimum over its pieces. Not `Proved`.
    The simulator's equivariance in floating point is not claimed: round-off breaks exact equivariance, which is
@@ -102,8 +104,9 @@ joint axis a is −P·a, so a pitch axis along y keeps its sign and roll and yaw
 `one_sided_payload_breaks_identity`; `free_body_step_equivariant_exact` (the single-body Cayley step under the
 mirror, in exact rationals); `mass_matrix_equivariance` (ρ(g)·M(q)·ρ(g)ᵀ = M(ρ(g)·q) on a planar two-link
 mirrored pair); `class_is_minimum_over_pieces`; `randomized_piece_records_bound` (a piece forced to route (b)
-with d = 12, |S| = 2³² and k = 4: the record carries all four sample points and the bound (12/2³²)⁴, and the
-piece prints class `Tested`).
+with d = 12, |S| = 2³² and k = 4: the record carries d, b = 32, m = 4 and the stream address, the four sample
+points regenerated from that address reproduce the recorded verdict, the bound is (12/2³²)⁴, and the piece prints
+class `Tested`).
 
 ### End-to-end script and logging
 

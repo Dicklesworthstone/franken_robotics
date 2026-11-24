@@ -104,6 +104,15 @@ bead may rename once, in the same commit as this entry):
 | CX-324 | true | a-a | scripted auditor that chooses audit bits after seeing fast-tier failures and records no probabilities; must be refused (FROB-REF-811) or caught by the bias check |
 | CX-325 | true | mutation | `mutant-chron-arrival-reservoir`: classic reservoir sampling by arrival order |
 
+Each `plant` is written as one plant record of N38b-05's form, whose `id` is `<planting bead>:<name>`; the
+seeding derives a mutation's `feature` (and another kind's `fixture`) from the name after the colon, so the name
+is the flag above and the control runner builds `--features gauntlet-mutations,frob-chronicle/<flag>`. The
+planting bead is the carrier that holds the rule: CX-319 `N29a-13:mutant-chron-order-sketch`; CX-320
+`BD-206:mutant-chron-midpoint-pointwise`; CX-321 `BD-205:cx-321` (`planted-input`, fixture `cx-321`); CX-322
+`BD-090:mutant-chron-impulse-mean`; CX-323 `N29a-04:mutant-chron-page-by-time`; CX-324 `BD-264:cx-324` (`a-a`,
+the scripted auditor's fixture `cx-324`); CX-325 `N29a-12:mutant-chron-arrival-reservoir`. Each carrier declares
+its feature in `frob-chronicle` as implying `conformance` (N38b-04's mutation guard).
+
 **The chapter's negative controls (one per known-answer subject), with carriers.** These are the stated control
 cells of KA-707 to KA-720 (N29-KA). The seeding tool turns each into a control (step 3 of N38b-05: it reuses the
 `NC-` of a CX-seeded control with the same target, else allocates one with `seed = "KA-nnn"`). This table is the
@@ -152,7 +161,11 @@ completions alone); C3 `planted-world`, the stiff-penalty bounce world at ω·h 
 `mutation`, `mutant-chron-numerical-as-failure` (a numerical outcome scored as a physical failure, and a second
 flag that drops it from the denominator), `same_as = "CX-150"` (one shortcut, two rules, two controls);
 C6 `mutation`, `mutant-chron-pin-after-verdict` (the verdict and its pins written in two transactions, with the
-collection cycle scheduled between them by the simulation harness).
+collection cycle scheduled between them by the simulation harness). Plant `id`s, by the same rule: C1
+`N29b-23:mutant-chron-exchange-heat`; C2 `BD-092:mutant-chron-conditional-mean-only`; C3
+`N29a-22:chron-penalty-bounce` (fixture); C4 `BD-092:mutant-chron-net-bus`; C5 two plants,
+`BD-094:mutant-chron-numerical-as-failure` and `BD-094:mutant-chron-numerical-dropped` (the second flag); C6
+`BD-209:mutant-chron-pin-after-verdict`.
 
 **Controls of the Chronicle gates that no entry of this bead reaches** (registered by the bead named; listed
 here so the linkage test can check them, not re-registered): GATE-CHRON-01: a digest that folds padding lanes,
@@ -169,18 +182,22 @@ grants √2·μ along its diagonals) are controls of GATE-CHRON-08 through the d
 {2, 3}) and KA-765's partition case (ranges [0, 100) and [50, 150) after a shard split) are controls of
 GATE-CHRON-04.
 
-**Known answers of the late subsection, for the known-answer registry to append** (the appendix has no rows):
-resting block: algorithmic exchange 1 J/s at 32 Hz and 0.5 J/s at 64 Hz, constitutive dissipation 0, heat 0
+**Known answers of the late subsection** (the appendix has no rows; they are N29-KA's rows K1 to K3, which
+C1's `rule` text cites, and are not entered here): resting block: algorithmic exchange 1 J/s at 32 Hz and 0.5 J/s at 64 Hz, constitutive dissipation 0, heat 0
 (exact); the same block sliding at 1 m/s on μ = 0.5: 4 W of friction heat at both rates (0.1%); a plastic drop
 arriving at 2 m/s: 2 J of impact dissipation, booked once at the located event (10⁻⁹ J). Negative control for
 all three: a mutant that feeds algorithmic exchange into the film temperature, whose temperature rise differs
 between 32 and 64 Hz by a factor of 2. Tier: G1 on the referee and on `strict`.
 
 **Linkage test.** `registry_chronicle_complete` (in `crates/frob-conformance/tests/chronicle_counterexamples.rs`,
-run after the seeding tool): every entry of this bead has exactly one control in `controls.toml` whose `seed`
-names it; every stated control cell of KA-707 to KA-720 has a control whose gates include the gate of the
+run after the seeding tool): every plant of every entry of this bead has exactly one control in `controls.toml`
+whose `seed` names the entry (one per plant, N38b-05: fourteen for the thirteen entries, C5 having two); every stated control cell of KA-707 to KA-720 has a control whose gates include the gate of the
 subject table above; every control names an existing gate and an owner bead; every Chronicle gate (GATE-CHRON-01
-to -14) has at least one control; no control's `expect` is empty; no entry of this bead appears in the seeding
+to -14) has at least one control, except a gate whose only controls are those a bead registers itself (the list
+"Controls of the Chronicle gates that no entry of this bead reaches" above) while that bead's milestone is later
+than the build's `FROB_MILESTONE`: the test prints it as `pending: <bead> (<milestone>)` (GATE-CHRON-01 and -13
+at M1, whose controls BD-203, N29a-19 and N29a-17 register at M2) and fails once that milestone is reached; no
+control's `expect` is empty; no entry of this bead appears in the seeding
 tool's findings file (a rule that resolves to no gate). A control whose carrier bead is closed and whose
 `last_seen.caught` is false fails the test.
 
@@ -191,17 +208,18 @@ tool's findings file (a rule that resolves to no gate). A control whose carrier 
       `rule_ids`; `registry::alloc::validate` passes.
 - [ ] The six appended entries carry numbers from a block issued to N29-CX in `allocations.toml`, in table
       order, with their tags in `slug`; no tag remains outside `slug` at M1 (`provisional-tag-past-due` clean).
-- [ ] After the seeding tool of N38b-05 is re-run, each of the thirteen entries has exactly one control whose
-      `seed` names it, each of the fourteen stated KA control cells of the chapter has a control on the gate of
+- [ ] After the seeding tool of N38b-05 is re-run, each plant of the thirteen entries has exactly one control
+      whose `seed` names its entry (fourteen controls; C5 has two plants), each of the fourteen stated KA control cells of the chapter has a control on the gate of
       the subject table, the tool's second run changes no byte, and the join of N38b-05 passes.
 - [ ] `registry_chronicle_complete` passes, and fails when an entry is planted without a gate or a gate without a
       control.
-- [ ] Each of GATE-CHRON-01 to -14 lists at least one control; GATE-CHRON-02 has the stage-9 localizer control
-      (KA-718, BD-204) or a recorded reason why none can be planted.
+- [ ] Each of GATE-CHRON-01 to -14 lists at least one control, or is `pending` with the bead that registers its
+      controls and that bead's milestone, later than the build's; GATE-CHRON-02 has the stage-9 localizer
+      control (KA-718, BD-204) or a recorded reason why none can be planted.
 - [ ] CX-322 is entered with `numeric = true` and the numeric case below, so it leaves the seeding tool's list of
       obligations (it was printed with no numeric case).
-- [ ] The three known answers of the late subsection are filed with the known-answer registry's bead (done:
-      rows K1 to K3 of N29-KA).
+- [ ] Each entry's plant is a plant record whose `id` is `<planting bead>:<name>` as listed above, and the
+      seeded control's `feature` (or `fixture`) equals the name after the colon.
 - [ ] For every entry whose carrier exists at the time, the gate run with the plant enabled fails and with it
       disabled passes; an entry whose carrier does not exist yet is `pending` with the bead and milestone due.
 - [ ] At each milestone exit, the list of Chronicle controls that have never been caught in a recorded run is
@@ -227,21 +245,25 @@ tool's findings file (a rule that resolves to no gate). A control whose carrier 
 ### End-to-end script and logging
 
 `scripts/e2e/chronicle_controls.sh` (helper of STD-E2E) first re-runs the seeding tool and the join for this
-chapter's entries (`cargo test -p frob-conformance --test seed_controls -- --ignored seed`, then the join test) and
-asserts a byte-identical second run; then iterates over the Chronicle controls whose carriers exist at the
-current milestone and runs each control's gate script twice, plant off and plant on (the carrier's script exposes
-`--control <NC-id>`), asserting pass then fail. NDJSON lines per the shared helper (`ts`, `script`, `bead`,
-`step`, `event`, the exact command line, exit code, wall time, the envelope's `evidence` block): the CX number or
-KA seed, the control's `NC-` identifier, the plant, the gate, both outcomes, `caught` as a boolean with the
-measured value that crossed the threshold under the plant (value, unit, threshold); controls whose carrier is not
-built are `not-run` with the bead and milestone due; on failure, the first differing value and the paths to
-reproduce. A `summary` line gives controls caught of run, pending, failed and the gates covered.
+chapter's entries (`FROB_TEST_SEED=0 cargo test -p frob-conformance --test seed_controls -- --ignored seed`, then
+`cargo test -p frob-conformance --test seed_join`) and asserts a byte-identical second run; then, for each
+Chronicle gate with a part due at the build's milestone, runs its tier with the controls (`FROB_MILESTONE=<Mn>
+FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test <tier> --features gauntlet-mutations -- <gate>`, the
+tier being the one of the gate's entries): the gate's entries pass with no plant, and the control runner of
+N38b-04 rebuilds once per mutation control with `<crate>/<feature>` and applies the other kinds, writing one line
+per control into the receipt (`caught`, `missed`, `stale` or `not-yet-due`). The script reads those lines from
+the receipt and asserts `caught` for every control that is due. It records no gate. NDJSON lines per the shared
+helper (`ts`, `script`, `bead`, `step`, `event`, the exact command line, exit code, wall time, the envelope's
+`evidence` block): the CX number or KA seed, the control's `NC-` identifier, the plant, the gate, the outcome,
+and for `caught` the measured value that crossed the threshold under the plant (value, unit, threshold);
+`not-yet-due` and `pending` controls with the bead and milestone due; on failure, the first differing value and
+the paths to reproduce. A `summary` line gives controls caught of run, pending, failed and the gates covered.
 
 ### Known answers and negative controls
 
 The registry is the list of negative controls; its own negative controls are the two planted registry defects of
-the linkage test and a control whose mutant was silently removed from the build (the script must then report
-`not caught`, which fails the gate, rather than `not-run`).
+the linkage test and a control whose mutant branch was silently removed from its feature (the mutant build then
+passes every entry, the control runner reports `missed` and the script fails, rather than passing it over).
 
 ## Considerations
 

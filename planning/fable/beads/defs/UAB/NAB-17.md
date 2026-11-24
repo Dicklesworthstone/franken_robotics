@@ -6,7 +6,7 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "frob-conformance", "solid", "registry", "decision-record", "test"]
 parent: "EPIC-M0"
-deps: ["BD-002", "BD-005", "BD-025", "N40-03", "STD-TEST"]
+deps: ["BD-002", "BD-005", "BD-025", "N34p4-03", "N40-03", "STD-TEST"]
 needs: []
 related: ["NAB-23", "NAB-24", "NAB-25", "NAB-26", "NAB-27", "NAB-28", "NAB-29", "NAB-30", "NAB-31", "NAB-42"]
 gates: []
@@ -82,12 +82,12 @@ kill_gates  = ["KILL-KIR"]
 gates       = []
 bets        = []
 killed_idea = []                          # KI-nn records a rejection rests on
-reason      = ""                          # rejected rows: why it is not built (the text after the colon of the
+reason      = ""                          # why it is not built as proposed (the text after the colon of the
                                           #   decision, or the qualifier after the decision word: "under D-2")
 reopen_on   = ""                          # parked and deferred rows: the evidence that reopens the question
 needed_by   = ""                          # an adopted row below 2.0: what needs it
-carried     = true                        # true when the row existed in the earlier version of the matrix
-rescored_from = ""                        # the earlier printed score when a verdict changed it ("3.0")
+carried     = true                        # true for the three rows the plan says come from version 0.2 (rule 2)
+rescored_from = ""                        # the version-0.2 score when a verdict changed it ("3.0", EV-F40 only)
 queue       = []                          # the MQ-nn items of the Moonshot queue that wait for this row (EV-F45
                                           #   has two); filled from the queue records' `family` (NAB-21)
 
@@ -123,16 +123,27 @@ zero, formatted with one digit after the point. It is computed in integer arithm
    queue until its pilot is funded. Check: a row of table `solid` or `frontier-moonshot` with score below 2.0
    must have `"M"` in `tiers`, or a non-empty `needed_by`.
 2. *Carried rows.* A row carried from the earlier version keeps its scores unless a verdict of the hypothesis
-   register changed them, and a changed score says so. Check: `carried = true` with scores different from the
-   frozen plan-time copy requires `rescored_from` or a `history` entry whose `evidence` names a hypothesis or a
-   gate record.
+   register changed them, and a changed score says so. The plan keeps no list of the rows of version 0.2; three
+   rows say they come from it (EV-F04 and EV-F37, which name their version-0.2 form, and EV-F40, "rescored from
+   3.0"), and only these have `carried = true` (DESIGN). Every row's plan-time scores stand as printed, so the
+   check covers every row: a row whose `impact`, `confidence` or `effort` differ from the frozen plan-time copy
+   needs a `history` entry with those factors and non-empty `evidence` (which evidence may move which factor,
+   and that it resolves, is NAB-22's check), or the finding is `ev.carried-changed-silently`.
+   *The frozen plan-time copy* is the three table fixtures `tests/fixtures/ev/solid.tsv`,
+   `frontier_moonshot.tsv` and `parked.tsv` (NAB-18 to NAB-20; per plan row, tab-separated: id, family, where,
+   impact, confidence, effort, score, decision text). Every comparison with it (scores, decision text, order,
+   table) binds a row only while the row's `history` is empty. A row with history is held to its last entry
+   instead: its decision text may differ from the copy only by the words a re-score appends ("fell back to
+   …", NAB-22), and a row whose history has a `move` sits in the table the move names.
 3. *Coverage.* Every construction C-16 to C-40 has a row, and so does every major mechanism that is not a
    construction. Where a construction has a Solid part and a Frontier part, the row sits in the table of its
    larger part and the decision names both. Check: each of C-16 … C-40 occurs in some row's `where` (at plan time
    all of C-01 … C-40 do); a row whose `tiers` has two entries sits in the table of the first.
 
 **4. Sort rule.** Within each table the rows are sorted by score, highest first; ties keep the plan-time order.
-The loader refuses a file whose table is out of order (`ev.unsorted`).
+The loader refuses a file in which a row scores higher than the row before it in its table (`ev.unsorted`). The
+order among equal scores is checked against the frozen copy by each table's `order_matches_frozen_list`
+(NAB-18 to NAB-20), not by the loader.
 
 **5. Vocabulary of decisions.** "Adopted" means the work package is funded once the pilot has run. "Admitted"
 means the item is in the catalogue and waits its turn under the Moonshot cap (at most four [M] items active at
@@ -143,12 +154,15 @@ where the rejection rests on a calculation, `killed_idea` names the record that 
 Findings: `ev.score-mismatch`, `ev.unsorted`, `ev.below-two-unjustified`, `ev.carried-changed-silently`,
 `ev.construction-missing`, `ev.kill-gate-unknown` (a kill gate not in the gate register), `ev.rejected-without-
 reason` (a rejected row with neither `killed_idea` nor a non-empty `reason`; three rejected rows of the plan,
-EV-P14, EV-P39 and EV-P40, have no colon in their decision text, which is why the reason is a field),
+EV-P14, EV-P39 and EV-P40, have neither a colon nor a killed-idea record in their decision text, which is why
+the reason is a field),
 `ev.parked-without-reopen`, `ev.tier-table-mismatch`, `ev.queue-mismatch` (checked in both directions against
 the queue records of NAB-21: an `admitted` row, or a row whose decision text says "queued", with an empty
 `queue`; a row whose `queue` lists an item whose `family` does not name the row; a queue item whose `family`
 names a row that does not list it, or a row that does not exist. A queue item with `family = []` has no row and
-is not a finding), `ev.history-edited`, `ev.history-without-evidence`.
+is not a finding), `ev.history-edited` (an entry of a row's `history` changed or removed compared with the file
+at the base, the identifier lint's rule of N00-03: `HEAD` when the working tree differs from it, `HEAD~1`
+otherwise), `ev.history-without-evidence`.
 
 *Kill rows that land later (DESIGN).* The kill rows of the gate register are entered in seven ledger groups: two
 at M0 (the foundations; Chronicle, Ground, Foundry and Tether) and five at M1 (the body; control, learning and
@@ -161,9 +175,19 @@ not exist; once that exit record exists it is `ev.kill-gate-unknown`. A name tha
 the frozen list is `ev.kill-gate-unknown` at once. This is how the row beads (NAB-18, NAB-19, NAB-21) meet the
 criterion "resolves in the gate register" at M0; the M1 sweep (NAB-24) requires that no such skip remains.
 
+*Tables and queue records that land later (DESIGN).* The three tables (NAB-18 to NAB-20) land in parallel, and
+the queue records (NAB-21) after the Frontier and Moonshot table, so on a tree holding only some of them two
+checks would fail on rows still to land. While one of the three tables has no record, a construction that no
+row names is reported with a recorded `skip` naming the tables still empty; once each table has a record it is
+`ev.construction-missing`. While the file holds no `[[moonshot_queue]]` record, the items of the rows' `queue`
+lists are not looked up and are reported with a recorded `skip`; an admitted or "queued" row with an empty
+`queue` is still `ev.queue-mismatch`. Once a queue record exists, `ev.queue-mismatch` applies in both
+directions. A table that has landed short of rows is caught by that table's own count test.
+
 **7. Generated printout.** `xtask::generate::ev_matrix` renders `docs/decisions/ev-matrix.md` (three tables and
-the Moonshot queue) from the registry under `check-generated`. It is a row of the generator table, not a new
-check.
+the Moonshot queue) from the registry under `check-generated`. It is a row of the generator table of N34p4-03
+(inputs `registries/ev_matrix.toml`; output `docs/decisions/ev-matrix.md`, with the marker line that
+interface requires; mode: regenerate, compare bytes), not a new check.
 
 **8. Readers.** The funding check (a work package whose family row is `parked`, `deferred` or `rejected` is
 refused funding without an ADR that changes the row); the pilot ledger's Moonshot cap; the milestone-exit
@@ -171,16 +195,22 @@ sweeps (NAB-23 to NAB-31); the revive lint of the killed-idea register (NAB-32).
 
 ## Acceptance criteria
 
-- [ ] `registries/ev_matrix.toml` validates and loads; with NAB-18 to NAB-20 landed it holds 143 `[[family]]`
-      records: 41, 59 and 43 per table.
-- [ ] `score` reproduces every printed score of the 143 rows, including "2.3" for (3, 3, 4) and "3.8" for
-      (5, 3, 4).
-- [ ] Rule 1 holds: no row of table `solid` is below 2.0; exactly 16 rows of table `frontier-moonshot` are
-      below 2.0 and each has an [M] tier or a `needed_by`; 32 rows of table `parked` are below 2.0 and 11 are at
-      2.0 or above with a stated reason.
-- [ ] Rule 3 holds: C-01 to C-40 each occur in a row's `where`.
+- [ ] `registries/ev_matrix.toml` validates and loads with the schema line and no `[[family]]` record (the
+      state this bead leaves); a fixture file holding rows of the three tables and queue records loads.
+- [ ] `score` gives every value of `score_examples`, including "2.3" for (3, 3, 4) and "3.8" for (5, 3, 4).
+- [ ] Rule 1 on fixtures: a `solid` or `frontier-moonshot` row below 2.0 passes with `"M"` in `tiers` or a
+      non-empty `needed_by` and fails `ev.below-two-unjustified` with neither; a `parked` row below 2.0 passes.
+- [ ] Rule 3 on fixtures: a three-table fixture in which no row names C-27 fails `ev.construction-missing`;
+      the same fixture with the `parked` table empty reports a recorded `skip` naming that table.
 - [ ] Each of the twelve findings of step 6 is produced by its planted fixture.
-- [ ] `docs/decisions/ev-matrix.md` is current under `check-generated`; `xtask` still has six subcommands.
+- [ ] `cargo test -p frob-conformance --test ev_matrix` passes on the tree this bead leaves and on any tree
+      where only some of NAB-18 to NAB-21 have landed, with no finding and only the recorded skips of step 6.
+- [ ] With `FROB_EV_SUMMARY` naming a file, `print_summary` writes the summary object of the test plan. (That
+      the matrix holds 143 records, 41, 59 and 43 per table, with every score matching, 0, 16 and 32 rows below
+      2.0 and C-01 to C-40 each named, is asserted for each table by NAB-18 to NAB-20 and over the whole matrix
+      by NAB-50 from this object; those beads come after this one.)
+- [ ] `docs/decisions/ev-matrix.md` is current under `check-generated`; the generator table gains this row and
+      `xtask` gains no subcommand.
 
 ## Test plan
 
@@ -191,18 +221,27 @@ sweeps (NAB-23 to NAB-31); the revive lint of the killed-idea register (NAB-32).
 - `score_examples`: (4,5,1) → "20.0"; (3,3,4) → "2.3"; (5,3,4) → "3.8"; (5,4,3) → "6.7"; (4,4,3) → "5.3";
   (3,2,4) → "1.5"; (2,2,3) → "1.3"; (2,2,5) → "0.8"; (3,1,5) → "0.6"; (2,1,5) → "0.4"; (1,4,3) → "1.3".
 - `score_half_rounds_away_from_zero`: (3,3,4) is "2.3", not "2.2".
-- `all_143_scores_match` (once the rows exist).
-- `tables_sorted_descending`.
-- `below_two_rule`: the 16 rows of the Frontier and Moonshot table below 2.0 are exactly: the tree-operator
-  route (1.5, needed by hybrids above 64 degrees of freedom), skill transport (1.5), symmetry at the instant of
-  contact (1.3), reachable-set tables (1.3), kernel reflection (1.0, needed as the one route from an instance
-  certificate to class Proved), the geometric-algebra tree policy, numerical continuation, Study-quadric
-  synthesis, tactile hands, firmware export, lifecycle compression, the shape-space atlas, label minimization
-  from contact, the fused per-world step kernel (all 1.0), coupled multiphysics islands (0.8) and facility
-  co-design (0.6).
-- `constructions_1_to_40_covered`.
+- `real_tree_is_clean`: the loader and the lints run on `registries/ev_matrix.toml` and report no finding, only
+  the recorded skips of step 6 (none once NAB-18 to NAB-21 have landed and the kill rows' ledger groups exist).
+- `tables_sorted_descending`: a fixture row placed above a higher-scoring row is `ev.unsorted`; two rows of
+  equal score swapped are not.
+- `below_two_rule` on fixtures: an [F]-only `frontier-moonshot` row at 1.5 with no `needed_by` is
+  `ev.below-two-unjustified`; the same row with `needed_by` passes; an `["F", "M"]` row at 1.3 passes; a
+  `parked` row at 0.4 passes. (The sixteen real rows are NAB-19's `sixteen_below_two`.)
+- `construction_coverage`: the two fixtures of the rule 3 criterion (finding, then skip).
+- `queue_before_queue_records`: a fixture row listing `MQ-16` with no `[[moonshot_queue]]` record is a recorded
+  skip; adding a queue record `MQ-16` whose `family` does not name the row gives `ev.queue-mismatch`.
 - `planted_findings`: one fixture per finding of step 6.
-- `rescored_row_says_so`: the connection-curvature row carries `rescored_from = "3.0"` and prints 2.0.
+- `history_unlocks_frozen_copy`: a fixture row whose `confidence` differs from its frozen copy fails
+  `ev.carried-changed-silently` with no history and passes with a history entry carrying the new factors and
+  non-empty `evidence`; its decision text with "fell back to …" appended passes only with that entry. (The real
+  rescored row, EV-F40, is NAB-19's `rescored_row`.)
+- `history_edited_against_base`: a history entry changed relative to the base file is `ev.history-edited`.
+- `print_summary`: when `FROB_EV_SUMMARY` names a file, writes to it one JSON object
+  `{"schema":"frob.ev-summary","families":{"solid":…,"frontier-moonshot":…,"parked":…},"score_mismatches":…,
+  "unsorted":…,"below_two":{"solid":…,"frontier-moonshot":…,"parked":…},"constructions_missing":…,
+  "kill_gates_named":…,"kill_gates_unresolved":…,"kill_gates_skipped":…,"queue_items":…}` computed on the real
+  registry; without the variable it writes nothing and passes.
 
 ### End-to-end script and logging
 
@@ -212,8 +251,10 @@ mismatches (expected 0), each as a `metric` with its expected value; digests of 
 
 ### Known answers and negative controls
 
-Known answers: 143 rows (41 + 59 + 43); 0, 16 and 32 rows below 2.0; the highest score is 20.0 (five rows) and
-the lowest is 0.4 (continuation on the GPU with root certificates checked inside a proof kernel). Negative
+Known answers of the whole matrix (asserted by NAB-50 from `print_summary`, and per table by NAB-18 to NAB-20):
+143 rows (41 + 59 + 43); 0, 16 and 32 rows below 2.0; 82 distinct kill gates named; the highest score is 20.0
+(five rows) and the lowest is 0.4 (continuation on the GPU with root certificates checked inside a proof
+kernel). Known answers of this bead: the eleven values of `score_examples`. Negative
 controls: a row whose printed score is "2.2" for (3,3,4); a Solid row at 1.5 with no `needed_by`; a carried row
 whose confidence was changed with no history; a rejected row with an empty reason; a kill gate name that does
 not exist; a history entry with empty `evidence` and `unchanged = false` (`ev.history-without-evidence`). Metamorphic relation: permuting rows of equal score within a table changes no lint result except

@@ -57,6 +57,11 @@ sources `scripts/e2e/lib.sh`; idempotent; works in a scratch directory under `ta
    g1-reduced-30`). Assert the `DesignId` equals the pinned one, `frob design show <DesignId> --section term
    --json` equals `import.fbot` byte for byte, a second call with the same key is an idempotent replay, and
    the loss report equals its golden (`--strict` must fail exactly when the golden loss report is non-empty).
+   For `fsim-g1`, the two referee runs its owners name for this script: `frob --json sim run <DesignId> --tier
+   referee --seconds 2 --key cat-g1-run` on the lowered design (NEG-32; exit 0, logged with the round-trip
+   maxima the import recorded and their thresholds), and `frob --json sim run g1 --tier referee --seconds 2 --key
+   asset-fsim-g1-smoke-<sibling commit>` (ROBOT-fsim-g1: BD-024's catalogue smoke), whose state digest must
+   equal the digest recorded beside the asset. Both lines carry their own evidence block (tier referee).
 3. Validation: counts, exact inertia consistency, joint limits, total mass; compare `validation.json`.
 4. Role rules: a parity-only robot is absent from the mass-gate table; a `reduced` profile is refused as a
    parity reference; no artifact produced in the loop carries claim Reality.

@@ -66,8 +66,9 @@ through the `poly-identity` kind, its accepted specimen and mutants. Out: produc
 
 - [ ] The offline auditor accepts the T-01 bundle for the M0 Cayley kernel without trusting the producer:
       `frob-verify` built from its crate alone returns `accept`.
-- [ ] GATE-LEMMA-00 (TARGET, M0): T-01 (with T-03 and T-04) certified by FrankenSymPy for the M0 kernels; the
-      certificate replays offline.
+- [ ] This card's part of GATE-LEMMA-00 (TARGET, M0): the T-01 certificate on `K-cay-step` is FrankenSymPy's
+      and replays offline in `frob-verify`. The gate itself (T-01 with T-03 and T-04) is recorded by N12-33, which
+      depends on this card, from its script's receipt; recording it is not a condition of this card's close.
 - [ ] Negative controls rejected: one changed coefficient in the payload (the factor 2 of ω̂² written as 3); a
       mutated statement (det N = −D³); a certificate whose embedded kernel hash is another kernel's.
 - [ ] The registry row shows the instance route `checked`, class `Certified`, with certificate hash and checker

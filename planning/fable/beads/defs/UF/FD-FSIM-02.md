@@ -4,9 +4,9 @@ title: "upstream frankensim: a persistent contact time stepper (its open Moreauâ
 type: "task"
 priority: 1
 milestone: "M2"
-labels: ["m2", "suite", "kinesis", "traction", "upstream", "frankensim", "solid"]
+labels: ["m2", "suite", "kinesis", "traction", "upstream", "frankensim", "solid", "review-notes-open"]
 parent: "WP-22"
-deps: ["BD-037", "BD-081", "BD-086", "N24b-03", "N33b-04", "STD-E2E"]
+deps: ["BD-037", "BD-080", "BD-081", "BD-083", "BD-085", "BD-086", "BD-093", "N24b-03", "N33b-04", "STD-E2E"]
 needs: []
 related: ["FD-FSIM-12", "FD-FSIM-13", "N16a-05", "N33b-07", "NFp2-01"]
 gates: ["GATE-FID-01"]
@@ -112,8 +112,10 @@ T moves while a ten-fold tournament is running. If a gate named here does not ex
 the pin still moves with the gates that do exist, the row stays `landed`, and the gate's first run is made
 against the new pin.
 
-**What the switch-over re-runs.** In this bead: the contact known-answer battery on the referee, the thin-barrier
-and sill fixtures, and INV-KIN-02 on forced retries, all at the new pin; their record, with the receipt hash, is
+**What the switch-over re-runs.** In this bead: the contact known-answer battery on the referee (the rows BD-085
+lists as referee-expressible), the thin-barrier and sill fixtures (BD-086; the sill's referee rows run through the
+witness migration of BD-093), and INV-KIN-02 on forced retries (the retry ladder and forced-retry plans of
+BD-083), all at the new pin; their record, with the receipt hash, is
 what NFp2-01 starts from. The transaction stays: the new stepper is called inside it, through its checkpoint
 interface. The referee's outputs change when its stepper changes, so the plan's switch-over rule also says that
 the **fidelity ledger is re-baselined once**, with a written rationale. That step is NFp2-01's. The new referee
@@ -159,11 +161,16 @@ asserting that the fixture fails with the signature in `expected.toml`; then the
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the referee-side re-runs
 of this bead are made (the contact known-answer battery, the thin-barrier and sill fixtures of BD-086, INV-KIN-02
 on forced retries), and the registry row must read `landed` with a receipt newer than the pin move (`adopted`
-once NFp2-01 has run: GATE-FID-01 is read there, not here). Phase `post` also runs `frob sim run --tier referee
---fixture <incline|stack> --seconds 2 --seed 5 --key fd02-<fixture>-<a|b> --json` (`--fixture` names a registered
-fixture, N24b-03) twice per fixture under distinct keys, the second in the conformance build with one
-interval forced to retry, asserting that the digests of the retried run equal those of the undisturbed run (both
-envelopes show `idempotent_replay: false`). The ledger reads before and after the re-baseline are in NFp2-01's
+once NFp2-01 has run: GATE-FID-01 is read there, not here). Phase `post` also checks INV-KIN-02 from the user's
+side, in the chaos build (test feature `chaos`; release and conformance builds answer the two plan inputs with
+802), on BD-080's registered referee fixtures `traction/referee_stand` and `traction/referee_drop` (N24b-03): per
+fixture, `frob sim run --tier referee --fixture traction/<name> --seconds 2 --seed 5 --chaos-plan <plan> --key
+fd02-<name>-forced --json`, where `<plan>` (schema `frob.chaos.retry/1`) holds one entry `{ world, base_interval,
+fail_attempts_below = 1 }` naming an interval with active contact (for `referee_drop`, one after the impact at
+0.3193 s), and the same command with `--numerical-plan-floor 1` under the key `fd02-<name>-plan1`, the clean
+plan-1 run. It asserts that the two digests are equal (KA-341: a forced retry equals the clean run started with
+the same plan, not the undisturbed plan-0 run, whose sub-interval differs) and that both envelopes show
+`idempotent_replay: false` and `chaos: true`. The ledger reads before and after the re-baseline are in NFp2-01's
 script.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to

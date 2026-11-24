@@ -6,7 +6,7 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "marrow", "frob-algebra", "solid", "frontier", "spine", "spec", "test"]
 parent: "WP-03"
-deps: ["BD-025", "N10a-01", "STD-E2E", "STD-TEST"]
+deps: ["BD-025", "N10-CX", "N10-KA1", "N10a-01", "STD-E2E", "STD-TEST"]
 needs: []
 related: ["BD-050", "BD-051", "BD-062", "N10a-13", "N13-29"]
 gates: ["GATE-MARROW-01", "GATE-SKEL-07", "GATE-ATEL-02"]
@@ -87,12 +87,15 @@ P; the sans-serif letter is used wherever the reflection matrix P also appears.)
 - *Shell rule.* A body with outer region Ω and declared wall thickness t has the mass and inertia of Ω minus
   its inward offset Ω_t at the same density: 𝖯_shell = 𝖯(Ω, ρ) − 𝖯(Ω_t, ρ), both in the same frame, computed in
   exact rational arithmetic at model compile time so the subtraction of two nearly equal matrices loses
-  nothing. A body without a wall thickness is solid. Limit check: as t → 0 a spherical shell of radius r tends
+  nothing. A body whose written fill is `solid` has no wall; a body with no written fill is refused
+  (FROB-REF-105), because there is no default fill. Limit check: as t → 0 a spherical shell of radius r tends
   to I = (2/3)·m·r², against (2/5)·m·r² for the solid ball.
 - *No silent solid.* A solid body whose mass exceeds the plausibility bound of its part class is refused
   (FROB-REF-168: a solid body exceeds the mass plausibility bound of its part class and no fill is declared;
-  repairs, in order: declare a wall thickness, declare the fill as intended, change the material) unless the
-  design declares the fill as intended.
+  repairs, in order: declare `{shell: t}` with a wall thickness, declare `{lattice: φ}`, declare the solid fill
+  as intended with `{solid: {intended: true}}`, change the material or the region) unless the design declares
+  the fill as intended. Until decision N13-03 approves a part-class table, the bound is one quarter of the
+  design's `mass_max` (the registry row's fail-closed default).
 
 **Statements.**
 
@@ -112,8 +115,9 @@ P; the sans-serif letter is used wherever the reflection matrix P also appears.)
 - *Mass-support.* A centred 1 kg part with three principal moments of 0.008 kg·m² each, declared inside a ball
   of radius 0.10 m. It passes positivity and the triangle tests (0.008 < 0.016). It needs
   tr(I_C)/(2m) = 0.024/2 = 0.012 m² where the ball allows ρ² = 0.010 m². Verdict: refused by the mass-support
-  predicate (FROB-REF-106: declared mass properties violate the mass-support bound; repairs: enlarge the
-  declared envelope, or correct the inertia).
+  predicate (FROB-REF-106: declared mass properties violate the mass-support bound; repairs, in order:
+  correct the declared inertia or centre of mass, enlarge the declared mass region to the real envelope,
+  `set-fill` to a geometric fill).
 - *Equality case.* An isotropic thin shell of radius 0.10 m and mass 1 kg has moments
   (2/3)·1·0.01 = 1/150 kg·m², so tr(I_C)/(2m) = (3/150)/2 = 0.010 m²: the bound holds with equality and the
   part is accepted.
@@ -183,10 +187,14 @@ parameter has a unit and a provenance (INV-SKEL-03).
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c03.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control; G0 and G1 rows
-KA-043 to KA-046; when the verbs exist, `frob --json design check fixtures/inertia/part_in_ball.fbot` (expects
-refusal FROB-REF-106 with both numbers), `…/shell_equality.fbot` (accepted), `…/alu_box_solid.fbot` (refused,
-FROB-REF-168) and `…/alu_box_shell.fbot` (mass 3.45 kg). The log
+`scripts/e2e/spec_c03.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control, one control per
+build with its own feature (N10a-01 section 6); the rows through the helper's `e2e_tier`, that is
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g0_laws -- KA-043` and `--test g1_known_answers --
+KA-044`, `-- KA-045`, `-- KA-046`; then, logged `pending` until `design.check` (BD-110) and the production cone
+and inertia functor (BD-051, BD-062) land, `frob --json design check @fixture:inertia/part_in_ball.fbot` (expects
+refusal FROB-REF-106 with both numbers and its three repairs in order), `@fixture:inertia/shell_equality.fbot`
+(accepted), `@fixture:inertia/alu_box_solid.fbot` (refused, FROB-REF-168) and `@fixture:inertia/alu_box_shell.fbot`
+(mass 3.45 kg); the four fixture designs are this bead's. The log
 `target/e2e-logs/spec_c03/<utc>.ndjson` records per step the command, exit code, the refusal code and its
 ranked repairs, masses with units against expected values, the envelope's evidence block, and on failure the
 first differing rational. Final `summary` line.

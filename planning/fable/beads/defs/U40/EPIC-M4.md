@@ -4,7 +4,7 @@ title: "Milestone M4, amortized control, co-design, mission queries at scale: de
 type: "epic"
 priority: 2
 milestone: "M4"
-labels: ["m4", "delivery", "solid", "frontier", "gate", "review-notes-open"]
+labels: ["m4", "delivery", "solid", "frontier", "gate"]
 parent: "EPIC-PROGRAM"
 deps: []
 needs: []
@@ -76,12 +76,15 @@ strata re-stratified if KILL-RANK and KILL-FAMILY both fired. M7 needs M4 and ne
 - `frob experiment suggest` ranked by value of information; the agent-surface A/B; `frob solve run`; the fleet
   scheduler (`frob fleet plan`).
 
-**2. Gates with a part due at this exit (compiled register tables: no admission, 49 convergence).** The register
+**2. Gates with a part due at this exit (compiled register tables: no admission, 51 convergence).** The register
 places GATE-HAB-11, GATE-SHIELD-01 and GATE-AUGUR-11 here, with their mechanisms. GATE-REFLEX-01 closes here for
-the tracked and hybrid archetypes.
+the tracked and hybrid archetypes. Two rows carry an M4 part that the plan's printed load table (49) does not
+count, each with its recording bead (N40-02, step 5): GATE-ARENA-01 for the M4 task families (BD-368), and
+GATE-LEMMA-03 over every proof kind enabled by M4 (recorded by this exit's review, BD-378).
 
 | Gate | Claim | Part due | Pass criterion in brief (TARGET) | Defined in |
 |---|---|---|---|---|
+| GATE-ARENA-01 | Known answer | M2 (the M2 task families); M3 (the four M3 task families); M4 (conveyors, stair and curb climbing for wheels and tracks, reach and carry) | Every task is reproducible inside its determinism class from its `TaskId`, `SceneId`, `ModelId` and seed; reference-robot baseline scorecards are recorded, for these families; a belt whose boundary work is left off the energy ledger is caught. | §24.17 |
 | GATE-ATEL-02 | Known answer | M1 (the analyses that exist); M4 (the rest) | Each analysis A-01 to A-14 passes its known-answer tests; `design check` finishes in under 2 s at the 95th percentile on templates. | §28.23 |
 | GATE-ATEL-03 | Design comparison | M4 | BET-10: the pre-registered A/B of agent surfaces on the design benchmark of §24, with an anytime-valid verdict and an effect size: restricted mean time to an accepted answer lower by a factor of at least 1.5 on at least ten briefs. The incumbent arm belongs to §39. | §28.23 |
 | GATE-ATEL-04 | Known answer | M3 (comparison); M4 (bisect) | Comparison type-I error at or below α under optional stopping over 10⁴ null comparisons; `design bisect` finds the planted edit in at least 95 of 100 trials. | §28.23 |
@@ -113,6 +116,7 @@ the tracked and hybrid archetypes.
 | GATE-GAIT-02 | Known answer | M4 | 100-case suite: in at least 72 of 80 regular cases the gradient's cosine against central differences is at least 0.95; all 20 grazing and fold controls labeled or refused; no case refused for simultaneity alone; the bar fixture returns rest, v/4 and the sign of the coupling term. | §22.18 |
 | GATE-GAIT-03 | Design comparison | M4 | Continuation succeeds on at least 50% of 10% design perturbations; median solve at most 10 minutes of CPU; Kendall τ of at least 0.5 between orbit cost of transport and specialists on the calibration set; the measured solve cost is recorded beside the published range. | §22.18 |
 | GATE-HAB-11 | Design comparison | M4 | Retrofit [F]: three planted bottlenecks (a 20 mm threshold, a closer above push capability, an unmarked glass door) are repaired by the expected kits with the policy identity unchanged; the wheel-and-ramp closed form is reproduced by both arms. | §19.19 |
+| GATE-LEMMA-03 | Known answer | M1; M2, M3, M4, M5, M8 (every kind enabled by that exit) | Every proof kind in use has one specimen that `frob-verify` accepts and at least three mutations it rejects; the four stance mutations, an unknown kind with consistent hashes and a changed quantifier are all rejected; the binary has no dependency outside the standard library and runs in an empty environment. | §12.6 |
 | GATE-LEMMA-04 | Proof | M1, repeated at M4 | The first mission slice of §25 ships its inner cells and its exclusions as bundles; a re-check on a second machine accepts every one; the seeded-defect suite yields zero accepted false certificates. One accepted false certificate fails the gate. | §12.6 |
 | GATE-MARROW-04 | Known answer | M4 | PO-MARROW-05 holds exactly for every group of GATE-MARROW-02 on 100 random pairs of channel spaces each; all eight mutations of §13.8 are caught by at least three fixtures each. | §13.10 |
 | GATE-NEMESIS-07 | Known answer | M4 | Screening audit: a planted winner removed by a biased screen is reported in 100 of 100 runs; the stratified bound covers the planted false-discard rate in at least 95% of 1,000 synthetic campaigns. | §26.15 |
@@ -275,7 +279,7 @@ certificates decide too little) → dual witnesses, monotone bounds and sampled 
 
 ### Unit tests
 
-Carried by member beads. Epic check: due counts for M4 are 0 admission, 49 convergence, 30 kill decisions, plus 16
+Carried by member beads. Epic check: due counts for M4 are 0 admission, 51 convergence, 30 kill decisions, plus 16
 late parts and 9 late kill decisions.
 
 ### End-to-end script and logging

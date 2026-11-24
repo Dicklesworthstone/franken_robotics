@@ -1,0 +1,314 @@
+{
+ "round": 4,
+ "slice": "F-U22c",
+ "reviewed": 41,
+ "changed": [
+  {
+   "bead": "BD-118",
+   "kinds": [
+    "plan",
+    "contradiction",
+    "registry"
+   ],
+   "what": "FROB-REF-424 was cited only in References: N22a-08's fallback contract refuses at synthesis a controller whose program has neither a last feasible command nor a backup, and VERBS-control lists 424 (exit 3) on control.synth. Step 2, the exit-code paragraph and `exit_codes_by_outcome` now state it; without it control.synth had no specified path for that case. The GATE-REFLEX-01 criterion said the standing rows of GATE-SKEL-03 are recorded from N22c-01's receipts, while N22c-01 and N14b-06 give GATE-SKEL-03's M1 part to N14b-06 from its own tier run: corrected, and the M1 part of GATE-REFLEX-01 is one receipt of N22c-01's tier run carrying N22a-11's legged case (not two receipts). The KILL-BASELINE consideration now names the reason form `class-withdrawn: KILL-BASELINE` that N22c-14 and BD-249 assert (request to N22a-12, whose closed reason list lacks it)."
+  },
+  {
+   "bead": "N22c-01",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Applied H-verbs-8: added dep N16ap4-01 (owner of `sim.run --task` and `--controller baseline` on the referee at M1 in VERBS-sim; it brings N29ax-01, stored designs on the referee) and replaced the stale consideration that `--task` was unregistered at M1 and its calls would be logged `not run` (a skip where VERBS-sim now requires a pass). C13: the 'requested of N22a-11' narration is now the fact (N22a-11's case `gate_reflex_01_legged_referee` under the GATE-REFLEX-01 entry; its script writes no row), checked against N22a-11. Steps 9 and 10 named no runnable command (`frob control synth <three-legged fixture>` is no design form): the pusher and three-legged fixture designs are now created with `design new --file` and synthesized by name."
+  },
+  {
+   "bead": "N22c-03",
+   "kinds": [
+    "deadlock",
+    "contradiction"
+   ],
+   "what": "INV-SHIELD-02's case reads `shield.report` envelopes, whose verb is BD-340's, but BD-340 was not a dependency (convention 8): added (M4, no cycle) and the script lists `frob shield report`. The script said GATE-GAIT-01 and -02 are recorded by BD-333 and BD-334; their one recorders are N22a-38 and N22a-39 (as N22c-49 now states): corrected."
+  },
+  {
+   "bead": "N22c-04",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The e2e ran controls 'with `--features gauntlet-mutations` and the fixture's mutant feature', a second per-fixture feature that convention 1 rules out (one feature builds planted defects): now the one feature, in whose run the registered mutant must be caught. Every hand value of both tables was recomputed (rimless 2.094996 and 1.20004, cost rows, 299, bar v/4, energy card 1.49 J, 50.5 and 45.5 ms, 50 kg, projection, pre-slip, lane cart, two-mode 1.457107 and 1.207107, sampled damper) and is right."
+  },
+  {
+   "bead": "N22c-05",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The script ran `frob sim run <robot>` on an archetype name, which `sim.run` does not resolve (a stored design, DesignId, path or catalog model): it now creates `pfb1-quad` and `pfb1-humanoid` with `design new --template` and runs those, and names the two harness controls as fixture controllers with their own keys (they had no command)."
+  },
+  {
+   "bead": "N22c-06",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Same defect as N22c-05: `frob sim run <robot>` on archetype names, and 'the same with fixture:pilot-osc for each robot' paired each controller with both robots. Now `design new` of `wheel-leg` and `mobile-manipulator`, the hybrid controller on the first and the operational-space controller on the second, and the two harness controls named."
+  },
+  {
+   "bead": "N22c-14",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Decision rule 2 said that after the one repair of an invalid measurement 'rule 3 applies', which fires the gate whatever the repaired measurement shows; now rules 1 and 3 apply to the repaired measurement, and a potency failure that survives the repair fires. `kill_baseline_rule_table` gains both post-repair cases. The 19-of-20 lower bound (0.784) and 20-of-20 (0.861) were recomputed."
+  },
+  {
+   "bead": "N22c-15",
+   "kinds": [
+    "registry"
+   ],
+   "what": "Under rule 1 (pilot falsified) the kill row's `receipts` was 'none', but N40-03 defines `receipts` as the receipts the outcome rests on and resolves pilot receipts at `receipts/pilots/<hash>.json` (N38a-09): the entry now cites the pilot result's receipt, so a fired decision rests on a checkable hash; AC updated."
+  },
+  {
+   "bead": "N22c-49",
+   "kinds": [
+    "request",
+    "registry",
+    "contradiction"
+   ],
+   "what": "Applied both F-U22a requests: GATE-GAIT-01 and -02 now read 'BD-333 with N22a-38' and 'BD-334 with N22a-39' (the second records from its tier run's receipt); GATE-REFLEX-01's M3 part keeps BD-247 as its recorder and the `legged-predictive` row is the one further recording N38b-19 permits (a lift of a lower-priority Frontier row recorded against its fallback named in advance, the Solid legged baseline) by N22a-21 (requests to BD-247 and N22a-21). Also found and fixed: GATE-REFLEX-09 named BD-436 and GATE-SHIELD-05 BD-440, both epics, which cannot record (now N22b-07 and N22b-35, the beads that record them); GATE-SHIELD-01 named BD-337, which depends on and closes on N22b-15's recorded campaign receipt (now N22b-15). Added a paragraph saying how the column is read (one recorder per part; `measured_by` names the recorder and its script)."
+  },
+  {
+   "bead": "N22c-16",
+   "kinds": [
+    "registry"
+   ],
+   "what": "When the pilot N22a-22 is falsified (the consideration's path, BD-331 closed `not-funded`), the kill row's `receipts` had nothing to cite; N40-03 resolves pilot receipts at `receipts/pilots/<hash>.json` (N38a-09), so the entry now cites the pilot result's receipt. Arithmetic (65,536; 204,800; 299; 0.33/1 and 1.7/5.2 GPU-minutes; break-even 30/60 and 6/12) checked against §22.8."
+  },
+  {
+   "bead": "N22c-17",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "Rule 0's `receipts` named 'the pilot record's identifier ... in its place'; it now cites the pilot result's receipt under `receipts/pilots/` (N40-03, N38a-09). The script's orbit call used `--key kg-orbit-<run-id>` on the stated ground that a fixed key would replay a record made before the switch; STD-E2E keys carry no run identifier and every run has its own state root, so it is now `$(e2e_key orbit-after-kill)`. Rule-table cases (lower-bound modes) checked."
+  },
+  {
+   "bead": "N22c-21",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The data command `frob sim run tracked-a --scene soil:sand-dry ...` named no scene form `sim.run` accepts (a scene identity, name or file) and a design that does not exist in the script's empty state root. The bead now delivers the scene file `fixtures/scenes/soil_plot_sand_dry.fscene` with its other fixtures and the script creates `tracked-a` with `design new --template tracked-flipper` first. Dictionary sizes (36; 1,891; 3.58e6), 108-column regressor, 3,888 coefficients, conformal index 951, abs-value and linear-recovery cases recomputed."
+  },
+  {
+   "bead": "N22c-22",
+   "kinds": [
+    "broken",
+    "contradiction"
+   ],
+   "what": "The switch-over script calibrated on `<pilot run id>`, a run from another state root, on a design it never created: it now creates `tracked-a` and its own data run as N22c-23's script does. The AC had GATE-REFLEX-10's M6 part re-entered after switch-over, a second recorder that N38b-19 does not admit (one recording bead per part; the only other is the lift of a fallback row): the re-run is now a check whose receipt is logged, and the part stays N22c-25's. Input-affine recovery case (A, B) recomputed."
+  },
+  {
+   "bead": "N22c-23",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "C13: 'the number is requested of N35x-02 so that VERBS-control can list it' and '(requested)' restated as the fact: raised by slug, its ledger row's interim form, listed by slug on `control.lift` and `control.mpc`, numbered by the ledger run. Script: same `--scene soil:sand-dry` and missing-design defect as N22c-21, fixed the same way; the 18-trajectory calibration had no data run, now `--worlds 18` with its own key."
+  },
+  {
+   "bead": "N22c-24",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The script used 'an admitted model from N22c-23's fixtures' and `lifted:<id>` in an empty state root, where no design or `LiftId` exists: it now creates `tracked-a`, runs N22c-23's data step and fits and calibrates first, taking `<id>` from that admission."
+  },
+  {
+   "bead": "N22c-25",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Same scene/design defect in step 3 (fixed as in N22c-21). The cap check ('a first request without --protocol beyond the third episode is refused') could not fail as stated: protocol episodes draw nothing from the default three, so a later protocol-free request is admitted; it is now one `--episodes 4` request without `--protocol`, refused with `mpc-episode-cap`. Paired-ratio and coverage helper values recomputed."
+  },
+  {
+   "bead": "N22c-26",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "`receipts` under rule 1 held 'only what exists' while the pilot result's receipt exists under `receipts/pilots/` (N40-03): rule 1 now cites it, and `not-fired`/rule 3 cite both N22c-25's and the pilot's, as rule 2 says. The fired-path check ran `control.mpc --planner compiled` on N22c-24's task `soil-velocity-tracking` and an uncreated design, neither of which exists when the item was not funded: it now creates a quadruped and uses the registered `track-forward-20s`."
+  },
+  {
+   "bead": "N22c-27",
+   "kinds": [
+    "broken",
+    "registry",
+    "contradiction"
+   ],
+   "what": "The hand batch pins a tick at 0.70 m (ticks 0.04 m apart), so Arm 1 brakes at 0.42 m, not 0.45 m: the script and AC asserted 0.05 m short and 0.2296 m beyond on that batch, which would fail; they now assert 0.02 m and 0.2596 m (1.236 m/s), keeping 0.05/0.2296 for a tick at 0.45 m in pinned unit cases. `constants` fixed v₀, μ_A and μ_B while the same names are free `--param` parameters, which N24b-03 and VERBS-sim refuse (802): they move to the `hand` batch and `free` defaults; `s0` had no domain (now [2.0, 2.5] m, default 2.02). The AC said an undeclared `--scene` is 802; VERBS-sim refuses only inputs the fixture declares: now `--task`. The mutant controller was both 'present in every build' and 'compiled only under gauntlet-mutations' while the scripts run it through `frob sim run`: it is a fixture controller in every build, and the plant `drop_intersample_term` is the planted defect in Arm 2's filter."
+  },
+  {
+   "bead": "N22c-28",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Applied the round-3 request (convention 11): its own script `scripts/e2e/reflex_shield_timeliness.sh` exercising the refusal payload on `listing-arm1.toml`, the quantified fit on `listing-arm2.toml`, the timely variant (`cart-timely.fbot`, now in scope) and `shield.check`'s `late-alarm` against the Arm 2 shield, with a script-injected plant. The `late-alarm` AC quoted only 0.2696 m (tick at 0.45 m); at the hand batch's phase it is 0.2996 m: both are stated."
+  },
+  {
+   "bead": "N22c-29",
+   "kinds": [
+    "request",
+    "registry",
+    "contradiction",
+    "broken"
+   ],
+   "what": "Applied H-verbs-8: with `--fixture` an out-of-domain value of a fixture-declared parameter is FROB-REF-530 (`free.<name>.domain`), 802 kept for undeclared or fixed names and controller domains; `param_out_of_domain_802` (`mu=0.9`, a fixture parameter) became `param_fixture_out_of_domain_530` plus a controller-side 802 case; C13 'interim DESIGN rule, requested of N24b-03' dropped (N24b-03 states it). Step 4 built `frob` with `gauntlet-mutations` through 'the end-to-end standard's mutation step', which STD-E2E does not have: the mutant is a fixture controller in every build (N22c-27). The plant `no-timeliness` was a separate build, which a script cannot inject: now script-injected. Episode 0 now pins `s0=2.01` so Arm 1 brakes at 0.45 m and reproduces 0.2296 m."
+  },
+  {
+   "bead": "N22c-31",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The script's session key carried the time; it is now a plain key (`cpr-open`), since STD-E2E keys carry no time and every run has its own state root, which also holds no earlier episode."
+  },
+  {
+   "bead": "N22c-32",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Session key without time (`dl-open`). The declared plant was a build (the label check removed), which a script cannot inject, so `run-all.sh --verify-plants` could not pass; the plant is now `conforming-offered` (step 6 offers step 3's conforming frozen ControllerId, so the refusal assertion fails), and the label-check build stays a negative control compiled under `gauntlet-mutations`."
+  },
+  {
+   "bead": "N22c-34",
+   "kinds": [
+    "registry"
+   ],
+   "what": "Rule 0 left no outcome for the pilot never run (N22a-22 falsified): it is now N40-03's `not-reached` with no receipt, in the rule, the record's outcome list, the unit test and the AC; under rule 0's `fired` the receipt is the pilot N22c-30's `[[pilot.result]]` receipt, which N40-03 resolves in `receipts/pilots/`."
+  },
+  {
+   "bead": "N22c-38",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The determinism lane's keys carried a run id (`g4-det-a-<run-id>-<case>`), which STD-E2E keys never carry; now `g4-det-a-<case>` and `g4-det-b-<case>`, distinct within the run."
+  },
+  {
+   "bead": "N22c-39",
+   "kinds": [
+    "registry"
+   ],
+   "what": "Rule 1 (pilot falsified) has no battery or N22c-38 receipt, so the `fired` decision cited none; it now cites the pilot N22c-35's `[[pilot.result]]` receipt at `receipts/pilots/<hash>.json` (N38a-09), which N40-03 resolves."
+  },
+  {
+   "bead": "N22c-41",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Its script asserted gamma = 1/2 exactly for the commuting pair; bisection for the least feasible gamma (1/2 = rho(A), on the boundary) stops at relative width 1e-4 above it, so the assertion would fail. Now `upper` within that width above 1/2, with the certificate accepted."
+  },
+  {
+   "bead": "N22c-42",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Determinism-lane keys carried a run id; now `g5-det-a-<step>`/`g5-det-b-<step>`. Step 3 ran the per-mode plant through a `gauntlet-mutations` build of `frob`, which STD-E2E never builds; the plant is now exercised and caught in step 5's tier run and the script asserts it in the receipt's `controls` (AC updated)."
+  },
+  {
+   "bead": "N22c-43",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "Rule 5 (pilot read before funding) now cites the pilot N22c-40's `[[pilot.result]]` receipt (N38a-09, resolved by N40-03) in `receipts`, not only in the ADR. The fallback run's key carried a run id; now an `e2e_key fallback` key."
+  },
+  {
+   "bead": "N22c-44",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The plant `no-bound` was a build, which a script cannot inject; it is now script-injected (the 300 N·s/m call sent with kd=100), and the build stays the registered control `damping_gain_above_bound`, caught in N22c-46's tier run. `shield.fit` was given file paths for `--controller <id>` and `--tasks <family>`: the hold controller is now the fixture controller `free-slider-hold`, and the task `hold.ftask` is registered with `task new` first. The physical-damper case now has its design (`slider-brake.fbot`), delivered here."
+  },
+  {
+   "bead": "N22c-46",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The controller's `kd` referred to an undefined 'planted-violation flag'; its declared domain now admits the negative gain step 7 plants. Steps 6 and 7 built n-output systems with a matrix inertia through `sim.run --param`, whose fixture parameters are scalars (N24b-03): the full draws are now the tier-run case's (counts read from the receipt) and the script runs the n = 1 draws through `free-slider`. Controls (a) to (c) were said to run through the script though they are `gauntlet-mutations` builds; they are caught in step 9's tier run."
+  },
+  {
+   "bead": "N22c-47",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "Declared plants `neighbour-read` and `starved-stance` were build mutations no script can inject (`--verify-plants` would fail); only `pd-sign-flip` stays a plant (a script-injected design), and the two mutations are caught in step 7's tier run and asserted in its `controls`. Step 1 compared the ControllerId with a referee one that the run's own state root never holds; it now runs the referee synth itself. The round-3 request (record the M2 part from its own receipt, compare `quad-mammal` with N22a-13's case) was already met."
+  },
+  {
+   "bead": "N22c-48",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The class-specific checks named no task or command: the tracked pivot now runs NEGp1-53's `fixtures/tasks/pivot-90.ftask` with `telemetry energy` (dep NEGp1-53 added; no cycle), and the hybrid sill uses `fixtures/tasks/sill-20mm.ftask`, delivered here."
+  },
+  {
+   "bead": "N22c-50",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The plant `nondeterministic-reduction` was a device build that the script never built, and on a host with no device it could not make the script fail, so `--verify-plants` would fail. The harness is a cargo example the script builds: under the plant it now builds it with `--features gauntlet-mutations`, and with no device the mutation applies to the `batch-cpu` arm."
+  },
+  {
+   "bead": "N22c-51",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "It said the pre-registration BD-145 cites `registries/ladder.toml` and its hash, but BD-145 is a dependency that closes before this bead creates the table. Now the table cites the pre-registration, and `tau_thresholds_single_source` checks that the two values equal BD-145's pair."
+  },
+  {
+   "bead": "N22c-52",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Rules 1 and 3 of the decision rule both applied when 0.15 matched 0.3 without saturation (rho = 0.3 stands, and rho = 0.15 is adopted), so `rule_table` had no single outcome; rule 3 now takes precedence."
+  },
+  {
+   "bead": "N22c-53",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The cap check expected a request without `--protocol` for the second step's three episodes to be refused with `mpc-episode-cap`, but protocol episodes draw nothing from the default three (N22a-24), so it would be admitted. The check is now `--episodes 4` with no `--protocol` (key `or4-cap`), refused at admission, exit 3."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N22a-12",
+   "what": "Add `class-withdrawn` to NotSynthesizable's closed `reason` list (witness: the kill gate and its ADR identifier, printed `class-withdrawn: KILL-BASELINE`). KILL-BASELINE's fallback (N22c-14, BD-249, BD-118) has control.synth return that reason for a class the corpus withdrew; without it the type cannot express the fallback named in advance and N22c-14's acceptance test cannot pass."
+  },
+  {
+   "bead": "BD-247",
+   "what": "N22c-49 keeps BD-247 as the one recorder of GATE-REFLEX-01's M3 part and has N22a-21 record it once more under N38b-19's lift rule. For that, BD-247's M3 recording must carry the `legged-predictive` row against its fallback named in advance (the Solid single-step legged baseline that remains the quadruped's controller, N22c-05 step 8), instead of 'neither waits for it nor records it'; otherwise N22a-21's recording is a second recorder of the part with no rule that admits it."
+  },
+  {
+   "bead": "N22a-21",
+   "what": "State that your re-recording of GATE-REFLEX-01's M3 part is N38b-19's one permitted lift of the `legged-predictive` row that BD-247 records against its fallback named in advance, from a receipt holding BD-247's fifteen archetype rows and `gate_reflex_01_legged_predictive`, by a session that implemented neither bead (N22c-49's register declaration)."
+  },
+  {
+   "bead": "N22b-15",
+   "what": "`scripts/e2e/gate_shield_01.sh` ends by running `record_gate` itself and runs the controls in a separate cargo invocation. Convention 9 and N38b-19: the script produces one receipt with `e2e_tier g1_known_answers GATE-SHIELD-01 --mutations` (controls caught in the same run) and the part is recorded outside the script by a non-implementing session. N22c-49 names N22b-15 as GATE-SHIELD-01's recorder; STD-E2E's linter fails the script as `self-recording` as written."
+  },
+  {
+   "bead": "BD-335",
+   "what": "With `orbit_use = \"diagnostic-only\"` after KILL-GAIT fires, state which refusal a ladder allocation or screening consumer returns when asked to discard or select by an orbit metric, whatever the rank-agreement mode: the gate can fire on clause A or B while the ledger row's lower bound of τ stays ≥ 0.5 (`discard-only`), in which case BD-328's FROB-REF-537 would not fire. N22c-17's AC and its `orbit_not_for_ranking_after_kill` test need that code."
+  },
+  {
+   "bead": "N22-REF",
+   "what": "After KILL-MPC fires, `control.mpc` keeps running one CPU world (`debugging-aid`) but refuses `--compare`, `--demonstrations` and batched requests 'with the ADR cited' (N22c-16). No code covers this: FROB-REF-724 refuses a whole `killed` capability at dispatch (N00-02), which would also refuse the one-world mode. Register a worded refusal (or name the code) for a request whose mode a fired kill gate withdrew while the verb lives on, with the ADR and the fallback in its payload, and list it on `control.mpc` in VERBS-control. The same need arises after KILL-MPCRECORD fires: `control.mpc --freeze` is withdrawn while the verb lives on, and N22c-34's script expects it 'refused citing the ADR'."
+  },
+  {
+   "bead": "FD-FSIM-20",
+   "what": "After the switch-over it records GATE-GAIT-01 and GATE-GAIT-02 itself (`record_gate -- --gate GATE-GAIT-01 --receipt <hash>`), but each part has one recording bead, N22a-38 and N22a-39 (N22c-49's register declaration), and N38b-19 admits a second recording only as the lift of a row recorded against a fallback named in advance. Either re-run the two gates on the referee route as a check whose receipt hash is logged (as N22c-22 does for GATE-REFLEX-10), or state the referee-route rows as a lift N38b-19 admits, from a receipt that keeps every row the recorder beads measured (`part-rows-dropped`)."
+  }
+ ],
+ "unchanged": 5,
+ "notes": "All 41 beads read in full. Main themes: pilot-falsified kill decisions now cite the pilot's result receipt (N38a-09, resolved by N40-03) and a pilot never run is `not-reached`; e2e scripts made runnable from an empty per-run state root (designs created with `design new`, no run ids or times in keys, no cross-run identities); declared plants that were build mutations made script-injectable, with the mutations caught in the tier run; one recorder per gate part (N38b-19) in N22c-49's Measured-by column; numbers recomputed (fixture phase of N22c-27/28, bar sensitivities, rimless wheel, switching bounds, sampled-damping rows, cost and step counts). Requests filed for N22a-12, BD-247, N22a-21, N22b-15, BD-335, N22-REF and FD-FSIM-20. Unchanged: N22c-02, N22c-30, N22c-33, N22c-36, N22c-54."
+}

@@ -6,9 +6,9 @@ priority: 3
 milestone: "M4"
 labels: ["m4", "suite", "nemesis", "upstream", "frankensim", "solid"]
 parent: "WP-55"
-deps: ["BD-037", "BD-276", "N33b-04", "STD-E2E"]
+deps: ["BD-037", "BD-276", "N26a-26", "N26b-22", "N33b-04", "STD-E2E"]
 needs: []
-related: ["FD-FSIM-19", "N26a-22", "N26a-31", "N26b-22", "N33a-18", "N33b-12", "N33b-13"]
+related: ["FD-FSIM-19", "N26a-22", "N26a-31", "N33a-18", "N33b-12", "N33b-13"]
 gates: ["GATE-NEMESIS-05"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§26.9", "§26.16", "§42", "§33.9"]
 ---
@@ -106,8 +106,9 @@ asking for what the cap forbids, and is the row's `fixture`.
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
-is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt
-(`frob.stack-receipt/1`) under `receipts/`; (3) re-run that sibling's admission gates, the parity gates and the
+is never rolled back locally); (2) write a new resolution receipt (`frob.stack-receipt/1`) under `receipts/`
+with `cargo xtask check-stack --write-receipt --reason pin-move --gate INT-FSIM-01` (plain `check-stack` only
+verifies and writes nothing); (3) re-run that sibling's admission gates, the parity gates and the
 gates this item names; (4) relock (`Cargo.lock` regenerated and committed, builds `--locked` on the one toolchain
 T) and append the record, with the receipt hash, to `DEPENDENCY_ADMISSION.md`. Only then does the row's `status`
 become `adopted` and the interim posture end. No PASS is recorded on a dirty sibling tree, and neither a pin nor
@@ -153,13 +154,20 @@ through the airlock) are in N26b-24, where the switch-over is specified.
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsim_18.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
-Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (the registry
+Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (its `upstream`
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_18 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
-asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob nemesis bound <candidate> --task <the failure-free fixture task> --tier batch-cpu
---target 1e-6 --mode certify --budget episodes=3000000 --key fd18-post --json` (a run verb: the tier is
-required and the call carries its idempotency key), asserting the bound and its label. This bead writes both phases and
+asserting that they pass (the admission tests and the routing of N26b-22, a dependency). Phase `post`, after the
+pin move: the same fixture must pass, and the registry row must read `landed`, with the sibling commit that
+contains the change and a receipt newer than the pin move (N26b-24 re-runs GATE-NEMESIS-05 and the coverage row
+of GATE-NEMESIS-04 at step 5 of its Procedure A, calls this phase at step 7 and sets the row to `adopted` only
+at step 8, so an assertion of `adopted` here could never pass). Phase `post` also runs `frob nemesis bound
+<candidate> --task <the failure-free fixture task> --tier batch-cpu --target 1e-6 --mode certify --finalist
+--budget episodes=3750000 --key fd18-post --json` (a run verb: the tier is required and the call carries its
+idempotency key; `--finalist` because the fixture's candidate is no finalist of a recorded campaign, and the
+finalists-only rule of N26a-26, a dependency, refuses such a request without it; 3,750,000 episodes because the
+fixed-n design needs 2,995,731 nominal episodes and the nominal share is 80% of the budget under the policy
+`table`, so a budget of 3,000,000 would be refused with `FROB-REF-760`), asserting the bound and its label. This bead writes both phases and
 runs phase `pre`; phase `post` is run by the switch-over (`scripts/e2e/nemesis_switchover.sh` of N26b-24 calls
 it after the pin move), which is where its assertions are accepted.
 

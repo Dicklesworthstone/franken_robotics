@@ -4,7 +4,7 @@ title: "inconsistency E7-C resolved: energy-budget labels: 0.25 J external work,
 type: "task"
 priority: 2
 milestone: "M4"
-labels: ["m4", "reflex", "safety", "frob-shield", "solid", "test", "card"]
+labels: ["m4", "reflex", "safety", "frob-shield", "solid", "test", "card", "review-notes-open"]
 parent: "WP-65"
 deps: ["BD-337", "GB-26", "N22b-10", "N22b-12", "N22b-18", "NEG-03"]
 needs: []

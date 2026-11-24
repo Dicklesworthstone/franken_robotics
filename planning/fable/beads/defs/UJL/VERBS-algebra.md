@@ -4,7 +4,7 @@ title: "frob-verbs registry: cluster `algebra`, two rows, with parity, e2e and s
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "tether", "marrow", "frob-verbs", "solid", "registry", "verb", "test"]
+labels: ["m1", "tether", "marrow", "frob-verbs", "solid", "registry", "verb", "test", "review-notes-open"]
 parent: "WP-06"
 deps: ["BD-022", "NJL-01", "NJL-02", "NJL-04", "NJL-05", "STD-E2E"]
 needs: []

@@ -6,9 +6,9 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "suite", "workspace", "upstream", "frankensim", "solid"]
 parent: "WP-01"
-deps: ["BD-031", "BD-037", "N33b-04", "STD-E2E"]
+deps: ["BD-031", "BD-037", "N33b-04", "NF-02", "STD-E2E"]
 needs: []
-related: ["FD-FSIM-31", "N33b-08", "N33c-02", "N33c-05", "N33c-06", "N33c-08", "N33c-47", "NF-02", "NF-03", "NF-05"]
+related: ["FD-FSIM-31", "N33b-08", "N33c-02", "N33c-05", "N33c-06", "N33c-08", "N33c-47", "NF-03", "NF-05"]
 gates: ["INT-TOOLCHAIN-01"]
 plan_refs: ["Appendix F.1", "Appendix F.3", "§33.12", "§33.2", "§33.13", "§33.16", "§41"]
 ---
@@ -104,8 +104,9 @@ pin the feature does not exist and the build fails.
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
-is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt
-(`frob.stack-receipt/1`) under `receipts/`; (3) re-run that sibling's admission gates, the parity gates and the
+is never rolled back locally); (2) write a new resolution receipt (`frob.stack-receipt/1`) under `receipts/`
+with `cargo xtask check-stack --write-receipt --reason pin-move --gate INT-FSIM-01` (plain `check-stack` only
+verifies and writes nothing); (3) re-run that sibling's admission gates, the parity gates and the
 gates this item names; (4) relock (`Cargo.lock` regenerated and committed, builds `--locked` on the one toolchain
 T) and append the record, with the receipt hash, to `DEPENDENCY_ADMISSION.md`. Only then does the row's `status`
 become `adopted` and the interim posture end. No PASS is recorded on a dirty sibling tree, and neither a pin nor
@@ -155,12 +156,13 @@ Here:
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsim_15.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
-Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (the registry
+Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (its `upstream`
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_15 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
 bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also re-runs the matrix row for `fs-qty` on each installed channel with
-`scripts/train/toolchain_train.sh --dry-run`, and logs one line per cell.
+`scripts/train/toolchain_train.sh --to <channel> --dry-run` (NF-02's script, a dependency; its dry run stops
+after the matrix and changes no file), and logs one line per cell.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_15/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

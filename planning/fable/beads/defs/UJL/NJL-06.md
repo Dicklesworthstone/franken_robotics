@@ -48,7 +48,9 @@ the handler that serves it from M1, two milestones before the rest of the server
 In: the generator `cluster_directory()` in `frob-verbs`, which is the single renderer of the directory for
 every door; the resource handler for `frob://docs/clusters` in `surface/frob-mcp`; the directory's text format
 and size budget; its equality with the registry and with `frob robot-docs`; its listing and reading in process
-and through `frobd --mcp`; the end-to-end script.
+and over `frob-mcp`'s loopback HTTP transport (BD-023); the end-to-end script. Reading it through `frobd --mcp`,
+which the daemon serves from M2 (N32a-14), is N32a-25's at M3, whose script reads every resource form over the
+daemon's transport and re-runs this bead's equality tests.
 
 Out, with the bead that has it:
 - the documentation model, the verb `robot-docs` and its other sections and layers (N32b-17, a dependency: it
@@ -127,7 +129,8 @@ with the marks removed equals it (the CLI has no launch flag and prints no such 
 ## Acceptance criteria
 
 - [ ] `resources/list` contains `frob://docs/clusters`, and `resources/read` returns one text item whose
-      header states 45 clusters, in process (stdio and in-memory) and through `frobd --mcp` (loopback HTTP).
+      header states 45 clusters, in process (stdio and in-memory) and over loopback HTTP (`frob-mcp`'s own
+      transport, BD-023).
 - [ ] The directory equals the registry: 45 blocks, the same names, activity lines and tool lists as the
       `[[task_cluster]]` tables; exactly one block is marked default and it is `orient`.
 - [ ] The directory equals `result.sections.clusters` of `frob robot-docs --json` byte for byte.
@@ -171,8 +174,9 @@ real registry and the real server over the in-memory transport; no mocks):
 ### End-to-end script and logging
 
 `scripts/e2e/mcp_cluster_directory.sh` (header: `bead=NJL-06 milestone=M1 labels=tether,mcp,verbs
-gates=GATE-TETHER-12 seed=1 needs=cpu,mcp,frobd plants=stale-directory,extra-tool`). It runs the same steps
-against `frob-mcp` over stdio and against `frobd --mcp` over loopback HTTP: (1) `resources/list`, assert the
+gates=GATE-TETHER-12 seed=1 needs=cpu,mcp plants=stale-directory,extra-tool`). It runs the same steps
+against `frob-mcp` over stdio and against `frob-mcp` over loopback HTTP (the daemon, and so `frobd --mcp`, lands
+at M2): (1) `resources/list`, assert the
 URI is present; (2) `resources/read`, save the text, assert the header and count the blocks (45); (3) `frob
 robot-docs --json`, assert equality of the saved text with the `clusters` section (`e2e_assert_digest_eq` on
 SHA-256 of both); (4) for each cluster in the saved text, `session_focus` and `tools/list`, assert the three

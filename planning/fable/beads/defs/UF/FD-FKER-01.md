@@ -4,7 +4,7 @@ title: "upstream asupersync (franken-kernel): claim and evidence identifier type
 type: "task"
 priority: 3
 milestone: "M1"
-labels: ["m1", "suite", "workspace", "upstream", "asupersync", "frob-core", "solid"]
+labels: ["m1", "suite", "workspace", "upstream", "asupersync", "frob-core", "solid", "review-notes-open"]
 parent: "WP-36"
 deps: ["BD-005", "BD-037", "BD-095", "N29b-09", "N33b-04", "N34-11", "STD-E2E"]
 needs: []

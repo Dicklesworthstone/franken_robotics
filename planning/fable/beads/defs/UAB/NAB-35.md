@@ -6,7 +6,7 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "habitat", "kinesis", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["NAB-32"]
+deps: ["N00-12", "NAB-11", "NAB-32"]
 needs: []
 related: ["NAB-36"]
 gates: []
@@ -41,7 +41,10 @@ harness and lint (NAB-32); the surviving mechanisms (their carriers).
 
 ## Technical approach
 
-**Transcription rule.** As in NAB-33.
+**Transcription rule.** As in NAB-33 (KI-17: `hypothesis_state = "REFUTED"`, row H-16 of N00-12). Revival
+fields by NAB-33's rule: KI-17 `pilot` (GATE-HAB-09); KI-18 `none`; KI-19 `gate` (KILL-VARIATIONAL); KI-20
+`none`; KI-21 `none`; KI-22 `pilot` (GATE-REFLEX-10, KILL-SOILLIFT); KI-23 `pilot` (KILL-STEPADJOINT,
+KILL-FDGRAD); KI-24 `none`; KI-25 `none`.
 
 **Machine-checked arithmetic of this group.**
 
@@ -101,7 +104,7 @@ composition. KI-25: entropy state of a thermal node, separate entropy production
   the failures of coupled models is untested and is decided by the pilot of §19.10.7. Advected films, slosh and
   articulated proxies [F]. Coupled islands [M] on the CPU referee for finalists only (§19.10.6; KILL-LIVING;
   BET-36).
-- *Revive only if.* The proxy-adequacy pilot (GATE-HAB-09) shows that proxies miss failures of the coupled models: then a coupled island is funded for finalists on the CPU referee. Coupled matter in every training world is not revived while a cell costs 152 bytes.
+- *Revive only if.* The proxy-adequacy pilot (GATE-HAB-09) shows that proxies miss failures of the coupled models (they reproduce fewer than 90% of the full-model failures, the bar of KILL-LIVING), and an island costs at most 181 rigid worlds at 5% activity: then a coupled island is funded for finalists on the CPU referee. Coupled matter in every training world is not revived while a cell costs 152 bytes.
 - *Carried by.* BD-230, BD-231, BD-413, BD-414, BD-415, BD-416, N19b-20 (KILL-LIVING).
 
 **KI-18. Lattice fluid at control rate**
@@ -192,12 +195,13 @@ composition. KI-25: entropy state of a thermal node, separate entropy production
 - [ ] Records `KI-17` … `KI-25` exist with the three paragraphs verbatim, revival conditions, carriers and
       keywords.
 - [ ] The harness recomputes the eleven calculation rows.
-- [ ] The four counterexamples are registered as negative controls of their analyses (the growth-vector
-      analysis, the impulse solve, the module compiler, the thermal node), each with the bead that owns the
-      fixture.
-- [ ] The revive lint fails a planted bead "Couple an LBM fluid tile to every training world" with
-      `ki.match-without-citation` naming KI-17 and KI-18, and passes the epic for coupled islands on the CPU
-      referee, which cites both and their kill gate.
+- [ ] Each of the four counterexamples names among its record's carriers the bead that owns it as a negative
+      control of its analysis: KI-20 the impulse solve (BD-082), KI-21 the growth-vector analysis (BD-106),
+      KI-24 the module compiler (BD-060, BD-061), KI-25 the thermal node (N15a-06). Registering each control
+      and its fixture is that bead's (they land at M1, after this bead).
+- [ ] The revive lint fails a planted bead "Put fluid in every world with LBM tiles in the batch" with
+      `ki.match-without-citation` naming KI-17 and KI-18 (it holds a keyword of each), and passes the epic for
+      coupled islands on the CPU referee (BD-416), which cites both and their kill gate.
 - [ ] KI-23's record states that gradients through contact are deferred to M6 and names the two surviving
       forms (derivatives with validity labels on regular segments and return maps; paired finite differences
       over short horizons).
@@ -219,18 +223,22 @@ composition. KI-25: entropy state of a thermal node, separate entropy production
   rank 3.
 - `ki22_lift_size`: C(62, 2) = 1,891; 1,891² = 3,575,881.
 - `records_complete_and_verbatim` against `tests/fixtures/killed/g3.md`.
+- `ki17_revive_cases`: the planted bead of the criteria fails naming both records; BD-416's title and
+  description pass.
+- `revival_fields`: `revive_evidence` and `revive_gates` per record as listed.
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh` (NAB-50) recomputes the calculations and runs the planted revive cases.
-Logged per STD-E2E.
+`scripts/e2e/decision_records.sh` (NAB-50) runs this module with the rest of `killed_ideas` and recomputes the
+calculations. Logged per STD-E2E.
 
 ### Known answers and negative controls
 
 Known answers: the table. Negative controls: a KI-17 record that gives 15.2 bytes per cell; a KI-18 record
 that reports Ma at 5 mm as 0.69 (a decimal slip); the curvature test wired in as the roller-alignment
 preflight (the parallel-roller base must then pass it, which is the failure the record documents); a proposal
-of "one Koopman model for the whole hybrid system" (must match KI-22 and KI-65). Metamorphic check for
+"Build Koopman model predictive control on a lifted-linear model for the hybrid system" (must match KI-22 and
+KI-65: it holds a keyword of each). Metamorphic check for
 `ki18_mach`: halving Δx doubles Ma.
 
 ## Considerations

@@ -1,0 +1,53 @@
+{
+"STD-E2E": [
+"convention 15 (new; read it in the conventions file): add the form `e2e_metric name value unit op threshold --observe [--gate …]` to helper 8: it logs the value against its threshold with `asserted: false` and a `verdict` field (`met` or `not-met`), and is never an assertion; `e2e_check` (the log linter) admits such lines, and the harness self-test covers a script whose only not-met line is an `--observe` one (exit 0). About thirty pilot and experiment scripts log falsifier values this way (reported by round 4's reviewer of S-21)."
+],
+"N38a-09": [
+"convention 15 (new): state in this bead, as the register's rule, that a pilot's script exits zero when its measurement was made and its record written whichever status the record carries, and non-zero only when a step could not run, a sanity assertion failed or a negative control was not caught; the record's status, not the script's exit code, carries the verdict."
+],
+"N33a-11": [
+"lead ruling on the question F-U33a's reviewer left open. The `optimize` feature group compiles ten sibling crates, but only `fs-race` and `fs-eproc` have admission records when BD-124 and BD-262 first enable it at M1, so the never-inherited check of `check-stack` would fail on the other eight. Ruling (DESIGN: a group-compile record would admit eight crates nobody has reviewed, which is what the admission rule exists to prevent): the M1 need gets its own sub-feature, `optimize-race`, which compiles only `fs-race` and `fs-eproc`; BD-124 and BD-262 enable `optimize-race`, not `optimize`; the full group is first enabled by the bead that admits its last crate, and N33a-11's group table and N33a-18/N33a-31/N33b-12 state the sub-feature. Take this bead's side of it, after checking it against the bead."
+],
+"N33a-18": [
+"lead ruling on the question F-U33a's reviewer left open. The `optimize` feature group compiles ten sibling crates, but only `fs-race` and `fs-eproc` have admission records when BD-124 and BD-262 first enable it at M1, so the never-inherited check of `check-stack` would fail on the other eight. Ruling (DESIGN: a group-compile record would admit eight crates nobody has reviewed, which is what the admission rule exists to prevent): the M1 need gets its own sub-feature, `optimize-race`, which compiles only `fs-race` and `fs-eproc`; BD-124 and BD-262 enable `optimize-race`, not `optimize`; the full group is first enabled by the bead that admits its last crate, and N33a-11's group table and N33a-18/N33a-31/N33b-12 state the sub-feature. Take this bead's side of it, after checking it against the bead."
+],
+"N33a-31": [
+"lead ruling on the question F-U33a's reviewer left open. The `optimize` feature group compiles ten sibling crates, but only `fs-race` and `fs-eproc` have admission records when BD-124 and BD-262 first enable it at M1, so the never-inherited check of `check-stack` would fail on the other eight. Ruling (DESIGN: a group-compile record would admit eight crates nobody has reviewed, which is what the admission rule exists to prevent): the M1 need gets its own sub-feature, `optimize-race`, which compiles only `fs-race` and `fs-eproc`; BD-124 and BD-262 enable `optimize-race`, not `optimize`; the full group is first enabled by the bead that admits its last crate, and N33a-11's group table and N33a-18/N33a-31/N33b-12 state the sub-feature. Take this bead's side of it, after checking it against the bead."
+],
+"N33b-12": [
+"lead ruling on the question F-U33a's reviewer left open. The `optimize` feature group compiles ten sibling crates, but only `fs-race` and `fs-eproc` have admission records when BD-124 and BD-262 first enable it at M1, so the never-inherited check of `check-stack` would fail on the other eight. Ruling (DESIGN: a group-compile record would admit eight crates nobody has reviewed, which is what the admission rule exists to prevent): the M1 need gets its own sub-feature, `optimize-race`, which compiles only `fs-race` and `fs-eproc`; BD-124 and BD-262 enable `optimize-race`, not `optimize`; the full group is first enabled by the bead that admits its last crate, and N33a-11's group table and N33a-18/N33a-31/N33b-12 state the sub-feature. Take this bead's side of it, after checking it against the bead."
+],
+"BD-124": [
+"lead ruling on the question F-U33a's reviewer left open. The `optimize` feature group compiles ten sibling crates, but only `fs-race` and `fs-eproc` have admission records when BD-124 and BD-262 first enable it at M1, so the never-inherited check of `check-stack` would fail on the other eight. Ruling (DESIGN: a group-compile record would admit eight crates nobody has reviewed, which is what the admission rule exists to prevent): the M1 need gets its own sub-feature, `optimize-race`, which compiles only `fs-race` and `fs-eproc`; BD-124 and BD-262 enable `optimize-race`, not `optimize`; the full group is first enabled by the bead that admits its last crate, and N33a-11's group table and N33a-18/N33a-31/N33b-12 state the sub-feature. Take this bead's side of it, after checking it against the bead."
+],
+"BD-262": [
+"lead ruling on the question F-U33a's reviewer left open. The `optimize` feature group compiles ten sibling crates, but only `fs-race` and `fs-eproc` have admission records when BD-124 and BD-262 first enable it at M1, so the never-inherited check of `check-stack` would fail on the other eight. Ruling (DESIGN: a group-compile record would admit eight crates nobody has reviewed, which is what the admission rule exists to prevent): the M1 need gets its own sub-feature, `optimize-race`, which compiles only `fs-race` and `fs-eproc`; BD-124 and BD-262 enable `optimize-race`, not `optimize`; the full group is first enabled by the bead that admits its last crate, and N33a-11's group table and N33a-18/N33a-31/N33b-12 state the sub-feature. Take this bead's side of it, after checking it against the bead."
+],
+"BD-301": [
+"convention 18 (new): the clauses of GATE-CORTEX-16 and the adapter rows of GATE-CORTEX-19 that an end-to-end script measures had no defined receipt form (reported by round 4's reviewer of S-13). A gate is recorded only from a tier-run receipt: the script runs the gate's row with `e2e_tier <target> <gate|row> --mutations` and the recorder reads that receipt; state the target and the row here."
+],
+"N23b-13": [
+"convention 18 (new): the clauses of GATE-CORTEX-16 and the adapter rows of GATE-CORTEX-19 that an end-to-end script measures had no defined receipt form (reported by round 4's reviewer of S-13). A gate is recorded only from a tier-run receipt: the script runs the gate's row with `e2e_tier <target> <gate|row> --mutations` and the recorder reads that receipt; state the target and the row here."
+],
+"BD-090": [
+"no bead owns `registries/channels.toml`, which N24ax-03 names as the registry that defines channels, although the overlays' `requires` lists (N32b-11, N32b-12) and the packet channel table (N24a-41) need something to be checked against (reported by round 4's reviewer of S-22). Lead ruling (DESIGN): the channel registry belongs to the bead that defines the channel kinds and the `.frun` column schema, BD-090: one row per channel (name, kind, stream, unit, first milestone, owning bead), each bead that adds a channel appending its row in its own change. If BD-090 already keeps its channel table in a file of another name, that file is the registry and N24ax-03 names it instead."
+],
+"N24ax-03": [
+"no bead owns `registries/channels.toml`, which N24ax-03 names as the registry that defines channels, although the overlays' `requires` lists (N32b-11, N32b-12) and the packet channel table (N24a-41) need something to be checked against (reported by round 4's reviewer of S-22). Lead ruling (DESIGN): the channel registry belongs to the bead that defines the channel kinds and the `.frun` column schema, BD-090: one row per channel (name, kind, stream, unit, first milestone, owning bead), each bead that adds a channel appending its row in its own change. If BD-090 already keeps its channel table in a file of another name, that file is the registry and N24ax-03 names it instead."
+],
+"BD-232": [
+"the per-part field `thin_routes`, which round 4's reviewer of S-08 defined here because four beads and CX-170 used 'thin routes disabled' and nothing defined it, is confirmed by the lead: keep it."
+],
+"N44-01": [
+"two campaigns above class E0 have no envelope request row and so cannot be admitted at full size: N20b-25's training arms and N20b-37's campaign for GATE-SENS-17 (reported by round 4's reviewers of S-10 and S-31). Add a request row for each, or state which existing row admits it."
+],
+"N20a-06": [
+"this bead has `frob doctor --json` and every run's evidence block report `WINDOW_RULE`, but the owner of the evidence block (N32a-03) lists no such field. Lead ruling (DESIGN: a build-wide constant belongs in the build's report, not in every run's evidence): report it in the doctor section only, and drop it from the evidence block."
+],
+"FD-FSIM-02": [
+"this upstream bead now sits about 65 layers deep behind the dependencies its switch-over needs, although the change in the sibling repository needs none of them (reported by round 4's reviewer of F-UF-1, who split FD-ASUP-01 into NFp4-01 for the same reason). If the sibling-repository work truly needs nothing from this workspace, split it the same way: a bead for the sibling change with only its real prerequisites, and this bead keeping the switch-over here. If it was already split (NFp3-11 holds FD-FSIM-12's M2 switch-over half), move the remaining late dependencies to the switch-over half."
+],
+"FD-FSIM-12": [
+"this upstream bead now sits about 65 layers deep behind the dependencies its switch-over needs, although the change in the sibling repository needs none of them (reported by round 4's reviewer of F-UF-1, who split FD-ASUP-01 into NFp4-01 for the same reason). If the sibling-repository work truly needs nothing from this workspace, split it the same way: a bead for the sibling change with only its real prerequisites, and this bead keeping the switch-over here. If it was already split (NFp3-11 holds FD-FSIM-12's M2 switch-over half), move the remaining late dependencies to the switch-over half."
+]
+}

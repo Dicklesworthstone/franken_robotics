@@ -44,7 +44,13 @@ trade dress raises a separate question; branded items are excluded from the sele
 
 **Selection list.** `assets/scenes/google-scanned-objects/selection.toml`: the object identifiers used, each
 with its hash, the category (toy, shoe, container, tool), the bounding dimensions, and `branded = false`.
-Only listed objects are importable in the default pipeline.
+Only listed objects are importable in the default pipeline. DESIGN: the list narrows this row's default
+pipeline to the objects it names, so an import in default mode (no `--user-supplied`) of an object that is not
+listed, or is listed with `branded = true`, is refused before anything is written, with the worded refusal of
+the default-pipeline filter, `asset-source-not-default-pipeline` (N19b-02; exit 3; interim code `FROB-REF-802`
+behind `ASSET_SOURCE_NOT_DEFAULT` until the ledger assigns a number), `observed` naming the object identifier and
+`assets/scenes/google-scanned-objects/selection.toml`, and the same two ranked repairs (re-run with
+`--user-supplied`; choose a listed object).
 
 **Import profile.** `frob --json scene import --kind asset <object> --source google-scanned-objects --profile
 small-rigid --behaviour free --key <k>` (the verb and its inputs are N19a-46's: `kind` is required, a `run` verb
@@ -69,8 +75,10 @@ the attribution text and the change statement.
       change statement.
 - [ ] An export containing any of them embeds the attribution (a pack through the pack export check of
       N19b-02, a report through the export door of N37-18, which adds the notices); removing the `notice` field
-      makes the pack check fail and the door refuse the report.
-- [ ] A non-selected or branded object is refused by the default pipeline.
+      makes the entry count as `unknown` (N19b-02), so the pack check refuses with `FROB-REF-310` (exit 3) and the
+      door refuses the report with `FROB-REF-733` (exit 5), each naming the object.
+- [ ] A non-selected or branded object is refused in default mode with `asset-source-not-default-pipeline`
+      (exit 3, nothing written), `observed` naming the object and the selection list.
 
 ## Test plan
 
@@ -89,12 +97,13 @@ the attribution text and the change statement.
 `scripts/e2e/assets_licences.sh` (the M5 scene-asset loop, owned and run by NEGp1-54, which depends on this
 bead; this bead lists the steps of its row), every `run` verb call with its own `--key`: the import of each
 selected object as written above (`--key al-gso-<n>`); a non-selected object and a branded one (`--key al-gso-x1`,
-`al-gso-x2`; refused by the default pipeline); a scene with five objects dropped on a floor (`frob --json scene
+`al-gso-x2`; each refused with `asset-source-not-default-pipeline`, exit 3, nothing written); a scene with five objects dropped on a floor (`frob --json scene
 compile` of the stand-in floor with the five objects, `--key al-gso-scn`; after `e2e_scene_ready <pack>`, a
 referee run `frob --json sim run quad-a --scene <pack> --tier referee --seconds 2 --key al-gso-run`, every object
 settled within 2 s); `frob --json artifact export <pack> --out exports/ --key al-gso-exp1` and the export of the
 run's report (`--key al-gso-exp2`), each embedding the attribution and the change statement; the same with the
-`notice` field removed (the pack check fails, the door refuses the report). Log lines carry `ts`, `script`,
+`notice` field removed (the pack check refuses with `FROB-REF-310`, exit 3; the door refuses the report with
+`FROB-REF-733`, exit 5). Log lines carry `ts`, `script`,
 `bead: "NEG-19"`, `step`, `event`, the exact command, exit code, wall time, the `evidence` block, object
 identifiers, hashes, mass, collision error, the attribution text's hash and its presence in both exports, each
 refusal code with its exit code, and no geometry.

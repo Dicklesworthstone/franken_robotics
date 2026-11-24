@@ -16,6 +16,10 @@ and their review continues beside it.
   known-answer and counterexample registries (`…-REF`, `…-KA`, `…-CX`), and the owner Beads `NJL-01`, `STD-E2E`,
   `STD-TEST` and `BD-025`. Where a mechanism Bead and its registry row differ, the registry row holds. The
   program-wide conventions are in `planning/fable/beads/polish/KNOWN_DRIFTS.md`.
+- A Bead with the label `review-notes-open` carries a tracker comment (shown by `br show <id>`) listing review
+  notes that were addressed to it after its own review and are not yet in its description. Read the comment
+  before starting the Bead, apply each note or confirm that it does not hold, and remove the label in the
+  staging file when done.
 
 ## Changing Beads
 

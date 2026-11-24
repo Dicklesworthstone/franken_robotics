@@ -6,7 +6,7 @@ priority: 2
 milestone: "M4"
 labels: ["m4", "lemma", "reflex", "frob-gait", "frob-algebra", "frontier", "spine", "spec", "test"]
 parent: "WP-64"
-deps: ["BD-025", "N10a-01", "SPEC-C-09", "STD-E2E", "STD-TEST"]
+deps: ["BD-025", "N10-CX", "N10-KA1", "N10a-01", "SPEC-C-09", "STD-E2E", "STD-TEST"]
 needs: []
 related: ["BD-049", "BD-332", "BD-333", "N10a-17", "SPEC-C-16"]
 gates: ["GATE-ATEL-02", "GATE-GAIT-01", "GATE-GAIT-03"]
@@ -159,8 +159,9 @@ rollout ranking at Kendall τ below 0.5.
 max-plus matrices come from `fs-tropical` through the airlock. Verb: `gait.atlas` (enumeration of gaits as
 (H, K) pairs with phase lags). Gates: the A-04 row of GATE-ATEL-02 (M4); GATE-GAIT-01 (the planted transverse
 instability is found and the restricted computation is marked incomplete; M4); GATE-GAIT-03 (Kendall τ of at
-least 0.5 between orbit cost of transport and specialists on the calibration set; M4). Card: T-25. Kill gates
-that concern its consumers: KILL-ATLAS, KILL-GAIT.
+least 0.5 between orbit cost of transport and specialists on the calibration set; M4). Card: T-25. Kill gate
+that concerns its consumers: KILL-GAIT (GATE-GAIT-03 fails: orbits serve stability diagnostics and warm starts
+only, and no design is ranked by an orbit). KILL-ATLAS is the regime atlas A-26's gate, not this atlas's.
 
 ## Acceptance criteria
 

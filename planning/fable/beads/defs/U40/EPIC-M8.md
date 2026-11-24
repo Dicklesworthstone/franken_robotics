@@ -42,7 +42,11 @@ released product.
 fallback and a result, and the application of its stop rule. An epic that has not passed its pilot within its
 planned weeks returns to the killed-idea register and frees its slot under the cap.
 
-**2. Gates with a part due at this exit (compiled register tables: no admission, 7 convergence).**
+**2. Gates with a part due at this exit (compiled register tables: no admission, 8 convergence).** One row
+carries an M8 part that the plan's printed load table (7) does not count, with its recording bead (N40-02, step
+5): GATE-LEMMA-03 over every proof kind enabled by M8, those of M1 to M5 and, if their Moonshot epics were funded,
+`tube-inclusion` and `alpha-root` (N12-19, N12p1-01), recorded by this exit's review (BD-442). It is due whether or
+not an epic is funded; unlike the gates of the epics it is never `not-run` for want of funding.
 
 | Gate | Claim | Part due | Pass criterion in brief (TARGET) | Defined in |
 |---|---|---|---|---|
@@ -51,6 +55,7 @@ planned weeks returns to the killed-idea register and frees its slot under the c
 | GATE-AUGUR-24 | Design comparison | M8 | Facility fixture: at least two feasible engineering strategies discriminated; each of the four seeded failures recovered with a withdrawal and a minimized scenario; the optimality gap reported for every unresolved continuous subproblem. | §25.27 |
 | GATE-CORTEX-17 | Design comparison | M8 | Geometric-algebra tree policy [M]: arm B or C is at least 1.3 times faster than arm A to the return threshold at equal wall-clock, or better with no adaptation beyond seed spread. | §23.23 |
 | GATE-FOUNDRY-11 | Known answer | M8 | [M] The fixed-point cases of §31.18; 10⁶ vectors bit-equal. | §31.19 |
+| GATE-LEMMA-03 | Known answer | M1; M2, M3, M4, M5, M8 (every kind enabled by that exit) | Every proof kind in use has one specimen that `frob-verify` accepts and at least three mutations it rejects; the four stance mutations, an unknown kind with consistent hashes and a changed quantifier are all rejected; the binary has no dependency outside the standard library and runs in an empty environment. | §12.6 |
 | GATE-REFLEX-09 | Design comparison | M8 | Learned residual transport [M]: at least 18 of 20 feasible unseen bodies within 3 percentage points of tuned baselines with no adaptation, both cost denominators reported. | §22.18 |
 | GATE-SHIELD-05 | Known answer | M8 | Reachable-set table [M]: zero false admissions in 5,000 in-envelope episodes on the braking fixture; `uncovered` outside the table. | §22.18 |
 
@@ -125,7 +130,7 @@ four (default: none before its pilot passes, then the order of the Scope list).
 
 ### Unit tests
 
-Carried by the epics. Epic check: due counts for M8 are 0 admission, 7 convergence, 8 kill decisions, plus 3 late
+Carried by the epics. Epic check: due counts for M8 are 0 admission, 8 convergence, 8 kill decisions, plus 3 late
 parts and 2 late kill decisions.
 
 ### End-to-end script and logging

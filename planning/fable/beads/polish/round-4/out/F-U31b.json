@@ -1,0 +1,341 @@
+{
+  "round": 4,
+  "slice": "F-U31b",
+  "reviewed": [
+    "BD-400",
+    "BD-402",
+    "BD-403",
+    "BD-404",
+    "BD-405",
+    "BD-406",
+    "BD-407",
+    "BD-408",
+    "BD-423",
+    "N31b-01",
+    "N31b-02",
+    "N31b-04",
+    "N31b-05",
+    "N31b-06",
+    "N31b-07",
+    "N31b-08",
+    "N31b-09",
+    "N31b-10",
+    "N31b-11",
+    "N31b-13",
+    "N31b-15",
+    "N31b-16",
+    "N31b-17",
+    "N31b-18",
+    "N31b-19",
+    "N31b-21",
+    "N31b-23",
+    "N31b-25",
+    "N31b-27",
+    "N31b-28",
+    "N31b-29",
+    "N31b-34",
+    "N31b-37",
+    "N31b-39",
+    "N31b-40",
+    "N31b-41",
+    "N31b-43",
+    "N31b-44",
+    "N31b-45"
+  ],
+  "changed": [
+    {
+      "bead": "BD-400",
+      "kinds": [
+        "convention",
+        "registry",
+        "deadlock"
+      ],
+      "what": "The CX-336/CX-337 plants were cfg(feature = \"nc-<nnnn>\") and named a module N31-CX does not use, so the control runner would build a feature that does not exist; the script derived --key from (script, step, spec hash), the form STD-E2E rejects, so the two calls of step 6 would collide; acceptance and standing conditions had this bead record the gate row and hand the receipt to N31b-16, both of which depend on it. Now features assemble-peaks/assume-equal-limbs, foundry_key labels, and the row recorded by N31a-53."
+    },
+    {
+      "bead": "BD-402",
+      "kinds": [
+        "convention",
+        "registry",
+        "deadlock"
+      ],
+      "what": "The finish-per-window plant was an nc-<nnnn> feature (N38b-05 names it by the plant); --key fcs-<step> gave step 1's two calls one key (FROB-REF-803); the standing condition had this bead record the gate row and said a script writes it. Now feature finish-per-window, one foundry_key label per call, row recorded by N31a-55."
+    },
+    {
+      "bead": "BD-403",
+      "kinds": [
+        "convention",
+        "deadlock"
+      ],
+      "what": "Two contradictory key forms (fo-<step> and one derived from script, step and fixture digest, the rejected design) would give the repeated calls of steps 3 and 4 one key; the gate row was said to be written by a script and recorded by this bead's standing condition. Now foundry_key labels and the row recorded by N31a-54 from its receipt."
+    },
+    {
+      "bead": "BD-404",
+      "kinds": [
+        "convention",
+        "registry",
+        "deadlock"
+      ],
+      "what": "The L31-4 mutation was built as frob-foundry/nc-<nnnn>, a feature that would not exist under N38b-05's plant naming; plant ids were missing; the standing condition had this bead record the gate row. Now feature resample-worlds-each-iteration, plant ids BD-404:*, foundry_key labels, row recorded by N31a-54."
+    },
+    {
+      "bead": "BD-405",
+      "kinds": [
+        "convention",
+        "deadlock"
+      ],
+      "what": "Acceptance required handing the gate receipt to N31b-17 and the standing condition required the gate row, both done by beads that depend on this one; the gate row was said to be written by a script; keys were labelled by step although the step runs 20 calls. Now the row is recorded by N31a-55 and N31b-17 reads it; one label per call."
+    },
+    {
+      "bead": "BD-406",
+      "kinds": [
+        "convention",
+        "registry",
+        "deadlock"
+      ],
+      "what": "The guard-removed builds were nc-<nnnn> features with no record behind them, so nobody could build them by name; CX-340's plant id was missing; acceptance handed the receipt to N31b-18 (a dependent). Now features named by the defect, plant id BD-406:quadratic-at-zero, row recorded by N31a-56."
+    },
+    {
+      "bead": "BD-407",
+      "kinds": [
+        "request",
+        "registry",
+        "deadlock",
+        "convention"
+      ],
+      "what": "The writer used the interim export kind packet for loose geometry and said kind geometry was requested of N37-18, which now has ten kinds including geometry (sidecar carries flags and notices): implementing the interim would send loose files through the packet decision. Acceptance also handed the receipt to N31b-19 and the gate row was said to be written by a script."
+    },
+    {
+      "bead": "BD-408",
+      "kinds": [
+        "registry",
+        "convention",
+        "deadlock"
+      ],
+      "what": "KA-747's control was 'halving the offset halves the slack', which N31-KA does not register (2,063 mm and 0.628 mm unit mutations); CX-341's plant was an nc-<nnnn> feature; keys were derived from (script, step, input digest), the rejected form that collides across step 3's kill runs; acceptance required NS-20 and the KILL-PACKET hand-off, both dependents."
+    },
+    {
+      "bead": "N31b-01",
+      "kinds": [
+        "registry",
+        "broken",
+        "convention"
+      ],
+      "what": "Registration had this bead write a record for every plant with an owner field the schema lacks and no gate: the assemble-peaks plant would be registered twice beside CX-336's seeded record, and the INV-FOUNDRY-06/-07 records would be refused no-gate. Now: reuse CX-336's record (dep N31-CX added), six INV-seeded records with their gates, two test-level controls; nine plants, not seven; no last_seen written here; e2e_key for the export key."
+    },
+    {
+      "bead": "N31b-02",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The script described foundry_key as derived from script, step and input digest, the form STD-E2E rejects; an implementer following it would build a colliding key helper. Now foundry_key is e2e_key under the cluster name, and the script sources the preamble library that defines it."
+    },
+    {
+      "bead": "N31b-04",
+      "kinds": [
+        "registry",
+        "broken",
+        "convention"
+      ],
+      "what": "KA-754's controls omitted the third control N31-KA registers (ratio 2 gives 1.333); acceptance had this bead submit proposals and mark registry rows not gate-eligible, though rows are N31-KA's (a dependent) and eligibility is computed by N38a-12, so the criterion could not pass; an interim 'until the registry owner accepts them' stood in Considerations."
+    },
+    {
+      "bead": "N31b-05",
+      "kinds": [
+        "registry",
+        "broken",
+        "convention"
+      ],
+      "what": "Section 1 told the implementer to write known_answers.toml records with fields (site, controls, gate) that differ from N38a-12's schema and duplicate N31-KA's rows, and acceptance expected rows 'awaiting registration' though N31-KA registers every tolerance and control; script keys were literals instead of e2e_key. Now the battery reads N31-KA's rows, writes their fixtures and expects all thirteen eligible."
+    },
+    {
+      "bead": "N31b-06",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention 11 flags a bead without a scripts/e2e script unless its test plan says it delivers nothing a frob command can reach; the pilot never said so, so an implementer could add a product e2e script for an experiment that has no product surface. The test plan now states it, and that the registered pilot script is its end-to-end script."
+    },
+    {
+      "bead": "N31b-07",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Keys were s2-<k>-<step>-<d> with d a digest of the inputs, the derived form STD-E2E rejects, and the text claimed a re-run 'resumes', which cannot happen because every script run has its own state root; now e2e_key labels per call (sim and edit per iteration, the noise-floor repeat and the resampling control apart). Also the convention-11 statement that the pilot has no scripts/e2e script."
+    },
+    {
+      "bead": "N31b-08",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention-11 statement missing: the test plan now says the pilot delivers nothing a frob command can reach and its pilot script is its end-to-end script."
+    },
+    {
+      "bead": "N31b-09",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The script sources the STD-E2E logging helper but STD-E2E was not a dependency (audit note; evidence holds: the other pilots list it); and the convention-11 statement was missing."
+    },
+    {
+      "bead": "N31b-10",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention-11 statement missing: the test plan now says the pilot delivers nothing a frob command can reach and its pilot script is its end-to-end script."
+    },
+    {
+      "bead": "N31b-11",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention-11 statement missing: the test plan now says the pilot (a stand-alone program) delivers nothing a frob command can reach and its pilot script is its end-to-end script."
+    },
+    {
+      "bead": "N31b-13",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The script described foundry_key as digesting registration hash, address set and stack lock so that a re-run 'resumes a pair': that is the derived key STD-E2E rejects, and with one state root per run nothing resumes, so an implementer following it would build a colliding helper. Now foundry_key labels per call (pairs and each control arm named)."
+    },
+    {
+      "bead": "N31b-15",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The fallback run's key was said to be derived from step and input digest (rejected form); and the --offline option was 'requested of' BD-403 and VERBS-foundry, a convention-13 request. Now e2e_key semantics, and the option's registry change is an item of the ADR's downstream list that no script calls before it lands."
+    },
+    {
+      "bead": "N31b-17",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The fired-branch keys were said to be derived from step and input digest, the form STD-E2E rejects; now foundry_key labels with the state-root reason."
+    },
+    {
+      "bead": "N31b-19",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Acceptance ran `frob foundry export --json` with no design, no --packet and no --key: as written it is refused (805) and cannot show the reduced packet. Now the full form of the row."
+    },
+    {
+      "bead": "N31b-23",
+      "kinds": [
+        "registry",
+        "convention"
+      ],
+      "what": "`frob eval run quad-ref --variants <set>` gave eval.run no population (VERBS-eval requires exactly one of battery or task), so the batch step would be refused with 802; keys were described as digest-derived; the decision entry omitted N40-03's `receipts` field and the gate row was said to be written by N31a-59. Now --battery smoke, foundry_key labels, receipts, row recorded from N31a-59's receipt."
+    },
+    {
+      "bead": "N31b-25",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Request from F-U31a-2 applied: the script described foundry_key as derived from step and input digest so that a changed catalogue gets a new key; foundry_key is e2e_key <label>, so the claim was false and steps that rely on it would replay a stored receipt. Now one label per call and no reliance on content changing the key."
+    },
+    {
+      "bead": "N31b-27",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Same request: foundry_key was said to digest the call's inputs, card included; and the fourth call (assumed curve under --strict-data) carried no key at all, so it would be refused 805 instead of 113. Now four labels ffa-1 to ffa-4."
+    },
+    {
+      "bead": "N31b-28",
+      "kinds": [
+        "deadlock",
+        "plan"
+      ],
+      "what": "Audit note applied after checking: acceptance required the GATE-FOUNDRY-12 row to state card provenance, but that row is recorded from N31a-59, which depends on this bead (convention 7); the three-call lifecycle script was the only reason for dep N31a-50, and N31a-59 step 9 already asserts 113 and 831 through the verb. The script and the gate-row item move to N31a-59 (its slice carries the matching note); dep N31a-50 dropped; unit tests on N31a-48 kept; the test plan says the bead has no frob-reachable surface of its own."
+    },
+    {
+      "bead": "N31b-29",
+      "kinds": [
+        "broken"
+      ],
+      "what": "Acceptance requires every certificate and refusal to record the budget and effort in every option, but scope added the recorded budget only under options B or C and N31a-45 does not record it, so under the default option A the criterion could not pass. Scope now adds the record in every option."
+    },
+    {
+      "bead": "N31b-34",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Keys were described as digesting the frozen binary's identity (rejected derived form) and one pattern g13-<brief>-<step> covered 200 planted copies and the imports, which would collide; now one foundry_key label per call for checks, planted copies and imports."
+    },
+    {
+      "bead": "N31b-37",
+      "kinds": [
+        "convention",
+        "registry"
+      ],
+      "what": "The two mutation controls were nc-<nnnn> branches that N31b-35/36 'already name', but those beads (dependencies) name no feature and cannot know a number this later bead allocates; the records lacked their GATE-FOUNDRY-14 seed; the spike's seeded plant id was not named, inviting a second record; keys were described as digest-derived. Now plant-named features added by this bead, seed GATE-FOUNDRY-14, the plant N31b-35:fast-tier-stiffness-spike reused, foundry_key labels."
+    },
+    {
+      "bead": "N31b-39",
+      "kinds": [
+        "request",
+        "registry",
+        "broken",
+        "convention"
+      ],
+      "what": "Request from F-U33b applied: the bounded-statics generator is now one public frob-analyze function that foundry.size and A-15 call, and the trait note records BD-401's margin() and analyze.structure emitting A-15.<link>.under-built. The planted design was committed at fixtures/design/foundry/, but N31-CX puts plant fixtures under crates/frob-conformance/fixtures/foundry/ with a synthetic header, so L31-3's seeded record would be fixture-missing. The 'test switch' and 'build without the sizer' were undefined; now FROB_TEST_NULL_SIZER under frob-verbs' conformance feature. The plants ran 'through the negative-control runner' before any record existed (N31b-43 registers them); now feature builds that make the script's own assertions fail. Keys were literals; now e2e_key. The N34x-01 audit counterpart is not taken: N34x-01 still holds the eleven-row item and the workspace_checks rows."
+    },
+    {
+      "bead": "N31b-40",
+      "kinds": [
+        "registry",
+        "broken",
+        "convention"
+      ],
+      "what": "The script ran `frob sim run`, then `frob eval scorecard quad-thin-shank`. That reads the latest eval.run, and a sim.run batch produces no scorecard, so steps 2-5 could not pass. Now eval.run in the task form, with the task declaring N29ax-02's capture.peaks, then scorecard <run>. The fail-closed step uses a task with no capture. The plants ran through the control runner with no record; now feature builds named by plant (promote-with-warning in frob-arena, where the 171 constant is). Literal keys are now e2e_key labels. Section 2 now says where the samples come from."
+    },
+    {
+      "bead": "N31b-41",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "H-verbs-2 request applied: design.edit's list is named beside design.check's and sim.run's for 170. The 6a 'requested of N14a-17 and VERBS-design' was stale: VERBS-design lists resolve-sized and set-fill {shell: sized}. FROB-REF-105 was an interim 'until the row is loaded', but N31b-45, a dependency, has already loaded 170, so that path was dead code and an untestable test. Re-resolution under measured loads reads N31b-40's measured cases and must pass its check, but N31b-40 was not a dependency (added; no cycle). Literal keys are now e2e_key. The runner step had no records; it now re-runs the guarding tests under each feature."
+    },
+    {
+      "bead": "N31b-43",
+      "kinds": [
+        "convention",
+        "registry",
+        "broken"
+      ],
+      "what": "C9 note checked: the row was already recorded through N38b-19, but Background said the bead 'writes' it and the record_gate command was missing (both fixed). The three controls reused nc-<nnnn> branches 'their beads name', but N31b-38/39/40 name plants and cannot know this bead's NC numbers; they now use the plant-named features, with seed GATE-FOUNDRY-15. solid-rod-modulus is N31b-38's plant, not a new one. L31-3's record exists only from N31-CX's M5 seeding. Other fixes: fixture path per N31-CX; rollouts via eval.run with peak capture (sim.run gives no scorecard); test switch named; keys now e2e_key."
+    },
+    {
+      "bead": "N31b-44",
+      "kinds": [
+        "registry",
+        "contradiction",
+        "convention",
+        "broken"
+      ],
+      "what": "Exit 9 for an unreadable directory contradicted the auditor's exit table (N12-04: 3 with rule input.unreadable; 2 for unsupported). The selection.status rule was said to be 'added by N31ax-01', but N31ax-01 depends on this bead and says this bead declares it. The consideration that the kind 'is carried on a branch until the certificates owner records it, and this bead cannot close' was a stale interim: N12x-08, a dependency, records the revision. The five plants ran through the control runner with no record; they are now test-level, on a scratch copy."
+    },
+    {
+      "bead": "N31b-45",
+      "kinds": [
+        "contradiction",
+        "convention"
+      ],
+      "what": "Steps 2 and 5 had row 1 raised under FROB-REF-105 by N31b-41 until this bead loads 170, and 'retired' afterwards. N31b-41 depends on this bead, so the interim is never raised; it now says so, and the ledger's filed interims are kept. Step 6 named the sized-fill verbs only as 'named by N31b-41'; it now names design.check, design.edit (resolve-sized) and sim.run in the loading change, matching VERBS-design. Also fixed: 'requested of' N35x-02, which already counts eleven slugs; literal keys, now e2e_key; plants through the runner with no record, now test-level."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N31b-38",
+      "what": "Your script runs the three planted defects 'through the negative-control runner', but the runner (N38b-04) runs only records in controls.toml, and none exists for them when you close. GATE-FOUNDRY-15's bead N31b-43 now registers solid-rod-modulus with seed GATE-FOUNDRY-15 and feature frob-foundry/solid-rod-modulus. Please state each planted defect as a cfg(feature = \"<plant name>\") branch of frob-foundry, compiled only under gauntlet-mutations. Catch each in your script by re-running its guarding test with the feature. If left: your script step cannot pass, and N31b-43's record names a feature nobody declares, so it is stale and the gate is not-eligible."
+    }
+  ],
+  "unchanged": 4,
+  "notes": "N31b-39's audit counterpart (N34x-01 eleven-row total and workspace_checks rows) not taken: N34x-01 as it stands still holds them. Possible improvement, not made: eval.run could declare N29ax-02's peak capture automatically for designs with shell or lattice links, so ordinary battery runs are not all fail-closed under N31b-40 step 6. Unchanged: BD-423, N31b-16, N31b-18, N31b-21."
+}

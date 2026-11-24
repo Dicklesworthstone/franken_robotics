@@ -1,0 +1,297 @@
+{
+  "round": 4,
+  "slice": "S-24",
+  "reviewed": 31,
+  "changed": [
+    {
+      "bead": "BD-008",
+      "kinds": [
+        "request",
+        "convention",
+        "registry",
+        "deadlock"
+      ],
+      "what": "Sections 2, 3 and 5 said FD-ASUP-01 chooses V and changes the siblings, and an acceptance item cited the upstream.toml row that BD-037 writes after this bead (BD-037 -> BD-023 -> BD-008): the implementer would look for work and a row that do not exist when this bead runs. Now: NFp4-01 is the sibling half, landed commits and mirror ids come from FD-ASUP-01's closing record, the constellation test is NFp4-01's, the OPEN-SUITE-1 decision record is N33c-35's. Added the Recording paragraph in N33a-07's form (g1 entry naming INT-ASUP-01, four controls, harness receipt, record_gate by a non-implementing session; scripts never record), the e2e tier step, and deps FD-ASUP-01, N33a-07, N38b-19, STD-E2E."
+    },
+    {
+      "bead": "BD-028",
+      "kinds": [
+        "convention",
+        "registry",
+        "users"
+      ],
+      "what": "The gate had no recording form (a row could be entered from an untiered run or by the implementer) and the e2e called frob doctor and frob spark probe, verbs of beads it does not reach. Added N33a-07's Recording paragraph (g1 entry INT-FT-02 wrapping the annex test on the M5 Ultra; no record on a host without Metal), mutants behind gauntlet-mutations, its own verb-free script scripts/e2e/suite_int_ft_02.sh (exit 77 without Metal), the doctor/probe view left to N33b-20; deps N33a-07, N38b-19, STD-E2E. The S-11 request to add BD-022 and BD-017 is declined: its premise (verb calls in this bead's script) is removed."
+    },
+    {
+      "bead": "BD-032",
+      "kinds": [
+        "convention",
+        "registry"
+      ],
+      "what": "INT-FSIM-02 and -03 had no recording form and the e2e lived in another bead's battery with frob doctor calls. Added N33a-07's Recording paragraph (one g1 entry per gate wrapping fsim02_/fsim03_ lanes, controls the reversed adjoint, the twist map on a wrench and three dynamics mutants; record_gate by a non-implementer), its own verb-free script suite_int_fsim_02_03.sh, deps N33a-07, N38b-19, STD-E2E."
+    },
+    {
+      "bead": "BD-079",
+      "kinds": [
+        "request",
+        "registry",
+        "convention"
+      ],
+      "what": "Lead note applied in part: BD-062 moved to related (the bead takes posed primitives as input), BD-047 added; BD-061 kept because the plan's seed table lists it as a dependency. The last acceptance item said both gates are recorded in gates.toml, making this bead a second recorder of INT-FSIM-08 (one part, M0, N33b-10's). Added a Recording paragraph: GATE-TRAC-02 one part (M1) recorded here with tier g2_parity and its controls; INT-FSIM-08 at M1 is an admission record from a second g1 entry with its own id (the table rejects a duplicate id), no gate row."
+    },
+    {
+      "bead": "N33b-10",
+      "kinds": [
+        "convention",
+        "registry"
+      ],
+      "what": "INT-FSIM-08/-09/-10 had no recording form and no own e2e. Added N33a-07's Recording paragraph (one recorder of the three M0 parts, g1 entries wrapping the bead's own tests, 2/3/2 planted adapters as controls, record_gate by a non-implementer), its own verb-free script suite_int_fsim_08_10.sh (doctor view is N33b-20's), deps N33a-07, N38b-19, STD-E2E."
+    },
+    {
+      "bead": "N33b-01",
+      "kinds": [
+        "request",
+        "deadlock",
+        "registry"
+      ],
+      "what": "Lead notes applied: the bead reads registries/gates.toml without depending on N40-02 (added); acceptance item 6 asserted BD-004's six-subcommand test, so BD-004 was a dependency only for that line (now: the report is a mode of check-stack, registered by N33a-05, reached through N33a-07; BD-004 owns the count; BD-004 moved to related). The e2e called suite_firewall.sh 'shared with N33b-02' with no owner; now owned here, N33b-02 adds its step."
+    },
+    {
+      "bead": "N33b-07",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The e2e called frob sim run without --key; sim.run is a run verb, so the script would exit with FROB-REF-805 instead of checking the digest. Added --key \"$(e2e_key lifted-g1)\" --json."
+    },
+    {
+      "bead": "N33b-08",
+      "kinds": [
+        "contradiction",
+        "registry"
+      ],
+      "what": "The FD-FSQL-01 posture said the eviction oracle exists only from M2 and acceptance expected eleven of twelve postures at M1, but INT-FSQL-02 is N33c-20's M1 gate and a dependency: the implementer would ship a skip where a pass is due. Now all twelve pass at M1, skip fails acceptance. FD-ASUP-01 was said to be executed in BD-008; now the upstream bead FD-ASUP-01 with its sibling half NFp4-01, proved by BD-008's gate."
+    },
+    {
+      "bead": "N33b-12",
+      "kinds": [
+        "request",
+        "registry",
+        "convention"
+      ],
+      "what": "Acceptance had this bead enter an M1 part of INT-FSIM-14 in gates.toml, but the register gives the gate one part (M3, N33b-13): record_gate would have no part to enter. Now the M1 result is the first-use admission record of fs-eproc in N33a-07's form (g1 entry with its own id, two planted adapters as controls, harness receipt, admission writer by a non-implementer), no gate row, an acceptance item that gates.toml is unchanged. The e2e was a step of N33b-21's script (which depends on this bead) reading a gate row from frob doctor; now its own verb-free suite_fs_eproc_m1.sh, the two-binary view left to N33b-21's stats_m1. Deps N38b-19, STD-E2E added."
+    },
+    {
+      "bead": "N33b-17",
+      "kinds": [
+        "registry",
+        "convention"
+      ],
+      "what": "Acceptance said 'the known answers are recorded for GATE-ATEL-02'; the gate's parts are M1 (BD-110) and M4 (BD-332, which records A-01 to A-14 complete), so an implementer would either enter a third row or leave no claim for BD-332 to cite. Added step 9: A-14's known answers bound as a g1_known_answers entry naming GATE-ATEL-02 (M3, host) with cone-only and ignore-own-links as controls, its receipt the claim BD-332 cites; no gate row; acceptance split accordingly."
+    },
+    {
+      "bead": "N33b-22",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The record named no gate, but N33a-07's writer requires --gate and files records by gate; an implementer would guess (INT-FSIM-03 would make this the newest INT-FSIM-03 record and fail rule 8 there). Now written under --gate INT-FSIM-01 with covers naming the use (N33a-21/N33a-22's form), no gate row."
+    },
+    {
+      "bead": "N33bp2-01",
+      "kinds": [
+        "contradiction",
+        "convention"
+      ],
+      "what": "The adopting commit was said to carry 'the gate rows', while N33b-04's step 9 and N38b-19 say the train writes no gate row: the implementer would self-record rows from a script. Now the commit carries admission records citing harness receipts, the wrapper logs the receipts, the parts' recording beads re-enter rows; acceptance asserts gates.toml unchanged; plant 5 names an admission record. The script header says timeout_s=3600 while the text ran an over-one-hour train with --approved-envelope; STD-E2E reads the limit from the header and asks for the flag only above 3600, so the flag changed nothing and the runner would kill the approved train at one hour. Now: 3600 is the envelope and a longer train is abandoned by step 10; a run under OPEN-SUITE-5's approved budget declares it in the header and runs with the flag."
+    },
+    {
+      "bead": "N33bx-01",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The fs-checker admission record named no gate (the writer requires one). Now --gate INT-FSIM-01 with covers.tool naming the use, the form of N33a-21/N33a-22."
+    },
+    {
+      "bead": "N33bx-03",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The fs-tropical first-use record named no gate (the writer requires one; INT-FSIM-14 would fail rule 8 against its row). Now --gate INT-FSIM-01 with covers naming the use."
+    },
+    {
+      "bead": "N33bx-04",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The fs-mesh first-use record named no gate; filed under INT-FSIM-15 at M4 it would become that gate's newest record before N33b-14 runs. Now --gate INT-FSIM-01 with covers naming the use."
+    },
+    {
+      "bead": "N33bx-05",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The fs-mbd-material first-use record named no gate (the writer requires one). Now --gate INT-FSIM-01 with covers naming the use."
+    },
+    {
+      "bead": "N33bx-06",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The fs-uq::product_epistemic first-use record named no gate; filed under INT-FSIM-14 it would become that gate's newest record at M5 and fail rule 8 against KA-769's thresholds, unadmitting the stats group. Now --gate INT-FSIM-01 with covers naming the use, stated as not a record of INT-FSIM-14."
+    },
+    {
+      "bead": "N33bx-07",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The fs-render[tracer] first-use record named no gate (the writer requires one). Now --gate INT-FSIM-01 with covers naming the use."
+    },
+    {
+      "bead": "BD-038",
+      "kinds": [
+        "request",
+        "convention",
+        "registry",
+        "broken"
+      ],
+      "what": "F-U34 request applied: acceptance and e2e step 2 now assert cargo metadata --locked in worker/ (N34p4-02's lockfile rule), which no other bead checks for that workspace. The gate row had no recording form; added step 5 (KA-780 as a g5_determinism entry naming INT-FSIM-18, the different-commit worker as control, harness receipt, record_gate by a non-implementer, script records nothing), e2e step 9 and dep N38b-19. Steps 3-4 called frob sim run without --key; sim.run is a run verb, so both calls would exit with FROB-REF-805 before any digest; keys added."
+    },
+    {
+      "bead": "N33c-03",
+      "kinds": [
+        "convention",
+        "deadlock"
+      ],
+      "what": "The e2e was a step of BD-031's script, and BD-031 depends on this bead: the implementer could not run its own end-to-end check before closing. Now its own scripts/e2e/qty_confinement.sh (header, plants fs-qty-direct and qty-generated-byte, alias and pair metrics), which BD-031 may run as a stage; dep STD-E2E. Two narration sentences ('an earlier wording here ...') removed."
+    },
+    {
+      "bead": "N33c-04",
+      "kinds": [
+        "deadlock",
+        "registry",
+        "convention"
+      ],
+      "what": "The bead marked its row of registries/open.toml without depending on N41-OPEN7, which writes that row, and N41-03's rule 4 refuses 'decided' on a row decided_by INT-TOOLCHAIN-01 until that gate's record exists (BD-031): the acceptance line could not pass when the bead became ready. Deps now BD-031, N33c-03, N41-OPEN7, STD-E2E; the record is docs/adr/ADR-OPEN-SUITE-4.md (named by the question, the majority form of open-question records, so the M0 suite decisions do not race for ADR-SUITE numbers, which BD-031 and N33bx-02 already collide on) with the open.toml row's status and adr; acceptance asks the N41-03 loader to accept the row. Narration in the e2e removed."
+    },
+    {
+      "bead": "N33c-10",
+      "kinds": [
+        "convention",
+        "deadlock"
+      ],
+      "what": "The e2e was 'exercised by suite_worker_fallback.sh (BD-038)', a bead that depends on this one: the protocol had no end-to-end check its implementer could run. Now its own verb-free scripts/e2e/fsim_job_protocol.sh (both build modes, the cargo tree check that the remote closure holds no fs-* crate, canonical-byte hashes of the fixture job, the partition metrics, two plants), BD-038 keeping the two-process comparison; dep STD-E2E."
+    },
+    {
+      "bead": "N33c-12",
+      "kinds": [
+        "request",
+        "convention",
+        "deadlock"
+      ],
+      "what": "Lead note (counterpart of N33a-08): N33a-08 now tests the salt on scratch workspaces and says worker/ carries its own worker/.cargo/config.toml entry, but no acceptance item here asserted it, so a worker build could rely on the root config and fail closed when built from an export. Added the item (same string as root config and FD-FSIM build_env; fails closed when removed); N33c-12 reaches N33a-08 through BD-007 -> BD-006. The e2e was BD-038's script (which depends on this bead); now its own scripts/e2e/fsim_worker.sh with two plants and the different-receipt refusal; dep STD-E2E."
+    },
+    {
+      "bead": "N33c-13",
+      "kinds": [
+        "registry",
+        "convention",
+        "deadlock"
+      ],
+      "what": "Step 4 called exit 5 for FROB-REF-791 a DESIGN reading 'the refusal registry must confirm', but N33-REF's row (a dependency) states exit 5 by N35-33's exit rule for the 79x decade: an implementer would treat a settled exit as provisional. Now cites the row; the Considerations line removed. The e2e was BD-038's script (which depends on this bead); now its own scripts/e2e/fsim_worker_supervision.sh (five handshake refusals, event sequence, orphan scan, three plants), with N33-REF's steps 2-3 and BD-038 named as the frob-binary views; dep STD-E2E."
+    },
+    {
+      "bead": "N33c-24",
+      "kinds": [
+        "convention",
+        "registry"
+      ],
+      "what": "The gate record was 'admission record; gate row' with no tier entry, harness receipt or recorder rule, so the implementer could enter INT-F3D-01 from the script itself. Step 6 now binds the comparison as a g2_parity entry naming INT-F3D-01 with the clear-colour and frame-time controls, the admission record cites its harness receipt, record_gate is run by a non-implementing session, the script records nothing; acceptance and e2e (e2e_tier step, header, export-html with --out) follow. Pilot register path and schema named (N38a-09); funding record placed in docs/adr/. Narration 'replaces the duplicate draft N33a-24' removed."
+    },
+    {
+      "bead": "N33c-29",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "F-U34 request and lead note applied: N34-03 declined to move its N33a-11-fixture item only because this bead was in no slice. Added the acceptance items and tests airlock_fixture_frob_dyn_structure_refused and real_default_groups_are_three (real records, real manifest, scratch plants); deps N34-03 and N33a-11 already present. Three narration passages ('drafted here under the names', 'the draft said') removed; the INV-SUITE-01 property test now admits the worker/ manifest-only package that step 1 exempts (else the reference predicate disagrees with the rule); OPEN-SUITE-1 default now names NFp4-01 as the half that chooses V; the split-graph consideration no longer presents itself as OPEN-SUITE-6's question; the script's owner stated as N33c-09."
+    },
+    {
+      "bead": "N33c-33",
+      "kinds": [
+        "deadlock",
+        "registry",
+        "convention"
+      ],
+      "what": "Acceptance marked OPEN-SUITE-3 in registries/open.toml with N41-OPEN7 (which writes the row) only in related, and N41-03's rule 4 needs INT-FSIM-01's record (BD-006 with BD-007) before 'decided': the item could fail when the bead became ready. Deps now add BD-007, N41-OPEN7, STD-E2E. Another item required the M0 exit review's checklist to cite the record, but BD-044 (the exit review) depends on this bead; removed, BD-044 reads the row. The record was 'an ADR in the ADR-SUITE series' (a number BD-031 and N33bx-02 already contend for); now docs/adr/ADR-OPEN-SUITE-3.md with the row's status and adr. The sampler was said to run in every e2e script that runs check-stack (scripts of other beads); now at session start on each machine. Narration ('an earlier wording') removed."
+    },
+    {
+      "bead": "N33c-34",
+      "kinds": [
+        "deadlock",
+        "registry",
+        "convention",
+        "contradiction"
+      ],
+      "what": "Same register gap as N33c-33 (no dep on N41-OPEN7, rule 4 on INT-FSIM-01): deps add BD-007, N41-OPEN7, STD-E2E; record docs/adr/ADR-OPEN-SUITE-5.md with status and adr; loader acceptance. The e2e was a step of BD-031's suite_toolchain_matrix.sh, a bead with no dependency either way, so no one owned the step; now its own scripts/e2e/suite_build_budget.sh (script tests, the M1-closure cells through N33c-01's harness, headroom metrics, two plants). The record now states that an option-B approval carries the envelope id runs above one hour cite (the N33bp2-01 timeout fix)."
+    },
+    {
+      "bead": "N33c-35",
+      "kinds": [
+        "contradiction",
+        "registry",
+        "request",
+        "convention"
+      ],
+      "what": "Option A re-exported asupersync's Cx as frob_core::cx::Cx, acceptance had frob-core export a context path and the test plan ran cargo test -p frob-core cx, but BD-005 (frob-core's owner) allows only std, fs-blake3 and fs-qty, no async runtime, and builds neither Cx nor a token, while Scope put 'the token or the context implementation' out to BD-005: an implementer would add asupersync to layer 0 or write tests for code no bead builds. Now A takes &asupersync::Cx in the inventory's crates only, frob-core stays free; B's token is a follow-up bead the record opens; the check-deps rule ctx.asupersync-edge reads the option from the record's front matter (open.toml has no 'decided value' field the test read). Records ADR-OPEN-SUITE-1/-6 with the rows' status and adr; the cancellation checkpoint in N33c-12's chunking function is in scope; KILL-MCP's decision is N32a-05, not BD-023; V named as NFp4-01's choice read from FD-ASUP-01's closing record; the negative control no longer fails a listed crate under A."
+    },
+    {
+      "bead": "N33c-47",
+      "kinds": [
+        "deadlock",
+        "convention"
+      ],
+      "what": "The e2e was a step of N33c-48's suite_ws09.sh, and N33c-48 depends on this bead; a unit test checked withdrawn numbers against NFx-01's series file 'once that bead has written it', and NFx-01 depends on this bead: the implementer could not finish either. Now its own scripts/e2e/upstream_register_late.sh (consistency tests, the six fixtures run --ignored and asserted failing, link states, counts, four plants), switch_over_due left to N33c-48; the tombstone check named as NFx-01's. Narration ('no working name is needed any more') removed. Counts (53 -> 59; 38/2; 2/8/16/33) and the six fixtures' numbers verified."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N33a-18",
+      "what": "Lines 106 and 111 say the fs-race record is 'an added M1 row of INT-FSIM-14' and that 'the M1 part of INT-FSIM-14 is entered by N33b-12 with record_gate'. The register gives INT-FSIM-14 one part (M3, N33b-13) and N33b-12 now writes the fs-eproc first-use admission record with no gate row (round 4, S-24). Say 'an M1 admission record under INT-FSIM-14' and that neither this bead nor N33b-12 writes a row; the title's 'the fs-race row' likewise."
+    },
+    {
+      "bead": "N33a-07",
+      "what": "First-use admission records with no register row of their own (N33b-22, N33bx-01, N33bx-03 to N33bx-07; also N33a-17, N33a-19, N33a-30, N33a-31) and partial-scope records under a register gate (N33b-12's fs-eproc and N33a-18's fs-race under INT-FSIM-14, BD-079's INT-FSIM-08 at M1) are not provided for: the writer requires --gate, rule 8 (measured-missing) checks every threshold of that gate's row, and admitted_gates and the status function take the gate's newest record. A record of one later use filed under a register gate therefore fails rule 8 and, as the newest record, unadmits the gate. The S-24 beads now file rowless first uses under --gate INT-FSIM-01 with covers naming the use (the form N33a-21 and N33a-22 already use). Please state it: a record whose covers differ from the gate's own scope (a first-use record) is checked against the thresholds its input declares, not the row's, is read by never_inherited through covers, is listed by doctor, and is never taken as the gate's newest record by admitted_gates, the status function or the generator's status table."
+    },
+    {
+      "bead": "N33a-34",
+      "what": "Line 40 and step 10 call N33b-12's record 'the fs-eproc row of INT-FSIM-14'; N33b-12 writes an admission record and no gate row (INT-FSIM-14 has one part, M3, N33b-13). Say 'record'."
+    },
+    {
+      "bead": "BD-031",
+      "what": "N33c-03 now owns scripts/e2e/qty_confinement.sh (the fs-qty-direct and qty-generated-byte plants, alias_count and equal_dimension_pairs metrics); round 4 S-24. Run it as a stage of suite_toolchain_matrix.sh instead of a step of your own that plants fs_qty, so the plant has one owner (convention 11)."
+    },
+    {
+      "bead": "N34-03",
+      "what": "N33c-29 now carries acceptance item 4 (N33a-11's planted frob-dyn -> structure fixture refused), the test airlock_fixture_frob_dyn_structure_refused, and the real-tree assertion of fsim.default-set (renamed real_default_groups_are_three there); round 4 S-24, as F-U34 proposed. Drop them here (keep default_groups_are_three on synthetic records) and, if the rule's record format is fully restated here, move N33a-11 to related."
+    },
+    {
+      "bead": "N33a-11",
+      "what": "Acceptance item and negative-control line say the refusal of the planted frob-dyn -> structure fixture 'is asserted by N34-03' and 'run by N34-03's check-deps test'. Round 4 S-24 moved that test (airlock_fixture_frob_dyn_structure_refused) to N33c-29, which depends on this bead; name N33c-29."
+    },
+    {
+      "bead": "BD-031",
+      "what": "Step 6 numbers its two ADRs 'next in the ADR-SUITE series after ADR-SUITE-02', i.e. ADR-SUITE-03 and -04, but N33bx-02 writes ADR-SUITE-03 (docs/adr/ADR-SUITE-03-airlock-consumers.md) under that fixed number at M4; BD-031 lands first and takes it. Name the two ADRs explicitly (for example ADR-SUITE-04 and -05). The M0 suite open-question decisions now use docs/adr/ADR-OPEN-SUITE-<n>.md (round 4, S-24) and take no ADR-SUITE number."
+    },
+    {
+      "bead": "N41-OPEN7",
+      "what": "The column 'Blocks, or decided by' does not say which `decided_by.kind` each row gets. OPEN-SUITE-3 and -5 are owner questions decided at INT-FSIM-01; OPEN-SUITE-1, -4, -6 are decided at INT-ASUP-01 and INT-TOOLCHAIN-01. State the kind (gate with ref, or owner) per row, since N41-03's rule 4 applies only to gate, measurement and pilot kinds; the decision beads N33c-04, -33, -34, -35 now depend on the gates' recorders and on this bead either way."
+    },
+    {
+      "bead": "N33b-21",
+      "what": "The step table labels stats_m1 '(INT-FSIM-14, M1 part)'; the register gives INT-FSIM-14 one part (M3). Label it 'fs-eproc first use under INT-FSIM-14 (N33b-12's admission record)'. N33b-12 now owns its own script suite_fs_eproc_m1.sh for the lane and the tier entry; stats_m1 keeps the two-binary view (the local reference through frob eval compare)."
+    }
+  ],
+  "unchanged": 1,
+  "notes": "Sweep slice, all 31 beads read in full. Unchanged: BD-413. Declined: S-11 request on BD-028 (premise removed: the script calls no verb). Partly applied: lead note on BD-079 (BD-061 kept, listed by the seed table). Applied: lead notes on N33b-01 (both), N33c-12 (its side: worker/ salt item), N33c-29 (and the F-U34 request); requests from F-UF-1 (BD-008), F-U33b (N33b-12), F-U34 (BD-038). Open-question decision records: two forms exist in the graph (ADR-OPEN-<ID>.md about 50, OPEN-<ID>.md about 29) and no owner fixes one; the S-24 decision beads use the majority form. Settled: no further change needed in this slice after this pass, pending the requests."
+}

@@ -4,7 +4,7 @@ title: "scene asset source `partnet-mobility` (non-commercial research): user-su
 type: "task"
 priority: 2
 milestone: "M3"
-labels: ["m3", "habitat", "safety", "frob-scene", "solid", "test", "asset", "registry", "review-notes-open"]
+labels: ["m3", "habitat", "safety", "frob-scene", "solid", "test", "asset", "registry"]
 parent: "WP-23"
 deps: ["BD-305", "N19a-07", "N19a-46", "N19b-02", "N37-18", "NEG-22"]
 needs: []
@@ -60,8 +60,14 @@ N19c-02); without either the import refuses (`FROB-REF-802`, naming the missing 
 **Validation.** Each joint sweeps its range without the parts interpenetrating beyond the recorded collision
 error: the profile moves each joint kinematically from its lower to its upper limit and back, in steps of at most
 1° for a revolute joint and at most 5 mm for a prismatic one, against the per-part convex decompositions of the
-object; a penetration deeper than the recorded decomposition error refuses the import with the part and the joint
-value named, and each jointed part's sweep (joint, range, step, minimum clearance, result) is written beside the
+object; a penetration deeper than the recorded decomposition error refuses the import with N35x-02's ledger row
+`import-articulation-interpenetrates` (registered by N19-REF: family `3xx`, exit 3, retry `after-change`, no
+interim; never FROB-REF-123, which is a design's self-collision), raised behind the one named constant
+`IMPORT_ARTICULATION_INTERPENETRATES` that holds the number the ledger assigned (never a literal number), with
+`pointer` the penetrating part and the swept joint, `observed` the penetration depth and the joint value at the
+deepest step, `required` the recorded decomposition error, `unit` `m`, and the repairs in order: 1. correct the
+named joint's limits, or the named part's collision geometry, in the source asset and re-import; 2. import
+another asset. Nothing is imported. Each jointed part's sweep (joint, range, step, minimum clearance, result) is written beside the
 loss report's per-part articulation row (N19a-46), so the import envelope carries it. Limits finite; the count of
 `assumed` parameters is written to the pack, and every such parameter carries provenance `assumed`, so an analysis
 run under strict data that needs one (a closing torque, a latch force) refuses by the strict-data rule rather than
@@ -97,7 +103,7 @@ in a scratch register.
 - `partnet_dynamics_parameters_assumed_and_counted`.
 - `partnet_sweep_no_interpenetration`: the stand-in's three joints swept at 1° and 5 mm steps pass, each with its
   minimum clearance recorded; a planted drawer whose travel runs it through the cabinet's back is refused with the
-  part and the joint value named.
+  code of `IMPORT_ARTICULATION_INTERPENETRATES` (exit 3), the part and the joint value named, and no pack written.
 - `partnet_pack_and_variant_export_refused_310`; `partnet_still_and_report_refused_at_door` (731, and 733 with
   the private flag); `partnet_no_real_data_in_tree`.
 
@@ -105,10 +111,13 @@ in a scratch register.
 
 `scripts/e2e/assets_licences.sh` (the M3 scene-asset loop, owned and run by NEGp1-51, which depends on this
 bead; this bead lists the steps of its row), on the stand-in, every `run` verb call with its own `--key`:
-refused default import (`--key al-pm-1`); the user-supplied import as written above without a scale (`--key
-al-pm-2`; refused) and with `--scale 1.0` (`--key al-pm-3`; a private pack with one hinged leaf and two drawers);
-each joint's sweep read from the import envelope (every row passed, no interpenetration beyond the recorded
-collision error); `frob --json scene show <pack>` (each closing torque, friction and latch force with provenance
+refused default import (`--key al-pm-1`; N19b-02's `asset-source-not-default-pipeline`, exit 3); the
+user-supplied import as written above without a scale (`--key al-pm-2`; `FROB-REF-802`, exit 3) and with `--scale
+1.0` (`--key al-pm-3`; a private pack with one hinged leaf and two drawers); each joint's sweep read from the
+import envelope (every row passed, no interpenetration beyond the recorded collision error); the planted drawer
+of `partnet_sweep_no_interpenetration` imported the same way (`--key al-pm-4`; refused with
+`import-articulation-interpenetrates`, asserted by the code of its constant and exit 3, naming the part and the
+joint value); `frob --json scene show <pack>` (each closing torque, friction and latch force with provenance
 `assumed`, and the pack's `assumed` count equal to their number); after `e2e_scene_ready <pack>`, a referee run
 in the pack (`frob --json sim run quad-a --scene <pack> --tier referee --seconds 2 --key al-pm-run`); the export
 attempts, each `frob --json artifact export <ref> --out exports/ --key al-pm-x<n>` (the pack, and a variant made by

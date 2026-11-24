@@ -1,0 +1,218 @@
+{
+ "round": 4,
+ "slice": "F-U24a-2",
+ "reviewed": [
+  "N24a-23",
+  "N24a-24",
+  "N24a-25",
+  "N24a-26",
+  "N24a-27",
+  "N24a-28",
+  "N24a-29",
+  "N24a-30",
+  "N24a-31",
+  "N24a-32",
+  "N24a-34",
+  "N24a-35",
+  "N24a-36",
+  "N24a-37",
+  "N24a-38",
+  "N24a-39",
+  "N24a-40",
+  "N24a-41",
+  "N24a-42",
+  "N24a-43",
+  "N24a-44",
+  "N24ap1-01",
+  "N24ap2-60",
+  "N24ax-02",
+  "N24ax-03",
+  "N24ax-04"
+ ],
+ "changed": [
+  {
+   "bead": "N24a-24",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Applied F-U24a-1's request, checked against BD-201, BD-253 and BD-368 (each records its part with --part). The script now writes only the receipt. Each milestone part of GATE-ARENA-01 is recorded outside any script with record_gate --part <milestone> by its one recording bead (BD-201 M2, BD-253 M3, BD-368 M4). The M1 referee rows come from N24c-07's arena_m1_families.sh. Applied F-U24c's request: dep N24cp3-01 (eval.run on batched tiers; no cycle). The negative controls are now rows of controls.toml, run through e2e_expect_caught and planted with --features gauntlet-mutations plus the control's feature (BD-025, N38b-04). Left as it was: the script would write gate rows (convention 9), and its eval run --tier batch-cpu would call a tier its dependencies do not deliver."
+  },
+  {
+   "bead": "N24a-25",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Added dep N24cp3-01. The script runs eval run --tier batch-cpu, which only N24cp3-01 delivers, and no path reached it (convention 8; no cycle). Left as it was: the bead could start before the batched eval tier exists, and its script could not run."
+  },
+  {
+   "bead": "N24a-26",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The ramp bracket said 0.26 fails and 0.27 passes. But μ* = 0.2628 puts 0.26 inside the referee's 0.005 exclusion band (0.0028 away; BD-123's grid rule). The referee bracket is now 0.25 (fails) and 0.27 (passes), the fast-tier bracket 0.25 and 0.28, plus one boundary-flagged run at μ*. The acceptance criterion matches. No M3 run input sets friction, so the rig command now names one design file per grid point, generated from a template, and carries --task, --worlds 1, --seconds and a distinct --key per μ. Left as it was: the known answer asserted a point the grid excludes, and the command could not vary μ."
+  },
+  {
+   "bead": "N24a-27",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The rig commands now name the design file of each case: the stopping rig at μ_b of water and of oil, and the film rig at its three cases. A run command has no load, radius or film input at M3. Left as it was: the script could not produce the cases it asserts."
+  },
+  {
+   "bead": "N24a-29",
+   "kinds": [
+    "plan",
+    "broken"
+   ],
+   "what": "Added the near-boundary labelled examples that admission rule 3 of N24a-12 requires: each comparator within a tenth of its scale (i_ratio in (0.99, 1], pitch in [40.5°, 45°), slide-back between 0.18 and 0.20 m), a synthetic fallback, and no-strike shown both ways. The rig command now runs a design file per grid point with --task, --tier, --seed and a distinct --key. Left as it was: admission would refuse the family with FROB-REF-539, and its rig runs would share receipts."
+  },
+  {
+   "bead": "N24a-30",
+   "kinds": [
+    "plan",
+    "broken"
+   ],
+   "what": "The ee example ('stops 0.025 m from the grasp frame') now states that it fails ee-at-tote with margin −0.25. Added rule 3's near-boundary set: 0.019 m; tote tilt in [9°, 10°); tip margin ≤ 5 mm; base tilt in [13.5°, 15°); clearance ≤ 3 mm; synthetic fallback. The tip-rig and attachment-card commands now carry --task, --scene, --tier, --seed and distinct keys. Left as it was: refusal 539 at admission, and runs that a test compares sharing one receipt."
+  },
+  {
+   "bead": "N24a-31",
+   "kinds": [
+    "request",
+    "broken",
+    "deadlock"
+   ],
+   "what": "Applied the scene.split request (NJL-01 action rule): create is the default call, add is --action add, and each has its own --key. Added the required --scenes to frob train start (N23a-14). Removed a deadlock: BD-259 (eval.qualify) depends on this bead through BD-255 → BD-253, so this bead cannot test qualify's 502. Its acceptance criterion and the training_side_label test now cover eval.compare and eval.promote. Qualify's planted 502 is BD-259's refusals_before_commit_match_registry. Left as it was: positional action words are refused with 802, train start without --scenes is refused, and the bead could never close."
+  },
+  {
+   "bead": "N24a-34",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Applied H-owners-3 and M1-4: eval.ledger's admin actions are --action open|close and take no key (--key is 802). The three command lines now read frob eval ledger --action open … and frob eval ledger <campaign> --action close --json. Added two deps (both M3, no cycle). BD-261 delivers qual:admin, the 720 of the stop-and-restart strategy. N24b-19 delivers FROB-REF-845, the code of the launder strategy. The acceptance criterion requires the real lane to refuse all six strategies with their codes, and the bead reached neither. Left as it was: the self-check script would stop at 802 on its first ledger call, and two of the six refusals had no delivering dependency."
+  },
+  {
+   "bead": "N24a-36",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied H-verbs-9. The Scope no longer calls FROB-REF-896 a chapter refusal of the verb. The verb reaches it only as the cause of the surface's appended 806 (N29-REF surfaces_as), and it is not in the row's list (VERBS-telemetry lists 883, 888 and 898). Left as it was: an implementer would raise 896 from the verb or put it on the row, against the registry."
+  },
+  {
+   "bead": "N24a-37",
+   "kinds": [
+    "request"
+   ],
+   "what": "Took this bead's side of the audit proposal for N29b-01. Checked: this bead runs energy_ledger_referee.sh, with N29b-01's step groups, to a pass; N24b-03 is M1 and does not reach this bead. The bead now registers, with N24b-03's manifest, the three fixtures that the breakdown-*, bus-* and pertask-* step groups run through frob sim run --fixture, and it depends on N24b-03 directly. Left as it was: once N29b-01 drops that registration, no bead would register the fixtures and those step groups could not run."
+  },
+  {
+   "bead": "N24a-38",
+   "kinds": [
+    "request",
+    "convention",
+    "contradiction"
+   ],
+   "what": "Applied F-U29b's request. The seven wave-1 classes become rows of fixtures/e2e/chron08/list.toml with wave = 1, as 64-world batches with 8 planted addresses like N29b-05's rows. The tier step is now a stage that runs scripts/e2e/gate_chron_08.sh, which exports FROB_CHRON08_REFEREE. A session that did not implement the monitors re-records the gate's one part from that receipt with record_gate … --part M2 (new section 7 and acceptance line). Added dep N29b-06 (its list and its script; M2, no cycle), as the sibling wave beads N22ap2-03, BD-394 and N19b-13 have. Removed the C13 narration 'requested of N29b-06'. The wave numbering now matches N29b-06's table: 2 gait-instability, 3 model-drift, 4 slosh-tip. Left as it was: the bare cargo line fails the referee-rows entry, so wave 1 could never be recorded."
+  },
+  {
+   "bead": "N24a-39",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Applied F-U24a-1's request: stage failures-stage runs BD-094's telemetry_failures.sh. Applied F-U29b's request: the referee receipt is a canonical JSON file named by the BLAKE3 hash of its bytes, written under target/e2e-receipts/telemetry_verbs/ with its hash and path logged. Its fields are commit, seeds, thirteen class rows {class, fixture, expected_tick, measured_tick, pass} and the two accounting assertions with pass. The reference to N29b-06's old step record is gone, and a new unit test, referee_receipt_canonical, covers the receipt. Took the audit counterpart from N24a-44: the extremum-* group asserts kind, sense (max, max, min) and coverage, with an acceptance line. Found: setup ran frob sim run with no fixture, seed or telemetry level. The fixtures are now registered conformance fixtures, run with --fixture <space>/<name> --telemetry T2 --seed --key. At the default level T1 no traces are kept, so --traced-worlds would return the empty set and the query, energy and extremum groups would fail. The controls are now controls.toml rows, planted with gauntlet-mutations plus their nc feature and run through e2e_expect_caught."
+  },
+  {
+   "bead": "N24a-40",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied H-verbs-9's request: the row lists 731, 840 and 888 (detail still-collected); the sentence '888 is requested of it' is gone (convention 13). Also, FROB-REF-840 was given exit 3, while N24-REF's row (and BD-261, N28a-17, N28a-21) give exit 5. Now exit 5, and sealed_refused_840 asserts it. Left as it was: the implementer would return the wrong exit for a sealed still, and the agent would retry a capability refusal as a bad input."
+  },
+  {
+   "bead": "N24a-41",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied F-U37's request: the M2 handler's export checks now run in the export door's order (N37-18): flags 816, privacy 731, licence 733, then the path 734. The M3 switch to export::admit therefore changes no answer. Applied H-ref-3's request: 'FROB-REF-836/-837 (provisional number)' is replaced by the held ledger slugs packet-over-byte-cap and packet-frames-not-retained, raised behind REFUSAL_PACKET_OVER_BYTE_CAP and REFUSAL_PACKET_FRAMES_NOT_RETAINED, with exit 3 and no interim code. over_cap_is_836_exit_3 becomes over_cap_is_slug_exit_3, and the tests assert the slug and exit 3. Left as it was: tests would assert numbers that N35x-01 holds, and the M2 order would differ from the door's."
+  },
+  {
+   "bead": "N24a-42",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Applied F-U24c's requests. The unregistered task.verdict options were already gone. planted_table_complete now reads gates::arena::GATE_ARENA_03_REFUSALS (N24c-06), and the Considerations state N24c-06's files_of_record_complete as a fact, where they said 'is asked to' (C13). Applied H-verbs-8: dep N16ap4-01 (sim.run --task at M1; no cycle). Applied F-U24a-1's overlay item in the owner's current form: the two planted overlays are frob.task.overlay/1 documents carrying the schema member by which a .json file is routed (N24a-13). Found: step 6 called task verdict --requirement dwell, but --requirement names a verdict (N24c-02) and dwell is an online signal. KA-596 now runs as its Gauntlet row. The controls are now controls.toml rows built with gauntlet-mutations and run through e2e_expect_caught. Not applied: F-U24a-1's request to run the spec beads' own scripts as stages. The owners (N24a-02, -03, -04, -05, -07, -08, -13), revised in this round, now state that this script does not run theirs and that its one stage is BD-121's. Applying the request would contradict seven owners, and both forms satisfy convention 11."
+  },
+  {
+   "bead": "N24a-43",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The e2e ran three μ values through one compiled rig with no friction input, so the three runs were the same run under three keys, and the 'μ ∈ {0.3, 0.5, 0.8}' check passed vacuously. The rig is now compiled once per μ, and each run passes --scene with the design positional. Each compile is followed by e2e_scene_ready, and dep BD-228 is added (M3, no cycle). From M3 a run on a pack with an incomplete acceptance report is FROB-REF-318, and the lint scene-ready-before-run fails the script. The planted control is now --features gauntlet-mutations,frob-contact/planted-no-belt-work, a controls.toml row, where it was a loose 'test build flag'. Left as it was: the friction sweep proved nothing, and every run would be refused from M3."
+  },
+  {
+   "bead": "N24a-44",
+   "kinds": [
+    "request"
+   ],
+   "what": "Applied the audit proposal after checking it. The acceptance item 'frob telemetry query returns the kind, sense and coverage' was this bead's only use of N24a-36, and its e2e steps belong to N24a-39. N24a-06 to N24a-10 reached N24a-36 only through this bead, and none of them calls telemetry.query itself. The item moved to N24a-39's extremum-* group (named in an acceptance line here), and N24a-36 moved from deps to related. Left as it was: the extremum kind waited on the query verb for no work it does."
+  },
+  {
+   "bead": "N24ap1-01",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "Section 2 said every run carries an explicit seed. eval.run's battery form takes none (--run-seed beside --battery is 802), so the rule now applies only to verbs that take a seed. The metrics-core step now names its calls: eval run <design> --battery … --key, then eval scorecard <run>, which had no run to score, and eval scorecard <run> --quantile 0.99. The controls are now controls.toml rows planted with gauntlet-mutations through e2e_expect_caught; three of them are N24a-22's nc rows. Request part checked: eval.scorecard's row now lists --quantile <p>, so that call stands. Not applied: running arena_metrics_core.sh, arena_metrics_energy.sh and arena_scorecard_table.sh as stages. The owners N24a-17, -18 and -22, revised in this round, now say this script does not run theirs. Left as it was: a seeded eval run is refused with 802, and the scorecard call is malformed."
+  },
+  {
+   "bead": "N24ap2-60",
+   "kinds": [
+    "convention"
+   ],
+   "what": "'Two options are added (DESIGN; requested of the verb's registry row)' now states the fact: VERBS-telemetry's telemetry.stills row lists --fork and --band from M3 with this bead in Extended by (convention 13). Left as it was: an implementer would wait on a registry change that has already been made."
+  },
+  {
+   "bead": "N24ax-02",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "The format row for group-element was 'requested of N34-09' (C13), and N34-09 never added it. VERBS-task's task.check already carries element = artifact-input<group-element>. This bead now enters the row itself through N34-19's registry (DESIGN id FMT-GROUP-ELEMENT, schema frob.group.element/1, .json routed by its schema member, owner frob-spec, reader rep::read_element, decision N34-27's record), as N24a-13 does for the overlay format. A new acceptance line requires no fmt.param-without-row. Left as it was: N34-27's fail-closed check would reject task.check's element parameter, and the input stage could not route the file."
+  },
+  {
+   "bead": "N24ax-04",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "The acceptance criterion and core_classification_table required the maneuver-cost and fallback-count records. Those are N24a-21's (M3), and this bead is M2. The bead now writes smoothness into every record present at M2 (N24a-17 to N24a-20). The two M3 rows are the rule N24a-21 follows and join the test when registered. Left as it was: the bead could not close until a later milestone."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N29b-01",
+   "what": "As the audit proposed, N24a-37 now registers the three step-group fixtures with N24b-03's manifest (reference quadruped trotting, two-joint braking, two-design per-task) and depends on N24b-03. Drop the clause 'the fixtures are registered with N24b-03's manifest' and the dep N24b-03, or say if you keep them, so the fixtures have one owner. Otherwise two beads register the same three fixtures."
+  },
+  {
+   "bead": "N24ax-01",
+   "what": "N24a-39's fixtures are now registered conformance fixtures under crates/frob-conformance/fixtures/<space>/<name>; frob sim run --fixture resolves only those and assets/fixtures/<name>, and --scene arrives at M2. Move fail/brownout-exhausted and fail/brownout-ceiling there, register them, and run them as frob sim run --fixture fail/brownout-exhausted --tier referee --telemetry T2 --seed 3 --key <k> --json. The positional fail/... is read as a design path, and the runs have no --key, so the failures-brownout-* steps cannot run as written."
+  },
+  {
+   "bead": "N24a-21",
+   "what": "N24ax-04's loader rule refuses a metric record without smoothness, and its table fixes your two records: maneuver cost smooth-accumulation (smooth_in design-continuous) and fallback count count. Register them with those values and add dep N24ax-04 (M2; no cycle). Otherwise your M3 records fail the registry load."
+  }
+ ],
+ "unchanged": 5,
+ "notes": "All 26 beads reviewed. Unchanged after a full read: N24a-23, N24a-28, N24a-32, N24a-35, N24ax-03 (numbers re-derived: family counts, KA-595, the 7x7 corpus, the summary counts, C(24,8) = 735,471 and the factor 30.0). Requests not applied, with reasons above: the spec-script stages for N24a-42 and the metric-script stages for N24ap1-01 (their owners say otherwise in this round). The N24c-07 concern from mid-review was dropped: that bead already writes only a receipt. For a later round, not edited: (1) N37-18's door checks the export:* scope (720) fourth, but telemetry.export-html's row lists export:report among its capabilities, which the surface checks before any handler. A request without that scope and with bad flags would get 720 at M2 and could get 816 through the door. N37-18 or VERBS-telemetry should say whether export:report belongs in option_capabilities of --out. (2) N19a-35's hazards_plant.sh calls e2e_scene_ready without depending on BD-228, which writes that helper."
+}

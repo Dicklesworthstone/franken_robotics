@@ -104,9 +104,11 @@ rejects naming the generator pair); `noncyclic_quotient_claim_rejects` (the list
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) runs the specimens and mutants; the gait work's script
-logs the atlas with its certificate hash through `frob gait atlas`. For this card their NDJSON lines (STD-E2E
-helper) carry `ts`, `script`, `bead` ("CARD-T-25"), `step` (`T-25/<ambient-group>/<specimen-or-mutant>`), `event`,
+`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) runs the specimens and mutants;
+`scripts/e2e/gait_atlas.sh` (bead BD-332, which depends on this card) logs the atlas with its certificate hash
+through `frob gait atlas`. For this card their NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead` and
+`step` ("CARD-T-25" and `T-25/<ambient-group>/<specimen-or-mutant>` on N12-34's per-card lines; BD-332's own key
+and step names on its script's lines, since a line carries its owning bead), `event`,
 the exact command line, exit code, wall time, the ambient group's order and its subgroup count, the claimed and
 recomputed pair counts, the declared-network assumption where present, the bundle's BLAKE3, the expected and
 observed verdict, and on a mismatch the first missing, extra or wrong pair (or phase lag) and the path to

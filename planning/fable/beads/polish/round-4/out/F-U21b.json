@@ -1,0 +1,302 @@
+{
+ "round": 4,
+ "slice": "F-U21b",
+ "reviewed": 35,
+ "changed": [
+  {
+   "bead": "BD-014",
+   "kinds": [
+    "request",
+    "deadlock"
+   ],
+   "what": "Added dep N21-REF (H-ref-1: the harness raises 601 and 603 at M0). The e2e text no longer says a keyless spark.check is 805 at M0: 805 and the idempotent replay are N32a-09's admission (M1, N32-REF row 805; BD-022: no refusal at M0), so an M0 harness run could not have shown it."
+  },
+  {
+   "bead": "BD-017",
+   "kinds": [
+    "request",
+    "deadlock"
+   ],
+   "what": "Added dep N21-REF (H-ref-1). The verb paragraph, acceptance and e2e step 5 asserted 805 for a keyless spark.probe at M0; 805 is raised by N32a-09 from M1. Now M0 asserts that --help --json lists 805 with source kind:run, the keyless call is logged skipped: N32a-09 (M1) at M0 and e2e_expect_refusal FROB-REF-805 3 from M1, so the M0 bead can close."
+  },
+  {
+   "bead": "BD-020",
+   "kinds": [
+    "deadlock",
+    "contradiction",
+    "convention"
+   ],
+   "what": "The e2e said the generator makes a keyless spark.check 805 at M0 already; restated as N32a-09's refusal from M1 (no refusal at M0, BD-022). Negative control B (contraction on) could be recorded 'not triggered' with control A carrying the gate, which N38b-19's same-run rule refuses for the registered KA-525 control (N21c-30's spark.contraction-prelude); now a survivor is 'missed' and blocks that family's pass. Detection is measured against the clean build's own device output, since against the reference alone it was vacuous on a D3 family; the bead builds the mutant-contraction feature that N21c-30 registers. Step 10's g1_known_answers run lacked --features gauntlet-mutations, though GATE-SPARK-00's registered control (spark.contraction-prelude, the mutant-contraction build of step 7) must run and be caught in the same receipt; added."
+  },
+  {
+   "bead": "BD-030",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "Re-running PILOT-PT-15 was to be 'entered in the pilot register as reproduced', but N38a-10 derives the status and refuses a document that states one, through its pilots append-result command (BD-030 is the record's rerun_owner). Added dep N38a-10 and the append-result call to acceptance and to e2e step 2, so the re-run actually reaches the ledger and clears KA-504/KA-530's rerun obligation."
+  },
+  {
+   "bead": "BD-176",
+   "kinds": [
+    "contradiction",
+    "broken"
+   ],
+   "what": "Currency key used the fingerprint's whole-record digest, which N21c-05 rejects (a re-measure of an unchanged machine changes it and would stale every check); now the identity, as N21b-32's key. Defined the 'conformance fingerprint override' other beads cite as BD-176's seam: N21c-05's FROB_INJECT_IDENTITY overlay. E2e step 5 expected spark check under the override to report stale rows and a re-check to restore currency, but N21c-05 refuses any device verb under a changed identity with 606 at admission; the step now reads staleness through --action list, asserts the 606, and restores currency after lifting the override."
+  },
+  {
+   "bead": "BD-179",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Translation labels: (k, k, 0) cells put the 125-cell world 1,414 m from the origin, not 1,000 m; labels now give per-axis coordinates and distances. The crossing world had to make 'at least 250' crossings, the most a walk at exactly 1 m/s for 2,000 s can make, so any slower gait failed a correct build; now at least 200, every cell-index change counted, fewer is 'not run'. 805 is from M1 (N32a-09), not M2."
+  },
+  {
+   "bead": "BD-183",
+   "kinds": [
+    "contradiction",
+    "convention"
+   ],
+   "what": "GATE-KIN-06 holds on batch-cpu and each GPU back end, but its device rows had no recorder: N16a-19 records the M2 part from batch-cpu alone and cannot wait for BD-183, which depends on it. BD-183, a carrier in N16c-05's register row, now records the M2 part from both receipts (DESIGN, request to N16a-19); a not-run back end leaves it unrecorded. The gate step ran g5_determinism without --features gauntlet-mutations, so the late-read and capacity-shaped-reduction controls could not be caught in the same run (the recorder refuses pass). 805 from M1."
+  },
+  {
+   "bead": "N21b-07",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The fence integration test was run with cargo --features debug-assertions, a feature no crate defines, so the command fails; the test profile already has debug assertions, which the gateway's fault seam needs. Dropped the flag and said why. The shell lane it describes ran --inject-faults seed=7,count=1000 over --intervals 5000 with the chunk length left to N21b-22's rule; at 1,024 worlds that rule can give k up to 48, about 105 chunks, room for at most 315 faults at three per chunk. Now pins --chunk-intervals 1 (5,000 chunks), as N21b-26 does."
+  },
+  {
+   "bead": "N21b-32",
+   "kinds": [
+    "request",
+    "deadlock",
+    "contradiction",
+    "convention"
+   ],
+   "what": "Added deps N21-REF (H-ref-1) and N21c-05. The M0 verb asserted 805 for a keyless call and idempotent_replay: true for a repeated key, both N32a-09's (M1) and named BD-211 as the binding: acceptance and e2e steps 0 and 4 now assert the help listing at M0 and the refusal and replay from M1, logged skipped at M0. The action list was spelled --list (802 under NJL-01); now --action list. The currency key now uses the fingerprint identity (N21c-05), with a test that a re-measure keeps it."
+  },
+  {
+   "bead": "N21b-08",
+   "kinds": [
+    "registry"
+   ],
+   "what": "Input 5 credited the sweeps of the CPU-versus-device check to BD-176; they are N21b-33's (--sweeps on BD-176's verb), reached through BD-181. The ADR now cites the right owner for that evidence."
+  },
+  {
+   "bead": "N21b-09",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Option D said KILL-METAL is 'recorded as fired on admission'; N21b-08, the one decision bead, records a measurement that could not be made as not-run (register deferred), and the plan's trigger (throughput or determinism) is not an admission failure. Option D now says not-run/deferred with the fallback in force, so the two decision beads cannot record different outcomes."
+  },
+  {
+   "bead": "N21b-11",
+   "kinds": [
+    "registry"
+   ],
+   "what": "Said CX-229 'is the planted direct read'; N21-CX registers CX-229's control as N21c-26's host_read_outside_lease_refused (a 614 refusal through this bead's API). Now states that, and keeps the planted bypass read as a demonstration only, so the control register and this bead agree."
+  },
+  {
+   "bead": "N21b-13",
+   "kinds": [
+    "request",
+    "convention",
+    "registry"
+   ],
+   "what": "Applied the H-owners-3 and M1-6 notes: evict is now --action evict --entry|--to-bytes|--all (scope spark:admin, no key; a per-action flag is 802), in the code block, the paging rule and the acceptance item. Applied H-verbs-9: artifact-input appends 891, 734, 828, not 891 to 893. --limit 0/1001 were called 808, which is only for integers beyond ±(2^53−1); they are 802. Dropped the 'requested of VERBS-sim' narration (VERBS-spark already lists --cache-dir). 805 is N32a-09's from M1. The R4-action flag on --list was a false alarm: --list is an option of the read action in VERBS-spark's row."
+  },
+  {
+   "bead": "N21b-14",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "The gate step ran record_gate inside the script (convention 9) and ran g1 without --features gauntlet-mutations, so the corrupted-entry and planted-allocation controls could not be caught in the same run; now it stops at the receipt with the feature on, and recording happens outside the script. The evict step used a 'test cap of 8 MiB' that no input sets; now it is VERBS-spark's --action evict --to-bytes 8388608 (scope spark:admin). The perturbation shim is named as N21b-12's key-input override (request). 805 from M1."
+  },
+  {
+   "bead": "N21b-16",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "The --admit-at harness admitted 'in the slot the Phylum slot table chooses', but N17a-09 depends on this bead (through BD-183), so the harness and admit_at_spec could not run. The harness now takes the lowest Free slot of its own slot table (DESIGN, recorded), and N17a-09 passes its own choice through the same call."
+  },
+  {
+   "bead": "N21b-17",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "Only a not-funded pilot let the bead close as not built; if KILL-BUCKET fired (N21b-19), the digest and admission criteria could never be met. The closing criterion now covers both, citing the decision record."
+  },
+  {
+   "bead": "N21b-21",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "The script started 'frobd --dispatch=per-job' and an acceptance item required that flag, but the --dispatch flags are BD-295's (M3), which depends on this bead. The per-job half now starts frobd with no flag (one environment per job before BD-295), the acceptance item tests per-job mode via per_job_mode_equivalence, and the shared half stays a skip naming BD-295."
+  },
+  {
+   "bead": "N21b-22",
+   "kinds": [
+    "request",
+    "registry",
+    "users"
+   ],
+   "what": "Added dep N16b-25 (F-U16b: this protocol owns device-tier cancellation that N16b-25 leaves to it; no cycle). --chunk-intervals 0 (and above 2^32−1) was called 808; it is a schema failure, 802. The pinned-length wrap refusal was typed 'FROB-REF-619 as proposed', but VERBS-spark and N21-REF say no bead types device-count-wrap's number; it is now named by its slug. Lists N21b-26 (step commit_fence) as a user of --chunk-intervals."
+  },
+  {
+   "bead": "N21b-23",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Dropped 'requested of VERBS-sim' after --inject-device-loss (C13; VERBS-sim lists it with owner N21b-23 and 601), applying the H-verbs-8 note. The eval.run half of evaluation_policy_raises_608_610 was attributed to N24c-04 ('which is asked to call this function'); N24c-04 is M1 and cannot reach the device tiers: it is N24cp3-01 (M2), which depends on this bead and calls the function. The e2e paragraph said every step drives sim run with a conformance fault flag; over_budget uses no hook and compile_error drives spark precompile --unit; now stated per step. The F-U21a note (command-line spellings) was already met: the plant kinds nan and overflow, --inject-device-loss, the over-budget world count and precompile --unit are in place."
+  },
+  {
+   "bead": "N21b-25",
+   "kinds": [
+    "broken",
+    "convention",
+    "registry"
+   ],
+   "what": "The canary row drove 609 with the mutant-fast-math build, which N21c-30 and N21-KA now keep as an experiment whose failure is a HYPOTHESIS, so the row could not be relied on to pass; it now uses spark probe --library conformance:folded-sum (spark.folded-eft, the must-catch control) and then a double-float plan, as N21b-36 does. The gate assembly ran g4_chaos without --features gauntlet-mutations though KA-542's registry-added control (a dropped handle or non-worker report presented as a drain report) is seeded by N38b-05 for GATE-SPARK-06; added, and the script stops at the receipt, with this bead named as the recorder (BD-175 says N21b-25 records). The coverage map's 606 and 613 now name their scripts (fingerprint_currency.sh, specialize_fence.sh), as the acceptance item requires."
+  },
+  {
+   "bead": "N21b-26",
+   "kinds": [
+    "broken",
+    "convention",
+    "request"
+   ],
+   "what": "Applied the F-U29a note: snapshot_reads now passes --telemetry T3 (--snapshot-every without it is 802) and --trace-size N (at the default trace rate of 1/100 the 10^5 snapshots needed a hundred times the run, beyond the one-hour envelope); the interval count is computed (25,088 for 1,024 worlds, 100,352 snapshots). commit_fence: 1,000 seeded faults over a 5,000-interval run with an unpinned chunk length could not be placed at three per chunk (k up to 48 at 1,024 worlds); runs now pin --chunk-intervals 1. The gate step ran record_gate inside the script and g4_chaos without --features gauntlet-mutations (KA-537's fence-disabled control and KA-544's added control are registered); it now stops at the receipt with the feature on, and a Recording paragraph names this bead as GATE-SPARK-12's recorder (as BD-172 states). 805 is from M1 (N32a-09), not M2."
+  },
+  {
+   "bead": "N21b-29",
+   "kinds": [
+    "registry"
+   ],
+   "what": "Limit 0 or 1,001 was FROB-REF-808, which N32-REF reserves for integers beyond ±(2^53−1); a value outside 1 to 1,000 fails the schema, 802 with pointer /limit (text, acceptance, unit test). The row's wrap refusal was typed FROB-REF-619; VERBS-spark and N21-REF say device-count-wrap's number is assigned by N35-33 and no bead types it; now named by its slug."
+  },
+  {
+   "bead": "N21b-31",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "stale_check used 'the conformance override' to make a check stale; that override is N21c-05's FROB_INJECT_IDENTITY, under which every device verb is 606 at admission, so the step could never see 605. The step now re-measures the fingerprint under the seam (spark fingerprint is exempt), plans with --require-current-check (605), and restores the real identity afterwards. The gate step ran record_gate inside the script and lacked --features gauntlet-mutations (KA-534's control is registered); it now stops at the receipt, and a Recording paragraph names this bead as GATE-SPARK-09's recorder (BD-178 says so). 805 from M1."
+  },
+  {
+   "bead": "N21b-34",
+   "kinds": [
+    "convention"
+   ],
+   "what": "frob sim replay <run> --world … used a positional run; the sim.replay row's positional is an episode and the run form is --run <r> --world <w>; fixed."
+  },
+  {
+   "bead": "N21b-35",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The stale step (override, then 605) could not pass: under N21c-05's seam the plan is 606 at admission. It now re-fingerprints under the seam, expects 605, re-checks (clean plan), lifts the seam and restores the real identity (clean plan again). The gate step ran record_gate inside the script and lacked --features gauntlet-mutations (spark.contraction-prelude is registered for GATE-SPARK-02); it now stops at the receipt with a Recording paragraph naming this bead as the recorder."
+  },
+  {
+   "bead": "N21b-36",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied the F-U21c note: the fast-math build is N21c-30's recorded experiment spark.fast-math, not a controls.toml record, and its survival blocks nothing; the must-catch control of both canaries is spark.folded-eft, as KA-527 and KA-528 now state (the KA paragraph called the fast-math build the negative control for both). All numbers in the bead were recomputed (bit patterns, the split trace, 17 operations, and the dd_accumulates_time figures by a float32 emulation: plain sum 1,982.283; dd_add +3.5e-7; dd_add_f +9.5e-5)."
+  },
+  {
+   "bead": "N21b-39",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Applied the C13 note: 'requested of VERBS-sim' for --host-workers dropped; VERBS-sim's conformance-only table lists the four knobs with this bead as owner. sim.run requires a key from M1 (N32a-09), not M2. All numbers rechecked (0.999^1000 = 0.37; 32 comparison points; M and 3/M; 8.2e7 world-steps, 41 s and 164 s; lane counts 12, 11 and 6)."
+  },
+  {
+   "bead": "N21b-40",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "--resume <run-id> and the script_is_idempotent test relied on stored envelopes being replayed by key at M0; replay is N32a-09's admission transaction (M1; BD-022 stores nothing by key at M0), so at M0 --resume re-runs every step and the replay half is logged skipped: N32a-09 (M1). The gates step put record_gate in the script's command cell and ran g0_laws without --features gauntlet-mutations, though N21c-30's spark.fused-form, spark.folded-eft, spark.regrouped-form and spark.bare-f32-corpus are registered for GATE-SPARK-01 and -08; the step now stops at the receipt with the feature on, and a Recording paragraph names this bead as the recorder of both gates (it records -01 and -08, confirmed)."
+  },
+  {
+   "bead": "N21b-42",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied both notes: the fence-disabled control is the record spark.fence-disabled seeded by N38b-05 from KA-537 (plant N21c-31's, seam N21b-07's --inject-faults …,fence=off), no longer 'registered by N21c-31', and this bead adds its fault lane to it (Out, acceptance, considerations). Its Control rows now write gate as a list, gate = [\"GATE-GAUNT-07\"], as BD-025's record has it."
+  },
+  {
+   "bead": "N21bp2-01",
+   "kinds": [
+    "convention",
+    "contradiction"
+   ],
+   "what": "Applied the F-U21c note: the gate step ran 'then the recording command' inside the script (convention 9); the script now stops at the receipt and step 6 records outside it, naming this bead as GATE-SPARK-05's recorder. The background said the walking world goes 'through 250 cells'; BD-179 says at most 250 cell faces at 1 m/s for 2,000 s, with at least 200 required; aligned, and the translations stated per axis (0, 104 m, 504 m, 1,000 m, BD-179's labels, checked). The header's plants (plain-f32-accumulator, plus-zero-padding) did not match the mutant names the controls step loads (ledger-plain-f32, ledger-plus-zero-padding); aligned. Its two Control rows write gate as a list."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N21c-32",
+   "what": "Measured-by column: GATE-SPARK-01 'BD-017 (the measurement), N21b-40 (the cross-host script; records the gate)'; GATE-SPARK-08 'BD-030 (the measurement), N21b-40 (records the gate)'; GATE-SPARK-02 'BD-176 (the measurement), BD-177 (the decision-level clause), N21b-35 (the script; records the gate)'. The slice's beads already record that way (one recorder per gate), and -01 and -08 need cross-host identical bytes that only N21b-40 assembles, as -07 does with N21c-06."
+  },
+  {
+   "bead": "VERBS-spark",
+   "what": "Convention 2 says 'the later variations of that table (10 to 13)'; NJL-01's table runs to 16. The acceptance item 'a run or mutate call without a key is FROB-REF-805' and e2e step 6's keyless e2e_expect_refusal FROB-REF-805 3 have no 'from M1': 805 is N32a-09's admission refusal (M1, N32-REF; BD-022: not refused at M0), so at M0 log them skipped naming N32a-09 and assert --help --json lists 805 with source kind:run, as VERBS-sim does."
+  },
+  {
+   "bead": "BD-029",
+   "what": "fingerprint_requires_key, the e2e step missing_key and the verb paragraph assert FROB-REF-805 for a keyless spark.fingerprint and a replayed stored record at M0; both are N32a-09's (M1). At M0 assert the help listing and log the keyless and replay checks skipped: N32a-09 (M1)."
+  },
+  {
+   "bead": "N21c-30",
+   "what": "spark.contraction-prelude's expect is 'a disagreement outside the class'; on a family whose clean K-cay-step build is only D3 against the reference, a fused build can stay within 4 ulp and the control is then missed by construction, blocking GATE-SPARK-00. BD-020 now detects it as a difference from the clean build's own device output on at least one lane (outside the class only on a D1 family); please state the same expect, and note that BD-020 builds the mutant-contraction feature you register."
+  },
+  {
+   "bead": "N16a-19",
+   "what": "GATE-KIN-06 holds on batch-cpu and each GPU back end; you record its M2 part from the batch-cpu receipt alone and cannot wait for the device rows (BD-183 depends on you). BD-183 (a carrier in N16c-05's row) now records the M2 part from your batch-cpu receipt plus its device receipts: stop your gate-receipts step at the receipt and hand its hash on, so the gate has one recorder and is never recorded from batch-cpu alone."
+  },
+  {
+   "bead": "N35-31",
+   "what": "Step 6 expects 'frob spark check --all --sweeps all' to readmit a fork while the conformance fingerprint override is in force; under that override (N21c-05's FROB_INJECT_IDENTITY, defined in BD-176) every device verb is refused FROB-REF-606 at admission. Lift the override before the re-check."
+  },
+  {
+   "bead": "N35-07",
+   "what": "The e2e runs 'frob spark check --sweeps all' to readmit a fork made stale by the conformance fingerprint override; while the override is in force that check is FROB-REF-606 (N21c-05). Lift the override before the re-check."
+  },
+  {
+   "bead": "N21b-12",
+   "what": "N21b-14's perturb_options, perturb_compiler and perturb_driver steps (and its fingerprint_shim_absent_in_release test) need a conformance-build key-input override from the cache: a seam that substitutes the compile options, the compiler identity string or the driver version string entering the key, absent from release builds. No bead defines it today; please own it, as the cache's test seam."
+  },
+  {
+   "bead": "N21c-32",
+   "what": "Measured-by column, more rows of the same pattern (each measuring bead already names the script as the recorder): GATE-SPARK-06 'BD-175 (the mechanisms), N21b-25 (the script; records the gate)'; GATE-SPARK-09 'BD-178 (the measurement), N21b-31 (the script; records the gate)'; GATE-SPARK-11 'BD-173 (the measurement), N21b-14 (the script; records the gate)'; GATE-SPARK-12 'BD-172 and BD-174 (the CUDA and Metal rows), N21b-26 (the script; records the gate)'; KILL-D1 'N21b-34 (the decision; measurement: BD-017, BD-176, N21b-35)', as KILL-METAL names N21b-08."
+  },
+  {
+   "bead": "BD-175",
+   "what": "The gate command you quote for GATE-SPARK-06 (cargo test -p frob-conformance --test g4_chaos -- GATE-SPARK-06) lacks --features gauntlet-mutations; N21-KA adds a control to KA-542 (a dropped handle presented as a drain report must be rejected) that N38b-05 seeds for this gate, and N21b-25 now runs the target with the feature."
+  },
+  {
+   "bead": "BD-172",
+   "what": "The g4_chaos command you quote for GATE-SPARK-12 lacks --features gauntlet-mutations; KA-537's fence-disabled control and KA-544's registry-added control are registered for this gate, and N21b-26 now runs the target with the feature."
+  },
+  {
+   "bead": "BD-178",
+   "what": "The g1_known_answers command you quote for GATE-SPARK-09 lacks --features gauntlet-mutations; KA-534's stated control is seeded for this gate, and N21b-31 now runs the target with the feature."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "Add N21b-26 (step commit_fence) to the users of --chunk-intervals: it pins 5,000 chunks so that 1,000 seeded faults fit at three per chunk."
+  }
+ ],
+ "unchanged": 5,
+ "notes": "Unchanged after full review (numbers recomputed, commands checked against VERBS rows, refusal codes against N21/N32/N35-REF): N21b-04, N21b-18, N21b-28, N21b-33, N21b-37. Cross-cutting fixes: 805 and keyed replay are N32a-09's from M1 (BD-014, BD-017, BD-020, N21b-26, N21b-31, N21b-32, N21b-39, N21b-40); FROB-REF-808 misused for schema range failures, now 802 (N21b-13, N21b-22, N21b-29); device-count-wrap no longer typed 619 (N21b-22, N21b-29); gate scripts stop at the receipt and run their tier target with --features gauntlet-mutations where registered controls exist, naming the recorder (N21b-14, -25, -26, -31, -35, -40, N21bp2-01, BD-020); the fingerprint override (N21c-05's FROB_INJECT_IDENTITY) gives 606 at admission, so stale-check steps re-fingerprint under it before expecting 605 (N21b-31, N21b-35). No new beads, no merges. The slice looks settled apart from the requests, chiefly N21c-32's Measured-by column, which still names the measuring beads rather than the recording scripts for GATE-SPARK-01, -02, -06, -08, -09, -11, -12 and KILL-D1."
+}

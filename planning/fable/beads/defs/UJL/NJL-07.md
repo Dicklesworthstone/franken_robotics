@@ -4,9 +4,9 @@ title: "fixtures/golden/appendix-l: layout, three layers, identity map, story-co
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "gauntlet", "frob-conformance", "solid", "test", "registry", "delivery"]
+labels: ["m1", "gauntlet", "frob-conformance", "solid", "test", "registry", "delivery", "review-notes-open"]
 parent: "WP-14"
-deps: ["BD-005", "N34-01", "N40-05", "STD-E2E", "STD-TEST"]
+deps: ["BD-005", "N34p4-02", "N40-05", "STD-E2E", "STD-TEST"]
 needs: []
 related: ["NJL-02", "NJLx-02"]
 gates: []
@@ -46,7 +46,7 @@ kept only in documentation (nothing would notice when a format drifts away from 
 
 In: the directory layout; the three layers and the four field classes; `MANIFEST.toml` and `IDENTITIES.toml`;
 the tool `frob-golden` (`check`, `resolve`, `bless`); the story-consistency check across the nine artifacts;
-the story runner script. Out: the content, schema validation and end-to-end script of each artifact (the
+the story runner script and its record in the exit runner's check table. Out: the content, schema validation and end-to-end script of each artifact (the
 `ART-L*` beads); the format registry and its round-trip gate (BD-141, BD-410); help-schema snapshots of verbs,
 which live beside these fixtures under `fixtures/golden/verbs/` (bead NJL-02).
 
@@ -65,7 +65,7 @@ fixtures/golden/verbs/<cluster>/<verb>.help.json      (owned by the verb conform
 The repository layout so far has `tests/fixtures/oracle/` for captures from pinned external oracles. Golden
 fixtures are a different thing (they come from the specification and from blessed output of this program), so
 they get their own root, `fixtures/golden/`, which this bead adds to the layout table of the workspace
-documentation.
+documentation (N34p4-02's table, a dependency).
 
 **Three layers per artifact.**
 1. `*.specimen.*`: the artifact exactly as specified, abbreviated identities included. Hand-entered once from
@@ -102,7 +102,10 @@ blessed = { by = "", commit = "", log = "" }
 
 Abbreviations and where they recur (the consistency check requires each to resolve to one value everywhere):
 `d:7a3e…` the design of L.1 (L.8 arm A, L.9); `d:c05b…` the design after the foot edit (L.8 arm B, L.9);
-`q:3c9d…` the mission of L.4 (L.1's `meta.source`, L.7's `query.blake3`, L.9); `b3:9a4e…` the module digest of
+`q:3c9d…` the mission of L.4 (L.1's `meta.source`, L.9), whose digest L.7 prints as `b3:3c9d…` in
+`query.blake3` (a row of its own, defined by L4, whose full identity the check requires to carry the same hex
+digest as `q:3c9d…`); `b3:e17a…` the admitted world set of L.4 (its `world` section; L.7 entry e2's `world-set`
+assumption, defined by L4); `b3:9a4e…` the module digest of
 L.2; `t:kitchen-tray@88c1…` the task of L.3 (L.6, L.8, L.9); `split:b3:60d3…` the scene split (L.3, L.8);
 `m:5d20…` the model and `c:2be8…` the baseline controller (L.6, L.9); `w:3fa9…` the minimal counterexample
 world (L.6, L.9) and its passing neighbours `w:51b0…`, `w:e7c4…`, `w:0a9d…` (L.6, L.9); `w:9d04…` and
@@ -163,10 +166,15 @@ printed values, plus one specimen and resolved pair in a format whose reader is 
 canonical JSON of `frob-core`, BD-005) for the manifest, resolve and round-trip paths, and the planted variants.
 On the real tree a fact is evaluated only when every artifact it reads is in the manifest; otherwise it is
 reported `not-due` with the missing artifacts, never as a pass (facts 1 and 2 read L.1, L.2 and L.4 and become
-evaluable at M1; facts 3 to 7 at M3; fact 8 at M4 with L.5). The story runner is added to step 4 of the exit
-runner `scripts/exit/review.sh` (N40-05, a dependency), so every exit from M1 runs the artifact scripts due at
-the candidate commit and the facts they make evaluable, and a failed script or fact is a blocking item of the
-exit record.
+evaluable at M1; facts 3 to 7 at M3; fact 8 at M4 with L.5). The story runner is attached to step 4 of the
+exit runner `scripts/exit/review.sh` (N40-05, a dependency) the way N40-05 attaches every owner's check, by one
+record in its table `scripts/exit/checks.toml` written in this bead's change: `id = "appendix-l-story"`, `owner
+= "NJL-07"`, `step = 4`, `since = "M1"`, `command = "scripts/exit/appendix-l-story.sh"`. That command wraps the
+story script (run as `<command> <Mn> --root <dir> --json`) and prints the check's contract object of N40-05
+(`section`: the table of artifact scripts and facts with their outcomes; one `blocks` entry per failed script or
+failed fact, naming it), exiting 0 whenever it ran, so a failed script or fact is a blocking item of the exit
+record and only a story run that could not start is `not-run`. Every exit from M1 thus runs the artifact
+scripts due at the candidate commit and the facts they make evaluable.
 
 ## Acceptance criteria
 
@@ -186,8 +194,10 @@ exit record.
       reader), so the single-parser rule of the format registry holds.
 - [ ] `frob-golden` is a declared `[[bin]]` with explicit `name` and `path` and has its row in the binary table
       of `CONTRACT.md`; BD-025's test `binaries_declared` passes with it.
-- [ ] `scripts/e2e/appendix_l_story.sh` is in step 4 of the exit runner. At this bead's close, with no artifact
-      entered, it logs every artifact and fact as a skip with its milestone and exits 0. At the M1 exit it runs
+- [ ] `scripts/exit/checks.toml` holds the record `appendix-l-story` (step 4, since M1) and
+      `scripts/exit/review.sh M1` runs it; a planted failed fact appears among the exit record's blocking parts
+      with the check's `id` and `owner`. At this bead's close, with no artifact
+      entered, `scripts/e2e/appendix_l_story.sh` logs every artifact and fact as a skip with its milestone and exits 0. At the M1 exit it runs
       the artifact scripts due at M1 (L.4, L.1, L.2) in one scratch root with facts 1 and 2 evaluated and passes;
       L.3 is due at M1 only through its library-level lane (`cargo test -p frob-spec --test golden_l3`, which
       the runner calls as a step), because its script uses the task verbs of M3; a failure blocks the exit;

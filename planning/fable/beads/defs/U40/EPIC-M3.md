@@ -4,7 +4,7 @@ title: "Milestone M3, places, tasks, adversaries, qualification: comparable resu
 type: "epic"
 priority: 2
 milestone: "M3"
-labels: ["m3", "delivery", "solid", "gate", "tenfold", "review-notes-open"]
+labels: ["m3", "delivery", "solid", "gate", "tenfold"]
 parent: "EPIC-PROGRAM"
 deps: []
 needs: []
@@ -26,7 +26,8 @@ held at M3, before the costly levers of M4 (family policies, inheritance) are bu
 decided on a measured loop: a class whose measured ratio is under 3 leaves the speed claim, and where a short
 program over an incumbent engine ties within a factor of 1.5 the layer ships over that engine. The exit line is
 that the gate is *recorded, whatever the ratio*. Planning estimate: 6 weeks (DESIGN). Critical path: yes. M3
-carries 77 convergence parts and 28 kill decisions of the compiled tables.
+carries 81 convergence parts and 28 kill decisions of the compiled tables (the plan's load table prints 77
+convergence parts; four gates have an M3 part the printed table does not count, N40-02 step 5).
 
 **Demonstrates.** NS-03 *An honest A/B*: `frob eval compare A B --task warehouse-tote` runs both designs on common
 world addresses under a declared anytime-valid study and reports the evidence ratio, valid at any stopping time,
@@ -81,7 +82,12 @@ lever); the corpus and benchmark; the pilot τ; OPEN-CORTEX-1 answered or defaul
 - The rank-agreement pilot on incumbent tools, and the partial ten-fold gate on legged and wheeled briefs, with a
   phase ledger for each arm.
 
-**2. Gates with a part due at this exit (compiled register tables: 6 admission, 77 convergence).**
+**2. Gates with a part due at this exit (compiled register tables: 6 admission, 81 convergence).** Four rows
+carry an M3 part that the plan's printed load table (77) does not count, each with its recording bead (N40-02,
+step 5): GATE-ARENA-01 for the four M3 task families (BD-253), GATE-HAB-01 on the device tiers (N19a-25),
+GATE-HAB-13 on the seven interior archetypes (N19c-19), and GATE-LEMMA-03 over every proof kind enabled by M3
+(recorded by this exit's review, BD-319). The four rows marked "pilot" have no recorded M3 part: the exit
+reads each from its pilot record and the gate itself is due at M4.
 
 | Gate | Claim | Part due | Pass criterion in brief (TARGET) | Defined in |
 |---|---|---|---|---|
@@ -91,6 +97,7 @@ lever); the corpus and benchmark; the pilot τ; OPEN-CORTEX-1 answered or defaul
 | INT-FTUI-01 | Admission | M3 | Foundation: frankentui [F]. One asupersync package or none in its graph; the job pane rendered from a recorded event stream equals its stored snapshot in the headless harness; idle processor use at most 2% of one core | §33.15 |
 | INT-F3D-01 | Admission | M3 | Foundation: franken_threed (pattern; subprocess) [F]. Ten reference frames of the replay page built through the route match the plain bundle within 1/255 per channel on at least 99.9% of pixels; an unadmitted feature fails explicitly | §33.15 |
 | INT-FDGR-01 | Admission | M3 (schema fixtures); M5 (scan import) | Foundation: drone geometry reconstruction (pattern; subprocess) [F]. The schema fixtures validate; a geometry generation whose scale status is not metric is refused; coverage masks become the scene's unknown-space label; privacy inheritance applies | §33.15 |
+| GATE-ARENA-01 | Known answer | M2 (the M2 task families); M3 (interior navigation, payload transport, low-friction crossing, tight-space maneuvering); M4 (the M4 task families) | Every task is reproducible inside its determinism class from its `TaskId`, `SceneId`, `ModelId` and seed; reference-robot baseline scorecards are recorded, for these families on the warehouse and kitchen proxies. | §24.17 |
 | GATE-ARENA-02 | Known answer | M3 | The scene-split check rejects an evaluation that reuses a training scene. | §24.17 |
 | GATE-ARENA-07 | Known answer | M3 | Scorecard accounting: a planted infeasible scenario appears in its column and in the all-scenario denominator; columns sum to the battery size on 100 random batteries; a silently shortened battery changes identity. | §24.17 |
 | GATE-ARENA-09 | Design comparison | M3 | Requirement writing: on 50 scripted mission statements, each with a reference formula and 20 labelled trajectories the agent does not see, at most 20% of first-draft requirements mislabel a trajectory, and `task.check` rejects every draft that does. | §24.17 |
@@ -121,13 +128,16 @@ lever); the corpus and benchmark; the pilot τ; OPEN-CORTEX-1 answered or defaul
 | GATE-FID-04 | Fidelity | M3 | Rank agreement between `batch-cpu` and the referee on the 40-design set per reference class, with the permitted use per stratum written to the ledger; per-episode ρ on 256 paired episodes per design reported. | §16.17 |
 | GATE-FID-05 | Known answer | M3 | Model-form check: the planted pyramid-cone and penetration-recovery winners are returned as `model-conditional`; a genuine winner is `model-robust`; cost at most 10% of the campaign's compute. | §16.17 |
 | GATE-FID-08 | Known answer | M3 | Tier correction: type-I error at most α over 10⁴ null comparisons with optional stopping; equals the paired mean at pᵢ = 1; a planted between-tier reversal is not established; ρ and the replaced higher-tier count printed. | §16.17 |
+| GATE-HAB-01 | Known answer | M2 (host and `batch-cpu`); M3 (the device tiers) | Compiled field against source geometry: error at most half a fine voxel at 10⁶ surface samples and never above the brick bound; analytic shapes exact to the interpolation bound and overlays to round-off; quantization ripple on a resting 10 kg block at most 1% of weight on every tier. | §19.19 |
 | GATE-HAB-02 | Known answer | M3 | Per archetype, 1,000 seeds yield valid scenes: all constraints satisfied; each tagged `witnessed`, `impossible` or `unresolved` (at most 5% `unresolved`); `impossible: intended` within one percentage point of quota; none resampled; one seed gives one `SceneId` on Linux and macOS. | §19.19 |
 | GATE-HAB-04 | Known answer | M3 | Scene acceptance: every fixture of §19.5.6 passes on 100 scenes per archetype; the reflected room is rejected and the three-point control accepts it; the 6 mm case returns `unknown`. | §19.19 |
 | GATE-HAB-05 | Known answer | M3 | Separation of optics and friction: the four-state tile behaves as in §19.5.4 on every tier, bit for bit within the determinism class. | §19.19 |
 | GATE-HAB-06 | Known answer | M3 | Film-friction law as scenes consume it (the law's own gate is GATE-TRAC-05): the three squeeze times within 2%; the R⁴ scaling; dry and thick-film limits recover the card coefficients. | §19.19 |
 | GATE-HAB-10 | Known answer | M3 | Clearance complexes [F]: the corridor closed form bracketed by witness and cut on 100 (a, b) pairs; zero false witnesses and zero false cuts on the seven archetype fixtures against a brute-force grid at four times the resolution; the checker accepts every certificate and rejects six mutated ones. | §19.19 |
 | GATE-HAB-12 | Performance | M3 | World bank: resident counts recorded against §19.15 (targets: at least 2,000 homes at 2 cm on the M5 Ultra; at least 150 on one RTX 4090 beside an 8,192-world quadruped batch); admission never exceeds the cap; a world changes scene at reset with no recompilation. | §19.19 |
+| GATE-HAB-13 | Known answer | M2 (the M2 battery of stand-ins); M3 (the seven interior archetypes) | Brick pool: the pooled field equals the dense field bit for bit at 10⁶ points per scene; measured occupancy and deduplication ratios are recorded for every archetype. | §19.19 |
 | GATE-HAB-14 | Known answer | M3 | Hygiene: a mirrored layout and a retrofit variant planted across a split are refused; feasibility counts in manifests equal recounts. | §19.19 |
+| GATE-LEMMA-03 | Known answer | M1; M2, M3, M4, M5, M8 (every kind enabled by that exit) | Every proof kind in use has one specimen that `frob-verify` accepts and at least three mutations it rejects; the four stance mutations, an unknown kind with consistent hashes and a changed quantifier are all rejected; the binary has no dependency outside the standard library and runs in an empty environment. | §12.6 |
 | GATE-MARROW-03 | Known answer | M3 | Γ_mech and Γ_obs equal the groups on file for all eighteen archetypes of §14.10 and for 24 planted asymmetries (a moved sensor, a one-sided payload, a changed sole material, a reversed gear), with the correct breaker named in every case; zero disagreements. | §13.10 |
 | GATE-NEMESIS-01 | Known answer | M3 | Legality and oracle: 100 of 100 planted illegal edits refused; 0 of 100 planted impossible traps counted; at least 95 of 100 planted solvable traps receive a witness. | §26.15 |
 | GATE-NEMESIS-02 | Design comparison | M3 | Planted traps of nominal probability at most 3 × 10⁻⁵, 30 paired repetitions: a first promoted failure with at least 3 times fewer simulated steps than card-uniform randomization at a 95% lower bound; at least 70% of reported counterexamples `solvable-causal` or `plant-feasible`. | §26.15 |
@@ -318,14 +328,16 @@ gate labelled `self-adjudicated`.
       at the partial gate has its decisions of KILL-TENFOLD-SPEED, -TIE, -ADJ and -REACH (N40-28);
       KILL-AUGUR-REUSE, KILL-TENFOLD-CERT and KILL-TENFOLD-LEAK are registered as standing from here.
 - [ ] NS-03, NS-04, NS-09, NS-15, NS-16 and NS-17 run from a clean checkout through `frob --json` and `frob-mcp`.
-- [ ] GATE-CORTEX-12 is recorded as a pilot and GATE-AUGUR-09 as a pilot; neither is printed as the whole gate.
+- [ ] The M3 parts of GATE-CORTEX-12, GATE-ATEL-07, GATE-ATEL-08 and GATE-AUGUR-09 are pilot parts, read from the
+      results of `PILOT-RANK-01`, `PILOT-LADDER-01` and `PILOT-C-32` (a pilot result never sets a gate part,
+      N38a-09; N40-02 step 5); each is printed `pilot: <verdict>`, none as the whole gate.
 - [ ] The exit report for M3 is `exit-ready`; the exit record is written by a fresh-context session.
 
 ## Test plan
 
 ### Unit tests
 
-Carried by member beads. Epic check: due counts for M3 are 6 admission, 77 convergence, 28 kill decisions, plus 21
+Carried by member beads. Epic check: due counts for M3 are 6 admission, 81 convergence, 28 kill decisions, plus 21
 late parts and 6 late kill decisions, plus seven ten-fold program parts.
 
 ### End-to-end script and logging

@@ -6,9 +6,9 @@ priority: 2
 milestone: "M2"
 labels: ["m2", "suite", "kinesis", "gauntlet", "upstream", "frankensim", "solid"]
 parent: "WP-14"
-deps: ["BD-025", "BD-032", "BD-037", "N33b-04", "STD-E2E"]
+deps: ["BD-025", "BD-032", "BD-037", "BD-085", "BD-088", "N29a-23", "N33b-04", "N35-03", "STD-E2E"]
 needs: []
-related: ["FD-FSIM-24", "N16a-05", "N35-03"]
+related: ["FD-FSIM-24", "N16a-05"]
 gates: []
 plan_refs: ["Appendix F.1", "Appendix F.3", "§35.1", "§16.4", "§33.3", "§33.8", "§38"]
 ---
@@ -37,7 +37,10 @@ wrapping `fs-mbd` to substitute its math functions from outside (not possible wi
 In: in FrankenSim, a mode of `fs-mbd` in which every elementary function is the deterministic one, and
 cancellation checkpoints in its long loops; here, cross-ISA lanes in tier G5 of the Gauntlet and prompt
 cancellation of referee jobs. Out: determinism of the batched tiers (their own gates); the ensemble lane of
-`fs-assimilate` (FD-FSIM-24).
+`fs-assimilate` (FD-FSIM-24). Dependencies the switch-over needs: N35-03, which owns the G5 lane `arch` (its
+fixtures, the transport of digests between the two machines, its receipts) and records the referee row of that
+lane `not-run` with the reason `upstream FD-FSIM-07` until this switch-over; BD-085 and BD-088, the M1 contact
+and dynamics batteries whose referee digests the added lanes compare; N29a-23, whose `job.cancel` the script calls.
 
 ## Technical approach
 
@@ -91,8 +94,9 @@ exist at the pin, and without it the digests are expected to differ: FACT to rec
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
-is never rolled back locally); (2) run `cargo xtask check-stack`, which writes a new resolution receipt
-(`frob.stack-receipt/1`) under `receipts/`; (3) re-run that sibling's admission gates, the parity gates and the
+is never rolled back locally); (2) write a new resolution receipt (`frob.stack-receipt/1`) under `receipts/`
+with `cargo xtask check-stack --write-receipt --reason pin-move --gate INT-FSIM-01` (plain `check-stack` only
+verifies and writes nothing); (3) re-run that sibling's admission gates, the parity gates and the
 gates this item names; (4) relock (`Cargo.lock` regenerated and committed, builds `--locked` on the one toolchain
 T) and append the record, with the receipt hash, to `DEPENDENCY_ADMISSION.md`. Only then does the row's `status`
 become `adopted` and the interim posture end. No PASS is recorded on a dirty sibling tree, and neither a pin nor
@@ -103,7 +107,10 @@ against the new pin.
 **What the switch-over re-runs.** The rule is "add cross-ISA lanes to G5". Tier G5 of the Gauntlet holds the
 determinism lanes (twice on one machine; across worker counts; debug and release; across platforms and
 backends, each against its class). Added lanes: referee digests of the G1 rollout and of the M1 contact and
-dynamics batteries are bit-equal between this Mac and the Linux host under the deterministic mode. Only when
+dynamics batteries are bit-equal between this Mac and the Linux host under the deterministic mode. The G1
+rollout is the referee row of N35-03's `arch` lane, which this switch-over turns from `not-run` into a run
+under the deterministic mode; the two battery lanes are added to the same lane, with its comparison and its
+receipts, and no second cross-machine comparison is built. Only when
 those lanes pass does the referee's contract claim the cross-ISA class, and results produced before adoption
 keep the class they had.
 
@@ -136,13 +143,15 @@ Here:
 
 ### End-to-end script and logging
 `scripts/e2e/upstream_fd_fsim_07.sh --phase pre|post` (plain shell, seed-explicit, idempotent, non-zero on failure).
-Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (the registry
+Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob doctor --json` (its `upstream`
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_fsim_07 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob sim run g1 --tier referee --seconds 2 --json` on both
-machines (the script is run once per machine and the second run compares against the first's log), and
-`frob job cancel` on a running referee job followed by resubmission.
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob sim run g1 --tier referee --seconds 2 --key
+fd07-g1-<machine> --json` on both machines (the script is run once per machine and the second run compares
+against the first's log; `sim.run` is a `run` verb, so every call carries its own idempotency key), and
+`frob job cancel <job> --json` on a running referee job (submitted with `--sync-wait-ms 0 --key fd07-cancel`,
+which returns the job handle with exit 8), followed by resubmission under a new key.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_07/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

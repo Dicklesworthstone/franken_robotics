@@ -4,7 +4,7 @@ title: "registry: Habitat refusal codes FROB-REF-301 to -317 with meanings, trig
 type: "task"
 priority: 1
 milestone: "M2"
-labels: ["m2", "habitat", "frob-scene", "solid", "registry", "test"]
+labels: ["m2", "habitat", "frob-scene", "solid", "registry", "test", "review-notes-open"]
 parent: "WP-17"
 deps: ["BD-005", "N35x-02", "STD-E2E", "STD-TEST"]
 needs: []

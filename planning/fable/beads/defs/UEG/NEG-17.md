@@ -102,6 +102,8 @@ with its own provenance (`assumed`, `norm`, `measured`), not from the generator'
 - `generated_pack_has_single_licence_entry`: for each of the seven archetypes' proxies.
 - `variant_copies_licence_entry`: a mirrored layout and a clutter variant.
 - `pack_is_pure_procedural_true_for_generated`, `…_false_with_imported_asset`.
+- `pack_is_pure_procedural_starter_pack`: every scene of the starter pack passes, files tagged `synthetic` apart;
+  with a research-only stand-in added to a scratch copy it fails.
 - `generators_have_no_foreign_assets`: with a planted file.
 - `starter_pack_regenerates_bit_identical`.
 
@@ -116,7 +118,9 @@ and sources the STD-E2E helper; this bead lists the steps of its row and writes 
 3. `frob --json artifact export <id> --out exports/ --key al-frob-scene-x-<n>` on each: exit 0, no notice item.
 4. The purity check on both packs and on every scene of the starter pack, and the regeneration of the starter
    pack from its recorded seeds with every `SceneId` reproduced (the checks of this bead's unit tests, run by
-   the script as `cargo test -p frob-scene purity` and logged as one command with its exit code).
+   the script as `cargo test -p frob-scene -- pack_is_pure_procedural starter_pack_regenerates_bit_identical`
+   and logged as one command with its exit code and the number of tests run, which must be four: no test name
+   contains "purity", so a filter on that word would run none and exit 0).
 5. The planted cases through `e2e_expect_caught`: a research-only stand-in added to a scratch copy of the starter
    pack (the purity check fails and the export answers `FROB-REF-310`, exit 3); an `attribution` stand-in from
    another default-pipeline source (the purity check fails, no export refusal); a mesh with no provenance

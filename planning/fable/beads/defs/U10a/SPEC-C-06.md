@@ -6,7 +6,7 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "traction", "marrow", "frob-algebra", "frob-contact", "solid", "frontier", "spine", "spec", "test"]
 parent: "WP-03"
-deps: ["BD-025", "N10a-01", "STD-E2E", "STD-TEST"]
+deps: ["BD-025", "N10-CX", "N10-KA1", "N10a-01", "STD-E2E", "STD-TEST"]
 needs: []
 related: ["BD-050", "BD-115", "BD-266", "N10a-14", "N18b-40", "SPEC-C-13", "SPEC-C-37"]
 gates: ["GATE-MARROW-01", "GATE-TRAC-01", "GATE-TRAC-09"]
@@ -196,11 +196,15 @@ contact states and 10⁻⁶ under the strict profile; M5). Cards: T-07, T-08.
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c06.sh`. Sources the STD-E2E helper. Steps: law suites; law suites per control; G0 and G1
-rows KA-055 to KA-057; when the verbs exist, `frob --json contact probe` on a block on an incline at the
-friction threshold (asserting the cone used is the second-order cone and the recorded solver error bound is
-present), and `frob --json fidelity modelform` on the planted pyramid design (asserting the ranking is typed
-`model-conditional` or the exploit is flagged). Log `target/e2e-logs/spec_c06/<utc>.ndjson` with transcript:
+`scripts/e2e/spec_c06.sh`. Sources the STD-E2E helper. Steps: law suites; law suites per control, one control
+per build with its own feature (N10a-01 section 6); the rows through the helper's `e2e_tier`, that is
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g0_laws -- KA-056` and `--test g1_known_answers --
+KA-055` and `-- KA-057`; then, each logged `pending` until its verb's bead lands, `frob --json contact probe
+--cone --mu 0.5 --normal 100N --slip 0.1m/s` (the cone branch of `contact.probe`, BD-154, M2), asserting that the
+returned projection of the trial impulse carries the three projection identities of S1 and lies in the
+second-order cone, and `frob --json fidelity modelform --study <the study ranking the planted diagonal-traction
+designs> --key c06-mf` (BD-266, M3; a `run` verb, so it carries a key), asserting the ranking is typed
+`model-conditional` with `flipped_by` naming the cone variant. Log `target/e2e-logs/spec_c06/<utc>.ndjson` with transcript:
 commands, exit codes, residuals and bounds with units, the evidence block, and on failure the first point at
 which an identity failed. Final `summary` line.
 

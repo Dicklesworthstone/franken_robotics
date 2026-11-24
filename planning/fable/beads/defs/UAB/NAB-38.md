@@ -6,7 +6,7 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "lemma", "marrow", "augur", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["N13-REF", "NAB-02", "NAB-32"]
+deps: ["N00-01", "N00-12", "N13-REF", "NAB-02", "NAB-11", "NAB-14", "NAB-15", "NAB-32"]
 needs: []
 related: ["NAB-39"]
 gates: []
@@ -43,7 +43,12 @@ schema, harness and lint (NAB-32); the glossary lint and its `[[ornamental]]` re
 
 ## Technical approach
 
-**Transcription rule.** As in NAB-33.
+**Transcription rule.** As in NAB-33. KI-52 names H-17 (N00-12), `hypothesis_state = "NARROWED"`; the other
+records name no hypothesis here (NAB-40's index later joins KI-47 to H-17). Revival fields: KI-47 `gate` (GATE-AUGUR-22); KI-48 `none`; KI-49 `none`; KI-50
+`none`; KI-51 `pilot` (GATE-LEMMA-05); KI-52 `gate` (KILL-SYNTH-LINKAGE, KILL-SYNTH-TRAJOPT); KI-53 `none`;
+KI-54 `none`; KI-55 `gate` (GATE-SHIELD-03); KI-56 `gate` (KILL-FAMILYCERT, KILL-AUGUR-TIE). FACT calculations
+name source-register records: the sibling-code caps are NAB-11's, the nine-point counts NAB-14's, the solver
+pilot of KI-56 NAB-15's.
 
 **Machine-checked arithmetic of this group.**
 
@@ -63,7 +68,9 @@ irreducible representation of C₂, C₂ × C₂, the dihedral groups and S₄ i
 complex type only; the smallest group with a quaternionic irreducible is the quaternion group of order 8,
 which is not a point group. The orbit count of KI-54 uses the fact that the identity fixes all 3⁴ labelings
 and each of the three non-identity elements of C₂ × C₂ (acting on four feet as products of two transpositions)
-fixes 3² of them. The measured ratios of KI-56 (1.345 warm, 1.088 cold) are medians of per-fixture ratios and
+fixes 3² of them. The harness evaluates real expressions only, so the C₃ row is stored with
+`expr = "(1 − 2 × (1 ÷ 2)) ÷ 3"` (ω + ω² = 2·cos(2π/3) = −1); the complex sums are computed from the character tables
+by `ki48_indicators`. The measured ratios of KI-56 (1.345 warm, 1.088 cold) are medians of per-fixture ratios and
 are not the ratio of the medians.
 
 FACT figures and their sources: sibling-code facts (the exact real solver is capped at 8 variables, 64
@@ -224,7 +231,7 @@ tool has, specialized solver ten-fold.
 - *Survives.* The query is kept where deriving the abstraction from a rich plant is cheaper than an expert doing
   it by hand. A tie with the generic comparator ships the generic method behind the same verbs (§25.22;
   KILL-AUGUR-TIE, KILL-FAMILYCERT; BET-14, BET-19).
-- *Revive only if.* At the M3 partial gate, a family certificate decides a cell that the generic comparator leaves undecided at equal cost (KILL-FAMILYCERT, KILL-AUGUR-TIE).
+- *Revive only if.* At the M3 partial gate, a family certificate decides a cell (at least 1) that the generic comparator leaves undecided at equal cost (KILL-FAMILYCERT, KILL-AUGUR-TIE).
 - *Carried by.* BD-131, BD-140, N12-30, N25a-18.
 
 ## Acceptance criteria
@@ -238,7 +245,7 @@ tool has, specialized solver ten-fold.
 - [ ] The wording lint finds no use of "verified" for a result anywhere, and KI-51's record names that rule.
 - [ ] The revive lint fails a planted contract sentence "the fusion is a cellular sheaf over the sensor graph"
       (through the glossary lint, `gloss.ornamental-label`) and a planted bead "Certify 4,326 roots by α-theory
-      inside the Lean kernel on the GPU" (`ki.match-without-citation`, KI-47).
+      inside the proof kernel on the GPU" (`ki.match-without-citation`, KI-47).
 - [ ] KI-56's record states the tie rule: a tie with the generic comparator ships the generic method behind
       the same verbs.
 
@@ -258,12 +265,14 @@ tool has, specialized solver ten-fold.
 - `ki56_ceiling`: 610.1 − 34.4 = 575.7; 842.8/575.7 = 1.4640; and 842.8/610.1 = 1.381 ≠ 1.345.
 - `ki50_ornamental_list_equals_glossary`: the KI-50 record's eight labels equal the labels of
   `registries/glossary.toml`'s `[[ornamental]]` records; removing one from either side fails.
+- `ki47_revive_case`: the planted bead of the criteria fails `ki.match-without-citation` naming KI-47.
+- `revival_fields`: `revive_evidence` and `revive_gates` per record as listed.
 - `records_complete_and_verbatim` against `tests/fixtures/killed/g6.md`.
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh` (NAB-50) recomputes the calculations, runs the group-theory tests and the
-planted cases. Logged per STD-E2E.
+`scripts/e2e/decision_records.sh` (NAB-50) runs this module with the rest of `killed_ideas` and recomputes the
+calculations. Logged per STD-E2E.
 
 ### Known answers and negative controls
 

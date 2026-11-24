@@ -99,7 +99,10 @@ computed here).
 
 ### End-to-end script and logging
 `scripts/e2e/bet_18_decide.sh` recomputes the harmonic-mean ratio from the per-family homogeneous rates and the
-mixed rate, checks digest equality counts, recomputes the verdict and checks the ADR and N11's rendering. Logged
+mixed rate, checks digest equality counts, reads the verdict of BET-18 from the bet register's report (`cargo
+run -p frob-conformance --example bets -- status --json`, example `bets` of N00-28, the one verdict rule, which
+prints a `GateFailedShort` reading as `open: gate failed short of the falsifier`; no second verdict rule in the
+script) and checks the ADR and N11's rendering against it. Logged
 per STD-E2E: per arm the rate with its disclosure block, the harmonic mean, the ratio against 0.70 and 0.5,
 padding waste, bucket count, edit-to-first-step times, digest matches; `summary` naming the three gates and two
 kill gates.

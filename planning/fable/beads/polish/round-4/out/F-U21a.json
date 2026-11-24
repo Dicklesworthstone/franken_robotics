@@ -1,0 +1,138 @@
+{
+ "round": 4,
+ "slice": "F-U21a",
+ "reviewed": 25,
+ "changed": [
+  {
+   "bead": "BD-013",
+   "kinds": [
+    "deadlock",
+    "contradiction"
+   ],
+   "what": "Two acceptance criteria waited on beads that depend on this one (convention 7): compiling the preludes on trj (NVRTC) and on the Mac (Metal gateway) needs BD-015/BD-016's compile paths, and the on-device contraction detector is BD-017's probe; the implementer could never close BD-013 honestly. They now check what this bead delivers (both preludes expand K-selftest to byte-identical kernel text with zero lint findings; the detector text is lint-clean and the planted option sets are rejected by rule 4) and name BD-015, BD-016, BD-017, BD-020 and N21c-30 as the beads that run them on devices. The KA-525 note attributed BD-020's one-ulp plant to KA-525; its control is N21c-30:spark.contraction-prelude (BD-020's control B), corrected so the wrong control is not seeded."
+  },
+  {
+   "bead": "BD-029",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Said --device all runs as one job once E1 is approved for gate:GATE-SPARK-07 (R11), without saying the call must cite that scope; under convention 14 an uncited call is adhoc (E0) and would still be refused 761. Added the cited form `frob spark fingerprint --device all --envelope-scope gate:GATE-SPARK-07 --key <k> --json` (or a launcher holding it)."
+  },
+  {
+   "bead": "BD-053",
+   "kinds": [
+    "registry"
+   ],
+   "what": "FROB-REF-252's repairs were in the wrong order (Guarded first, Exact second) and lacked the third; N35-REF's row orders them Exact, Guarded, then non-strict requirement. Restated in the registry's order, so the refusal the implementer builds ranks its repairs as the registry does."
+  },
+  {
+   "bead": "BD-152",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied H-owners-3: the register step's N21a-04 assertion read `frob spark check --list --json`, which is 802 under NJL-01's action rule; now `frob spark check --action list --json`."
+  },
+  {
+   "bead": "BD-172",
+   "kinds": [
+    "request"
+   ],
+   "what": "Applied F-U29a: snapshot_reads writes snapshots with `--telemetry T3 --snapshot-every 1` (without T3 the option is 802, N29ap1-02, and the step could not pass); N21b-26's own table already carries the same request. Applied F-U16b: added dep N16b-25 (owner of --tier beyond referee and --worlds on sim.run, M2; checked with graph_check, no cycle), since the first-light script runs `frob sim run --tier gpu-cuda ... --worlds 8192`."
+  },
+  {
+   "bead": "BD-173",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied H-owners-3 and M1-6 (the mechanical R4-action finding was real): the verb paragraph still spelled eviction `--evict <key> | --evict-to <bytes> | --evict-all`, all 802 under NJL-01. Now the read forms (--list, --verify, exit 2 on corrupt) and the admin action `--action evict` with exactly one of `--entry <cache key>`, `--to-bytes <bytes>`, `--all`, no key, scope spark:admin, 802 for none/two/target without the action, 720 without the scope."
+  },
+  {
+   "bead": "BD-175",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Applied F-U21b and the H-verbs-8 ANSWER; the C13-pending finding was real. nan_world and overflow now run through `frob sim run --conformance-plant <file>` with N21b-23's plant kinds `nan` (world 17, tick 100) and `overflow` (contacts, 40 against 32; 610 exit 6 under refuse) instead of the annex-test route and the 'requested of N21b-23' narration. Section 7 now states every command-line hook: --inject-faults, the two plant kinds, --inject-device-loss open|chunk=<k> (601), --inject-stall, no hook for over-budget (602 at admission), and `frob spark precompile <device> --unit <file> --key <k>` for 603."
+  },
+  {
+   "bead": "BD-178",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The verb paragraph and the acceptance gave spark.place exit 0 or a refusal with exit 6 only; VERBS-spark's row gives exit 2 for a plan with findings (fallback under mixed-allowed, plan moved under prefer, stale check) and 247 (exit 3) for an unattainable --need-class. An implementer following the bead would return 0 for a fallback plan. Both places now carry the row's exit codes."
+  },
+  {
+   "bead": "BD-217",
+   "kinds": [
+    "deadlock",
+    "broken",
+    "convention"
+   ],
+   "what": "The unit test `kill_metal_rule` tested the KILL-METAL reading, whose decision function is N21b-08's (`kill_metal_rule_table`), and N21b-08 depends on this bead: BD-217 could not pass it without implementing the decision bead's function. Now `kill_metal_receipt_fields` (row 12's bound with pairs and threshold 0.25, and the Metal determinism result), the same form as the existing `kill_parity_receipt_fields`. The script ran every row as `frob sim run`, so: row 3 (PPO training) could not be measured at all; it is now `frob train start ... --task quad-flat-velocity --algo ppo --backend gpu-cuda --devices cuda:0 --worlds 8192 --steps <n> --seed <s> --key pr-3-... --json` (BD-198's trainer) with the rate read from `frob train status`. Row 2 now names its task (`--task quad-flat-velocity`), row 8 runs `--workload H:heightfield`, row 15 `--profile strict` (each otherwise measured a different row), and rows 13 and 14 add `--workers 24` and, because 24 threads exceed E0, cite R1 with `--envelope-scope gate:GATE-SPARK-03` (convention 14; uncited they are adhoc and refused 761; the choice of R1's scope is labelled DESIGN, see requests), logged `not run` without an approved R1."
+  },
+  {
+   "bead": "BD-221",
+   "kinds": [
+    "request"
+   ],
+   "what": "Applied H-owners-3: the inventory step read the library index with `frob spark check --list --json`, which is 802 under NJL-01's action rule, so the decision script would fail at its first step; now `frob spark check --action list --json` (the keyless read action), following the cursor to the last page."
+  },
+  {
+   "bead": "BD-371",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "Applied F-U21c: the final reading is now stated as a second `decision` entry {outcome, reading = \"final\", adr, date, session, receipts, exit = \"M4\"} with `docs/adr/ADR-KILL-SPECIALIZE-M4-final.md` citing the first ADR, and the first entry and ADR never edited (N40-03, N21c-18). FROB-REF-603's repair 'the generic kernel, if a specialized one failed' was called the first repair; N21-REF ranks it second after reporting the diagnostics. The `--specialize` paragraph narrated that the option 'is requested of the verb's row'; VERBS-spark now lists it (M4, 724 exit 5 before the bead or after the gate fires), stated as fact (convention 13)."
+  },
+  {
+   "bead": "N21a-04",
+   "kinds": [
+    "request"
+   ],
+   "what": "Applied H-owners-3: the surface, the acceptance, the test `list_takes_no_key` and the e2e step spelled the listing `frob spark check --list`, which VERBS-spark makes the unknown-parameter 802; an implementer would have built a flag the registry refuses. Now `--action list` throughout, with `--list` named as 802 (exit 3)."
+  },
+  {
+   "bead": "N21a-08",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The refusal paragraph gave 722 and 610 'the same ranked repairs (a larger capacity, then continue-flagged)'; N16-REF's 722 row ranks three (a larger capacity as a new StepPlanId, reset, continue flagged). Each code now carries its own row's repairs, so the batch-cpu refusal is not built missing 'reset'."
+  },
+  {
+   "bead": "N21a-18",
+   "kinds": [
+    "request"
+   ],
+   "what": "Applied H-owners-3: the e2e note named the library listing `frob spark check --list`, the 802 form; now `--action list`, so the script's author is not pointed at a refused spelling."
+  },
+  {
+   "bead": "N21a-19",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The rewrites step ran `cargo test -p frob-kernels --test kernel_vectors -- --emit-digests <file>`; the default libtest harness rejects an unknown option after `--`, so the step could never produce its digests. Now `FROB_TEST_SEED=<seed> FROB_KERNEL_DIGESTS=<file> cargo test -p frob-kernels --test kernel_vectors`, with the test target stated as this bead's (it was defined nowhere)."
+  },
+  {
+   "bead": "N21a-22",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied H-owners-3: the classes step of spark_probe.sh read `frob spark check --list --json` (802); now `--action list`, followed to the last page. FROB-REF-252's 'first repair: declare the kernel guarded or move the output to an exact kernel' inverted N35-REF's order; now exact kernel on quantized inputs, then guarded, then a non-strict requirement, the order the refusal's repairs must carry."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N44-01",
+   "what": "R1 (incumbent and parity measurements on both cards and on all cores) admits the scopes gate:GATE-SPARK-21, gate:GATE-SPARK-03 and gate:GATE-SPARK-22, but none of them names the batch-cpu Performance rows 13 and 14 of §36.3 (24 threads on the M5 Ultra; BD-217, and N40-33 under the no-GPU variant), which are the only parity rows that need R1's all-cores clause; GATE-SPARK-03 is defined as the CUDA rows. BD-217 now cites `--envelope-scope gate:GATE-SPARK-03` for them (DESIGN). State in R1 that gate:GATE-SPARK-03 covers rows 13 and 14 of the parity campaign, or add the scope that does; otherwise an implementer of the envelope admission can read GATE-SPARK-03 as CUDA-only and refuse those runs 761, leaving rows 13 and 14 permanently `not run`."
+  }
+ ],
+ "unchanged": 9,
+ "notes": "unchanged: N21a-02, N21a-03, N21a-07, N21a-10, N21a-12, N21a-14, N21a-23, N21a-25, N21a-27. Every note addressed to the slice was checked and applied (the NJL-01 --action list form in five beads, BD-173's evict action, BD-175's plant hooks and the H-verbs-8 ANSWER, BD-172's T3 and N16b-25 dep, BD-371's second decision entry); the two mechanical findings (BD-173 R4-action, BD-175 C13-pending) were real. Fixes beyond the notes were registry repair orders (252, 603, 722), one decision-function test moved out of a measuring bead, BD-217's row commands, and an unrunnable libtest option. The slice looks settled apart from the R1 scope request to N44-01."
+}

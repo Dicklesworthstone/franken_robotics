@@ -4,9 +4,9 @@ title: "discrepancy E7-1 resolved: the tenth qualification request needs 76,959 
 type: "task"
 priority: 2
 milestone: "M3"
-labels: ["m3", "nemesis", "frob-nemesis", "solid", "test", "card"]
+labels: ["m3", "nemesis", "frob-nemesis", "solid", "test", "card", "review-notes-open"]
 parent: "WP-55"
-deps: ["BD-276", "GB-32", "N26a-21", "N38b-56", "NEG-03", "STD-E2E", "VERBS-nemesis"]
+deps: ["BD-276", "GB-32", "N26a-21", "N26a-26", "N38b-56", "NEG-03", "STD-E2E", "VERBS-nemesis"]
 needs: []
 related: []
 gates: []
@@ -87,16 +87,23 @@ certification lane itself (BD-276); the card (GB-32).
 ### End-to-end script and logging
 
 `scripts/e2e/neg_e7_1_clean_count.sh [--seed S]` (shared end-to-end helper; N38b-56 names it as the place where
-the count is checked through the verb), each call with its own key:
-1. `frob nemesis bound <c> --task <t> --tier batch-cpu --target 1e-4 --delta 1/2200 --mode certify --estimate
-   --key e71-1 --json`: `required` is 76,959 (the level of the tenth request) and no field of the envelope
-   carries 76,963; then δ = 1/20 at 10⁻⁴, 10⁻⁵ and 10⁻⁶ (`--key e71-2` to `e71-4`): 29,956, 299,572 and
+the count is checked through the verb). Conventions for every `frob nemesis bound` call, as in N26a-30's script:
+its own key; `--finalist` (BD-276's recorded attestation: the script's `synthetic` candidate is a finalist of no
+recorded campaign, and without the flag N26a-26's finalists-only rule refuses the call with
+`rare-bound-not-finalist`, exit 3, before the count is reached); and a scratch configuration with
+`nemesis.bound.policy = baseline` (N26a-26: the nominal share is the whole budget; under the adopted table
+policy it is 80%, and step 2's budgets of 2,995 and 2,994 episodes would not decide at the count).
+1. `frob nemesis bound <c> --task <t> --tier batch-cpu --target 1e-4 --delta 1/2200 --mode certify --finalist
+   --estimate --key e71-1 --json`: `required` is 76,959 (the level of the tenth request) and no field of the
+   envelope carries 76,963; then δ = 1/20 at 10⁻⁴, 10⁻⁵ and 10⁻⁶ (`--key e71-2` to `e71-4`): 29,956, 299,572 and
    2,995,731, each with the design N26a-22 would use.
-2. The planner uses the exact count, not the approximation: at `--target 1e-3`, where the exact rule gives 2,995
-   and ⌈ln(1/δ)/p⋆⌉ gives 2,996, `--budget episodes=2995 --estimate --key e71-5` is admitted with design
-   `fixed-n` and n_declared 2,995, and `--budget episodes=2994 --estimate --key e71-6` is refused with
-   FROB-REF-760, exit 4, the reachable bound attached and zero episodes run. A planner sized by the
-   approximation would refuse the first.
+2. The planner uses the exact count, not the approximation: at `--target 1e-3 --delta 1/20`, where the exact
+   rule gives 2,995 and ⌈ln(1/δ)/p⋆⌉ gives 2,996, `--budget episodes=2995 --estimate --key e71-5` reports
+   `required` 2,995 and the design `fixed-n` with n_declared 2,995, so the budget buys the claim; the same
+   request submitted with `--budget episodes=2994 --key e71-6` and no `--estimate` (FROB-REF-760 is raised at
+   admission, and an estimate-only call admits nothing) is refused with FROB-REF-760, exit 4, `required` 2,995
+   against `observed` 2,994, the reachable bound attached and zero episodes run. A planner sized by the
+   approximation would report 2,996 for the first and refuse a budget of 2,995.
 3. `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g0_laws -- KA-664` (the four counts) and the same
    with `--features gauntlet-mutations`, where the undercount control (29,955) is reported caught.
 4. The stale-value scan of NEG-03 over the tree (zero hits outside the three listed places), then over a scratch

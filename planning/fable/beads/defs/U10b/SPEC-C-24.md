@@ -55,7 +55,7 @@ environment of `frob-learn`): that bead is listed in `related` and is not a prer
 over its subject trait and closes on the exact reference model and the mutants in its own test support. If
 `frob-learn` does not exist when this bead starts, the suite and its support files are written under
 `crates/frob-conformance/tests/` with the same file names (that crate exists from BD-025) and the commands below
-read `-p frob-conformance` (with `--features gauntlet-mutations` in place of the crate's `conformance`); the bead that implements the construction moves them into the owning crate, binds its
+read `-p frob-conformance` (a control's build there reads `--features gauntlet-mutations,<feature>`, its mutation feature declared in `frob-conformance`); the bead that implements the construction moves them into the owning crate, binds its
 production types to the subject trait and runs the unchanged suite as part of its own acceptance. A criterion or
 script step below that names production code or a verb of an implementing bead is owed at that bead's acceptance
 and is logged `pending` here until then.
@@ -118,8 +118,13 @@ envelope). Ceiling: 1.3× on an amortized pretraining run. Fallback: arm A.
   fn act(&self, tokens, tree) -> Vec<Action> }`. `tests/support/c24_ref.rs`: a reference equivariant layer
   stack built from the allowed operations with fixed rational weights (a real, small network; labelled
   `synthetic` data); generators of group elements (yaw angles with rational sine and cosine such as (3/5, 4/5),
-  rational translations, reflections through vertical planes). `tests/support/c24_mutants.rs`: mutants under the crate's cargo feature
-  `conformance` (BD-025; the umbrella `gauntlet-mutations` enables it).
+  rational translations, reflections through vertical planes). `tests/support/c24_mutants.rs`: each mutant
+  compiled only under its own Cargo feature, declared by `frob-learn` and named in its control record's `feature`
+  field (N10a-01 section 6, BD-025): `cx-061` for the plant `SPEC-C-24:cx-061` of CX-061 (the all-rotations
+  mutant), the `nc-` feature of each control this bead registers directly (the polar-parity mutant). No mutation
+  feature is part of the umbrella `gauntlet-mutations` or of the crate's `conformance` feature: the suite is run
+  once per control, one control per build. Each mutation feature enables `moonshot-ga-policy` (DESIGN: the
+  control runner adds only the record's one feature, so the suite must compile under it alone).
 - Register row C-24: `rust_type` = the multivector token type of `frob-learn` (filled if the epic is funded),
   `verb = "train.family"` with the architecture option, `failing_test` =
   `frob-learn::laws_c24::s3_horizontal_rotation_not_a_symmetry`, `payoff.gate = "GATE-CORTEX-17"`,
@@ -135,8 +140,10 @@ envelope). Ceiling: 1.3× on an amortized pretraining run. Fallback: arm A.
 
 - [ ] `docs/math/C-24.md` has the ten sections, statements C-24.S1 to S5 with classes, the transformation
       table, the evidence figures tagged FACT and the pilot statement.
-- [ ] `cargo test -p frob-learn --features moonshot-ga-policy --test laws_c24` passes; with `conformance` added
-      every mutant fails. A default build compiles none of it.
+- [ ] `cargo test -p frob-learn --features moonshot-ga-policy --test laws_c24` passes; built once per registered
+      control with the feature its record names (`cargo test -p frob-learn --features <feature> --test laws_c24`:
+      `cx-061`, and the `nc-` feature of the polar-parity mutant), the test the record names fails. A default
+      build compiles none of it.
 - [ ] KA-131: for every layer of the reference stack and 100 seeded group elements of each kind (yaw,
       translation, vertical-plane reflection, relabeling), applying the element before the layer equals
       applying it after, exactly in ℚ for rational elements and within 64 units in the last place in `f64`
@@ -167,9 +174,13 @@ envelope). Ceiling: 1.3× on an amortized pretraining run. Fallback: arm A.
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c24.sh` (idempotent; seed 2400 printed): `frob --json doctor`; the law suite with the
-feature flags; `FROB_TEST_SEED=2400 cargo test -p frob-conformance --test g3_metamorphic -- KA-131` on the host site (the row's tier is G3), then the same with `--features gauntlet-mutations`, under which the control CX-061 (the all-rotations mutant) must fail; a check that a default
-build does not contain the suite. Sources the STD-E2E helper; writes `target/e2e-logs/spec_c24/<utc>.ndjson`
+`scripts/e2e/spec_c24.sh` (idempotent; seed 2400 printed): `frob --json doctor`; the law suite with
+`--features moonshot-ga-policy`, then once per registered control in its own build with the feature its record
+names (`cargo test -p frob-learn --features <feature> --test laws_c24`: `cx-061`, the all-rotations mutant, which
+must fail `s3_horizontal_rotation_not_a_symmetry`; the `nc-` feature of the polar-parity mutant), asserting that
+the test the record names fails; the row through the helper's `e2e_tier g3_metamorphic KA-131` on the host site
+(`FROB_TEST_SEED=2400 cargo test -p frob-conformance --test g3_metamorphic -- KA-131`; the row's tier is G3), the
+receipt hash logged; a check that a default build does not contain the suite. Sources the STD-E2E helper; writes `target/e2e-logs/spec_c24/<utc>.ndjson`
 and a transcript; each line has `ts`, `script`, `bead` (`SPEC-C-24`), `step`, `event` (`start`, `cmd`, `assert`,
 `metric`, `refusal`, `end`), command line, exit code, wall time, evidence block (claim Known answer, class
 Tested, tier G3 host, determinism class, seed), per layer and group-element kind the largest equivariance

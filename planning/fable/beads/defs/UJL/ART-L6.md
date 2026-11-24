@@ -66,8 +66,9 @@ shrinking (measured by those beads); the layers and the identity map (NJL-07).
   "promotion": {"tier": "referee", "reproduced": true,
                 "variants": ["half-step", "iterations-x2", "law-2", "tol-div-10"]},
   "oracle": {"class": "solvable-causal", "controller": "c:77e1…", "margin": 0.18, "trace": "b3:a9d2…"},
-  "legality": {"inside": true, "touched": [{"bound": "closer_torque", "provenance": "assumed"},
-                                           {"bound": "tray_fill", "provenance": "assumed"}]},
+  "legality": {"profile": "kitchen-commercial/default@b3:…", "inside": true,
+               "touched": [{"bound": "closer_torque", "provenance": "assumed"},
+                           {"bound": "tray_fill", "provenance": "assumed"}]},
   "prior": {"log10_density_ratio": -4.6},
   "neighbours_passing": ["w:51b0…", "w:e7c4…", "w:0a9d…"],
   "evidence": {"class": "Tested", "tier": "referee", "standing": "established"},
@@ -75,14 +76,24 @@ shrinking (measured by those beads); the layers and the identity map (NJL-07).
                        "sim_to_real_certified": false} }
 ```
 
-One field more than the specification prints (DESIGN, following the owner of the format): the specification's
-text of this artifact has no `one_minimal_verified` in `minimality`. The bead that owns `frob.mcw/1` (N26a-19)
-requires it in every file, because it is what tells a verified 1-minimal world of more than three edits from
-an unfinished shrink, and its reader rejects a file without it. A specimen that the format's own reader
-rejected could not be resolved and validated, so the specimen carries the field (true, as it must be with
-`1-minimal`); this is the case the fixture layout provides for (an owner bead fixes a spelling, and the specimen
-is entered from the amended artifact bead). The specification's text without the field is kept as a planted
-violation in the acceptance list.
+Two fields more than the specification prints (DESIGN, following the owner of the format): the specification's
+text of this artifact has no `one_minimal_verified` in `minimality` and no `profile` in `legality`. The bead that
+owns `frob.mcw/1` (N26a-19) requires both in every file. `one_minimal_verified` is what tells a verified
+1-minimal world of more than three edits from an unfinished shrink, and its reader rejects a file without it.
+`legality.profile` is the name and content address of the legality profile the world was checked against (BD-270
+puts the profile identity in every result): the reader's rule 3 checks the final world against the profile the
+file names, cannot be run on a file that names none, and reports a profile that does not resolve as an error
+naming that field. A specimen that the format's own reader rejected could not be resolved and validated, so the
+specimen carries both fields (`one_minimal_verified` true, as it must be with `1-minimal`; `profile` naming
+`kitchen-commercial/default`, the profile of the story); this is the case the fixture layout provides for (an
+owner bead fixes a spelling, and the specimen is entered from the amended artifact bead). The specification's
+text without the two fields is kept as a planted violation in the acceptance list.
+
+The profile's content address is printed as `b3:…`, with no leading digits, because no text prints any. It is a
+placeholder that no abbreviation pattern matches, so it enters `IDENTITIES.toml` as a row of its own
+(`defined_by = "L6"`), whose full value is `kitchen-commercial/default@` followed by the content address that
+BD-270's registry gives that profile at blessing; `frob-golden resolve` then writes it like any other identity
+and leaves no `…` in the resolved file, and `fields.toml` declares `/legality/profile` `identity`.
 
 **Field by field.** `task`, `requirement`: the task of artifact L.3 and its verdict `delivered`. `candidate`:
 model, controller and policy identities. `base`: the scene and the world address (run seed, world, episode) of
@@ -93,8 +104,8 @@ one intervention in an autopsy. `minimality`: the kind, whether all single and p
 number of tests, and the paired seeds on which the failure appears. `failure`: class, binding atom, margin and
 time. `replay`: backend, determinism class and state digests. `promotion`: the tier on which the failure was
 reproduced and the numerical variants it survived. `oracle`: the solvability class with a witness controller
-and its margin. `legality`: whether the world is inside the declared profile and which touched bounds have
-provenance `assumed`. `prior`: the log density ratio of the world against the nominal law.
+and its margin. `legality`: the profile the world was checked against (`profile`: its name and content address),
+whether the world is inside it and which touched bounds have provenance `assumed`. `prior`: the log density ratio of the world against the nominal law.
 `neighbours_passing`: the worlds with one edit removed. `evidence`, `authorization`: class, tier, standing and
 the three no-authorization flags.
 
@@ -141,7 +152,7 @@ files):
 | `minimality.one_minimal_verified` is present; it is true when the kind is `1-minimal` | true |
 | `failure.binding_atom` is an atom of the task's requirement; `failure.margin` < 0 | `upright`, −0.42 |
 | `oracle.class` is `solvable-causal` or `plant-feasible`, with a witness and a margin > 0 | `solvable-causal`, 0.18 |
-| `legality.inside` is true; every touched bound of provenance `assumed` is listed | two listed |
+| `legality.profile` names a profile that resolves (name and content address); `legality.inside` is true for that profile; every touched bound of provenance `assumed` is listed | `kitchen-commercial/default`; two listed |
 | `evidence.tier` is `referee` and `standing` is `established` only if `promotion.reproduced` is true | true |
 | `evidence.class` is at most Tested | Tested |
 | The three authorization flags are present and false | present, false |
@@ -175,8 +186,9 @@ not false: `FROB-REF-816`. Offering the world as a confirmation sample: `FROB-RE
 - [ ] Each planted violation of an invariant in a copy of the resolved file is rejected by the reader or by
       `frob-golden check`: a fourth edit with three neighbours; `seeds_failing: "40/64"`; `tests: 20` with
       `pairs_exhausted: true`; an oracle class `unsolvable`; a true flag; a duplicate path; `minimality`
-      without `one_minimal_verified` (the specification's own text of the artifact), or with it false beside
-      `1-minimal`.
+      without `one_minimal_verified` (the specification's own text of the artifact, which also names no
+      profile), or with it false beside `1-minimal`; a `legality.profile` that does not resolve (the reader's
+      error names that field).
 - [ ] The six refusals of the list above fire on their planted requests with the stated codes, each from the
       verb named in step (9) of the script.
 - [ ] The produced file is identical on two runs on one backend (determinism class D2 for the replay), and its
@@ -246,13 +258,14 @@ code and first repair, and the `summary`.
 ### Known answers and negative controls
 
 - Known answers (exact): 7 + 21 = 28 single and pair tests of 42; 55 ≥ 48 of 64; −0.42 from 17.04° and 12°;
-  the two delta-debugging cases of the unit tests. They have no number in the known-answer suite; the unit's
-  coverage file lists them.
+  the two delta-debugging cases of the unit tests. They are row JL-15 of NJLx-02's known-answer block (a
+  dependency), which this bead's tests cite by number once the block is issued, with the row's control (a
+  shrinker that reports the 1-minimal world as the smallest failure).
 - Counterexample kept alive: calling a 1-minimal world the smallest failure. With failure when a and b are
   both present or when c, d and e are all present, and the edits listed as (a, c, d, e, b), delta debugging
   ends at three edits while a two-edit counterexample exists.
-- Negative controls: the six mutated files; the two plants; an impossible world (no solvable witness) must not
-  be written as a `.fmcw`.
+- Negative controls: the mutated files of the acceptance list, one per planted violation; the two plants; an
+  impossible world (no solvable witness) must not be written as a `.fmcw`.
 - Invariants carried: INV-NEMESIS-01 (only solvable worlds count), INV-NEMESIS-02 (every world evaluated is
   inside the legality profile, checked on the final world), INV-NEMESIS-04 (a `.fmcw` replays with identical
   digests on its originating backend), INV-NEMESIS-05 (a failure counts only after the artifact guard).

@@ -76,3 +76,29 @@ bead and follow it exactly, or record a request to its slice.
     otherwise `adhoc`, whose class in force is E0. A citation that contradicts the launcher's token is refused. No
     new capability scope is introduced: the session's ordinary run scope and budget apply, and the envelope meter
     bounds what a scope can consume.
+15. **A pilot's verdict is data** (owners `N38a-09`, `STD-E2E`; settled by the lead when round 4 closed). A pilot
+    or experiment script measures. It exits zero when the measurement was made and its pilot record written,
+    whichever status the record carries (`falsifier-holds`, `falsifier-rejected`, `inconclusive`): a held
+    falsifier is a result, and the fallback then ships. It exits non-zero only when a step could not run, a
+    sanity assertion failed, or a negative control was not caught. Falsifier values are logged against their
+    thresholds with `e2e_metric … --observe` (the line carries `asserted: false` and the verdict; it is never an
+    assertion), not with a bare thresholded `e2e_metric`, which asserts.
+16. **Command-line facts that scripts kept getting wrong** (owners `BD-022`, `NJL-01`, the `VERBS-<cluster>`
+    rows). The command line waits to completion by default: exit 8 with a job handle happens only when the call
+    passes `--sync-wait-ms <n>` and the wait elapses, so a script that expects exit 8 passes it. An action of a
+    multi-action verb is selected only with `--action <name>`; an action of kind admin takes no `--key`. The
+    battery form of `eval run` takes neither `--run-seed` nor `--worlds`. Two calls whose results a test compares
+    as independently computed carry `--no-memo` (a verb whose row has `memo = true`) or distinct keys (a run
+    verb): otherwise the second is answered from the first's stored result and the comparison checks nothing.
+17. **Cargo forms** (owners `BD-025`, `N38b-04`, `N38b-05`). The tests of a file `tests/<stem>.rs` are run with
+    `--test <stem>`; a bare `<stem>` is a name filter and usually selects nothing. A test command has at most one
+    name filter, after `--`. A build that plants a defect is never a release build. The feature that builds a
+    control is exactly the one its control record's `feature` field names, one control per build: the plant's
+    name (`cx-262` for the plant `BD-123:cx-262`) for a control seeded from a counterexample catalogue, and
+    `nc-<nnnn>` only for a control its bead registers directly. It is never `mutants` and never the crate's
+    `conformance` feature, and a script that builds a seeded control under an `nc-<nnnn>` name builds nothing.
+18. **What a gate is recorded from** (owners `N38b-19`, `N38a-02`, `STD-E2E`). The recorder loads only a tier-run
+    receipt (`frob.gauntlet.receipt/1`). A script that measures a gate therefore runs the gate's row through
+    `e2e_tier <target> <gate|row> --mutations`, so that the gate's registered control is caught in the same
+    receipt; a script's summary line, a log tag or a file the script writes is not a receipt. The session that
+    implemented a mechanism does not enter its gate's result: the recorder refuses a self-certified record.

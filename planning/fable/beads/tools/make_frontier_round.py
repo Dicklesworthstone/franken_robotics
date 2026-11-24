@@ -80,7 +80,10 @@ inbox = defaultdict(list)
 for full, tag, target, text in requests_of(rnd - 1):
     if target and tag not in delivered_prev and full not in delivered_prev:
         inbox[target].append((full, text))
-for name, label in (("lint_findings.json", "mechanical check of the conventions"), ("lead_notes.json", "note from the lead")):
+for name, label in (("lint_findings.json", "mechanical check of the conventions (can be a false alarm)"), ("lead_notes.json", "note from the lead"),
+                    ("lead_notes_wrapup.json", "note from the lead"), ("lint_findings_2.json", "mechanical check of the conventions (can be a false alarm)"),
+                    ("lead_notes_graph.json", "note from the lead, from the audit of the dependency graph"),
+                    ("lint_findings_3.json", "mechanical check of the conventions (can be a false alarm)"), ("lead_notes_late.json", "note from the lead")):
     f = R / name                                      # {bead key: [text, ...]} written before the round is cut
     if f.exists():
         for k, items in json.loads(f.read_text(encoding="utf-8")).items():
@@ -170,6 +173,37 @@ if phase == "mopup":     # hub beads that reviewers of this same round addressed
     if cur:
         new.append(("M%d-%d" % (n_pass, i), cur, "mopup"))
     inbox = pend         # a mop-up slice lists only what its beads have not yet been shown
+
+if phase == "sweep":     # every live bead that no slice of this round holds: by unit, read in full
+    rest = [k for k in live if k not in placed]
+    by_unit = defaultdict(list)
+    for k in rest:
+        by_unit[live[k]["unit"]].append(k)
+    for u in sorted(by_unit):
+        for name, ks in chunks(by_unit[u], "S-" + u, MAX):
+            new.append((name, ks, "sweep"))
+    merged = []          # small units ride together
+    for name, ks, ph in new:
+        if merged and len(merged[-1][1]) + len(ks) <= MAX:
+            merged[-1] = (merged[-1][0] + "+" + name[2:], merged[-1][1] + ks, ph)
+        else:
+            merged.append((name, ks, ph))
+    new = [("S-%02d" % i, ks, ph) for i, (name, ks, ph) in enumerate(merged, 1)]
+
+if phase == "late":      # beads already reviewed in this round that have since been addressed again
+    done_beads = {k for x in slices if (R / "out" / (x["slice"] + ".json")).exists() for k in x["beads"]}
+    pend = {k: [(full, text) for full, text in items if full not in delivered] for k, items in inbox.items() if k in done_beads}
+    pend = {k: v for k, v in pend.items() if v}
+    n_pass = 1 + len({x["slice"].split("-")[0] for x in slices if x["origin"] == "late"})
+    cur, load, i = [], 0, 1
+    for k in sorted(pend, key=lambda k: (live[k]["unit"], k)):
+        w = 1 + 0.5 * len(pend[k])
+        if cur and (load + w > 42 or len(cur) >= 26):
+            new.append(("L%d-%02d" % (n_pass, i), cur, "late")); cur, load, i = [], 0, i + 1
+        cur.append(k); load += w
+    if cur:
+        new.append(("L%d-%02d" % (n_pass, i), cur, "late"))
+    inbox = pend
 
 if phase == "refresh":   # slices not yet reviewed get the requests made since they were cut
     # --slices a,b,c : also refresh these, whose result file is partial (an interrupted reviewer's)

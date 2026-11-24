@@ -4,11 +4,11 @@ title: "registries/open.toml, part 8: program questions and those adopted from G
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "delivery", "gauntlet", "tenfold", "registry", "solid", "owner-decision", "review-notes-open"]
+labels: ["m0", "delivery", "gauntlet", "tenfold", "registry", "solid", "owner-decision"]
 parent: "EPIC-M0"
-deps: ["N41-03", "N41-OPEN1", "N41-OPEN2", "N41-OPEN3", "N41-OPEN4", "N41-OPEN5", "N41-OPEN6", "N41-OPEN7"]
+deps: ["N41-03"]
 needs: []
-related: []
+related: ["N41-04", "N41-OPEN1", "N41-OPEN2", "N41-OPEN3", "N41-OPEN4", "N41-OPEN5", "N41-OPEN6", "N41-OPEN7"]
 gates: []
 plan_refs: ["§42.2", "§42.3", "§42.4", "§38.16", "§39.19"]
 ---
@@ -36,7 +36,13 @@ M7; the result is published whatever it is.
 ## Scope
 
 In: the twenty rows and two aliases below as records of `registries/open.toml`. Out: the schema and loader
-(N41-03); the decisions (N41-05 to N41-10 and N41-15 in this unit; the others as named).
+(N41-03); the decisions (N41-05 to N41-10 and N41-15 in this unit; the others as named); the owner calendar and
+the cost of each owner default printed in it (N40-35); the checks that need the whole register or another
+registry, run by N41-04, which depends on all eight parts, on the owner calendar and, through its other
+dependencies, on the known-answer registry (N38a-12) and the gate register (N40-02): the total of 161 with
+`check --complete`, the owner's table resolved on the real rows, the counts of OPEN-GAUNT-2 and -3 from the
+known-answer registry, the ten-fold constants against the gate register, and the calendar's two listings of
+OPEN-TENFOLD-4.
 
 ## Technical approach
 
@@ -77,9 +83,13 @@ and its second asking before the M7 pin freeze is recorded in `note` and enforce
 
 Status at entry: twenty `open` rows and two aliases. Counting: this part completes the register at 161 questions
 (147 in the subsystem table, including the six program-level rows above, plus OPEN-GAUNT-2 to -8 and
-OPEN-TENFOLD-3 to -9; OPEN-TENFOLD-1 and -2 are counted with OPEN-PROG-2).
+OPEN-TENFOLD-3 to -9; OPEN-TENFOLD-1 and -2 are counted with OPEN-PROG-2). The total is checked on the real file
+by N41-04 once all eight parts exist; this part loads on its own under the plain load (rules 1 to 7 and 9 of
+N41-03).
 
-What the owner defaults cost, recorded with each row: OPEN-PROG-1, a private repository cannot be independently
+What the owner defaults cost (the record `frob.open/1` has no cost field: the cost is the `cost_of_default` of the
+question's `[[owner_input]]` row in the owner calendar, N40-35, whose load check (e) requires a calendar row for
+each of the ten owner rows here): OPEN-PROG-1, a private repository cannot be independently
 confirmed; OPEN-PROG-2, the words "independently accepted" are not used for the result and the partial gate at M3
 is a rehearsal; OPEN-PROG-3, external learning stacks have no supported route into the environment, and if the
 adapter fails its gate the rival drives whole rollouts through the job interface; OPEN-PROG-4, the decisive early
@@ -90,30 +100,30 @@ asked two milestones early.
 
 ## Acceptance criteria
 
-- [ ] `registries/open.toml` contains the twenty records and the two aliases; the aliases resolve to OPEN-PROG-2.
-- [ ] With parts 1 to 7 (dependencies of this bead) the register holds exactly 161 questions, four closed or
-      decided-and-recorded (OPEN-SKEL-1, OPEN-AUGUR-6, OPEN-SUITE-2, OPEN-TETHER-1) and four defaults confirmed by
-      the gate register: `cargo run -p frob-conformance --example open_questions -- check --complete` (rule 8 of
-      N41-03, through the example target that bead declares; the crate has no binary of its own name, BD-025)
-      passes on the real file.
-- [ ] The owner's table resolves on the real rows: each of its 32 questions (22 rows: 17 single, five grouped
-      rows of 2, 3, 4, 2 and 4) names a decision bead that exists and carries the label `owner-decision`, 15 of
-      them in this unit's packets and 17 in chapter units (known answer K41-15).
-- [ ] Each of the ten owner rows here links to its decision bead in this unit and carries the cost of its default.
-- [ ] OPEN-TENFOLD-4 is flagged as a default that blocks an exit (M3), and the owner calendar lists it at M1 and
-      again at M2.
-- [ ] OPEN-GAUNT-2 and OPEN-GAUNT-3 report their remaining counts from the known-answer registry (133 and 325 at
-      the start), and the counts fall as chapters state tolerances and controls.
+- [ ] `registries/open.toml` contains the twenty records and the two aliases; the aliases resolve to OPEN-PROG-2;
+      the part loads under the plain load of N41-03 (rules 1 to 7 and 9) with no other part present.
+- [ ] Each of the ten owner rows here (OPEN-PROG-1 to -5, OPEN-GAUNT-1, OPEN-TENFOLD-3, -4, -6, -8) has owner
+      `Owner` and names its decision bead in this unit as `decision_bead`.
+- [ ] OPEN-TENFOLD-4 is the default that blocks an exit: its `blocks` holds GATE-TENFOLD-06 and GATE-TENFOLD-07
+      (the partial gate of M3 and the tournament), its deadline is M2 and its default leaves the gate `not run`.
+- [ ] OPEN-GAUNT-2, OPEN-GAUNT-3 and OPEN-GAUNT-6 have `deadline = "per-row"` and a non-empty `tracked_by` naming
+      the query that counts their open obligations (OPEN-GAUNT-2 and -3: the known-answer registry's rows printed
+      `to set` and `none stated`).
+- [ ] The checks that need every part or another registry are N41-04's (Scope), which depends on this bead, so
+      none is an acceptance condition here: the 161 with `check --complete`, the owner's 32 questions resolving
+      (K41-15), OPEN-GAUNT-2 and -3 reporting 133 and 325 from the known-answer registry, the ten-fold constants
+      agreeing with the gate register, and the calendar listing OPEN-TENFOLD-4 at M1 and M2.
 
 ## Test plan
 
 ### Unit tests
-`crates/frob-conformance/tests/open_part8.rs`: `twenty_rows_two_aliases`; `ids_match_expected_set`;
-`register_total_is_161` (147 + 14; the `check --complete` function of N41-03 on the real file); `owner_table_questions_resolve`
-(the 32 identifiers of the owner's table, each to a decision bead labelled `owner-decision`: 15 in this unit, 17
-in chapter units); `per_row_rows_have_tracked_by` (OPEN-GAUNT-2, -3, -6); `aliases_resolve_to_prog_2`; `owner_rows_link_to_this_unit` (PROG-1 to -5,
-GAUNT-1, TENFOLD-3, -4, -6, -8); `tenfold_4_blocks_m3_exit`; `gaunt_2_and_3_counts_come_from_ka_registry`;
-`thresholds_agree_with_gate_register` (3, 10, 5, 1.5, 0.05, four cells; 40 device-hours).
+`crates/frob-conformance/tests/open_part8.rs`, on this part's rows alone: `twenty_rows_two_aliases`;
+`ids_match_expected_set`; `part_loads_alone` (the plain load on a scratch file holding only this part);
+`per_row_rows_have_tracked_by` (OPEN-GAUNT-2, -3, -6); `aliases_resolve_to_prog_2`; `owner_rows_link_to_this_unit`
+(PROG-1 to -5, GAUNT-1, TENFOLD-3, -4, -6, -8); `tenfold_4_blocks_m3_exit` (the row's `blocks`, deadline and
+default as in the acceptance item). The tests `register_total_is_161`, `owner_table_questions_resolve`,
+`gaunt_2_and_3_counts_come_from_ka_registry` and `thresholds_agree_with_gate_register` read all eight parts, the
+known-answer registry and the gate register, and are N41-04's (`crates/frob-conformance/tests/open_register_complete.rs`).
 
 ### End-to-end script and logging
 Covered by `scripts/e2e/registers_exit.sh` (N41-04); the M3 walk asserts that with OPEN-TENFOLD-4 at its default
@@ -123,7 +133,8 @@ default class measured and the others `not run` with the reason (the rule of N41
 by the run. An approval with no gate record does not clear it.
 
 ### Known answers and negative controls
-Known answers: 161 in total; 133 and 325 open rows of the known-answer suite at the start. Negative controls: a
+Known answers: twenty rows and two aliases here; 161 in total and 133 and 325 open rows of the known-answer suite
+at the start, both asserted by N41-04. Negative controls: a
 result worded "independently accepted" while OPEN-PROG-2 is at its default; the M3 exit attempted with
 OPEN-TENFOLD-4 at its default; a known-answer row with tolerance `to set` counted as passing.
 

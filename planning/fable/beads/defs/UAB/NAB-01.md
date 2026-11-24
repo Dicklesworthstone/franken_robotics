@@ -4,9 +4,9 @@ title: "registries/glossary.toml: the term registry (schema frob.glossary/1) and
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "workspace", "delivery", "solid", "registry"]
+labels: ["m0", "workspace", "delivery", "solid", "registry", "review-notes-open"]
 parent: "WP-01"
-deps: ["BD-002", "BD-004", "BD-005"]
+deps: ["BD-002", "BD-005", "N34p4-03"]
 needs: []
 related: []
 gates: []
@@ -33,7 +33,7 @@ Design decisions, with reasons (DESIGN):
   regenerates and compares). Rejected: a hand-edited Markdown glossary, because the lint of NAB-02 needs term
   identities, senses and aliases as data, and a second copy would drift.
 - **No new check.** `xtask` has exactly six subcommands, and a seventh needs a named defect class and the owner's
-  approval. The generator is one more row in `check-generated`'s generator table; the term lint is a test in
+  approval. The generator is one more row in `check-generated`'s generator table (N34p4-03); the term lint is a test in
   `frob-conformance` (NAB-02).
 - **The defining chapter governs.** A glossary row is an abbreviation. Where a row and the contract of the crate
   that owns the term differ, the contract is right and the row is corrected. The registry therefore records, for
@@ -57,7 +57,7 @@ registry. Out: the term records (NAB-03 to NAB-07); the lint over `CONTRACT.md` 
 **1. File and schema.** `registries/glossary.toml`, schema name `frob.glossary/1`, JSON-Schema at
 `schemas/registries/glossary.schema.json`, written by hand by this bead like every registry-file schema under
 `schemas/registries/` (BD-002, N34x-03): it is reviewed source, not a generator output. `check-generated`
-(BD-004) generates only `schemas/frob.*.json`, so it neither regenerates this file nor reports it as
+(N34p4-03) generates only `schemas/frob.*.json`, so it neither regenerates this file nor reports it as
 `gen.orphan`; a change to the record format edits the schema and the loader in the same commit. One `[[term]]`
 table per row:
 
@@ -145,11 +145,14 @@ registry). Evidence class: not applicable; the registry makes no claim about the
 
 - [ ] `registries/glossary.toml` exists, validates against `schemas/registries/glossary.schema.json`, and loads
       through `frob_core::registry::glossary::load`.
-- [ ] After NAB-03 to NAB-07 land, the registry holds 337 records: the 336 rows of the plan-time glossary and the
-      one row it omitted (`Reflex`).
+- [ ] With no term records (the state this bead leaves) the registry loads and the generator writes the header
+      and the empty table; the count of 337 records (the 336 rows of the plan-time glossary and the one row it
+      omitted, `Reflex`) is a known answer asserted by NAB-08's script once NAB-03 to NAB-07 land, not by this
+      bead, which they depend on.
 - [ ] `docs/GLOSSARY.md` is produced by the generator, carries the marker line, and `cargo xtask
       check-generated` passes on a clean tree and fails with `gen.differs` after a one-character hand edit.
-- [ ] `xtask` still has exactly six subcommands (the six-subcommand test passes).
+- [ ] The generator is a row of `check-generated`'s table (N34p4-03) and adds no subcommand: `cargo xtask` with
+      no argument prints the same list of names, with exit 3, before and after this bead.
 - [ ] Each loader error of step 3 is produced by its planted fixture.
 - [ ] `cargo xtask check-generated --write` followed by `check-generated` exits 0, and running `--write` twice
       leaves the file byte-identical.
@@ -162,6 +165,7 @@ registry). Evidence class: not applicable; the registry makes no claim about the
 
 - `loads_minimal_registry`: a file with three records loads; `lookup("cells")` returns the record whose
   `aliases` contain `cells`.
+- `duplicate_id_is_refused`: two records with the same `id` → `gloss.duplicate-id`.
 - `duplicate_term_without_sense_is_refused`: two records `Cell` with empty `sense` → `gloss.missing-sense`.
 - `duplicate_term_sense_is_refused`: `Tier`/`physics` twice → `gloss.duplicate-term-sense`.
 - `unsorted_file_is_refused`: `Bead` before `Battery` → `gloss.unsorted` naming that pair.
@@ -182,7 +186,7 @@ registry). Evidence class: not applicable; the registry makes no claim about the
   `gloss.schema` in the loader and fails schema validation (the schema is not generated, so this test is what
   keeps the two from drifting).
 
-`xtask/tests/generate_glossary.rs`: `output_is_deterministic` (two runs, equal bytes);
+`crates/xtask/tests/generate_glossary.rs`: `output_is_deterministic` (two runs, equal bytes);
 `sense_and_code_terms_render` (`Cell (mission)`, `` `provisional` ``); `marker_line_present`;
 `hand_edit_is_caught` (one changed byte → `gen.differs` with line number).
 

@@ -4,7 +4,7 @@ title: "Known-answer registry for Arena (KA-594 to KA-623): requirements, metric
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "arena", "frob-conformance", "frob-spec", "frob-arena", "registry", "test", "solid"]
+labels: ["m1", "arena", "frob-conformance", "frob-spec", "frob-arena", "registry", "test", "solid", "review-notes-open"]
 parent: "WP-41"
 deps: ["BD-025", "N38a-12", "N38a-40", "N38b-05", "N41-KA", "STD-E2E", "STD-TEST"]
 needs: []

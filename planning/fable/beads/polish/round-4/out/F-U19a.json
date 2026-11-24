@@ -1,0 +1,233 @@
+{
+  "round": 4,
+  "slice": "F-U19a",
+  "reviewed": [
+    "BD-104",
+    "BD-228",
+    "BD-229",
+    "BD-234",
+    "BD-399",
+    "N19a-01",
+    "N19a-02",
+    "N19a-04",
+    "N19a-05",
+    "N19a-08",
+    "N19a-09",
+    "N19a-10",
+    "N19a-13",
+    "N19a-15",
+    "N19a-17",
+    "N19a-18",
+    "N19a-19",
+    "N19a-20",
+    "N19a-21",
+    "N19a-22",
+    "N19a-25",
+    "N19a-28",
+    "N19a-29",
+    "N19a-30",
+    "N19a-39",
+    "N19a-40",
+    "N19a-41",
+    "N19a-42",
+    "N19a-43",
+    "N19a-44",
+    "N19a-46",
+    "N19ax-01",
+    "N19ax-02",
+    "N19ax-03",
+    "N19ax-04",
+    "N19ax-05"
+  ],
+  "changed": [
+    {
+      "bead": "BD-228",
+      "kinds": [
+        "request",
+        "registry",
+        "contradiction"
+      ],
+      "what": "Applied F-UEG-2's request after checking NEG-23: the admission check reads the report only through the pack reader's acceptance-report accessor, so a reader refusal comes first (303; scene-pack-identity-mismatch exit 9; scan-profile-absent for a scan pack stored without its scan profile) and 318 is raised only on a pack the reader opens; left as it was, a scan-store pack met 318 whose repair 'run scene.accept' meets the same refusal. The admission row's 'basis §19.5' was not what N32ax-01's field holds (names of standing indices whose version counters the ledger keeps); now basis = [\"scene_acceptance\"], bumped by scene.accept when it stores a part, so a report stored between stage A and stage E reruns stage A. Tests admission_row_declared (basis) and reader_refusal_precedes_318 added."
+    },
+    {
+      "bead": "BD-399",
+      "kinds": [
+        "registry"
+      ],
+      "what": "VERBS-scene's scene.gen row and N19b-02 name BD-399's populated draw as the emit site of asset-source-not-default-pipeline, but the bead only said such rows are never drawn: an implementer would filter silently and the registered refusal would never be raised. The populate step now refuses with ASSET_SOURCE_NOT_DEFAULT (exit 3, nothing written) when a row the --assets class admits is keyed to a default_pipeline = false source, checked over the admitted rows so the answer never depends on the seed; unit test non_default_source_row_refused (seeds 0 to 9, and the control without the row)."
+    },
+    {
+      "bead": "N19a-01",
+      "kinds": [
+        "contradiction",
+        "registry"
+      ],
+      "what": "The background put scene.purge's handler in frob-scene, while N37-19 (and N19a-02's handler map) implement it in frob-verbs over frob-chronicle's store: the crate would have grown a second handler. The feature list lacked frontier-actors (N38a-33, a frob-scene feature under KILL-DRESSING), so contract.toml's feature rows and default_features_are_solid_only would miss it. contract.toml's refusals lacked the five rows N19-REF enters under ledger numbers (hazard-registry-invalid, scan-profile-absent, asset-source-not-default-pipeline, scene-edit-invalid, import-articulation-interpenetrates), all raised in this crate."
+    },
+    {
+      "bead": "N19a-02",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "Considerations said the scene family spans 'two clusters' and named BD-298 as the owner of clustering; VERBS-scene's rows put the verbs in four task clusters (places, places-check, housekeeping, batteries) and the cluster assignment and lints are NJL-05's (BD-298 serves them over MCP). An implementer would have looked for a two-cluster split in the wrong bead."
+    },
+    {
+      "bead": "N19a-05",
+      "kinds": [
+        "registry"
+      ],
+      "what": "NEG-23, VERBS-scene and N19-REF key scan-profile-absent on provenance.scan_profile = absent, a member of the provenance block this bead defines, but the block's schema had no such member: the reader would reject it as unknown or the scan beads would grow a second provenance list. Reserved the optional member scan_profile (absent for NEG-23's scan-store profile, else the scan profile's name and version, NEGp1-52), inside the SceneId, with the reader refusing geometry and acceptance-report accessors when absent."
+    },
+    {
+      "bead": "N19a-09",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The leak script's sim run calls compare episode 2 of world 17 but passed no --episodes; sim.run's --episodes defaults to 1 and the task file declares no episode count, so there was no second episode to read and the reset half of KA-458 could not be checked. Added --episodes 2 to the push, idle and persistence runs."
+    },
+    {
+      "bead": "N19a-10",
+      "kinds": [
+        "contradiction",
+        "broken"
+      ],
+      "what": "The bead keeps its scene profiles in registries/import-profiles.toml, the file N37-05 (M1) creates with the design-importer rows and whose layout it fixes, without depending on N37-05: two beads would each create the one registry file in its own layout. Added the dep (M1, no cycle). The acceptance criterion says every limit of the profile is reached by a crafted file and refused, but the unit tests covered five of seven: max_nodes and max_string_len could be missing and every test still pass. Added limit_nodes and limit_string_len (a name one byte over, refused, never truncated, since names are stored verbatim)."
+    },
+    {
+      "bead": "N19a-18",
+      "kinds": [
+        "registry"
+      ],
+      "what": "A fell-through movable made 'the compile fail', but the scene.compile row registers no refusal for it (its exit 2 is 'compiled with findings'): the implementer would have raised an unregistered code that the refusal_lists check rejects. DESIGN: the compile ends with exit 2 and the finding naming the object, no settled pose is stored for it, and the pack can never be accepted because BD-228's support test fails on the same missing surface (so no run binds it, 318); acceptance criterion, unit test and script step aligned."
+    },
+    {
+      "bead": "N19a-19",
+      "kinds": [
+        "deadlock"
+      ],
+      "what": "An M2 bead whose acceptance criterion and unit test door_sweep_invalid need a door leaf sweep, while fixtures (and their swept volumes) arrive with N19a-07 at M3 and settled movables with N19a-18 at M3: the test could not be written at M2. The stage now reads sweeps and settled movables as data from the pack's fixture and movable tables (empty until M3), and the door case uses a synthetic swept-volume row through the same accessor, with the control that removing the row makes the poses valid."
+    },
+    {
+      "bead": "N19a-21",
+      "kinds": [
+        "registry"
+      ],
+      "what": "N19-CX names this bead the carrier of the mutation plants N19a-21:cx-184 (three landmarks, parity and det L unchecked) and N19a-21:cx-185 (a gravity witness as the fourth correspondence), which must be Cargo features under gauntlet-mutations in the real component; the bead had only a test-tree routine, so the seeding tool's controls for CX-184 and CX-185 would name features that do not exist and the control runner could never see the gate fail with the plant on. Added item 11 (features cx-184-three-landmarks and cx-185-gravity-fourth, never in default or release builds) and the tests cx_184_plant_caught and cx_185_plant_caught."
+    },
+    {
+      "bead": "N19a-22",
+      "kinds": [
+        "registry"
+      ],
+      "what": "N19-CX names this bead the carrier of the mutation plant N19a-22:cx-186 (a clearance verdict read from nominal surfaces); the bead built only the test-tree routine, so CX-186's control would point at a missing feature. Added item 10 (feature cx-186-nominal-surfaces under gauntlet-mutations: KA-430's 6 mm row reads Clear and fails with it on) and the test cx_186_plant_caught."
+    },
+    {
+      "bead": "N19a-39",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "Convention 13: the bead narrated 'the registry bead VERBS-report is asked to list it'; it now states that VERBS-report lists --claims-realism on every report verb, owned by this bead. Script step 5 edited a copy's dimensions_assumed but kept its stored scene_id, so scene show answered scene-pack-identity-mismatch (exit 9) before the recount ever ran and the edited-count control was never caught by the check under test; the copy's scene_id is now recomputed and the copy stored under it, so only the recount (FROB-REF-303, exit 3, pointer at dimensions_assumed, observed 0) can catch it."
+    },
+    {
+      "bead": "N19a-41",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The fallback-branch command 'scene gen --family home --populated --assets attribution' had no seed, so scene.gen answered FROB-REF-802 and hid the FROB-REF-724 under test: the fallback check could pass on the wrong refusal. Now '--seed 1 ... --key kd-fb-1'. Item 4 said 'BD-399 closes with the fallback name', but BD-399 is a dependency, already closed when this M5 bead runs; it now says the ADR lists BD-399 as standing on the fallback and the capability carries the fallback's name."
+    },
+    {
+      "bead": "N19a-42",
+      "kinds": [
+        "request",
+        "broken"
+      ],
+      "what": "Slice note (use N19a-21's mirrored-room fixture) checked and not applied as given: N19a-21 is M3 and its fixture fixtures/imports/asym-room-mirrored.glb with its landmark sidecar is refused by the M3 four-point solve, which does not exist at M2; this M2 bead cannot depend on it. Instead the bead now states what its own mirrored-room.glb is (a room whose root node carries a reflection, det A < 0, with no declared handedness and no sidecar: N19a-11's M2 parity rule) and that the landmark case is N19a-21's and is run at M3 by N19a-43, so an implementer does not try to reuse an M3 file in an M2 gate."
+    },
+    {
+      "bead": "N19a-44",
+      "kinds": [
+        "request",
+        "contradiction"
+      ],
+      "what": "Applied F-U19a-1's request after checking BD-229: BD-229 commits fixtures/scenes/tile4/ (md.src, gd.src, mw.src, gw.src, latent.src) and records it as CX-199's case, while this bead's Scope also claimed to create the tile and its variants, so two beads would have committed the same five sources. Scope In now keeps only the script's run fixtures (push-block.fbot, scan-rig.fbot, tile-push.ftask, tile-scan.ftask); the tile and the plant are Out (BD-229); variant names are the sources' stems. The negative control named no build, so the gate could run an ad-hoc mutant that N19-CX's control does not cover; it is now BD-229's plant BD-229:cx-199 (--features gauntlet-mutations,cx-199-friction-from-r0) on the check (a) pair P(MD)/P(GD), through e2e_expect_caught, in the text and the acceptance criterion."
+    },
+    {
+      "bead": "N19a-46",
+      "kinds": [
+        "request",
+        "registry",
+        "convention",
+        "contradiction"
+      ],
+      "what": "Applied F-UEG-1 and F-UEG-2. The profile row listed only some row-bead profiles; it now lists VERBS-scene's set (scene-collection, scan-store, articulated-object, generic at M3; populated-interior, small-rigid, kitchen-fixture, kitchen-layout at M5; another name 802), names asset-default the default (Background said profiles are 'never defaulted', against the registry's 'asset-default, N19a-46's default'). NEG-20 and NEG-24 write a joint-sweep row per jointed part 'beside the loss report's per-part articulation row (N19a-46)' that frob.scene.import.loss/1 did not admit, so their import envelopes would fail schema validation: the schema now admits joint_sweep rows (part, joint, range, step, min_clearance, result; a failed sweep refuses with import-articulation-interpenetrates); test loss_schema_admits_joint_sweep. Convention 13: two narrations of pending requests (the filter's code 'requested of N19b-02'; 'the registry bead is asked to use this example') now state the facts: the worded refusal asset-source-not-default-pipeline behind ASSET_SOURCE_NOT_DEFAULT, exit 3, asserted in the e2e step; the example is VERBS-scene's."
+    },
+    {
+      "bead": "N19ax-01",
+      "kinds": [
+        "broken",
+        "contradiction"
+      ],
+      "what": "Script step 4 'a typed edit of the closer torque, recompiled' had no command a typed edit can travel through and asserted 'every geometry digest unchanged', while typed edits are N19b-44's (not a dependency) and its aspect digests are the comparison: now 'scene compile --base <id> --edits closer-16.edits.json' with one set-fixture-param edit, asserting only the actors digest differs; dep N19b-44 added (M3, no cycle). The runs used the design name cart-a, which no step stored, so sim run would fail in the script's scratch root: the bead now commits fixtures/hab/cart-a.fbot and its stop-in-doorway schedule (Scope In) and stores the design with design new before the first run."
+    },
+    {
+      "bead": "N19ax-02",
+      "kinds": [
+        "contradiction",
+        "broken"
+      ],
+      "what": "Background quoted N24c-21's predicate as (H (0 s W) (>= corridor_margin 0 m)); N24c-21 uses the running minimum (>= corridor_min 0 m) because that window is false by N24a-04's origin rule on episodes ending before their horizon. The test task's W was unpinned (526 or a pre-origin false); now W = horizon, no early termination. The warehouse family was cited as BD-226's; it is BD-225's (dep swapped). Step 2 assumed warehouse node names dock-1 and goal that no generator fixes; it now reads them from the route graph. cart-a was never stored (sim run would fail): stored from N19ax-01's cart-a.fbot (dep added). The corner run reused the straight-route task; corridor-corner.ftask added. Point bodies cannot be passed to --footprint; left to the unit test corner_distances."
+    },
+    {
+      "bead": "N19ax-03",
+      "kinds": [
+        "broken",
+        "contradiction"
+      ],
+      "what": "Script step 2b reads tile values with 'telemetry query --channels contact.field_value', but no bead declares that channel (BD-090 requires every channel to be declared with kind, unit and label): when N24c-36 turns step 2 on, the query would answer an unknown channel and N24c-36's acceptance could not pass. The bead now declares contact.field_value on the contact stream (kind state, T2, control rate, label privileged, one value per active contact and field draw with its key) and lists it, and the strip scene fixture, in Scope. The rejected-alternative figure '100 m aisle at 0.25 m tiles is 160,000 cells' was wrong by 40x for an aisle (400 x 400 cells is a 100 m x 100 m floor); corrected."
+    },
+    {
+      "bead": "N19ax-04",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "The bead put the site table in the provenance block but 'covered by the pack's provenance digest, not by SceneId', and its acceptance criterion said a weight change leaves SceneId unchanged; N19a-05 (a dependency) puts the whole provenance block, the generator version and the resolved table inside the manifest and so inside SceneId. An implementer could not satisfy both: either the criterion fails or provenance becomes editable after the fact. The table is now stated to be inside SceneId; the criterion now says a weight change changes the table, the generator version and the SceneId, and an unchanged grammar gives identical tables and SceneId."
+    },
+    {
+      "bead": "N19ax-05",
+      "kinds": [
+        "request",
+        "convention",
+        "contradiction",
+        "broken"
+      ],
+      "what": "Applied F-U38a's request and the C13 flag: step 1 said no form attaches actors to a generated scene and that one 'is requested of N38a-33'; N38a-33 defines scene.gen --actors and VERBS-scene lists it, so the step now generates each pair with and without --actors and asserts the pairing from the aspects block (geometry, material, optics, clocks equal; actors different; one split group). Item 5 said N38a-33 'closes with reason fallback', but it is a dependency, closed before this bead runs: it is now listed in the ADR as standing on the fallback and the epic BD-421 closes with the fallback's name. The criterion 'generators emit no actors' had no test: item 5 and step 6 now refuse scene gen --actors with 724, exit 5."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "VERBS-scene",
+      "what": "scene.accept's chapter refusals and refusal_lists omit scan-profile-absent, while NEG-23 states that scene accept on a scan pack stored under scan-store answers it and BD-228 now says so: add scan-profile-absent to scene.accept (as on scene.compile, scene.fit and scene.show)."
+    },
+    {
+      "bead": "VERBS-scene",
+      "what": "scene.compile's chapter refusals and the refusal_lists test omit FROB-REF-305, but N19-REF names N19a-04 as its raiser at pack validation from M2 (a declared spawn or goal region in or beside unknown space), and N19a-04's script compiles such a fixture expecting exit 3 with 305: add 305 to scene.compile (and judge scene.import, whose packs carry an unknown mask and may declare spawn regions in their sidecar)."
+    },
+    {
+      "bead": "STD-E2E",
+      "what": "Item 11 says BD-228 writes e2e_scene_ready, but scripts of beads that land before BD-228 and do not depend on it call it (N19a-07, N19a-08, N19a-09, N19a-18, N19a-23, N19a-31 to N19a-37, BD-163, BD-231, N18a-04, N18a-05, N18a-38, N18b-10, N19b-03, N24a-43); with no function those scripts stop at 'command not found'. Ship the function from this bead as the logged no-op the item describes (one assert, status skip, naming scene.accept) and let BD-228 fill in the accept body."
+    },
+    {
+      "bead": "VERBS-scene",
+      "what": "scene.import lists FROB-REF-832 (an import over its size, depth or polygon limit), but no bead raises it on that verb: N19a-10 (stage 1) reports every decode limit of a scene source as 303, N19a-46 lists 303 for an over-limit file, and frob-scene does not link frob-io, whose mesh readers (N37-05) raise 832. Name the path that raises 832 on scene.import or drop it, so that the binding check does not wait for a refusal nothing emits."
+    },
+    {
+      "bead": "N19a-07",
+      "what": "N19a-19 (stage 9) now reads door leaf sweeps from the fixture table and tests the case at M2 with a synthetic sweep row; the fixture gallery script of N19a-07 (which compiles real doors once stage 8 lands) should assert that spawn lattice cells inside a door's leaf sweep are invalid with reason interference: <door> in the stage-9 receipt, so the real sweep reaching the mask is checked end to end."
+    }
+  ],
+  "unchanged": 15,
+  "notes": "All 36 beads reviewed. Unchanged (read in full and found right): BD-104, BD-229, BD-234, N19a-04, N19a-08, N19a-13, N19a-15, N19a-17, N19a-20, N19a-25, N19a-28, N19a-29, N19a-30, N19a-40, N19a-43."
+}

@@ -1,0 +1,231 @@
+{
+ "round": 4,
+ "slice": "S-26",
+ "reviewed": 22,
+ "changed": [
+  {
+   "bead": "BD-303",
+   "kinds": [
+    "registry",
+    "contradiction",
+    "convention",
+    "broken"
+   ],
+   "what": "The M3 exporter table listed report.campaign (an M4 verb that exports nothing) and eval.qualify, eval.ledger, task.verdict, eval.scorecard and scene.purge, none of them exporting verbs, and gave the qualification receipt the envelope spelling `authorization`. The M3 sweep would call verbs that write no file, assert members they never carry, and fail on a correct build. The table is now rebuilt from the registries: report.design, report.run and report.mission; nemesis.shrink --out; sim.run --resolved-out; and artifact.export of stored receipts, verdicts and scorecards with `no_authorization` (Appendix I, N37-23). A paragraph says which verbs are not exporting. The bead now names itself the one recorder of GATE-SAFE-01's M3 part, with the record_gate form and the m3 receipt (conventions 1 and 9). The acceptance criteria and unit tests follow the table."
+  },
+  {
+   "bead": "N37-01",
+   "kinds": [
+    "deadlock",
+    "convention"
+   ],
+   "what": "The traceability test reads the refusal rows of N32-REF, N24-REF and N37-REF, the controls of N37-CX and N32-CX, N32a-02's entry schema and N32b-17's robot-docs, but none of these were dependencies. The bead could start before those rows existed, and its test could not pass. They are added, with no cycle and every one at M0 or M1. Step 4 narrated a future table entry. It now states that this bead adds `threats` to the closed entry schema with its member and lint (N32a-02's later-field row), so the implementer knows a row carrying it fails `unknown-field` before the change (convention 13)."
+  },
+  {
+   "bead": "N37-03",
+   "kinds": [
+    "convention",
+    "registry",
+    "contradiction",
+    "broken"
+   ],
+   "what": "Five problems. (1) The sniff table gave no `observed` kinds, used `not-a-<format>`, which N37-REF's row 828 does not have, and lacked the HDF5 and NumPy signatures that N37-07's reader runs as the same table. Refusals would carry kinds no registry lists. The table now has three columns with the kinds of row 828. (2) Step 5 named a KernelId argument of spark.precompile, but that verb is M2 and takes a ShapeClassId; its test `precompile_unknown_kernel_refused` could not be written. The rule is now that no release schema has a kernel-source leaf, outside `conformance_only`, with a synthetic test. (3) The E2E mutate calls had no `--key`, which is FROB-REF-805 (convention 5). (4) The control used a `mutants` build (convention 1). (5) The MCP rule is restated as the union over foci, with the base tools as registered verbs."
+  },
+  {
+   "bead": "N37-04",
+   "kinds": [
+    "deadlock",
+    "convention"
+   ],
+   "what": "The acceptance criteria and E2E script needed `design import` (BD-065) and the M1 echoing verbs, all of which depend on N37-04, so the bead could never close (convention 7). Acceptance is now type-level: a synthetic record and the derived identifier. The bead owns its own script, `scripts/e2e/safe_untrusted.sh`, which walks every served output schema for bare string leaves, with a planted failing schema (convention 11). It now owns the 200-string starter corpus file. The M1 profile of `safe_injection.sh` moves to the new bead N37p4-01. The control is `--features gauntlet-mutations` (convention 1)."
+  },
+  {
+   "bead": "N37-08",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "The acceptance criteria require `frob capabilities --json` to print the allowlist, but no registry row or bead put it in `frob.capabilities.out/1`, and the bead did not depend on the complete capabilities verb (N32b-19). The implementer had nowhere to put it, and N37-06's `weights` step read a member nobody writes. Step 4 now states that this bead adds the optional member `policy_families` (one entry per row, read from the embedded registry), with N32b-19 as a dependency and a frob-verbs test. The E2E text names N37-06 and the pointer `/result/policy_families`."
+  },
+  {
+   "bead": "N37-20",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The negative control used a `mutants` build, a feature that does not exist, so the control could not be built. It is now `--features gauntlet-mutations` (convention 1)."
+  },
+  {
+   "bead": "N37-26",
+   "kinds": [
+    "request",
+    "broken",
+    "registry",
+    "convention"
+   ],
+   "what": "This applies F-U37's request. Three problems first. No M3 release argument requires `established` on the requirement side for a Design comparison. The Certificate row of prove.bundle refuses a comparison at the kind member. The report verbs' `--cite` is the assertion side, which raises 820 (BD-302, N16b-04). The Leaderboard has no verb. So acceptance 1 and N37-27's step 3 could not be run, and N37-REF's list test reads 'N37-26's declaration table', which did not exist. Step 2 now does five things. (1) It adds `consumes_evidence` to the closed entry schema with its member and lint, as a list, per N32a-02's row. (2) It scopes the lint so that a pass-through or screening reader of a result needs no declaration unless the argument is marked `accepts = \"verdict\"`; otherwise explain.compare and eval.detect would fail it. (3) It gives the table of M3 declarations. (4) It names which M3 arguments require `established` and why. (5) It adds the conformance-only verb `testprobe.cite`, built on N37-25's testprobe pattern with the build-packet requirement, as the requirement-side consumer at M3. The acceptance criteria and unit tests follow. The E2E text names N37-27 as the one owner of the shared script (convention 11). The controls use `gauntlet-mutations` (convention 1)."
+  },
+  {
+   "bead": "N37-30",
+   "kinds": [
+    "contradiction",
+    "broken",
+    "convention"
+   ],
+   "what": "Under the default, the acceptance criteria keep an audit-retired cluster sealed after close. But N24b-17's close unseals 'the clusters', and nothing said which mechanism reads `retention.retired_clusters`. The implementer's test would fail against N24b-17. Step 2 now states the rule at close: the cluster stays sealed under `sealed-indefinitely` and `sealed-days`, and only `reveal-at-close` unseals it; replay needs only the revealed key. The E2E text said 'the qualification-lane script asserts' the sealed state, but no script does (convention 8). The unit test now covers it, in frob-arena, the crate of the close step, with a reveal-at-close counter-case. The controls use `gauntlet-mutations` (convention 1) and add a close step that unseals the cluster."
+  },
+  {
+   "bead": "N37-31",
+   "kinds": [
+    "broken",
+    "registry"
+   ],
+   "what": "The admission record was 'written with the admission writer' with no command and no fields, so the implementer could not produce a record that N33a-07's validator accepts. Step 2 now gives `cargo run -p frob-conformance --example admission -- record --gate ADMIT-CAP-STD --input <path>` (harness receipt null). The input's covers, measured, controls and facts come from steps 2.1 to 2.4, and `sibling_rev` is the pin of FD-FMCP. Step 4 claimed that `check-stack` reports a stale record as `admission-stale`. N33a-07's never-inherited check enumerates foundation crates only and never sees cap-std, so staleness is now this row's own `check-deps` finding (`L-5.exception-unadmitted`), and its test covers a moved pin."
+  },
+  {
+   "bead": "N37x-01",
+   "kinds": [
+    "broken",
+    "deadlock",
+    "registry",
+    "convention"
+   ],
+   "what": "Four problems. (1) The four new threat rows had no `asset` or `gates`, and deferred their controls to 'when they land'. N37-01's traceability test needs a gate whose controls exist on every row, so 'the traceability test passes with the new rows' was unattainable, and the peer-link plants belong to N32a-35, which depends on this bead. The rows now carry the full schema. The gates are GATE-SAFE-10 and GATE-SAFE-04, whose registered controls satisfy the test. T1.c's plant is registered as LST-X01, the peer-link plants are N32a-35's, and the count test becomes thirteen. (2) E2E step 5 sent HTTP requests 'through `frob --json`', but the CLI does not speak to the HTTP transport, and it expected 723 for a request with no header, where N32a-27 returns the library's unauthorized response (convention 8). The step now uses curl, an expired session from `session open --ttl-s 1`, and the LST-X01 plant. (3) The doctor block is now a section through BD-022's interface. (4) An acceptance criterion that only the peer-link bead could satisfy is replaced by this bead's own deliverable."
+  },
+  {
+   "bead": "BD-421",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The epic said only that KILL-DRESSING's decision for actors is 'an ADR in docs/adr/', so an implementer could write it in any form. Step 4 and the acceptance criteria now name N19ax-05's record `docs/adr/ADR-KILL-DRESSING-M6.md` in N40-03's form: the required fields, one of `not-fired`, `fired` or `not-reached`, and scope `item:actors` (convention 10)."
+  },
+  {
+   "bead": "BD-432",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The acceptance on GATE-TENFOLD-05 or KILL-TENFOLD-ADJ named neither the gate's recorder nor the decision's form, so the epic's closure could not be checked against the register. It now names N39a-10 as the one recorder (`record_gate --gate GATE-TENFOLD-05 --part M7`) and N39a-11's `docs/adr/ADR-KILL-TENFOLD-ADJ-M7.md` in N40-03's form (conventions 1, 9 and 10)."
+  },
+  {
+   "bead": "N38a-05",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Two problems. (1) GATE-GAUNT-05's M0 part had no recorder: N38b-23 lists two measurers and neither recorded it, so the M0 exit would find it `not-run`. The script runs all four hygiene clauses, so the bead now has a receipt step (`e2e_tier g2_parity GATE-GAUNT-05 --mutations`) and is the one recorder of the M0 part (`record_gate --part M0`), with the record citing N38a-04 (conventions 1 and 9). (2) The script ran 'one report when the frob binary exists'. The binary exists at M0, but no report verb does until BD-139 at M1, so the step would fail at M0 (convention 8). The step now checks `capabilities --verb report.run` and logs `skipped: capability absent` otherwise."
+  },
+  {
+   "bead": "N38a-08",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "Three problems. (1) GATE-GAUNT-09 (M1) had no recorder anywhere: N38b-23 names N38a-07 and N38a-08 as measurers, and neither records. Since this bead depends on N38a-07, it is now the one recorder, from a receipt step `e2e_tier g0_laws GATE-GAUNT-09 --mutations`, with the record citing both (conventions 1 and 9). (2) The `ratio-of-means` plant now names its build, `--features gauntlet-mutations`. (3) An acceptance criterion required N36-06's `PerfRatio` (M2, which depends on this bead) to be built on `PairedBound`, which this M1 bead cannot make true (convention 7). It now asserts the single implementation here and leaves PerfRatio to N36-06's own acceptance."
+  },
+  {
+   "bead": "N38a-19",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Three problems. (1) GATE-GAUNT-03 had no recorder: this bead, its only measurer, put 'writing the gate status' out of scope, so the M2 exit would find the gate `not-run`. The bead is now the one recorder (`record_gate --gate GATE-GAUNT-03 --part M2`, from a release receipt with both hosts' sites; later exits with `--part <Mn>`; never a smoke receipt), with an acceptance criterion and the scope updated (conventions 1 and 9). (2) MR-C09's surface step 'splits `frob sim run` at a snapshot and resumes it', but sim.run has no resume input, so the command could not be written (convention 8). The step now runs `sim run --capture snapshots` and resumes with `sim replay <episode> --from-snapshot <hash>` (VERBS-sim). (3) Surface commands whose verb is not yet implemented are now logged `skipped: capability absent`, not failed."
+  },
+  {
+   "bead": "N38a-22",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "This applies F-U38b's request. The run `cargo test --test g1_known_answers -- battery:fixtures` used a filter form N38a-02 does not have, so the runner would refuse it and BD-146's per-change run, which relies on it, would fail. The bead now defines and owns the G1 filter `battery:<name>`: it selects the G1 entries of the `ka` items that `battery::resolve(<name>, \"all\")` lists, in manifest order; `task` items are not tier entries; an empty or refused selection is an error. Scope, an acceptance criterion and two unit tests were added. The E2E text also states that the script records no gate: GATE-ARENA-04's parts are BD-123's and BD-212's (convention 9)."
+  },
+  {
+   "bead": "N38a-32",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "The pilot record named only its tier, fallback and mechanism, and the script 'registers the protocol' with no form. N38a-09's loader rejects a record without `id`, `bead`, `work_package`, `protocol` and the other fields, and with no `gated_beads` the actor mechanism N38a-33 could be fundable before the verdict. The record is now specified like N19a-40's twin: `id` the next free of set DRESSING, owner §19.7, bead, WP-74, `gated_beads = [\"N38a-33\"]`, protocol hash and ledger sequence, falsifier, ceiling, fallback, cost, tool, status, then an appended result (convention 3). The script now checks registration before the first row and checks `pilots -- fundable --bead N38a-33` before and after the verdict."
+  },
+  {
+   "bead": "N38a-35",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Scope said this bead writes the gate's record, but the script had no receipt step and no record command, so an implementer would not know which receipt GATE-GAUNT-07 cites or who may record it. The script now ends with `e2e_tier g5_determinism GATE-GAUNT-07 --mutations`, the plants are built with `--features gauntlet-mutations`, and the bead is stated as the one recorder (`record_gate --gate GATE-GAUNT-07`, from a receipt covering both hosts and every family, by a session that did not implement the tier; never a single-host receipt), with an acceptance criterion (conventions 1 and 9)."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N37p4-01",
+   "why": "Split from N37-04 to break a deadlock. The M1 profile of `scripts/e2e/safe_injection.sh` needs design.import (BD-065) and the M1 echoing verbs (design show, diff and blame, explain design, artifact list), and all of them depend on N37-04's type. The profile is now its own M1 bead that depends on them. It owns the script file and its option parser, the 200-string fixture, the harness driver `cargo run -p frob-conformance --example sanitize`, the pointer scan, the no-side-effect check and the planted SAFE-X02 defect (design.show copies a label into `warnings`). It records no gate."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N37-10",
+   "what": "The file `scripts/e2e/safe_injection.sh` and its `--profile m1` are now created by N37p4-01 (M1), not by N37-04. Please change the step that says N37-04 creates them, add N37p4-01 to your deps, and keep `--profile m1` unchanged when you add `--profile full`."
+  },
+  {
+   "bead": "N37-CX",
+   "what": "Seed SAFE-X02 of GATE-SAFE-02 (a handler that copies a label into `warnings`) is now planted and run at M1 by N37p4-01, as `design.show` under the `frob-design` feature `plant-label-in-warnings`, reachable only under `gauntlet-mutations`. Please name N37p4-01 as the M1 user of that control."
+  },
+  {
+   "bead": "VERBS-control",
+   "what": "Plan §37.9 (the carriers table: 'Controller and policy exports (`.fskill`, `train.export`, `control.show --export`)', file header) lists `control.show --export` as a carrier of the no-authorization flags, but your control.show row has no `--export` option and no bead implements one. Either add the option, marked exporting, with its owner and milestone (and the M3 sweep of BD-303 will cover it), or record that control.show does not export, so that N37-23's list of carriers matches."
+  },
+  {
+   "bead": "VERBS-spark",
+   "what": "`spark.precompile --unit <path>` (N21a-10) takes a dialect unit file, which is kernel source in a release-build input schema. That is against §37.3 and §37.8 and against N37-03's lint, which accepts such a leaf only in `conformance_only`. Please list `unit` in the row's `conformance_only`, or replace the path with a unit identifier from the registry."
+  },
+  {
+   "bead": "VERBS-operator",
+   "what": "N37-08 (M2) adds the optional member `policy_families` to `frob.capabilities.out/1`: one entry per row of `registries/policy-families.toml` with `kind`, `layout`, `dtypes`, the bounds, `admit`, `since` and `decided_by`. Please list it in the capabilities outputs and add N37-08 to Extended by. The schema's owner N00-02 is named in the same row."
+  },
+  {
+   "bead": "N37-27",
+   "what": "Steps 3 and 4: the M3 argument that requires `established` on the requirement side is `frob --json testprobe cite <comparison>` (N37-26 step 2: a conformance-only test-support verb with the build-packet requirement; a build with the feature `conformance`, as your step 1's `testprobe combine`). No release verb at M3 has one: prove.bundle's Certificate row refuses a comparison at the kind member, and the report verbs' `--cite` is the assertion side (820). Step 6 contradicts VERBS-report: `report design B --cite <provisional verdict>` cites in the role `Established` and is refused with `FROB-REF-820`, so it does not render 'provisional'. Either expect 820 there, or show the provisional wording on a result the report reaches through its lineage without `--cite` (the role `Described`)."
+  },
+  {
+   "bead": "VERBS-eval",
+   "what": "N37-26 (M3) declares `consumes_evidence` on `eval.promote`'s `result` (Promotion) and on `eval.compare`'s `run` (the cross-decimation form, PairedStatistics). N32a-02's row and N37-REF's list test require every declared verb to list 819 and 825. `eval.promote` lacks 819, and `eval.compare` lacks both. Please add them to the blocks and to `refusal_lists`."
+  },
+  {
+   "bead": "VERBS-study",
+   "what": "N37-26 (M3) declares `consumes_evidence` on `study.compare`'s stored study (PairedStatistics). Its row lists 825 but not 819, which N37-REF's list test requires of a declared verb. Please add 819 to the block and to `refusal_lists`."
+  },
+  {
+   "bead": "VERBS-report",
+   "what": "N37-26 (M3) declares `consumes_evidence` on the `cite` argument of `report.design`, `report.run` and `report.mission` (use Report). N37-REF's list test requires 825 beside 819 on a declared verb, because a cited D4 or unrecorded result is 825, first in the boundary's precedence. Please add 825 to the three rows and to `refusal_lists`, and to report.campaign's when its `--cite` lands at M4."
+  },
+  {
+   "bead": "N32a-02",
+   "what": "Row `consumes_evidence`: 'A result-reference argument without one fails the lint' is now scoped by its owner N37-26 (step 2). The lint covers the result-reference arguments of verbs whose evidence label is neither pass-through nor screening, plus every parameter marked `accepts = \"verdict\"`. A pass-through or screening reader (explain.compare's comparison, eval.detect's `result`) returns the product unchanged and needs no declaration. Please align the row's text."
+  },
+  {
+   "bead": "N24b-17",
+   "what": "N37-30's `retention.retired_clusters` (owner-held safety configuration, N37-02) decides an audit-retired cluster at close. Under `sealed-indefinitely` (the default) and `sealed-days=N`, your close step unseals the campaign's other clusters and leaves the audit-retired cluster's pack sealed. Only `reveal-at-close` unseals it with the rest. The revealed key K still lets anyone replay its derivation. Please state this in 'Close, reveal, retire' step 2 and in 'Audited clusters', with a case in `qualify_clusters.sh` (audit-open one cluster, close, read it as a discovery session: sealed)."
+  },
+  {
+   "bead": "N33a-07",
+   "what": "N37-31 writes a third-party admission record (gate `ADMIT-CAP-STD`, crate `cap-std` in `frob-verbs`) with `cargo run -p frob-conformance --example admission -- record --gate ADMIT-CAP-STD --input <path>`. That gate has no row in `registries/gates.toml`, and cap-std is no foundation. Please say where such a record takes its `foundation` (FD-FMCP, the MCP library whose pin the exception follows), its `sibling_rev` (that pin) and its thresholds (none), for example a `foundation` member of `--input` accepted only for a gate with no register row, so that the validator's `receipt-missing` and `measured-missing` rules can pass it."
+  },
+  {
+   "bead": "VERBS-operator",
+   "what": "`doctor` gains the section `listeners` (N37x-01, M3; contributed through BD-022's section interface; for each open listener its register id, transport, bound address and whether authentication is enforced). Please add it to the static section table and to 'Extended by'."
+  },
+  {
+   "bead": "N32a-35",
+   "what": "N37x-01 adds the threat rows T1.d, T3.b and T4.c (gates GATE-SAFE-10 and GATE-SAFE-04) whose plants are the peer link's: a peer asking for a state slab, offering a widened token, or sending a scene whose identity differs from its recipe; a job with a private scan in its lineage offered for forwarding; a flood of offers, and an offer above the reservation. In the change that builds the link, please register those controls in `crates/frob-conformance/registry/controls.toml` with the rows' gates and name them in the rows' `controls` field. Please also replace the acceptance 'passes the threat review's checklist' with the ten items of N37x-01's checklist, each cited by the test that covers it."
+  },
+  {
+   "bead": "N38b-23",
+   "what": "In your gate table, 'Measured by' names two beads for GATE-GAUNT-05 (N38a-04, N38a-05) and for GATE-GAUNT-09 (N38a-07, N38a-08), and none of the Gauntlet rows below names a recorder. Under convention 9 the recorders are now stated in the beads. GATE-GAUNT-03: N38a-19, from the release receipt, `--part M2`, then one part per exit. GATE-GAUNT-05's M0 part: N38a-05, from `e2e_tier g2_parity GATE-GAUNT-05 --mutations`, citing N38a-04. GATE-GAUNT-07: N38a-35, from `e2e_tier g5_determinism GATE-GAUNT-07 --mutations`. GATE-GAUNT-09: N38a-08, which depends on N38a-07, from `e2e_tier g0_laws GATE-GAUNT-09 --mutations`. Please name them as recorders in the form you use for GATE-GAUNT-04's M1 part."
+  },
+  {
+   "bead": "N38a-02",
+   "what": "Your selection lists four filter forms (gate, row, site, milestone), and your acceptance and tests check exactly four. Two tier beads now define filter forms for their own targets: `battery:<name>` on `g1_known_answers` (N38a-22: the G1 entries of the battery's `ka` items per `battery::resolve(<name>, \"all\")`; BD-146's per-change run uses it) and `<family>[@<site>]` with `--count N` on `g4_chaos` (N38a-23's G4 runner, used by N38a-25, N38a-26 and N38a-27). Please admit filter forms that a tier's own bead registers, with the same empty-selection rule, and update the 'four filter forms' acceptance, so that neither form is refused by the selection parser."
+  }
+ ],
+ "unchanged": 4,
+ "notes": "Sweep slice, 22 beads, each read in full against the 14 conventions, the registry beads, its plan sections and its dependencies. Both addressed requests are applied (N37-26: the M3 arguments requiring `established`, plus the conformance-only `testprobe.cite`; N38a-22: the `battery:<name>` filter). One new bead, N37p4-01, is split from N37-04 to break its deadlock on BD-065. Every touched file passes the front-matter and seven-section check, and the graph has no cycle. Unchanged keys: N38a-03, N38a-15, N38a-23, N38a-36."
+}

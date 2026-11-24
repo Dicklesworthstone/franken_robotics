@@ -133,8 +133,10 @@ lint). A registry with no reader is proposed for reduction to its generated prin
 - [ ] `docs/delivery/exits/M3/decision-records.json` exists and `decision-sweep check --exit M3` passes.
 - [ ] Each of the 22 family-and-kill-gate pairs of step 1 has an outcome citing its decision ADR.
 - [ ] Each row of step 2 has measured values and `condition_met`; KI-56's entry cites the partial-gate record.
-- [ ] Step 4's table of shares and ceilings is stored with the sweep, and every changed Impact cites it.
-- [ ] The reader list of step 7 is in the record; a registry with no reader has a proposal.
+- [ ] Step 4's table of shares and ceilings is the record's `shares` (NAB-22 step 3), and every changed Impact
+      cites a row of it.
+- [ ] The reader list of step 7 is the record's `readers`; a registry with no reader has a proposal (an entry
+      without one fails `sweep.row-not-swept`).
 - [ ] No reading task is open for a gate recorded at M3.
 - [ ] The sweep record exists at the exit candidate commit before the M3 exit record is written, and the exit
       runner's attached check reads it; the sweep's session implemented none of the beads it cites.
@@ -175,8 +177,11 @@ failed and the kill gates read.
 
 Known answers: nineteen families, 22 pairs; thresholds quoted above (0.1% and 5%; 10 times and 85%; 90% and
 30%; 90% and 95%; τ 0.7 and 0.5; 60% and 30%). A zero-failure 95% bound at 10⁻⁵ needs ln(20)/10⁻⁵ ≈ 3.0 × 10⁵
-nominal episodes. Negative controls: an Impact raised with no phase share; KI-56 marked `condition_met` when
-the comparator tied; a kill gate that fired at the exit with its family still reading "adopted".
+nominal episodes. Negative controls: an Impact raised with no phase share (`sweep.change-without-evidence`, by
+the evidence-kind rule); KI-56 marked `condition_met` when the comparator tied, its measured count of cells
+decided beyond the comparator being 0 against the threshold `>= 1` (`sweep.change-without-evidence`, NAB-22
+check (c)); a kill gate that fired at the exit with its family still reading "adopted"
+(`sweep.kill-not-reflected`).
 
 ## Considerations
 

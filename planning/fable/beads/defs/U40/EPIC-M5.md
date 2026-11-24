@@ -70,9 +70,12 @@ decisions; M7 counts certificates that changed a decision.
 - Foundry: `frob foundry loads`, `size`, `optimize`, `check`, `tolerance` and `export`, ending in a `.fbuild`
   packet whose four flags are false.
 
-**2. Gates with a part due at this exit (compiled register tables: 4 admission, 25 convergence).** Four of these
+**2. Gates with a part due at this exit (compiled register tables: 4 admission, 26 convergence).** Four of these
 are tagged M4 by their chapters and may pass there: GATE-FOUNDRY-01 to -03 and GATE-GROUND-03. GATE-TRAC-09 is due
 on `batch-cpu` (its rows are admitted from M3; the GPU rows are M6). GATE-WS-02 completes for all thirteen formats.
+One row carries an M5 part that the plan's printed load table (25) does not count, with its recording bead (N40-02,
+step 5): GATE-LEMMA-03 over every proof kind enabled by M5, those of M1 to M4 and `lean-capsule` (BD-381), recorded
+by this exit's review (BD-412).
 
 | Gate | Claim | Part due | Pass criterion in brief (TARGET) | Defined in |
 |---|---|---|---|---|
@@ -101,6 +104,7 @@ on `batch-cpu` (its rows are admitted from M3; the GPU rows are M6). GATE-WS-02 
 | GATE-HAB-03 | Reality | M5 | One real place ingested end to end, privately, with its scale label and unknown regions respected, and at least one probe request emitted for it. A place for which no capture exists is recorded as `no-claim`, not as a pass. [F]. | §19.19 |
 | GATE-LEMMA-01 | Proof | M5 | At least 80% of derived kernels carry a replayable instance certificate for each identity their manifest declares (BET-11). | §12.6 |
 | GATE-LEMMA-02 | Proof | M5 | At least three Lean theorem cards compiled by stock Lean, re-checked by `fln`, and sealed; the capsule verifies from an empty environment. | §12.6 |
+| GATE-LEMMA-03 | Known answer | M1; M2, M3, M4, M5, M8 (every kind enabled by that exit) | Every proof kind in use has one specimen that `frob-verify` accepts and at least three mutations it rejects; the four stance mutations, an unknown kind with consistent hashes and a changed quantifier are all rejected; the binary has no dependency outside the standard library and runs in an empty environment. | §12.6 |
 | GATE-LEMMA-05 | Proof | M5 | The Farkas and rational LDLᵀ reflectors have soundness theorems compiled by stock Lean and re-checked by `fln`, and each proves its specimen by kernel evaluation within 60 s. | §12.6 |
 | GATE-QUAL-03 | Known answer | M5 | `frob-verify` replays the levels, the commitments and, after close, the cluster derivation of a campaign; a reordered index, a changed request and a reused cluster are each rejected. | §24.17 |
 | GATE-TRAC-09 | Fidelity | M5; GPU at M6 | CL-H on `batch-cpu`: residual at most 10⁻⁴ within eight passes on at least 95% of battery contact states and 10⁻⁶ under `strict`; zero creep on the incline below threshold; no separation velocity on a sliding block; agreement with the referee on the Solid rows of §18.16. | §18.17 |
@@ -208,7 +212,7 @@ BET-29 (generative structure saves too little) → beam sizing and the structura
 
 ### Unit tests
 
-Carried by member beads. Epic check: due counts for M5 are 4 admission, 25 convergence, 18 kill decisions, plus 3
+Carried by member beads. Epic check: due counts for M5 are 4 admission, 26 convergence, 18 kill decisions, plus 3
 late parts; GATE-GROUND-10 is listed outside the blocking set.
 
 ### End-to-end script and logging

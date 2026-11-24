@@ -1,0 +1,211 @@
+{
+ "round": 4,
+ "slice": "F-UEG",
+ "reviewed": 41,
+ "changed": [
+  {
+   "bead": "NEG-01",
+   "kinds": [
+    "request",
+    "contradiction"
+   ],
+   "what": "Request applied after checking GB-25 and N12p2-02 (M2, split out of the M4 bead N12-18): the lane-B contract cited GB-25's trace checker at M4, so an implementer of the loader's milestone gating would build GB-25's card for an M4 check that is in fact M2; the example now reads 'the card and its hash check at M0, the rewrite table and the rewrite-trace checker at M2' (the M4 case stays in the synthetic card of card_mechanism_milestones). The loader sketch said load() validates rules 1 to 6 while the acceptance and card_value_kinds require rule 7's rejections: now 1 to 8. Label review-notes-open removed."
+  },
+  {
+   "bead": "NEG-02",
+   "kinds": [
+    "request",
+    "contradiction"
+   ],
+   "what": "Request applied (a)-(c) after checking GB-25, GB-32 and GB-14: acceptance line 1 expected GB-25's checks 'not run (M2)' and 'not run (M4)', which can never be observed now that both staged checks and the prove.kernel surface are M2 (the M0 run would fail its own acceptance); now 'two M2 checks and the surface each not run (M2)', and the surface table says the same. Step 6 lists FROB-REF-560 (GB-32 through nemesis.bound, exit 3, verified on N26-REF/VERBS-nemesis). 'No card bead depends on this one' was false (GB-14 does): now 'no M0 card'. Step 6's list also omitted codes the card beads drive (checked against every GB file): -440 (GB-23) and -451 (GB-26) through the test lane, and -135, -163, -249, -431, -805, -821 as each card bead states. (d) noted, no change. Label review-notes-open removed."
+  },
+  {
+   "bead": "GB-25",
+   "kinds": [
+    "deadlock",
+    "convention"
+   ],
+   "what": "The M0 card's acceptance asserted the M2 behaviour of N21a-19 and N12p2-02, which it cannot depend on (convention 7), and nobody was named to write the bodies of gb_25_mechanism_rewrite_refused and gb_25_mechanism_trace_reject, so NEG-02's M2 run would find declared checks with no implementation. The card now declares both [[mechanism]] entries and their not run (M2) status (its own M0 acceptance), and states that N21a-19 and N12p2-02 write, enable and pass those bodies; requests recorded to both (no cycle: GB-25 depends on neither)."
+  },
+  {
+   "bead": "GB-32",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Every frob nemesis bound call (lane B and NEG-02's surface) lacked --finalist; the synthetic candidate is a finalist of no recorded campaign, so N26a-26's finalists-only rule refuses each with rare-bound-not-finalist, exit 3, before the count or the 560 rule is reached (N26a-30's script says so and passes --finalist on every call). Added --finalist (BD-276's input on the nemesis.bound row) with the reason."
+  },
+  {
+   "bead": "GB-35",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The surface calls of opt.cascade on N28b-28's seeded-81 population are campaigns that answer exit 8 with a job (N28b-28 step run); STD-E2E's e2e_cmd fails exit 8 unless listed, and the assertions read no result. Added the frob job wait <job> --json step and the completed result's exit 2 when labels are present."
+  },
+  {
+   "bead": "NEG-06",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "The e2e section said NEG-02's worked_cards.sh replays the archive's verify.py timing check and logs re-run medians; NEG-02 has no such step, so it would never be built where the bead points. BD-043's scripts/e2e/pilots_rerun_augur.sh (a dependency) is the script that does it; the section now names it and says this bead adds no script."
+  },
+  {
+   "bead": "NEG-15",
+   "kinds": [
+    "broken"
+   ],
+   "what": "ROBOT-fsim-g1's test robot_fsim_g1_not_a_parity_reference and acceptance ('offered as the reference for the humanoid@g1 mass row, the asset is refused with the profile named') and NEG-16 step 4 ('a reduced profile is refused as a parity reference') all rely on a refusal no bead delivered: NEG-15's mass-row reader had no rule for a reduced robot, so the three checks had nothing to call. Added the rule to the mass-row reader (a manifest carrying `profile` is refused as a class's mass reference, the profile named; N14b-34 and BD-109 already say the reduced G1 is never the reference) and the test robot_mass_reference_not_reduced. The BD-109 audit note needs nothing from this bead: the mass_on_file record is what either reader uses."
+  },
+  {
+   "bead": "NEG-16",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "NEG-32 and ROBOT-fsim-g1 both name this bead's script as the one that runs their referee steps (sim run on the lowered G1 with key cat-g1-run; BD-024's catalogue smoke with key asset-fsim-g1-smoke-<commit>, whose digest must match the recorded one), but the robot loop had no such step, so the owner of the shared script (convention 11) would build it without them. Added both runs to step 2 for fsim-g1, with their expected outcomes."
+  },
+  {
+   "bead": "NEG-20",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Requests from H-owners-1, H-verbs-7 and M1-1 applied (checked against N35x-02, N19-REF rows 103 and 120 and VERBS-scene): the joint-sweep refusal was unnamed, so the implementer had no code, block or repairs to raise. Validation now names import-articulation-interpenetrates (3xx, exit 3, retry after-change, no interim, not 123) behind IMPORT_ARTICULATION_INTERPENETRATES with pointer, observed, required (the fitting error), unit m and the two repairs; robocasa_fixture_sweep_through_range and the al-rbc-x1 script step assert the code and exit 3. Label review-notes-open removed."
+  },
+  {
+   "bead": "NEG-21",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Step 2 and the e2e step al-procthor-2 said a user-supplied import naming procthor with --licence-class attribution succeeds and is clamped to unknown; the verb's owner N19a-46 refuses a declaration that weakens a row's class with FROB-REF-802 (its flag table, refusal paragraph and test user_supplied_inputs), so the script step would fail. Now: that call is refused with 802 naming the flag and row; a new step al-procthor-4 (no class) yields the private unknown/NotRead pack the export steps use; unit test procthor_declaration_cannot_weaken added. Request to N19b-02 for its matching sentence."
+  },
+  {
+   "bead": "NEG-22",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 13: 'a request to N37-18 asks whether one is wanted' narrated a request; N37-18 already states there is no aggregate exception. Removed the narration."
+  },
+  {
+   "bead": "NEG-23",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request from H-verbs-7 applied: the bead now names every verb whose handler reaches a refused accessor, so the registry rows can list scan-profile-absent: scene.compile (scan base), scene.fit, scene.show with --probe/--route/--corridor, scene.accept (acceptance-report accessor), scene.bank estimate and admit (both read the pack's bricks, BD-236), scene.retrofit --apply, and the run verbs (sim.run, train.run) through BD-228's acceptance check. Without this VERBS-scene's scene.accept row omits a refusal the bead's own acceptance and script expect. The narrated request to BD-228 (convention 13) replaced by the fact: BD-228 reads the report through ScenePack::acceptance_report. Requests to VERBS-scene and VERBS-sim/VERBS-train. Label review-notes-open removed."
+  },
+  {
+   "bead": "NEG-24",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Requests from H-owners-1, H-verbs-7 and M1-1 applied: the sweep refusal was unnamed. Validation names import-articulation-interpenetrates behind IMPORT_ARTICULATION_INTERPENETRATES (3xx, exit 3, retry after-change, no interim, not 123), required = the recorded decomposition error, unit m, the two repairs; partnet_sweep_no_interpenetration's planted drawer asserts the code and exit 3, and the script gains the planted-drawer import (al-pm-4). The default-mode and no-scale refusals in the script now name their codes (asset-source-not-default-pipeline; 802). Label review-notes-open removed."
+  },
+  {
+   "bead": "NEG-25",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 13: 'a request to N37-18 asks the owner whether such an override is wanted' narrated a request; replaced by what is: N37-18's table has no aggregate exception and any override would be a change to the door."
+  },
+  {
+   "bead": "NEG-26",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The acceptance said removing the one unknown object lets 'the rest' export, but the five test objects include research-only and proprietary ones, so a mixed pack of all five stays refused after the removal and the test cannot pass. The mixed pack is now the redistributable, attribution and unknown objects (acceptance and e2e). The attribution-without-text refusal had no code: FROB-REF-802 naming --attribution, exit 3."
+  },
+  {
+   "bead": "NEG-32",
+   "kinds": [
+    "contradiction",
+    "registry"
+   ],
+   "what": "Step 7 said the mass-dropped refusal is raised under its slug until assigned and tests assert the slug; N14b-34 (its owner) raises it from the start through IMPORT_MASS_DROPPED holding the number N35x-02 assigns at M0, and N35-33 rule 7 forbids a bare slug as interim, so the implementer would raise an unregistered refusal BD-005's loader refuses. Now the constant, with acceptance item 2 asserting its code (exit 3). The 'capability refusal' for a build without the fsim-catalog feature is now named: FROB-REF-724, feature-not-built, exit 5."
+  },
+  {
+   "bead": "ROBOT-fsim-g1",
+   "kinds": [
+    "broken"
+   ],
+   "what": "robot_fsim_g1_not_a_parity_reference called 'the mass-gate loader', which no dependency defines; it now calls NEG-15's mass-row reader, which now carries that refusal."
+  },
+  {
+   "bead": "NEG-29",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 13: '(the registry bead VERBS-eval is asked to note it)' narrated a request that is already settled; VERBS-eval's eval.scorecard row lists hazards_drawn_unguarded and hazards_uncovered. Now states that."
+  },
+  {
+   "bead": "NEGp1-51",
+   "kinds": [
+    "contradiction",
+    "convention"
+   ],
+   "what": "The division matrix used 'a procthor entry declared by the user' as a stand-in; a declared class on the procthor row is refused with 802 by N19a-46 (now stated in NEG-21), so that cell could never be built. Now a user-supplied procthor entry with no declared class (unknown, NotRead). Considerations narrated a round-1 request to N37-18 (convention 13): replaced by the fact that N37-18's table has no aggregate exception."
+  },
+  {
+   "bead": "NEGp1-52",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The import command used --kind place with no --from, so the place form's default adapter `twin` (N19c-04, BD-398) would try to read an HM3D mesh as a twin package and fail. An HM3D scan is a mesh: added --from mesh --declare <declaration> (mesh requires --declare; BD-398 test refuses mesh without it), with the declaration's content (units in metres as the source states, frame, handedness, no scale witness), which is what makes the label estimated and the pack no-claim."
+  },
+  {
+   "bead": "NEGp1-54",
+   "kinds": [
+    "broken",
+    "registry"
+   ],
+   "what": "The HM3D scan steps named only --kind place --profile hm3d-scan, missing the --from mesh --declare inputs the place form needs (see NEGp1-52), so the M5 run's scan import would fail; now cites NEGp1-52's command. The robocasa door-through-frame refusal now names import-articulation-interpenetrates (the code of its constant, exit 3), as NEG-20 now does."
+  },
+  {
+   "bead": "ROBOT-apollo",
+   "kinds": [
+    "convention"
+   ],
+   "what": "C13 finding confirmed: 'M2 work, requested of N17a-08's script' narrated a request that is settled (N17a-08 depends on this bead and its step 6a asserts the bucket or FROB-REF-160 from this manifest). Now states that."
+  },
+  {
+   "bead": "ROBOT-talos",
+   "kinds": [
+    "convention"
+   ],
+   "what": "C13 finding confirmed: 'is requested of N17a-08's script' narrated a settled request (N17a-08 step 6a asserts the bucket and overheads from this manifest). Now states that."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N21a-19",
+   "what": "GB-25 (M0) declares the staged lane-B check gb_25_mechanism_rewrite_refused ([[mechanism]] entry, first_milestone M2, in registries/cards/GB-25.toml; test file crates/frob-conformance/tests/cards/gb_25.rs) and cannot depend on this M2 bead (convention 7). Add to this bead: write and enable that test's body (the rewrite engine refuses to produce a + (b + c) from (a + b) + c under class E) and pass it in acceptance, with dep GB-25 (no cycle). Without it NEG-02's M2 run finds a declared check that nobody implements."
+  },
+  {
+   "bead": "N12p2-02",
+   "what": "GB-25 (M0) declares the staged lane-B check gb_25_mechanism_trace_reject ([[mechanism]] entry, first_milestone M2) and cannot depend on this M2 bead. Add: write and enable that test's body (a trace filing the reassociation (a + b) + c → a + (b + c) as class E is rejected with verdict reject, KA-212) and pass it in acceptance, with dep GB-25 (no cycle)."
+  },
+  {
+   "bead": "N19b-02",
+   "what": "Step 4 says a user-supplied import naming a row takes 'the more restrictive of the row's class and the class the caller declares (so unknown for a row whose licence was not read, whatever is declared)'. The verb's owner N19a-46 refuses a --licence-class that would weaken a row's class with FROB-REF-802 (flag table, refusal paragraph, test user_supplied_inputs). Reword so the declaration is refused, not clamped, when weaker (NEG-21 now does so)."
+  },
+  {
+   "bead": "VERBS-scene",
+   "what": "NEG-23 names the verbs whose handlers reach a refused ScenePack accessor on a scan-store pack, so their rows list scan-profile-absent (the code behind SCAN_PROFILE_ABSENT, exit 3): add it to scene.accept (the acceptance-report accessor; BD-228 says scene.accept answers it), scene.bank (--action estimate and --action admit read the pack's bricks, BD-236) and scene.retrofit (--apply --scene compiles from the pack's geometry), beside compile, fit and show already listed."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "BD-228's acceptance check, called at admission by every run verb that binds a scene pack, answers scan-profile-absent on a scan pack imported without its profile (NEG-23; NEG-23's script expects it from `frob sim run quad-a --scene <pack> --tier referee`). sim.run's row lists neither that nor scene-pack-not-accepted; list both (VERBS-train's train.run row lists scene-pack-not-accepted but not scan-profile-absent: same addition there)."
+  },
+  {
+   "bead": "VERBS-design",
+   "what": "The design.import row says the mass-dropped refusal is 'raised under its slug until the ledger assigns' a number. N14b-34 raises it from M1 through IMPORT_MASS_DROPPED holding the number N35x-02 assigns at M0, and N35-33 rule 7 admits no bare slug. List it under its assigned number (via the constant) instead of the 'Pending ... raised under its slug' text."
+  },
+  {
+   "bead": "N17a-08",
+   "what": "Step 6a calls `frob phylum plan --designs asset-talos-<source hash>` (and the same for apollo). `asset-<name>-<source hash>` is the idempotency key of the import in NEG-15's recipe (`frob design import ... --name talos --key asset-talos-<source hash>`), not a design: the design is named `talos` (`apollo`), and its pinned DesignId is in the asset's import.fbot/validation.json. Address the design by that name or by the pinned DesignId, or the step refuses on an unknown design."
+  }
+ ],
+ "unchanged": 18,
+ "notes": "Unchanged after full check (18): GB-03, GB-06, GB-08, GB-10, GB-15, GB-16, GB-22, GB-23, GB-26, NEG-08, NEG-13, NEG-30, NEG-31, NEGp1-53, ZOO-balancer-2w, ZOO-snake-crawler, ZOO-tri-wheel-stair, ZOO-wheel-leg. All card arithmetic recomputed (GB-32 counts, GB-35 Beta and ladder, NEG-06 ceiling, balancer pole 8.49628/8.49483/9.1698 and cosh 2.826, tri-wheel centres and 23.51 N·m, wheel-leg strata 351 by brute force, snake and zoo counts, NEGp1-52 u_scale 21.5/20.5 mm, NEGp1-53 30 N·m and 47.1239 J). The NEG-15 audit note (BD-109's mass rows to N14b-06): NEG-15 names no BD-109 item or edge; its mass_on_file record serves either reader, so it needs no side of that change. Outside the slice, for their reviewers: ZOO-snake-crawler's three-link sub-fixture uses links of 0.20 m while the template's link is 0.12 m and N10a-16's wheeled snake 0.3 m; no row depends on the value, so it was left. N19b-02 step 4 still says a weaker --licence-class is clamped (request filed)."
+}

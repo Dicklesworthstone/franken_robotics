@@ -222,7 +222,8 @@ the label of the violated trace that atom alone decides (V1 to V8). Every atom i
       distinguishes all eight atoms.
 - [ ] M3 lane: `frob task new` on the resolved file succeeds with the scene family, the split and the three
       hazard-registry draws resolved and echoed in `bound`; `frob task check` reports every row of the check
-      table as passed, with evidence class Tested, tier `static`, determinism `exact`.
+      table as passed, with evidence class Tested, tier `static`, determinism `D0` (the wire form of class D0,
+      N35-01, whose reader rejects `exact`).
 - [ ] With only the specimen's four examples (S1, S2, V1, V9), `task.check` reports five hard-limit atoms as
       vacuous (`tray-level`, `gentle`, `clear`, `cool`, `no-spill`, form (ii)) and refuses (`FROB-REF-539`, detail
       `vacuous-hard-limit`); the same report lists `settled`, `tray-level`, `gentle`, `clear`, `cool` and

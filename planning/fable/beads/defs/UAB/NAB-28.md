@@ -145,8 +145,10 @@ read.
 Known answers: seven families, 11 pairs; split-conformal coverage at n = 20 and 90% nominal is distributed as
 Beta(19, 2), with a standard deviation of 6.3 points, and at n = 200 as Beta(181, 20), with 2.1 points, so a
 coverage gate read at n = 20 has that much sampling spread. Negative controls: a reality family whose
-Confidence was raised on the synthetic rehearsal; kernel reflection left in the Frontier table after its kill
-gate fired; an NV item marked `measured` with no record.
+Confidence was raised on the synthetic rehearsal (`sweep.change-without-evidence`, by NAB-22's evidence-kind rule
+for `synthetic` records); kernel reflection left in the Frontier table after its kill gate fired
+(`sweep.kill-not-reflected`); an NV item listed under `sources.unverified_settled` as `measured` with an empty
+`record` (`sweep.change-without-evidence`).
 
 ## Considerations
 

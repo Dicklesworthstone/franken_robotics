@@ -1,0 +1,282 @@
+{
+ "round": 4,
+ "slice": "F-U19b",
+ "reviewed": 39,
+ "changed": [
+  {
+   "bead": "BD-369",
+   "kinds": [
+    "request"
+   ],
+   "what": "F-U14b-1 applied: this bead now calls `catalog.for_bottleneck(feature)` from the builder of preflight stage 7's FROB-REF-119 payload (stage landed at M3 by N14b-12, wired by BD-244, now a dep) and fills its `retrofit` field (entries cheapest first, an empty list, or `catalog-absent`), with an acceptance line, the unit test `place_stage_119_names_kit` and an e2e `design check` step. Left as it was, nobody makes the call, so the 119 payload reads `catalog-absent` for ever even after the catalog exists."
+  },
+  {
+   "bead": "BD-420",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Round-3 request and convention 10 applied: the owner's decision is the kill gate's decision, recorded at `docs/adr/ADR-<gate name>-M6.md` (`docs/adr/ADR-KILL-RGBSPLAT-M6.md` under the working name), the path N19bp2-01 writes; the epic's `fallback` close cited a different file, so its close would cite a record that never exists."
+  },
+  {
+   "bead": "BD-415",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "Acceptance now records KILL-PROXY per mechanism (`mechanism:chain-cord`, `mechanism:hinged-rug`, N40-03's scope kind), `fired` for both without `fallback_form` when the pilot's falsifier holds. It also said the proxy rows of GATE-HAB-08 read `killed` when KILL-PROXY fired; KILL-PROXY reads the pilot and the cost record, not GATE-HAB-08, and on that branch N19b-18 is withdrawn so the proxy rows are never registered: the criterion could not be met."
+  },
+  {
+   "bead": "N19b-03",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "H-owners-2, H-ref-3 and the C13 lint applied: admission now reads the kill gate's decision in force with outcome `fired` (N40-03), per scope (KILL-PROXY per `mechanism:`, KILL-LIVING per `kind:`), instead of a `killed: fallback adopted` record no bead writes, so admission would never have substituted after a kill; `fallback_form` is N40-03's field (verbatim, absent = not at all); the 'requested of' narration of N32-REF and VERBS-sim is replaced by the facts both rows now hold; tests plant the verbatim form ('articulated proxies in evaluation batches only', which N40-03's load requires) and a new `proxy_kill_read_per_mechanism` test. CX-190's plant `N19b-03:cx-190` (N19-CX: a rug as a fixed step) was never built, so N38b-05's seeded control would be `plant-missing`; the bead now builds it under `gauntlet-mutations` with a test that it changes the alternative."
+  },
+  {
+   "bead": "N19b-04",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "N19-CX writes CX-192's entry and names its plant `N19b-04:cx-192` (planted-input: a request for a resolved solver in a training world that the tier rule must refuse); the bead claimed to register the row itself (a second writer) and never built the plant, so N38b-05's seeded control would be `plant-missing`. Scope and acceptance now build the plant (a synthetic island-in-training request refused 726 `island-in-training`) and leave the entry to N19-CX, added as a dep."
+  },
+  {
+   "bead": "N19b-06",
+   "kinds": [
+    "request",
+    "convention",
+    "registry"
+   ],
+   "what": "C13 lint and F-U18a applied: `film_thickness` is BD-230's T2 channel of the `contact` stream, no longer 'requested of BD-230'. Convention 9: the script made no receipt, so `record_gate --receipt <hash>` had nothing to cite; the gate's entries (G1 rows KA-438, KA-439) now sit in `g1_known_answers` under GATE-HAB-06 and the script ends with `e2e_tier g1_known_answers GATE-HAB-06 --mutations` (line `pass`, CX-189 and the three plants `caught`), which the acceptance names. The KILL-FILM consideration said rows become `killed: fallback adopted`, a status no register has (N40-03 derives `killed`; the recorder never writes it)."
+  },
+  {
+   "bead": "N19b-07",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Pilot record fixed against N38a-09: `gated_beads = [N19b-08, N19b-09, N19b-10]` (WP-73 holds five mechanisms, so without it `fundable_bead` answers with the whole package and another pilot's held falsifier blocks the film beads), verdicts `falsifier-holds`/`falsifier-rejected` instead of 'pass' (not a verdict the loader accepts), ceiling `basis` and the cost fields, and the result's receipt committed at `receipts/pilots/<hash>.json` (else the loader refuses the result, `pilot-receipt-uncommitted`, and N19b-11's `not-reached` entry has no receipt). The `closed_form` test asserted floating-point agreement at grid points where a deposit equals sigma exactly (the worked point among them) and went negative where h_c f < sigma; it is now clamped and excludes exact boundary points, so it can pass."
+  },
+  {
+   "bead": "N19b-11",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "On `fired` the bead set GATE-HAB-07 to `killed` in every case; N40-03's propagation kills only a read gate that failed, so on a `cost` or `no ranking change` firing a passed GATE-HAB-07 keeps `pass` and the acceptance line as written could not be met. Text and acceptance now say so."
+  },
+  {
+   "bead": "N19b-12",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "Same pilot-record fixes as N19b-07 (`gated_beads = [N19b-13, N19b-14]`, `work_package = WP-73`, verdict names, ceiling basis, cost fields, committed receipt). The value of g was never stated, and every figure (8.9556 rad/s, 1.4253 Hz, the table) holds only for g = 9.81 m/s²; with standard gravity 9.80665 the four-decimal `worked_point` test fails, so g = 9.81 is now stated."
+  },
+  {
+   "bead": "N19b-13",
+   "kinds": [
+    "request",
+    "registry",
+    "contradiction"
+   ],
+   "what": "F-U29b applied (N29b-06 item 10): the bead lands the `slosh-tip` monitor in `frob-chronicle`, switches N24a-38's row from `pending: N19b-13` to `available`, adds the wave-4 row to `fixtures/e2e/chron08/list.toml`, runs `gate_chron_08.sh` as a stage and re-records GATE-CHRON-08's part M2 from that tier receipt by a fresh session (dep N29b-06 added); without it the row stays pending for ever. Its own `slosh-tip` predicate contradicted N24a-38's row (now that row's, with a card field `spill_disp` for the spill amplitude and a predicate test). Channels were in a `slosh` stream that does not exist among the nine (a query of it is 802); they are now `slosh_disp`/`slosh_vel` of `kinematics`, and the smoke run records T2 (the default T1 would hold no samples)."
+  },
+  {
+   "bead": "N19b-14",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "Convention 9: no tier run, so `record_gate --receipt <summary receipt hash>` had no receipt; the slosh rows are now G1 entries against GATE-HAB-08 with the deep-water mutant as control, the script ends with `e2e_tier g1_known_answers GATE-HAB-08 --mutations`, and the two measuring beads of the register each record the one part from a run of the whole gate (later in force). `--task fixture:tray-shake-<h>` with a positional rig is not a task name (refused); runs now use `--fixture tray-shake-<h>` with `--telemetry T2`. The `slosh` stream query became `--stream kinematics --channels slosh_disp`. The script's last step ran `record_gate` itself, which STD-E2E's `self-recording` lint fails; the script now stops at the tier run and the part is recorded from its hash outside the script."
+  },
+  {
+   "bead": "N19b-15",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "On `fired` the bead set 'the slosh rows of GATE-HAB-08' to `killed`; N40-03 kills a whole read gate and only if it failed, so the text and acceptance now say GATE-HAB-08 is killed on a `frequency` firing (the proxy rows with it) and keeps `pass` on `no ranking change`; as written the acceptance could not be met. The shared-gate problem is raised as a request."
+  },
+  {
+   "bead": "N19b-16",
+   "kinds": [
+    "registry",
+    "contradiction",
+    "convention"
+   ],
+   "what": "Pilot ids were 'set C', which N38a-09 reserves for construction pilots (PILOT-C-nn); now set HAB. Records gain `gated_beads` ([N19b-17, N19b-18] and [N19b-21]) so WP-73's other pilots do not block them. The articulated record's falsifier was pooled T >= 0.90, which could withdraw both proxies while one scene is below 0.90, against KILL-PROXY's per-mechanism decision; it now needs both scenes, and the readings are registered per mechanism and per island kind. Convention 9: GATE-HAB-09 was recorded from 'the scoring run's receipt', a pilot receipt record_gate does not take; a G1 entry now verifies the committed pilot receipt and recomputes the shares, and the script runs `e2e_tier g1_known_answers GATE-HAB-09 --mutations` with the three scoring controls."
+  },
+  {
+   "bead": "N19b-17",
+   "kinds": [
+    "registry",
+    "contradiction",
+    "broken"
+   ],
+   "what": "Indicators were in a `proxy` stream that does not exist (802 on query); now `cord_winding` and `rug_hinge_max` in `kinematics`. Its own `snag` predicate contradicted N24a-38's row (dep added); it now uses that predicate and adds only the `wrap`/`fold` detail. The smoke run used `--task fixture:cord-drag` with a positional design (not a task; refused) and no T2; it now runs `--fixture cord-drag --telemetry T2`, a fixture this bead registers."
+  },
+  {
+   "bead": "N19b-18",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "Convention 9: the gate was recorded from a 'summary receipt' no tier run produced; the proxy rows are now G1 entries against GATE-HAB-08 with the two-link chain and CX-190's plant `N19b-03:cx-190` as controls (N19b-03 added as a dep), the script ends with `e2e_tier g1_known_answers GATE-HAB-08 --mutations`, and the recording rule matches N19b-14's. The chain telemetry query named a `proxy` stream that does not exist; now `kinematics` at T2. The script's last step ran `record_gate` itself (STD-E2E `self-recording` lint failure); it now stops at the tier run."
+  },
+  {
+   "bead": "N19b-19",
+   "kinds": [
+    "request",
+    "registry",
+    "convention"
+   ],
+   "what": "H-owners-2, H-ref-3 and C13 applied: KILL-PROXY is recorded as one entry per mechanism (`scope_kind = mechanism`, `mechanism:chain-cord`/`mechanism:hinged-rug`) instead of one unscoped entry, `fallback_form = 'articulated proxies in evaluation batches only'` verbatim on a `fired: cost` entry (the shortened 'evaluation batches only' fails N40-03's load), and 'requested of N40-03/N32-REF/VERBS-sim' and the e2e_skip on `--require-living-tier` are replaced by the facts (both rows list them). The claim that propagation kills the proxy rows of GATE-HAB-08 was wrong (KILL-PROXY does not read that gate) and is replaced; tests now fail on an unscoped entry or a shortened form."
+  },
+  {
+   "bead": "N19b-20",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "N19b-21 'closes superseded for them' (per kind): a bead closes once, and N41-17 rule 5 closes a bead that exists only on the untaken branch, never built, `withdrawn` citing the ADR. It now drops fired kinds by a re-read note and closes `withdrawn` when every kind is fired; BD-416 likewise closes `fallback` once every kind is fired."
+  },
+  {
+   "bead": "N19b-21",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "F-U33b applied: the e2e now asserts through the verb both refusals the island contract implies, FROB-REF-790 naming `multiphysics` on a default build (an `oracle-check` referee run, so the missing group is the only cause) and 726 `tier-not-eligible` on `batch-cpu` with `--require-living-tier M`, with an acceptance line; C13 narration of VERBS-sim replaced by the fact. `frob result show <run>` was used for failure class and time per episode: `result.show` (M4) returns a stored result with its claim product, not failure instants, so the scoring step had no input; it now reads `telemetry failures <run>`."
+  },
+  {
+   "bead": "N19b-29",
+   "kinds": [
+    "request",
+    "registry",
+    "broken"
+   ],
+   "what": "H-cx-1 applied: CX-194's plant is `N19b-29:cx-194` as N19-CX registers it; the sentence claiming N19-CX named the pilot N19b-25 as carrier contradicted the registry. Two figures were wrong: a geometric e near 1 mm needs a cell of about 0.7 mm (not 1 mm) with some 2,500 headings, and 4 million cells at four bytes is 16 MB, not 16 MiB."
+  },
+  {
+   "bead": "N19b-31",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The e2e exported bundles with `artifact export --out <tmp>/`; `out` must lie under the session's export root and an absolute or temporary path is FROB-REF-734, so the export, and every `frob-verify` step after it, would fail. Now `--out exports/clearance_certs/`."
+  },
+  {
+   "bead": "N19b-32",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "The bead said the row lists 304, 305, 308 and 891 and that 303 'is requested of the row' with the test reporting the difference; VERBS-scene's row and its `refusal_lists` test hold 303, 304, 305, 308, 891 plus the slugs `scene-pack-identity-mismatch` and `scan-profile-absent` (NEG-23). The handler's refusal-list test, built from the old text, would fail against the row; the text now states the row's set."
+  },
+  {
+   "bead": "N19b-33",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "Convention 9: the battery ran as a bare `cargo test`, which logs no receipt, yet the record cited `--receipt <hash>`; the script now ends with `e2e_tier g1_known_answers GATE-TRAC-07 --mutations` (the four planted predicates as the entry's controls), records nothing itself, and the acceptance names the receipt. C13: `--certificate` is in VERBS-contact's row, no longer 'asked for'. The export used `--out <dir>/`; now a path under the export root (else FROB-REF-734)."
+  },
+  {
+   "bead": "N19b-35",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Convention 9: GATE-HAB-10 was recorded with `--receipt <hash>` while the script never ran a tier and so had no receipt; the three clauses are now the GATE-HAB-10 entry of `g1_known_answers` with the four controls, the script ends with `e2e_tier g1_known_answers GATE-HAB-10 --mutations` and records nothing, and the acceptance names that receipt. The export used `--out <dir>/`; now a path under the export root (else FROB-REF-734)."
+  },
+  {
+   "bead": "N19b-36",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "C4-adr: the parenthetical naming the retired `docs/delivery/adr/` is gone. The e2e read the GATE-HAB-10 record with a bare `frob evidence trace`; the verb takes a `clm:<64 hex>` claim identifier (missing input is 802), so the step could not run; it now traces the record's claim identifier, as the sibling decision beads do."
+  },
+  {
+   "bead": "N19b-38",
+   "kinds": [
+    "deadlock",
+    "broken"
+   ],
+   "what": "The e2e read `frob://catalog/retrofits` and logged `e2e_skip` 'until N32a-25 serves the retrofits kind from this bead's loader'; N32a-25 is a dependency (closed first) and serves a catalog kind only when its listing verb lands, and no verb lists the retrofit catalog, so the skip could never lift and N19bx-01's resource step had no server. Section 7 already claimed 'the catalog as an MCP resource'; the bead now builds that kind's hand-written handler (loader output, N32a-25's cursor, `scene:read`), with a unit test, an acceptance line and the step run for real."
+  },
+  {
+   "bead": "N19b-40",
+   "kinds": [
+    "contradiction",
+    "convention"
+   ],
+   "what": "Considerations said the redesign arm reports `unresolved` 'until the design search exists'; N28bx-01, the cheapest flipping design edit, is a dependency, so the arm always has it and the partial-verb wording was wrong. The 48-of-64 flip rule was 'to be confirmed with the owner of the counterexample format'; it is N26a-17's shrink relation (a dependency) and is now cited as such (C13)."
+  },
+  {
+   "bead": "N19b-42",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "C4-adr: the `docs/delivery/adr/` parenthetical removed. The acceptance and script run `cargo test -p frob-conformance --test kill_ledger` (N40-30) but N40-30 was not a dependency (reached only through an incidental eleven-step chain via N28bx-01); added, as N19b-36 has it."
+  },
+  {
+   "bead": "N19b-44",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "F-U34 applied: the FMT-FEDIT row's `decision` is `docs/adr/ADR-WS-06-format-rows.md`, which lists the row as added at M3; the bead cited an unnamed 'ruling note', so the row's `decision` field had no path to write. H-ref-1 and C13 applied: 'requested of N19-REF, N19c-42 and VERBS-scene' replaced by the fact (N19-REF enters `scene-edit-invalid` under its N35x-02 number; VERBS-scene lists it on `scene.compile`; N19c-42 does not carry it)."
+  },
+  {
+   "bead": "N19bp2-01",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "On `drop` (outcome `not-reached`) N20a-28 was to close `superseded`; N41-17 reserves `superseded` for a bead that needed a killed capability, and a bead only on the untaken branch closes `withdrawn` citing the ADR, so the close would fail `superseded-without-adr`'s meaning check. Rule and acceptance now say `withdrawn`."
+  },
+  {
+   "bead": "N19bx-01",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The surface cited `frob://catalog/retrofits` as N32a-25's, which serves no retrofits kind (no listing verb); it now names N19b-38's handler, which returns each entry with its `facility` table, so step 1 of the script reads a resource that exists."
+  },
+  {
+   "bead": "BD-162",
+   "kinds": [
+    "convention"
+   ],
+   "what": "C13: the coarse-truncation default was 'to be confirmed with the ray kernels (BD-187) and the pool (BD-164)', a pending ask in the bead; it is a manifest value the codec N19b-01 (a dependency) reads, and the text now says so."
+  },
+  {
+   "bead": "N19b-02",
+   "kinds": [
+    "convention"
+   ],
+   "what": "C13: 'requested there' about the refusal number is replaced by the fact: N35x-02's row for `asset-source-not-default-pipeline` carries no proposal and names 802 with `detail` as the interim."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N19c-29",
+   "what": "GATE-HAB-08 is one gate with one M6 part and two measuring beads (N19b-14 slosh rows, N19b-18 proxy rows) under two kill gates. N40-03's propagation acts on a whole gate, so a KILL-SLOSH firing on `frequency` marks the proxy rows `killed` too, and a proxy failure fails the gate KILL-SLOSH reads. N19b-14 and N19b-18 now each record the one part from a tier run of the whole gate (the later in force, as N29b-06 does for GATE-CHRON-08's waves). Decide whether that stands, or give the register a way to keep the two row groups' status apart."
+  },
+  {
+   "bead": "N32a-25",
+   "what": "The `retrofits` kind of `frob://catalog/{kind}` has no listing verb (`scene.retrofit` reads the registry and is not a listing), so the rule 'served when that verb lands' never serves it, and your acceptance 'all twelve catalog kinds are readable' at M3 cannot hold: `registries/retrofits.toml` arrives at M4 (N19b-38). N19b-38 now builds that kind's hand-written handler from its loader (paged with your cursor, authorized by `scene:read`). Please state in your table that `retrofits` is served by N19b-38's handler from M4, with the loader's output as its source in place of a verb, and scope the twelve-kind acceptance accordingly."
+  },
+  {
+   "bead": "N20a-28",
+   "what": "Your acceptance says 'on `drop` the bead closes `superseded` with that ADR'. On drop the kill gate's outcome is `not-reached` (N40-03) and no capability was killed; N41-17 closes a bead that exists only on the untaken branch `withdrawn`, citing the ADR (`superseded` is for a bead that needed a killed capability). N19bp2-01 now says `withdrawn`; please match."
+  }
+ ],
+ "unchanged": 7,
+ "notes": "All 39 beads of the slice read in full; every slice note applied after checking. Unchanged after full review: BD-233, BD-414, N19b-23, N19b-26, N19b-27, N19b-30, N19b-34. Edited files parse (front matter, list fields, the seven sections, no later-milestone deps); graph_check reports no cycles after the added deps (N19-CX->N19b-04, BD-244->BD-369, N29b-06->N19b-13, N24a-38->N19b-17, N19b-03->N19b-18, N40-30->N19b-42). N40-24 still lacks `scope_kind = mechanism` for KILL-PROXY; H-owners-2 already requested it (out/H-owners-2.json), so it is not repeated. Edits made with scripts in the scratch directory polish-r4-F-U19b/."
+}

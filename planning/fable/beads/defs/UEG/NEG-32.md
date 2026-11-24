@@ -124,9 +124,10 @@ sibling source is copied into this repository.
    omitted), the lowering refuses unless `--reduced <profile>` names a profile whose retained links equal the
    tree's links. It then writes the `reduced` block from the profile. This is the same refusal a file import
    raises when mass is dropped (N14b-34's refusal, exit 3, payload each dropped body with its mass and the
-   total): the ledger row `import-mass-dropped` of N35x-02 (family `1xx`, proposal 127 on file, no number
-   assigned), raised under its slug until the ledger assigns the number, as the `design.import` row of
-   VERBS-design states; tests assert the slug (then the assigned code), never a proposed number.
+   total): the ledger row `import-mass-dropped` of N35x-02 (family `1xx`), which N35x-02's run numbers at M0,
+   raised through N14b-34's one named constant `IMPORT_MASS_DROPPED` (never a literal number, never the slug:
+   a bare slug is not an admitted interim, N35-33 rule 7); tests assert the code read from that constant,
+   never the proposal 127.
 8. *Canonical form and identity.* The term goes through the seven canonical-form rules and receives its
    `DesignId`. The identity depends on the sibling commit only through the numbers read.
 9. *Coordinate map.* `coord_map.json`: for each generalized coordinate of the builder's layout, the index of
@@ -150,7 +151,8 @@ for a reduced model, `reduced = { profile, omitted_mass }`. Kind `mutate`, scope
 schema-snapshot checks then cover them. An unknown builder name is refused as a malformed request
 (FROB-REF-802, exit 3) and the refusal lists the admitted names. `frob-io` reaches the builders only through
 `frob-fsim` (feature `fsim-catalog`); without the feature the format is absent from `capabilities` and the
-verb answers with the capability refusal.
+verb answers with the capability refusal `FROB-REF-724` (`reason: feature-not-built`, exit 5, before any
+builder is called and with no design created), as for `--format sdf` before its importer is linked.
 
 **5. Round-trip comparison (the check that the lowering means what the builder means).** Compile the lowered
 design, lower it to the referee with the compiler's own lowering, and compare with the builder's handle:
@@ -179,8 +181,8 @@ loss-report hash and the round-trip maxima.
 - [ ] `frob design import --format fsim-catalog --builder g1 --name fsim-g1 --reduced g1-reduced-30 --key
       cat-g1-1 --json` returns a design with 30 bodies, 29 actuated coordinates, n_v = 35 and total mass
       31.96314202 kg (exact decimal sum); the same call repeated with the same key is an idempotent replay.
-- [ ] The same command without `--reduced` (key `cat-g1-2`) is refused, naming the profile and the omitted mass
-      on record.
+- [ ] The same command without `--reduced` (key `cat-g1-2`) is refused with the code of `IMPORT_MASS_DROPPED`
+      (exit 3), naming the profile and the omitted mass on record.
 - [ ] `--builder iiwa7` returns a design whose counts equal the admission record's (expected, the builder at
       the pin governs: 7 revolute joints, 8 bodies) with a free root and the `no-exact-equivalent` entry for
       the fixed base.

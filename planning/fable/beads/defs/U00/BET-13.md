@@ -107,14 +107,19 @@ Out, and where it is:
 ### Unit tests
 `bets.rs`: `bet13_confirmed_on_one_stratum_holds_for_that_stratum`; `bet13_no_stratum_confirmed_falsifies_a`;
 `bet13_class_ratio_2_4_withdraws_speed_claim_at_m3`; `bet13_wording_between_3_and_10_has_no_tenfold_word`;
-`bet13_all_classes_under_3_stops_speed_funding` (the funding check then refuses `speed-lever` records);
+`bet13_all_classes_under_3_stops_speed_funding` (N00-09's funding admission check `admit` then refuses a
+`speed-lever` record for any class on which N39b-06's KILL-TENFOLD-SPEED record fired, quoting that record's
+hash; with every class fired, every `speed-lever` record);
 `bet13_population_wording_needs_32_families` (24 families → finite-suite wording only; 32 with one confirmatory
 cell → population wording allowed; 40 with four confirmatory cells sharing α → refused, 46 needed).
 
 ### End-to-end script and logging
 `scripts/e2e/bet_13_decide.sh` reads the gate records and the published report, runs the metric-contract
-conformance check on the report, recomputes the per-stratum verdict and wording, and scans the tree's documents
-for the word "ten-fold" outside confirmed strata. Logged per STD-E2E: stratum, ratio, interval, completion, cap
+conformance check on the report (`cargo run -p frob-conformance --bin frob-tenfold -- check-report --report
+<file> --campaign <dir> --json`, N00-19), reads the per-stratum verdict of BET-13 from the bet register's report
+(`cargo run -p frob-conformance --example bets -- status --json`, example `bets` of N00-28, the one verdict
+rule; no second verdict rule in the script), checks the ADRs and each stratum's wording against it, and scans the
+tree's documents for the word "ten-fold" outside confirmed strata. Logged per STD-E2E: stratum, ratio, interval, completion, cap
 1/q, verdict, wording; `summary` naming GATE-TENFOLD-06, GATE-TENFOLD-07 and KILL-TENFOLD-SPEED.
 
 ### Known answers and negative controls

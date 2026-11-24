@@ -4,7 +4,7 @@ title: "upstream frankensim: `fs-mbd::Wrench` mixed frames documented, or named 
 type: "task"
 priority: 2
 milestone: "M1"
-labels: ["m1", "suite", "marrow", "upstream", "frankensim", "frob-fsim", "solid"]
+labels: ["m1", "suite", "marrow", "upstream", "frankensim", "frob-fsim", "solid", "review-notes-open"]
 parent: "WP-02"
 deps: ["FDEF-05", "N33b-04", "N33c-36", "STD-E2E"]
 needs: []
@@ -136,8 +136,9 @@ runs the probe of GATE-WS-06 at the new pin (`cargo test -p frob-fsim mixed_wren
 mutant), which carries the adoption. A verb-level check (a referee run of a one-body fixture with an authored
 external wrench in the body frame at R_z(90°), asserting the world-frame momentum change of the known answer) is
 not part of this script: no row of `sim.run` takes an authored external wrench before the disturbance model of
-N26a-02 (M3), a later bead, so the check belongs to that bead's own script (KNOWN_DRIFTS 7 and 8; requested of
-N26a-02).
+N26a-02 (M3), a later bead (KNOWN_DRIFTS 7 and 8). That bead carries this bead's hand case as its unit test
+`push_frame_kept` (a body-frame push at R_z(90°) moves along world +y, through the airlock's frame-typed method),
+and no script holds a verb-level form of the check.
 
 Logging per STD-E2E: the script sources the shared helper and writes NDJSON to
 `target/e2e-logs/upstream_fd_fsim_33/<utc-timestamp>.ndjson` with a human-readable transcript beside it. Every line has `ts`,

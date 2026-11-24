@@ -1,0 +1,394 @@
+{
+ "round": 4,
+ "slice": "F-U34",
+ "reviewed": 31,
+ "changed": [
+  {
+   "bead": "BD-005",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied H-owners-1: Refusal gains `detail: Option<String>` with N35-33 rule 7's meaning (absent under a code's own meaning, present on every interim raise, slug or interim_detail; omitted, never null) and a test `refusal_detail_is_optional`. Applied H-ref-3: the exit rule now has N35-33's three exception lists (conflict 803/804/809/112 -> 7, integrity 810 -> 9, capability 840 -> 5), overriding the range whatever the family, a code in at most one list and every listed code present; `registry_exit_family_rule` gains the 112, 840, two-list and absent-code cases. If left: the loader built here could not carry an interim raise's detail and would refuse the registry's 840 row (exit 5 in an 8xx range) and 112 (exit 7 in 1xx). The C11-script finding is a false alarm: the test plan already says frob-core has no verb and names the scripts that observe it. The audit counterparts (STD-TEST, N34-06, BD-004, N32-REF, N24a-11 splits) touch BD-005 only as a dependency: no text change."
+  },
+  {
+   "bead": "N34-17",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Mutants restated as CX-361 plants 2 to 4 (`N34-17:<name>`, GATE-WS-05) with plant-named features `frob-core/dup-first-wins`, `-/dup-last-wins`, `-/skip-escape-decode` instead of `nc-<nnnn>`, the record seeded by N38b-05, and N38a-26's reuse of dup-last-wins stated with GATE-GAUNT-06 coming through CX-361's plant gates, the record written only by N38b-05's seeding tool, no longer 'N38a-26 adds GATE-GAUNT-06' (H-cx-2, H-owners-1, F-U38a; C13 narration 'requested of N34-CX' removed). Fixed the skip-escape-decode example `{\"a\":1,\"a\":2}`, which is a plain duplicate every build refuses, to `{\"a\":1,\"\\u0061\":2}`. Interim mapping now says each raise carries the slug as `detail`. If left: the runner would build features that do not exist and the control's example would not exercise the defect."
+  },
+  {
+   "bead": "N34-18",
+   "kinds": [
+    "request",
+    "convention",
+    "contradiction"
+   ],
+   "what": "Mutants restated as CX-358's four plants (`N34-18:<name>`) with features `frob-core/writer-no-key-sort`, `identity-on-raw-bytes`, `utf16-sort`, `escape-all-non-ascii`; utf16-sort and escape-all-non-ascii now stated as registered plants 3 and 4 (H-cx-2, H-owners-1; C13 'requested of N34-CX' removed). Stated that the library-map mutant writer is built by N34-21 (its Scope; N34-18 has no conformance-crate dependency and frob-core must not link the library). If left: nc-<nnnn> features matching no control, and an implementer of N34-18 told to build a mutant it cannot reach."
+  },
+  {
+   "bead": "N34-20",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "Refusal mapping gains a `detail` column (N35-33 rule 7): the duplicate-member raises (802 in arguments, the owner's code or 891 in files) carry `duplicate-member-name`, the identifier raises `identifier-not-printable`; 808 and plain 802 byte faults carry none. Added N34-REF's 891 fallback for an owner with no duplicate-field code, `refusal.detail` to surface parity and the script's assertions, a test `detail_only_on_interim_raises`, and N34-REF as a dependency (no cycle; its detail rows are what is raised). If left: interim raises without detail, which N35-33's ledger check cannot map back to a request, and an artifact duplicate with no code for owners lacking 103."
+  },
+  {
+   "bead": "N34-21",
+   "kinds": [
+    "request",
+    "convention",
+    "plan"
+   ],
+   "what": "Added CX-358 plants 3 and 4 (utf16-sort, escape-all-non-ascii) to the GATE-WS-05 controls, each failing step 4, and required the corpus to hold what they fail on (20 canonical entries with non-ASCII text, 20 with a U+E000..U+FFFF name beside a supplementary-plane name) with a test `corpus_covers_the_writer_rules`; features are plant-named (`frob-core/<plant>`, seven of them) instead of `nc-<nnnn>`; CX-361 listed. Fixed step 7 for the three identifier entries containing U+0000, which no argv can carry: they go as `idempotency_key` in the args file. If left: two registered controls never run or never caught, and three surface cases that cannot be sent."
+  },
+  {
+   "bead": "N34-22",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "`frob-core/nc-<nnnn>` replaced three times by the plant feature `frob-core/writer-no-key-sort` (BD-025, H-cx-2). If left: the control build names a feature that does not exist."
+  },
+  {
+   "bead": "N34-23",
+   "kinds": [
+    "convention",
+    "plan"
+   ],
+   "what": "Step 10's controls name their plant features (`frob-core/writer-no-key-sort`, `frob-design/reader-ignores-unknown`, `frob-core/view-has-identity`, `frob-verbs/view-converted-silently`) instead of `nc-<nnnn>`. The gate line now counts plan formats ('n of 13') and added formats (N34-27 rows) apart, with a self-test case; this moves N34-27's acceptance item, which N34-27 could not test (N34-23 depends on it). If left: wrong feature names, and added rows (FMT-FOVERLAY, FMT-FSTUDY at M1) would change the plan-format count."
+  },
+  {
+   "bead": "N34-24",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "The fixture-reference refusal is the interim 802 with `detail = \"fixture-reference-unresolved\"` (N34-REF), not 'until a number is assigned'; the CX-360 plant 1 is `N34-24:view-converted-silently` with feature `frob-verbs/view-converted-silently`. DESIGN added: how F in `artifact-input<F>` names its row (identifier, schema name, schema stem or extension, each unique to one row), with a test `format_param_spellings_resolve`. If left: the verb registries' F spellings (`design`, `fbot`, `FMT-FSTUDY`, `frob.scene.edit/1`) could not be resolved by the loader or by N34-27's lint, which matched schema names only and would flag nearly every verb."
+  },
+  {
+   "bead": "N34-27",
+   "kinds": [
+    "request",
+    "plan",
+    "deadlock",
+    "broken"
+   ],
+   "what": "Applied F-U24a-1 and F-U27a: classification rows for the training overlay (FMT-FOVERLAY, N24a-13, M1) and fork-children list (FMT-FCHILDREN, BD-205, M2); also added the study manifest (FMT-FSTUDY, N33b-19), the group element (N24ax-02, with the note that `.json` cannot be a row's extension), and the five other files a verb row takes by path (scene grid BD-165, scene recipe N21c-09, calibration edges BD-242, host fingerprint N21b-13, subsystem table N22b-35), with Background and Scope. `fmt.param-without-row` now resolves F as N34-24 states. Replaced two acceptance items that waited on later beads (the gate line's split count, now N34-23's; other beads' Scope wording) by the decision record naming each file's bead and status. If left: an incomplete ruling and a lint that cannot match the registries' F spellings."
+  },
+  {
+   "bead": "N34-19",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Applied F-U33b and F-U34: the loader reads the thirteen plan rows (a constant list) plus every added row (FMT-FSTUDY and the others named), `thirteen_rows_load` becomes `plan_rows_load` plus `added_row_loads_with_decision`; `decision` is a path under docs/adr/ (ADR-WS-06), required on an added row and forbidden on the thirteen, in the type, acceptance and tests. Named CX-360 plant 2 `N34-19:view-has-identity` with feature `frob-core/view-has-identity` as the control of the three compile_fail doctests. If left: the real registry fails `thirteen_rows_load` as soon as N33b-19 enters its row, and the plant's feature is unnamed."
+  },
+  {
+   "bead": "N34-09",
+   "kinds": [
+    "request",
+    "contradiction"
+   ],
+   "what": "Applied F-U34's request: the demo schema is BD-002's with its eleven optional keys; N34x-03 pins their shapes and adds no demo key (the text said N34x-03 extended it). Format-row counts at M1 now say seven landed and six pending plan-format rows, added rows reported by the same rules. Not applied: F-U24a-2's request to add the group-element row here (N24ax-02 enters that row itself, and its `.json` extension cannot be a row's: see requests). If left: a false statement about who owns the demo keys and an acceptance count that fails once an added M1 row lands."
+  },
+  {
+   "bead": "N34x-02",
+   "kinds": [
+    "request",
+    "deadlock",
+    "convention"
+   ],
+   "what": "Applied M1-3: eleven scope kinds (family, mechanism, proofkind added) in the field text, rule 1 and `scope_form_checked`, and the known answer; `region:x` stays refused. Removed what waited on N40-09 and N40-30 (both depend on this bead, convention 7): the acceptance that they run from blocks, and script step 3 running their test targets, replaced by the check's own facts (blocks read per crate) against a count of `[[gate]]` headers; the M1-exit acceptance is now this bead's own (no `gate-decl-not-cited` on the tree). Removed the 'asked to rename' narration (N16c-05 already refuses `carrier_beads`). If left: a reader refusing three ledger scope kinds and a bead that cannot close before its dependents."
+  },
+  {
+   "bead": "N34p3-01",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Applied H-ref-3: the refusal is the interim FROB-REF-802 with `detail = \"fixture-reference-unresolved\"` (N35-33 rule 7, N34-REF's row), six observed values kept, 'until a number is assigned' removed, in the approach, acceptance, a unit test, the script and its log line; N34-REF moved from related to deps (M0, no cycle). C13: 'requested of the envelope's schema' and 'requested of that bead' restated as facts; requests recorded for N32a-03 and N32ax-03. If left: a raise the ledger check cannot map, and a refusal without its detail on both surfaces."
+  },
+  {
+   "bead": "N34-25",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Applied F-U25b: the gate row's recorder is N38b-19's record_gate run by N25bp4-01 at M1 (`--part M1`); N25b-05 owns the script and the assembler of the receipt; 'the independence script, the one writer of that row' removed (convention 9) in Scope, approach, acceptance and the script paragraph. Applied F-U34: CX-362 plants 1 and 2 named (`N34-25:cert-depends-on-core`, `N34-25:cert-pasted-function`, planted inputs against GATE-WS-03, kept as fixtures). If left: two writers of one gate row and unnamed plants that the seeding tool cannot bind."
+  },
+  {
+   "bead": "BD-141",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Control builds named by plant: `frob-core/writer-no-key-sort` and `frob-design/reader-ignores-unknown` (CX-361 plant 1) instead of `nc-<nnnn>` (BD-025). If left: the gate run of M1 builds features that do not exist."
+  },
+  {
+   "bead": "N34p1-01",
+   "kinds": [
+    "convention"
+   ],
+   "what": "`frob-core/nc-<nnnn>` replaced by `frob-core/writer-no-key-sort` in the gate lane and the acceptance. If left: the M2 control build names a nonexistent feature."
+  },
+  {
+   "bead": "N34p1-03",
+   "kinds": [
+    "convention"
+   ],
+   "what": "`frob-core/nc-<nnnn>` replaced by `frob-core/writer-no-key-sort` in the gate lane. If left: the M4 control build names a nonexistent feature."
+  },
+  {
+   "bead": "BD-003",
+   "kinds": [
+    "plan",
+    "deadlock"
+   ],
+   "what": "Audit split applied (evidence holds: check-layers steps 1-5 read only the crate map and manifests; only check-deps reads the stack lock through N33a-03 and decides through N33a-01's edge_allowed). The surface, report format, declared-edge read, check-layers with the L-10/L-11 rule code, INV-WS-01, CX-363 and the two layer plants moved to the new N34p4-01; BD-003 keeps check-deps (L-2, L-4, L-5, L-9, edge.forbidden, facts), the ownership acceptance between the two checks (new test layer_and_dep_plants_owned_once), the 10 s share for both, fs-blake3, and gains its own negative control (L-4 without edge_allowed must fail foundation_confined); deps + N34p4-01. Inputs: the workspace roots are now an argument filled from the table of N34p4-02; as written, BD-003 read 'each workspace of the workspace table' that N34-01, a bead depending on it, creates. If left: N34-06, N34-07, N34-08, N34x-01 and N27a-01 wait on the stack-lock beads for rules they never use, and the first check reads a table no earlier bead creates."
+  },
+  {
+   "bead": "BD-004",
+   "kinds": [
+    "plan",
+    "deadlock",
+    "contradiction"
+   ],
+   "what": "Audit split applied (evidence holds: check-generated was the one check still written inside the capstone, so every bead that only adds a generator row waited on all six): the generator interface, its six rows, gen.* findings, --write, kernel digests, INV-SPARK-08, the later-rule list and the status_table.sh steps moved to the new N34p4-03, which depends on N33a-07 (the audit's missing edge: BD-004 now reaches it through N34p4-03, not only through N34-03 -> N33a-11 -> BD-006). BD-004 keeps the table fixed at six (adding the check-stack row over N33a-05's module; which bead adds every other row is now stated), the ownership rule, the plant matrix, the GATE-WS-04 share table (its 10 s line now names N34p4-01 and BD-003) and plant 5's 'no other check' on the real tree. Convention 7: the two seed done-conditions 'measured and recorded by N34-14' were acceptance items of BD-004 although N34-14 depends on it; they are now the in-crate form (matrix diagonal, in-process timing test in_process_timing) with the real-tree measurement left to N34-14. If left: N35-33, N32a-02 and the refusal-registry segment wait on the capstone, and BD-004 has items it can never tick."
+  },
+  {
+   "bead": "N34-01",
+   "kinds": [
+    "plan",
+    "deadlock",
+    "contradiction"
+   ],
+   "what": "Audit split applied (evidence holds: the table and its rules use no backend, receipt or verb type): the workspace table and forbidden-package list, the layout, lockfile, toolchain-file and directory rules, workspaces.rs tests, the core-lockfile grep and the cudarc check-deps plant moved to the new N34p4-02, which creates scripts/e2e/workspace_layout.sh; N34-01 keeps the apps/ workspace, BackendSet, FROB-REF-601, the device builds, doctor backend lists, and the six-check ownership of the cudarc plant, and adds its steps to that script. Acceptance item 1 listed the derive and worker workspaces, created by BD-019 and BD-038, which N34-01 did not reach: BD-019 added (level 19, no level cost), worker and bindings join the step when their manifests exist and are logged absent until then (request to BD-038). The toolchain-file plant needed check-stack's condition 2 of N33c-08, which N34-01 did not reach and which already tests the same plant: assigned there, and the false statement that N33c-08 reads the workspace table removed. If left: an item no agent can tick, and six table readers (N00-23, N21c-24, NJL-07, N32b-44, N32b-13, N32a-06) waiting at level 25 for GPU backends."
+  },
+  {
+   "bead": "N34-02",
+   "kinds": [
+    "plan"
+   ],
+   "what": "Pointers updated for the splits: check-layers is N34p4-01's, the exempt link-package names come from the link row of N34p4-02's workspace table; related gains both. If left: the crate-map bead sends its readers to beads that no longer hold the code."
+  },
+  {
+   "bead": "N34-14",
+   "kinds": [
+    "request",
+    "deadlock",
+    "broken"
+   ],
+   "what": "Applied F-U33c (audit counterpart of N33c-09): dep N33c-09 (level unchanged, 15); its plants (the five of its item 2, the cloth-oracle feature plant, the unlinked asupersync 0.5.0 lockfile, an f3d-*/frankenjax package in a core crate) are rows of the extra-plant table; every extra plant owned by one of the six checks is now run through all six with the seven's normalization, must be reported by its owner and no other, and the summary counts plants caught by another check (new acceptance item). The N34-07 and N34-08 counterparts (their 'no other check' clauses) are already plants 4 and 6 here: nothing to add. Step 7 runs `e2e_tier g0_laws GATE-WS-01` and record_gate, but the bead reached neither the tier runner N38a-02 nor the recorder N38b-19: both added (levels 11 and 13, no cost, no cycle) and the scope names the conformance entries of the two gates. The extra plants of N34p4-01 are named. If left: the gate step calls a harness that may not exist when the bead starts, and N33c-09's ownership assertion is lost."
+  },
+  {
+   "bead": "N34-15",
+   "kinds": [
+    "request",
+    "deadlock",
+    "plan",
+    "broken"
+   ],
+   "what": "Applied F-U36 and the audit's wrong-way note: acceptance item 6 (same verdict as N36-20's admission) removed; N36-20 holds it and depends on this bead, and the considerations say so. Convention 7: the e2e clause 'once check-stack exists, N33a-05, also wraps it and logs not-run' removed. Audit split applied (evidence holds: the other items test the guard on scratch registries and script text): the AGENTS.md section and its review moved to the new N34p4-04 (deps BD-002, N34-15); BD-002 moved to related, so the guard is ready at level 3 instead of 5. Omission: the rule table names scripts/precommit.sh as the enforcement point of rules 7 and 8, the bead's own tests are 'run by scripts/precommit.sh', and N44-03/N44-04 cite it as N34-15's, but no bead created it: added to Scope with its five steps (each under the guard; the workspace checks are those `cargo xtask` lists), an acceptance item and three tests. If left: a recipe nobody builds and two items the bead cannot tick."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N34p4-01",
+   "why": "Split from BD-003 (audit): the xtask command surface, exit codes and report frob.xtask.report/1, the declared-edge cargo-metadata read, and check-layers (crate map, L-1, L-3, the L-10 rule code, L-11) with INV-WS-01, CX-363 and plants 1-2 of GATE-WS-01; deps BD-001, N34-02, N34-17; level 5 instead of 7."
+  },
+  {
+   "bead": "N34p4-02",
+   "why": "Split from N34-01 (audit): the seven-row workspace table with the forbidden-package list and reasons, its wiring as the roots of check-layers/check-deps and the link-package exemptions, the layout, lockfile, toolchain-file and directory rules, workspaces.rs tests, the core-lockfile grep, the cudarc plant and scripts/e2e/workspace_layout.sh; deps BD-001, BD-003, N34-02, STD-E2E; level 8 instead of 25."
+  },
+  {
+   "bead": "N34p4-03",
+   "why": "Split from BD-004 (audit): check-generated as a component bead (generator interface with input globs, six rows including the admission document and stack-lock schema, gen.* findings, --write, kernel digests, INV-SPARK-08, the later-rule list, the status_table.sh steps); deps BD-002, BD-005, N33a-03, N33a-07, N34p4-01, STD-E2E; level 10 instead of 14, and the generator-row beads stop waiting on all six checks."
+  },
+  {
+   "bead": "N34p4-04",
+   "why": "Split from N34-15 (audit): the twelve working rules as the reviewed AGENTS.md section, the build-failure recipe of rule 10, and a text check that the enforcement points exist; deps BD-002, N34-15."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N34-CX",
+   "what": "CX-361 plant 4 (skip-escape-decode): the example `{\"a\":1,\"a\":2}` is a plain duplicate every build refuses; use `{\"a\":1,\"\\u0061\":2}`. The ws-json-library-map plant library-map-insertion-order is built by N34-21 (its probe fixture), not N34-18. CX-363's checking bead is now N34p4-01 (check-layers), split from BD-003. With F-U38a: GATE-GAUNT-06 among the gates of CX-361's dup-last-wins plant."
+  },
+  {
+   "bead": "N24ax-02",
+   "what": "Give the group-element format its own extension (a row's extension cannot be `.json`, which every JSON file has), and spell the F of `artifact-input<F>` as one of the row's keys (identifier, schema name, schema stem or extension), which N34-24 now requires; `group-element` resolves to no row."
+  },
+  {
+   "bead": "N24a-13",
+   "what": "Spell the overlay input `artifact-input<task.overlay>` (schema stem) or `artifact-input<FMT-FOVERLAY>`, not `task-overlay`, which resolves to no row under N34-24's rule; the same change in the task verbs' rows."
+  },
+  {
+   "bead": "N22b-35",
+   "what": "Enter a format row for `frob.shield.subsystem/1` (it is taken by path) and spell the verb input `artifact-input<shield.subsystem>`, not `subsystem`."
+  },
+  {
+   "bead": "N21c-09",
+   "what": "`frob.scene.recipe/1` is taken by path (`artifact-input`) but has no row of registries/formats.toml; enter one under ADR-WS-06 (N34-27's ruling: a file a verb takes by path is a format), or the contract check refuses the verb row (fmt.param-without-row)."
+  },
+  {
+   "bead": "BD-242",
+   "what": "`frob.sense.calib.edges/1` is taken by path but has no format row; enter one under ADR-WS-06 (N34-27)."
+  },
+  {
+   "bead": "N21b-13",
+   "what": "`frob.fingerprint/1` (owner frob-kernels) is taken by path but has no format row; enter one under ADR-WS-06 (N34-27)."
+  },
+  {
+   "bead": "N32a-03",
+   "what": "Add `bound.fixtures` (the resolved `@fixture:` references with path and digest, N34p3-01) to the envelope schema's `bound` object."
+  },
+  {
+   "bead": "N32ax-03",
+   "what": "Script step (6) passes `@fixture:two-card-train` verbatim to the binary; the STD-E2E rule is that scripts obtain the path with `e2e_fixture` and pass the path (N34p3-01 resolves only inside the binary's argument parser for a user's call)."
+  },
+  {
+   "bead": "N40-09",
+   "what": "Drop the interim reading of registries/gate_declarations.toml: N34x-02 is now the reader those beads build on; assert the block count through it."
+  },
+  {
+   "bead": "N40-30",
+   "what": "Same as N40-09: read declarations through N34x-02's reader, drop the interim file reading, assert the block count."
+  },
+  {
+   "bead": "N34-06",
+   "what": "Depend on N34p4-01 (check-layers with the L-10 rule code, split from BD-003) instead of BD-003: the register rows need only the L-10 rules (audit: level 7 -> 6)."
+  },
+  {
+   "bead": "N34-07",
+   "what": "Depend on N34p4-01 (the xtask surface) instead of BD-003 if check-unsafe uses no check-deps code (audit: level 7 -> 5); and drop the clause 'and no other check reports anything on that scratch copy' of acceptance item 2 (convention 7: BD-004 depends on this bead; N34-14 asserts it as plant 4)."
+  },
+  {
+   "bead": "N34-08",
+   "what": "Depend on N34p4-01 instead of BD-003 if check-contracts uses no check-deps code (audit: level 8 -> 6); drop 'and no other check reports anything on that scratch copy' from acceptance item 1 (convention 7; N34-14 asserts it as plant 6)."
+  },
+  {
+   "bead": "N34x-01",
+   "what": "Depend on N34p4-01 (check-layers, L-10) instead of BD-003 if it uses only the layer rules (audit)."
+  },
+  {
+   "bead": "N27a-01",
+   "what": "Depend on N34p4-01 instead of BD-003 if it uses only the xtask surface or check-layers (audit: level 7 -> 5)."
+  },
+  {
+   "bead": "N15a-01",
+   "what": "If the audit's 'add BD-003 (check-layers)' is applied, the check-layers bead is now N34p4-01."
+  },
+  {
+   "bead": "N00-23",
+   "what": "Depend on N34p4-02 instead of N34-01 and cite the forbidden-package list as N34p4-02's (`crates/xtask/src/workspaces.rs`); the table moved there from N34-01 (audit: level 26 -> about 14)."
+  },
+  {
+   "bead": "N21c-24",
+   "what": "Depend on N34p4-02 instead of N34-01 and cite the workspace table and its forbidden list as N34p4-02's."
+  },
+  {
+   "bead": "NJL-07",
+   "what": "Depend on N34p4-02 instead of N34-01: the layout table that gains fixtures/golden/ is N34p4-02's."
+  },
+  {
+   "bead": "N32b-44",
+   "what": "Depend on N34p4-02 instead of N34-01 (the layout and workspace table moved there)."
+  },
+  {
+   "bead": "N32b-13",
+   "what": "Depend on N34p4-02 instead of N34-01 (the layout and workspace table moved there)."
+  },
+  {
+   "bead": "N32a-06",
+   "what": "Depend on N34p4-02 instead of N34-01: the MCP fallback adds a row to the workspace table, which is N34p4-02's."
+  },
+  {
+   "bead": "N21a-01",
+   "what": "Cite the workspace table and forbidden-package list as N34p4-02's (`crates/xtask/src/workspaces.rs`); N34-01 now holds only the apps/ workspace and backend registration. Keep the dependency on N34-01."
+  },
+  {
+   "bead": "BD-038",
+   "what": "Add an acceptance item that `cargo metadata --locked` succeeds in `worker/` (the lockfile rule of N34p4-02): N34-01 no longer lists the worker workspace, which it cannot reach."
+  },
+  {
+   "bead": "N35-33",
+   "what": "Depend on N34p4-03 (check-generated, split from BD-004) instead of BD-004, and cite it for the printout rule (audit: the refusal-registry segment stops waiting on all six checks)."
+  },
+  {
+   "bead": "N32a-02",
+   "what": "Depend on N34p4-03 instead of BD-004 and cite 'N34p4-03's check' for the verb-table rule inside check-generated."
+  },
+  {
+   "bead": "BD-022",
+   "what": "Cite the generated-table rule as added to N34p4-03's check-generated (it was BD-004's list of later rules)."
+  },
+  {
+   "bead": "N29a-09",
+   "what": "Cite check-generated as N34p4-03's; depend on it instead of BD-004 if only the bead-log rule needs it."
+  },
+  {
+   "bead": "BD-095",
+   "what": "Cite check-generated as N34p4-03's; depend on it instead of BD-004 if only the artifact-graph rule needs it."
+  },
+  {
+   "bead": "N33a-07",
+   "what": "The admission-document row of check-generated is N34p4-03's (which depends on this bead), not BD-004's."
+  },
+  {
+   "bead": "N33a-03",
+   "what": "The stack-lock schema row of check-generated is N34p4-03's (which depends on this bead), not BD-004's."
+  },
+  {
+   "bead": "N33a-04",
+   "what": "'the generators of check-generated (BD-004)' are N34p4-03's."
+  },
+  {
+   "bead": "N33a-05",
+   "what": "The ownership note says BD-004 wires check-stack 'together with three other checks'; BD-004 now adds only the check-stack row (N34p4-01, BD-003, N34-07, N34-08 and N34p4-03 add theirs)."
+  },
+  {
+   "bead": "BD-002",
+   "what": "The status block's --write mode is N34p4-03's check-generated (the steps BD-004 added to status_table.sh are now N34p4-03's)."
+  },
+  {
+   "bead": "N10a-03",
+   "what": "Cite the regeneration check as N34p4-03's (`xtask check-generated`)."
+  },
+  {
+   "bead": "N21c-27",
+   "what": "INV-SPARK-08's row names BD-004 for check_generated_detects_edit; the test is now N34p4-03's."
+  },
+  {
+   "bead": "N40-02",
+   "what": "Step 7: the register printout is compared by check-generated, which is N34p4-03's; N38b-20 may depend on N34p4-03 instead of BD-004 if it needs only that check."
+  },
+  {
+   "bead": "NAB-01",
+   "what": "Cite check-generated as N34p4-03's (the orphan rule for schemas/frob.*.json)."
+  },
+  {
+   "bead": "NAB-09",
+   "what": "Cite check-generated as N34p4-03's."
+  },
+  {
+   "bead": "N34-16",
+   "what": "Depend on N34p4-04 (the AGENTS.md working-rules section, split from N34-15) so that the first commit's inventory checks an AGENTS.md that holds the rules."
+  },
+  {
+   "bead": "N33c-29",
+   "what": "Audit proposal for N34-03, declined there because this bead is in no round-4 slice: carry N34-03's acceptance item 4 (the planted frob-dyn -> structure fixture of N33a-11 refused), its test airlock_fixture_frob_dyn_structure_refused and the real-manifest assertions (default_groups_are_three, fsim.default set on the real records); then N34-03 can drop them and move N33a-11 to related (level 13 -> 8)."
+  },
+  {
+   "bead": "WP-01",
+   "what": "Update the titles of BD-003, BD-004, N34-01 and N34-15 and add N34p4-01 to N34p4-04 to the work package's bead list."
+  }
+ ],
+ "unchanged": 8,
+ "notes": "Unchanged (8): N34-03, N34-11, N34-12, N34-26, BD-145, BD-410, N34p1-02, N34x-03. N34-03 is unchanged because the audit's move of its item 4 to N33c-29 needs a bead outside round 4 (request recorded). Not taken up: the BD-006 proposal (check-stack registered by N33a-05) and the N33a-08 salt proposal, whose beads have no reviewer this round; BD-004 still adds the check-stack row as N33a-05 says. The N34x-01 proposal (eleven-row total to N31b-39) leaves N34-14's extra-plant row text as it is until N34x-01 changes. U34/coverage.md maps INV-WS-01 to BD-003; it is now N34p4-01's. Graph after the splits: N34p4-01 level 5, N34p4-02 8, N34p4-03 10, BD-003 7, BD-004 14, N34-14 15, N34-15 3; no cycle (checked by reachability)."
+}

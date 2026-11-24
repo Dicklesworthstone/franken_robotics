@@ -24,7 +24,7 @@
 
 ## Addressed to your beads
 
-- `N27b-10`: mechanical check of the conventions: [C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)
+- `N27b-10`: mechanical check of the conventions (can be a false alarm): [C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)
 - `N27b-18`: request from round 4, slice H-verbs-6: ANSWER: there is no role flag. To cite as established: `frob report run <run> --cite <claim> --key <k> --json` (role Established; an Autopsy claim gives FROB-REF-880, exit 3). Under the Reality claim: `frob report run <run> --claim reality --cite <claim> --key <k> --json` (role Reality, also 880). Without --cite the claim is printed in its described wording (role Described) and is not refused.
-- `N27b-21`: mechanical check of the conventions: [C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)
-- `N27b-22`: mechanical check of the conventions: [C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)
+- `N27b-21`: mechanical check of the conventions (can be a false alarm): [C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)
+- `N27b-22`: mechanical check of the conventions (can be a false alarm): [C11-script] has no end-to-end script of its own (`scripts/e2e/<name>.sh`): convention 11 gives each mechanism bead one, unless it delivers nothing a `frob` command can reach (then say so in the test plan)

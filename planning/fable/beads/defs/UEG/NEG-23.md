@@ -4,7 +4,7 @@ title: "scene asset source `hm3d` (academic, non-commercial): register row, per-
 type: "task"
 priority: 2
 milestone: "M3"
-labels: ["m3", "habitat", "safety", "frob-scene", "solid", "test", "asset", "registry", "review-notes-open"]
+labels: ["m3", "habitat", "safety", "frob-scene", "solid", "test", "asset", "registry"]
 parent: "WP-23"
 deps: ["BD-305", "N19a-05", "N19a-46", "N19b-02", "N37-18", "NAB-13", "NEG-22"]
 needs: []
@@ -75,7 +75,16 @@ acceptance), and a run that binds an unaccepted pack would otherwise meet the ac
 with `scene-pack-not-accepted` (proposal 318) and the repair "run `scene.accept`", which would meet this same
 refusal. So the reader's acceptance-report accessor is one of the refused accessors: `scene accept` on the pack,
 and the acceptance check that run verbs call, both answer `scan-profile-absent`, whose repair is the one that
-works. (A request asks BD-228 to confirm that its check reads the report through the pack reader.)
+works. (BD-228's check reads the report through that accessor, `ScenePack::acceptance_report`, the one
+`scene.accept` uses, so what the reader refuses comes before its `scene-pack-not-accepted`.)
+
+**The verbs that reach a refused accessor, and so list the refusal.** `scene.compile` (the derived form on a
+scan base), `scene.fit`, `scene.show` with `--probe`, `--route` or `--corridor`, `scene.accept` (the
+acceptance-report accessor), `scene.bank --action estimate` and `--action admit` (both read the pack's bricks,
+BD-236), `scene.retrofit
+--apply --scene <pack>` (the variant is compiled from the pack's geometry), and every run verb that binds the
+pack (`sim.run`, `train.run`), through BD-228's acceptance check at admission. `scene.show` without those
+options and `scene.list` read only the manifest, licence entry and loss report, and never raise it.
 
 **Scan profile (M5, NEGp1-52; listed here so that the row is complete).** Steps specific to scans:
 

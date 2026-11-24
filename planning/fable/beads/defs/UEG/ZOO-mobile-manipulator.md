@@ -38,7 +38,9 @@ port. Actuated 9 (2 wheels, 7 arm joints); n_v = 17 (floating base 6, 2 wheel sp
 7 arm joints); bodies 12; end effectors: 3 wheels and the flange.
 
 **Symmetry.** Γ_mech as built: trivial with the arm off-centre. Variant with the arm on the centre line and at
-a mirror-symmetric pose: C₂; then a 2 kg payload held at y = +0.1 m is named as the breaker.
+a mirror-symmetric pose: Γ_mech = Γ_obs = C₂; then a 2 kg payload held at y = +0.1 m makes Γ_obs trivial and
+is named as the breaker, while Γ_mech stays C₂ (a payload is filtered at the reduction from Γ_mech to Γ_obs and
+never enters the mechanical tree: the rule of BD-102 and N13-21, shared with ZOO-quad-mammal and ZOO-humanoid).
 
 **Arm facts used by the rows (DESIGN statements checked by the analyses, not asserted from memory).** A
 7-revolute S-R-S arm with upper-arm length d₁ and forearm length d₂ has a wrist-centre workspace that is the
@@ -68,10 +70,11 @@ standing at the declared approach distance.
 | Rank at full extension | 5 (singular) | exact |
 | Highest reachable wrist-centre height | 0.60 + 0.80 = 1.40 m: a shelf at 1.50 m is out of reach by 0.10 m (before the flange length is added) | rel 10⁻⁹ |
 | Tip-over with the arm horizontal sideways: moment of the payload about the nearer wheel line | 2·9.81·(0.80 + 0.10 − 0.20) = 13.73 N·m, against the restoring moment (base weight)·0.20 m | rel 10⁻³ |
-| Payload breaker, centred-arm variant | the payload at y = +0.1 m is named; Γ_mech trivial with it, C₂ without | exact |
+| Payload breaker, centred-arm variant | the payload at y = +0.1 m is named; Γ_obs trivial with it, C₂ without; Γ_mech C₂ in both | exact |
 
-**Control variants.** (a) the centred-arm variant with the payload and `assert_mech: C2` → FROB-REF-109 with
-the payload as breaker; (b) a stage-7 task that requires the 1.50 m shelf: refused with FROB-REF-119 (no
+**Control variants.** (a) the centred-arm variant with the payload and `assert_obs: C2` → FROB-REF-109 with
+the payload as breaker (the same variant with `assert_mech: C2` is accepted, since the payload leaves Γ_mech
+unchanged); (b) a stage-7 task that requires the 1.50 m shelf: refused with FROB-REF-119 (no
 admissible route or reach in the scene) naming the height and the lever that would fix it (a taller mast or a
 longer forearm); (c) a workspace routine that reports the outer sphere only (ignores the inner radius from the
 elbow limit): the row "points inside d_min are unreachable" catches it.

@@ -1,0 +1,225 @@
+{
+ "list": "B2",
+ "audited": 28,
+ "edges_judged": 90,
+ "real": 77,
+ "proposals": [
+  {
+   "bead": "N34-07",
+   "kind": "split",
+   "edge": "BD-003",
+   "change": "split from BD-003 a bead BD-003a 'xtask skeleton' (the xtask binary, the command table, the CLI surface `cargo xtask <check> [--root <dir>] [--json]`, exit codes 0/2/3 and the report schema frob.xtask.report/1), deps BD-001 and N34p2-01; BD-003 (check-layers, check-deps) then depends on BD-003a; N34-07 depends on BD-003a instead of BD-003",
+   "evidence": "N34-07: 'The check reads source files and manifests only; it compiles nothing.' It uses the xtask binary and its report format, not check-layers, check-deps or the stack lock that hold BD-003 at level 6 (BD-003 deps N33a-01, N33a-03, N34-17).",
+   "gain": "simulated: BD-003a at level 3; N34-07 7 -> 4, N34-08 8 -> 5; 4 beads drop, 12 layers saved (15 with the N34-08 partial below)"
+  },
+  {
+   "bead": "N34-08",
+   "kind": "split",
+   "edge": "BD-003",
+   "change": "depend on BD-003a (the xtask skeleton above) instead of BD-003",
+   "evidence": "check-contracts reads CONTRACT.md, contract.toml, manifests and registries and counts lines; no item runs check-layers or check-deps or reads the stack lock.",
+   "gain": "with the N34-07 split: N34-08 8 -> 5; with the N34-07 partial too, 8 -> 4 (19 dependents, among them BD-004)"
+  },
+  {
+   "bead": "N34-08",
+   "kind": "partial",
+   "edge": "N34-07",
+   "change": "move the doorway clause of rule 10 `contract.determinism-evidence` (Certified/Proved outside the doorway crates) and its test `certified_outside_doorway_crates_fails` to BD-004, which already depends on both N34-07 and N34-08; then drop N34-07 from N34-08's deps",
+   "evidence": "N34-08 rule 10: '... in a crate other than those the doorway table allows to create such leaves (the table is data in `xtask`, written by N34-07, and read here, not copied).' No other rule or test of N34-08 reads anything N34-07 delivers.",
+   "gain": "N34-08 8 -> 7 alone (3 beads, 3 layers); 8 -> 4 combined with the BD-003a split (4 beads, 15 layers)"
+  },
+  {
+   "bead": "N38a-12",
+   "kind": "partial",
+   "edge": "N38a-09",
+   "change": "move the FACT-row `pilot` source (the loader rule that a `pilot` naming no register record is a load error, the pilot clause of acceptance item 10, the pilot cases of `fact_row_rerun_state`) to a small follow-up bead with deps N38a-12 and N38a-09; until it closes, N38a-12 treats a pilot-sourced FACT row as `obligation: rerun` (fails closed)",
+   "evidence": "N38a-12: '`pilot = \"PILOT-…\"` for a pilot result: the status is read from the pilot register through N38a-09's status read (a dependency ...)'. Only this source of FACT rows reads the pilot register; the schema, the five rules, derivation files and the printout do not.",
+   "gain": "simulated: N38a-12 7 -> 6 and N00-KA 8 -> 7; 10 beads drop, 10 layers saved; N38a-12 blocks 78 beads"
+  },
+  {
+   "bead": "N34-06",
+   "kind": "split",
+   "edge": "BD-003",
+   "change": "split off N34-06a 'frob_core::ports: the four L-10 traits (EvidenceSink, TraceSource, JobCx, CertificateSink) and their null implementations', deps BD-005 and N34-11 (level 6); N34-06 keeps the inversion register inversions.rs and the check-layers items; N34-05 (uses only EvidenceSink) and N27a-01 (uses JobCx) depend on N34-06a",
+   "evidence": "N34-05: 'the `EvidenceSink` port trait of `frob_core::ports` (N34-06)'; N27a-01's trait methods take `cx: &JobCx`. Only the register and its check-layers tests need xtask (BD-003).",
+   "gain": "simulated: N34-05 8 -> 7 (1 bead, 1 layer); lets N27a-01 take its missing JobCx edge without rising to level 8"
+  },
+  {
+   "bead": "N27a-01",
+   "kind": "partial",
+   "edge": "BD-003",
+   "change": "move acceptance item 1's clause '`xtask check-layers` passes with `frob-autopsy` (layer 5) depending on no layer-6 crate' to N27a-10, the bead that creates frob-autopsy (it depends on N27a-01 and reaches BD-003); drop BD-003",
+   "evidence": "item 1: '`frob_core::fork` exists with the types above; `xtask check-layers` passes with `frob-autopsy` (layer 5) ...' frob-autopsy does not exist before N27a-10; nothing else uses xtask.",
+   "gain": "no level gain on its own: see the missing JobCx edge below (with N34-06a the bead stays at 7 with honest deps)"
+  },
+  {
+   "bead": "N27a-01",
+   "kind": "missing",
+   "edge": "N34-06 (or N34-06a)",
+   "change": "add N34-06a (after the split above) or N34-06; this also brings the canonical writer N34-18 through N34-11",
+   "evidence": "`fn open(&self, req: &ForkRequest, cx: &JobCx) -> Result<ForkPoint, Refusal>;` JobCx is N34-06's job-context trait; 'their canonical JSON encodings' and 'model_diff is the BLAKE3 hash of the canonical JSON' need N34-18, which N27a-01 does not reach.",
+   "gain": "correctness; with N34-06a level stays 7, with N34-06 whole 7 -> 8 (1 bead)"
+  },
+  {
+   "bead": "N41-OPEN8",
+   "kind": "partial",
+   "edge": "N41-OPEN1..N41-OPEN7",
+   "change": "move acceptance item 2 (the register holds exactly 161 questions; `check --complete`) and item 3 (the owner's 32 questions resolve, 17 of them in chapter units) with tests `register_total_is_161` and `owner_table_questions_resolve` to N41-04, which depends on all eight parts; keep only N41-03 in deps",
+   "evidence": "item 2: 'With parts 1 to 7 (dependencies of this bead) the register holds exactly 161 questions'. The twenty rows and two aliases (which resolve to OPEN-PROG-2 in this part) need only N41-03's schema and loader.",
+   "gain": "simulated: N41-OPEN8 7 -> 6 (1 bead, 1 layer); small"
+  },
+  {
+   "bead": "N41-OPEN8",
+   "kind": "missing",
+   "edge": "N38a-12, N40-02",
+   "change": "move acceptance item 6 and test `gaunt_2_and_3_counts_come_from_ka_registry`, and test `thresholds_agree_with_gate_register`, to N41-04, which reaches N38a-12 (via N40-05 -> ... -> N00-KA) and N40-02 (via N40-04)",
+   "evidence": "item 6: 'OPEN-GAUNT-2 and OPEN-GAUNT-3 report their remaining counts from the known-answer registry (133 and 325 at the start)'; test 'thresholds_agree_with_gate_register (3, 10, 5, 1.5, 0.05, four cells; 40 device-hours)'. Neither registry is a dependency.",
+   "gain": "correctness at no level cost; adding the edges instead would hold the bead behind the gate rows and the chapter known-answer rows"
+  },
+  {
+   "bead": "N34x-01",
+   "kind": "false",
+   "edge": "STD-TEST",
+   "change": "move STD-TEST from deps to related",
+   "evidence": "the bead never cites STD-TEST or a testkit parser; its tests are xtask check-layers runs on scratch copies (BD-003) and its script uses STD-E2E",
+   "gain": "none in levels (N34-06 holds it at 8)"
+  },
+  {
+   "bead": "N34x-01",
+   "kind": "missing",
+   "edge": "N16a-01, N22a-01, N34-14",
+   "change": "acceptance item 1 asserts only its own `member-sizer` row under ADR-WS-04 plus the five standing rows; the eleven-row total (which counts the five ADR-WS-05 rows of N16a-01 and N22a-01) and the new row in N34-14's workspace_checks.sh move to N31b-39, which depends on N34x-01 and already reaches N16a-01, N22a-01 and N34-14",
+   "evidence": "'from ten rows at M1 (five standing, five under ADR-WS-05) to eleven'; '... ADR-WS-05 rows (N16a-01, N22a-01)'. N34x-01 depends on none of N16a-01 (15), N22a-01 (36), N34-14 (14).",
+   "gain": "adding the three edges would move N34x-01 8 -> 37 (29 layers); moving the items keeps it at 8"
+  },
+  {
+   "bead": "N22b-27",
+   "kind": "missing",
+   "edge": "N34-26, N32ax-03",
+   "change": "replace script step 1 (`frob --json doctor`; record build and fingerprint) by recording the commit hash, and read the scratch registry by explicit path through N41-03's loader instead of the `FROB_REGISTRIES_ROOT` override; or move both to a later bead that has the doctor verb",
+   "evidence": "step 1: '`frob --json doctor`; record build and fingerprint.' and the test that points '`FROB_REGISTRIES_ROOT` at a scratch copy holding α = 10⁻² ... (N32ax-03)'. Neither N34-26 (level 25) nor N32ax-03 (21) is reached.",
+   "gain": "adding the edges would move N22b-27 7 -> 26 (19 layers, 6 dependents); the fix keeps it at 7"
+  },
+  {
+   "bead": "N30a-01",
+   "kind": "missing",
+   "edge": "N34-08",
+   "change": "add N34-08 to deps (only N30a-01 rises, 7 -> 9), or move acceptance item 4 and script step 3 to the frob-ground bead that closes the crate's contract",
+   "evidence": "item 4: '`CONTRACT.md` has ten sections and `xtask check-contracts` accepts it.'; step (3) '`cargo xtask check-contracts --json`'. check-contracts is N34-08, not a dependency.",
+   "gain": "correctness; cost 2 layers on one bead"
+  },
+  {
+   "bead": "N30b-26",
+   "kind": "missing",
+   "edge": "N40-02",
+   "change": "add N40-02 (only N30b-26 rises, 7 -> 9): test `packages_never_block_milestones` reads gate rows of registries/gates.toml",
+   "evidence": "'`packages_never_block_milestones` (no gate ...' reads the gate register, which N40-01/N40-02 deliver; neither is reached.",
+   "gain": "correctness; cost 2 layers on one bead"
+  },
+  {
+   "bead": "N30b-26",
+   "kind": "wrong-way",
+   "edge": "BD-397",
+   "change": "move acceptance item 3 (BD-397's record states the default of this question) to BD-397, which depends on N30b-26 (convention 7)",
+   "evidence": "'(BD-397) states the default of this question.' BD-397 waits on N30b-26.",
+   "gain": "the bead can close without waiting on its own dependent"
+  },
+  {
+   "bead": "N33a-09",
+   "kind": "missing",
+   "edge": "N33a-07, BD-006",
+   "change": "move the acceptance item 'The INT-FSIM-01 admission record contains `facts_reread` entries' and the admission-record half of the stale-fact item (marking INT-FSIM-04 and INT-FSIM-07 `stale-fact`) to N33a-28, which already depends on N33a-07, N33a-09 and BD-006; N33a-09 keeps the probe report",
+   "evidence": "'The INT-FSIM-01 admission record contains `facts_reread` entries for the facts that cite it.' The admission writer is N33a-07 and the INT-FSIM records come from BD-006's gate runs; neither is a dependency.",
+   "gain": "keeps N33a-09 at 7 (adding N33a-07 alone costs 2 layers; BD-006 more)"
+  },
+  {
+   "bead": "N33c-09",
+   "kind": "missing",
+   "edge": "BD-004",
+   "change": "move acceptance item 7 ('Each plant is caught by `check-deps` and by no other of the six checks') and the summary's count of plants caught by another check to N34-14; add N33c-09 to N34-14's deps (no level change, 14 stays 14)",
+   "evidence": "item 7: 'Each plant is caught by `check-deps` and by no other of the six checks.' The six checks are assembled by BD-004 (level 13), which is not reached.",
+   "gain": "adding BD-004 instead would move N33c-09 7 -> 14 (12 beads rise, 38 layers)"
+  },
+  {
+   "bead": "N34-07",
+   "kind": "wrong-way",
+   "edge": "BD-004",
+   "change": "move the clause 'and no other check reports anything on that scratch copy' of acceptance item 2 to N34-14 (convention 7: BD-004 depends on N34-07)",
+   "evidence": "'`capsule.unregistered` and exit 2, and no other check reports anything on that scratch copy.'",
+   "gain": "the bead can close before BD-004"
+  },
+  {
+   "bead": "N34-08",
+   "kind": "wrong-way",
+   "edge": "BD-004",
+   "change": "move the clause 'and no other check reports anything on that scratch copy' of acceptance item 1 to N34-14 (convention 7: BD-004 depends on N34-08)",
+   "evidence": "'`contract.section-missing` and exit 2, and no other check reports anything on that scratch copy.'",
+   "gain": "the bead can close before BD-004"
+  },
+  {
+   "bead": "N40-01",
+   "kind": "missing",
+   "edge": "BD-004",
+   "change": "move the RC-06 step of the e2e script (a hand-edited status table fails `cargo xtask check-generated`) to N38b-20 (status views generated from gates.toml, which depends on BD-004); add N40-01 to N38b-20's deps, which it reads but lacks (no level change)",
+   "evidence": "'then plants a hand-edited status table (RC-06) and asserts that `cargo xtask check-generated` fails'. check-generated is BD-004 (level 13); N40-01 does not reach it.",
+   "gain": "adding BD-004 instead would move N40-01 7 -> 14: 158 beads rise, 678 layers"
+  },
+  {
+   "bead": "N40-02",
+   "kind": "missing",
+   "edge": "BD-004",
+   "change": "move the acceptance clause 'a hand edit of it fails `cargo xtask check-generated`' and the matching script step to N38b-20; add N40-02 to N38b-20's deps (no level change); the bead's own regenerate-and-compare test keeps the freshness check",
+   "evidence": "'The printout regenerates byte-identically, and a hand edit of it fails `cargo xtask check-generated`.'",
+   "gain": "adding BD-004 instead would move N40-02 8 -> 14: 111 beads rise, 369 layers"
+  },
+  {
+   "bead": "N40-03",
+   "kind": "missing",
+   "edge": "BD-004, N40-02",
+   "change": "move e2e step (4) (fire a gate and assert the README table and the register printout regenerated by check-generated's generator) to N38b-20 and add N40-03 to its deps (no level change); N40-03 asserts the renaming on its own row rendering",
+   "evidence": "'(4) fires a gate and asserts the README table and the register printout, regenerated by `cargo xtask check-generated`'s generator'. The printout is N40-02's, the generator BD-004's; N40-03 reaches neither.",
+   "gain": "adding the edges instead would move N40-03 8 -> 14: 69 beads rise, 273 layers (it blocks 109)"
+  },
+  {
+   "bead": "N40-03",
+   "kind": "missing",
+   "edge": "N38a-09",
+   "change": "add N38a-09 to deps (level 6; no level change)",
+   "evidence": "'the `receipt` of the `[[pilot.result]]` it read, committed with the result at `receipts/pilots/<hash>.json` (N38a-09)'; an acceptance item refuses a pilot-read entry whose receipt does not resolve there.",
+   "gain": "correctness at no cost"
+  },
+  {
+   "bead": "N40-06",
+   "kind": "missing",
+   "edge": "BD-004",
+   "change": "move the e2e step that regenerates the README status table with `cargo xtask check-generated` and compares milestone names to N38b-20; add N40-06 to N38b-20's deps (no level change)",
+   "evidence": "'regenerates the README status table with `cargo xtask check-generated` and asserts the milestone names it prints equal the registry'",
+   "gain": "adding BD-004 instead would move N40-06 8 -> 14: 5 beads rise, 14 layers"
+  },
+  {
+   "bead": "N40-06",
+   "kind": "wrong-way",
+   "edge": "N40-05",
+   "change": "move acceptance item 6 ('`started` and `exited` are written only by the exit runner; a hand edit is detected by comparison with the bead logs') and control RC-21 to N40-05, the exit runner, which depends on N40-06; the bead-log comparison also needs the per-bead logs of N29a-09 (M1), which N40-05 does not reach: name it there",
+   "evidence": "item 6 as quoted; 'Start and exit times are written by the exit runner (N40-05) from the bead logs, not by hand.'",
+   "gain": "the bead can close without waiting on N40-05 (level 17) and N29a-09 (45)"
+  },
+  {
+   "bead": "N33a-06",
+   "kind": "wrong-way",
+   "edge": "N34-26, BD-022, BD-090, BD-111",
+   "change": "move acceptance item 1 (`frob doctor --json` prints the receipt hash) to the doctor bead N34-26, item 3 (envelope, ledger `run` row and `.frun` manifest carry `evidence.stack_receipt`) to BD-022 and BD-090, and item 5 (memoized referee result not served across lock digests) to BD-111; all of them already depend on N33a-06 (convention 7)",
+   "evidence": "Scope: 'the envelope itself (BD-022); the ledger schema (BD-090); the memo graph (BD-111, BD-220)' are named as out of scope, yet items 1, 3 and 5 assert their behaviour.",
+   "gain": "the bead can close; today it cannot finish before beads that wait on it"
+  },
+  {
+   "bead": "N39a-01",
+   "kind": "wrong-way",
+   "edge": "N39-REF -> N39a-01",
+   "change": "split N39-REF's harness-reason table (tenfold refusals and their enum) into a registry bead with deps BD-025 and STD-TEST; N39a-01 depends on it, and N39-REF no longer depends on the mechanism N39a-01 (rule 5)",
+   "evidence": "N39a-01: '... reason (N39-REF) that names the JSON pointer at fault.' N39a-01 raises N39-REF's reasons, but N39-REF (a registry) depends on N39a-01.",
+   "gain": "no level gain (N39-REF is held at 18 by N32-REF); fixes a rule-5 inversion"
+  }
+ ],
+ "notes": "28 beads, 90 edges; 77 kept as real. Proposals by kind: false 1, missing 13, partial 4, split 3, wrong-way 6. Shape: almost every bead here sits at level 7 or 8 because of one level-6 prerequisite (BD-003, N38a-09, N38b-18, N33a-04 or an N41-OPEN part); the deps lists are mostly honest, and the larger fault is the reverse: acceptance items that call later surfaces, above all `cargo xtask check-generated` (BD-004, level 13) in N40-01, N40-02, N40-03, N40-06 and the 'no other of the six checks' clauses of N33c-09, N34-07 and N34-08; made honest by adding edges they would cost hundreds of layers (N40-01 alone 678), so each proposal moves the item to N38b-20 or N34-14 instead, which also need N40-01..N40-06 / N33c-09 as deps they lack today. BD-003 is the main lever: N34-07 and N34-08 need only the xtask skeleton. N33a-06 -> N33a-05 sits on the 169-bead longest chain and removing it would drop 3,365 beads one level, but it is real: frob-core's build.rs reads receipts/HEAD and LOCK_DIGEST, which only `check-stack --write-receipt` writes, and fails closed without them; not proposed. BD-026 -> BD-003 holds N12-02 and N39a-01 at level 8 (BD-026 is not on this list). No start-ready bead found: the six pilots really use frob-conformance, pilots.toml and the harness."
+}

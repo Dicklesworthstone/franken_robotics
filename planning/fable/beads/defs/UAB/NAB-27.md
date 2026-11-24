@@ -152,10 +152,11 @@ are re-read before the family-policy and inheritance gates cite them.
 `EV-F03`, `EV-F05`, `EV-F08`, `EV-F09`, `EV-F11`, `EV-F12`, `EV-F13`, `EV-F16`, `EV-F20`, `EV-F22`, `EV-F25`,
 `EV-F28`, `EV-F30`, `EV-F31`, `EV-F33`, `EV-F34`, `EV-F41`, `EV-F56`, `EV-P18`; 24 pairs, because EV-F08, EV-F16
 and EV-F25 each have two kill gates); `speed_evidence_needs_prior_ceiling` (a family re-scored on a comparison whose
-ceiling was recorded after it ran → `check` fails); `no_family_policy_variant_marks_fell_back`;
+ceiling was recorded after it ran → `check` fails `sweep.change-without-evidence`); `no_family_policy_variant_marks_fell_back`;
 `rung_select_at_tau_0_6_is_discard_only` (a KI-40 entry licensing selection at τ = 0.6 → `check` fails; at 0.6 the
-entry must read "discard only"); `ki28_needs_parameter_edits` (KI-28 marked met from a topology-edit result →
-`check` fails); `fired_gate_family_renamed` (KILL-FAMILY fired, EV-F22 still reading `adopted` → `check` fails).
+entry must read "discard only"; `sweep.change-without-evidence`); `ki28_needs_parameter_edits` (KI-28 marked met
+from a topology-edit result → `check` fails `sweep.change-without-evidence`); `fired_gate_family_renamed`
+(KILL-FAMILY fired, EV-F22 still reading `adopted` → `check` fails `sweep.kill-not-reflected`).
 
 ### End-to-end script and logging
 
@@ -177,9 +178,11 @@ failed and the kill gates read.
 
 Known answers: twenty-one families, 24 pairs; 1/(1 − ρ²) = 1.96 at ρ = 0.7, 5.26 at 0.9 and 10.3 at 0.95, so a
 fifth of the samples needs ρ ≥ √0.8 = 0.894; the design-family lane's ceiling is 1.10 to 1.32 and its kill
-trigger is a measured whole-step gain below 1.15 or overhead h ≥ f·(1 − 1/r). Negative controls: a rung
-licensed to select at τ = 0.6 (the entry must read "discard only"); a family re-scored on a speed comparison
-with no prior ceiling; KI-28 marked met from a topology-edit result (the condition is on parameter edits).
+trigger is a measured whole-step gain below 1.15 or overhead h ≥ f·(1 − 1/r). Negative controls (each fails `sweep.change-without-evidence` by NAB-22 check (c)): a rung
+licensed to select at τ = 0.6 (KI-40's selection threshold is `tau >= 0.7`; at 0.6 the entry must read "discard
+only"); a family re-scored on a speed comparison with no prior ceiling (the pilot record does not resolve as
+evidence); KI-28 marked met from a topology-edit result (its thresholds name parameter edits, so a measured value
+under another name leaves them unmet).
 
 ## Considerations
 

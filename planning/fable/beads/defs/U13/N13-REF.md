@@ -4,7 +4,7 @@ title: "Refusal registry for Marrow: FROB-REF-212 to -215 with triggers, payload
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "marrow", "frob-lie", "frob-algebra", "solid", "registry"]
+labels: ["m0", "marrow", "frob-lie", "frob-algebra", "solid", "registry", "review-notes-open"]
 parent: "WP-03"
 deps: ["BD-005", "N35-33"]
 needs: []

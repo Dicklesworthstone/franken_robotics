@@ -4,7 +4,7 @@ title: "registries/glossary.toml: term records G to M (Gait orbit to Morphology 
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "workspace", "delivery", "solid", "registry"]
+labels: ["m0", "workspace", "delivery", "solid", "registry", "review-notes-open"]
 parent: "WP-01"
 deps: ["N00-10", "NAB-01"]
 needs: []

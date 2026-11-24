@@ -1,0 +1,260 @@
+{
+ "round": 4,
+ "slice": "S-22",
+ "reviewed": 24,
+ "changed": [
+  {
+   "bead": "BD-295",
+   "kinds": [
+    "registry",
+    "contradiction",
+    "broken",
+    "convention"
+   ],
+   "what": "The digest part of GATE-TETHER-09 now belongs to N40-08's batch-independence group (plan §40.3): it cites the milestone's one shared-fixture receipt (BD-181's run), so the exit query cannot fail with shared-fixture-diverged against a second digest run; the daemon campaign stays as the dispatcher's own PO-TETHER-03 and KILL-SLOT check and the dispatch limits cite this bead's own receipt. The gate criterion no longer calls the e2e summary digest (body_sha256, SHA-256) a receipt, which the recorder would refuse; it names frob.gauntlet.receipt/1 receipts and a recording session that did not implement the work. The KA-761 test now carries the ka_761_ prefix, and tests po_tether_03_assign_pure_and_slot_blind and inv_tether_08_digest_slot_independent bind the obligation and invariant the bead claims. The e2e header gains timeout_s=3600 (about 10^9 world-steps would hit the 600 s default), principals are granted before frobd starts and sessions opened after it answers (without a token every call from M2 is 723), and `--tier <lane>` with cuda/metal (802) became the sim.run tiers gpu-cuda and gpu-metal. The campaign's submissions now carry --no-memo (asserted NoMemo) and e2e_key keys: sim.run sets memo = true and a co-tenant run of a reference episode has the solo run's request content, so the memo graph would have served the solo result, every digest would agree whatever the dispatcher did, and the plant slot-keyed-draw could never be caught."
+  },
+  {
+   "bead": "N32a-14",
+   "kinds": [
+    "broken",
+    "convention",
+    "registry"
+   ],
+   "what": "The no-daemon refusal now names its code (FROB-REF-601, pointer daemon, exit 6, retry backoff), so the unit test and callers assert one form. `--no-daemon` is declared a process option of NJL-01's PROCESS_OPTIONS (NJL-01: a bead that adds one adds it to that list), with test no_daemon_flag_is_a_process_option. The e2e script gains its STD-E2E header and plants, grants and opens its session (from M2 a tokenless call is 723), and submits its 20 jobs with distinct e2e_key keys on tier batch-cpu (they replayed one receipt before); its conditional `frob job find` step, which waited on N29a-23 (a later bead, convention 7), is replaced by the unit test restart_then_find_by_key, the CLI recovery being N29a-23's own script. The parked-and-resumed job and its uninterrupted reference now run with --no-memo (asserted NoMemo): the reference would otherwise be served the resumed job's stored result and the known answer would hold trivially."
+  },
+  {
+   "bead": "N32a-19",
+   "kinds": [
+    "request",
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "Request applied: the code-to-exit check states N35-33's [exit_rule] with its three exception lists (conflict 112, 803, 804, 809 -> 7; integrity 810 -> 9; capability 840 -> 5) and the 70x/74x/76x -> 4, 72x/73x/79x -> 5 rows; as written the check failed on 112 and 840. The claim that N39-REF lands at M3 is corrected (it is M0); only N26-REF (M3) and N31-REF (M5) are absent at M2. N39-REF added to deps (no cycle). The family test gains 761 -> 4, 790 -> 5, 112 -> 7, 840 -> 5. Each of the 300 kill-harness trials has its own key (one key made every trial after the first a replay of the stored receipt, so nothing was killed). The e2e script gains its header and plants, opens its session through e2e_session, starts frob-mcp with the session token and keys every run or mutate stimulus with e2e_key. The kill harness's slow fixture is named (a sim.run job on batch-cpu) and runs with no_memo, as does the uninterrupted reference: the 300 trials share one request content, so every trial after the first finished would have been served from the memo graph at once and the kill would land on a job that never ran."
+  },
+  {
+   "bead": "N32a-06",
+   "kinds": [
+    "request",
+    "broken",
+    "registry",
+    "convention"
+   ],
+   "what": "Request applied: depends on N34p4-02 instead of N34-01 (no cycle). Step 1 now adds the `mcp` row (root surface/frob-mcp, own lockfile, kind annex) to N34p4-02's workspace table and removes frob-mcp from the core row, without which check-layers and check-deps would not see the separate workspace; a branch toolchain file is entered in the stack lock and admitted by check-stack's exceptions (N33c-08 condition 2), not left as a stack.toolchain-file finding. The no-daemon refusal is named (601). The parity criterion, which compared every verb's envelope across surfaces (impossible for executed run verbs: one key replays, two keys differ in job id), now follows N32a-11's item 5: read verbs and estimable run verbs in estimate-only mode plus a misspelt-parameter refusal, after example-identity substitution, masking cost.wall_ms. Test workspace_row_mcp added; the e2e header and a keyed kill-mid-run step added."
+  },
+  {
+   "bead": "BD-297",
+   "kinds": [
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "The per-stratum calibration record was said to be shown by session.show, whose row has no such output, and the dashboard's Queue pane (plan §32.14) reads job.list: the bead now serves the record as a `calibration` block on every job.list page (stratum, n, label, prequential scored/covered, rolling 50-job coverage, coverage_low, over_twice), extending that row. The e2e script read the record from session.show (it would find nothing); it now reads job.list and checks it against its own computed coverage. Its jobs now carry --no-memo: sim.run and study.submit set memo = true, so a repeated workload served from the memo graph would cost almost nothing and enter the stratum as false misses. Keys use e2e_key, the lane maps to the sim.run tiers batch-cpu/gpu-cuda/gpu-metal, the session is granted and opened (723 otherwise), and timeout_s=3600 is set for a workload of 220+ jobs per stratum. Tests ka_759_index_n19_alpha_1_20 (the mechanism's claim of KA-759) and the po_tether_04_ prefix on the coverage test bind the KA row and PO-TETHER-04; N29a-23 moved from related to deps since the bead extends its verb; the gate is recorded by a session that did not implement the work. Arithmetic rechecked: [40.66, 245.96], [38.67, 258.57], k = 18/19/180/190, binomial tails 0.0094 and 1.75e-5, shift to 0.42 crossing 34/50 after about 23 jobs."
+  },
+  {
+   "bead": "BD-298",
+   "kinds": [
+    "contradiction",
+    "deadlock",
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "It said it records the KILL-MCPTASKS decision, which is N32a-29's (convention 10); it now cites that ADR, and the e2e header and summary no longer name a gate the script does not measure. Its isolation criterion included the Tasks adapter (N32a-30, not a dependency; its own test other_principal_sees_unknown covers it) and its INV-TETHER-13 criterion used the hostile corpus, which is BD-304's and BD-304 depends on this bead (a dependency cycle if followed); the check now runs on the script's own planted-string imports, and the 200-string sweep stays BD-304's. The `operate` row quoted the plan's 'job, artifact, device and session verbs' instead of NJL-05's assignment (job_list, job_status, job_find and the four artifact tools). M-wait and M-cancel now use no_memo on memo = true tools (a memo-served result returns at once and measures no wait), restrict M-wait to implemented tools (declared M4/M5 tools answer 724 at once), compare M-cancel against an uncancelled run under its own key, and cancel measured jobs. The script gains timeout_s=3600 (about fifty run tools at 0, 5 and 30 s is some 29 minutes per transport), e2e_session grants and opens for its four sessions (723 otherwise), and e2e_key keys with label-legal characters (tool names contain underscores, which e2e_key refuses). From N32a-29: the gate record states which KILL-MCPTASKS branch was in force."
+  },
+  {
+   "bead": "BD-373",
+   "kinds": [
+    "contradiction",
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "It recorded GATE-TETHER-13's first arm with record_gate, 'marked partial', citing 'the hash of the first-arm record': the recorder has no partial mark, takes frob.gauntlet.receipt/1 receipts, and the gate has one recorder, N32a-32, which records it whole (convention 9). The bead now commits the first-arm record (canonical JSON, BLAKE3) for N32a-32 to cite and runs no record_gate. Its script had no STD-E2E header: it gains one with plants for its six negative controls and timeout_s=21600 (ten tasks at a registered 30-minute ceiling, DESIGN, plus N32b-16's script and the reference solution), which is above the one-hour limit and so runs only with --approved-envelope; principals are granted and sessions opened per task through e2e_session (723 otherwise), and the reference solution keys its calls with e2e_key. As a mechanism bead of KA-760 and KA-762 (N32-KA) it gains ka_760_alpha_schedule and the ka_762_ prefix on its bounds test. Arithmetic rechecked: Clopper-Pearson bounds 0.0183/0.0275/0.0357/0.0432/0.0504 at 0.025 and 0.0425/0.0505 at 0.05/6; set counts 179 + 233 = 412, 233 - 61 = 172."
+  },
+  {
+   "bead": "N32a-23",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The rollback demonstration and the batch-cpu co-tenancy check compare the per-job mode's digests with the shared mode's for the same requests under distinct keys, but sim.run sets memo = true, so the second mode would be served the first mode's stored result and the digests would agree whatever the dispatcher did: both now run with --no-memo and assert memo disposition NoMemo. Keys are written with e2e_key, and the session is granted and opened through e2e_session (723 otherwise). Decision table, ceiling (8,192/192 = 42.67) and slot shares rechecked."
+  },
+  {
+   "bead": "N32a-24",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The fallback demonstration's mix and the 20-cycle park-and-resume check compare digests with runs of the same requests; they now run with --no-memo (memo-served results would make the digest campaign pass whatever the fallback did), keys are written with e2e_key, and sessions are granted and opened through e2e_session. The M/G/1 numbers were recomputed and hold (E[S] = 189, E[S^2] = 324,090; FCFS 857/2,001/3,430/7,716 s; priority 439/621/713/806 s; preempt-resume 0.12/0.17/0.20/0.22 s; slowdown 2.4/3.4/4.0/4.5%)."
+  },
+  {
+   "bead": "N32a-28",
+   "kinds": [
+    "deadlock",
+    "broken",
+    "convention"
+   ],
+   "what": "Rows 5 (budget stop, FROB-REF-702) and 11-12 (preempt and resume) need N32a-15 and BD-296, which were not dependencies (convention 7); both added (no cycle). The script's header lacked frobd although its jobs are the daemon's and row 14 restarts it. Keys are written with e2e_key (rows 16 and 17 with --again), the session goes through e2e_session (723 otherwise), and run calls carry no_memo where the row has memo = true, since rows sharing a fixture would otherwise be served an earlier row's result and skip the states under test."
+  },
+  {
+   "bead": "N32a-29",
+   "kinds": [
+    "deadlock",
+    "broken",
+    "convention"
+   ],
+   "what": "Its criterion that the GATE-TETHER-12 record state the branch in force waited on BD-298, which depends on this bead (convention 7); it moved to BD-298. The smoke's long job runs on frobd (header needs gained frobd), under an e2e_key key, in a session from e2e_session (723 otherwise)."
+  },
+  {
+   "bead": "N32a-30",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The 20-row script runs the same rows over two transports with distinct keys but no memo bypass, so the second transport's jobs would be served the first's results from the memo graph and end at once, changing every state trace: calls now carry no_memo where the row has memo = true. Keys use e2e_key (rows 16 and 17 with --again) and two principals (owner and isolation observer) are granted and opened through e2e_session (723 otherwise)."
+  },
+  {
+   "bead": "N32b-07",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The Budgets pane's qualification block read alpha_i and the sum spent from eval.scorecard, whose row carries no level ledger; it now reads eval.ledger (alpha_total, index, alpha_i, alpha_spent; N24b-15, already a dependency), so its cells have a resolving source. The budget columns gain `delegated`, the fifth field of session.show's budget table, without which the criterion's identity cap = spent + reserved + left + delegated could not be shown. The gate view's statuses gain `blocked` (the register's union, N40-01). alpha schedule rechecked: 0.025, 0.0083333, 0.0041667, 0.0025, sum 0.04; 0.05/56 is i = 7."
+  },
+  {
+   "bead": "N32b-08",
+   "kinds": [
+    "registry",
+    "plan"
+   ],
+   "what": "The Queue pane read the fallback state from a `dispatch_mode` field that no verb has, and the calibration header had no source; they now come from job.list's `dispatcher` block (`mode`, `preemption`) and BD-297's `calibration` block (n, label, scored, covered), and the per-job cells (size class, wait, estimate, actual, preemptions) are stated as job.list's, per plan §32.14. The Devices pane named spark.devices and job.list but no field held the slot occupancy, environments, arena, kernel cache or temperature; the sources are now stated by field (spark.devices per device; placement receipts frob.placement/1; the reserve and cap from the dispatcher block), with requests to the registry owners. Slot arithmetic rechecked (5,466 free; 81 or 82 slots per cell at W = 100)."
+  },
+  {
+   "bead": "N32b-11",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The registration said the stills verb accepts N32b-12's `film` and `clearance`; telemetry.stills accepts all five of N32b-12's overlays from M3 (film, clearance, ghost, world-diff, reality-band, N24ap2-60), so the id lint now covers them. Arithmetic rechecked (atan 0.8 = 38.66 deg; 18.44 N, 6.71 N, 0.455; 9 W; 3,400/4,096 = 0.830078125; age 40)."
+  },
+  {
+   "bead": "N32b-13",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request applied: depends on N34p4-02 (the workspace table, layout and check-deps roots, including viewer/) instead of N34-01, which is now the apps workspace; no cycle. Its script header lacked seed, needs and plants (STD-E2E); added, with the grown-page control listed among the negative controls it already ran. Payload arithmetic rechecked: (8,388,608 - 600,000) x 3/4 = 5,841,456."
+  },
+  {
+   "bead": "N32b-17",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Its script header lacked gates (its summary names GATE-TETHER-02), seed, needs and plants (STD-E2E); added, one plant per negative control. Verb options checked against VERBS-operator; token arithmetic and the 243-verb count rechecked."
+  },
+  {
+   "bead": "N32b-18",
+   "kinds": [
+    "deadlock",
+    "convention"
+   ],
+   "what": "Its script and criterion kept steps logged 'not yet due' until later beads landed: served-* needs N32a-25 and N32a-26, which depend on this bead, and source-scene-* needs scene.compile (BD-163, M2), not a dependency of this M1 bead; its known answer also waited on BD-304's untrusted mark (convention 7, and convention 13's no step that logs 'not run'). These checks now belong to N32a-25, N32a-26 and BD-304, which already carry them. The design import of the poisoned URDF now carries an e2e_key key (design.import is mutate)."
+  },
+  {
+   "bead": "N32b-40",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Its script header lacked seed, needs and plants (STD-E2E); added, one plant per negative control. Frame offset (75 x 13 + 3) x 48 = 46,944 and 93,600 bytes (124,800 encoded) rechecked."
+  },
+  {
+   "bead": "N32b-44",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request applied: depends on N34p4-02 instead of N34-01 (no cycle); the rule it cites, that Node and browser tooling stay outside every Cargo workspace, is the workspace table's. Its script had no STD-E2E header; added (seed, needs, plants for its three negative controls, no gate)."
+  },
+  {
+   "bead": "N32bp1-01",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "The noninterference pair ran the same request twice under distinct keys without --no-memo, so the bare run would be served the attached run's stored result and the digest chains would agree whatever the viewer did; the plant polling-advances-noise could never be caught. Both runs now carry --no-memo, asserted NoMemo. The script opened its session with a bare `frob session open --key vl-1` (no principal, no grant; STD-E2E requires e2e_session for every grant and token) whose read-only scopes could not run `frob sim run` (720): it now grants viewer, runner, noquery and brief principals before frobd starts and opens their sessions through e2e_session, so the page holds read scopes only and the refusal steps have the tokens they need. The referee pair the criterion requires was missing from the script and is added; keys use e2e_key; the header gains seed, needs and plants."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N34p4-02",
+   "what": "On the branch where KILL-MCP fires, N32a-06 adds a workspace row `mcp` (root surface/frob-mcp, its own Cargo.lock, kind annex) and removes surface/frob-mcp from the core row; list that conditional row in the workspace table's description so check-layers and check-deps cover it."
+  },
+  {
+   "bead": "N33c-08",
+   "what": "check-stack condition 2 should admit surface/frob-mcp/rust-toolchain.toml while KILL-MCP's decision in force is `fired` (N32a-06), entered in the stack lock with its expected end date, as it admits the worker fallback's."
+  },
+  {
+   "bead": "NJL-01",
+   "what": "PROCESS_OPTIONS should list `no-daemon` (CLI --no-daemon), added by N32a-14 (run in process without frobd, refused with 601 for device verbs)."
+  },
+  {
+   "bead": "BD-022",
+   "what": "The process-option list should include --no-daemon (N32a-14), matching NJL-01's PROCESS_OPTIONS."
+  },
+  {
+   "bead": "BD-299",
+   "what": "It says N39-REF lands at M3; N39-REF is M0 with all its rows. At M3 only §26 (N26-REF) is newly present; N31-REF is M5."
+  },
+  {
+   "bead": "BD-296",
+   "what": "Its device lanes submit `frob sim run ... --tier <lane>` with lanes cuda/metal, which are not sim.run tier values (802); use gpu-cuda and gpu-metal (the lane names the tier). Its keys mix-<session>-<i>, bat-u-<i>, bat-p-<i> should be written with e2e_key (STD-E2E: every run or mutate key in a script is), so a label issued twice in one run is a harness error instead of a silent replay. Its comparison battery runs with and without the random-preemption hook under distinct keys, and the device lanes compare digests across runs of the same requests: sim.run sets memo = true, so the second pass would be served the first pass's results from the memo graph and every digest would agree whatever preemption did; both passes need --no-memo (NJL-01 variation 14), asserted NoMemo."
+  },
+  {
+   "bead": "N32a-26",
+   "what": "Its script and property test seed a store with 'the hostile corpus' (at least 200 strings). The corpus file crates/frob-conformance/corpora/injection/strings.toml is BD-304's, and BD-304 depends on BD-298, which depends on this bead, so the corpus cannot exist when this bead is built. Either the bead states its own generated strings (as its property test can), or the corpus file moves to a bead before both (N37-04, M1, the Untrusted type, is a dependency of BD-304)."
+  },
+  {
+   "bead": "BD-304",
+   "what": "The hostile corpus it owns is used by N32a-26 (prompts), which sits before it in the graph (BD-304 -> BD-298 -> N32a-26); BD-298 no longer uses it. Consider delivering the corpus file from N37-04 (M1) so that earlier surface beads can test INV-TETHER-13 on the same strings."
+  },
+  {
+   "bead": "N32a-32",
+   "what": "It records GATE-TETHER-13 with `--receipt <hash of the decision record>`; the recorder (N38b-19) takes frob.gauntlet.receipt/1 receipts named by BLAKE3, not a decision record. It should cite the arms' receipts. BD-373 now commits a first-arm record (canonical JSON, BLAKE3) and runs no record_gate, leaving N32a-32 the gate's one recorder; 'BD-373's first-arm row' should read 'BD-373's first-arm record'. If a gate measured by fresh-agent sessions has no tier run to write a receipt, N38b-19 needs to say how such a gate's receipt is produced."
+  },
+  {
+   "bead": "VERBS-job",
+   "what": "job.list should carry what the dashboard's Queue and Devices panes read from it (plan §32.14 names job.list as their source): per job of the caller's namespace the size class, the wait (daemon instants of admission and start), the estimate (point, lo, hi) against the actual cost, and the preemption count; and in the `dispatcher` block the modes in force: `mode` (`model`, or `fallback` with its trigger `over-estimates` or `resume-digest`, N32a-21's guard table), `dispatch` per device family (`shared` or `per-job`, KILL-SLOT and the runtime digest fallback) and `preemption` (`on` or `off`, KILL-PREEMPT). N32b-08 and N32a-24 read these fields."
+  },
+  {
+   "bead": "N32a-21",
+   "what": "The dispatcher's fallback state (entered at 10 of the last 50 jobs over twice their estimate, left at 5; or on a resume digest difference) is shown by the dashboard and named by N32a-24's fired branch, but no verb exposes it. Publish it in job.list's `dispatcher` block as `mode` (`model` | `fallback`, with the trigger) so ADR-TETHER-10 holds."
+  },
+  {
+   "bead": "VERBS-spark",
+   "what": "spark.devices should report what the dashboard's Devices pane reads from it (plan §32.14, ADR-TETHER-10): per device its persistent environments (shape class, capacity B, the occupancy as runs of slots {first_slot, count, job, agent}, the reserve's slot range, jobs held of the cap), the device arena's bytes used and total, the binary kernel cache's entries and bytes, and on the Mac the temperature with its unit. The environments and occupancy are BD-295's (persistent environments and slot dispatch), the rest N21c-04's row; N32b-08 states these fields."
+  },
+  {
+   "bead": "BD-295",
+   "what": "Its environments and slot occupancy are shown by the dashboard (N32b-08) and must be readable through a verb: extend spark.devices (or name the verb that carries them) with per-device environments, capacity, the occupancy as runs of slots with job and agent, the reserve range and jobs of the cap."
+  },
+  {
+   "bead": "N32b-14",
+   "what": "Its noninterference pairs (labels vo-<scene>-<tier>-bare and -viewed) run the same request twice from the same seed; sim.run sets memo = true, so both runs need --no-memo (asserted NoMemo), or the second is served the first's result and the digest chains agree whatever the viewer did. N32bp1-01 now grants `viewer` with read scopes only (the page's token) and `runner` with sim:run for the runs; the session N32b-14 opens as `vo --principal viewer` cannot run sim.run, so its runs should go through a runner session."
+  },
+  {
+   "bead": "N32b-09",
+   "what": "Its evidence-* steps re-issue each pane's source verb; the Budgets pane's qualification block now reads eval.ledger (N32b-07), and the Queue pane reads job.list's `calibration` block (BD-297) and its `dispatcher` fields `mode` and `preemption` (N32b-08)."
+  },
+  {
+   "bead": "BD-313",
+   "what": "N32-KA lists BD-313 as a mechanism bead of KA-760 and KA-762 and says each mechanism bead adds its own ka_<nnn>_ test when it lands; BD-313 has none. BD-373 now has ka_760_alpha_schedule and ka_762_qualification_truth."
+  },
+  {
+   "bead": "VERBS-job",
+   "what": "job.list: from BD-297 (M3) every page carries a block `calibration`, one row per (stratum, quantity): stratum key, n, label (calibrated|uncalibrated), prequential scored and covered with their ratio, rolling coverage of the last 50 scored jobs, coverage_low, over_twice (of the last 50 finished jobs, those over twice the point estimate). Add it to Outputs and add BD-297 under Extended by; the dashboard's Queue pane (N32b-08) reads it."
+  }
+ ],
+ "unchanged": 3,
+ "notes": "Unchanged (3): N32b-06, N32b-12, N32b-42. Open point for the owner (no single bead to send it to): the overlay channel names N32b-11 and N32b-12 require (contact.fn, energy.residual and the rest) appear in no channel registry; N24ax-03 names registries/channels.toml as the registry that defines channels, but no bead owns that file, so the overlays' `requires` lists and N24a-41's packet channel table have nothing to be checked against. Audit notes applied after checking: N32b-13 and N32b-44 depend on N34p4-02 instead of N34-01 (N34p4-02 owns the workspace table, layout and check-deps; no cycle). graph_check cycles: 0 after all edits; every edited file parses (front matter, seven sections, sorted deps that exist)."
+}

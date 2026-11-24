@@ -44,10 +44,12 @@ gripper driven through a linkage or tendon; a pan-tilt head with cameras; total 
 asset-stretch3-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
 the design's `term` section). Mapping rules exercised: joints coupled in the source by `tendon`
 or `equality joint` elements (the telescoping segments; the gripper fingers) become one actuator driving
-several joints through a coupling matrix (a transmission), never independent actuators; cameras become
-sensors with frame, rate and clock, the rate `assumed` if the source gives none. Expected loss-report entries
-(HYPOTHESIS until read): tendon path geometry beyond its coupling ratio; visual meshes; fitted collision
-primitives; unmapped solver parameters.
+several joints through a coupling matrix (a transmission), never independent actuators (BD-066 maps a fixed
+`tendon` and a linear `equality joint` to a coupling row; a spatial tendon is unsupported and listed). Cameras
+and `sensor` elements are not mapped: BD-066 maps no `camera` element, and a sensor needs a rate and a clock
+the source does not state, so each is listed with the card that would fit. Expected loss-report entries
+(HYPOTHESIS until read): the head cameras and any sensors; tendon path geometry beyond its coupling ratio;
+visual meshes; fitted collision primitives; unmapped solver parameters.
 
 **Base-only sub-design.** `assets/robots/stretch3/base.fbot`: the import with the lift and everything above it
 replaced by one body carrying their summed mass properties at the stowed pose (a typed edit recorded in the
@@ -57,7 +59,10 @@ manifest). `diff-drive@stretch3` is compared with its mass.
 arm's extension equals the sum of segment travels at the coupling ratios, exactly. (2) Wheel geometry: track
 width and wheel radius extracted and stored, since the wheeled known answers (growth vector, chord step,
 threshold oracle) are evaluated on them. (3) Static tip-over with the arm fully extended at mid-lift and the
-rated payload, reported as a margin. (4) Mass properties and limits as for every robot.
+rated payload (the figure the manifest records with its source, `assumed` if none is cited), reported as a
+margin: the distance from the ground projection of the centre of mass to the nearest edge of the support
+polygon of the two wheel contacts and the passive support's contact, positive inside. (4) Mass properties and
+limits as for every robot.
 
 **Use.** Import parity and dynamics parity rows; mass rows of `diff-drive@stretch3` (M1) and of
 `mobile-manipulator@iiwa7-stretch3` (M3, the base's share); wheeled baseline scorecards.
@@ -78,6 +83,8 @@ rated payload, reported as a margin. (4) Mass properties and limits as for every
 - `robot_stretch3_telescope_single_coordinate`, `robot_stretch3_gripper_coupled`.
 - `robot_stretch3_base_subdesign_conserves_mass`.
 - `robot_stretch3_wheel_geometry_extracted`.
+- `robot_stretch3_tipover_margin_reported`: the margin of validation step 3 is computed, stored and logged; on
+  a `synthetic` triangle of supports with the centre of mass placed outside it, the margin is negative.
 - `robot_stretch3_mass_properties_consistent`, `robot_stretch3_joint_limits_valid`.
 - `robot_stretch3_loss_report_golden`, `robot_stretch3_design_id_pinned`.
 

@@ -6,7 +6,7 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "reflex", "cortex", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["NAB-32"]
+deps: ["N00-11", "N00-12", "NAB-12", "NAB-13", "NAB-32"]
 needs: []
 related: ["NAB-37", "NAB-47"]
 gates: []
@@ -39,7 +39,13 @@ harness and lint (NAB-32); the surviving mechanisms (their carriers).
 
 ## Technical approach
 
-**Transcription rule.** As in NAB-33.
+**Transcription rule.** As in NAB-33 (every hypothesis a heading here names is `NARROWED`; rows H-01, H-02 and
+H-05 are N00-11's, H-20, H-21 and H-24 N00-12's; KI-32 is joined to H-20 by NAB-40's index). FACT calculations name source-register records: the
+published sampling setting of KI-26, the figures of KI-27 and the orbit solve times of KI-30 are NAB-13's, the
+410 s training run of KI-30 is NAB-12's. Revival fields by NAB-33's rule:
+KI-26 `gate` (GATE-REFLEX-06); KI-27 `primary-source` (GATE-CORTEX-11); KI-28 `gate` (GATE-CORTEX-13); KI-29
+`gate` (GATE-CORTEX-17); KI-30 `gate` (GATE-GAIT-03); KI-31 `primary-source` (none: a sibling-solver result);
+KI-32 `none`.
 
 **Machine-checked arithmetic of this group.**
 
@@ -130,7 +136,7 @@ projection for the filter.
   control for the edit class. Transfer from a class prior costs about 2 to 25% of such a run; the one published
   parent-to-child figure is about 50%; no source measures a small typed parameter edit. Resets follow a measured
   regression of an audit twin, with a depth schedule as fallback (§23.12; GATE-CORTEX-13; KILL-INHERIT; BET-16).
-- *Revive only if.* Per edit class, GATE-CORTEX-13 against an early-stopped from-scratch control. Topology edits are revived only by a measured cost below from-scratch.
+- *Revive only if.* Per edit class, GATE-CORTEX-13 against an early-stopped from-scratch control. Topology edits are revived only by a measured cost below from-scratch (a cost ratio below 1).
 - *Carried by.* BD-322, N23a-30.
 
 **KI-29. A geometric-algebra tree policy as a source of sample efficiency** (H-24, NARROWED)
@@ -142,7 +148,7 @@ projection for the filter.
 - *Survives.* Invariance to heading and to description conventions through canonical inputs and augmentation
   (C-21; §23.11). The tree policy as an [M] three-arm experiment with the plain transformer as control (§23.14;
   KILL-GATREE).
-- *Revive only if.* The three-arm experiment at equal compute (GATE-CORTEX-17).
+- *Revive only if.* The three-arm experiment at equal compute (GATE-CORTEX-17): an arm with multivector features at least 1.3 times faster than the plain arm to the return threshold.
 - *Carried by.* BD-439, N23b-02.
 
 **KI-30. Gait continuation at one percent of a training run** (H-05, NARROWED)
@@ -153,7 +159,7 @@ projection for the filter.
   a nominal orbit on regular ground, not a controller the referee accepts.
 - *Survives.* A gait-orbit analysis with continuation in design parameters, labeled screening (§22.9;
   GATE-GAIT-03; KILL-GAIT; BET-26).
-- *Revive only if.* The measured cost and rank value of orbits at GATE-GAIT-03.
+- *Revive only if.* The measured cost and rank value of orbits at GATE-GAIT-03: continuation succeeding on at least 50% of 10% perturbations, a median solve of at most 10 CPU-minutes, and Kendall τ of at least 0.5 against specialists.
 - *Carried by.* BD-335, N22c-17.
 
 **KI-31. Proof-guided control for full-order legged robots** (H-20, NARROWED)
@@ -187,12 +193,18 @@ projection for the filter.
       keywords.
 - [ ] The harness recomputes the thirteen calculation rows, and a test solves the small quadratic program of
       KI-32 exactly and obtains (1, 0.5).
-- [ ] `FROB-REF-817` exists in the refusal registry with the stated meaning.
-- [ ] The three counterexamples of KI-32 are registered as negative controls of the shield.
+- [ ] `FROB-REF-817` exists in the refusal registry with the stated meaning, or, while the M1 exit record does
+      not exist, is reported under NAB-32's recorded `skip` (its row is Reflex's, entered at M1).
+- [ ] The three counterexamples of KI-32 are in the fixture this bead supplies
+      (`tests/fixtures/killed/ki32_shield_cases.toml`: the three inputs and the expected refusal or optimum),
+      and the record names among its carriers the beads that run them as negative controls of the shield
+      (BD-338, N10c-02; M4).
 - [ ] The revive lint fails a planted gate threshold "a universal policy reaches 70% of specialist return on
       any unseen design with no adaptation" with `ki.strong-form-as-goal` naming KI-27, and passes the
       family-policy gate, which is per morphology class.
-- [ ] No record, contract or report template of the carriers uses the word "deployable".
+- (Not this bead's close condition: that no contract, help text or report template calls a safety filter
+  "deployable", as KI-31's *survives* line requires, is the wording lint of the hypothesis register
+  (`hyp.banned-wording`), with "deployable" among the banned patterns of row H-20 (N00-12).)
 
 ## Test plan
 
@@ -211,11 +223,16 @@ projection for the filter.
   (1, 0.5) by enumeration of active sets, with its KKT multipliers non-negative.
 - `ki32_clairvoyant`: for d ∈ {−1, +1} the set of u with u = d is non-empty for each d and empty for both.
 - `records_complete_and_verbatim` against `tests/fixtures/killed/g4.md`.
+- `ki27_strong_form_as_goal`: the planted gate threshold of the criteria fails `ki.strong-form-as-goal` through
+  H-02's pattern "universal policy"; the family-policy gate's wording (per morphology class) passes.
+- `fact_sources_resolve`: the FACT calculations of KI-27 and KI-28 name `sources` ids present in
+  `registries/sources.toml`, whose readings report `reread_before_gate = true`.
+- `revival_fields`: `revive_evidence` and `revive_gates` per record as listed.
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh` (NAB-50) recomputes the calculations, solves the KI-32 program, and runs the
-planted revive cases. Logged per STD-E2E.
+`scripts/e2e/decision_records.sh` (NAB-50) runs this module with the rest of `killed_ideas` and recomputes the
+calculations. Logged per STD-E2E.
 
 ### Known answers and negative controls
 
@@ -223,8 +240,8 @@ Known answers: the table. Negative controls: a shield implementation that return
 for the KI-32 case (the carrier's test must fail it; this bead supplies the fixture); a record of KI-26 with
 298 clean episodes; a proposal to "use the sampling controller's pass rate as the acceptance result for the
 trained policy" (must match KI-26; the run-time refusal is `FROB-REF-817`). The published ratios of KI-27 and
-KI-28 are FACTs to re-read: a test asserts that their source ids resolve and that the readings are flagged
-until re-read.
+KI-28 are FACTs to re-read: `fact_sources_resolve` asserts that their source ids resolve and that the readings
+are flagged until re-read.
 
 ## Considerations
 

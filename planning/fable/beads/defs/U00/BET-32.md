@@ -29,9 +29,12 @@ bound.
 
 ## Scope
 
-In: pre-registration, the M3 reading, verdict and decision record. Out, with the beads that have them: the
-certification lane `nemesis.bound` with the defensive mixture, GATE-NEMESIS-04 and the measurements of clauses
-(a) to (d) (BD-276, with its end-to-end script N26a-30); the exploration lane (multilevel splitting) and
+In: pre-registration; the measurement of clauses (b) and (c), which no gate records (this bead's script runs the
+crude and the bounded-weight arm on a 10⁻⁴ trap); the M3 reading, verdict and decision record. Out, with the
+beads that have them: the certification lane `nemesis.bound` with the defensive mixture and GATE-NEMESIS-04,
+whose record supplies clause (a) (row 1: coverage over 10⁴ synthetic studies) and clause (d) (row 2: the
+mixture's confidence sequence covers a two-sided tail under a proposal shifted to one side only, so the mode
+outside the proposal is not reported absent) (BD-276, with its end-to-end script N26a-30); the exploration lane (multilevel splitting) and
 GATE-NEMESIS-05 (BD-277); the decision KILL-RARE, its ADR and its fallback (N26a-32), which this bead reads and
 cites and never re-decides.
 
@@ -83,9 +86,22 @@ cites and never re-decides.
 `bet32_weight_above_one_over_epsilon_rejected`; `bet32_proposal_changed_after_draws_rejected`.
 
 ### End-to-end script and logging
-`scripts/e2e/bet_32_decide.sh` runs `frob nemesis bound` on the Gaussian-tail and random-walk fixtures against a
-target, checks the weight bound and the refusal of non-nominal episodes, recomputes coverage and the episode
-ratio from the ledger, and the verdict. Logged per STD-E2E: fixture, planted rate, proposal digest and its
+`scripts/e2e/bet_32_decide.sh` reads clauses (a) and (d) and the refusal row from the GATE-NEMESIS-04 record
+(`cargo run -p frob-conformance --example registry_report -- gates --chapter 26 --milestone M3 --json`) and
+measures clauses (b) and (c) on a T4 trap of the planted registry (N26a-04: probability exactly 10⁻⁴ on the
+reference quadruped's task) against the registered target p⋆ below 10⁻⁴, in the registered number of paired
+repetitions. The crude arm is `frob nemesis bound <reference quadruped> --task <T4 task> --tier batch-cpu
+--target <p⋆> --mode certify --finalist --key b32-crude-<i> --json` (nominal sampling only; it ends `refuted` when
+its lower bound passes p⋆; its budget is registered large enough that N26a-22's `choose_design` picks
+`sequential`, so that it stops at refutation); the bounded-weight arm is the same call with `--mode refute
+--shift <the registered shift> --epsilon 1/10 --key b32-bw-<i>`. Every call carries `--tier`, which has no
+default, `--finalist`, without which N26a-26's finalists-only rule refuses a fixture candidate, and its own key,
+so that the two arms are two runs and not one stored receipt. The script asserts every recorded weight at most
+1/ε = 10, computes the ratio of the arms' mean episodes `n` to `refuted` (clause (c), against 3) and the
+bounded-weight runs' effective sample size as a share of n from their `weights` blocks (clause (b), against
+30%), reads the verdict of BET-32 from the bet register's report (`cargo run -p frob-conformance --example bets --
+status --json`, example `bets` of N00-28, the one verdict rule) and checks `docs/adr/bet-32-m3.md` against it.
+Logged per STD-E2E: fixture, planted rate, proposal digest and its
 timestamp against the first confirming draw, maximum weight against 1/ε, effective sample size, bounds,
 episodes per arm; `summary` naming GATE-NEMESIS-04, GATE-NEMESIS-05 and KILL-RARE.
 

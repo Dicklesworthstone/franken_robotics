@@ -1,0 +1,312 @@
+{
+ "round": 4,
+ "slice": "S-10",
+ "reviewed": 29,
+ "changed": [
+  {
+   "bead": "BD-098",
+   "kinds": [
+    "convention",
+    "broken",
+    "deadlock"
+   ],
+   "what": "Interrupted edit finished. The earlier reviewer had moved the acceptance line's 'measured digests recorded' into the G5 receipt of KA-477, but that row runs on the fixture checkpoint-three, whose force-torque sensor (N20a-16) builds on this bead, so the bead would have waited on what waits on it (convention 7). The line now rests on this bead's three restore tests on its test-card fixture, with the digests in the unit-test evidence stream; the G5 receipt is N20a-44's stage 12a through this bead's API, and N20a-44 records GATE-SENS-05's M1 part (N20b-21), so no second gate record can be written here. `cargo test -p frob-sense queue checkpoint` gave cargo two name filters, which it rejects; it selects the two test targets. N20-REF moved from related to deps: the bead raises FROB-REF-441 with the registry row's message and repairs, and an unregistered code is a load-time error if this bead lands first (no cycle; M1)."
+  },
+  {
+   "bead": "N20a-01",
+   "kinds": [
+    "registry",
+    "plan",
+    "broken"
+   ],
+   "what": "The 442 repair was a single 'use the observation service'; N20-REF orders two repairs and its refusal_sens_44x row asserts both in order, so the acceptance line and ref_442_presentation_source now ask for both. CONTRACT.md listed refusals '440 to 447', taking in the control chapter's 444; it lists 440 to 443 and 445 to 447. The intra-step policy is hashed into ObservationServiceId (plan section 20.4.4) but the acceptance line and service_id_covers_inputs listed six inputs without it; it is the seventh. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense service`), which runs only tests whose names contain 'service' and passes while skipping the rest of tests/service.rs; it is now `--test service`. Added on resume: dep N20-REF (M1, no cycle), because the acceptance now cites the registry row and the code must be registered before the bead that raises it."
+  },
+  {
+   "bead": "N20a-02",
+   "kinds": [
+    "deadlock",
+    "plan",
+    "broken"
+   ],
+   "what": "The acceptance line 'a policy schema without a declared mask presentation is refused at registration' could not be met here: the schema type and its freeze are N20a-03's, which depends on this bead, and no test checked it. This bead now delivers MaskPresentation and the maskable-channel rule with the test mask_presentation_rule; the refusal moved to N20a-03. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense mask`), which runs only tests whose names contain 'mask' and passes while skipping the rest of tests/mask.rs; it is now `--test mask`. Read whole on resume: complete and coherent with N20a-03."
+  },
+  {
+   "bead": "N20a-03",
+   "kinds": [
+    "registry",
+    "deadlock",
+    "broken"
+   ],
+   "what": "The 442 repair was only 'move the channel to the training-only schema'; N20-REF's row orders two, and N20b-11 step 4 asserts both; the freeze, the acceptance line and actor_schema_refuses_truth carry both in order. The freeze now refuses a maskable channel without a mask presentation (acceptance line and test added), because N20a-02 could not. The one-home test searched Truth*, Measured*, PolicyObs* and ActorSchema and would miss MeasRef, BeliefRef, ObsRef and CriticSchema; it names the six real types. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense namespace`), which runs only tests whose names contain 'namespace' and passes while skipping the rest of tests/namespace.rs; it is now `--test namespace`. Finished on resume: the mask-presentation refusal was a typed error with no code a caller would see, so a verb's handler would have had to invent one; it is now stated as the surface's schema failure FROB-REF-802, exit 3, pointer the channel (DESIGN; on every verb's list). Dep N20-REF added (M1, no cycle)."
+  },
+  {
+   "bead": "N20a-04",
+   "kinds": [
+    "convention",
+    "contradiction",
+    "broken"
+   ],
+   "what": "DrawOrderRng was 'feature-gated' with no feature named, while BD-215 and N20-CX name the same plant draw-order-noise; an implementer would have built a second plant, possibly under a default or umbrella feature. It is now the frob-sense mutation feature draw-order-noise (implies conformance, never default, never in the umbrella) with its cargo lines. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense noise`), which runs only tests whose names contain 'noise' and passes while skipping the rest of tests/noise.rs; it is now `--test noise`. Read whole on resume; numbers recomputed; left as the earlier reviewer had it."
+  },
+  {
+   "bead": "N20a-05",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense instants`), which runs only tests whose names contain 'instants' and passes while skipping the rest of tests/instants.rs; it is now `--test instants`. None of the eight named tests contains 'instants', so the old line ran nothing and passed. Everything else was checked (the seven-instant hand values, the 50 ppm case, the stamp formula) and is right."
+  },
+  {
+   "bead": "N20a-06",
+   "kinds": [
+    "convention",
+    "deadlock",
+    "broken"
+   ],
+   "what": "The window mutants were planted 'under the controls feature', a name BD-025 forbids; they are frob-sense mutation features named by their control records (window-closed-closed for CX-201, window-open-open), with cargo lines and the lint's allow-list. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense boundary`), which runs only tests whose names contain 'boundary' and passes while skipping the rest of tests/boundary.rs; it is now `--test boundary`. Interrupted edit finished: the earlier reviewer moved 'on batch-cpu' out of the M1 acceptance line but left 'the stage order is recorded in the step plan's signature', and no step plan with sensing kernels exists at M1 (N16a-03's descriptor has no stage field; the launch record frob.stepplan/1 is N21ap1-01's, M2). The line now asks at M1 for what the referee can show (stage_order_is_fixed and the swapped-stage build failing the arrival test) and gives the signature check to BD-189. Added: dep N20a-04 (the reset redraws phases from the keyed phase stream, which this bead did not reach; M1, no cycle) with the key named in the reset rule; and a BoundaryTrace probe under the crate's conformance feature, which N20ap1-51 needs to read the stage order on the real referee."
+  },
+  {
+   "bead": "N20a-07",
+   "kinds": [
+    "plan",
+    "broken",
+    "registry",
+    "convention"
+   ],
+   "what": "The acceptance line says each clock's policy is part of the model identity, but no test checked it; policy_in_model_identity was added. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense intra_step`), which runs only tests whose names contain 'intra_step' and passes while skipping the rest of tests/intra_step.rs; it is now `--test intra_step`. Finished on resume: the added test asserted 'the model identity in the evidence block', which a frob-sense integration test has no envelope to read; it now asserts ObservationServiceId, the field through which the policy enters the model identity. Added: the linear-blend mutant named no plant, although N20-CX registers CX-202's control as pose-blend-across-impact with this bead as its first catching bead; a mutant under another name or as a test-only function would leave the registered control unbuildable and GATE-SENS-06 without its control. It is that frob-sense mutation feature, with its cargo line (the same correction the other CX-named plants of the slice received)."
+  },
+  {
+   "bead": "N20a-08",
+   "kinds": [
+    "contradiction",
+    "plan",
+    "broken"
+   ],
+   "what": "never_before_latency drew 10^5 packets where the acceptance line requires 10^6 per law; it runs 10^6 under each of fixed, uniform and table. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense link`), which runs only tests whose names contain 'link' and passes while skipping the rest of tests/link.rs; it is now `--test link`. Added on resume: the acceptance line on loss and duplication frequencies (99.9% binomial interval over 10^6 packets) had no test at all, so a wrong threshold constant would pass; loss_dup_frequencies now checks it (at most 717 from 50,000 at p = 1/20; at most 460 from 20,000 at p = 1/50)."
+  },
+  {
+   "bead": "N20a-13",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "KA-510's control and KA-511's tolerance and control were called 'proposed' and 'to set', but N20-KA carries them as set by this bead; a gate record cannot cite a to-set row. Wording now matches the registry; values unchanged. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense encoder`), which runs only tests whose names contain 'encoder' and passes while skipping the rest of tests/encoder.rs; it is now `--test encoder`. Read whole on resume; all numbers recomputed (2,148; 32 and 5 counts; 0.3835 rad/s; 10.026 rad/s) and right."
+  },
+  {
+   "bead": "N20a-15",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "KA-514's tolerance and control and KA-515's control were 'proposed' and 'to set' while N20-KA carries them as set by this bead; wording matches the registry. `cargo test -p frob-sense readout contact_switch` gave cargo two filters, which it rejects; it names the two test targets. Read whole on resume; the two-lag values (15.17 A, 9.59 A, 0.308 A, 48.9 C) recomputed and right."
+  },
+  {
+   "bead": "N20a-16",
+   "kinds": [
+    "contradiction",
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "The boundary-impulse acceptance line and test hard-coded 'the later window' while N20a-06 makes it the ruled WINDOW_RULE; they name the ruled window, with the selector build. The closed-closed mutant names its plant, N20a-06's window-closed-closed. KA-516's tolerance and controls were 'proposed'; N20-KA carries them as set. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense ft`), which runs only tests whose names contain 'ft' and passes while skipping the rest of tests/ft.rs; it is now `--test ft`. Added on resume: dep BD-082 (M1, no cycle): the reading adds 'every committed event record carrying an impulse', and event records and located impact instants are BD-082's, which this bead did not reach, so its GATE-SENS-04 impulse row could not run on the referee. The oracle test lives in the conformance crate and no stated command ran it; its command is now given."
+  },
+  {
+   "bead": "N20a-20",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "KA-519's controls and KA-520's tolerance and control were 'proposed' and 'to set' while N20-KA carries them as set by this bead. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense range`), which runs only tests whose names contain 'range' and passes while skipping the rest of tests/range.rs; it is now `--test range`. Read whole on resume; 4.10851 m, 2.309 m and the noise check recomputed and right."
+  },
+  {
+   "bead": "N20a-21",
+   "kinds": [
+    "deadlock",
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "KA-483 (glass) is still 'to set' in N20-KA and the bead stated no tolerance, so GATE-SENS-07 could never be recorded (to_set_blocks_gate); the glass acceptance line sets it (1 mm plus the ray kernel's bound; echo count, order and reasons exact) and a request goes to N20-KA. KA-482's tolerance and control were 'proposed'. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense specular`), which runs only tests whose names contain 'specular' and passes while skipping the rest of tests/specular.rs; it is now `--test specular`. Added on resume: a consideration said the optical-card schema 'must carry acceptance_angle ... until it does, this bead's card check is the place the refusal lives' (convention 13). N19a-06, a dependency, carries the field (radians, required on glass) and refuses the card, so the text states that and that the kernel-side check is the same refusal; the fixtures' 5 degrees is 0.0873 rad on the card. All fixture numbers recomputed and right."
+  },
+  {
+   "bead": "N20a-22",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "KA-484's tolerance was 'to set, proposed' while N20-KA carries it as set. The one-way mutant named no plant; it is the frob-sense mutation feature attenuation-one-way, CX-204's control, on the real K-ray-volume stage. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense volume`), which runs only tests whose names contain 'volume' and passes while skipping the rest of tests/volume.rs; it is now `--test volume`. Read whole on resume; exp(-2.8), exp(-3.0), exp(-3.2) and ln 20/4 recomputed and right."
+  },
+  {
+   "bead": "N20a-23",
+   "kinds": [
+    "registry",
+    "plan",
+    "broken"
+   ],
+   "what": "KA-485's controls were 'proposed' while N20-KA carries them as set. The single-coin mutant was an acceptance criterion with no test; single_coin_mutant_caught added. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense pattern`), which runs only tests whose names contain 'pattern' and passes while skipping the rest of tests/pattern.rs; it is now `--test pattern`. Added on resume: step 7 named only `attenuated` and left a diffuse surface whose strength is already below detection_threshold with no reason, so in a dark room it passed the contrast test and was valid, against the diffuse rule of BD-237 and N20a-22's attribution. It is now masked `weak`, with the test weak_before_contrast."
+  },
+  {
+   "bead": "N20a-24",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "The independent-coin mutant named no plant; it is the frob-sense mutation feature dropout-independent-coins, CX-203's control, on the real consumption rule. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense latent`), which runs only tests whose names contain 'latent' and passes while skipping the rest of tests/latent.rs; it is now `--test latent`. Read whole on resume; the majorities and both 99.9% intervals recomputed and right."
+  },
+  {
+   "bead": "BD-237",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "The bead is GATE-SENS-07's one recorder (N20b-21) but gave no harness row or record command; the acceptance line gives both and says N20a-46 writes no record. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense optical_classes`), which runs only tests whose names contain 'optical_classes' and passes while skipping the rest of tests/optical_classes.rs; it is now `--test optical_classes`. Finished on resume: the record line omitted that the recording session is not the implementing one (N38b-19 refuses it otherwise) and said 'one receipt per tier target' without saying that all five rows, KA-482 to KA-486, are in the G1 target."
+  },
+  {
+   "bead": "BD-238",
+   "kinds": [
+    "convention",
+    "registry",
+    "deadlock",
+    "broken"
+   ],
+   "what": "The bead is GATE-SENS-14's one recorder but gave no record form; added, with FROB_TEST_SEED on the harness command. The gate's registered control is 'a card field without provenance' (N20b-21), not the disabled-saturation card alone; both are stated. A consideration said tolerances were still 'to set'; N20-KA has KA-510 to KA-522 set or exact. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense cards`), which runs only tests whose names contain 'cards' and passes while skipping the rest of tests/cards.rs; it is now `--test cards`. Finished on resume: the earlier reviewer's record line ran only `--test g1_known_answers`, but KA-522, the fault row of this gate, is a G4 row and matches nothing in the G1 target, so the gate would have been recorded without it; the line and the e2e text now run g4_chaos too and record two receipts, from a session that did not implement the work. The register row for the extrinsic bump named BD-242 as owner of its first check; BD-242 depends on this bead through N20b-18, so register_complete could never pass; the row names N20a-31 and N20b-06 (the self-check, a dependency)."
+  },
+  {
+   "bead": "N20a-32",
+   "kinds": [
+    "convention",
+    "broken",
+    "contradiction",
+    "registry"
+   ],
+   "what": "The decision package went 'under docs/decisions/' and the ADR had no path; it is docs/adr/ADR-OPEN-SENS-4.md with the package beside it. The script's Reality-claim request named no verb; it runs N20b-18's corridor fixture with --key and asks through `frob report run --claim reality`, with dep BD-302 (M3). The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-sense card_admission`), which runs only tests whose names contain 'card_admission' and passes while skipping the rest of tests/card_admission.rs; it is now `--test card_admission`. Finished on resume: 'the register row is closed or re-dated' now uses N41-03's statuses (decided with adr, or defaulted at the M4 exit), and N41-OPEN3 moved from related to deps as in N20b-24 and N20b-25. The fixture is the conformance fixture sensorium/corridor-default. Contradiction fixed: the criterion 'no card with a datasheet or measured field enters the repository before the ADR' would have been broken at M3 by the synthetic all-measured test catalogue that BD-238 and N20b-18 need; the check now exempts `synthetic` cards of a conformance fixture, with the test synthetic_fixture_card_exempt."
+  },
+  {
+   "bead": "N20b-18",
+   "kinds": [
+    "convention",
+    "broken",
+    "contradiction"
+   ],
+   "what": "The script ran three compared `frob sim run` calls without --key and switched card sets that sim.run cannot select; the three card sets are fixture variants with distinct keys. The report leg's '(BD-302, requested)' was narration; VERBS-report's report.run carries --claim reality routed through this guard. Finished on resume: the variants were bare fixture names, which resolve under the shipped assets/fixtures; a synthetic all-measured catalogue among shipped assets contradicts N20a-32's rule and could be named by a design. They are conformance fixtures, `--fixture sensorium/<variant>`. The unit filter `provenance::` is a module filter and is right."
+  },
+  {
+   "bead": "N20a-35",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "The script called eval run, run fork, autopsy intervene and sense visibility with no --key, ran batteries 'with explicit world addresses' (802 on the battery form) and forked from '<snapshot>'; every call is in its registry form with its own key. The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-conformance pilot_estimator_causes`), which runs only tests whose names contain 'pilot_estimator_causes' and passes while skipping the rest of tests/pilot_estimator_causes.rs; it is now `--test pilot_estimator_causes`. Finished on resume: the record was 'one row' for two mechanisms with two verdicts, to which the earlier reviewer had added one kill_gate. N38a-09's record carries one mechanism, one fallback and one verdict, and funds per mechanism through gated_beads, so one row could not fund N20a-36 and N20b-36 differently. The pilot now registers two PILOT-SENSE records on one frozen protocol, in the register's fields, with the verdicts mapped to the register's words; the visibility record names KILL-VISIBILITY, and the Gramian record carries `to-register` with the plan's wording, because that kill rule has no register identifier (request below). The Clopper-Pearson intervals and verdict cases were recomputed and are right."
+  },
+  {
+   "bead": "N20a-49",
+   "kinds": [
+    "broken",
+    "convention",
+    "deadlock"
+   ],
+   "what": "The unit-test command passed the test file's stem as a bare name filter (`cargo test -p frob-conformance window_rule_model`), which runs only tests whose names contain 'window_rule_model' and passes while skipping the rest of tests/window_rule_model.rs; it is now `--test window_rule_model`. Reviewed in full on resume. The record had no path, although this bead's script checks that it exists and N20ap1-51 reads its model table and fills its confirmation field: it is docs/adr/ADR-SENS-WINDOW-RULE.md (convention 4; DESIGN name) with the table beside it as a data file. The bead amends and reads back KA-475, CX-201, KA-204 and CX-104 but depended on none of their registries, so it could be started before the rows existed; N20-KA, N20-CX, N11-KA and N11-CX are now deps (all M1, no cycle). The acceptance line had the conventions battery's row 'amended in the same change', but N13-06 depends on this bead; it now says N13-06 writes that row on the ruled side."
+  },
+  {
+   "bead": "N20ap1-51",
+   "kinds": [
+    "convention",
+    "deadlock",
+    "broken"
+   ],
+   "what": "The mutants were 'confined to the test target' although window_contains lives in frob-sense; they are frob-sense mutation features. The line 'the GATE-SENS-04 CPU record cites this run' gave this bead a gate record that N20a-44 owns. The fixture was passed positionally and compared runs had no --key. Reviewed in full on resume and finished: (1) the measured table read 'the transaction log of the step' and 'the boundary trace on the telemetry debug channel', neither of which any bead provides (no such stream among BD-090's nine); the sources are now BD-081's StepOutcome with BD-082's EventRecord and N20a-06's BoundaryTrace probe. (2) Every run of the target carries --features gauntlet-mutations, which enables frob-sense's conformance feature for that probe, and the mutant builds use the control runner's form. (3) The script queried telemetry for an 'event stream' and a 'boundary trace'; it now takes those two columns from the test target in report mode and the window averages from `frob telemetry query --stream sensing --channels ft`, says how the ClosesAt binary is built, and checks the rule with `frob doctor`. (4) 'This run's receipt' is defined (the log digest; a check target writes no tier receipt). (5) Deps N24a-36 and N24b-03 added for telemetry.query and --fixture (convention 8; M1, no cycle)."
+  },
+  {
+   "bead": "N20b-20",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "Rows 13 and 22 said 'none stated' and the count was 8, but N20-KA carries both controls (6 remain); rows 19 and 24 gave boundary checks as controls and now name N38b-28's mutations. Every runner used --test g1_known_answers, but 12 of the rows are in G0, G3, G4 or G5 targets and would match nothing; each row's target is named. Reviewed in full on resume (27 cases, the tier split 2/48/6/1/3, every owner reachable) and finished: the script ran rows marked 'none stated' without a control, but N38b-32 (M2) registers controls for those six before this M3 battery runs, so it would have skipped registered controls; whether a row has a control is now read from the registry at run time. The background still said the late answers 'are not yet numbered' and the slot heading had N20b-45 renaming slots in this manifest, which is written after N20b-45; both now state that the manifest is written with the assigned numbers."
+  },
+  {
+   "bead": "N20b-24",
+   "kinds": [
+    "broken",
+    "convention",
+    "plan",
+    "registry"
+   ],
+   "what": "`cargo test -p frob-sense clock::lattice` matched no test (BD-078's lattice tests are in tests/clock_lattice.rs); it is --test clock_lattice. The record had no path and nothing closed OPEN-SENS-2's register row; the ADR is docs/adr/ADR-OPEN-SENS-2.md and N41-OPEN3 moved to deps. Reviewed in full on resume (Q = 12,000,000, the headroom rule and the menu example recomputed) and finished: the row is set to N41-03's status `decided`, not 'closed', which is the register's tombstone. 'The limit is a named constant read from the registry' named no file, here, in BD-078 or in N20b-16; it is the field q_max of registries/clock_rates.toml (DESIGN), with requests to the two readers."
+  },
+  {
+   "bead": "N20b-25",
+   "kinds": [
+    "convention",
+    "plan",
+    "contradiction"
+   ],
+   "what": "The script's train start, eval compare and sense causal-test calls had no --key; each carries its own. The record had no path and the register row was never closed; the ADR is docs/adr/ADR-OPEN-SENS-3.md and N41-OPEN3 moved to deps. Reviewed in full on resume and finished: the row is set to `decided`. The earlier reviewer's sentence said the training runs 'are above the ad-hoc class' and are refused without a scope; whether they exceed E0 is not known, so it now says when a scope is cited and which refusal follows without it (704 or 761). Arm C (true age) was to be trained although the acceptance criteria have the freeze refuse it; it is trained on the task variant with ideal device clocks, the one case the bead admits."
+  },
+  {
+   "bead": "N20b-36",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "The verb surface said the spec section 'is requested of the opt.start row'; VERBS-opt's row lists the sensing section, so the text cites it. Reviewed in full on resume: the opt.start, opt.status, sense.visibility and design.check calls match their rows and carry keys where the kind is run; the hand case (H at least 0.7 m for a 0.5 s bound; 33.7 to 32.0 degrees) recomputed; deps and the pilot dependency right. One addition: the bead said the sensing section 'is removed' if the kill gate fires, without the answer a caller then gets; N32-REF's row 724 gives it (a mechanism the request names whose kill gate fired: FROB-REF-724, exit 5), and without it an implementer would let the spec fail as a schema error, sending an agent to repair a file that is not wrong."
+  },
+  {
+   "bead": "N20b-38",
+   "kinds": [
+    "convention",
+    "registry",
+    "broken"
+   ],
+   "what": "The bead wrote only the owner declaration and said the kill row 'is not edited here'; N40-03 has the decision bead enter decision = {outcome, adr, date, session, receipts} on the row, without which apply_decisions and N40-30's comparisons have nothing to read. An inconclusive pilot at the M4 exit was 'fired', which N40-30's consistency check rejects; it is not-reached. A '(reported to N40-30)' narration now cites N40-30's two-time exception. Reviewed in full on resume against N40-03, N40-29 and N40-30 (outcomes, mode exit, receipt directories, the declaration's fields): right. Added: 'the pilot row' now means the visibility record of N20a-35's pilot, since the pilot registers one record per mechanism; and the fired branch's refusal of a spec with a sensing section, which the criterion, the test and the script left without a code, is N32-REF's FROB-REF-724, exit 5."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N20-KA",
+   "what": "KA-483 (glass pane) is still 'to set'. Its owner N20a-21 now sets the tolerance: each reported range within 1 mm plus the ray kernel's bound; echo count, echo order and mask reasons exact. Carry it as '(set: N20a-21)' and drop KA-483 from 'Still to set'. Otherwise to_set_blocks_gate refuses every GATE-SENS-07 record that cites KA-483 and the gate can never be recorded."
+  },
+  {
+   "bead": "N20a-44",
+   "what": "The stage table passes conformance fixtures positionally (`frob sim run seven-instants`, arrival-edge, impulse-window, lossy-link, checkpoint-three, clock-400-30: stages 5 to 12b). VERBS-sim reads the positional as a design and rules the positional fixture out; a conformance fixture goes through `--fixture <space>/<name>` (N24b-03, which this bead does not depend on). Use `--fixture sensorium/<name>` and add dep N24b-03; otherwise each of those stages answers an unknown design. (The keys are already covered by item 1.)"
+  },
+  {
+   "bead": "N40-29",
+   "what": "KILL-VISIBILITY's row has reads = GATE-SENS-17 only, while its trigger also reads the pilot ('the pilot attributes under a fifth'). N40-30's two-time exception lets N20b-36 and N20b-37 depend on 'the pilot bead whose record the ledger row's reads names' instead of the decision bead; with the pilot absent from reads they are listed as branch-only beads depending on neither, and the kill ledger check fails with no fix available in those beads. Add the pilot record of N20a-35 for the mechanism 'mounts as optimizer variables' (its PILOT-SENSE record in pilots.toml) to reads."
+  },
+  {
+   "bead": "BD-189",
+   "what": "N20a-06's M1 acceptance line required that the step plan's signature record the stage order and that a plan with stages 4 and 5 swapped have a different signature. No step plan with sensing kernels exists at M1, so the check now belongs here: add a test that the launch record frob.stepplan/1 built with K-sense-deliver after the decision launch has a different record hash and fails deliver_order_matches_reference. Otherwise nothing checks that the plan's identity covers the boundary order, and two tiers could run different closed loops under one plan identity."
+  },
+  {
+   "bead": "N38a-37",
+   "what": "A fourth upper-tier mechanism has a fallback in the plan and no kill gate in the register: sensor placement scored by the observability Gramian (N20a-36, Frontier, M4; plan section 20.11: kill 'no measured drop in drift after a recommended move', fallback 'the Gramian remains a report'). N38a-09 funds a record only when fallback.kill_gate names a register row, so the pilot record that gates N20a-36 (N20a-35's Gramian record, now `to-register` with that wording) blocks it with kill-gate-to-register for ever. Enter the row by dated amendment as for KILL-TAXEL, and set the record's field to the identifier."
+  },
+  {
+   "bead": "N20a-36",
+   "what": "The bead says its kill rule 'has no identifier in the gate register' and names its ADR for the mechanism. Under N38a-09 it cannot become fundable without a registered kill gate (see the request to N38a-37). Once the row is entered, cite its identifier, name the ADR docs/adr/ADR-<gate>-M4.md (convention 10), and read the pilot verdict from the Gramian record of N20a-35's pilot, which now has a record of its own (gated_beads = [N20a-36])."
+  },
+  {
+   "bead": "BD-078",
+   "what": "The lattice limit is a literal in admission step 3, while N20b-16 prints 'a named constant read from the registry' and N20b-24 decides it 'in the registry'; no bead named the file. N20b-24 now names it: the field q_max in the header of registries/clock_rates.toml, the menu file this bead creates. Write q_max = 2^40 there and read it in step 3; otherwise N20b-16 and N20b-24 may read two different places and a recorded decision would not change the limit that admission applies."
+  },
+  {
+   "bead": "N20b-16",
+   "what": "Read the lattice limit that sense.profile prints from the field q_max of registries/clock_rates.toml (see the request to BD-078), the home N20b-24 names; the bead says only 'a named constant read from the registry'."
+  },
+  {
+   "bead": "N20b-45",
+   "what": "Step 3 reads the count of late known-answer rows 'from slots L1 to L3 of N20b-20's manifest' and step 4 renames the slots in that manifest, but the manifest is a file N20b-20 writes, and N20b-20 depends on this bead, so it does not exist when this bead runs (convention 7). Count the rows from the stating beads listed in step 3 (N20b-28, -29, -32, -39, -40, -41) and drop the manifest from the files step 4 edits; N20b-20 now says its manifest is written with the assigned numbers. N20-KA's consideration repeats the same source for the count."
+  }
+ ],
+ "unchanged": 0,
+ "notes": "Resumed slice. All 29 bead files had been touched by the interrupted reviewer and were read whole; all parse (front matter, one-line JSON lists, the seven sections, deps existing, none on a later milestone, no cycle). The seven beads the partial result did not name (N20a-49, N20ap1-51, N20b-20, N20b-24, N20b-25, N20b-36, N20b-38) were reviewed in full against the plan, N20-KA, N20-CX, N20-REF, N20b-21, the VERBS rows they call, BD-025, N38a-09, N38b-04, N40-03, N40-29, N40-30 and N41-03. Unchanged: none; every file carries at least the corrected test command. The slice file addressed nothing to these beads. Every number quoted in the slice was recomputed and none was wrong. The interrupted reviewer's request to N20a-44 about missing keys was dropped: its item 1 already gives every sim run a key. Program-wide, for the lead (not edited outside this slice): a recount at the end of this session finds 92 commands in 87 other beads of the form `cargo test -p <crate> <stem>` where the same bead names the file tests/<stem>.rs (the interrupted reviewer's figure of 729 could not be reproduced and is not repeated); cargo reads the bare stem as a name filter, so such a line usually runs no test of the file and passes, and two filters are rejected outright. A mechanical sweep to `--test <stem>` would remove the class; module filters such as `age::` on inline tests are right. Not changed, for the lead to weigh: (1) N20a-06 has `frob doctor --json` and every run's evidence block report WINDOW_RULE; the doctor section interface of BD-022 admits it, but no owner of the evidence block lists such a field. (2) N20b-25's training arms may need more than E0, and N44-01 has no envelope request row for them. (3) N20-CX writes the plants of CX-201 and CX-215 as N20a-16:window-closed-closed and BD-215:draw-order-noise, while N20a-06 and N20a-04 build them; the feature names agree, so nothing breaks. (4) KA-474's control, a build with the lattice limit removed, has no registered feature name, so N20b-24 names none."
+}

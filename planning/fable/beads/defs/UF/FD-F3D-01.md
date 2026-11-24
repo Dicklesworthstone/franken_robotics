@@ -80,7 +80,11 @@ recorded at the pinned commit (`observed_at`, the failing assertion and the obse
 and passes once the change is adopted; a fixture that passes at the pin no longer demonstrates the limit and is
 itself a failure of the registry check. It runs `cargo metadata` on a scratch workspace in which `f3d-math` with its
 `serde` feature **on** sits beside FrankenSim's crates, and expects one `serde_json`; at the pin Cargo reports
-the conflict between `=1.0.151` and `>=1.0.154`.
+the conflict between `=1.0.151` and `>=1.0.154`. franken_threed has no row in `franken-stack.lock` at M0, so under
+BD-037's fixture timing rule the fixture was written against franken_threed's head as read on the day,
+`observed_at` names that commit and the row carries `pin_state = "unpinned"`. franken_threed is first admitted by
+the pilot N33c-24 (a dependency), which records its pinned revision; this bead then re-runs the fixture at that
+pin, records that commit in `observed_at` with the signature observed there, and clears `pin_state`.
 
 **Switch-over (the compatibility train).** When the change is on the sibling's `main`: (1) move the sibling's pin
 in `franken-stack.lock` to a clean commit that contains it (a pin only moves forward; a sibling's newer clean head
@@ -109,7 +113,7 @@ viewer in every case.
 - [ ] Here: the fixture resolves with exactly one `serde_json` at the new pin; `check-deps` shows the same version and feature set for every production binary as before.
 - [ ] Here: INT-F3D-01 passes (pixel agreement and the explicit failure of an unadmitted feature), with the measured share of agreeing pixels recorded against 99.9%.
 - [ ] Here: no crate that requires asupersync 0.5.0 is in any graph of this project, at every pin.
-- [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet.
+- [ ] The item's row in `registries/upstream.toml` names its fixture, this bead and the mirrored bead in the sibling's tracker; its `status` is `adopted`, or `landed` with the reason the switch-over has not run yet; its `pin_state` field, `unpinned` as BD-037 wrote it, is cleared once the fixture has been re-run at the pin N33c-24 admitted.
 - [ ] Every file edited in the sibling was reserved through Agent Mail before the edit and released after landing; the change is on the sibling's `main` and passed that repository's own gates under its `AGENTS.md`.
 - [ ] Nothing in this repository patches, forks or vendors the sibling; `cargo xtask check-stack` reports it on-pin and clean under the new receipt, and the record in `DEPENDENCY_ADMISSION.md` cites that receipt.
 
@@ -131,7 +135,7 @@ Phase `pre`, valid at any pin before adoption: `cargo xtask check-stack`; `frob 
 section shows this item with its status); `cargo test -p frob-conformance --test upstream_fd_f3d_01 -- --ignored`,
 asserting that the fixture fails with the signature in `expected.toml`; then the interim posture's own tests,
 asserting that they pass. Phase `post`, after the pin move: the same fixture must pass, the gates named in this
-bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob telemetry export-html --json` on a recorded episode, builds
+bead are re-run, and the registry row must read `adopted` with a receipt newer than the pin move. Phase `post` also runs `frob telemetry export-html <run> --world <address> --out replay.html --json` on N33c-24's fixture episode (the run, world and output file the row requires; the file lands under the session's export root), builds
 the page through the route as a subprocess and through the plain bundle, renders the ten frames headlessly
 and logs the agreeing-pixel share per frame.
 

@@ -4,9 +4,9 @@ title: "upstream frankensim: a moving-surface owner for the sustained contact st
 type: "task"
 priority: 1
 milestone: "M2"
-labels: ["m2", "suite", "kinesis", "traction", "upstream", "frankensim", "solid"]
+labels: ["m2", "suite", "kinesis", "traction", "upstream", "frankensim", "solid", "review-notes-open"]
 parent: "WP-39"
-deps: ["BD-093", "FDEF-04", "N33b-04", "STD-E2E"]
+deps: ["BD-085", "BD-093", "FDEF-04", "N33b-04", "STD-E2E"]
 needs: []
 related: ["FD-FSIM-13", "N33b-07", "N33b-08", "NFp3-11"]
 gates: ["INT-FSIM-07"]
@@ -35,7 +35,7 @@ of the sustained step.
 ## Scope
 
 In: in FrankenSim, an owner for contacts whose witnesses move; here, delegation to it, the pin move and the
-referee-side re-runs of the switch-over. Out: the one-time re-baseline of the fidelity ledger for this item, the
+referee-side re-runs of the switch-over (the referee's contact battery is BD-085's, a dependency). Out: the one-time re-baseline of the fidelity ledger for this item, the
 reading of GATE-FID-01 against it and the re-issue of the referee's coverage table (NFp3-11, which depends on this
 bead, on the M2 ledger measurement BD-212, on the envelope store N16bp1-01 and on the coverage campaign BD-213,
 so that this upstream work can start before the ledger exists; the split made for FD-FSIM-02 in NFp2-01); the
@@ -202,7 +202,7 @@ gates touched. No private-scene data is logged.
 - Two implementations of migration will exist after adoption (upstream for the referee, ours for `strict`); their agreement on the transition fixtures is a model-form check worth keeping, not a redundancy to remove.
 - BET-34's fallback names this item and FD-FSIM-13: until they land, the `strict` profile is the highest tier where the referee cannot complete, and results there stay provisional and say so.
 - No milestone waits on this bead. Its milestone label says when its switch-over gate first exists (NFp3-11), not that the
-  milestone's exit depends on it; the work itself may start as soon as BD-093 is done. Until the switch-over has been run, the interim posture above is the design of
+  milestone's exit depends on it; the work itself may start as soon as BD-093 and BD-085 (the referee's contact battery, which the switch-over re-runs) are done. Until the switch-over has been run, the interim posture above is the design of
   record. M1 depends only on FrankenSim, asupersync and FrankenSQLite, and no upstream work item is on its
   critical path.
 - If this change never lands, the program still ships on the interim posture, at the cost stated there. A change

@@ -60,8 +60,9 @@ the sign rule of the double cover (a convention test of the algebra crate).
 
 ## Acceptance criteria
 
-- [ ] `frob-verify` accepts the two T-03 bundles for the M0 kernels (`K-cay-step`, `K-normalize`); GATE-LEMMA-00
-      (TARGET, M0) records T-03 as certified and replaying offline.
+- [ ] `frob-verify` accepts the two T-03 bundles for the M0 kernels (`K-cay-step`, `K-normalize`). That is this
+      card's part of GATE-LEMMA-00 (TARGET, M0); the gate is recorded by N12-33, which depends on this card, from
+      its script's receipt, and recording it is not a condition of this card's close.
 - [ ] Negative controls rejected: one changed coefficient (a sign flipped in one product term, which is the
       Hamilton product with a wrong handedness in one component); the witness side relation removed; a statement
       claiming ‖q·c‖² = ‖q‖² + ‖c‖².

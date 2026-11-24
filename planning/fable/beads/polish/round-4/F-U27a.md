@@ -17,5 +17,5 @@
 ## Addressed to your beads
 
 - `BD-205`: request from round 4, slice H-verbs-7: VERBS-run now declares run.fork's `--children` plan as the params entry `children = "artifact-input<frob.fork.children/1>"` (891, 734 and 828 appended). As the bead that defines the child plan `frob.fork.children/1`, enter its row in `registries/formats.toml` (N34-27's rule fmt.param-without-row) and state the parameter kind in the verb section.
-- `BD-283`: mechanical check of the conventions: [C5-key] 1 complete command(s) of a run verb in a code block carry no `--key` (convention 5), e.g. `frob autopsy rerun <run> ( --edit '<typed design edit>' | --do '<factor> := <value>' )`
+- `BD-283`: mechanical check of the conventions (can be a false alarm): [C5-key] 1 complete command(s) of a run verb in a code block carry no `--key` (convention 5), e.g. `frob autopsy rerun <run> ( --edit '<typed design edit>' | --do '<factor> := <value>' )`
 - `BD-283`: request from round 4, slice H-verbs-1: Your refusal table copies design.edit's thirteen codes. VERBS-design says the code of the ledger slug sized-fill-unsatisfiable (a resolve-sized edit no stock wall carries; N31b-41, M3) joins design.edit's list under its assigned number; VERBS-autopsy now states that it joins autopsy.rerun's row in the same change. Add the same line to your table row for design.edit's codes.

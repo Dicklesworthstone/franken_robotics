@@ -1,0 +1,162 @@
+{
+ "round": 4,
+ "slice": "F-U44-1",
+ "reviewed": 28,
+ "changed": [
+  {
+   "bead": "N44-02",
+   "kinds": [
+    "request",
+    "convention",
+    "registry"
+   ],
+   "what": "Reserved rows are now R12 to R28 (seventeen): R27 (WP-79, gate:GATE-REFLEX-09, N22b-07) and R28 (WP-47, campaign:perf-row9-humanoid, N36-22, E2) added to the row table as launcher rows active at M2, with their not-approved forms as N44-01 states them, to the no-single-class list (R27) and to the launcher step list. Without them the synthetic campaign would skip two reserved rows and their arms would never be checked against the register. Convention 14 applied: a new paragraph states how a run verb reaches a row's scope (citation `--envelope-scope`, launcher token, derived scope, otherwise `adhoc` E0); 'under S' now means the two forms, a cited `--envelope-scope S` and the child of `frob-launch`; the steps no longer cite 'N36-20's open question on a citation input' (settled: N36-20 states the order). The scratch-approval branch now follows N32ax-03 and BD-296: at M0 761 with `scratch_verdict: \"admitted\"`; from M1 the job is admitted held (`hold: scratch-approval`), never re-sized or dispatched; `frob-launch` exits 4 with `scratch_verdict`. 704 is raised only for a campaign-class job whose scope has no approved envelope (size classifier at submission), and again at dispatch or resume when an approval of record lapses; every other envelope case is 761. Run keys became `envpkg-<row>-<step>-<form>-<path>-s<seed>` (path adhoc, cited or launcher, `d` prefix for frobd) so two forms of one step never collide into FROB-REF-803. Logging gains the scope source `citation`, the held-job metrics, and the pending reasons (verb absent, scheduler absent) with skipped steps; acceptance, the unit test `run_keys_distinct`, the known answers, the negative controls and both Considerations bullets follow."
+  },
+  {
+   "bead": "N44-03",
+   "kinds": [
+    "request"
+   ],
+   "what": "Lead's dependency-audit note checked and applied: BD-001 moved from deps to related (deps now []). The script is POSIX shell with `jq` and `awk`, calls no tracker binary and adds no xtask subcommand, and its tests run on synthetic fixtures, so BD-001 gated nothing it needs; it was blocking a level-0 bead. The [C11-std] finding is a false alarm: the bead's own tests are `sh scripts/lib/tests/wp_table_test.sh` on fixtures, and the end-to-end script belongs to N44-05, which depends on STD-E2E. All its numbers were recomputed and hold."
+  },
+  {
+   "bead": "N44-04",
+   "kinds": [
+    "request",
+    "registry",
+    "broken"
+   ],
+   "what": "Reserved-row fixture gains R27 `WP-79` (N22b-07) and R28 `WP-47` (N36-22); check 11(b) reads 'a row R12 to R28' and 'a new row from R29 on'; the synthetic known answer has twenty-eight rows and logs R12 to R28 as reserved; the planted defect that cited R27 now cites R29 (R27 exists, so the plant would no longer fail and the control would be dead). Check 6 now states that a kill gate in an epic's `gates` counts as a key gate, that 'names by key' means anywhere in the epic body, and that a package or milestone epic is never the measuring bead; the acceptance line lists every measured-elsewhere case the live graph prints (WP-07, WP-11, WP-19, WP-37, WP-47 and the four of WP-76), without which a correct run would print lines the acceptance does not expect. A planted defect for the measured-elsewhere path was added (WP-19's body with BD-175 and N21b-25 replaced by WP-18), so the 'package epic is never the measuring bead' rule has a negative control; the count reads eighteen planted defects."
+  },
+  {
+   "bead": "WP-01",
+   "kinds": [
+    "request"
+   ],
+   "what": "Child list regenerated from the live files: 98 beads (M0 95, M1 3); N34p2-01 and N34p4-01 to N34p4-04 added; titles of BD-003, BD-004, N34-01, N34-15 and N35x-02 updated. Without it the table of contents misses five beads of the package. Label review-notes-open removed."
+  },
+  {
+   "bead": "WP-02",
+   "kinds": [
+    "broken",
+    "contradiction"
+   ],
+   "what": "Child list regenerated: NFp4-01 (FD-ASUP-01's sibling half, created this round) added; 26 beads (M0 23, M1 3). The Upstream-work paragraph said the bead FD-ASUP-01 itself makes the changes in the siblings; FD-ASUP-01 now edits no sibling file and depends on NFp4-01, which chooses V, lands it in the four repositories under their own gates with Agent Mail reservations and writes the 'before' listings. The paragraph now names both halves; left as it was, an agent would start the sibling work under FD-ASUP-01, behind the workspace beads it waits for, and miss NFp4-01."
+  },
+  {
+   "bead": "WP-04",
+   "kinds": [
+    "request"
+   ],
+   "what": "Child list regenerated: titles of N41-21 and N41-22 updated. Label review-notes-open removed."
+  },
+  {
+   "bead": "WP-06",
+   "kinds": [
+    "request"
+   ],
+   "what": "Child list regenerated: 68 beads (M0 30, M1 38); N34-REF, N34p3-01 and VERBS-result added; titles of N32-REF, N32b-25, NJL-01 and VERBS-artifact updated. Label review-notes-open removed."
+  },
+  {
+   "bead": "WP-10",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Child list regenerated (no request named it): N16ap4-01, the M1 form of `sim.run` on the referee, added; 39 beads (M1 36). The header count and the M1 count were wrong against the graph. GATE-MARROW-06 is indexed in plan §40.8 (§13.11; M1), not §40.9: both citations corrected, since a reader looking it up in §40.9 does not find it."
+  },
+  {
+   "bead": "WP-11",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Child list regenerated: BD-108's title updated (GATE-ATEL-05's M1 clauses)."
+  },
+  {
+   "bead": "WP-12",
+   "kinds": [
+    "request"
+   ],
+   "what": "Child list regenerated: N15ap3-01 (the open-loop schedule controller, M1) added; 24 beads. Label review-notes-open removed."
+  },
+  {
+   "bead": "WP-14",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Child list regenerated: N24bp4-01 (pinned forward-kinematics captures of the two vendored URDF sources, M1) added; 180 beads (M1 101)."
+  },
+  {
+   "bead": "WP-15",
+   "kinds": [
+    "broken",
+    "plan"
+   ],
+   "what": "Child list regenerated: N16cp4-01, the M3 re-read of KILL-LOOPELIM, added (72 beads: M2 71, M3 1). 'What lands' gains the M3 item, and the Considerations bullet no longer says the three later kill gates all fall back to 'the dense path': KILL-LOOPELIM's fallback (§16.22) is every closure kept a row (compliant equality rows on the lockstep tiers, bilateral rows under the transactional profiles) and KILL-ROWQUEUE's is the masked lockstep solve alone; it also states that KILL-LOOPELIM's coverage clause is read again at M3 on all eighteen archetypes (N40-29's `reread`) and that a re-read never reverses a fired gate. Left as it was, the epic told the implementer of a fired LOOPELIM to fall back to the wrong path and showed the package as M2-only although the M3 exit needs its entry."
+  },
+  {
+   "bead": "WP-16",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Child list regenerated: NFp3-12 (switch-over of FD-FSIM-13) added; 16 beads."
+  },
+  {
+   "bead": "WP-17",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Child list regenerated: N19c-42's title updated (the request), and N19ap4-01 (the `frob-fsim` signed-distance chart surface, M2, created this round) added; 44 beads. Label review-notes-open removed."
+  },
+  {
+   "bead": "WP-22",
+   "kinds": [
+    "broken",
+    "contradiction"
+   ],
+   "what": "Child list regenerated: NFp3-11 (switch-over of FD-FSIM-12, M2) added; 26 beads. 'What lands' and the re-baseline bullet named only NFp2-01 as the ledger's further re-baseline in this package; NFp3-11 is the second, the one the plan's switch-over rule for FD-FSIM-12 allows. Left as it was, a second re-baseline of GATE-FID-01 by NFp3-11 reads as a breach of the freeze the epic states."
+  },
+  {
+   "bead": "WP-26",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Child list regenerated: titles of NJLx-51 (247 rows) and N32bx-02 updated (the request). The size-class bullet said a job above the envelope is refused at submission with FROB-REF-761 and only the dispatch-time re-check gives 704; under convention 14 and N32-REF row 704, the daemon's size classifier refuses a campaign-class job with no approved envelope with 704 at submission (scope order: launcher token, cited `envelope_scope`, derived scope, `adhoc`), the scheduler (BD-296) raises it again at dispatch and resume, and every other envelope case is 761; both precede 701 and exit 4. Left as it was, the daemon's implementer reading the package would answer 761 where the registry, its repair ('resubmit citing it') and the conformance sweep expect 704. Label review-notes-open removed."
+  },
+  {
+   "bead": "WP-30",
+   "kinds": [
+    "broken",
+    "registry"
+   ],
+   "what": "Child list regenerated: N18bp4-02, the KILL-TYRE decision, added (30 beads). The kill gate KILL-TYRE, entered by amendment N40-24 and decided in this package at M4, was absent from the epic: 'What lands' now names it, a Considerations bullet gives its registered trigger, fallback (rigid wheels with the friction cone and a rolling-resistance row; N18b-04 closes `fallback`) and the rule that funding of N18b-04 is read from the pilot record alone, and References cite it. Left out, the package's reader would fund and accept the tyre laws without the decision the M4 exit requires."
+  },
+  {
+   "bead": "WP-36",
+   "kinds": [
+    "request"
+   ],
+   "what": "Child list regenerated: N12-REF moved to the M0 group (M0 8, M1 18). Label review-notes-open removed."
+  },
+  {
+   "bead": "WP-37",
+   "kinds": [
+    "request"
+   ],
+   "what": "INT-FSIM-11's acceptance line now names its measuring bead BD-020 (WP-04), as WP-19 does for GATE-SPARK-06; N44-04 check 6 failed on it, the only failure on the staging files, and now prints measured-elsewhere. Label review-notes-open removed."
+  },
+  {
+   "bead": "WP-38",
+   "kinds": [
+    "broken"
+   ],
+   "what": "GATE-SKEL-09 (§14.16) and GATE-FOUNDRY-15 (§31.23) are indexed in plan §40.8, not §40.9: the three citations corrected, since a reader looking them up in §40.9 does not find them. Child list unchanged (78 beads)."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [],
+ "unchanged": 8,
+ "notes": "Complete. Unchanged: N44-05, WP-07, WP-23, WP-27, WP-29, WP-34, WP-39, WP-40. N44-05 and the seven unchanged epics were read in full against plan §44.1, §44.3, §40 and their registries and are right as they stand. Every child list was regenerated from the live staging files (parent set, no superseded_by) and re-diffed at the end: all 24 epics match the graph, including NFp4-01 (WP-02) and N19ap4-01 (WP-17), created by other reviewers during this pass. N44-04 check 6, simulated on the live graph, prints no failure; its measured-elsewhere lines are exactly those N44-04's acceptance lists. The mechanical finding [C11-std] on N44-03 is a false alarm (its end-to-end script is N44-05's, which depends on STD-E2E). No new request: the citations of reserved rows R27 (WP-79) and R28 (WP-47) are already requested by slice F-U44-2. Not edited, by the rule of §44 that an epic's gates are its key gates and §40 holds the full assignment: gates of §40.8 and §40.9 measured by children but not listed in some epics (e.g. GATE-HAB-16 in WP-17, GATE-KIN-08, -11, -12, -13 in WP-15). Not edited either: 'What lands' paragraphs that do not name every new child (WP-10, -12, -14, -16), since the regenerated list carries them and nothing would be built differently. Labels review-notes-open removed from WP-01, -04, -06, -12, -17, -26, -36 and -37."
+}

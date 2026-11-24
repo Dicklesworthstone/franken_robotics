@@ -4,7 +4,7 @@ title: "Ground known-answer registry: KA-721 to KA-736, the synthetic rehearsal'
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "ground", "frob-ground", "frob-conformance", "registry", "test", "frontier"]
+labels: ["m1", "ground", "frob-ground", "frob-conformance", "registry", "test", "frontier", "review-notes-open"]
 parent: "WP-68"
 deps: ["BD-025", "N38a-12", "N38a-40", "N38b-05", "STD-E2E", "STD-TEST"]
 needs: []

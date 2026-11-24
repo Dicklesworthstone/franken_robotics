@@ -4,7 +4,7 @@ title: "upstream frankensim: `planar_drive` without the near-straight defect (th
 type: "task"
 priority: 2
 milestone: "M1"
-labels: ["m1", "suite", "traction", "upstream", "frankensim", "solid"]
+labels: ["m1", "suite", "traction", "upstream", "frankensim", "solid", "review-notes-open"]
 parent: "WP-37"
 deps: ["FDEF-02", "N33b-04", "STD-E2E"]
 needs: []

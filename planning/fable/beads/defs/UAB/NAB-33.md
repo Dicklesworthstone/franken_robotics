@@ -6,7 +6,7 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "spark", "gauntlet", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["NAB-32"]
+deps: ["N00-11", "N00-12", "NAB-12", "NAB-15", "NAB-32"]
 needs: []
 related: ["NAB-34"]
 gates: []
@@ -42,12 +42,30 @@ the schema, harness and lint (NAB-32); building any surviving mechanism (the car
 ## Technical approach
 
 **Transcription rule (all killed-idea beads).** One `[[idea]]` record per entry. `title` is the bold heading;
-`hypothesis` and `hypothesis_state` come from the parenthesis after it; `strong_form`, `refutation` and
+`hypothesis` and `hypothesis_state` come from the parenthesis after it: `hypothesis_state` is the state word
+alone (`REFUTED`, `NARROWED`, `DEFERRED`, `ACTIVE`), and a qualifier after it ("for recursion-only
+specialization", "as stated", "for exact reuse", "and unmeasured") is the register row's `scope` (N00-10) and is
+not copied, because NAB-32's loader refuses a state that differs from the one the hypothesis register holds. The
+loader also refuses a hypothesis absent from the register, so every killed-idea bead that names one depends on
+the register bead holding it (N00-11 for H-01 to H-12b, N00-12 for H-13 to H-29); `strong_form`, `refutation` and
 `survives` are the three paragraphs verbatim; `revive_only_if` and `carriers` are the last two lines of each
 entry below; `sections`, `gates`, `kill_gates`, `bets` and `refusals` are the identifiers found in the
 *survives* paragraph; `state` is `refuted`, `narrowed` or `deflated` (an entry with no hypothesis whose
 strong form failed on arithmetic is `refuted`; one that restated an existing position or miscounted is
-`deflated`).
+`deflated`). `revive_gates` is empty when `revive_evidence` is `none`; otherwise it holds the gate and kill-gate
+identifiers the *Revive only if* line names, or, where that line names none and the evidence is `gate` or
+`pilot`, those of the *survives* paragraph (the plan: the reversal condition is the measurement named there). `revive_evidence` is read from the same line (DESIGN): `none` when it says "Never" or names only an ADR
+or the owner's decision; `pilot` when the measurement that decides is a pilot's (also when a gate measurement
+must come first, as in KI-03); `primary-source` when it names a publication to read; otherwise `gate` (a
+measurement on our own code, profile or battery). A calculation is `FACT` when it uses a figure read from a
+source and names in `sources` the source-register ids of those figures; the ids are assigned in order by the
+beads that enter the records (NAB-11 local, NAB-12 engines, toolchains and hardware, NAB-13 learning to
+assets, NAB-14 standard references and the not-verified list, NAB-15 plan-time checks), so each killed-idea
+bead depends on the source beads its FACT figures come from. A revival ADR's typed `threshold:` lines may state only
+numbers written in the line (NAB-32), so a measurable condition writes its numbers there, in digits or in the
+words that lint reads; in this group only KI-02 compares against a figure not fixed in advance (the gain a
+revival would claim). This group: KI-01 `gate` (none); KI-02 `gate` (none); KI-03 `pilot` (KILL-SPECIALIZE); KI-04
+`gate` (none); KI-05 `none`; KI-06 `none`; KI-07 `pilot` (KILL-MEGA); KI-08 `gate` (none); KI-09 `gate` (none).
 
 **Machine-checked arithmetic of this group** (`[[idea.calculation]]`; DESIGN arithmetic unless marked):
 
@@ -176,7 +194,7 @@ KI-08: staged erasure as speed. KI-09: time tiles, parareal, time-parallel integ
 - *Refutation.* It restates the plan's own compile-time position and names no new mechanism. Its figure, 1.875 in
   floating-point operations, is counted on a step that is bound by memory traffic (§36.11) and not by arithmetic.
 - *Survives.* A compiler rule: proofs, tags and types are erased before runtime (§21.7).
-- *Revive only if.* A measured profile in which the step is bound by arithmetic and not by memory traffic. Until then erasure is a compiler rule and is not counted as a lever.
+- *Revive only if.* A measured profile in which the step is bound by arithmetic and not by memory traffic: its arithmetic time exceeds its memory-traffic time, a ratio above 1. Until then erasure is a compiler rule and is not counted as a lever.
 - *Carried by.* BD-018 (no tags reach a kernel), BD-217 (the profile).
 
 **KI-09. Per-world adaptive time tiles and time-parallel integration**
@@ -186,7 +204,7 @@ KI-08: staged erasure as speed. KI-09: time tiles, parareal, time-parallel integ
   100 Hz are observation fences, and at physics steps of 1 to 2 ms they bound a tile to 5 to 20 steps. Contact
   makes coarse and fine propagators disagree, and tiles make shapes dynamic.
 - *Survives.* Fixed decimation in a static launch graph (§21.11).
-- *Revive only if.* A static-shape formulation, and measured interaction-free windows longer than the observation fences. Neither exists.
+- *Revive only if.* A static-shape formulation, and measured interaction-free windows longer than the observation fences (10 ms for frames at 100 Hz, 20 ms at 50 Hz). Neither exists.
 - *Carried by.* BD-172 (the static step plan with fixed decimation).
 
 ## Acceptance criteria
@@ -195,11 +213,12 @@ KI-08: staged erasure as speed. KI-09: time tiles, parareal, time-parallel integ
       each entry, and the keywords above.
 - [ ] The harness recomputes the thirteen calculation rows within tolerance.
 - [ ] `FROB-REF-245` exists in the refusal registry with the meaning "a half-precision solve or state is
-      refused", and a request for one from the command line returns it (checked by the carrier's own test; this
-      bead checks the registry row).
+      refused", or, while the M1 exit record does not exist, is reported under NAB-32's recorded `skip` (its row
+      is entered by N18-REF at M1). That a request from the command line returns it is the carrier's own test.
 - [ ] The revive lint, run on a planted bead titled "Factor the contact Hessian in f16 on tensor cores", fails
-      `ki.match-without-citation` naming KI-01; the same title on a bead that cites KI-01 and the scaling
-      kernels passes as the surviving form.
+      `ki.match-without-citation` naming KI-01; the same title on a bead that cites KI-01 and names its carrier
+      BD-156 (the scaling kernels) passes as the surviving form.
+- [ ] `revive_evidence` and `revive_gates` of the nine records are those of the transcription rule.
 - [ ] The structure-exploiting constraint assembly and solve (an ACTIVE hypothesis, measured at M2) is **not**
       a record here: a test asserts that no keyword of KI-03 matches "ancestor-sparse assembly" or
       "tree-ordered factor".
@@ -219,11 +238,16 @@ KI-08: staged erasure as speed. KI-09: time tiles, parareal, time-parallel integ
 - `ki08_ratio`: 1.875.
 - `ki09_tile_bound`: 10 ms ÷ 2 ms = 5; 20 ms ÷ 1 ms = 20.
 - `records_complete_and_verbatim` against `tests/fixtures/killed/g1.md` (this bead's entries).
+- `ki01_revive_cases`: the two planted beads of the criteria (match without citation; surviving form with
+  BD-156).
+- `revival_fields`: `revive_evidence` and `revive_gates` per record as listed; KI-03's `hypothesis_state` is
+  `REFUTED`.
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh` (NAB-50) recomputes the group's calculations and runs the two planted revive
-cases of the criteria. Logged per STD-E2E with each calculation's name, value, expected value and tolerance.
+`scripts/e2e/decision_records.sh` (NAB-50) recomputes the group's calculations, among them the planted 2.75 for
+the refinement ratio at n = 18. Logged per STD-E2E with each calculation's name, value, expected value and
+tolerance.
 
 ### Known answers and negative controls
 

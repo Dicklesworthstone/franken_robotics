@@ -143,7 +143,8 @@ Known answers: one kill-gate pair due; arithmetic the evaluations must reproduce
 842.8 ÷ 575.7 = 1.464; 521 + 521 + 1,103 = 2,145. Negative controls: a sweep that raises the confidence of
 derived kernels citing only the M0 spike gate when its kill gate is still open (allowed only with the reason
 stated; the planted case has an empty reason and must fail `sweep.change-without-evidence`); a sweep record
-that marks NV-01 `measured` with no gate record.
+that lists NV-01 under `sources.unverified_settled` as `measured` with an empty `record` (must fail
+`sweep.change-without-evidence` by NAB-22's check (c)).
 
 ## Considerations
 

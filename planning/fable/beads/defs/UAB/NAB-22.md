@@ -6,7 +6,7 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "frob-conformance", "solid", "registry", "decision-record", "test"]
 parent: "EPIC-M0"
-deps: ["BD-025", "N00-10", "N38a-09", "N40-03", "N40-04", "N40-05", "NAB-09", "NAB-10", "NAB-17", "NAB-21", "NAB-32", "NAB-42", "STD-TEST"]
+deps: ["BD-025", "N00-10", "N38a-09", "N40-03", "N40-04", "N40-05", "NAB-09", "NAB-10", "NAB-17", "NAB-18", "NAB-20", "NAB-21", "NAB-32", "NAB-42", "STD-TEST"]
 needs: []
 related: []
 gates: []
@@ -69,7 +69,9 @@ units).
    by where it resolves: a gate record or kill-gate ADR; a pilot; a hypothesis; a phase-share row (a ten-fold
    gate's phase ledger, or the share table a sweep stores); an effort record (a scope-cap measurement, or the
    schedule gate N40-11); an upstream work item. An Impact change needs a phase-share row or the record of a
-   gate that the family's own row names; an Effort change needs an effort record or an upstream item.
+   gate that the family's own row names; an Effort change needs an effort record or an upstream item. A gate
+   record whose evidence is labelled `synthetic` (a rehearsal or fixture dataset) fits no factor of a family
+   whose named gates have claim Reality: that lane rests at `no-claim` until real data is admitted.
 3. *A fired kill gate.* The family's `decision_text` gains "fell back to <fallback>" and the family is described
    by the fallback's name everywhere. If the family was Frontier-only and the rule of the matrix says so (kernel
    reflection), the row moves to the parked table by an entry `move = "frontier-moonshot → parked"`.
@@ -96,12 +98,14 @@ hand:
   has no family row and is recorded against the posture record KI-63) puts KI-63 on the killed-idea list of
   every exit from M<a>. At M7 every family of the `solid` and `frontier-moonshot` tables (100) is due for an
   Impact evaluation against the tournament's phase ledgers (`due_because = ["impact: tournament"]`, NAB-30),
-  also outside the kill-gate counts.
+  also outside the kill-gate counts. At M8 every family, killed-idea record, queue item, idea record and
+  `[[unverified]]` item is due for a final state (`due_because = ["final"]`, NAB-31), also outside those
+  counts.
 - *Killed ideas:* every `KI` record whose "revive only if" names a gate, kill gate or measurement due at
   `exit`.
 - *Queue:* every Moonshot-queue item whose earliest milestone is `exit`, plus every active item.
-- *Ideas:* every idea record whose carrier gates were decided at `exit`; every not-yet-placed idea with a
-  trigger read at `exit`.
+- *Ideas:* every idea record whose carrier gates were decided at `exit`; every not-yet-placed idea whose
+  `trigger_exit` (NAB-42) is `exit`.
 - *Sources:* every reading task attached to a gate due at `exit`; every `[[unverified]]` item whose settling
   gate is due at `exit`.
 - *Glossary:* the unused-term and allow-file reports of the glossary lint.
@@ -113,26 +117,65 @@ a generated `decision-records.md` beside the exit record:
 { "exit": "M2", "commit": "...", "session": "...", "implementer_sessions_excluded": true,
   "families":   [ { "id": "EV-F23", "due_because": ["KILL-PHYLUM", "KILL-BUCKET"], "outcome": "changed" |
                     "unchanged" | "fell-back" | "moved" | "proposal-opened", "history_ref": "...", "evidence": [...] } ],
-  "killed_ideas": [ { "id": "KI-42", "condition_met": false, "measured": [...], "proposal": null } ],
-  "queue":      { "freed": [...], "entered": [...], "active_after": n },
+  "killed_ideas": [ { "id": "KI-42", "condition_met": false,
+                    "threshold": [ { "name": "homogeneous-ratio-512", "op": ">=", "value": "0.5" } ],
+                    "measured":  [ { "name": "homogeneous-ratio-512", "value": "0.41", "unit": "1",
+                                     "receipt": "<gate record id>" } ], "proposal": null } ],
+  "queue":      { "freed": [...], "entered": [...], "active_after": n,
+                  "final": [ { "id": "MQ-01", "outcome": "passed", "reason": "", "evidence": [...] } ] },  # M8
   "ideas":      [ { "id": "IP-12", "state": "planned" | "in-progress" | "delivered" | "fell-back" |
                     "not-delivered", "note": "" } ],              # the state vocabulary of NAB-42
   "unplaced":   [ { "id": "UP-06", "trigger_met": false, "measured": [...],
                     "outcome": "trigger-not-met" | "proposal-opened" } ],   # conditional ideas of NAB-49
-  "sources":    { "reading_tasks_open": n, "unverified_settled": [...] },
+  "sources":    { "reading_tasks_open": n,
+                  "unverified_settled": [ { "id": "NV-01", "status": "measured", "record": "<gate record id>" } ] },
+  "shares":     [ { "id": "SH-M3-01", "family": "EV-S14", "phase": "checking", "arm": "ours", "stratum": "",
+                    "share": 0.04, "ceiling": 1.042, "receipt": "<gate record id>" } ],   # optional
+  "readers":    [ { "registry": "registries/ideas.toml", "readers_run": [...], "proposal": null } ],  # optional
   "carried_forward": [ { "id": "...", "why": "gate recorded not-run", "to_exit": "M3" } ] }
 ```
+
+`threshold` is the killed-idea condition as numbers (the sweep bead's table states each one); every
+threshold `name` needs a `measured` entry of the same name, and `condition_met` must equal the conjunction of
+the comparisons, so a value measured on another quantity (a topology edit where the condition names parameter
+edits) never meets it. A condition that has no number (a state such as "every backend reports 64-bit atomics")
+is one threshold with `op = "=="` on a named Boolean.
+
+`shares` is the share table a sweep stores (rule 1.2): one row per measured phase share, with `ceiling` =
+1/(1 − `share`) to four figures and a `receipt` that resolves to the gate record of the phase ledger it was read
+from (the incumbent design-loop ledger at M1, the partial ten-fold gate at M3, the tournament at M7). A share
+row cited as evidence resolves to an `id` in the `shares` of this or an earlier sweep record. `readers` is the
+reader check of a decision registry (NAB-26 step 7). Both are optional and empty at exits that store none; a
+field outside this sketch fails the schema.
 
 **4. The completeness check** (a library function, `frob_conformance::sweep::check(exit)`, run by the test
 target `crates/frob-conformance/tests/decision_sweep.rs` for every exit whose exit record exists, and by the
 binary's `check` for the one exit it names, at the candidate commit before the exit record is written): (a) a
 sweep record exists; (b) every item of `due(exit)` appears in it with an outcome or in
-`carried_forward` with a reason; (c) every `changed` outcome has a history entry with a non-empty `reason` (rule
-1.2; an empty one is reported as `sweep.change-without-evidence`) and non-empty evidence that resolves (gate records in the gate register, ADRs on disk, hypothesis ids in the hypothesis register, pilot ids
-in the pilot register) and whose kind fits each factor it changes (rule 1.2), and every killed-idea evaluation
-with `condition_met` set cites `measured` values whose records resolve at this exit; (d) no
-family named by a fired kill gate still reads "adopted" without "fell back"; (e) the Moonshot cap holds after
-`entered`; (f) the sweep's session is not among the implementer sessions of the beads whose gates it cites;
+`carried_forward` with a reason, and an `unchanged` outcome whose `looked_at` cites only gate records with
+status `not-run` is `sweep.row-not-swept` (a row read only through unrun gates belongs in `carried_forward`),
+and so is a `readers` entry with an empty `readers_run` and no `proposal`, and, at M8, a queue item with no
+`final` entry, a `final` outcome outside the six of NAB-31 (the five terminal registry states and
+`never-funded`), or `never-funded` with an empty `reason`; a `final` outcome `passed` whose `evidence` holds no
+resolving gate record is `sweep.change-without-evidence`; (c) every `changed` outcome has a history entry with a non-empty `reason` (rule
+1.2; an empty one is reported as `sweep.change-without-evidence`) and non-empty evidence that resolves (gate
+records in the gate register, ADRs on disk, hypothesis ids in the hypothesis register, pilot ids in the pilot
+register (a pilot whose claim is a speed ratio resolves only when its `ceiling` block, N38a-09, was recorded
+before its first run record), share rows in the `shares` of this or an earlier sweep record, whose `ceiling` must
+equal 1/(1 − `share`)) and whose kind fits each factor it changes (rule 1.2), and whose `reason` states a ratio
+(a number with "times", "×" or "-fold", or the word "ten-fold") only as the measured value of a gate record in
+its evidence (KI-60: no multiplier is printed except a gate's measured value); every killed-idea evaluation with
+`condition_met` set cites `measured` values whose records resolve at this exit, and its `condition_met` equals
+its `threshold` comparisons, with no `proposal` while `condition_met` is false; and every `unverified_settled`
+entry has a `record` that resolves by the rule of the source register (NAB-09: a gate record for `measured`, a
+source id with a P reading or a confirmed re-read for `read`, an ADR for `withdrawn`). Each failure of (c) is
+`sweep.change-without-evidence`; (d) no
+family named by a fired kill gate still reads "adopted" without "fell back", and one that rule 3 moves on a
+fired kill gate (kernel reflection) has its `move` entry and is in the parked table, and no queue item whose
+kill gate fired is in `entered` (`sweep.kill-not-reflected`); (e) the Moonshot cap holds after `entered`, and
+no item is in `entered` while the item its `waits_for` names is not `passed`, and `entered` is a prefix of
+`next_entries` at this exit (NAB-21) unless an accepted ADR reorders the queue (`sweep.cap-exceeded`, naming the
+rule broken); (f) the sweep's session is not among the implementer sessions of the beads whose gates it cites;
 (g) no reading task is open for a gate recorded at this exit. Findings: `sweep.missing`, `sweep.row-not-swept`,
 `sweep.change-without-evidence`, `sweep.kill-not-reflected`, `sweep.cap-exceeded`, `sweep.self-certified`,
 `sweep.reading-task-open`, `sweep.proposal-applied-without-adr`.
@@ -216,7 +259,24 @@ system; it is a decision record, and its changes are DESIGN judgments with FACT 
 - `reopen_evidence_opens_proposal_not_move`.
 - `below_two_after_rescore_is_proposed_for_parking`: a Frontier family re-scored from (4, 3, 4) = 3.0 to
   (4, 2, 5) = 1.6 with no Moonshot tier produces a parking proposal.
-- `cap_after_entry`: four active plus one entered → `sweep.cap-exceeded`.
+- `cap_after_entry`: four active plus one entered → `sweep.cap-exceeded`; MQ-08 entered while MQ-02 is
+  `queued`, or MQ-03 entered ahead of MQ-02 with no ADR, → `sweep.cap-exceeded`; an item whose kill gate fired
+  in `entered` → `sweep.kill-not-reflected`.
+- `synthetic_record_moves_no_reality_factor`: a Confidence raise of EV-F32 whose only evidence is a gate record
+  on `synthetic` data → `sweep.change-without-evidence`.
+- `m8_final_states`: at M8 a queue item with no `final` entry, a `final` outcome `active`, or `never-funded`
+  with an empty reason → `sweep.row-not-swept`; `passed` with no resolving gate record →
+  `sweep.change-without-evidence`.
+- `condition_met_follows_threshold`: KI-03 with threshold `specializable-share >= 1/3` and measured 0.25 fails
+  `sweep.change-without-evidence` when `condition_met = true` or when a proposal is opened, and passes with
+  `condition_met = false` and no proposal; a measured value under another name leaves the threshold unmet.
+- `unchanged_on_unrun_gates_is_not_swept`: a family `unchanged` whose `looked_at` holds one `not-run` gate record
+  fails `sweep.row-not-swept`; the same family in `carried_forward` passes.
+- `unverified_settled_needs_record`: NV-01 listed as `measured` with an empty `record` fails
+  `sweep.change-without-evidence`; with a gate record of GATE-SPARK-21 in the fixture register it passes.
+- `share_row_resolves`: an Impact change citing `SH-M3-01` passes when that row is in the record's `shares` with
+  `ceiling` 1.042 for `share` 0.04, and fails `sweep.change-without-evidence` when the row is absent or its
+  ceiling is 1.5.
 - `self_certified_sweep_is_refused`.
 - `check_json_follows_runner_contract`: `check --exit M0 --root <fixture> --json` on a fixture with no sweep
   record prints one object with `check = "decision-sweep"`, `milestone = "M0"` and a block `sweep.missing`, and

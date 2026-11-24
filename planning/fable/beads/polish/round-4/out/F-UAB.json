@@ -1,0 +1,184 @@
+{
+ "round": 4,
+ "slice": "F-UAB",
+ "reviewed": 23,
+ "changed": [
+  {
+   "bead": "NAB-01",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Depended on and cited BD-004 for check-generated, whose component is N34p4-03 (request); acceptance required 337 records after NAB-03..07, which depend on this bead (convention 7: it could never close); the six-subcommand acceptance used BD-004's test, absent once the dep is N34p4-03; the generator test path xtask/tests/ was not the crate's crates/xtask/tests/; the planted duplicate-id control had no unit test."
+  },
+  {
+   "bead": "NAB-02",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Acceptance said the ornamental labels are accepted inside the killed-idea printout, which is NAB-32's and not a dependency, and step 1 skipped 'generated files' without saying how one is recognised; only one of the eight labels was tested. Now: a generated file is one with N34p4-03's first-line marker, a fixture marker file proves the exemption, and all eight labels are tested with their repairs."
+  },
+  {
+   "bead": "NAB-09",
+   "kinds": [
+    "request",
+    "convention",
+    "broken",
+    "contradiction"
+   ],
+   "what": "Cited and depended on BD-004 for check-generated (request: N34p4-03). Acceptance 'with NAB-11 to NAB-15 landed' waited on beads that depend on it (convention 7), restated as the src.no-reading/src.schema rule. The plan-check flag required reading N38a-10's ledger, which frob-core's loader cannot reach and this bead does not depend on: the status is now an argument, fail-closed not-run, supplied by NAB-10, with a test. NAB-15 requires the limits text in the generated summary, which this bead's generator did not print."
+  },
+  {
+   "bead": "NAB-10",
+   "kinds": [
+    "registry",
+    "broken",
+    "contradiction"
+   ],
+   "what": "Citation form 1 put a `sources` field in gates.toml and contract.toml, whose schemas refuse unknown fields (N40-01's loader, contract.schema), so every cited gate would fail to load; the bead now adds the field to both. Form 3 scanned a `cites` field of the bead log, which frob.beadlog/1 does not have; close reasons are read from the tracker export .beads/issues.jsonl. Tests added for both."
+  },
+  {
+   "bead": "NAB-14",
+   "kinds": [
+    "convention",
+    "contradiction",
+    "broken"
+   ],
+   "what": "Test 'nv06_anchor_figures_are_mark_r (once BD-311 registers them)' narrated a pending action (convention 13) and contradicted BD-311, which keeps anchors in its own register and refuses search-summary anchors; step 3 said the same. Acceptance relied on NAB-16's script and NAB-10's lint, which come after it (convention 7), and 'no reference is cited by a recorded gate' was untestable here; restated to what its loader dependency can check."
+  },
+  {
+   "bead": "NAB-15",
+   "kinds": [
+    "convention",
+    "contradiction",
+    "plan"
+   ],
+   "what": "Acceptance relied on NAB-10's lint and N38a-10's ledger, both of which depend on this bead (convention 7, a cycle if added); the loader 'derives' the flag from the ledger it cannot read (now: status supplied, fail closed, with a test). PC-25's cited_in read 'the worked-artifact set'; the plan's Appendix H row says Appendix L."
+  },
+  {
+   "bead": "NAB-16",
+   "kinds": [
+    "contradiction",
+    "broken"
+   ],
+   "what": "Step 4 extracted only the working-tree archive and compared its counts with the recorded values, while NAB-15 (and its rule that re-runs use the cited revision first) says the script extracts a635b91 via git show and compares the working-tree revision with it. Both revisions are now extracted, with a shallow-clone repair that never substitutes the working-tree file."
+  },
+  {
+   "bead": "NAB-21",
+   "kinds": [
+    "registry",
+    "convention",
+    "contradiction"
+   ],
+   "what": "Acceptance 'every kill gate named exists in the gate register' cannot pass at M0 for kill gates whose ledger groups land at M1; restated per NAB-17's frozen list and skip rule. 'A fifth funding request is refused there' needed the pilot register (N38a-09), not a dependency; restated as next_entries with active_count = 4. A unit test had next_entries' sweep make MQ-08 killed, but state is written only by N41-09's release transition."
+  },
+  {
+   "bead": "NAB-22",
+   "kinds": [
+    "broken",
+    "contradiction"
+   ],
+   "what": "The due list's known answers (69 families: 13 Solid, 55 Frontier or Moonshot, 1 parked) read the Solid and parked tables, but NAB-18 and NAB-20 were not dependencies. Rule 1.2 cites 'the share table a sweep stores' and NAB-24/26/30 store shares, ceilings and a reader list, yet the record had no such fields and check (c) could not resolve a share row; unverified_settled carried no record, so NAB-23's NV-01 control could fire no finding. Added `shares`, `readers` and records on unverified_settled, with resolution in check (c) and tests. The sweeps' own negative controls (replayed by NAB-50's hook, each to be caught by `check`) mostly fired no finding: added typed killed-idea thresholds, the unrun-gate rule, ceiling-before-run and synthetic-evidence resolution, a ratio rule (KI-60), queue rules (waits_for, next_entries order, fired kill gate), kernel-reflection move, M8 final states (queue.final) and the trigger_exit read for unplaced ideas, all under the existing eight findings."
+  },
+  {
+   "bead": "NAB-23",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The negative control 'a sweep record that marks NV-01 measured with no gate record' produced none of the eight findings of NAB-22 (unverified_settled carried no evidence), so the replayed control could never be caught; restated against NAB-22's new record field and finding."
+  },
+  {
+   "bead": "NAB-25",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Its three negative controls must each be caught by `decision-sweep check` (NAB-50's hook), but the KI-03 proposal on an unmet share and the no-GPU 'unchanged' row fired none of NAB-22's findings; they are now stated against NAB-22's typed thresholds and unrun-gate rule, each with its finding."
+  },
+  {
+   "bead": "NAB-26",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The share table and reader list had no place in the sweep record, so 'every changed Impact cites it' and the reader-list acceptance could not be checked; they are now the record's `shares` and `readers`. The KI-56 control (met while the comparator tied) fired no finding; mapped to the typed threshold, and every control now names its finding."
+  },
+  {
+   "bead": "NAB-27",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The τ = 0.6 selection, the speed comparison with no prior ceiling and the KI-28 topology-edit controls and tests said only 'check fails', with no NAB-22 rule able to fail; each now names `sweep.change-without-evidence` through the typed thresholds and the ceiling-before-run resolution added to NAB-22."
+  },
+  {
+   "bead": "NAB-28",
+   "kinds": [
+    "broken"
+   ],
+   "what": "Controls (synthetic rehearsal raising a reality family's Confidence; kernel reflection left in the Frontier table; an NV item measured with no record) had no NAB-22 finding that could fire; mapped to the rules added there."
+  },
+  {
+   "bead": "NAB-29",
+   "kinds": [
+    "broken",
+    "contradiction"
+   ],
+   "what": "Acceptance 'MQ-08 is killed' was a state only N41-09's release transition writes; now cited as that transition. The waits_for and KILL-LIVING controls fired no NAB-22 finding; mapped to the queue rules added there."
+  },
+  {
+   "bead": "NAB-30",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The test claimed 'the wording lint's finding is surfaced as a sweep finding', which no bead implements, and the 'ten-fold' control had no finding; both now fail `sweep.change-without-evidence` by the ratio rule added to NAB-22's check (c); the Impact control names its finding."
+  },
+  {
+   "bead": "NAB-31",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The final sweep prints every item's queue history and final states but did not depend on the M5 and M6 sweeps (no path), so it could run first and miss their entries; now depends on NAB-29. Final queue outcomes had no field and no due rule in NAB-22; controls now name findings."
+  },
+  {
+   "bead": "NAB-32",
+   "kinds": [
+    "broken",
+    "convention"
+   ],
+   "what": "`ki.adr-condition-not-met` compared measured values with a free-text `revive_only_if`, which no lint can evaluate; ADRs now type the threshold and measured lines. `ki.record-removed` relied on an undefined 'frozen id list' (now the base-commit rule of N00-03, with a test). Acceptance and `every_record_is_complete (once the entries exist)` waited on NAB-33..40, which depend on it (conventions 7, 13)."
+  },
+  {
+   "bead": "NAB-42",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Acceptance and two unit tests asserted the real register's counts (30/88/19/27/16 and the 90/9 join), which exist only after NAB-43..49 land, and those beads depend on it (convention 7: it could never close); moved to fixtures, with the real counts asserted by NAB-50. Gate resolution now states the frozen-list skip. A `trigger_exit` field was added because NAB-22's due list could not read the free-text trigger's milestone."
+  },
+  {
+   "bead": "NAB-49",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "The decision record was in docs/delivery/adr/, which is retired (KNOWN_DRIFTS 4; request); it is now docs/adr/. 'The two triggers are named in the M2 sweep's due list' needed NAB-22's tool, which is not a dependency, and the due list had no field to read; now UP-06/UP-10 carry `trigger_exit = \"M2\"`, and NAB-50 asserts the listing."
+  },
+  {
+   "bead": "NAB-50",
+   "kinds": [
+    "broken"
+   ],
+   "what": "No step asserted that the M2 due list names the conditional ideas UP-06 and UP-10, which NAB-49 now leaves to this script; added."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N40-01",
+   "what": "NAB-10 adds an optional `sources` field (list of strings: SRC-… citations, with an optional #figure part) to the [[gate]] record of frob.gates/1 and to N40-01's loader in the same commit; list it among the gate record fields so the loader's unknown-field rule and the schema agree."
+  }
+ ],
+ "unchanged": 2,
+ "notes": "NAB-22 also gained the `shares`, `readers`, `threshold`, `queue.final` and `unverified_settled.record` fields and the matching rules in checks (b) to (e), each with a test; no ninth finding was added, so the 'eight findings' counts elsewhere hold. INDEX.tsv lacks the N34p4-* beads; their milestones were read from the staging files. NAB-02 keeps BD-004, since its acceptance uses check-contracts and the six-subcommand test. Unchanged: NAB-05, NAB-24."
+}

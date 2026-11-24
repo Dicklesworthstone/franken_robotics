@@ -150,10 +150,16 @@ an unknown major version refuses (`FROB-REF-125`) and names the migration; a bod
 differs from the computed one refuses with the breaker (`FROB-REF-109`); a lever value outside its bounds, or
 an edit to a locked block, refuses (`FROB-REF-111`); a sensor without a parent frame, a rate or a clock
 refuses (`FROB-REF-126`). Each is exit 3 with one envelope and ranked repairs. That is eight planted mutations
-for seven codes (111 twice), each refused by the stage that owns it (N14b-10): the form-stage codes (103, 105,
-111 for a lever value, 125, 126) when the mutated file is loaded with `frob design new --file`; the inverted
-interval (107) at stage 3 and the declared symmetry (109) at stage 5, by `frob design check` on the stored
-design; and the lock (111) by `frob design edit` on a locked block, since a lock constrains edits, not files.
+for seven codes (111 twice), each refused by the stage that owns it (N14b-10), through the verb that refuses
+there. `frob design new --file` refuses only a document with no canonical form, with the reader's code and
+nothing stored: the unknown field (103) and the unknown major version (125). A file that has a canonical form
+and fails stage 1 is stored by `design new` and answered with exit 2 and the code as a finding (N14a-21: the
+stage-1 codes are findings of that verb, not refusals), so the missing fill (105), the lever value outside its
+bounds (111) and the sensor without a clock (126) are loaded with `frob design new --file` (exit 2, the finding
+asserted) and then refused with exit 3 at stage 1 by `frob design check` on the stored design; the inverted
+interval (107) is refused at stage 3 and the declared symmetry (109) at stage 5, by `frob design check` on the
+stored design; and the lock (111) by `frob design edit` on a locked block, since a lock constrains edits, not
+files.
 
 **Round trips.** (a) authored → canonical → value → canonical: zero byte differences, and a second
 canonicalization changes nothing; (b) canonical JSON → S-expression view → canonical JSON: the identity, with
@@ -178,7 +184,8 @@ reads, may differ, so `DesignId` equality is asserted only when `meta` is passed
 - [ ] Each of the eight planted mutations (seven codes) is refused with its code and exit 3 by the verb named
       above; the unmutated file is accepted.
 - [ ] `frob design check quad-tray --json` returns `closure: "closed"`, `symmetry: "C2xC2"` and no finding of
-      severity high, with evidence class Tested, tier `static`, determinism `exact`.
+      severity high, with evidence class Tested, tier `static`, determinism `D0` (the wire form of class D0,
+      N35-01, whose reader rejects `exact`).
 - [ ] The design created from cell c:06a has half-width 1/7 m, ratio 2.35 and the fixture's model identity.
 - [ ] `DesignId`, canonical bytes and the S-expression text are identical on two runs, in debug and release,
       on Linux and macOS (class D0); once blessed, the identity equals the map's entry for `d:7a3e…`.
@@ -212,8 +219,11 @@ digest equality with the canonical file; (4) `frob analyze symmetry quad-tray --
 the breaker; (5) `frob design check quad-tray --json`, assert closure and symmetry; (6) run the mission steps
 of artifact L.4's script in the same scratch root, then `frob design new quad-tray-cell --from-cell
 <mission>/c:06a --key l1-cell --json`, assert half-width, ratio and model identity; (7) the eight mutations
-through `e2e_expect_refusal <code> 3`, each through the verb that owns its stage (`design new --file`,
-`design check` or `design edit`, as above); (8) `frob-golden check --artifact L1`. Plants: `ratio-as-decimal` feeds
+through `e2e_expect_refusal <code> 3`, each through the verb that refuses it, as above: `design new --file` for
+103 and 125; `design check` on the design stored from the mutated file for 105, the lever value of 111, 126,
+107 and 109 (each such file is first loaded with `design new --file` under a name and a key of its own, and for
+the three stage-1 codes that call's exit 2 and finding are asserted); `design edit` for the lock;
+(8) `frob-golden check --artifact L1`. Plants: `ratio-as-decimal` feeds
 `"0.142857 m"` and must fail the identity assertion; `lidar-centred-assert` asserts `assert_obs: "C2xC2"` and
 must be refused with 109. The log (`target/e2e-logs/art_l1_fbot/<utc>.ndjson`) records every command with exit
 code and wall time, the envelope's evidence block, digests where state is compared, each assertion with
@@ -222,8 +232,10 @@ observed and expected values, each refusal with code and first repair, and the `
 ### Known answers and negative controls
 
 - Known answers (exact; hand-checkable): the pointer table; twelve coordinates; feet at (±1/5, ±1/7) m; the
-  orders 4 and 2 of the two groups; v = 7 and r = 47/20 at the cell centre. They have no number in the
-  known-answer suite; the unit's coverage file lists them for registration.
+  orders 4 and 2 of the two groups; v = 7 and r = 47/20 at the cell centre. They are rows JL-06 (one identity
+  for every spelling, with the pointer table) and JL-07 (the derived facts) of NJLx-02's known-answer block (a
+  dependency), which this bead's tests cite by number once the block is issued, with the rows' controls (a
+  reader built with key sorting disabled; the mechanical group used as the policy's symmetry).
 - Counterexample this fixture keeps alive: taking the mechanical symmetry group as the policy's symmetry. A
   quadruped with one forward lidar has the four-element group mechanically and a two-element group in closed
   loop; only the observation-preserving subgroup may be used for weight sharing and deduplication.

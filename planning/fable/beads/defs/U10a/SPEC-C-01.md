@@ -4,7 +4,7 @@ title: "frob-lie: C-01 specified â€” configuration group, joint subgroups, HervÃ
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "lemma", "marrow", "frob-lie", "solid", "frontier", "spine", "spec", "test"]
+labels: ["m1", "lemma", "marrow", "frob-lie", "solid", "frontier", "spine", "spec", "test", "review-notes-open"]
 parent: "WP-03"
 deps: ["BD-025", "N10a-01", "STD-E2E", "STD-TEST"]
 needs: []

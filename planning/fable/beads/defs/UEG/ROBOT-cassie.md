@@ -45,17 +45,20 @@ asset-cassie-<source hash> --json` (NEG-15's import recipe: `design.import` is a
 file and has no output-path option; the key makes a re-run an idempotent replay with the same `DesignId`). The
 golden `assets/robots/cassie/import.fbot` is the design's `term` section (`frob design show <DesignId> --section
 term --json`, the canonical JSON bytes), and the loss report is read with `frob artifact read <report> --json`.
-Mapping rules exercised here: an `equality` of kind `connect`
-between two bodies becomes a `closure` with a spherical or revolute constraint at the stated anchor; a joint
-with `stiffness` and `springref` becomes a passive joint with an elastic element and its rest angle; anything
-the importer cannot map (for example a constraint's solver softness) is listed in the loss report with the
-source's values. Expected loss-report entries (HYPOTHESIS until read): constraint softness parameters; visual
-meshes; fitted collision primitives.
+Mapping rules exercised here, as BD-066's table states them: an `equality` of kind `connect` between two bodies
+becomes a `closure` of class `S` (a spherical constraint at the stated anchor), and one of kind `weld` a fixed
+closure; a spring joint becomes an unactuated (passive) joint of its class, and its `stiffness` and `springref`
+are not mapped (the design format has no joint-spring field) but listed in the loss report with the source's
+values, severity high, as is any `armature` on such a joint; anything else the importer cannot map (for example
+a constraint's solver softness) is listed in the loss report with the source's values. Expected loss-report
+entries (HYPOTHESIS until read): the four spring joints' stiffness and rest angle; constraint softness
+parameters; visual meshes; fitted collision primitives.
 
 **Validation specifics.** (1) Mobility: with the loops closed, the leg's mobility computed by exact rank
 equals the count of independent leg coordinates the source implies (actuated joints plus spring deflections);
 the number is computed at the pin and stored. (2) Closure residual at the source's reference pose: zero to
-10⁻⁹ m. (3) Passive joints are counted as passive, with their stiffness carried. (4) Mass properties and joint
+10⁻⁹ m. (3) Passive joints are counted as passive (no actuator bound), and each spring joint's stiffness and
+rest angle appear in the loss report with the source's values, severity high. (4) Mass properties and joint
 limits as for every robot. (5) Forward-kinematics parity is evaluated on configurations that satisfy the
 closures (sampled in independent coordinates and solved for the dependent ones by the oracle), since
 arbitrary joint vectors violate the loops.
@@ -81,7 +84,9 @@ item lands.
 - `robot_cassie_manifest_valid`, `robot_cassie_licence_mit_matches`.
 - `robot_cassie_equalities_accounted`: count in the source = closures + loss-report entries.
 - `robot_cassie_closure_residual_zero_at_reference`.
-- `robot_cassie_mobility_recorded`; `robot_cassie_springs_are_passive_with_stiffness`.
+- `robot_cassie_mobility_recorded`; `robot_cassie_springs_passive_stiffness_listed`: each spring joint is
+  unactuated in the import and its `stiffness` and `springref` are loss-report entries of severity high with the
+  source's values.
 - `robot_cassie_mass_properties_consistent`, `robot_cassie_joint_limits_valid`.
 - `robot_cassie_loss_report_golden`, `robot_cassie_design_id_pinned`.
 

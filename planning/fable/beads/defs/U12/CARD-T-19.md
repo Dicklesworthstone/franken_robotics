@@ -36,21 +36,23 @@ proxy (the bound is applied to a declared mass envelope and never to an unrelate
 
 ## Scope
 
-In: statement document, registry row, the per-body certificates of a compiled model (kind `rational-ldlt` plus
-the inequality), specimens and mutants, the binding to the importer's refusals. Out: the inertia cone and the
-mass-support predicate as library code (the algebra crate bead); geometry-derived inertia and the shell rule
-(the model compiler); the plausibility refusal for solid enclosures (FROB-REF-168, raised by the compiler);
-Riemannian identification on the cone (Frontier, separate pilot).
+In: statement document, registry row, the per-body certificate format (kind `rational-ldlt` plus the
+inequality), specimens and mutants, the binding to the preflight refusals `FROB-REF-104` and `FROB-REF-106`. Out:
+the per-body certificates of compiled models (N12-20, M5); the inertia cone and the mass-support predicate as
+library code (the algebra crate bead); geometry-derived inertia and the shell rule (the model compiler); the
+plausibility refusal for solid enclosures (FROB-REF-168, raised by the compiler); Riemannian identification on
+the cone (Frontier, separate pilot).
 
-Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
-the pseudo-inertia cone of `frob-algebra` (BD-051), like the model compiler that derives inertia is `related`, not
-a dependency (a card that waited for its implementer would close a loop, because the implementer's own acceptance
-runs the card's law tests). What the card does depend on is in `deps`: the card registry, its specification, its
-pilot where the route is Frontier, and Lemma's own proof machinery. It closes on its statement document, its
-registry row, its specimens and mutants, and every acceptance line that its own fixtures decide. An acceptance
-line that can only be observed on live output (the per-body certificates of each reference robot and the
-importer's refusal of a failing body) is run inside the implementing bead, with this card's law tests, as part of
-that bead's acceptance; the receipt produced there is what moves the registry row for that output.
+Order of work. This card is finished before the code that uses its theorem and never depends on it: the
+pseudo-inertia cone of `frob-algebra` (BD-051), like the model compiler that derives inertia (BD-062), is
+`related`, not a dependency; neither depends on this card. What the card does depend on is in `deps`: the card
+registry, its specification and Lemma's own proof machinery. It closes on its statement document, its registry
+row, its specimens and mutants, and every acceptance line that its own fixtures decide. Two outputs are observed
+elsewhere, on live models: the refusal of a failing body at preflight stage 2 (`FROB-REF-104`, inconsistent
+inertia; `FROB-REF-106`, mass-support bound), raised by BD-100 with the codes written once in N14a-13; and the
+per-body certificates of each reference robot's compiled model, issued at M5 by the certificate-coverage pipeline
+N12-20 (its catalogue row "Inertia tables of a model"), whose receipt moves the registry row to `checked`. N12-20
+is at a later milestone, so it is not a dependency.
 
 ## Technical approach
 
@@ -77,15 +79,19 @@ that bead's acceptance; the receipt produced there is what moves the registry ro
 
 ## Acceptance criteria
 
-- [ ] For each reference robot, every body has both certificates and `frob-verify` accepts them; a body failing
-      either is refused at import with the offending quantity.
+- [ ] `frob-verify` accepts the card's specimens (a solid box, the thin shell at equality, an offset centre of
+      mass inside the same ball), each carrying both certificates. The per-body certificates of each reference
+      robot are N12-20's at M5, and the refusal of a failing body (`FROB-REF-104` or `FROB-REF-106`, with the
+      offending quantity) is BD-100's; neither is a condition of this card's close.
 - [ ] Negative controls rejected: principal moments (1, 1, 3) kg·m² (triangle inequality violated: Σ = diag(3/2,
       3/2, −1/2) has a negative pivot); a negative mass; one changed matrix entry in an accepted certificate; the
       mass-support bound evaluated against a collision proxy smaller than the mass envelope.
 - [ ] Mass-support fixture: a centred 1 kg part with three principal moments of 0.008 kg·m² passes positivity and
       the triangle tests yet needs 0.012 m² where a ball of radius 0.10 m allows 0.010 m², so it is refused; an
       isotropic thin shell of that radius, with moments 1/150 kg·m², reaches equality and is accepted.
-- [ ] Registry row `checked`, class `Certified`, with hashes and checker identity.
+- [ ] Registry row at this card's close: the route registered and `hypothesis`, printing no class; N12-20's
+      certificates on the reference robots' inertia tables move it to `checked`, class `Certified`, with hashes and
+      checker identity.
 
 ## Test plan
 
@@ -101,9 +107,12 @@ collision sphere: the certificate's envelope field is not the declared mass enve
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) includes the specimens and mutants; the importer's own
-script exercises the refusals through `frob design check`. For this card the NDJSON lines (STD-E2E helper) carry
-`ts`, `script`, `bead` ("CARD-T-19"), `step` (`T-19/<body-or-mutant>`), `event`, the exact command line, exit code,
+`scripts/e2e/lemma_auditor_mutations.sh` (bead N12-34) includes the specimens and mutants; BD-100's script
+`scripts/e2e/analyze_mass_stability.sh` exercises the refusals `FROB-REF-104` and `FROB-REF-106` through
+`frob analyze mass` (N28a-29's `atelier_check.sh` runs it as a stage and adds the `frob design check` legs). For
+this card the NDJSON lines (STD-E2E helper) carry `ts`, `script`, `bead` and `step` ("CARD-T-19" and
+`T-19/<body-or-mutant>` on N12-34's per-card lines; BD-100's own key and step names on its script's lines, since a
+line carries its owning bead), `event`, the exact command line, exit code,
 wall time, the four pivots as rationals, the mass-support margin ρ² − ‖c − o‖² − tr(I_C)/(2m) in m², the bundle's
 BLAKE3, the expected and observed verdict, and on a mismatch the first failing rule (the first non-positive pivot
 or the negative margin) and the path to reproduce.
@@ -124,4 +133,4 @@ spherical shell of radius r tends to I = (2/3)·m·r², against (2/5)·m·r² fo
 
 ## References
 
-§12.3, §11.5; C-03; FROB-REF-168; CX-101; the LDLᵀ reflector of the reflection pilot.
+§12.3, §11.5; C-03; FROB-REF-104, FROB-REF-106, FROB-REF-168; CX-101; the LDLᵀ reflector of the reflection pilot.

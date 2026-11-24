@@ -205,10 +205,16 @@ hand; CI regenerates and compares digests.
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c14.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control; G0 and G2 rows
-KA-085 to KA-087; `frob --json prove kernel K-cay-step` (asserting the identities listed, the certificate
-hash, class `Certified`, the checker identity); `frob --json prove verify <certificate>` in an environment
-without the simulator; where a device is present, `frob --json spark check --kernel K-cay-step --backend
+`scripts/e2e/spec_c14.sh`. Sources the STD-E2E helper. Steps: law suite; law suite per control (one control per
+build, N10a-01 section 6); the registry rows in their tier targets,
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g0_laws -- KA-086 KA-087` and
+`--test g2_parity -- KA-085` (KA-085 is a G2 row), each again with `--features gauntlet-mutations` for the rows'
+controls; `frob --json prove kernel K-cay-step` (asserting the identities listed, the certificate
+hash, class `Certified`, the checker identity; logged `pending` until BD-021 and BD-027 land); `frob --json prove
+verify <certificate>` in tree, then the same file through the offline auditor, `frob-verify <certificate>` under
+`env -i` in an empty working directory (BD-026's binary, which links neither the simulator nor the derivation
+engine: the environment without the simulator), asserting the verdict `accept` both times; where a device is
+present, `frob --json spark check --kernel K-cay-step --backend
 <gpu-cuda|gpu-metal> --key spec-c14-<backend>-<run>` (a `run` verb: without its idempotency key it is refused
 with `FROB-REF-805`) asserting agreement inside the device's class. Log `target/e2e-logs/spec_c14/<utc>.ndjson` with transcript: commands, exit codes,
 wall times, hashes of source, emitted and certificate artifacts, the evidence block (class, determinism

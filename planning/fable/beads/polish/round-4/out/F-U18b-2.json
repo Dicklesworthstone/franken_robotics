@@ -1,0 +1,247 @@
+{
+ "round": 4,
+ "slice": "F-U18b-2",
+ "reviewed": 24,
+ "changed": [
+  {
+   "bead": "N18b-23",
+   "kinds": [
+    "request",
+    "contradiction",
+    "broken"
+   ],
+   "what": "Forced-overflow run now uses N18b-20's crates/frob-conformance/fixtures/capacity/tracked-2f.fbot with --init flippers-down (the M3 zoo tracked-flipper did not exist at M2; left, the step could not run). margin_holds said v·h + ε_g = 10 mm + ε_g; the production margin is m₀ + v·h + ε_g = 11 mm + ε_g (N18a-12); left, the test asserts a margin the code does not have. Re-detection took candidates 'inside its swept bound' and used N18b-43's swept bounds, so the audit could never find a pair the audited bound rejected (and a chord-only mutant would blind it): candidates are now all pairs past the self-collision filter and the strict route advances on N18a-13's closing-speed bound (N16a-08's audit-pass rule). The chord-only acceptance and e2e step could not pass (lockstep uses no swept bound; on strict check 6's audit pass ends the run with FROB-REF-221): restated on N18b-45's arc hand instance on strict with the control build gauntlet-mutations,frob-contact/chord-only-swept-bound (plant N18b-43:trac-arc), plus unit test broad_phase_attribution. Deps + N18b-20, N18b-45 (files used)."
+  },
+  {
+   "bead": "N18b-24",
+   "kinds": [
+    "request",
+    "contradiction",
+    "convention"
+   ],
+   "what": "Step 2 used names (quad-mammal, humanoid, tracked-flipper) and 'a referee cap of 21' where N18b-20's script runs crates/frob-conformance/fixtures/capacity/*.fbot and reads referee_cap (NFp3-12 reruns it at a new pin); step 4 used the M3 zoo tracked-flipper instead of tracked-2f.fbot; step 6 asserted chord-only misses that cannot occur (aligned with N18b-23); step 7 called smoke 'the battery of N38a-20 that BD-168 records the gate on' (smoke is N24b-01's; BD-168 records GATE-TRAC-03 on standard); the contacts-removed mutant is now CX-180's plant N18b-22:cx-180 built per BD-025. Left, the script fails at a new pin, runs a missing fixture and asserts impossible misses."
+  },
+  {
+   "bead": "N18b-26",
+   "kinds": [
+    "request",
+    "deadlock"
+   ],
+   "what": "The third clause of GATE-TRAC-10 is measured in the receipt BD-156 (the one recorder) records from; the script writes only its receipt. The OPEN-TRAC-4 decision from the measured f32 Newton-step error curve needs BD-156's solve, which depends on this bead (convention 7): it moved to new bead N18bp4-01; this bead keeps b_adm as one registry constant at the fail-closed 0.05, with a test that the estimate reads it. Left, the acceptance could never pass."
+  },
+  {
+   "bead": "N18b-27",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Replaces only the figures in CX-176's catalogue row; the rerun pair is N18-CX's, entered from PILOT-PT-19 and always equal to pilots::rerun_status (N38b-05). Left, setting rerun = true while the record reads differs is the load error rerun-disagrees-with-pilot."
+  },
+  {
+   "bead": "N18b-28",
+   "kinds": [
+    "request",
+    "deadlock",
+    "registry"
+   ],
+   "what": "VERBS-sim makes sim.run --law this bead's input at M1 (N16b-25 widens it at M2), but the bead said it arrives with N16b-25 and left the referee forms unasserted; the M1 script now asserts --law CL-2 --tier referee → 246 not-built, --law CL-9 → 802, --law CL-H runs; dep VERBS-sim added. Admission deadlock (F-U18a): DESIGN (a) per plan §18.14 246 is for a requested law; a default (or named default) on a pending cell runs labelled law-pending with gate and part, on failed/fallback/not-certified it is refused, so BD-161/BD-168 can measure GATE-TRAC-01; (b) conformance-build-only --conformance-admit-pending <gate> admits a named law on a cell exactly pending whose row names that gate, labelled, in manifest and StepPlanId, release 802. Unit tests default_law_pending_runs_labelled and conformance_admit_pending. Left, every gate measured by runs of its own pending cell could never be recorded."
+  },
+  {
+   "bead": "N18b-29",
+   "kinds": [
+    "request",
+    "convention",
+    "registry",
+    "contradiction"
+   ],
+   "what": "C13: tyre laws stated as the M4 tyre form of the law branch (N18b-04) with 243, not 'once N18b-04 registers them'; the registry example is already --law CL-1 (was described as foot-patch and 'requested of VERBS-contact'). H-verbs-2: pulse and attachment inputs are not in the schema before N18bx-01/N15ax-02, so passing them is 802, not 724 (ProbeBranch comment, parse rules, branch_not_wired). --reff is not the input's spelling: r_eff is --r-eff (BD-022), in two command lines. static_max 24 'against the cap 21' now reads referee_cap from the admission record (fits m ≤ C), so the test survives NFp3-12's pin. Left, an implementer builds 724 arms the registry forbids and the script's cone probe answers 802."
+  },
+  {
+   "bead": "N18b-30",
+   "kinds": [
+    "convention",
+    "registry",
+    "contradiction"
+   ],
+   "what": "Step 5 promised the missing-pair refusal's 'interim form before' numbering; the 2xx row is numbered at the ledger's M0 run, so this M2 script asserts the assigned number from docs/generated/refusal_round2.md. Step 7 said --law arrives with N16b-25 and repeated the referee forms; --law is N18b-28's at M1 (VERBS-sim), whose stage-0 script now asserts them, so step 7 keeps the batch-cpu form only (no second copy, as the script's own rule requires). Step 8 repeated stage 0's referee incline probe: now on the batched law. Left, the script asserts an interim code that never exists and duplicates stage 0."
+  },
+  {
+   "bead": "N18b-43",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "C13: the plant is stated as N18-CX's fact N18b-43:trac-arc with feature chord-only-swept-bound, and the control build is --features gauntlet-mutations,frob-contact/chord-only-swept-bound (BD-025), not nc-<nnnn> or 'requested of N18-CX'. The admission refusal raises swept-bound-without-speed-bound under its assigned number (numbered at the ledger's M0 run; no interim form, no 'at the time of writing'). Convention 9/N38b-19: this bead ran record_gate for GATE-TRAC-12 although the M1 part's one recorder is N18b-45 (BD-147); it now writes and logs the containment receipt only. Left, two recordings of one part (the second hits part-rows-dropped) and a build feature that does not exist."
+  },
+  {
+   "bead": "N18b-44",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Plant N18b-45:trac-arc → N18b-43:trac-arc; controls built as gauntlet-mutations,frob-contact/chord-only-swept-bound and frob-contact/bp-box-base-only (the record's feature, BD-025), not nc-<nnnn>. The audit clause was to be recorded from contact.audit envelopes, which record_gate cannot take (receipts are Gauntlet tier receipts, N38b-19): it is now the gate entry GATE-TRAC-12/audit (standard battery per audited tier plus the free-plate fixture), recorded with --part M2 from one g1 run of /strict and /audit with both controls caught. Scope no longer claims the 'final gate record' with the M1 rows (N18b-45 records M1). On strict the chord-only build is 'not detected' (no event, or 221 from check 6), not 'missed'. The e2e smoke audit is labelled as the per-change battery; the gate entry audits standard. Left, the M2 part could not be recorded and the control builds fail to compile."
+  },
+  {
+   "bead": "N18b-45",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "H-verbs-8: its M1 runs passed --scene, which sim.run lacks until N16b-25 (802 at M1); the hand instance is now also registered as conformance fixtures traction/arc-hand and traction/arc-hand-unlimited (BD-080's form, N24b-03's registry; deps BD-080, N24b-03 added) and the M1 stages run --fixture, with arc_fixture_matches_files tying them to the design and scene files N18b-44 uses. H-cx-1: plant N18b-43:trac-arc, feature chord-only-swept-bound, no 'requested of'. Admission refusal under its assigned number (no interim form). As the M1 part's one recorder it records --part M1 from one g1 run of /containment and /referee with both controls caught. Left, every M1 command line answers 802 and the control builds name a nonexistent feature."
+  },
+  {
+   "bead": "N18b-32",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Control builds were spelled <crate>/nc-<nnnn>; BD-025's runner adds <crate>/<feature> exactly as the control record writes it, and several battery controls are counterexample plants (N18a-13:cx-169, N18b-22:cx-180) whose features are not nc numbers. Left, an implementer builds a feature that does not exist and no control is planted."
+  },
+  {
+   "bead": "N18b-33",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "The decision was to set 'the gate's row' to kept, step 1 or step 2, which are not N40-03's outcomes (convention 10): the kill row now takes decision = { outcome, adr, date, session, receipts } with not-fired for kept, fired with fallback_form 'CL-2 becomes the default at a published lower throughput' for step 1, and fired with fallback_form 'locomotion claims are restricted to the referee tier and the fast tiers are labeled exploratory' for step 2 (verbatim from the row), receipts the GATE-FID-01 receipts and the pilot result. Left, N40-03's loader rejects the decision and propagation never runs."
+  },
+  {
+   "bead": "N18b-34",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The battery-row runs passed '<row design> --scene <row scene>' although N18b-32's rows are conformance fixtures in BD-080's form (one file carrying bodies and environment); they now run --fixture traction/<row fixture> (a --scene beside a fixture that declares one is 802), and the referee arm runs with the referee's own law, no --law (CL-1 and CL-2 have no referee row, so --law there is 246). Left, every pilot run fails before measuring."
+  },
+  {
+   "bead": "N18b-35",
+   "kinds": [
+    "convention"
+   ],
+   "what": "The radius-zero plant was built with '--features gauntlet-mutations' alone, which plants nothing; it is now the build gauntlet-mutations,frob-contact/single-patch-radius-zero with the feature as its control record writes it (BD-025). Left, the control is never planted and 'caught' cannot be observed."
+  },
+  {
+   "bead": "N18b-36",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "ANSWER from VERBS-report applied: the realism claim over an assumed card field is FROB-REF-819, exit 3, from the evidence boundary (N37-26's precedence), observed Estimated, weakest naming card and field; the e2e asserts e2e_expect_refusal FROB-REF-819 3 and the unit test realism_refused the same; no contact-card code, 312 not widened; dep N37-26 added. Left, the script asserted an unnumbered refusal 'requested of' the registry (C13) and would accept any exit-3 error."
+  },
+  {
+   "bead": "N18b-38",
+   "kinds": [
+    "convention",
+    "contradiction"
+   ],
+   "what": "Control builds named frob-contact/nc-<nnnn>; now <crate>/<feature> as each record writes it (keep-memory is CX-183's plant N18a-14:cx-183). GATE-TRAC-06's M1 referee part had two recorders (BD-086 for thin-barrier rows, this bead for sill rows), against N38b-19's one recording bead per part; this bead, whose receipt already carries both row sets with both controls caught, is now the part's one recorder (--part M1) and BD-086 records nothing (request). Left, the second recording replaces the first and two beads claim one part."
+  },
+  {
+   "bead": "N18b-39",
+   "kinds": [
+    "request",
+    "convention",
+    "registry",
+    "contradiction",
+    "broken"
+   ],
+   "what": "H-owners-1 applied: response-anchor-unconverged is stated as N35x-02's 2xx row (Contact §18.19, exit 3, after-change, no interim form) registered by N18-REF, not 'requested of'. Both 2xx refusals promised an 'interim form before' the number; the ledger numbers them at its M0 run, so they are raised under the number read from refusal_round2.md and N18-REF's table. KILL-RESPONSE is decided per column family (N18a-26), so anchors are removed only when every family has fired, not when the gate 'fires'. The script ran --fixture resting-block, which no bead registered: this bead registers it (assets/fixtures/resting-block/fixture.toml; a 10/g₀ kg box, μ = 0.5, so μ·N = 5 N exactly, the block N18b-40 and BD-367 load with 4 N and 6 N). The (world, step) anchor mutant is made an explicit test-level control, world_step_key_caught. Left, the e2e fails on an unknown fixture and an implementer awaits an interim code that never exists."
+  },
+  {
+   "bead": "N18b-40",
+   "kinds": [
+    "convention",
+    "contradiction"
+   ],
+   "what": "Plant builds were frob-contact/nc-<nnnn> 'numbers read from the control registry'; the trac-resid, trac-lambda and trac-mode records carry their own feature, so the build is gauntlet-mutations,frob-contact/<feature> exactly as each record writes it (BD-025). KILL-RESPONSE was described as one decision that removes the code path; it is decided per column family (N18a-26), one family can keep the batch while another falls back, and the path goes only when every family fired. Left, the controls are built with nonexistent features and an implementer deletes a path a surviving family still uses."
+  },
+  {
+   "bead": "N18b-41",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "'If KILL-RESPONSE fires, this bead's code is unused' contradicts the per-family decision (N18a-26): the certificate stays in use while any family keeps the batch, and is unused only when every family fired. Left, λ_lo is removed while a surviving family's bounds still need it."
+  },
+  {
+   "bead": "N18b-42",
+   "kinds": [
+    "request",
+    "convention",
+    "contradiction",
+    "broken"
+   ],
+   "what": "Stage 4 passed --run-seed beside --battery (FROB-REF-802, VERBS-eval): it now runs the battery form frob eval run --battery standard --class <c> ... with no seed, SEED drawing the state sample and the columns. F-U18a: the sweep's 64 columns were contact impulses and joint impulses only, all of family counterfactual, so N18a-26 could not decide adjoint and stencil from it; they are now 22 counterfactual, 21 adjoint, 21 stencil (the pilot's and BD-367's families), each carrying its family, and the rerouted share is reported per class and per family (gate run, stage 4, log, record, tests column_generator_by_address and shares_per_family_sum). Stage 7 built four plants as frob-contact/nc-<nnnn>; the three N18b-40 plants are built per BD-025 and the (world, step) anchor mutant, which has no control record, is N18b-39's test-level control read in stage 1. The kill fallback is per family; BD-367 has no 'method' field, so the assertion is status full-solve on a fired family's columns. The Considerations said the gate has no register row; EPIC-M4 (N40-10) has it. Stage 1's 'does not ship while the row has no number' is now the M0-assigned number. Label removed. Left, stage 4 and stage 7 fail at once and KILL-RESPONSE cannot be decided for two of three families."
+  },
+  {
+   "bead": "N18bx-01",
+   "kinds": [
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "valid_impulse with lo ≥ hi was FROB-REF-102 (unit or dimension error) though its units are right; it is FROB-REF-103, and a non-positive duration, which had no code, is FROB-REF-103 (the container's fail-closed form error, as N15ax-02 does for a non-positive limit); each refusal now has its code and pointer, and validation_refusals and the e2e cover all five. The six probe rows need half-sine 1 ms and rect 10/1 ms cards, but item 8 shipped only two fixture cards: five are now listed. The e2e read m_eff from the contact telemetry stream, whose fields (N24a-20) have no m_eff: the stream now carries it beside the event impulse. --impulse 1N·s is spelled 1N.s as the CLI spells compound units (VERBS-contact). The pulse branch's exclusivity rules of VERBS-contact are now this bead's, with test pulse_branch_exclusive. Left, four probe rows have no card, the telemetry check finds no field, and two refusals carry the wrong or no code."
+  },
+  {
+   "bead": "N18bx-03",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The e2e impact run passed no precision or step, but the acceptance's 50 N / 100 N peaks and [1.8, 2.2] ratio are for batch-cpu f64 at h = 1 ms (sim.run's default precision is 'default'): the run now passes --precision f64 --step 1ms, and device-tier runs log peaks at their own precision. The acceptance says the referee replay of the planted address 'reproduces the unplanted referee trace', but the script replayed only the planted run: it now replays the unplanted run's address too and compares digests. Left, the ratio is measured at another precision and the replay clause is never checked."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N18bp4-01",
+   "why": "OPEN-TRAC-4 (the f32 admission bound on scaled κ·u) is decided from the f32-vs-f64 Newton-step error curve, which exists only with BD-156's solve; BD-156 depends on N18b-26, so N18b-26 could not carry the decision (convention 7). The new M2 bead (deps BD-156, N18b-26, N41-OPEN2) runs the stiffness sweep, applies a rule fixed before measuring (bound = largest grid value with max step error ≤ 2.5%, zero false and missed refusals), writes docs/adr/ADR-OPEN-TRAC-4.md, sets b_adm and restates the 0.04/0.06 fixtures around it."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N41-OPEN2",
+   "what": "OPEN-TRAC-4's 'Decided in' column names N18b-26; the decision moved to N18bp4-01 (N18b-26 cannot measure the f32 Newton-step error curve, which needs BD-156, a dependent of N18b-26). Name N18bp4-01."
+  },
+  {
+   "bead": "WP-45",
+   "what": "List the new child N18bp4-01 (Decision OPEN-TRAC-4: the f32 admission bound from the measured Newton-step error curve) beside N18b-26."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "Add to the conformance-build-only inputs table the row `--conformance-admit-pending <gate>` (owner N18b-28): admits a named law on a cell whose status is exactly `pending` and whose admission row names that gate, for that gate's measuring runs; any other status or gate keeps FROB-REF-246; results carry `law-pending` with gate and part; enters the manifest and StepPlanId; a release build answers 802. Also note under `--law` that a request naming no law (or the cell's default) runs on a `pending` cell labelled `law-pending` and is refused with 246 on a failed, fallback or not-certified cell (N18b-28's DESIGN)."
+  },
+  {
+   "bead": "N18a-40",
+   "what": "Your measuring runs of CL-H on batch-cpu (steps 2-7) are runs of a pending cell (GATE-TRAC-09 unrecorded) and are refused with 246: pass `--conformance-admit-pending GATE-TRAC-09` (N18b-28, conformance build) in them, and keep step 1 asserting 246 without it."
+  },
+  {
+   "bead": "BD-386",
+   "what": "Your acceptance run `frob sim run --fixture sliding-block --tier batch-cpu --profile lockstep --law CL-H ...` is refused with 246 before GATE-TRAC-09 is recorded; pass `--conformance-admit-pending GATE-TRAC-09` (N18b-28's conformance-build input) in the measuring runs and keep the 246 assertion for the form without it."
+  },
+  {
+   "bead": "N18ax-02",
+   "what": "Step 6's unnamed 'conformance-only switch' is N18b-28's `--conformance-admit-pending GATE-TRAC-09` (conformance build only; release 802); name it in the device measuring runs."
+  },
+  {
+   "bead": "N18ax-03",
+   "what": "Step 2's device runs of CL-H before the gate record need N18b-28's `--conformance-admit-pending GATE-TRAC-09` (conformance build only); name it."
+  },
+  {
+   "bead": "N18a-18",
+   "what": "CL-2's measuring runs on batch-cpu before its admission row passes are runs of a pending cell; pass N18b-28's `--conformance-admit-pending <gate>` (the gate CL-2's admission row names) in them, and keep asserting `--law CL-2` → 246 without it."
+  },
+  {
+   "bead": "GB-20",
+   "what": "Your probe line uses `--reff 20mm`; the input is `r_eff`, so its option is `--r-eff` (BD-022's kebab-case, as N18b-29 now spells it); `--reff` is an unknown parameter, FROB-REF-802."
+  },
+  {
+   "bead": "BD-086",
+   "what": "GATE-TRAC-06's M1 referee part has one recording bead (N38b-19): N18b-38 records it from one g1 run carrying your thin-barrier rows and its sill rows with both controls caught. Drop your acceptance item that records the thin-barrier rows with record_gate; write and log the thin-barrier receipt only, and name N18b-38 as the part's recorder."
+  },
+  {
+   "bead": "VERBS-sim",
+   "what": "The `--conformance-plant <file>` row lists the plant kinds registered by N16b-15 and N21b-23 only; N18bx-03 registers the kind `stiffness` in registries/plant-kinds.toml (M5; one StiffnessPlant per entry, fast-tier lockstep only), used by N31b-37. Add it, or the row reads as the complete list and the stiffness plant looks unadmitted."
+  }
+ ],
+ "unchanged": 2,
+ "notes": "Every note of the slice file was checked and applied (H-verbs-2's N18b-29 note had an empty text in the slice file; its text was read from H-verbs-2.json; H-owners-1 on N18b-39; F-U18a's per-family request on N18b-42). The label review-notes-open was removed from each bead whose notes are dealt with. BD-168 needs no new input: under N18b-28's DESIGN its default-law CL-1 runs on a pending cell run labelled law-pending. Unchanged after a full read: N18b-31 (derivations recomputed; convention-1 forms correct) and N18b-37 (arithmetic and scene compile --fine/--coarse/--truncation verified). Recorder map after this pass: GATE-TRAC-12 M1 N18b-45, M2 N18b-44, N18b-43 none; GATE-TRAC-06 M1 N18b-38 (BD-086 request); GATE-TRAC-11 N18b-42. Every touched file parses (front matter, JSON lists, seven sections, three test subsections); graph_check cycles: 0. Unchanged after review: N18b-31, N18b-37."
+}

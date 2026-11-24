@@ -1,0 +1,226 @@
+{
+  "round": 4,
+  "slice": "F-U39a",
+  "reviewed": 37,
+  "changed": [
+    {
+      "bead": "BD-147",
+      "kinds": [
+        "request",
+        "registry",
+        "convention"
+      ],
+      "what": "Applied three requests: the M1 load is 60 convergence parts (GATE-MARROW-01's completing part recorded by N13-19 with --part M1; GATE-MARROW-06's M1 part is the referee rows of N13-36), with due_counts and the known answers updated; NAB-24 added to deps and the decision sweep now runs before the review as the attached check decision-sweep (BET-12 alone comes after); N25bp4-01 added to deps (it records GATE-WS-03's M1 part). Unchanged, the review would have counted 59 parts against N40-04's 60 and could have run before the sweep and the GATE-WS-03 M1 part it reads. The acceptance line for KILL-TENFOLD-LEVER now asks for its one decision ADR (docs/adr/ADR-KILL-TENFOLD-LEVER-M1.md, holding the eight per-lever records of N39a-39) and the register row's entry with exit = \"M1\", in place of 'eight decision records', which an exit reviewer would have sought as eight ADRs (convention 10)."
+    },
+    {
+      "bead": "BD-314",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Removed the narration that prereg-section-missing and prereg-rule-paraphrased were still requested of N39-REF; they are its rows (exit 3, raised_by BD-314) and the bead now says so (convention 13). An implementer would otherwise have waited for, or added, rows that already exist."
+    },
+    {
+      "bead": "BD-434",
+      "kinds": [
+        "plan",
+        "registry"
+      ],
+      "what": "The M7 exit review had no Bets section although N40-31 makes BET-13 and BET-14 due at M7 and the other exit reviews (BD-378, BD-427, BD-442) carry one. Added the acceptance clause and the unit test bets_due_m7 (the due set is exactly {BET-13, BET-14}; an open bet makes the exit not-ready; a stratum measured between 3 and 10 neither holds nor falsifies BET-13). Without it M7 could exit with both bets undecided."
+    },
+    {
+      "bead": "N39a-01",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The strict reading named no reason ids or exit codes. It now names the N39-REF rows it raises (record-unknown-field, record-missing-field, record-duplicate-key, record-noncanonical-number, record-unknown-schema at exit 3; record-hash-mismatch and store-overwrite at exit 9) with N39-REF's refusal shape, and the record check and unit tests assert them. Otherwise the implementer would invent ids that N39-REF's two-way consistency test then rejects."
+    },
+    {
+      "bead": "BD-039",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "capabilities_resolve accepted only IA-nn ids, but the audit (N39b-08 step 2) fills a comparator row's capabilities with IA, DA and NF ids, and N00-14 writes the DA and NF records into the same incumbent_audit.toml. The test and the Scope now resolve ids of any record of that file; as written, every audited row would have been a load error."
+    },
+    {
+      "bead": "N39a-07",
+      "kinds": [
+        "request",
+        "registry",
+        "broken"
+      ],
+      "what": "Wrote the planted input false_certificate (TF-CX-11, GATE-TENFOLD-03) under its plant name in fixtures/tenfold/controls/, with what makes it caught and who disqualifies and decides (N39b-01, N39b-03); registered its three answer kinds in N39a-09's decision table that frob-tenfold adjudicate runs; added N39a-08 to deps, since step 5(c) samples in the adjudicating simulator whose adapter N39a-08 builds. Without these the registry entry had no fixture, the e2e's adjudicate call had no definition, and the bead could start before its simulator existed."
+    },
+    {
+      "bead": "N39a-09",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The e2e scripts of N39a-06, N39a-07 and this bead call frob-tenfold submit and frob-tenfold adjudicate, but no bead defined adjudicate. This bead now owns both subcommands (submit: commit and spend; adjudicate: draw, decide through a table keyed by answer kind, sign the receipt; adjudicator role only, N39a-02) and its script uses them. Unchanged, the scripts called a subcommand that nothing builds (convention 8)."
+    },
+    {
+      "bead": "N39a-06",
+      "kinds": [
+        "broken"
+      ],
+      "what": "States that its battery procedure is registered for qualified-design and counterexample-and-repair in N39a-09's decision table, which frob-tenfold adjudicate (called by its e2e script) runs. Without it nothing connects the battery to the subcommand the script calls."
+    },
+    {
+      "bead": "N39a-10",
+      "kinds": [
+        "convention",
+        "registry"
+      ],
+      "what": "N40-14 names this bead the recorder of GATE-TENFOLD-05, but the script wrote 'the gate record' and nothing entered the register part. It now commits the per-stratum records and the run receipt under receipts/gates/ and records the part with record_gate --gate GATE-TENFOLD-05 --part M3|M7 from a fresh session (convention 9); control (d) is named as TF-CX-15 with its plant judge_in_tuning_logs (N39a-08). Unchanged, may_open would find no -05 pass part, or a script would write the register itself."
+    },
+    {
+      "bead": "N39a-40",
+      "kinds": [
+        "convention"
+      ],
+      "what": "N40-14 names this bead the recorder of GATE-TENFOLD-04, but nothing entered the register part. The record and the receipt of the control run are now committed under receipts/gates/, and the part is recorded with record_gate --gate GATE-TENFOLD-04 --part M3|M7 from the pre-open run, by a session that implemented none of the mechanisms (convention 9). Otherwise the pre-opening conjunction would find no -04 part."
+    },
+    {
+      "bead": "N39a-12",
+      "kinds": [
+        "request",
+        "contradiction",
+        "broken"
+      ],
+      "what": "Applied the request: the stratum record now has development_deadline_s (14,400 s by default, published with the class description, carried by development cards) beside deadline_s (the stratum's H, null until N39b-30 decides it, carried by sealed cards), and check 6 holds only sealed cards to deadline_s; unit test two_deadlines added. The e2e now runs the grid check as a rehearsal tournament as well, since check 3 refuses an empty cell only at a tournament. Before, every development card failed check 6 or N39a-05's check 4, and the script's empty-cell refusal could never occur on a partial-gate rehearsal."
+    },
+    {
+      "bead": "N39a-05",
+      "kinds": [
+        "registry"
+      ],
+      "what": "Card check 4 now names the two stratum-record fields it compares against (deadline_s for sealed cards, development_deadline_s for development cards, N39a-12). Before, it pointed at a 'provisional deadline of the class description' that no record held."
+    },
+    {
+      "bead": "N39a-15",
+      "kinds": [
+        "broken",
+        "registry"
+      ],
+      "what": "Its own e2e and BD-314's call frob-tenfold seal step, which no bead defined. Added the command forms (seal step <n> --kind --payload [--arm], --complete, the open operation as seal step 6 --kind open, seal verify) with their exit codes, and named the refusals for an unregistered entry kind (seal-kind-unregistered, requested of N39-REF) and a role the kind does not allow (role-not-permitted); unit test kind_and_role_registry added. Otherwise the scripts called a nonexistent subcommand and the acceptance criterion's refusal of an unregistered kind had no reason id."
+    },
+    {
+      "bead": "N39a-17",
+      "kinds": [
+        "broken"
+      ],
+      "what": "Its e2e and N39a-41 call frob-tenfold-score warm, which no bead defined; the bead now owns that subcommand (frob-tenfold-score warm <cell> [--json], exit 3 on refusal) (convention 8)."
+    },
+    {
+      "bead": "N39a-24",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "ledger check fails a ledger without a resolvable freeze manifest, yet the M0 and M1 baseline ledgers (BD-040, BD-143) are written before any freeze manifest exists (N39a-18, M3). A baseline ledger's freeze field now holds the content address of the frozen comparator-registry row (BD-039's registry, frozen by N36-25), which the check resolves; baseline_single_phase tests both cases. Otherwise every baseline ledger would fail its own check with ledger-disclosure-missing."
+    },
+    {
+      "bead": "N39a-27",
+      "kinds": [
+        "broken"
+      ],
+      "what": "Its e2e, N39a-28 and N39a-41 call frob-tenfold-score cell, which no bead defined; the bead now owns the subcommand (frob-tenfold-score cell <cell> [--json], exit 3 with the first validation refusal) (convention 8)."
+    },
+    {
+      "bead": "N39a-28",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "Gave the bead its own e2e script, scripts/e2e/tenfold_bootstrap.sh (convention 11): the exact TF-26 reference values (recomputed here: p0 = 9,569/20,000, k_L = 398, k_U = 9,380, L = 612/469, U = 126/17), thread and build-mode identity, the degenerate case and a cross-platform digest; STD-E2E added to deps. Defined the subcommand frob-tenfold-score bootstrap <cell> [--seed] that N39a-41 calls. Before, the bead had no script, and the rehearsal's 'covered by' line called cell, not the bootstrap."
+    },
+    {
+      "bead": "N39a-30",
+      "kinds": [
+        "request",
+        "convention",
+        "registry"
+      ],
+      "what": "Gave the bead its own e2e script, scripts/e2e/tenfold_noninferiority.sh (convention 11; the table 59/93/124/153, the bounds and BinCDF(3; 60) = 0.647 recomputed), STD-E2E added to deps, and the subcommand frob-tenfold-score noninferiority <cell> defined beside --table. Built the mutation bootstrap_zero_counts that N39-CX assigns it (TF-CX-08), which zero_count_bound catches. Before, the registry entry had no plant and the bead had no script."
+    },
+    {
+      "bead": "N39a-32",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The combiner's refusal of a monitor stop at a tournament gate had no reason id; it is now monitor-stop-disarmed (exit 3; requested of N39-REF), and the e2e asserts it. Otherwise the implementer would invent an id that N39-REF's two-way consistency test rejects."
+    },
+    {
+      "bead": "N39a-33",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "Wrote the planted input four_family_cell (TF-CX-07, gates GATE-TENFOLD-03 and -04) under its plant name in fixtures/tenfold/controls/, with the condition that catches it (condition iii failed, ten-fold unreachable, naming refused with cell-not-reachable) and who decides (N39a-34); N39a-40's control runner reads it. Before, N39a-40 cited a fixture that no bead wrote."
+    },
+    {
+      "bead": "N39a-35",
+      "kinds": [
+        "request"
+      ],
+      "what": "The TF-CX-26 paragraph assigned the refusal of an operator's stop request to N39b-13. It now names N39bp3-01 (frob-tenfold tournament stop-cell refused with tenfold.interim-stop-refused, exit 3), as N39-CX does, and keeps the fixture and the monitor side here; N39bp3-01 added to related. Otherwise an implementer would look for the refusal in the wrong bead."
+    },
+    {
+      "bead": "N39a-36",
+      "kinds": [
+        "request",
+        "convention",
+        "registry"
+      ],
+      "what": "Gave the report record its own e2e script, scripts/e2e/tenfold_report_record.sh (convention 11), built on its own dependencies through a new subcommand frob-tenfold report check [--render], because report build is N39b-14's and comes later. The script and two new unit tests (self_adjudicated_labelled, cost_claim_none) make the assertions this bead now solely owns: a self-adjudicated report carries the label and omits 'independently accepted' and 'ten-fold', and every report prints cost_claim: none. Rule 5's refusal is named report-locked-wording (requested of N39-REF, with the existing but unregistered report-contract-violation); STD-E2E added to deps. Before, those two assertions were made nowhere, and the 'covered by' script called a command this bead cannot reach."
+    },
+    {
+      "bead": "N39a-39",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "The register entry now carries exit = \"M1\" as the first entry of the row's decision array (N40-03, N39b-10); the narration that a per-class field was 'requested of N00-09' is replaced by N00-09's actual field: a package struck for some classes is re-registered with those classes removed from classes (check g) (convention 13). Not applied: the request's 'fired only when a lever is struck_overall'. The bead's 'fired when any (lever, class) is struck' matches the trigger, the per-class fallback and N39b-10's M2 entry, and the request's form would record not-fired while a fallback is in force. The 'a new ADR at the M2 re-read' wording was already in place."
+    },
+    {
+      "bead": "N39a-41",
+      "kinds": [
+        "deadlock"
+      ],
+      "what": "Step 11 runs frob-tenfold report build, which N39b-14 builds, but the bead did not depend on N39b-14 (both M3, no cycle). Added the dependency and named it at the step. Otherwise an agent could start the rehearsal and be unable to finish its report step."
+    },
+    {
+      "bead": "N39ax-06",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "Attributed frob-tenfold report build to N39a-36; N39a-36 says the command is N39b-14's (already a dependency). Corrected, so the implementer looks in the right bead."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "to": "N39-REF",
+      "what": "Add the harness reason seal-kind-unregistered: an entry offered to the sealing ledger whose kind is not in the ledger's kind registry (repair: register the kind with its payload schema and roles in the bead that writes it; exit 3; maps_to none; raised_by N39a-15; producing test N39a-15's seal::kind_and_role_registry)."
+    },
+    {
+      "to": "N39-REF",
+      "what": "Add the harness reason monitor-stop-disarmed: a futility-monitor stop offered to the cell outcome combiner for a cell of a gate of type tournament, where the stop is disarmed (repair: none, the cell runs to n; exit 3; maps_to none; raised_by N39a-32; producing test N39a-32's monitor_stop_combiner)."
+    },
+    {
+      "to": "N39-REF",
+      "what": "Add the harness reasons report-contract-violation (a report record failing the metric contract's check_report, listing the violations by letter; exit 3; raised_by N39a-36; producing test contract_violation_refuses_build; already used by N39a-36's rule 7 but not a row) and report-locked-wording (a locked phrase in the rendering of a self-adjudicated report, or 'ten-fold' on a cell whose verdict is not ten-fold; exit 3; raised_by N39a-36; producing test self_adjudicated_labelled)."
+    },
+    {
+      "to": "N39ax-01",
+      "what": "Name the field: the 'provisional development deadline of the stratum's class description (4 h by default)' that development cards carry is the stratum record's development_deadline_s (N39a-12, 14,400 s by default); deadline_s there is the stratum's H, null until N39b-30 decides it."
+    },
+    {
+      "to": "N39b-30",
+      "what": "Name the field: the provisional deadline used before this decision (14,400 s) is the stratum record's development_deadline_s (N39a-12); the deadline this decision sets is written to the stratum record's deadline_s."
+    }
+  ],
+  "unchanged": 12,
+  "notes": "Unchanged after full review: BD-433, N39a-02, N39a-04, N39a-08, N39a-13, N39a-18, N39a-20, N39a-29, N39a-31, N39a-37, N39a-38, N39ax-03. Numbers recomputed with own scripts (bootstrap TF-26, guard tails and Holm steps, non-inferiority attainability 59/93/124/153 and BinCDF(3;60)=0.647, warm card, six-family card, ceilings, monitor E values, battery sizes). N39a-01: the audit's proposed split of N39-REF's harness-reason table (so that N39-REF no longer depends on N39a-01) was declined: N39-REF's unit tests run in N39a-01's test target (--test tenfold), its exit_codes test and e2e tenfold_refusals.sh provoke reasons through N39a-01's binaries, and its two-way consistency test reads harness source, so removing the edge would let N39-REF start and not finish; N39a-01 instead states the ids and exits it raises, which N39-REF binds. Dependencies added: N39a-07 -> N39a-08, N39a-41 -> N39b-14, STD-E2E to N39a-28, N39a-30 and N39a-36 (BD-147's NAB-24 and N25bp4-01 by request); graph_check reports no cycle. All 37 files parse (front matter, one-line JSON lists, seven sections)."
+}

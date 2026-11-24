@@ -33,11 +33,16 @@ dependency); the background referee (BD-214); the card (GB-16).
 ## Technical approach
 
 1. **Single source.** The planning rates of the reference workloads live in one registry table, the target
-   register `registries/perf_targets.toml` of N36-01 (row 7: H, physics only, `gpu-cuda`, planning 1.7 M
-   world-steps/s; the quadruped row, planning 2.0 M), keyed by workload and tier; the workload records
+   register `registries/perf_targets.toml` of N36-01, keyed by workload and tier; the workload records
    themselves are `registries/workloads.toml` (N36-02). The coverage model of `sim.estimate` takes a workload
    key and reads T from that row (or from the device's measured rate once one exists), never a literal rate.
-   A unit test fails if a numeric rate appears as a literal in the coverage code path.
+   The number read is the one in the row's binding (tolerance) column while no incumbent has been measured:
+   for row 7 (H, physics only, `gpu-cuda`) the tolerance's planning figure, 1.7 M world-steps/s exactly; for
+   row 1 (Q, physics only, `gpu-cuda`) the interim floor, 2.0 M, which N36-01's `threshold(row, None)` returns
+   with status `interim-floor`. It is not the row's ambition planning value (2.55 M for H; 4.0 M for Q, which is
+   what `planning_value(row 1)` returns): those give 0.09 to 0.47% and 0.06 to 0.3%, the ambition case the card
+   prints beside the others, and the estimate labels which figure it used. A unit test fails if a numeric rate
+   appears as a literal in the coverage code path.
 2. **Values (from the table's TARGETs; h = 2 ms; 24 cores at 0.2 to 1.0 of real time).** Humanoid 1.7 M:
    3,400 world-seconds per second, 4.8/3,400 = 0.1412% to 24/3,400 = 0.7059%. Quadruped 2.0 M: 4,000, 0.12% to
    0.6%. The stale 0.5 M gives 1,000 and 0.48% to 2.4%.
@@ -45,8 +50,10 @@ dependency); the background referee (BD-214); the card (GB-16).
    (`share` = `shadowed_world_seconds` / `gpu_world_seconds`: world-seconds actually re-simulated over
    world-seconds produced, so a dropped snapshot lowers it); the planning value appears only in `sim.estimate` and
    is labelled TARGET.
-4. **Register and scan.** Item E7-4: stale patterns `0.5 M world-steps` in the scope of referee, shadow or
-   coverage text, and `0.5 to 2.4%`; pinned by `gb_16_reference` and the test below.
+4. **Register and scan.** Item E7-4: stale patterns `0.5 M world-steps` and `0.5 to 2.4%`, each in the scope
+   of referee, shadow or coverage text (the engine's entry form, N38b-50, searches no value without a scope;
+   NEG-03 writes both entries); pinned by `gb_16_reference` and the test below. The planted wrong golden of
+   GB-16's card file states the stale figure on purpose and carries `stale-as-control: E7-4`.
 
 ## Acceptance criteria
 
@@ -60,8 +67,9 @@ dependency); the background referee (BD-214); the card (GB-16).
 
 ### Unit tests
 
-- `coverage_from_table_humanoid`: 4.8/3,400 and 24/3,400 as rationals.
-- `coverage_from_table_quadruped`: 4.8/4,000 and 24/4,000.
+- `coverage_from_table_humanoid`: 4.8/3,400 and 24/3,400 as rationals (T = 1.7 M, row 7's tolerance figure).
+- `coverage_from_table_quadruped`: 4.8/4,000 and 24/4,000 (T = 2.0 M, row 1's interim floor); reading
+  `planning_value(row 1)` = 4.0 M instead gives 4.8/8,000 and must differ.
 - `coverage_tracks_table`: a scratch table with the humanoid at 2.55 M yields 0.0941% to 0.4706%.
 - `coverage_no_literal_rates`: source lint.
 - `stale_rate_differs`: the 0.5 M inputs give 0.48 to 2.4%, asserted different from the table-driven result.

@@ -39,9 +39,10 @@ to 88 (NAB-46); the contested records (NAB-47).
 **Transcription rule.** As in NAB-44. `proposals` is the integer in the "Passes" column; two rows have a
 qualified count and store it as `proposals_note`: IP-35 ("2, on the problem, with two estimators": two passes
 agreed on the problem and proposed different estimators) with `proposals = 2`, and IP-46 ("5 or more") with
-`proposals = 5`. `contested` links: IP-25 (runtime shields), IP-26 (the probability bound of the typed
-product), IP-33 (what a fork may claim), IP-35 (the estimator for cheap referee promotion), IP-37 (structure
-and manufacture inside the loop), IP-45 (verdict reuse beyond a keyed cache). Two rows are *program rules*
+`proposals = 5`. `contested` links: IP-25 → CT-07 (runtime shields), IP-26 → CT-08 (the probability bound of
+the typed product), IP-33 → CT-13 (what a fork may claim), IP-35 → CT-16 (the estimator for cheap referee
+promotion), IP-37 → CT-14 (structure and manufacture inside the loop), IP-45 → CT-11 (verdict reuse beyond a
+keyed cache); NAB-47 depends on this bead and checks that they resolve. Two rows are *program rules*
 with no tier: IP-46 (ten-fold defined as the cost of an accepted design decision) and IP-47 (rival audit
 before any ratio); their `tiers` is empty and `tier_text = "Program rule"`. IP-46's `gates` expands "the gates
 of §39" to GATE-TENFOLD-01 to GATE-TENFOLD-13, as the program-rule clause of `idea.placed-without-gate`
@@ -115,13 +116,16 @@ requires.
 ## Acceptance criteria
 
 - [ ] Records `IP-23` … `IP-48` exist in four themes with the columns verbatim and carriers as listed.
-- [ ] Every carrier key exists as a bead; every gate and kill gate named exists in the gate register (30
-      distinct kill gates in these rows).
-- [ ] Six records carry a `contested` link that resolves; IP-34 carries `killed_idea = ["KI-45"]` for its
+- [ ] Every carrier key exists as a bead; every gate named exists in the gate register; of the 30 distinct
+      kill gates in these rows, the 13 of the M0 ledger groups (N40-23, N40-27) exist in the kill-gate
+      register, and the 17 of the M1 groups (N40-24 to N40-26) exist or, while the M1 exit record does not, are
+      recorded `skip`s under NAB-42's rule for rows that land later.
+- [ ] Six records carry the `contested` link listed above (its resolution is NAB-47's test); IP-34 carries `killed_idea = ["KI-45"]` for its
       strong form.
 - [ ] The five rows with no kill gate (IP-26, IP-29, IP-40, IP-46, IP-47) are Solid or program rules.
 - [ ] `FROB-REF-856` exists in the refusal registry with the meaning "joint paving of a high-dimensional box
-      is refused".
+      is refused", or, while the M1 exit record does not exist, is reported as NAB-42's recorded `skip` (its
+      row is Augur's, entered at M1).
 - [ ] The traceability lint of NAB-42 passes on these records.
 
 ## Test plan
@@ -133,14 +137,15 @@ requires.
 - `twenty_six_records_in_four_themes` (8, 5, 7, 6).
 - `proposal_counts`: IP-33 has 7 (the widest); IP-31 has 6; IP-46 has 5 with a note; IP-35 has 2 with a note.
 - `contested_links_are_six`; `kill_gates_are_30`; `program_rules_are_two`.
-- `carriers_resolve`; `gates_resolve`.
+- `carriers_resolve`; `gates_resolve` (kill gates of the M1 ledger groups and `FROB-REF-856` resolve or are
+  recorded `skip`s, as in the criteria).
 - `tiers`: [M] is named by IP-24, IP-38 and IP-39.
 - `rows_frozen` against `tests/fixtures/ideas/converged_b.tsv`.
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh` (NAB-50) asserts 26 records and zero unresolved carriers and gates, logged
-per STD-E2E.
+`scripts/e2e/decision_records.sh` (NAB-50) asserts the 88 `IP` records of NAB-44 to NAB-46 and zero
+unresolved carriers and gates over the register, logged per STD-E2E; this pass's 26 are this module's tests.
 
 ### Known answers and negative controls
 

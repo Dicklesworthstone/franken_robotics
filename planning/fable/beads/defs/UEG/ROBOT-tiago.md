@@ -49,17 +49,23 @@ asset-tiago-<source hash> --json` (NEG-15's import recipe; the verb writes no fi
 the design's `term` section). Base-kind determination (step 1 of validation): count driven wheels
 and inspect how the source models them. Mecanum wheels in public models are written in one of three ways:
 explicit roller bodies on each wheel; an anisotropic friction setting on a plain wheel; or a planar joint with
-velocity actuators that bypasses wheel contact. The importer maps the first two to `roller-wheel` with the
-roller angle recovered (and its sign per wheel checked against the working pattern tᵢ = −sign(xᵢ·yᵢ)); the
-third is not a wheel model at all and is reported in the loss report as "base motion prescribed, no wheel
-contact", in which case the base serves kinematic parity only.
+velocity actuators that bypasses wheel contact. The importer infers no contact law (BD-066): roller bodies
+import as bodies on unactuated revolute joints, and an anisotropic friction setting as an interface card under
+the lossy parity-only mapping, listed. This bead's validation recovers each wheel's roller angle from the
+imported roller axes (first form) or from the source's friction directions (second form), stores it in the
+manifest, and checks its sign per wheel against the working pattern tᵢ = −sign(xᵢ·yᵢ); declaring the
+`roller-wheel` law (BD-245, M3) on the base is a later edit, not part of the import. The third form is not a
+wheel model at all: the validation records the finding "base motion prescribed, no wheel contact" in the
+manifest, and the base then serves kinematic parity only.
 
 **Validation specifics.** (2) If mecanum: the twist-to-wheel map built from the imported wheel positions and
 roller angles has rank 3. The map is the one BD-109 states for the `mecanum` template (wheel i at (xᵢ, yᵢ) with
 radius r and roller angle αᵢ to its rolling direction, tᵢ = tan αᵢ): ωᵢ = (1/r)·(v_x + tᵢ·v_y + (tᵢ·xᵢ − yᵢ)·ω_z),
 four rows in (v_x, v_y, ω_z); the validation builds it from the imported xᵢ, yᵢ, r and the recovered αᵢ and
 computes its rank exactly at rational wheel positions (the positions rounded to the file's printed digits),
-and with all four tᵢ equal the first two columns are parallel and the rank is 2. (3) The arm: seven revolute joints, Jacobian rank 6 at the reference pose. (4)
+and with all four tᵢ equal the first two columns are parallel and the rank is 2. (3) The arm: seven revolute joints, Jacobian rank 6 at a generic configuration (a stated sample whose joint
+cosines and sines are rational, such as (3/5, 4/5), so that with the file's decimal offsets and axes the rank
+is computed exactly; the reference pose of a tucked arm may be singular and is not used). (4)
 Base-only sub-design `base.fbot` by a recorded edit, conserving mass. (5) Mass properties and limits as for
 every robot.
 
@@ -81,7 +87,7 @@ the base's share of `mobile-manipulator@iiwa7-tiago` (M3).
 - `robot_tiago_manifest_valid`, `robot_tiago_licence_apache2_notice`.
 - `robot_tiago_base_kind_determined`: one of `mecanum`, `differential`, `prescribed-planar`.
 - `robot_tiago_roller_pattern_and_rank` (conditional on `mecanum`).
-- `robot_tiago_arm_rank_six`.
+- `robot_tiago_arm_rank_six`: at the stated generic sample.
 - `robot_tiago_base_subdesign_conserves_mass`.
 - `robot_tiago_mass_properties_consistent`, `robot_tiago_joint_limits_valid`.
 - `robot_tiago_loss_report_golden`, `robot_tiago_design_id_pinned`.

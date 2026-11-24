@@ -22,9 +22,9 @@ is grouped by chapter, so it has no group for the two appendices that state hand
 the verb registry (the closed list of 243 verbs with their kinds, clusters and milestones) and the nine worked
 artifacts (one fully worked file of each exchange format, with every number derivable by hand).
 
-The beads that build those two appendices state their truths inline and say that they have no number (the
-registry reconciliation, the task-cluster assignment, eight golden-fixture beads and the second half of the
-scripted agent session). Every other chapter has a registry bead that enters its rows; these two appendices had
+The beads that build those two appendices state their truths inline (the registry reconciliation, the
+task-cluster assignment, eight golden-fixture beads and the second half of the scripted agent session), and
+the suite has no number for them until this bead's block is issued; each of them cites its rows below. Every other chapter has a registry bead that enters its rows; these two appendices had
 none, so their truths could not be cited by a gate, could not be listed by the registry's completeness check, and
 had no place where their controls were registered. This bead is that registry bead. Tier: Solid. It serves the
 rule that a gate nothing can fail validates nothing: each row here names the mutation that must fail it.

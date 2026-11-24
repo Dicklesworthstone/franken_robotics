@@ -55,9 +55,22 @@ lowering (BD-148); the capacity audit that measures overflow rates (BD-168); the
 4. **Consistency test across readers.** For each workload the five readers, and the shape-class registry once
    it exists, report the same (C, R); the buffers the lowering allocates have exactly the byte sizes the estimate
    predicts.
-5. **Register and scan.** Item E7-A: stale patterns `C = 24`, `R = 128`, `C = 40`, `R = 224`, `27 kB`,
-   `72 kB` in the scope of capacity, per-world or bucket text; pinned by `gb_41_reference_terms` and the tests
-   below.
+5. **Register and scan.** Item E7-A. What was withdrawn is a pair as the default of a reference workload, not
+   a number: C = 24 alone is a legitimate capacity elsewhere (the trot fixture of the row-class queues runs at
+   C = 24, the capacity rule can return C = 40, a test requests C = 24 against a record at C = 32), and an
+   entry on the single value in "capacity" text would fire on correct files and fail the scan on a clean tree.
+   The stale entries are therefore the two pairs, in the engine's entry form (N38b-50), written as TOML
+   strings: `{ pattern = "\\bC = 24\\b", all_of = ["R = 128"] }` and
+   `{ pattern = "\\bC = 40\\b", all_of = ["R = 224"] }` (both members of the pair inside the window; the `\b`
+   anchors keep C = 240 from matching). The byte figures 27 kB and 72 kB get no entry: they are the byte
+   model's correct values at the earlier capacities, which KA-348 keeps as a known answer of the formula with
+   both capacity sets (N16-KA, N16b-26), and the adjoint store arithmetic prints 160 × 27 kB = 4.32 MB per
+   world beside the current figure (N16c-25, N23b-38); an entry on them would fire on those correct files.
+   A line that states one of the earlier pairs on purpose fires like a stale one, so it carries the marker
+   `stale-as-control: E7-A`: the control rows of `registries/cards/GB-41.toml` (control (a) of
+   `gb_41_controls`), the line of KA-348's row that states the earlier capacities in that form, the
+   `byte_model_example` test of N38b-58, and the planted strings of this bead's tests. Pinned by
+   `gb_41_reference_terms` and the tests below.
 
 ## Acceptance criteria
 
@@ -78,6 +91,10 @@ lowering (BD-148); the capacity audit that measures overflow rates (BD-168); the
   with a literal C or R on a reference workload's class fails the lint.
 - `capacities_byte_model`: 30,556 and 90,704; superseded 25,948 and 70,352 asserted different.
 - `capacities_change_changes_identity`: a scratch row with R = 128 yields a different bucket digest.
+- `capacities_stale_entries_are_pairs`: through the scan of NEG-03, on one scratch file per text: "contact
+  capacity C = 24 (class bounds 6, 12, 24)" and "the store is 160 × 27 kB = 4.32 MB per world" give no hit;
+  "the quadruped default is C = 24, R = 128" and "the humanoid default is C = 40, R = 224" each give exactly
+  one hit, naming E7-A; the planted lines of the test source carry `stale-as-control: E7-A`.
 - `capacity_overflow_is_flagged`: a `synthetic` world that needs 33 contacts at C = 32 is flagged `Degraded`
   with the capacity named, never truncated silently.
 

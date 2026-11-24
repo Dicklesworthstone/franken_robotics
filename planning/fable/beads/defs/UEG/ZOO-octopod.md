@@ -54,7 +54,7 @@ mass).
 | Contact strata, eight feet × {open, stick, slip} under D₈ | (3⁸ + 4·3 + 2·3² + 3⁴ + 4·3⁵ + 4·3⁴)/16 = 7,968/16 = 498 | count |
 | Ten leg types on eight slots under D₈ | (10⁸ + 4·10 + 2·10² + 10⁴ + 4·10⁵ + 4·10⁴)/16 = 6,278,140 | count |
 | Contacts with one sample per foot | 8, inside the referee's limit of 21 (FACT: the sibling contact library sets its maximum contact count to 21) | exact |
-| Contacts with three samples per foot | 24 > 21: the referee returns its typed over-capacity refusal by name, never a truncated solve | exact (verdict) |
+| Contacts with three samples per foot | 24 > 21: the referee refuses with `FROB-REF-721` (referee capacity, exit 5; `observed` 24, `required` 21; BD-080's static check at compile, or its run-time check), never a truncated solve | exact (verdict) |
 | One leg out, radial layout | eight cases, each with a positive static margin | exact (sign) |
 | Batched capacities | the 36 bucket declares its own contact capacity C and row capacity R in the capacities table; 8 single-sample contacts need C ≥ 8 and 8 × 4 = 32 cone rows besides joint rows, and `sim.estimate` names the declared values it used | exact (table lookup) |
 
@@ -69,7 +69,8 @@ overstated, caught by comparing with the seven-foot polygon.
       identities pinned and platform-independent.
 - [ ] Symmetry, preflight and known-answer rows pass in both layouts; eight of eight single-leg failures have
       a positive margin.
-- [ ] One sample per foot stands on the referee's contact solve; three samples per foot is refused by name.
+- [ ] One sample per foot stands on the referee's contact solve; three samples per foot is refused with
+      `FROB-REF-721` (exit 5).
 
 ## Test plan
 
@@ -84,8 +85,9 @@ overstated, caught by comparing with the seven-foot polygon.
 ### End-to-end script and logging
 
 `scripts/e2e/zoo_goldens.sh` (NEG-31) at M3: both layouts through symmetry and stages 1 to 6; `frob phylum
-plan` on a single octopod for the bucket row; `frob sim run --tier referee` on the three-samples variant
-expecting the over-capacity refusal; log lines carry the contact count, the limit and the refusal name.
+plan --designs <DesignId> --worlds-per-design 1 --json` on the default instance for the bucket row; `frob sim run
+<three-samples variant> --tier referee --seconds 1 --key zoo-octopod-cap-<run> --json` expecting `FROB-REF-721`,
+exit 5; log lines carry the contact count, the limit and the refusal code.
 
 ### Known answers and negative controls
 

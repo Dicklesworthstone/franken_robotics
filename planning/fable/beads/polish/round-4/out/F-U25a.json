@@ -1,0 +1,236 @@
+{
+  "round": 4,
+  "slice": "F-U25a",
+  "reviewed": 30,
+  "changed": [
+    {
+      "bead": "BD-130",
+      "kinds": [
+        "plan"
+      ],
+      "what": "Applied the audit's split: deps N25a-12 -> N25ap4-01 (the new trait and registry bead). BD-130 only implements and registers a lowering, and its tests call the lowering directly, so waiting for the whole driver held up BD-133, N12-05 and the rest for one page of interface. Scope now says both forms register as primary and second."
+    },
+    {
+      "bead": "BD-135",
+      "kinds": [
+        "registry",
+        "contradiction",
+        "request",
+        "broken"
+      ],
+      "what": "Refusal lists and TOML now match VERBS-mission (858, 859, the M6 slug; the nine admission codes on synthesize, refute and distinguish; refute's and distinguish's mapped codes). Step 2 lists six common run properties with --envelope-scope (H-owners-3). A budget argument changes no MissionId; tests added. VERBS-mission moved from related to deps. New step 12: N25a-24's mid-run budget stop and cancellation relied on a 'test-only cost scale of the daemon' that no bead built, and there is no daemon at M1. BD-135 now owns a fixed per-call cost and proposer delay in frob-mission's conformance feature, read only under gauntlet-mutations, with the warning test-cost-model and a test. Dep N25ap4-01 added for the budget meter."
+    },
+    {
+      "bead": "BD-140",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Step 9 had the harness write the GATE-AUGUR-07 row, which N38b-19 refuses as self-certified. It now writes a hash-named receipt, and a non-implementing session runs record_gate."
+    },
+    {
+      "bead": "BD-288",
+      "kinds": [
+        "broken",
+        "convention"
+      ],
+      "what": "Step 8: --transport-unchecked is conformance_only, so the schema strips it unless frob-verbs/conformance is on. The test build is now --features gauntlet-mutations, not test-switches alone. The 'requested of BD-133' narration is replaced by BD-133's stated export of withheld entries."
+    },
+    {
+      "bead": "BD-292",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The CX-287 re-run receipt was to show the plant cx-287 caught from a run with only --features gauntlet-mutations. A mutation feature is never in the umbrella, and the control is an obligation the runner does not run, so the acceptance could not be met. The receipt now carries the case's counts, and the plant is shown caught in its own build (frob-verbs/cx-287)."
+    },
+    {
+      "bead": "BD-355",
+      "kinds": [
+        "broken"
+      ],
+      "what": "CX-284's re-run had the same defect as BD-292's: the plant cannot be caught in that run. The plant now runs in its own build (frob-mission/frontier-family-gpu,cx-284). The publish_from_device_labels mutant is named as a frob-mission mutation feature, built as gauntlet-mutations,frob-mission/publish_from_device_labels."
+    },
+    {
+      "bead": "BD-387",
+      "kinds": [
+        "request",
+        "plan"
+      ],
+      "what": "Applied H-cx-2's request. New step 8 builds CX-G-05's and CX-G-06's plants BD-387:cx-<nnn> as frob-ground mutation features, caught by attempt_count_mismatch_refused and split_by_rows_refused. It records case_supplied_by and numeric = true, then re-seeds. Acceptance, controls and references added; dep N30-CX added (the entries must exist)."
+    },
+    {
+      "bead": "N25a-08",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Dropped the 'requested of that bead' narration for row 10; N25c-13 states it writes shortcut_10 (convention 13)."
+    },
+    {
+      "bead": "N25a-11",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "Step 3 said the bead writes no row of controls.toml while the controls section registers the missing-confidence mutant directly. Scoped the statement to CX-276 and named the direct control's feature nc-<nnnn> of frob-mission."
+    },
+    {
+      "bead": "N25a-13",
+      "kinds": [
+        "registry"
+      ],
+      "what": "Step 5's call forms had no --key (result.revalidate is a run verb), and one form chained mission.synthesize --set into a revalidate with no change option, which the row refuses as 802. Now: --against q:… or --amendment field=value, one change option each, with --key; none is 802 pointer /change. Declined F-U00-2's request to switch to --between: VERBS-result now registers --against q:… for a mission-answer target, so --against is valid and keeps the one-query form."
+    },
+    {
+      "bead": "N25a-16",
+      "kinds": [
+        "registry",
+        "contradiction"
+      ],
+      "what": "Step 4 cited FROB-REF-853 as this verb's refusal, but the mission.revalidate row lists 835, 854, 870, 874 and 881. A revoked minimum is a result, and 853 belongs to synthesize and refute. References now list the row's codes."
+    },
+    {
+      "bead": "N25a-17",
+      "kinds": [
+        "convention",
+        "plan"
+      ],
+      "what": "Dropped the 'requested of N25d-40' narration; the consideration states that this bead carries the part still to run (N25d-40 row 6). The scorer gains --control <name>=<dir> and --receipt. It writes the hash-named receipt from which GATE-AUGUR-12 and GATE-ATEL-11 are recorded (N25a-26 step 12), with each control caught or missed and no gate row. Acceptance item and test receipt_is_hash_named_and_holds_both_gate_lines added."
+    },
+    {
+      "bead": "N25a-21",
+      "kinds": [
+        "request",
+        "convention",
+        "broken"
+      ],
+      "what": "F-U25c-1's request, applied: step 11 had the script write the GATE-AUGUR-02 record. A --gate tag in the log is not a receipt, and --test stance_grid is not a tier target, so there was nothing to record from. Step 11 now runs e2e_tier g1_known_answers GATE-AUGUR-02 --mutations (KA-624, KA-625, KA-658 bound by N25d-37, with the weak-screen control), checks the receipt with e2e_get and writes no row; a non-implementing session runs record_gate. Dep N25d-37 added. Step 6 is marked as a logged check, and step 9 names --against as the form."
+    },
+    {
+      "bead": "N25a-22",
+      "kinds": [
+        "convention",
+        "registry",
+        "broken"
+      ],
+      "what": "Step 8 claimed the run's receipt held the gate line from log tags; only a tier run writes a receipt. It now runs e2e_tier g1_known_answers GATE-AUGUR-04 --mutations (KA-628, KA-629 with their controls; dep N25d-37), asserts the receipt and writes no row. Step 6 called mission.refute with --policy alone, which is not a registered scope at M1 (a cell, or --design with --policy). It now names the design g = 1/2; the whole-family form is N25e-11's at M3."
+    },
+    {
+      "bead": "N25a-23",
+      "kinds": [
+        "request",
+        "registry"
+      ],
+      "what": "Applied H-verbs-5's request. Case a17 (853) said nothing of its route, and 853 is not an admission code, so it failed the 'registry lists the code' check through new or check. It now offers a re-sealed stance bundle claiming minimum 3/14 against lower bound 1/5 (gap 1/70) to mission.synthesize --reuse, whose row lists 853 for evidence supplied with --from or --reuse. --reuse rather than --from, because a stored answer cannot carry a forged claim. Deps BD-136 (the re-sealing library) and N25c-21 (--reuse) added; no cycle."
+    },
+    {
+      "bead": "N25a-24",
+      "kinds": [
+        "request",
+        "registry",
+        "broken"
+      ],
+      "what": "Step 2 adds BD-135's requested assertion: synthesize --estimate --budget wall_s=5 echoes the MissionId of mission.check. Step 6b used two --set flags, but --set on synthesize is a one-field amendment. It now writes a variant file and admits it. Steps 6 and 10 relied on an unbuilt 'test-only cost scale of the daemon', and M1 has no daemon. They now name BD-135's test cost model and proposer delay in a gauntlet-mutations build."
+    },
+    {
+      "bead": "N25a-26",
+      "kinds": [
+        "convention",
+        "plan"
+      ],
+      "what": "Step 12 claimed the run's receipt held both gate lines from log tags; a log is not a receipt. The receipt is now the campaign scorer's (N25a-17 score --control … --receipt), with both gate lines and every mutant caught or missed; the script writes no row, and a non-implementing session runs record_gate for each gate. The campaign is revealed once the receipt is written. Step 7's 854 case now gives its call (synthesize --reuse, N25c-21's check), and dep N25c-21 is added (it also owns KA-638's three-gain case)."
+    },
+    {
+      "bead": "N25a-27",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Step 8 had the script enter GATE-AUGUR-14's row, which N38b-19 refuses as self-certified. The script now writes a receipt and prints its hash; a session that implemented neither BD-354 nor the script runs record_gate --part M4."
+    },
+    {
+      "bead": "N25a-28",
+      "kinds": [
+        "convention",
+        "broken"
+      ],
+      "what": "Merge mode now writes a receipt and a non-implementing session records GATE-AUGUR-15; it used to call record_gate from the script. The label-publishing mutant is built with its own frob-mission feature, since gauntlet-mutations alone does not enable it. Device runs now cite --envelope-scope gate:GATE-AUGUR-15. The two-shard placement uses two devices, above E0's one, so an uncited run is refused with 761 (convention 14). The consideration names the compute_envelope request row."
+    },
+    {
+      "bead": "N25a-29",
+      "kinds": [
+        "plan"
+      ],
+      "what": "Step 8's controls name CX-G-05's and CX-G-06's plants as BD-387's frob-ground/cx-<nnn> builds, so the script knows which builds to run."
+    },
+    {
+      "bead": "N25a-30",
+      "kinds": [
+        "convention",
+        "contradiction"
+      ],
+      "what": "Removed the 'requested of the kill-gate records, N40-03' narration. N40-26 (M1) already enters KILL-AUGUR-SOS by an introduce amendment, so at M4 the row names the gate itself, and to-register applies only if it is absent. The e2e assertion expects Fundable with the gate on a pass. N40-26 added to related."
+    },
+    {
+      "bead": "N25a-31",
+      "kinds": [
+        "contradiction"
+      ],
+      "what": "Two places said no gate names the mechanism and that the pilot only proposes KILL-AUGUR-SOS, but N40-26 enters it at M1. The controls text now says why the mutants stay in unit tests: the only gate is a kill row decided by the falsifier and the stop rule, which these mutants cannot fail. Step 10 names the gate as entered. N40-26 added to related."
+    },
+    {
+      "bead": "N25ax-01",
+      "kinds": [
+        "plan",
+        "broken"
+      ],
+      "what": "With the lowering registry split out (N25ap4-01), the delivery lowering had no registry entry, so the synthesis driver could not find it. It now exports a primary entry added to builtin(). The template also had no record in N25d-34's register of lowering pairs, and its second route had no session-independence rule. Both are added. Dep N25ap4-01, plus an acceptance clause."
+    },
+    {
+      "bead": "N25ax-02",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Step 5 and the e2e step (5) had the script run record_gate itself, which STD-E2E's lint refuses as self-recording and N38b-19 refuses as self-certified. The script now writes the receipt with values, thresholds and control outcomes, and prints its hash. A session that implemented neither the check nor the script records --part M3. Scope, background and acceptance updated."
+    }
+  ],
+  "new_beads": [
+    {
+      "bead": "N25ap4-01",
+      "why": "The audit's split of N25a-12: the Lowering trait, Proposal, the budget meter and the lowering registry (primary and second roles, selection by --lowering choice), plus a partition helper. Deps BD-128 and N25a-02. BD-130 and BD-131 implement against it instead of waiting for the driver, and N25ax-01 registers its template's lowering in it."
+    }
+  ],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N24a-13",
+      "what": "Enter FMT-FOVERLAY's row in formats.toml yourself as its owner, and drop 'requested of BD-002'. BD-002 stays at the plan's thirteen formats of §34.9; later formats are entered by their owning beads (N19b-44, N33b-19, BD-165)."
+    },
+    {
+      "bead": "N25a-12",
+      "what": "The trait, Proposal and registry moved to the new bead N25ap4-01 (polishing round 4 split). Narrow step 1 to 'uses N25ap4-01's registry: select(m, choice) gives the lowerings to run', drop the trait code, and add N25ap4-01 to deps. The audit's other proposal for you (N25a-10 to related, cost_bounds attached by BD-135) was not applied on BD-135's side: decide it here first."
+    },
+    {
+      "bead": "BD-131",
+      "what": "Replace dep N25a-12 with N25ap4-01. BD-131 only implements and registers the pusher lowerings, and its tests call them directly. Register both with the roles of N25d-34's register: primary is the specialized interval solver, second is the composed solver. Your text calls the composed one the implementation, which contradicts that register."
+    },
+    {
+      "bead": "BD-129",
+      "what": "Add dep N25ap4-01. BD-129's finite-game lowering implements Lowering and registers as the docking template's primary (N25d-34's register; N25c-20 registers scenario-tree as second). No bead says who registers the docking primary today."
+    },
+    {
+      "bead": "N25a-25",
+      "what": "Steps 1 and 4 build frob with --features gauntlet-mutations (plus frontier-transport and conformance-fixtures) instead of test-switches alone. --transport-unchecked is conformance_only, so the schema strips it without frob-verbs/conformance and answers 802 (VERBS-mission; BD-288 step 8)."
+    },
+    {
+      "bead": "GB-31",
+      "what": "Lane B runs frob mission synthesize but GB-31 does not depend on BD-135 (the verb) or N25c-11 (the --set authority amendment). Add both. Each call is a run verb and needs --key (VERBS-mission; convention 5)."
+    },
+    {
+      "bead": "N25d-43",
+      "what": "scripts/e2e/open_augur_2.sh runs frob mission synthesize, but N25d-43 does not depend on BD-135. Add BD-135, and give each run call its own --key."
+    },
+    {
+      "bead": "N25c-12",
+      "what": "Your acceptance and e2e say GATE-AUGUR-02's grid clause is recorded from the receipt of --test stance_grid. That target is not a tier, so it writes no frob.gauntlet.receipt/1 (N38a-02; STD-E2E e2e_tier accepts only the six tier targets). State that your grid code is the entry code of KA-625 and KA-658 in g1_known_answers (with the weak-screen control), whose receipt is the one recorded. N25a-21 step 11 now runs e2e_tier g1_known_answers GATE-AUGUR-02 --mutations."
+    }
+  ],
+  "unchanged": 6,
+  "notes": "Unchanged after review: BD-002 (the FOVERLAY request is declined: §34.9 has thirteen formats, redirected to N24a-13), BD-127, BD-354 (every ceiling in its table re-derived), BD-436, N25a-15, N25ap2-01. Arithmetic re-derived: N25a-28's screen and batch counts, N25a-30's twelve minima and hand certificates, and N25ax-01's margins and costs. Not applied: the audit's counterpart for BD-135 (N25a-10 to related), because N25a-12 has no reviewer this round (passed to N25a-12 as a request); BD-002's side of the BD-004 split, which waits for F-U34. Every touched file parses (front matter lists, seven sections), every dep and related key exists, and the graph has no cycle (own checker). Process slip: several path queries were run with the project's read-only tools/graph_check.py, against the rule to run only scripts I wrote. Each was re-checked with my own scratch script."
+}

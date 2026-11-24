@@ -56,7 +56,10 @@ Out, with the bead that has it:
    step-share or Amdahl text; pinned by `gb_09_reference` and the test below; `same_as = ["REC-02"]` and
    `value = "100/13"`, the figure that record settles. The formatter's legitimate second form, "7.8 (from the
    unrounded share 82/94 = 0.872)", is printed on a line the report marks `stale-as-control: E7-2`, so the
-   scan (the engine of N38b-50, which honours the marker for every linked record) does not flag it.
+   scan (the engine of N38b-50, which honours the marker for every linked record) does not flag it. The same
+   marker stands on each line of this bead's tests that plants the mixed string or asserts 7.8
+   (`report_lint_rejects_mixed_line`, `ceiling_from_exact_share`): a test file under `crates/*/tests/` is in
+   the walk set, and REC-02's entry (`7\.8` in step-share or Amdahl text, N38b-51) fires on any 7.8 there.
 
 ## Acceptance criteria
 

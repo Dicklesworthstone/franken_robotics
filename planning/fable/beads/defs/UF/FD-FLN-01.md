@@ -4,7 +4,7 @@ title: "upstream franken_lean: Mathlib roots unblocked (matrix exponential, Lie 
 type: "task"
 priority: 3
 milestone: "M5"
-labels: ["m5", "suite", "lemma", "upstream", "franken_lean", "frontier"]
+labels: ["m5", "suite", "lemma", "upstream", "franken_lean", "frontier", "review-notes-open"]
 parent: "WP-31"
 deps: ["BD-037", "BD-380", "BD-381", "N33b-04", "STD-E2E"]
 needs: []

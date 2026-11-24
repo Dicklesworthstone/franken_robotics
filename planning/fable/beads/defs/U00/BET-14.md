@@ -124,16 +124,22 @@ Out, and where it is:
 ### Unit tests
 `bets.rs`: `bet14_ratio_2_3_and_recovery_0_4_holds`; `bet14_ratio_1_4_falsifies_a` (within a factor of 1.5);
 `bet14_recovery_0_85_on_both_falsifies_b`; `bet14_recovery_0_85_time_0_6_compute_holds` (clause b needs both);
-`bet14_different_accepted_scope_is_not_a_tie`; `bet14_tie_refuses_engine_speed_funding_for_stratum`;
+`bet14_different_accepted_scope_is_not_a_tie`; `bet14_tie_refuses_engine_speed_funding_for_stratum` (N00-09's
+funding admission check `admit` refuses a `speed-lever` record whose `classes` name a stratum on which N39b-07's
+KILL-TENFOLD-TIE record fired, quoting that record's hash, unless its `reason` names one of the engine-internal
+gaps);
 `bet14_recovery_0_6_and_0_3_is_mixed`; `bet14_f_not_faster_than_b_is_no_saving` (T_F ≥ T_B → r undefined,
 label `no saving to recover`); `bet14_w_faster_than_f_is_tie` (T_W < T_F → r > 1); `bet14_known_answer_0_28`
 (T_F = 0.10·T_B: T_W = 0.28·T_B gives r_T = 0.8 exactly, a tie on time; T_W = 0.29·T_B gives 0.789, not);
 `bet14_ablation_above_bound_voids_stratum` (s = 0.7, information-only ratio 1.6 > 1.43).
 
 ### End-to-end script and logging
-`scripts/e2e/bet_14_decide.sh` recomputes the per-stratum labels from the gate records, checks the report
-contains the tie statement for every tied stratum, and checks that the claims-wording registry renders N13
-accordingly. Logged per STD-E2E: stratum, the three arms' restricted mean times, ratio and interval, r_T, r_C,
+`scripts/e2e/bet_14_decide.sh` reads the per-stratum readings from the gate records (the `three_arm` object of
+N39b-43: tie reading, r_T and r_C with their case, unrecovered phase; the ablations against their bounds,
+N39b-45), reads the per-stratum verdict of BET-14 from the bet register's report (`cargo run -p frob-conformance
+--example bets -- status --json`, example `bets` of N00-28, the one verdict rule; no second verdict rule in the
+script), checks the ADRs and each stratum's label against both, checks the report contains the tie statement for
+every tied stratum, and checks that the claims-wording registry renders N13 accordingly. Logged per STD-E2E: stratum, the three arms' restricted mean times, ratio and interval, r_T, r_C,
 scope equality, label; `summary` naming the gates and both kill gates. The three logged arms are A (F), B and C (W); arm D is a fourth column
 when run.
 

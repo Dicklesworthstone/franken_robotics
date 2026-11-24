@@ -6,7 +6,7 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["N40-27", "NAB-42"]
+deps: ["N40-27", "NAB-34", "NAB-42", "NAB-44", "NAB-45", "NAB-46"]
 needs: []
 related: ["NAB-48"]
 gates: []
@@ -54,7 +54,10 @@ column).
 Correspondence to placed rows: CT-01 ↔ IP-12; CT-02 ↔ IP-03; CT-03 ↔ IP-04; CT-04 ↔ IP-16; CT-05 ↔ IP-13;
 CT-06 ↔ IP-60; CT-07 ↔ IP-25; CT-08 ↔ IP-26; CT-09 ↔ IP-21; CT-10 ↔ IP-70; CT-11 ↔ IP-45; CT-12 has no placed
 row (it is not built); CT-13 ↔ IP-33; CT-14 ↔ IP-37; CT-15 ↔ IP-74 and IP-75; CT-16 ↔ IP-35; CT-17 ↔ IP-02;
-CT-18 ↔ IP-18; CT-19 has no placed row (it is the thesis).
+CT-18 ↔ IP-18; CT-19 has no placed row (it is the thesis). The placed rows are records of NAB-44 to NAB-46,
+which this bead depends on; sixteen of them carry a `contested` link back (seven of NAB-44, six of NAB-45, and
+IP-70, IP-74 and IP-75), and IP-02 and IP-60 carry none, because the plan's rows for them are not marked
+contested. KI-16, the record CT-12 names, is NAB-34's.
 
 **The records.**
 
@@ -111,8 +114,11 @@ opposite edges, (10⁶ + 10³)/2 = 500,500.
 
 - [ ] Records `CT-01` … `CT-19` exist with both arguments, the resolution and `decided_by` verbatim, and
       `placed_rows` as listed.
+- [ ] Every IP record's `contested` link names a CT record whose `placed_rows` contain that IP record (the
+      sixteen links above).
 - [ ] Every bead and gate named in `decided_by` exists; every kill gate named in a resolution exists in the
-      gate register with a trigger whose numbers equal those quoted (KILL-MEGA: a paired lower bound of 2.0;
+      gate register (or, for the rows of the M1 ledger groups, is a recorded `skip` until the M1 exit record
+      exists, as in `kill_trigger_numbers_match_register`) with a trigger whose numbers equal those quoted (KILL-MEGA: a paired lower bound of 2.0;
       KILL-DR: ρ below 0.7 on 200 addresses; KILL-QUOTIENT: below 5%; KILL-SYNTH-CODESIGN: one falsely pruned
       design or more than 20% of top designs mis-ranked; KILL-AUGUR-CUTS: one false cut; the rank-agreement
       thresholds 0.7 and 0.5); so do the triggers quoted for the standing disagreements (KILL-PARITY: below
@@ -130,6 +136,8 @@ opposite edges, (10⁶ + 10³)/2 = 500,500.
 `crates/frob-conformance/tests/idea_register.rs`, module `contested`:
 
 - `nineteen_records`; `placed_rows_resolve`; `two_records_have_no_placed_row` (CT-12, CT-19).
+- `contested_links_resolve`: the sixteen `contested` links of IP records each name a CT record that lists the
+  IP record in `placed_rows`; IP-02 and IP-60 have none; CT-12's `killed_idea` resolves to KI-16.
 - `decided_by_resolves` (beads and gates).
 - `kill_trigger_numbers_match_register`: the six quoted triggers, and the KILL-PARITY and KILL-FDGRAD
   triggers of the standing disagreements, against `registries/gates.toml`. KILL-DR is entered at M0; the
@@ -145,8 +153,8 @@ opposite edges, (10⁶ + 10³)/2 = 500,500.
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh` (NAB-50) asserts 19 records, recomputes the calculations (the orbit count
-runs in under a second), and prints the four standing disagreements with their status. Logged per STD-E2E.
+`scripts/e2e/decision_records.sh` (NAB-50) asserts the 19 `CT` records and the orbit count 86,185 over the
+register, logged per STD-E2E; the standing disagreements and the other calculations are this module's tests.
 
 ### Known answers and negative controls
 

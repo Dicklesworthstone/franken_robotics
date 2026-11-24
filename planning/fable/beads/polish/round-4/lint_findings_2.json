@@ -1,0 +1,74 @@
+{
+"BD-275": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. `place (`frob nemesis hardset add …`) or `--action show` is FROB-REF-802. The three run actions each take an`"
+],
+"N16a-15": [
+"[R4-battery] passes `--run-seed` or `--worlds` beside `--battery`: the battery form of `eval.run` takes neither (VERBS-eval; it is refused with 802, because a battery's items carry their own world addresses), e.g. `frozen battery fixes its own, and `--run-seed` beside `--battery` is 802; `continue-flagged``"
+],
+"N16a-16": [
+"[R4-battery] passes `--run-seed` or `--worlds` beside `--battery`: the battery form of `eval.run` takes neither (VERBS-eval; it is refused with 802, because a battery's items carry their own world addresses), e.g. `design> --battery standard --class <class> --tier referee --run-seed 7 --key open1-ref-<class> --json`), then for`"
+],
+"N16c-16": [
+"[R4-battery] passes `--run-seed` or `--worlds` beside `--battery`: the battery form of `eval.run` takes neither (VERBS-eval; it is refused with 802, because a battery's items carry their own world addresses), e.g. `- `--solve-queues` is N16c-15's option of `sim.run` and `phylum.sweep`, forwarded by `eval.run` and exercised by the `solve-queues` axis of the invari`"
+],
+"N18b-42": [
+"[R4-battery] passes `--run-seed` or `--worlds` beside `--battery`: the battery form of `eval.run` takes neither (VERBS-eval; it is refused with 802, because a battery's items carry their own world addresses), e.g. `--battery <the standard battery of c> --tier batch-cpu --profile lockstep --precision f32 --run-seed $SEED`"
+],
+"BD-173": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. `- `frob spark cache [--list [--backend cuda|metal] [--class <ShapeClassId>] | --verify | --evict <key> |`"
+],
+"N21b-13": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. `frob spark cache --list [--backend cuda|metal] [--class <ShapeClassId>] --json`"
+],
+"N21c-17": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. ``frob spark cache --evict <key> --json` for each cache key of the arm's set (keys from `frob spark cache --list`"
+],
+"N24c-33": [
+"[R4-battery] passes `--run-seed` or `--worlds` beside `--battery`: the battery form of `eval.run` takes neither (VERBS-eval; it is refused with 802, because a battery's items carry their own world addresses), e.g. `(`frob eval run <design> --battery standard --tier batch-cpu --determinism reference-replay --run-seed <protocol seed>`"
+],
+"N24c-37": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. ``frob task check --coupling` on the task and the pair; the command is given). The pass record is keyed by`"
+],
+"N24c-38": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. `| `coupling_test` | `frob task check exposure-coupling --coupling --arms A,B --worlds 4096 --key aec-cpl --json` (exit 8; then `frob job wait <job> --`"
+],
+"N24c-40": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. `**2. Choice procedure** (`frob task check <family> --coupling --choose --arms A,B --pilot-worlds n --key <k>`"
+],
+"N24c-41": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. `side that `frob task check <gate fixture family> --coupling --choose --arms A,B --pilot-worlds 1024 --key`"
+],
+"N24cp1-02": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. `adapters, plus two steps added by this bead: `choose_refused` (`frob task check <family> --coupling --choose`"
+],
+"N24cp3-01": [
+"[R4-battery] passes `--run-seed` or `--worlds` beside `--battery`: the battery form of `eval.run` takes neither (VERBS-eval; it is refused with 802, because a battery's items carry their own world addresses), e.g. `- [ ] `frob eval run <design> --battery smoke --class quadruped --tier batch-cpu --run-seed 17 --key <k> --json` completes with the same `BatteryId`, `"
+],
+"N26a-16": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. `<k>` and `frob nemesis hardset add <file.fmcw> --class <class> --task <task> --key <k>` (the set is selected`"
+],
+"N26a-20": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. `6. `frob nemesis hardset add <fmcw> --class <class> --task <task> --key hs-1` (class with task selects the`"
+],
+"N26b-05": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. `- `frob nemesis audit prepare <campaign> --stage <n> [--share 1/10] [--n-audit N] [--delta 0.05]`"
+],
+"N26b-07": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. `1. **Surface exercised.** `frob nemesis audit prepare …`, `frob nemesis audit run … [--stage-record F --outcomes`"
+],
+"BD-345": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. `winner's identity. The controller obtains each stage's plan and seal by `frob nemesis audit prepare <campaign>`"
+],
+"N29b-07": [
+"[R4-battery] passes `--run-seed` or `--worlds` beside `--battery`: the battery form of `eval.run` takes neither (VERBS-eval; it is refused with 802, because a battery's items carry their own world addresses), e.g. `run seed, so at the same addresses: `frob eval run --class quadruped --battery smoke --tier batch-cpu --run-seed`"
+],
+"N30a-43": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. `5. **Manual retirement.** `frob ground band --retire --cell <id> --reason \"<text>\" --key <k> --json` (the`"
+],
+"N32bx-02": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. `On the CLI the action is spelled `frob ground band --retire --cell <id> --reason \"<text>\" --key <k>` (the row`"
+],
+"N38a-21": [
+"[R4-action] selects a verb's action with a per-action flag or a positional word; NJL-01's action rule admits only `--action <name>` (and an action of kind admin takes no `--key`): check the verb's row in its VERBS bead, e.g. `quadruped it runs `frob nemesis hardset show --class quadruped --task <t> --json` (the set and its version) and`"
+]
+}

@@ -96,9 +96,11 @@ listing of the working-tree revision, 179 entries). The first
 chapters that cite it), and `scripts_retained` (false for the rows whose scripts were not kept: PC-20 and PC-21
 on conditioning, PC-22 the CPU incumbent rate and PC-23 the Metal device query, which the review log counts as
 three checks and which are re-run from scratch).
-`reread_before_gate` is not typed by hand for these records: the loader derives it from the plan-time pilot
-ledger, as true unless `pilots::status_of_source(id)` (N38a-10) returns `reproduced`. A check that no ledger
-record covers therefore stays uncitable by a gate (fail closed).
+`reread_before_gate` is not typed by hand for these records: NAB-09's loader derives it from the re-run status
+it is given (NAB-09 step 2), as true unless that status is `reproduced`. The citation lint (NAB-10) supplies the
+plan-time pilot ledger's `pilots::status_of_source(id)` (N38a-10, which reads this register and so is not a
+dependency of this bead); with no status supplied, and for a check that no ledger record covers, the record
+stays uncitable by a gate (fail closed).
 
 **2a. A plan-time result with no recorded source (one case).** The dynamics chapter states as "FACT (a recorded
 pilot, Appendix K; to be re-run before a gate cites it)" that a rational referee and a native single-precision
@@ -143,7 +145,7 @@ the plan-time table this register follows row by row.
 | CPU incumbent rate on this Mac | A reference quadruped at 2 ms, double precision, 36 threads, under background load | About 410,000 steps/s | §36 | PC-22 |
 | Metal device query | Working-set limit and largest buffer on this Mac | About 222.7 GiB and 167.0 GiB | §21.16, §36 | PC-23 |
 | Worked numbers of the body chapters | Thermal card, shell masses and gyration radii, orbit counts, voltage closed forms, bus ceiling, gear fixture, backlash impact, the single-precision predicate | Recomputed by script | §13 to §15 | PC-24 |
-| Worked artifacts of the specification | The stance family of L.4 in exact rationals on a 81 × 31 grid against its closed form; the paving of L.4; the binomial bounds of L.9 | Zero mismatches; one inner, three unresolved and eight excluded cells; bounds 0.0432, 0.0504, 0.0425, 0.0505 | the worked-artifact set | PC-25 |
+| Worked artifacts of the specification | The stance family of L.4 in exact rationals on a 81 × 31 grid against its closed form; the paving of L.4; the binomial bounds of L.9 | Zero mismatches; one inner, three unresolved and eight excluded cells; bounds 0.0432, 0.0504, 0.0425, 0.0505 | Appendix L | PC-25 |
 
 **3. Consistency assertions on the recorded values** (exact arithmetic; they are the known answers of this
 bead and catch transcription errors before any re-run):
@@ -207,13 +209,16 @@ entries:
 - [ ] `SRC-REC-05` holds the four archive revisions with bytes and digests, `cited_revision = "a635b91"`, and
       the test that recomputes the digest of the working-tree file reports which revision it is.
 - [ ] Every consistency assertion of step 3 is a passing test.
-- [ ] A gate record citing a `plan-check` source whose ledger status is not `reproduced` is refused by the
-      citation lint (NAB-10).
+- [ ] Every `plan-check` record loads with `reread_before_gate = true` when no re-run status is supplied or the
+      supplied status is `not-run` or `differs`, and with `false` only for `reproduced`. The refusal of a gate
+      that cites such a record is NAB-10's finding `cite.plan-check-not-reproduced`, shown by NAB-16's script;
+      NAB-10 and the ledger both come after this bead.
 - [ ] The limits text is attached to the archive record and appears in the generated summary of the register.
-- [ ] GATE-GAUNT-08's re-run clause can be evaluated from these records and the plan-time pilot ledger
-      (N38a-10) together. The re-run owner of a check is named by the ledger record that covers it (BD-030,
-      BD-041, BD-042, BD-043, N38a-11 or N00-35), not by this register; the ledger's completeness check lists
-      any `SRC-CHK` id that no record covers.
+- [ ] Each of the 25 records carries the `SRC-CHK` id and the recorded values that the plan-time pilot ledger
+      (N38a-10) keys its coverage on, and no record names a re-run owner. GATE-GAUNT-08's re-run clause is
+      evaluated from these records and that ledger together by the ledger's own check, which names the re-run
+      owner of each check (BD-030, BD-041, BD-042, BD-043, N38a-11 or N00-35) and lists any `SRC-CHK` id that no
+      record covers; it is not this bead's close condition.
 
 ## Test plan
 
@@ -230,6 +235,8 @@ entries:
   1.345 and 842.8 ÷ 610.1), `pc10_label_frontier_step`, `pc15_sill_counts`, `pc17_share_15_4_percent`,
   `pc18_reachable_verdicts_2145`, `pc25_paving_cells`.
 - `limits_present_on_archive_record` (three entries).
+- `plan_check_flag_follows_supplied_status`: `SRC-CHK-01` loads flagged with no status supplied and with
+  `not-run` or `differs`, and unflagged with `reproduced`.
 - (The test that each check is covered by at most one ledger record with a re-run owner is in N38a-10, which
   reads both registers.)
 

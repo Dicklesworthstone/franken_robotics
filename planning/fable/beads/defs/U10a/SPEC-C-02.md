@@ -161,9 +161,12 @@ away from being wrong.
 
 **Charts, failure cases, retirement.** A logarithm or a derivative of a logarithm requested within a stated
 margin of a rotation by π, where the chart is cut, returns refusal FROB-REF-213 (a logarithm or its derivative
-inside the stated margin of a chart cut, with no second chart supplied; the refusal carries the element, the
-margin and the charts that cover it; repair: supply the second chart) and never a value from the wrong side of
-the cut. Retirement rule: when a loop of chart changes exceeds its error budget, that chart pair is withdrawn
+inside the stated margin of a chart cut, with no second chart supplied; exit 3; the refusal carries the element,
+the margin and the charts that cover it; ranked repairs as the registry N13-REF has them: 1. supply the covering
+chart named in the reply (the chart based at the rotation by π about the axis of the largest quaternion component
+keeps the angle at most 2π/3); 2. reformulate the query on the group element instead of its logarithm; 3. if the
+request came from a derivative path, withdraw that chart pair from the derivative path and refuse the query) and
+never a value from the wrong side of the cut. Retirement rule: when a loop of chart changes exceeds its error budget, that chart pair is withdrawn
 from the derivative path and the query is refused. Budget (DESIGN, TARGET, set by this bead because the
 known-answer row prints none): 128 ulp in `f64` per component, scaled by max(1, ‖x‖), for the two-chart loop
 of SO(3) and SE(3) outside the cut margin; margin 10⁻³ rad.
@@ -217,9 +220,12 @@ single-transpose mutations caught by at least three fixtures; M4).
 
 ### End-to-end script and logging
 
-`scripts/e2e/spec_c02.sh`. Sources the STD-E2E helper. Steps: law suite; law suite under each control; G0 rows
-KA-040 to KA-042; `frob --json prove kernel K-adjoint` (when present) and `frob --json prove verify` on its
-certificate, asserting class `Certified`, the certificate hash and the checker identity in the evidence block.
+`scripts/e2e/spec_c02.sh`. Sources the STD-E2E helper. Steps: law suite; law suite under each control, one
+control per build with its own feature (N10a-01 section 6); the rows through the helper's `e2e_tier`, that is
+`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g0_laws -- KA-040` and `-- KA-041`, and `--test
+g3_metamorphic -- KA-042` (KA-042 is a G3 row); `frob --json prove kernel K-ad-se3` (BD-021's M0 adjoint kernel,
+whose T-04 certificate CARD-T-04 states; logged `pending` until BD-021 lands) and `frob --json prove verify` on
+its certificate, asserting class `Certified`, the certificate hash and the checker identity in the evidence block.
 NDJSON log at `target/e2e-logs/spec_c02/<utc>.ndjson` plus transcript, with per-assert measured ulp errors
 against 64 and 16, the three fixtures that caught the reversed adjoint, digests of the certificates, and on
 failure the first differing matrix entry with the sample that produced it. Final `summary` line.

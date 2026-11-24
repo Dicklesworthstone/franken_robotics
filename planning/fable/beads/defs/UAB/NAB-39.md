@@ -6,7 +6,7 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "tenfold", "ground", "gauntlet", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["N00-15", "NAB-32"]
+deps: ["N00-01", "N00-11", "N00-12", "N00-15", "NAB-11", "NAB-12", "NAB-13", "NAB-15", "NAB-32"]
 needs: []
 related: []
 gates: []
@@ -48,8 +48,22 @@ claims-wording registry (N00-15); the thesis arithmetic calculators (N00-17).
 
 **Transcription rule.** As in NAB-33. KI-61 and KI-63 are tables: each becomes one record with `[[idea.row]]`
 sub-tables (KI-61: `withdrawn_claim`, `contradicted_by`, `claimed_instead`; KI-63: `item`, `evidence_against`,
-`done_instead`), each row with its own keywords so the revive lint can match a single row. KI-62's record
-state is `withdrawn-claim`; KI-63's is `process`.
+`done_instead`), each row with its own keywords so the revive lint can match a single row. Record states:
+KI-57 `narrowed`, KI-58 `deferred`, KI-59 `assumed`, KI-60 `deflated`, KI-61 and KI-62 `withdrawn-claim`,
+KI-63 `process`. Hypotheses: KI-57 H-14 (`NARROWED`) and KI-59 H-18 (`ACTIVE`) of N00-12, KI-58 H-12
+(`DEFERRED`; the row's scope is "as a decision-time lever") of N00-11. Revival fields: KI-57 `gate`
+(GATE-GROUND-06, GATE-GROUND-07); KI-58 `gate` (KILL-TOPOPT); KI-59 `gate` (GATE-TENFOLD-13, KILL-PARITY);
+KI-60 `none`; KI-61 `primary-source` (none: incumbent documentation re-read by the M0 re-audit); KI-62 `gate`
+(GATE-CORTEX-05, KILL-PARITY); KI-63 `none` (each row's condition is judged by the owner's ADR). FACT
+calculations name source-register records: the planning-record recomputations and the sibling crate closure
+are NAB-11's, the incumbent figures (410 s; 2.55 M world-steps/s) NAB-12's, the published shares and
+structure results NAB-13's, the thermal-limit re-derivation NAB-15's.
+
+**Withdrawn claims and the claims-wording registry.** N00-15's `[[withdrawn]]` list numbers the sixteen
+statements of §1.3; KI-61's nine rows cover fourteen of them and KI-62 the other two. The mapping (DESIGN),
+held as test data: row 1 → 1, 4; row 2 → 2, 8; row 3 → 3; row 4 → 5; row 5 → 6; row 6 → 7; row 7 → 9, 10, 11;
+row 8 → 14, 15; row 9 → 13; KI-62 → 12, 16. Every differentiator a *claimed instead* cell names (N4, N6, N7, N9,
+N10, N11) is a differentiator record of that registry.
 
 **Machine-checked arithmetic of this group.**
 
@@ -81,13 +95,15 @@ lifecycle factor of 1,800 counts substeps, not wall time or field life.
 
 **Keywords for the revive lint.** KI-57: reality band for an unbuilt design, conformal band without
 calibration. KI-58: topology optimization as a speed lever, generative structure counts toward ten-fold.
-KI-59: faster step delivers ten-fold, engine does not matter. KI-60: any printed multiplier of the form "N×
-faster", "N-fold" or "N% of simulations deleted" outside a gate record. KI-61: per row (deterministic GPU
+KI-59: faster step delivers ten-fold, engine does not matter. KI-60: futile simulations deleted, lifecycle
+factor, quotient factor of 29.96, orbit search 3,000 times faster (a keyword is a phrase; a printed multiplier
+in general, "16× faster" or "10-fold", is the wording lint's L-RESULT finding, N00-01, which carries KI-60).
+KI-61: per row (deterministic GPU
 replay as a first; different CPU code base; mixed topologies as a capability; actuator thermal modelling as a
 novelty; no training needed; anytime-valid comparison as a novelty; first on Apple GPUs; morphology fixed
 before the simulator starts; any ten-fold on per-step throughput). KI-62: 15-minute training gate, six hours
-later. KI-63: per row (vendor the foundations; verified by script; real-board timing gate; zero-millisecond
-stall; unadmitted third-party tool; local patch of a sibling; absolute statement about incumbents; hardware
+later. KI-63: per row (vendor the foundations, vendor the multibody crate; verified by script; real-board timing gate; zero-millisecond
+stall; unadmitted third-party tool; local patch of a sibling, patch the sibling locally; absolute statement about incumbents; hardware
 figure asserted; ideation score as evidence; simulated humans as validated agents; generated board support).
 
 **The entries.**
@@ -200,11 +216,12 @@ each case is FACT: incumbent documentation at pinned versions (§1.1, §1.2).
 - [ ] Records `KI-57` … `KI-63` exist with the paragraphs and tables verbatim, revival conditions, carriers and
       keywords; KI-61 has nine row sub-records and KI-63 has eleven.
 - [ ] The harness recomputes the eight calculation rows.
-- [ ] The revive lint (with the wording lint) fails a planted README sentence "FrankenRobotics is 16× faster
-      than incumbents" as `ki.strong-form-as-goal` naming KI-60, and passes a gate record that prints a
-      measured ratio with its interval, ceiling and disclosure block.
-- [ ] Each withdrawn claim of KI-61 resolves to a record of the claims-wording registry, and the "claimed
-      instead" wording equals the permitted wording there.
+- [ ] The revive lint fails a planted bead titled "Print the lifecycle factor of 1,800 in the README" with
+      `ki.match-without-citation` naming KI-60; a planted README sentence "FrankenRobotics is 16× faster than
+      incumbents" fails the wording lint's L-RESULT (N00-01), the carrier KI-60 names.
+- [ ] Every withdrawn-statement number of the mapping above resolves to a `[[withdrawn]]` record of the
+      claims-wording registry, the numbers of KI-61 and KI-62 together are 1 to 16 with none twice, and every
+      differentiator named in a *claimed instead* cell exists there.
 - [ ] A planted bead titled "Vendor the multibody crate into this workspace" fails
       `ki.match-without-citation` naming KI-63 (the row on copying the foundations wholesale), and a planted
       bead "Patch the sibling locally until upstream lands" fails naming the row on a local patch or fork.
@@ -223,14 +240,18 @@ each case is FACT: incumbent documentation at pinned versions (§1.1, §1.2).
 - `ki62_units`: 400,000 × 10 = 4,000,000.
 - `ki63_rederivation`: 33.5 − 21.1 = 12.4; 12.4/21.1 = 0.588.
 - `ki61_has_nine_rows`; `ki63_has_eleven_rows`.
-- `ki61_wordings_match_claims_registry` (the registry is N00-15's, a dependency of this bead, so the test runs
-  from the start and never records a `skip`).
+- `ki61_withdrawn_resolve_in_claims_registry` (the registry is N00-15's, a dependency of this bead, so the
+  test runs from the start and never records a `skip`): the mapping resolves, covers 1 to 16 once, and the
+  named differentiators exist; removing withdrawn record 9 from a scratch copy of the registry fails it.
+- `ki60_ki63_revive_cases`: the planted bead of KI-60 and the two planted beads of KI-63 fail
+  `ki.match-without-citation` naming the record and row; the README sentence fails L-RESULT.
+- `revival_fields`: states, `revive_evidence` and `revive_gates` per record as listed.
 - `records_complete_and_verbatim` against `tests/fixtures/killed/g7.md`.
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh` (NAB-50) recomputes the calculations and runs the planted wording and
-manifest cases. Logged per STD-E2E.
+`scripts/e2e/decision_records.sh` (NAB-50) runs this module with the rest of `killed_ideas` and recomputes the
+calculations. Logged per STD-E2E.
 
 ### Known answers and negative controls
 

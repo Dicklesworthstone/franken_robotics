@@ -4,7 +4,7 @@ title: "frob-verbs registry: cluster `run`, four rows, with parity, e2e and sche
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "tether", "chronicle", "frob-verbs", "solid", "registry", "verb", "test"]
+labels: ["m1", "tether", "chronicle", "frob-verbs", "solid", "registry", "verb", "test", "review-notes-open"]
 parent: "WP-06"
 deps: ["BD-022", "N18-REF", "N21-REF", "N29-REF", "N30-REF", "N34-REF", "N35-REF", "N37-REF", "N39-REF", "NJL-01", "NJL-02", "NJL-04", "NJL-05", "STD-E2E"]
 needs: []

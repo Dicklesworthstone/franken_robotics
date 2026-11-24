@@ -6,11 +6,11 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "lemma", "frob-kir", "solid", "test"]
 parent: "WP-05"
-deps: ["N12-06", "SPEC-C-14"]
+deps: ["BD-018", "N12-06", "SPEC-C-14"]
 needs: []
 related: ["CARD-T-10", "CARD-T-14", "CARD-T-27", "N12-20", "N12-45", "N17a-22", "N21a-16", "N35-REF", "SPEC-C-21"]
 gates: []
-plan_refs: ["§12.3 (T-09)", "§10 C-14", "§10 C-21", "§21.7", "§21.14 (PO-SPARK-01)", "Appendix D.5 (similarity rescaling)"]
+plan_refs: ["§12.3 (T-09)", "§10 C-14", "§10 C-21", "§21.7", "§21.22 (PO-SPARK-01)", "Appendix D.5 (similarity rescaling)"]
 ---
 ## Background
 
@@ -39,15 +39,15 @@ In: the card's statement and registry row; the binding of the type checker's ver
 status per kernel); the negative fixtures. Out: the type checker itself (the kernel-IR bead); the power-of-two
 metamorphic test (the canonical-form and determinism beads); units at public APIs.
 
-Order of work. This card is finished before the code that implements or uses its theorem and never depends on it:
-the kernel IR with its dimension checker (BD-018) is `related`, not a dependency (a card that waited for its
-implementer would close a loop, because the implementer's own acceptance runs the card's law tests). What the card
-does depend on is in `deps`: the card registry, its specification, its pilot where the route is Frontier, and
-Lemma's own proof machinery. It closes on its statement document, its registry row, its specimens and mutants, and
-every acceptance line that its own fixtures decide. An acceptance line that can only be observed on live output
-(`dimension_check: pass` on every kernel of the library, and the registry count of kernels checked) is run inside
-the implementing bead, with this card's law tests, as part of that bead's acceptance; the receipt produced there
-is what moves the registry row for that output.
+Order of work. The kernel IR with its dimension checker (BD-018, M0) is the checker of this card's route, not a
+bead that waits on the card: BD-018 does not depend on this card, and it is upstream of it already (N12-06 →
+BD-021 → BD-019 → BD-018), so it is a dependency. What the card depends on is in `deps`: the card registry, its
+specification and that checker. It closes on its statement document, its registry row, its negative fixtures and
+the second opinion, run against the checker and against the M0 kernels as built (`K-cay-step`, `K-normalize`,
+`K-ad-se3`); the receipt of that run (kernels checked n of n, with the checker's identity) moves the registry row,
+and N12-33, which depends on this card, observes the same verdicts again in its M0 run. Kernels emitted at later
+milestones carry `dimension_check: pass` because the emitter refuses any other (`FROB-REF-250`). The loop and
+buffer rules arrive with bounded loops, loads and stores in N21a-16 (M2) and are checked by that bead's tests.
 
 ## Technical approach
 
@@ -57,7 +57,8 @@ is what moves the registry row for that output.
    and both vectors.
 2. Rules checked, exhaustively: add, sub, min, max, compare, select branches → equal vectors; mul → vector sum;
    div → vector difference; sqrt → every entry even, result is half; neg, abs → unchanged; integer and Boolean
-   values are dimensionless; a loop-carried value has the same vector at entry and at yield; a load or store
+   values are dimensionless; an output has its port's declared vector; from M2 (N21a-16, which adds bounded
+   loops, loads and stores), a loop-carried value has the same vector at entry and at yield, and a load or store
    agrees with the buffer schema's recorded dimension (GPU buffers are raw single precision with the dimension
    recorded in the buffer schema).
 3. Receipt: the kernel manifest records `dimension_check: pass` with the checker's build; the theorem-card
@@ -74,11 +75,13 @@ is what moves the registry row for that output.
 
 ## Acceptance criteria
 
-- [ ] Every kernel in the library at each milestone has `dimension_check: pass`; a kernel without it cannot be
-      emitted.
-- [ ] Negative controls rejected by the checker with the operation named: a program that adds a length to a
-      time; a square root of a value of dimension length (odd exponent); a select whose branches differ in
-      dimension; a store of a force into a buffer whose schema says torque.
+- [ ] Every kernel in the library at this card's close (the M0 kernels) has `dimension_check: pass`; a kernel
+      that fails the check cannot be emitted (`FROB-REF-250`), which keeps the property at later milestones.
+- [ ] Negative controls rejected by the checker with `FROB-REF-250`, the operation and both exponent vectors
+      named: a program that adds a length to a time; a square root of a value of dimension length (odd exponent);
+      a select whose branches differ in dimension; a force returned on an output port declared as torque. (The
+      M0 IR has no loops, loads or stores; a force stored into a slot whose schema says torque, and a loop whose
+      yield changes its argument's dimension, are rejected from M2 by N21a-16's tests.)
 - [ ] The independent re-implementation in the conformance crate agrees with the checker on every kernel and on
       every negative fixture.
 - [ ] The registry row shows the route `checked` with the count of kernels and the checker's identity.
@@ -90,7 +93,8 @@ is what moves the registry row for that output.
 
 `crates/frob-kir/tests/dimension.rs` (owned with the IR): `sum_of_length_and_time_rejected`;
 `sqrt_of_length_rejected`; `sqrt_of_area_is_length`; `product_and_quotient_vectors`;
-`select_branch_mismatch_rejected`; `loop_carried_dimension_stable`; `buffer_schema_mismatch_rejected`;
+`select_branch_mismatch_rejected`; `output_port_dimension_mismatch_rejected` (a force, kg·m·s⁻², returned on a
+port declared as torque, kg·m²·s⁻²: rejected with both vectors named);
 `shared_epsilon_across_dimensions_rejected` (one tolerance literal compared against an angle residual and an
 impulse residual: the second comparison fails with both vectors named).
 `crates/frob-conformance/tests/dimension_second_opinion.rs`: `agrees_on_all_kernels`;

@@ -42,8 +42,9 @@ n_v = 18; total mass on the order of 12 kg; one actuator per joint; sphere feet.
 asset-a1-<source hash> --json` (NEG-15's import recipe; the verb writes no file, and the golden `import.fbot` is
 the design's `term` section). Expected loss-report entries (HYPOTHESIS until read): as for the other
 Unitree quadrupeds (visual meshes; fitted collision primitives with recorded error; unmapped solver and
-contact parameters; `armature`, `damping`, `frictionloss` to an `assumed` actuator card; keyframes to named
-poses).
+contact parameters with "no contact law declared"; keyframes other than `home` listed). Not losses, by BD-066's
+table: joint `damping` and `frictionloss` (the joint's own damping and friction), `armature` (an override of the
+bound `assumed` card's rotor inertia) and the keyframe `home` (the named pose `home`).
 
 **Validation specifics: structural equality across the three Unitree quadrupeds.** After import, strip every
 numeric parameter from the three designs (`go1`, `go2`, `a1`) and compare the remaining term structure

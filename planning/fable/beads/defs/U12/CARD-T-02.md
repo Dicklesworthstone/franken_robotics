@@ -6,7 +6,7 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "frob-lemma", "solid", "test"]
 parent: "WP-05"
-deps: ["BD-027", "CARD-T-01", "N12-06", "SPEC-C-05"]
+deps: ["BD-027", "CARD-T-01", "N12-06", "N12-33", "SPEC-C-05"]
 needs: []
 related: ["CARD-T-06", "N12-20"]
 gates: []
@@ -30,9 +30,13 @@ factor and leaving the composition with the incoming pose to a test.
 
 ## Scope
 
-In: statement document, registry row, the instance certificate on the SE(3) step kernel, specimen and mutants.
-Out: the certificate machinery (BD-027, N12-20); momentum conservation of the step (CARD-T-06); floating-point
-drift and normalization.
+In: statement document, registry row, the specimen bundle `poly-identity/accept-T-02.frobcert` (the identities
+below over the update as the SE(3) step kernel `K-cay-step` computes it, written with BD-027's bundle writer) and
+its mutants. Out: the instance certificate bound to `K-cay-step`'s content hash, which the certificate-coverage
+pipeline N12-20 issues at M5 (its catalogue lists T-02 on `K-cay-step`; BD-021's M0 certificates are T-01, T-03
+and T-04 only), and whose receipt moves this card's row to `checked`; N12-20 is at a later milestone, so it is not
+a dependency. The certificate machinery (BD-021, BD-027); momentum conservation of the step (CARD-T-06);
+floating-point drift and normalization.
 
 ## Technical approach
 
@@ -48,19 +52,20 @@ drift and normalization.
 2. The translation needs no identity beyond being a rational function with denominator D (nonvanishing recorded
    as a side condition); the homogeneous last row is structural and is checked on the kernel's output layout.
 3. Checker: FrankenSymPy's proof kernel at build time; `frob-verify` offline.
-4. Class and limits: `Certified` for the kernel at its content hash; no stronger class because no general Lean
+4. Class and limits: `Certified` for the kernel at its content hash, from N12-20's certificate at M5; no stronger class because no general Lean
    statement is planned for this card (its tier is Solid only). Nothing is claimed about floating point.
 5. Relies on it: construction C-05; the step kernels (`K-cay-step`, the articulated Cayley step, the anchor
    update); the North-Star scenario "a kernel with a certificate"; card T-06, which adds momentum.
-6. Artifacts: `docs/math/cards/T-02.md`; registry row; the kernel's `.cert` and bundle; specimen
-   `poly-identity/accept-T-02.frobcert` with mutants.
+6. Artifacts: `docs/math/cards/T-02.md`; registry row; specimen `poly-identity/accept-T-02.frobcert` with
+   mutants (the T-02 entry of `K-cay-step.cert` and its bundle are N12-20's, at M5).
 
 ## Acceptance criteria
 
-- [ ] `frob-verify` accepts the T-02 bundle for the SE(3) step kernel and rejects: a changed coefficient in the
-      translation's inverse (2·h·ω̂ written as h·ω̂); a missing side relation for R; a statement that drops the
-      determinant.
-- [ ] The registry row is `checked`, class `Certified`, with certificate hash and checker identity.
+- [ ] `frob-verify` accepts the T-02 specimen bundle and rejects: a changed coefficient in the translation's
+      inverse (2·h·ω̂ written as h·ω̂); a missing side relation for R; a statement that drops the determinant.
+- [ ] Registry row at this card's close (M1): the `poly-identity` route registered and `hypothesis`, printing no
+      class. N12-20's certificate on `K-cay-step` at M5 moves it to `checked`, class `Certified`, with certificate
+      hash and checker identity.
 - [ ] The cofactor identity is reproduced by an independent expansion in the test (not by the producer's code).
 - [ ] The statement document records both side conditions: R is a rotation; D ≠ 0.
 
@@ -78,8 +83,8 @@ registered statement: `reject`); `t02_det_cofactor_identity_expands`;
 
 ### End-to-end script and logging
 
-At M1, when the card closes, the T-02 bundle and its mutants join the specimen set that
-`scripts/e2e/lemma_kernel_cert.sh` (bead N12-33) certifies and replays offline with `frob-verify`; at M5
+At M1, when the card closes, the T-02 specimen bundle and its mutants join the specimen set that
+`scripts/e2e/lemma_kernel_cert.sh` (bead N12-33, a dependency) replays offline with `frob-verify`; at M5
 `scripts/e2e/lemma_coverage.sh` (bead N12-36) includes this identity in the coverage run and in the NS-11
 demonstration. Both log, per specimen and mutant, NDJSON lines (STD-E2E helper) with `ts`, `script`, `bead`
 ("CARD-T-02"), `step`, `event`, the exact command line, exit code, wall time, the envelope's `evidence` block

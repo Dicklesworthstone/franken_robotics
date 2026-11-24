@@ -4,7 +4,7 @@ title: "golden fixture L.9, part B: the simulated half of the MCP transcript (at
 type: "task"
 priority: 2
 milestone: "M3"
-labels: ["m3", "tether", "nemesis", "autopsy", "arena", "frob-mcp", "frob-conformance", "solid", "test", "e2e", "review-notes-open"]
+labels: ["m3", "tether", "nemesis", "autopsy", "arena", "frob-mcp", "frob-conformance", "solid", "test", "e2e"]
 parent: "WP-26"
 deps: ["ART-L3", "ART-L6", "ART-L7", "BD-058", "BD-133", "BD-205", "BD-210", "BD-259", "BD-273", "BD-274", "BD-279", "BD-280", "BD-292", "BD-298", "N24b-15", "N24b-19", "NJL-08", "NJLx-02", "STD-E2E"]
 needs: []
@@ -256,7 +256,7 @@ retry costs power. In the story the committed request observes 2 failures, bound
       session is refused with `FROB-REF-840`, and the receipt contains only the listed fields.
 - [ ] Rule 11: the bundle of B13 has class Tested and the offline auditor accepts six of six entries.
 - [ ] The test campaign is opened and closed by the administrative session through `eval.ledger`'s `open` and
-      `close` actions with keys; the agent's session is refused `--open` (FROB-REF-720, exit 5); while
+      `close` actions, which take no key; the agent's session is refused `--action open` (FROB-REF-720, exit 5); while
       OPEN-ARENA-3 is undecided a non-synthetic claim family is refused `qualification-undecided` (exit 3).
 - [ ] If a search finds no failure for the unedited design, steps B4 to B7 are logged as skips with that
       reason, never as passes, and the remaining steps run.
@@ -309,7 +309,8 @@ log.
   the arithmetic of B11 and B12. KA-763 (one job and one charge per key; the retry returns the stored receipt)
   is rule 4.
 - Known answers of this bead (recomputed for it): the second-request level 0.05/6 with bounds 0.0425 and
-  0.0505; the budget identities of the specimen. They have no number in the known-answer suite.
+  0.0505; the budget identities of the specimen. They are row JL-18 of NJLx-02's known-answer block (a
+  dependency), which this bead's tests cite by number once the block is issued.
 - Counterexample kept alive: retrying a held-out test until it passes. With independent attempts at level 5%
   each, fourteen null submissions give a 51% chance of at least one false promotion; the level sequence
   α/[i·(i + 1)] keeps the campaign-wide chance at most α for any number of retries.
@@ -337,14 +338,15 @@ log.
 - The qualification of B12 consumes sealed clusters of a real campaign; the script uses a campaign opened for
   the test in the scratch root, so that no production campaign's index moves. It is opened and closed with
   the admin actions of `eval.ledger` (N24b-15), under a second, administrative session holding `qual:admin`
-  that the agent's session never sees: before the first half, `frob eval ledger --open --task
-  t:kitchen-tray@88c1… --world-family <the fixture's synthetic family> --key l9-open --json` (the record is the
+  that the agent's session never sees: before the first half, `frob eval ledger --action open --task
+  t:kitchen-tray@88c1… --world-family <the fixture's synthetic family> --json` (the record is the
   campaign `q:kitchen-tray/1` of the transcript); after the sealed-read refusals of rule 10 and before the
-  offline step, `frob eval ledger <campaign> --close --key l9-close --json`. While OPEN-ARENA-3 is undecided
+  offline step, `frob eval ledger <campaign> --action close --json` (admin actions take no key: `--key` on
+  `eval.ledger` is FROB-REF-802). While OPEN-ARENA-3 is undecided
   (`decided: false` in `config/qualification.toml`), opening on a non-synthetic claim family is refused with
   `qualification-undecided` (exit 3), so the fixture's task family carries the `synthetic` label; the script
   asserts that refusal once on a non-synthetic family (`e2e_expect_refusal` by name), and logs which posture
-  held. The agent's session calling `--open` is refused with FROB-REF-720, exit 5 (asserted once).
+  held. The agent's session calling `--action open` is refused with FROB-REF-720, exit 5 (asserted once).
 
 ## References
 

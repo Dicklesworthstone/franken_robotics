@@ -4,7 +4,7 @@ title: "frob-verbs registry: cluster `autopsy`, five rows, with parity, e2e and 
 type: "task"
 priority: 2
 milestone: "M3"
-labels: ["m3", "tether", "autopsy", "frob-verbs", "solid", "registry", "verb", "test"]
+labels: ["m3", "tether", "autopsy", "frob-verbs", "solid", "registry", "verb", "test", "review-notes-open"]
 parent: "WP-26"
 deps: ["BD-022", "NJL-01", "NJL-02", "NJL-04", "NJL-05", "STD-E2E"]
 needs: []

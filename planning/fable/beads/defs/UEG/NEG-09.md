@@ -50,14 +50,26 @@ built here).
 4. **Closed window check.** On [0, 20] (closed) the exact schedule has 601 instants and the shortcut still 616
    (7,995 is the last multiple of 13 at or below 8,000); the test records both so that the convention's
    effect is explicit.
-5. **Register and scan.** Item E7-6: stale pattern `615` in the scope of decision, thirteenth, 30 Hz or 20 s
-   text; pinned by `gb_23_reference` and the tests below.
+5. **Register and scan.** Item E7-6, in the engine's entry form (N38b-50):
+   `stale = [{ pattern = "\\b615\\b", scope = "decision|thirteenth|30 Hz|20 s" }]`, linked to REC-06 (N38b-55,
+   whose retired entry is `615` in decision, thirteenth or 13-steps text); pinned by `gb_23_reference` and the
+   tests below. The pattern also matches 615.38, and the engine reads no label, so every line in the walk set
+   that prints 615 or 615.38 on purpose carries `stale-as-control: E7-6`: the lines of
+   `count_is_not_rate_times_duration` and the mis-count control of GB-23's card file.
+6. **Report lint (DESIGN: the rule is by type and by name, so that it is decidable).** Two checks, both in
+   `frob-conformance`, which sees every crate and every registered schema. (a) By type: the only formatter that
+   prints "k <events> in T seconds" takes its count as the `u64` that `count_firings` returns; a float cannot
+   be passed, and a source scan finds no other formatting of such a phrase in a report template. (b) By name:
+   in every registered output schema a property named `count`, or whose name ends in `_count`, `_firings`,
+   `_decisions` or `_instants`, has JSON type `integer`, never `number`; the lint runs over the schemas
+   present in the build, so it grows with them. A rate times a duration is a `number` and cannot enter either.
 
 ## Acceptance criteria
 
 - [ ] `count_firings(40, 0, 0, 24000) = 600` and `count_firings(39, 0, 0, 24000) = 616`.
 - [ ] Reports print counts only from the function; a float rate × duration formatted as a count is rejected by
-      the report lint (a count field must be an integer type in every schema).
+      the report lint (a count field must be an integer type in every schema): `count_fields_are_integer`
+      passes on the registered schemas and fails on the planted schema below.
 - [ ] The stale-value scan finds no hit for E7-6.
 
 ## Test plan
@@ -70,6 +82,10 @@ built here).
   (10⁴ cases).
 - `count_is_not_rate_times_duration`: ⌊615.38⌋ = 615 and round(615.38) = 615 both differ from 616.
 - `overpayment_figures`: 30.769/30 − 1 = 0.02564; 616/600 − 1 = 0.02667.
+- `count_fields_are_integer`: the lint of item 6 over every registered output schema; a planted `synthetic`
+  schema whose property `decision_count` is declared `number` (the place a 615.38 would be written) fails it,
+  naming the schema and the property; `report_count_only_from_function`: the source scan of item 6 (a) finds
+  one formatter and no second one.
 
 ### End-to-end script and logging
 

@@ -45,8 +45,9 @@ base its generalized-velocity count is expected near 38 to 45, which lands in th
 set {12, 18, 24, 36, 48, 64} and above the reference humanoid's 35; the validation records n_v and, as DATA for the
 bucket planner (labelled DESIGN: the default set is the planner's, N17a-05 at M2, and is quoted here, not
 implemented), the expected bucket and the padding overhead of this robot in it ((capacity/n_v) to the powers
-1, 2, 3). The planner's own assertion on this robot (`frob phylum plan` choosing that bucket) is M2 work and is
-requested of N17a-08's script; this M1 bead does not wait on it. (2) Coupled gripper fingers: if the source couples them by an equality or a tendon, they are
+1, 2, 3). The planner's own assertion on this robot (`frob phylum plan` choosing that bucket) is made at M2 by
+step 6a of N17a-08's script, which depends on this bead and reads this manifest; this M1 bead does not wait on
+it. (2) Coupled gripper fingers: if the source couples them by an equality or a tendon, they are
 imported as one actuator through a coupling matrix; if it writes them as independent position actuators with
 the same command, the import keeps them independent and the loss report says that a mechanical coupling may
 exist on the real robot and is absent from the file. (3) Seven-joint arms: Jacobian rank 6 with a

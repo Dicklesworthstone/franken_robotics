@@ -6,7 +6,7 @@ priority: 1
 milestone: "M1"
 labels: ["m1", "lemma", "atelier", "marrow", "frob-analyze", "frontier", "spine", "spec", "test"]
 parent: "WP-11"
-deps: ["BD-025", "N10a-01", "N28a-01", "STD-E2E", "STD-TEST"]
+deps: ["BD-025", "N10-CX", "N10-KA1", "N10a-01", "N28a-01", "STD-E2E", "STD-TEST"]
 needs: []
 related: ["BD-011", "BD-243", "N10a-16", "N13-05"]
 gates: ["GATE-MARROW-01", "GATE-MARROW-04", "GATE-ATEL-02"]
@@ -213,8 +213,11 @@ computed with +[𝔸ᵢ, 𝔸ⱼ]).
 ### End-to-end script and logging
 
 `scripts/e2e/spec_c08.sh`. Sources the STD-E2E helper. Steps: both law suites; both per control; G1 rows
-KA-064 and KA-065; when the verb exists, `frob --json analyze curvature` on the three-link fixture design and
-a loop file, asserting the displacement per cycle, the label `leading-order`, the chart named, and an evidence
+KA-064 and KA-065 (`FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g1_known_answers -- KA-064`,
+and `-- KA-065`); then, logged `pending` until BD-243 lands (M3), `frob --json analyze curvature <the three-link
+fixture design> --stratum flight --shape <joint 1>,<joint 2> --loop circle:0.1@0.5,0.5` (the registered inputs
+of `analyze.curvature`: the loop is an inline circle or rectangle with its centre, not a file; `flight` is the
+zero-momentum stratum of a floating body), asserting the displacement per cycle, the label `leading-order`, the chart named, and an evidence
 block of class `Estimated` for the area formula and `Tested` against integration. Log
 `target/e2e-logs/spec_c08/<utc>.ndjson` with transcript: commands, exit codes, holonomy by both routes with
 units, relative errors against thresholds, the break radius, and on failure the loop and radius at which the

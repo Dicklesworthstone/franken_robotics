@@ -6,9 +6,9 @@ priority: 0
 milestone: "M0"
 labels: ["m0", "delivery", "gauntlet", "solid", "registry", "decision-record"]
 parent: "EPIC-M0"
-deps: ["NAB-17"]
+deps: ["NAB-17", "NAB-33", "NAB-34", "NAB-35", "NAB-36", "NAB-37", "NAB-38"]
 needs: []
-related: ["NAB-22", "NAB-32", "NAB-33", "NAB-34", "NAB-35", "NAB-36", "NAB-37", "NAB-38", "NAB-39"]
+related: ["NAB-22", "NAB-32", "NAB-39"]
 gates: []
 plan_refs: ["Appendix C.1.3", "Appendix C.1", "§28.19.4"]
 ---
@@ -44,11 +44,17 @@ killed-idea records the rows point to; the revive lint (NAB-32).
 
 **Transcription rule.** One record per row, in table order, as in NAB-18. `decision` is the first word of the
 decision text mapped to `rejected`, `parked`, `deferred`, `kept-as-summary` ("Kept as a budgeted summary only")
-or `left-to-sibling` ("Left to FrankenSim's own lane; not built here"). `reason` is the text after the colon.
-Three rejected rows have no colon: for EV-P14 and EV-P40 `reason` is the qualifier after the decision word
-("under D-2"; "at current tool limits; inside the caps, certified inverse kinematics is [F]"), and for EV-P39,
-whose decision is the single word "Rejected", it is "below 2.0 (table rule 1); the plan states no other
-reason" (DESIGN). `killed_idea` holds the `KI-nn` named in the row. `queue` is `["MQ-21"]` for EV-P35 (general
+or `left-to-sibling` ("Left to FrankenSim's own lane; not built here"). `reason` is the text after the colon
+where the decision text has one; otherwise the qualifier after the decision word and its tier bracket, without
+a leading "; " and without the parenthetical that names records (`(KI-nn)`, `(H-nn; KI-nn)`): EV-P04 "as a
+budgeted summary only", EV-P05 "as a certificate; kept as a lower bound for refutation", EV-P06 "none of the
+laws of §18.5 implements it", EV-P14 "under D-2", EV-P24 "refused by `FROB-REF-245`", EV-P40 "at current tool
+limits; inside the caps, certified inverse kinematics is [F]". A row that is only a decision word and a record
+parenthetical (EV-P09 "Rejected (KI-37)", EV-P20 "Parked (KI-22)" and the like) has an empty `reason` and
+rests on its `killed_idea`. Three rejected rows have neither a colon nor a killed-idea record: EV-P14 and
+EV-P40 take their qualifier, and EV-P39, whose decision is the single word "Rejected", has "below 2.0 (table
+rule 1); the plan states no other reason" (DESIGN). `killed_idea` holds the `KI-nn` named in the row; the 20
+records named are entered by NAB-33 to NAB-38, dependencies of this bead. `queue` is `["MQ-21"]` for EV-P35 (general
 Lean theorems, the deferred item of the Moonshot queue, NAB-21) and `[]` for every other row. `reopen_on` is filled as follows (the text of the row where
 it gives one; otherwise the standing rule that a verdict changes only on new evidence of the kind that
 produced it):
@@ -155,12 +161,15 @@ Rows in this table: 43.
 
 - [ ] 43 records `EV-P01` … `EV-P43` exist in table `parked`, in the order above, and the lints of NAB-17 pass.
 - [ ] Every printed score equals the derived score; the first row scores 3.0 and the last 0.4.
-- [ ] 32 rows are below 2.0; 11 are at 2.0 or above, and each of those 11 has a non-empty reason.
+- [ ] 32 rows are below 2.0; 11 are at 2.0 or above, and each of those 11 has a non-empty `reason` or a
+      `killed_idea` (EV-P09 has only KI-37).
 - [ ] Every `rejected` row has a reason or a `killed_idea`; every `parked` and `deferred` row has `reopen_on`.
 - [ ] The 20 distinct `KI-nn` references of the table (KI-01, -02, -04, -09, -10, -11, -12, -13, -15, -17, -21,
       -22, -26, -27, -33, -35, -37, -45, -47, -48) resolve in the killed-idea register.
-- [ ] The two refusal codes named (`FROB-REF-245` for a half-precision solve or state; `FROB-REF-214` for a
-      quaternionic constituent) exist in the refusal registry with those meanings.
+- (Not this bead's close condition: that the two refusal codes named, `FROB-REF-245` for a half-precision
+  solve or state and `FROB-REF-214` for a quaternionic constituent, exist in the refusal registry with those
+  meanings is the criterion of KI-01 (NAB-33) and KI-48 (NAB-38), under NAB-32's rule for a code registered at
+  a later milestone; `FROB-REF-245` is registered by N18-REF at M1.)
 
 ## Test plan
 
@@ -172,20 +181,24 @@ Rows in this table: 43.
 - `scores`: spot values: bandit allocation (3, 3, 3) → "3.0"; a second geometric-algebra layer (2, 4, 3) →
   "2.7"; pressure-field contact (3, 3, 4) → "2.3"; barrier contact (3, 3, 5) → "1.8"; e-graph saturation
   (4, 2, 5) → "1.6"; one universal policy (5, 1, 5) → "1.0"; continuation on the GPU (2, 1, 5) → "0.4".
-- `eleven_rows_at_or_above_two_all_have_reasons`.
+- `eleven_rows_at_or_above_two_all_have_reasons`: EV-P01 to EV-P11 each have a non-empty `reason` or a
+  `killed_idea`.
+- `reasons_follow_rule`: the six example reasons of the transcription rule and EV-P39's, and an empty `reason`
+  with a `killed_idea` for EV-P09 and EV-P20.
 - `decision_vocabulary`: 33 rejected, 5 parked, 3 deferred, 1 `kept-as-summary`, 1 `left-to-sibling`; total 43.
 - `killed_idea_references_resolve`.
 - `rejected_rows_have_reason`: each of the 33 rejected rows has a non-empty `reason` or a `killed_idea`; the
   three rows without a colon (EV-P14, EV-P39, EV-P40) carry the `reason` of the transcription rule.
 - `deferred_lean_row_lists_mq21`: EV-P35 has `queue = ["MQ-21"]`, and no other row of this table has a queue.
 - `parked_and_deferred_have_reopen_on`.
-- `decision_text_frozen` against `tests/fixtures/ev/parked.tsv`.
+- `decision_text_frozen` against `tests/fixtures/ev/parked.tsv` (the columns of NAB-17 rule 2), for every row
+  whose `history` is empty.
 
 ### End-to-end script and logging
 
-`scripts/e2e/decision_records.sh` (NAB-50) asserts the count (43), zero mismatches, the 32/11 split and the
-resolution of every `KI-nn`, and runs the revive lint's planted case against one row of this table (a work
-package that names "bandit allocation for the ladder" without citing its record must be refused). Logged per
+`scripts/e2e/decision_records.sh` (NAB-50) runs this table's module, asserts the count (43), zero mismatches
+and the 32 rows below 2.0, and plants the revive lint's case against a row of this table: a bead "Copy-on-write
+forks for device state" with no citation (EV-P22, KI-10) must fail `ki.match-without-citation`. Logged per
 STD-E2E.
 
 ### Known answers and negative controls

@@ -134,7 +134,9 @@ stratum, and a report that says so.
       evaluated on the rival's ledger, and the replication kit (GATE-TENFOLD-07).
 - [ ] GATE-TENFOLD-08, -12 and -13 are recorded; a failed -08 prints `unreplicated` on every figure.
 - [ ] No family used at the M3 partial gate is in the sealed suite; no pin moved during the freeze.
-- [ ] Each of the six KILL-TENFOLD rules that apply has its outcome per cell recorded as an ADR.
+- [ ] Each of the six KILL-TENFOLD rules that apply has its M7 reading recorded as an ADR with its register
+      entries: one entry per cell (scope `cell:<stratum>`) for -SPEED, -TIE, -ADJ and -REACH, and one entry, with
+      no scope, for each of the standing gates -CERT and -LEAK, which are decided whole (N40-28).
 - [ ] The words used for each stratum are the ones the outcome rules fix for its measured range.
 - [ ] The exit report for M7 is `exit-ready`; the exit record is written by a fresh-context session.
 

@@ -1,0 +1,401 @@
+{
+  "round": 4,
+  "slice": "F-U32a",
+  "reviewed": 44,
+  "changed": [
+    {
+      "bead": "BD-022",
+      "kinds": [
+        "registry",
+        "convention",
+        "contradiction",
+        "request"
+      ],
+      "what": "Flag table gains --envelope-scope (the sixth common run input, convention 14) and --no-memo (NJL-01 variation 14, BD-111); help_json_form names six run properties; the interim field admits a list of codes or none with detail and pointer (N35-33 rule 7), and schema_bare_equals_refusals holds a list-interim row. Counterpart of N32a-01's move: CONTRACT.md of frob-verbs and frob-cli cite the ADR-TETHER records, verb_literal_lint_catches_plant and a planted-literal acceptance added, and the e2e asserts robot-docs uses principle 6's wording. The check-generated rule for verbs_table.rs (re-run the build script, compare bytes, fail a FROB_VERBS_REGISTRY build) moves here from N32a-02, with an acceptance, the test check_generated_verbs_table and an e2e step; BD-022 depends on BD-004 through N35-33. Later in the pass, the counterpart of the audit's N33a-06 proposal (whose reviewer moved the stamping items to their owners): doctor's stack_receipt is stated as the sr: receipt hash and sl: lock digest of BUILT_UNDER (and dev), and the acceptance asserts they equal receipts/HEAD and receipts/LOCK_DIGEST; the envelope's stamp is N32a-03's."
+    },
+    {
+      "bead": "BD-023",
+      "kinds": [
+        "registry",
+        "convention",
+        "plan"
+      ],
+      "what": "envelope_scope added to the generated input schema and definition_from_entry; 990 cited as N32-REF's assigned row; the fastmcp facts step cites the BLAKE3 of receipts/facts/fastmcp-<rev>.json (N33c-26), lists the changed facts and refuses a mismatched hash. Counterpart of N32a-01's move: the literal lint covers frob-mcp with a planted literal, and surface/frob-mcp/CONTRACT.md cites ADR-TETHER-01, -02, -03, -06."
+    },
+    {
+      "bead": "BD-137",
+      "kinds": [
+        "registry",
+        "contradiction"
+      ],
+      "what": "Gate run, acceptance and known answers use NJL-03's staged check registry_is_list_restricted (244 in 44 clusters is not due at M1); checklist item 4 adds the reality guard's codes 814, 816, 819, 873, 889, 895, 897 for report surfaces and artifact readers (NJL-01 variation 15, BD-139)."
+    },
+    {
+      "bead": "BD-138",
+      "kinds": [
+        "contradiction",
+        "registry"
+      ],
+      "what": "The operate task-cluster row matches NJL-05 (job_list, job_status, job_find, artifact_list, artifact_read, artifact_export, artifact_import) and says where spark_devices, session_show, session_open and session_close sit."
+    },
+    {
+      "bead": "BD-211",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The unit-test command filtered two names as one argument; it is now cargo test -p frob-cli -- daemon_idem daemon_cursor."
+    },
+    {
+      "bead": "BD-222",
+      "kinds": [
+        "request",
+        "registry",
+        "convention",
+        "deadlock"
+      ],
+      "what": "Audit notes applied after checking their evidence: BD-184, BD-186 and BD-215 move to related (consumers and campaigns, not builders), N17b-04 (phylum.sweep) and N20b-12 (sense.causal-test on the batched tiers) join deps, no cycle; phylum and sense brackets, the operate cluster and two_kind_verb_actions restated against NJL-01/NJL-05; envelope_scope added; the e2e replay and fork commands carry --key."
+    },
+    {
+      "bead": "BD-296",
+      "kinds": [
+        "request",
+        "convention",
+        "contradiction"
+      ],
+      "what": "Aligned with convention 14 and N32-REF row 704: the size classifier refuses a campaign-class job with no approved envelope with 704 at submission (after fit 602, before 761 and 701) and again at dispatch/resume on a lapse; slots preconditions, fit, size_class, envelope, budget, guard, transaction; campaign_submission_is_704, campaign_over_approved_limit_is_761 and scratch_held_job_never_resized replace the old test; a scratch-held job is never re-sized, so the dispatch 704 is tested on an of-record registry view and skipped on the lane without an approval of record; the stage-order fixture becomes nineteen rows; the envelope e2e lane is scratch-rooted and never feeds the gate record."
+    },
+    {
+      "bead": "N32ax-01",
+      "kinds": [
+        "request",
+        "convention",
+        "contradiction"
+      ],
+      "what": "Stage table rebuilt to convention 14: preconditions, fit (602, BD-219's check run before the class), size_class (704 at submission), envelope (761), budget (701), guard (703), transaction; stage_order_envelope_after_budget becomes stage_order_envelope_before_budget (E+B gives 761); stage_slots_fixed and the six M2 fixture rows (S, E, B, S+E, S+B, E+B) restated; NJL-01 row 16 and six common properties stated instead of a pending request (convention 13); stage letters in the race, acceptance and controls follow the new table."
+    },
+    {
+      "bead": "BD-299",
+      "kinds": [
+        "registry",
+        "broken"
+      ],
+      "what": "The code-to-exit check states N35-33's [exit_rule] with its exception lists (conflict 112, 803, 804, 809 -> 7; integrity 810 -> 9; capability 840 -> 5; 74x and 76x -> 4, 79x -> 5), which the old family defaults would have failed on 112 and 840; Protocol stimuli gain an unknown-field case so a verb without a named or required parameter still has one, and the count test follows; key_optional_rows_skip_805 names both key_optional rows (session.focus, study.plan)."
+    },
+    {
+      "bead": "BD-312",
+      "kinds": [
+        "request",
+        "registry",
+        "broken"
+      ],
+      "what": "eval.ledger's open and close use --action open / --action close with no key (NJL-01 action rule 1; admin actions take none); the e2e session adds export:report, without which report.design is 720; two_kind_entries restated (default call unnamed, --action show is 802); the appended-codes paragraph adds variation 15 (814, 816, 819, 873, 889, 895, 897 for report surfaces and artifact readers) and variation 16 (admission-check codes)."
+    },
+    {
+      "bead": "BD-313",
+      "kinds": [
+        "request",
+        "convention",
+        "registry"
+      ],
+      "what": "N32b-38 joins deps (no cycle) and the runner counts turns and simulations with its transcript_counts, one definition for GATE-TETHER-01 and the battery; session one's listing carries --key on every mutate and run call (convention 5), --json throughout, the registry spelling of set-param, and predict register's M3 answer (724)."
+    },
+    {
+      "bead": "BD-372",
+      "kinds": [
+        "request",
+        "convention",
+        "registry",
+        "contradiction"
+      ],
+      "what": "No paginated result: the ranked set is bounded by top_k and returned whole (variation 1 is read-only); six common run properties with envelope_scope; the envelope tests and consideration follow convention 14 (campaign_704_at_submission, over_approved_limit_761, 704 again at dispatch); --root already replaced by FROB_STATE."
+    },
+    {
+      "bead": "BD-376",
+      "kinds": [
+        "registry"
+      ],
+      "what": "The checklist's refusal list says the generator appends the codes of the kind and of the fields (NJL-01 variations) and no row repeats them, instead of 'the common codes of its kind'."
+    },
+    {
+      "bead": "BD-409",
+      "kinds": [
+        "request",
+        "registry",
+        "deadlock",
+        "broken"
+      ],
+      "what": "Completeness reference is NJL-03's 243 plus the additions (artifact.import and NJLx-51's three): 247, 248 with fidelity.rank, 246 with solve.run withdrawn; N31ap3-51 joins deps (no cycle); BD-397 moves to related (it registers no verb and the checks run on the synthetic rehearsal); the e2e band inside the rehearsal's scored cell is 'synthetic' (BD-393), never 'calibrated'; ground.kit needs export:packet only with --out; checklist refusal wording as BD-376."
+    },
+    {
+      "bead": "N32a-01",
+      "kinds": [
+        "deadlock",
+        "request"
+      ],
+      "what": "Audit notes applied: acceptance items 4 and 5, verb_literal_lint_catches_plant, the robot-docs e2e step and the literal-plant control move to BD-022 and BD-023, which depend on this bead and build the crates; the index lists those checks pending; N34-08 moves to related (nothing here runs check-contracts)."
+    },
+    {
+      "bead": "N32a-02",
+      "kinds": [
+        "request",
+        "registry",
+        "deadlock",
+        "contradiction",
+        "convention"
+      ],
+      "what": "Later-field rows added for memo (BD-111, variation 14, lint memo-kind), reports (BD-139, variation 15, lint reports-carry-reality), max_wall_ms (N37-13) and same_engine_as (N28c-29, lint same-engine-mutual); the listing row is withdrawn (BD-305 uses x-frob-listing from VisibleList<T>); [[addition]] exists from M1 and [counts] holds the totals at each commit (NJLx-51), [[admission_check]] admitted from N32ax-01; the nine two-kind cluster rows of NJL-01 (eval.ledger, scene.split added); paginated allowed only on a read (RL-23 extended, variation 1); two_kind_verb_actions restated (default action unnamed, show is 802); BD-004 leaves deps (audit note verified): the check-generated rule for verbs_table.rs moves to BD-022, and this bead's acceptance and e2e compare two build-script runs. Later in the pass: RL-09's 30000 is stated as OPEN-TETHER-3's fail-closed maximum, which N32a-33's decision moves together with the request timeout."
+    },
+    {
+      "bead": "N32a-03",
+      "kinds": [
+        "request",
+        "registry",
+        "contradiction"
+      ],
+      "what": "bound gains bound.fixtures ({param, reference, path, digest}, N34p3-01, on every envelope after Resolve); the refusal object serializes the optional detail (N35-33 rule 7); the exit table and the rule text follow N35-33's [exit_rule] (74x, 76x -> 4; 79x -> 5; conflict 112, 803, 804, 809 -> 7; 810 -> 9; 840 -> 5; a 7xx decade without a rule row fails the load) in place of 'unnamed families carry an explicit exit', and unnamed_family_needs_explicit_exit becomes exit_rule_from_registry; authorization names build packets' fourth flag fabrication_released (BD-408); 990 is N32-REF's assigned row, no longer 'provisional'. Later in the pass (N33a-06's stamping sites): every envelope, refusals and exit 9 included, carries evidence.stack_receipt (the sr: form of BUILT_UNDER) and stack_dev: true when dev, with an acceptance line and the test stack_receipt_on_every_envelope."
+    },
+    {
+      "bead": "N32a-04",
+      "kinds": [
+        "request",
+        "deadlock",
+        "convention"
+      ],
+      "what": "N21-REF joins deps (the 601 route is its row's raising site; no cycle); BD-008 and N33c-35 move to related (audit note verified: dispatch takes asupersync's Cx under every OPEN-SUITE-6 option and runs no asupersync-count check); Resolve calls N34p3-01's fixture resolver for @fixture: references and records bound.fixtures, and the digest covers the resolved files' digests; the frob.rpc/1 example's common block carries envelope_scope (convention 14)."
+    },
+    {
+      "bead": "N32a-05",
+      "kinds": [
+        "contradiction",
+        "broken"
+      ],
+      "what": "The decision function's input carried clause results as three booleans, which cannot tell a toolchain failure from a duplicate runtime, stdio from HTTP, or the socket smoke; it now takes the measurements and returns the qualified not-fired results the table test expects. A stdio smoke failure with HTTP passing had no class: it now fires like a failure on both transports; classes are read in order (a) to (d); the table test and known answer have seven rows. frob-mcp --dispatch=socket (a flag no bead defines) becomes FROB_DISPATCH=socket, N32a-04's and BD-022's selector."
+    },
+    {
+      "bead": "N32a-07",
+      "kinds": [
+        "registry"
+      ],
+      "what": "A fraction or exponent within the int53 range (1.0, 1e3) is 802, not 808, whose row is the range fault only; a literal outside the range is 808 whatever its spelling (test adds 1e16); 990 is cited as N32-REF's row assigned by N35-33."
+    },
+    {
+      "bead": "N32a-08",
+      "kinds": [
+        "contradiction",
+        "deadlock",
+        "broken"
+      ],
+      "what": "The run's lease generation is BD-091's (its reassign and renew, M1, upstream through N29a-05): this bead no longer claims the only definition of the lease row and increments it through reassign; the late writer's refusal is BD-091's 875; held_job_never_starts no longer calls job.cancel at M1 (no job verb exists before M2) but cancels through the engine."
+    },
+    {
+      "bead": "N32a-09",
+      "kinds": [
+        "convention",
+        "registry",
+        "broken"
+      ],
+      "what": "The request digest covers envelope_scope (the sixth common run property selects the approval a job is admitted under) and the digests of files a @fixture: reference resolved to (N34p3-01); the refusals decided before the insert name N32ax-01's stages; admission_refusal_binds_nothing used 701, which nothing raises before N32a-15 (M2): at M1 it uses 761; the e2e keys use e2e_key (k1 replayed with --again, an unused key from its own label) and the replay with changed content asserts 803."
+    },
+    {
+      "bead": "N32a-10",
+      "kinds": [
+        "broken"
+      ],
+      "what": "The e2e re-read 'the same frontier using the saved first-page frontier', but no input takes a frontier; a fresh process now presents the saved first-page cursor (which carries the frontier and verifies in a new process) and its pages must equal pages two onward of the first pass."
+    },
+    {
+      "bead": "N32a-11",
+      "kinds": [
+        "registry"
+      ],
+      "what": "refusals_parsed_from_short_doc used design.check as a specimen with the list {101, 104, 107, 110, 720, 723, 724, 802}, which is not design.check's served list (its eight stages' codes and the codes its fields append); the specimen is now a synthetic read entry with that chapter list and no field-driven variation."
+    },
+    {
+      "bead": "N32a-12",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "verb_invoke's list of a run entry's common properties adds envelope_scope (convention 14)."
+    },
+    {
+      "bead": "N32a-13",
+      "kinds": [
+        "registry",
+        "convention",
+        "broken"
+      ],
+      "what": "study.compare's chapter refusals add the codes VERBS-study's row holds from its extending beads (890 N33c-31, 825 N37-28, 870 BD-347), passed through; the acceptance's full list and rows_match_verbs_study follow; the e2e keys use e2e_key (s1's replay with --again), and the unknown plan is a well-formed address of 64 zeros so the refusal is 809, not a schema failure."
+    },
+    {
+      "bead": "N32a-16",
+      "kinds": [
+        "request",
+        "deadlock",
+        "contradiction"
+      ],
+      "what": "Audit note applied after checking it (BD-219 is named only in deps; the interval and factor 2 are admission's, N32a-15): BD-219 moves to related, acceptance 7 requires an eta_s interval only when the job carries an estimate, eta_s is absent with no estimate, and the check that a live job's deferred envelope carries its admission interval moves to N32a-15; BD-138's request answered: the bounded wait replaces BD-138's M1 rule (run tools ran to completion, VerbTool::timeout() unset, sync_wait_ms without effect), with an acceptance. Later in the pass: the 40 s request timeout is stated as the maximum wait plus 10 s, moved with it by N32a-33's decision."
+    },
+    {
+      "bead": "N32a-15",
+      "kinds": [
+        "request",
+        "registry",
+        "broken",
+        "convention"
+      ],
+      "what": "Counterpart of N32a-16: N32a-16 joins deps (no cycle) and the acceptance and test deferred_envelope_carries_admission_interval move here. The estimate-required lint failed every run row (no VERBS row sets estimable; NJL-01 variation 2 gives every run entry estimate_only whatever the flag): a row is now estimable by kind run or estimable = true, and the lint and its test follow; step 2 names the stages before the budget (fit, size class, envelope); the e2e opens its session with STD-E2E's e2e_session helper (the token kept out of the log) and its run keys use e2e_key."
+    },
+    {
+      "bead": "N32a-17",
+      "kinds": [
+        "convention"
+      ],
+      "what": "The e2e keys are written with e2e_key (STD-E2E), and job.find recovers each killed trial's job with the same key reissued by e2e_key --again."
+    },
+    {
+      "bead": "N32a-18",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "The lane receipt's citation is stated as N29a-24 has it: N29a-24 records GATE-TETHER-08 from its own g4_chaos receipt, whose entry tether08:lanes@host verifies this receipt by content address (FROB_TETHER08_LANES names the file); a tier receipt cannot carry another receipt; the acceptance follows; the run keys use e2e_key, fault names with '-' for '_' as labels allow."
+    },
+    {
+      "bead": "N32a-22",
+      "kinds": [
+        "request",
+        "convention",
+        "contradiction"
+      ],
+      "what": "The pending-request narration about job.list (convention 13) is replaced by the check that job.list's dispatcher block (N29a-23, in the build through BD-217) shows the decided slot_reserve, job_cap_per_environment, quantum_s and ageing_period_s and the config_digest frob doctor reports; acceptance added. Later in the pass: frob.queuetrace/1 did not carry what the peer-link pilot's eligibility reads (N32a-34 said it reads this schema); the job row now holds the device and its family, the tier and determinism class requested, the memory estimate and role from the estimate record (BD-219, role_of of N21c-07), and a private-input flag."
+    },
+    {
+      "bead": "N32a-25",
+      "kinds": [
+        "request",
+        "contradiction",
+        "convention"
+      ],
+      "what": "retrofits has no listing verb and is served from M4 by N19b-38's hand-written handler (its loader as the source, this bead's cursor, scene:read); a kind whose source is not in the build is refused 724, never served empty; the twelve-kind acceptance and the e2e threshold are scoped to the kinds whose source is in the build; e2e keys use e2e_key."
+    },
+    {
+      "bead": "N32a-26",
+      "kinds": [
+        "convention"
+      ],
+      "what": "Convention 13: the robot-docs --workflow option is in VERBS-operator's row (extended by N32a-26), not 'requested of' it; the hostile-corpus import keys use e2e_key."
+    },
+    {
+      "bead": "N32a-27",
+      "kinds": [
+        "request",
+        "contradiction",
+        "convention"
+      ],
+      "what": "The token travelled in FROB_SESSION and as --session, which N32b-01 and BD-022 reserve for the session identifier (a token there is 802): stdio now reads FROB_SESSION_TOKEN or --session-token-file (N32b-01's start-up read), with a test that a token in FROB_SESSION is 802; N32b-01's requests answered: a token-less stdio server serves the four public operator tools and refuses the rest (a root session_open included) with 723 'no token', and a root session_open presenting a token is 723, so over MCP the tool is derive-only (table row, five situations, two tests); the e2e opens sessions with e2e_session (tokens never logged) and keys calls with e2e_key."
+    },
+    {
+      "bead": "N32a-31",
+      "kinds": [
+        "broken",
+        "contradiction"
+      ],
+      "what": "The transcript stores digests, not bodies (N32bx-01), yet the classifier and raters were to read previous envelopes: stated how each request (frob.resolved-request/1 by request_digest) and each answer (re-obtained as N32b-38's clean client does) are read, that a run answer's next_actions are not stored so conditions (2) and (3) read its result, and that an unrecoverable answer is labelled decision; turns are segmented by N32b-38's transcript_counts, the one definition (BD-313 forbids a second count); the falsifier's 'under 1.4-fold' is stated as 1/0.70 = 1.43 rounded, with p compared to 0.30; two tests added."
+    },
+    {
+      "bead": "N32a-32",
+      "kinds": [
+        "broken",
+        "contradiction"
+      ],
+      "what": "Clause 1 states 1/0.70 = 1.43 as the ceiling's threshold (p = 0.29 gives 1.41 and fires, so the e2e's 'ceiling against 1.4' would contradict the branch); the clause-1 branch names NJL-05's ruling (opt_cascade takes the vacated seat, search keeps seven tools) and the clause-2 removal adds the retired-name entry (801 naming opt.cascade), as VERBS-solve's removal rule states; 'the admissibility checks below' corrected to 'above'."
+    },
+    {
+      "bead": "N32a-33",
+      "kinds": [
+        "contradiction",
+        "broken"
+      ],
+      "what": "The grid's w_max = 60,000 could not be adopted by a registry change alone: N32a-02's lint RL-09 caps mcp_max_ms at 30000 and N32a-16 builds frob-mcp with .request_timeout(40); rule 2, the background, the acceptance and a new test max_change_moves_lint_and_timeout now move RL-09's bound and the request timeout with the maximum in one commit; the two inconsistent latency-threshold sets are unified to 1, 2, 5, 10, 15, 20, 30 and 60 s (every wait of the grid)."
+    },
+    {
+      "bead": "N32a-34",
+      "kinds": [
+        "convention",
+        "contradiction",
+        "registry"
+      ],
+      "what": "Convention 13: 'requested of N41-12' replaced by N41-12's acceptance (it enters KILL-PEERLINK and sets the kill gate); the trace fields are aligned with N32a-22's frob.queuetrace/1, which now carries the eligibility fields this pilot reads; the registration row gains N38a-09's mandatory mechanism, bead, falsifier and ceiling; the standalone branch row aligned with N41-12 (fleet.plan advises and dispatches nothing across machines; KILL-FLEET also gives standalone); the e2e's KILL-FLEET read admits no entry yet (N21c-11's rule 1)."
+    },
+    {
+      "bead": "N32a-35",
+      "kinds": [
+        "convention",
+        "contradiction",
+        "registry"
+      ],
+      "what": "Convention 13: 'requested of N41-12' replaced by N41-12's acceptance; the private mark was missing from what never crosses although clause (b) and N41-12 require it: a job with a private-marked input is never offered and a private-marked object is refused FROB-REF-731 (not-on-holder, N37-REF) on both sides, with an acceptance line, a test, a metric and a negative control; e2e keys use e2e_key with --again for the deliberate re-send."
+    },
+    {
+      "bead": "N32ap1-01",
+      "kinds": [
+        "contradiction",
+        "broken",
+        "convention"
+      ],
+      "what": "The fires(ceiling) branch said search 'then has six tools (NJL-05's rule)': NJL-05 rules the opposite (opt_cascade takes the vacated seat, seven tools) and VERBS-solve adds the retired-name entry (801 naming opt.cascade, BD-376 recording the withdrawal); the branch, its acceptance, registry_matches_branch and the e2e now check that; the trigger is stated as 1/0.70 = 1.43 with p compared to 0.30 (p = 0.29 gives 1.41 and fires), and the e2e compares ceilings with 1.4286, not 1.4; the 'request to VERBS-solve' narration is gone."
+    },
+    {
+      "bead": "N32ax-02",
+      "kinds": [
+        "request",
+        "convention",
+        "registry"
+      ],
+      "what": "Convention 13 (H-owners-1): the three refusals are stated as N35x-02's rows engine-environment-mismatch (601), engine-model-unrepresentable (604) and engine-not-serving (724) with detail the slug until numbered; the session default of the engine selection is removed (session.open has no engine input in VERBS-session); admission listed in N32ax-01's stage order (fit, size class, envelope before budget, convention 14); the cross-engine 561 is tied to N35-07's family key; e2e keys use e2e_key and the 803 of one key with two engines is asserted with --again; 'criterion below' corrected to 'above'."
+    },
+    {
+      "bead": "N32ax-03",
+      "kinds": [
+        "request",
+        "convention"
+      ],
+      "what": "Requests of F-U34, F-U36, the lead and H-owners-2 applied: the script passes e2e_fixture's path, not @fixture: (N34p3-01 builds on this bead); an estimate is a read and prices adhoc, so the class in force stays E0 and step 7 cites --envelope-scope gate:<id>, with the uncited run checked as a plain 761 (704 from BD-296 when campaign-class) and never held, in the acceptance, a new unit test and the script; assert_of_record reaches the recorder as the hook receipts_of_record in register::record::CHECKS (reason receipt-not-of-record), with frob-conformance in the crates and the test receipts_of_record_hook; e2e keys use e2e_key and e2e_expect_refusal is written in full."
+    }
+  ],
+  "new_beads": [],
+  "superseded": [],
+  "requests": [
+    {
+      "bead": "N36-20",
+      "what": "Lines 193-200 say a run verb has no scope input and list five common inputs; convention 14 and NJL-01 add envelope_scope (--envelope-scope <gate:…|campaign:…|pretrain:…>) as the sixth, and the scope order is launcher token, cited envelope_scope, verb-derived scope, then adhoc; 'the same command started directly is refused with 761' holds only when uncited. Also: N32ax-01 now runs the check registered in admit_run's fit slot as its own stage before BD-296's size classifier (N32-REF row 704: 704 after 602); state that the fit slot's check is callable on its own for that stage."
+    },
+    {
+      "bead": "N32a-19",
+      "what": "Its code-to-exit check says 1xx to 5xx -> 3 and 8xx -> 3 except conflicts -> 7 and the chunk conflict -> 9; N35-33's [exit_rule] has three exception lists (conflict 112, 803, 804, 809 -> 7; integrity 810 -> 9; capability 840 -> 5) and rows 74x, 76x -> 4 and 79x -> 5, so the check as written fails on 112 (exit 7) and 840 (exit 5). State the rule as N35-33's, as BD-299 now does."
+    },
+    {
+      "bead": "VERBS-report",
+      "what": "report.design, report.run and report.mission are rendered reports, BD-139's definition of reports = true, but no row says it; BD-139 says each later surface's bead sets the field on its own row, and neither this registry nor BD-302 does; set reports = true on them (or say why not) so that NJL-01 variation 15 appends 814, 816, 819, 873, 889, 895 and 897 and BD-139's reports-carry-reality lint covers them. BD-312 now refers to them as report surfaces."
+    },
+    {
+      "bead": "BD-004",
+      "what": "Its list of later check-generated rules says N32a-02 (M0) adds the verbs_table.rs rule; N32a-02 no longer depends on BD-004 and BD-022 now adds that rule (re-run frob-verbs' build script, compare $OUT_DIR/verbs_table.rs, fail a FROB_VERBS_REGISTRY build). Name BD-022."
+    },
+    {
+      "bead": "N32-REF",
+      "what": "Row FROB-REF-808 says an int53 field 'holds, or would be serialized with' an out-of-range value and names the serializer as a raising site; row 990, N32a-03 and N32a-07 give the serializer's refusal of an out-of-range int53 to 990 (internal fault, exit 9). Drop the serializer from 808 (input validation only)."
+    },
+    {
+      "bead": "BD-091",
+      "what": "It says 'the run row holds lease_gen'; the run table is filled by Tether downstream (BD-090), while N32a-08, BD-210 and N29a-05 name the lease row run_lease(run PK, lease_gen). BD-091 builds first (N32a-08 -> N29a-05 -> BD-091) and owns the lease: create run_lease(run PK, lease_gen) here with reassign and renew, so N32a-08 only increments it."
+    },
+    {
+      "bead": "N35-07",
+      "what": "N32ax-02 (engine back end, on KILL-TENFOLD-TIE's firing branch) refuses a pair whose arms ran on different engines with FROB-REF-561 at your licence check, taking the engine identity (evidence.tier external:<name>) as part of each arm's device family, and its design rule (3) says results of different engines are never paired. Your paired-comparison rule admits D1 across families; state that a pair across engine identities is 561 whatever the class, or name the code that refuses it."
+    }
+  ],
+  "unchanged": 2,
+  "notes": "Unchanged: N32a-20, N32a-21. N32a-20 and N32a-21 were checked in full (every worked number recomputed: the simulator cases, the loss of 18.55, the hysteresis and the floors) and need no change. Slice settled: all 44 beads reviewed; every slice-file note applied after checking it against the owning bead; the requests above go to beads outside the slice."
+}

@@ -4,7 +4,7 @@ title: "frob-conformance: refusal vocabulary of the Gauntlet: harness reasons an
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "gauntlet", "frob-conformance", "solid", "registry", "test"]
+labels: ["m0", "gauntlet", "frob-conformance", "solid", "registry", "test", "review-notes-open"]
 parent: "WP-14"
 deps: ["BD-005", "BD-025", "STD-E2E", "STD-TEST"]
 needs: []

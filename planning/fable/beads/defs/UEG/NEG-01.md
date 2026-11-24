@@ -4,7 +4,7 @@ title: "frob-conformance: worked-card goldens: the `frob.card/1` file, the loade
 type: "task"
 priority: 0
 milestone: "M0"
-labels: ["m0", "gauntlet", "frob-conformance", "solid", "test", "card", "registry", "review-notes-open"]
+labels: ["m0", "gauntlet", "frob-conformance", "solid", "test", "card", "registry"]
 parent: "WP-34"
 deps: ["BD-005", "BD-025", "BD-026", "NAB-09", "STD-TEST"]
 needs: []
@@ -110,10 +110,10 @@ Rules of the format:
 - Lane B, `gb_nn_mechanism`: the test calls the owning crate's public API (and, where a `[[surface]]` entry
   names a verb, the verb's in-process handler) on the same inputs and compares the same outputs. A failure means the mechanism
   disagrees with the card. Before `first_milestone` the lane is compiled out and reported `not run`, never
-  `pass`. Where lane B checks need mechanisms that arrive at different milestones (GB-25: the rewrite table at
-  M2 and the trace checker at M4, the card itself at M0), each such check is a `[[mechanism]]` entry with its
-  own `first_milestone` and is gated, compiled out and reported separately; the card's `first_milestone` is
-  the earliest of them. The surface step likewise carries the `first_milestone` of its verb (or of the
+  `pass`. Where lane B checks need mechanisms that arrive at different milestones (GB-25: the card and its
+  hash check at M0, the rewrite table and the rewrite-trace checker at M2), each such check is a `[[mechanism]]`
+  entry with its own `first_milestone` and is gated, compiled out and reported separately; the card's
+  `first_milestone` is the earliest of them. The surface step likewise carries the `first_milestone` of its verb (or of the
   verb's field the card reads) and reports `not run` before it.
 - `gb_nn_controls`: each planted defect is evaluated in lane A's arithmetic and must miss the golden.
 
@@ -121,7 +121,7 @@ Rules of the format:
 
 ```rust
 pub struct Card { pub id: CardId, pub inputs: Vec<Quantity>, pub outputs: Vec<Golden>, pub controls: Vec<Control>, /* … */ }
-pub fn load(id: &str) -> Result<Card, CardError>;          // validates rules 1 to 6
+pub fn load(id: &str) -> Result<Card, CardError>;          // validates rules 1 to 8
 pub fn check(card: &Card, name: &str, got: Exact) -> CheckResult;   // records measured, golden, tolerance
 pub fn status() -> Vec<CardStatus>;   // id, lane A, lane B and each [[mechanism]] check and the surface
                                       // (pass | fail | not run, with the milestone it waits for), citable,

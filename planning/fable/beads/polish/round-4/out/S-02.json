@@ -1,0 +1,278 @@
+{
+ "round": 4,
+ "slice": "S-02",
+ "reviewed": 28,
+ "changed": [
+  {
+   "bead": "N10a-03",
+   "kinds": [
+    "request",
+    "registry",
+    "broken"
+   ],
+   "what": "Request from F-U34 applied: the regeneration check is cited as N34p4-03's `xtask check-generated` (Background, Out, D-7 step 2), and dep BD-004 (the assembly of all six checks) is replaced by N34p4-03, the one check this bead uses; graph_check: no cycle. D-7 step 2 said check-generated 'proves' the generated kernel file reproducible; per N34p4-03 its kernel row only compares BLAKE3 against the digest the kernel registry records, and the derivation lane (BD-019) regenerates: now stated so, otherwise an implementer relies on a reproducibility proof nobody runs. Out named BD-014 as owner of the kernel manifest; the manifest `frob.kernel/1` and `registries/kernels.toml` are N21b-01's (BD-014 is the backend trait): an implementer reading BD-014 finds no manifest. E2E: `frob --json spark probe` (a run verb with no `--key` and no `--device`, whose report carries no manifest hash) is replaced by `frob doctor --section kernels --json`, N21b-01's read-only section that reports the kernel registry's path and digest (VERBS-operator row checked). Resumed pass. (1) The request from S-11, which the first pass never saw, is applied: `BD-022` added to deps, because the script runs `frob doctor --section kernels --json` and reached the `doctor` verb only through BD-014 -> N21b-01; `N21b-01` added as well, because the three lints read its manifest and its registry and the bead reached it only through BD-014 (graph_check: neither depends on N10a-03). N21b-01 still owns the `kernels` doctor section, so the citation stands. (2) The first pass's request to N21b-01 has since been answered there (the bead as it stands now: `ArgDecl` carries `kind`, `components` and `state`; the row of `registries/kernels.toml` carries `origin` and one `lowers` entry per state argument), so that request is dropped from this file and the bead is put in the owner's form (convention 13): D-3 reads the manifest's state arguments (`kind`, `components`, with `integer` as the owner spells the kind), and D-1 step 2 reads the `lowers` entry of the registry row, not a field of the manifest; an implementer following the old wording would look for the lowering in the manifest and find nothing. Whole file re-read: it parses and the first pass's edit is complete."
+  },
+  {
+   "bead": "N10a-04",
+   "kinds": [
+    "contradiction",
+    "deadlock",
+    "registry",
+    "convention"
+   ],
+   "what": "N10b-01 and N16b-24 both state that this bead writes the one production declaration of `DerivativeLabel` and `Labeled<D>` at M2 (N16b-24 depends on it for the type); this bead said it declares no label type and tests 'wherever the first producer placed it'. Left so, N16b-24 (M3) would find no type or two would be declared. It now writes the declaration in `frob-dyn` from N10b-01's sketch (dep N16a-01, the frob-dyn skeleton, M1; label frob-dyn added). The acceptance line 'the bouncing-ball fixture returns the saltation matrix ... the grazing fixture returns FROB-REF-263' could not pass at M2: no producer of `saltation` or of an event-grazing refusal exists before M4 (N10b-01, BD-334). It now asserts the fixture checks on producer outputs the test supplies (synthetic), with the real producers carrying KA-092/KA-095 at M4 (convention 7). E2E: the conditional step 'when the verbs exist, frob --json gait gradient ... asserting FROB-REF-263' ran an M4 verb from an M2 script, without `--key`, and asserted the wrong code: at grazing gait.gradient answers FROB-REF-431 wrapping 263 (VERBS-gait, BD-334). The step is removed and the verb-level check is named as BD-334's. Label table, saltation matrix (recomputed: [[-r,0],[-(1+r)g/v-,-r]], det r^2), KA-086/092/095, CX-041/043, N21a-20's derivative field spelling and the five repairs of FROB-REF-263 (N12-REF) checked and right. Resumed pass: file read whole; it parses and the edit is complete and coherent (the declaration in `frob-dyn`, the synthetic producer outputs at M2, the script without the M4 verb); nothing further."
+  },
+  {
+   "bead": "N10a-07",
+   "kinds": [
+    "registry",
+    "contradiction",
+    "broken",
+    "convention"
+   ],
+   "what": "Mission fault injection contradicted BD-135's budget-stop rule: a zero budget is refused before admission with FROB-REF-702 (exit 4, nothing published), and a budget exhausted mid-run returns checked cells plus unresolved cells with `BudgetExhausted` (exit 0 or 2 `resolution-unmet`), never an `unknown` verdict with reason `budget-stop`; the e2e also used `--budget 0`, which is not the registered `--budget k=v` grammar, and no `--key`. As written the step could never pass. D-13 step 4, the acceptance line and the e2e now follow BD-135 and N25a-24's fixture `tray-stance-and-knee.fmission` (`--budget checker_s=0` -> 702; mid-run under BD-135's test cost model -> exit 2, BudgetExhausted), with dep N25a-24 (M1, no cycle). `d13_fault_solver_budget` expected `unknown`/`budget-stop` from the cone solver; BD-115's undecided end state is `Unconverged` with reason `budget`: test and Out now name BD-115 (dep added; it was only transitive), and D-13 step 2 accepts a producer's registered reason names that map onto the doctrine's causes (BD-115, BD-135), otherwise the schema walk fails every real solver output. `frob --json spark probe` lacked `--suite boundary`, `--device` and a key per call (VERBS-spark, BD-030's form): fixed. Cone case recomputed (+1.19e-8 exact, equal in f32), docking strictness, KA-034/018/099, CX-017/046 and FROB-REF-215 checked. Resumed pass: file read whole; it parses and the edit is complete; `--budget checker_s=0` -> 702 (N25a-24 step 5), `FROB_TEST_COST_PER_CALL_MS` in a `gauntlet-mutations` build and `resolution-unmet` (BD-135) and `spark probe --suite boundary --device` (VERBS-spark) re-checked; nothing further."
+  },
+  {
+   "bead": "N10a-08",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "E2E `frob --json module substitute` for the mirror swap and the bus edit omitted every input of the registered row: `module.substitute` is a `mutate` verb (VERBS-module) needing the design, `--at`, `--with <module@hash>`, `--expected-parent` and a key (805 without one); `frob-verify` now uses its registered offline form `frob-verify --json <bundle>` under `env -i`. As written both calls would be refused with 802/805 before testing anything. Polarity arithmetic (threshold (U + 1/2)/4 = 5/16 at U = 3/4), KA-070/071/079/103/104/106, CX-031/037/049/050 and FROB-REF-835/161/162 checked against N10-KA1, N10-KA2, N10-CX, N12-REF and N17-REF. Resumed pass: file read whole; it parses and the edit is complete; nothing further."
+  },
+  {
+   "bead": "N10a-10",
+   "kinds": [
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "Not touched by the first pass; reviewed in full. FROB-REF-214's repair read 'none on the consumer's side; the group computation is examined'; N13-REF's row has four ranked repairs per trigger (for a quaternionic constituent: re-run the symmetry analysis and report the computation as defective with `retry: never`; restrict to a supported subgroup; declare by construction or take the tolerance route; augmentation without tying) and exit 3: restated with the triggers, otherwise the contract and any ranked-repairs check disagree with the real refusal. E2E ran `frob --json algebra irreps` 'on the tri-wheel fixture, the blind symmetric quadruped and the radial hexapod' with no group source and no channel space: refused with 802, and the design form needs a stored group this bead does not deliver. Now the registered family form with both spaces (`C3 --in permutation:3 --out permutation:3`, `C2xC2 --in 'regular*64' --out 'regular*64'`, `D6 --in permutation:6 --out permutation:6`), asserting 3, 16,384 and 4 against the Reynolds rank (N13-14's own acceptance values), pending until N13-14; the row KA-067 by convention 1 (`--test g0_laws -- KA-067`, then with `--features gauntlet-mutations`); controls one per build. Out named BD-048 as owner of the verb; VERBS-algebra and N13-14 make it N13-14's. Dep `N10-KA1` added (the row KA-067 the script runs; M1; no cycle). Recomputed and right: commutant dimensions 3, 16,384 of 65,536, 4, 2; D6's four orbitals; indicators 0 (C3), +1 (D3), -1 (Q8); the conjugate-missing mutant is the projector of the conjugate character and returns 0 on the eigenvector fixture for odd n; KA-067's row, GATE-MARROW-02 and -04 and KILL-MARROW-BLOCKS match."
+  },
+  {
+   "bead": "N10a-11",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "FROB-REF-116's repairs were three and differently worded; N14-REF's row has four, in order: shorten the limb lever, `swap-actuator` to a higher torque density, `regear`, reduce supported mass (raised by design.check stage 6, exit 3). Restated as the registry has it; otherwise the contract would omit `regear` and the e2e's ranked-repairs assertion would fail against the real refusal. E2E `module substitute` given its registered mutate form (design, --at, --with, --expected-parent, --key per call). Mass spiral recomputed: kappa = 2943/5000 = 0.5886, m/m_f = 5000/2057 = 2.4307, 14.58 kg, k = 40 for 1e-9, kappa(0.50) = 0.981 (52.6), L* = 0.51 m, kappa(0.52) = 1.0202; KA-077/079/080 and CX-036/037 match. Resumed pass: file read whole; the first pass's edit is complete. Two defects of the kind the first pass corrected in the SPEC beads remained in the script: 'G1 and G3 rows KA-077, KA-079, KA-080' had no run form and no split (KA-079 is the G3 row): now `--test g1_known_answers -- KA-077 KA-080` and `--test g3_metamorphic -- KA-079`, each again with `--features gauntlet-mutations`, controls one per build; and `design check fixtures/budget/spiral_L030.fbot` named repository paths that do not resolve from the script's `work/` directory: now `@fixture:budget/...`, the verb steps logged pending until their beads land, with FROB-REF-116's four repairs asserted in order. Deps gain `N10-KA1` and `N10-CX`: the script runs the rows KA-077, KA-079 and KA-080 by number and plants the controls of CX-036 and CX-037, and both registries (M1, as this bead) are what enters those rows and entries; N10a-01's order rule lists them among a specification's dependencies, and without the edge the bead is offered as ready while its row steps cannot find a row (no reverse path, no cycle)."
+  },
+  {
+   "bead": "N10a-13",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "The pilot record named only protocol hash, falsifier, ceiling, fallback, cost and pins, and the decision as PASS/FAIL. N38a-09's register (`frob.gauntlet.pilot/1`) requires `bead`, `work_package`, the protocol table, a ceiling value or `none on speed`, and `fallback = {ships, kill_gate}`; a record without `kill_gate` fails the register's completeness check, and PASS/FAIL is not a verdict the register accepts. The record now has `bead = N10a-13`, `work_package = WP-68`, `kill_gate = to-register` with proposed wording (plan C-03's Frontier row gives a fallback and no kill gate, convention 13), and the result as `[[pilot.result]]` with verdict `falsifier-rejected`/`falsifier-holds` and a receipt under `receipts/pilots/`; the decision acceptance uses those verdicts. Geodesic, step formula and falsifier clauses checked. Resumed pass: file read whole; it parses and the edit is complete (`to-register` with its proposed wording and the `introduce` amendment of N40-03, which N40-03 carries); nothing further."
+  },
+  {
+   "bead": "N10a-15",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "Same register defect as N10a-13: the record lacked `bead`, `work_package` and `fallback.kill_gate` and used PASS/FAIL, so it would fail N38a-09's completeness check; path given as `crates/frob-conformance/registry/pilots.toml` (convention 2). Now `bead`, `work_package = WP-11`, `kill_gate = to-register` with proposed wording (the plan names no kill gate for the maneuverability index), verdicts `falsifier-rejected`/`falsifier-holds`. Recomputed and right: four-move 0.5537 m at alpha = 0.72, 0.1785 m at d = 0.01, 4*sqrt(d*b) = 0.566; the four-pivot manoeuvre shifts (0.00161, -0.01000) m for 4*b*phi = 0.1274 m; Kendall tau 2/3; KA-058, KA-059 match N10-KA1. Resumed pass: file read whole; it parses and the edit is complete. As the file stands the record also carries `gated_beads = [BD-106]` (WP-11 holds other upper-tier mechanisms; BD-106 depends on this pilot), which this entry had not mentioned; nothing further changed."
+  },
+  {
+   "bead": "N10a-16",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "Pilot record lacked `bead`, `work_package` and `fallback.kill_gate`, used PASS/FAIL, and gave the register path without `crates/`: it would fail N38a-09's completeness check. Now `bead`, `work_package = WP-11`, `kill_gate = KILL-AUGUR-PHASE` (the plan's kill gate for the holonomy query, whose fallback is this pilot's; N25c-42 cites it too), verdicts `falsifier-rejected`/`falsifier-holds`. det W_g at (0.5, -0.5) = 0.2700 m and the beanie -pi/2 recomputed; KA-064, KA-065, CX-030 checked. Resumed pass: file read whole; it parses and the edit is complete. Correction of this entry: as the file stands the record has `work_package = WP-38` (the package of BD-243, the A-09 analysis the pilot gates) and `gated_beads = [BD-243]`, not WP-11; checked: BD-243 is in WP-38 and depends on this pilot, and KILL-AUGUR-PHASE's fallback (A-09 stays a forward diagnostic) is the pilot's. Nothing further changed."
+  },
+  {
+   "bead": "N10a-17",
+   "kinds": [
+    "registry",
+    "contradiction",
+    "convention"
+   ],
+   "what": "Rollout arm ran `frob sim run <variant> --task ...` with no controller: `sim.run` has no gait input and defaults to the design's baseline, so the trot and bound rankings would have compared the same rollouts. It now synthesizes per gait and variant with `frob control synth <variant> --gait <g> --task ... --key ...` and passes the `ControllerId` via `--controller` (VERBS-sim, VERBS-control). The A/A control used 'world-address offsets', not an input; it now uses distinct `--seed` values. Fallback cited KILL-ATLAS, which is A-26's regime-atlas gate with another fallback; only KILL-GAIT applies (plan kill-gate table), so References and Fallback now name KILL-GAIT alone. Pilot record gains `bead`, `work_package = WP-64`, `kill_gate = KILL-GAIT`, and the register's verdicts in place of PASS/FAIL. Rimless multiplier cos^2(pi/4) = 1/2, KA-072/073/560 and CX-034/035 checked. Resumed pass: file read whole; it parses and the edit is complete (`control synth --gait` feeding `sim run --controller`, distinct `--seed` for the A/A arm, KILL-GAIT alone); nothing further."
+  },
+  {
+   "bead": "N10a-18",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "Pilot record lacked `bead`, `work_package` and `fallback.kill_gate`, used PASS/FAIL and the path without `crates/`: it would fail N38a-09's completeness check. Now `bead`, `work_package = WP-11`, `kill_gate = to-register` with proposed wording (the plan names no kill gate for certified IK), verdicts `falsifier-rejected`/`falsifier-holds`. Tool caps match plan C-11 and 12.1; KA-074 matches. Resumed pass: file read whole; it parses and the edit is complete. As the file stands the record also carries `gated_beads = [N10ax-01]` (the mechanism bead, which depends on this pilot), which this entry had not mentioned; nothing further changed."
+  },
+  {
+   "bead": "N10a-19",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "Pilot record lacked `bead`, `work_package` and `fallback.kill_gate`, gave the register path without `crates/` and the decision as PASS/FAIL: it would fail N38a-09's completeness check. Now `bead`, `work_package = WP-07`, `gated_beads = [BD-063, BD-077]`, `kill_gate = KILL-SKEL-SUBST` (the consumer's kill gate the bead already names, and N14a-15's record), ceiling stated as the speed bound it is, verdicts `falsifier-rejected`/`falsifier-holds`. Edit mix sums to 64; KA-079/080, CX-036/037 match. Resumed pass: file read whole; it parses and the edit is complete (BD-063 and BD-077 both depend on this pilot; KILL-SKEL-SUBST matches the gate register and N14a-15); nothing further."
+  },
+  {
+   "bead": "N10ax-01",
+   "kinds": [
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "E2E wrote certificates to `$TMP/certs`: an absolute path is refused with FROB-REF-734 by the path jail (N37-11) and the helper defines no `$TMP`, so no certificate would be written; it also named fixtures by repository paths that do not resolve from the script's `work/` directory. Now `--emit-certs certs/<chain>` under `work/` and `@fixture:kin/...` references (STD-E2E), and this bead owns the kin fixtures in its In list. `frob-verify $TMP/certs` (a directory) replaced by BD-132's offline form `frob-verify --json <file>` under `env -i` per bundle. Funding: 'PILOT-C-11 shows PASS' named a verdict the register does not have and ignored N38a-09's rule that funding needs `fundable_bead` to answer Fundable (which needs the kill gate registered); now stated, with the `pilots fundable --bead N10ax-01` command. Krawczyk test, caps, KA-074, VERBS-analyze row and FROB-REF-215 checked. Resumed pass: file read whole; it parses and the edit is complete; the two requests it raised (N12-16, VERBS-analyze) are still unanswered by those beads as they stand and are kept; nothing further."
+  },
+  {
+   "bead": "SPEC-C-02",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "E2E ran `frob prove kernel K-adjoint`: `K-adjoint` is the pilot body of N21a-13, not a kernel of the registry; the M0 adjoint kernel whose T-04 certificate GATE-LEMMA-00 reads is BD-021's `K-ad-se3` (CARD-T-04), so the step would return no certificate. Fixed, logged pending until BD-021. 'G0 rows KA-040 to KA-042' put KA-042 (a G3 row) in g0_laws: now the convention-1 commands, `--test g0_laws -- KA-040/041` and `--test g3_metamorphic -- KA-042`, and controls one per build (N10a-01 section 6). Formulas, ad* transpose, hand checks (torque (0, -1, 0); pi-dot (0, 0, -1), residual (0, 0, 2)), two-link torques (-3, -3), KA-040 to 042 and CX-020 recomputed or checked. Resumed pass: file read whole; it parses and the first pass's edit is complete. One correction of the kind the first pass made elsewhere: FROB-REF-213 was given one repair ('supply the second chart'); N13-REF's row has three ranked repairs (supply the covering chart named in the reply; reformulate the query on the group element; withdraw the chart pair from the derivative path and refuse) and exit 3: restated, or the contract records one repair where the refusal carries three. Hand checks recomputed: torque (0, -1, 0); pi-dot (0, 0, -1) and residual (0, 0, 2) under the wrong sign. Not changed, and reported under requests: the bead is M0 and its acceptance and script need the rows KA-040 to KA-042, which N10-KA1 enters at M1."
+  },
+  {
+   "bead": "SPEC-C-03",
+   "kinds": [
+    "registry",
+    "contradiction",
+    "convention"
+   ],
+   "what": "Shell rule said 'a body without a wall thickness is solid', contradicting the bead's own 'no default fill' and FROB-REF-105 (a body without a fill is refused) and N12-REF's reading of that sentence under N13-03: an implementer would default to solid and pass the 18.8-fold error the construction exists to stop. Now: a written `solid` has no wall, an unwritten fill is refused. FROB-REF-168's repairs listed three; the registry has four (shell, lattice, solid intended, material or region) and the interim bound of a quarter of `mass_max`: restated. FROB-REF-106's repairs were reordered and short of `set-fill`: restated in the registry's order, otherwise the e2e's ranked-repairs check fails against the real refusal. E2E: rows by convention 1 (KA-043 g0_laws; KA-044 to 046 g1_known_answers), fixtures as `@fixture:inertia/...` (repository paths do not resolve from `work/`), verb steps logged pending until BD-110, BD-051, BD-062. All fixture numbers recomputed (0.012 vs 0.010 m^2; 1/150; 275,967/80,000 kg; 18.785; shell ratio expansion 1 - x + 2x^2/3). Resumed pass: file read whole; the edit is complete. Deps gain `N10-KA1` and `N10-CX` (the script runs KA-043 to KA-046 by number and plants the controls of CX-021 and CX-022; both registries are M1 as this bead; N10a-01's order rule; no cycle)."
+  },
+  {
+   "bead": "SPEC-C-05",
+   "kinds": [
+    "registry",
+    "broken",
+    "convention"
+   ],
+   "what": "E2E ran `frob sim run --tier referee --robot builtin:free-body --steps 1000000 --seed 3`: `sim.run` has no `--robot` input, `builtin:free-body` is no design form, `--steps` is M2, the call had no `--key`, and BD-087 states no verb runs the free body; the step could never execute. Now the free-flight check runs BD-087's oracle (`cargo test -p frob-dyn --test free_body_oracle`, pending until it lands), the FROB-REF-212 refusal comes from the suite's admission input, and the verb-level path is named as N16b-25's at M2 (convention 7). Rows by convention 1 (KA-052 g0_laws; KA-053, 054 g1_known_answers). Cayley fixtures (pi/2 rotation, translation (1/2, 1/2, 0), 99/101 and 20/101), shortfall arithmetic and FROB-REF-212's substep count checked. Resumed pass: file read whole; it parses and the edit is complete. Not changed, and reported under requests: the bead is M0 and its rows KA-052 to KA-054 are entered by N10-KA1 at M1."
+  },
+  {
+   "bead": "SPEC-C-06",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "E2E ran `frob contact probe` 'on a block on an incline' (no such input: the probe takes a contact state, and the cone branch is `--cone --mu --normal --slip`, BD-154, M2) asserting 'the recorded solver error bound', which `contact.probe` does not output; and `frob fidelity modelform` 'on the planted pyramid design', but the verb takes `--ranking` or `--study`, is a run verb and needs `--key` (805 otherwise). Both would be refused or assert absent fields. Now the registered forms, each logged pending until BD-154 and BD-266, asserting the projection identities and `model-conditional` with `flipped_by`. Rows by convention 1 (KA-056 g0_laws; KA-055, 057 g1_known_answers). Projection fixtures (2/5, (1/5, 0)), the polar case, the single-precision residual example (true error 9.9e-9, rho 2.4e-7, bound 7.9e-8) and the pyramid excess recomputed; KA-055 to 057 and CX-026 checked. Resumed pass: file read whole; the edit is complete. Deps gain `N10-KA1` and `N10-CX` (rows KA-055 to KA-057 and the control of CX-026; M1 as this bead; no cycle)."
+  },
+  {
+   "bead": "SPEC-C-07",
+   "kinds": [
+    "convention"
+   ],
+   "what": "E2E said 'G1 and G3 rows KA-058 to KA-063' without the run form or the split; the convention-1 commands now put KA-060 in g3_metamorphic and the other five in g1_known_answers, controls one per build, and the `analyze.maneuverability` step is logged pending until BD-106. Otherwise an implementer could run KA-060 in g1 and find no row. Bracket of the unicycle (s, -c, 0) under the stated convention, the near-straight limit (cos 32, sin 32) = (0.8342, 0.5514), the disk's (0, 2) m, sleigh equations, shift costs and KA-058 to 063 and CX-027 to 029 checked. Resumed pass: file read whole; the edit is complete. Deps gain `N10-KA1` and `N10-CX` (rows KA-058 to KA-063 and the controls of CX-027 to CX-029; M1 as this bead; no cycle)."
+  },
+  {
+   "bead": "SPEC-C-08",
+   "kinds": [
+    "registry",
+    "convention"
+   ],
+   "what": "E2E ran `frob analyze curvature` 'on the three-link fixture design and a loop file': the registered verb takes the loop inline (`--loop circle:<r>@<s1>,<s2>` or `rect:`), needs `--shape` and, for a floating body, `--stratum flight` (VERBS-analyze); a loop file is no input, so the call fails with 802. Now in its registered form, pending until BD-243 (M3), with the G1 row commands. Rectangle BCH sum (+ab[A1, A2]), the SO(3) sign fixture, the beanie ratio and KA-064/065, CX-030 checked. Resumed pass: file read whole; the edit is complete. Deps gain `N10-KA1` and `N10-CX` (rows KA-064 and KA-065 and the control of CX-030; M1 as this bead; no cycle)."
+  },
+  {
+   "bead": "SPEC-C-09",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Not touched by the first pass; reviewed in full. E2E said 'G1 and G3 rows KA-066, KA-068 to KA-071' without the run form or the split: now the convention-1 commands, `--test g3_metamorphic -- KA-066` and `--test g1_known_answers -- KA-068 KA-069 KA-070 KA-071`, each again with `--features gauntlet-mutations`, controls one per build (N10a-01 section 6); an implementer running KA-066 in g1 finds no row. The `analyze symmetry` step now has its design argument, names its three fixture designs and is logged pending until BD-102. Deps gain `N10-KA1` and `N10-CX` (the rows it runs and the entries CX-031 to CX-033 it plants; both M1; N10a-01's order rule; no cycle). Checked and right: the parity images under P = diag(1, -1, 1), the group orders (4, 4), (4, 2), (4, 1), KA-066 and KA-068 to KA-071 against N10-KA1, CX-031 to CX-033, FROB-REF-161 against N17-REF, and the texts of GATE-MARROW-03, GATE-REFLEX-07, GATE-CORTEX-03 and KILL-EQUIV."
+  },
+  {
+   "bead": "SPEC-C-10",
+   "kinds": [
+    "contradiction",
+    "registry",
+    "convention"
+   ],
+   "what": "Named KILL-ATLAS as a kill gate of this construction's consumers; in the plan's kill-gate table KILL-ATLAS is the regime atlas A-26's gate (its fallback: A-26 a descriptive report), and C-10's atlas A-04 answers to KILL-GAIT alone. A decision bead reading this would look for C-10's fate in the wrong record. Now KILL-GAIT with its fallback, and KILL-ATLAS named as A-26's. Lattice counts (8 subgroups, 23 pairs, 11 for C2 x C2, 26 under the abelian mutant), the trot matrix [[1/2, 1/4], [3/4, 1/2]], lambda = 1/2, x = (0, 1/4) and the variant interval [1/4, 7/20] recomputed; `gait.atlas` row checked. Resumed pass: file read whole; the edit is complete. Deps gain `N10-KA1` and `N10-CX` (rows KA-072 and KA-073 and the controls of CX-034 and CX-035; both M1, this bead M4; no cycle)."
+  },
+  {
+   "bead": "SPEC-C-14",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "Not touched by the first pass; reviewed in full. E2E said 'G0 and G2 rows KA-085 to KA-087' without the run form or the split: now `--test g0_laws -- KA-086 KA-087` and `--test g2_parity -- KA-085` (KA-085 is the G2 row, as N10-KA1's selection rule says), each again with `--features gauntlet-mutations`. '`frob --json prove verify <certificate>` in an environment without the simulator' cannot be run: `frob` links the simulator, so the step either checked in tree only or could not be written; the offline replay the plan asks for ('certificates that travel with the code', GATE-LEMMA-00) is now `frob-verify <certificate>` under `env -i` (BD-026's binary) after the in-tree check, both asserting `accept`; `prove kernel K-cay-step` is logged pending until BD-021 and BD-027. Checked and right: the `f32` reassociation fixture (spacing 8 near 1e8, so 1 and 0), the power-of-two fixture at (1 + 2^-23)*2^-126 (the tie rounds to even and returns 2^-126), the dimension cases, 1/(1 - 0.18) = 1.22, the 8,192 cap, `spark.check`'s inputs, KA-085 to KA-087, CX-039, the four gate texts and KILL-KIR. Not changed, and reported under requests: the bead is M0 and its rows are entered by N10-KA1 at M1."
+  },
+  {
+   "bead": "N10b-03",
+   "kinds": [
+    "registry",
+    "convention",
+    "broken"
+   ],
+   "what": "First pass's edit (found complete, kept): the pilot record in N38a-09's form (`tier`, `bead = N10b-03`, `work_package = WP-64`, protocol table, `fallback = {ships, kill_gate = KILL-GAIT}`, `[[pilot.result]]` with verdict `falsifier-rejected` or `falsifier-holds`, `inconclusive` in place of the unregistered word `partial`, receipt under `receipts/pilots/`); without these the record fails the register's four-part check. Resumed pass: `controls_are_constructed` required every control to have a transversality number or |1 - multiplier| below 1e-9, but the ball's control 'second impact entering the horizon' is transverse and has no unit multiplier, so the test could not pass on the protocol's own controls: it now names the third measure (the gap between that impact and the end of the horizon). `cosine_exact_on_closed_forms` gave 29.95984 s^-2 per radian without g; the value holds only for g = 9.81 m/s^2 (9.80665 gives 29.9496), as BD-334, N22a-39 and N22-KA state: g added. The record gains `gated_beads = [BD-334]`: WP-64 also holds PILOT-C-10's mechanism and this pilot's own fallback ('orbits as stability diagnostics and warm starts') needs BD-333, so a record without the list answers for the whole package and a held falsifier would stop the orbits its fallback ships (the first pass did the same for the pilots of WP-11 and WP-07). Recomputed and right: gamma_c = 0.0682295 rad for eight spokes, 4 degrees just above it, about 198,700 spokes for the near-unit multiplier; KA-092, 093, 095, 097, 560, CX-041, FROB-REF-263 and KILL-GAIT checked against N10-KA2, N22-KA, N10-CX, N12-REF and the gate register."
+  },
+  {
+   "bead": "N10b-05",
+   "kinds": [
+    "registry",
+    "contradiction",
+    "deadlock",
+    "broken",
+    "convention"
+   ],
+   "what": "First pass's edit kept in part: the record in N38a-09's form, the verdicts mapped onto the register's vocabulary, the e2e with `mission new`, `synthesize` and `refute` keyed per call and `frob-verify --json` under `env -i`. Resumed pass, three corrections. (1) The edit set `work_package = WP-59` and mapped `tie` to `falsifier-holds`; under N38a-09 a held falsifier blocks its package, so the expected outcome (a tie, which the plan calls acceptable and which ships the generic method behind the same verbs) would have closed the M3 mission package, against the bead's own outcome rule and against N12-30 (only the beads that extend the specialized projections at M4 are closed). The record now names the mechanism (the specialized projections as a deciding arm), `work_package = WP-66` and `gated_beads = [BD-355]` (the one bead on the branch of N12-30's KILL-FAMILYCERT decision), states what a held falsifier does (BD-355 `Blocked{falsifier-holds}`, N12-30 `not-reached`, BD-355 closed `withdrawn` by N41-17 rule 7) and that the other dependents wait only for a result; an acceptance check on a scratch tie guards it. (2) `mission refute q:<id> --design <cell>`: a cell is passed with `--cell` (VERBS-mission and BD-135: the scope is `--cell`, or `--design` with `--policy`); as written the call fails the schema with 802. (3) The script drives `mission.new` (BD-126), `mission.synthesize` and `mission.refute` (BD-135) and `frob-verify` (BD-132) and reached them only through BD-136 and N10bx-01: added to deps (all M1, no cycle). Recomputed and right: f++ - f-- = 90 + 15/b, b = 3/14 m, forces (160, 130, 110, 0) N, 165 N at b = 1/5 m; 344 admitted, 217 excluded, 9 on the boundary of 561; 0.94176 J; KA-098, 099, 108 to 111, 154, 157, 158 match."
+  },
+  {
+   "bead": "N10c-01",
+   "kinds": [
+    "registry",
+    "plan"
+   ],
+   "what": "Not touched by the first pass; reviewed in full. Section 4 attached the controls seeded from CX-069 and CX-070 to GATE-AUTOPSY-03, -04 and -05; N10-CX's gate column has GATE-AUTOPSY-04 for CX-069 and GATE-AUTOPSY-05 for CX-070, and its gate check fails on any other: restated per entry. Statement A1 and `null_calibration` use 'an exact one-sided test' and 'the e-process of construction C-15' without a formula, so the reference model could not be written from the bead and could differ from the mechanism bead N27b-05 that binds to this suite: the contract now gives Fisher's p-value in exact integers with the decision p*m <= alpha (alpha defaults to 1/20) and the paired betting e-process E_n = prod(1 + d_i/2), d_i = X_i - Y_i, crossing at m/alpha (N27b-05's forms), with check values recomputed here (8 of 8 against 2 of 64: 2,016/536,211,932,256 = 3.76e-9; 8 clean pairs at m = 1, 14 at m = 12). Recomputed and right: 78 coalitions and 689 forks; both Shapley cases (1/2, 1/2) and (1/2, -1/2); pair interactions -1 and +1; 2^40 = 1.0995e12 and the 0.0995 shift; 13/64 and 12/64 around 0.2; the worked contrasts 0.76 and 0.13; KA-146 to KA-148, GATE-AUTOPSY-03 to -05 and KILL-AUTOPSY match the plan and N10-KA3. Left as it is: the bead labels KA-146's first case `alternative` as the chapter's table and N27-KA do, while N10-KA3's truth cell keeps the plan's words 'labels them but-for and joint' (noted by the H-ka-2 reviewer)."
+  },
+  {
+   "bead": "N10c-02",
+   "kinds": [
+    "registry",
+    "plan"
+   ],
+   "what": "First pass's edit (found complete, kept): the pilot named as part 0 of N22b-19 (checked: N22b-19 carries it), the gates given their recorders BD-338, BD-339 and BD-340 with GATE-SHIELD-04's text, and the script's verb-level refusals stated as BD-338's and N22b-32's on their own fixtures (the script had promised fixtures under `fixtures/shield/c31/` that nothing in this bead writes). Resumed pass: FROB-REF-826's repairs were two and differently worded; N12-REF has three, in order (offer the certificate for the query it was made for; re-derive it for the query asked; weaken the claim): restated, or the contract table and a ranked-repairs assertion disagree with the real refusal. The acceptance line attached the CX-074 and CX-075 controls to GATE-SHIELD-02 and -03; N10-CX's gate column has GATE-SHIELD-02 for both, and its gate check fails on a second gate: now -02 only. The margin's scope key had dropped the plan's 'controller or policy identity' (plan 22.12.4 and N22-REF row 457): restored, otherwise a margin calibrated for one baseline controller is not refused for another. Recomputed and right: (1, 0.5), (1.25, 0.25), (1, 0.25); margin indices 999, none at n = 998, and 38; risk bound 0.013; delta-1 0.25; the sampled-damping case (-2 m/s and +1.5 J; 0 m/s); KA-155 (G1 host) and KA-156 (G0 auditor) in N10-KA3; FROB-REF-454 and 457 match N22-REF; the gate texts match the register."
+  },
+  {
+   "bead": "N10c-03",
+   "kinds": [
+    "registry",
+    "deadlock",
+    "plan"
+   ],
+   "what": "First pass's edit (found complete, kept): KA-846's record, derivation file and control are N38-KA's (the control seeded from CX-395, plant `N38b-45:cx-395`), so this bead no longer claims to write a derivation file or to attach a control to a record it does not own; its law test reads the constants; the conformance-row commands are logged pending until N38b-45, which comes after this bead (checked: N38b-45 -> N22b-34 -> N10c-03). Resumed pass: the acceptance 'every mutant fails its named law' could not be met for `guard_assumed_resolved` (checks one guard where two may be enabled): no unit test had two enabled guards, although 'every simultaneously enabled guard' is the centre of statement C1 and of plan C-31 tier 2. Added `two_enabled_guards_both_checked` with a hand-checked case (K + E = [0.4, 0.6]; G12 passes; G13's image [0.45, 0.65] leaves the eroded target [0.6, 0.9]), and each mutant now names the law it fails. Recomputed and right: [0.1, 1.0] and [0, 0.9]; [0.35, 0.65] against [0.3, 0.9] and [0.4, 0.9]; [0.4, 0.8]; the latency case; 16,384^(1/4) = 11.3; the pilot row and KILL-TUBE match the plan."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N12-16",
+   "what": "N10ax-01 (certified inverse kinematics, M4) emits, per answer, `interval-root` bundles for certified boxes, 'no root' claims for empty boxes, and a manifest claiming the boxes cover the search box B; its acceptance needs `frob-verify` to reject a manifest with one sub-box removed and a certified box of a pose task whose trace test (enclosure of trace(R_target^T R(x)) above 1, which separates a solution from a half-turn alias) was skipped. N12-16's `interval-root` rules check Krawczyk containment and the 'no root' exclusion only, and BD-132's `partition` kind counts rational cell ends, while N10ax-01's pieces are cut at multiples of pi/2 and its bundles are (c, s, d) rectangles that overlap by a rounding width. Without a coverage rule a solver that drops a sub-box (the pilot's planted failure) yields an answer frob-verify accepts as Complete, and a half-turn alias passes as a solution. Add rules for the coverage manifest (for example: boxes named by their bisection path from the quadrant pieces, the leaves checked to form a complete bisection tree, and each rectangle checked to enclose its arc with the checker's own outward-rounded cos and sin) and for the trace claim, or name the kind that checks them."
+  },
+  {
+   "bead": "VERBS-analyze",
+   "what": "The `analyze.workspace` row lists the certified mode's `--task pose` only; N10ax-01 section 1 defines four task kinds (`position`, `pose`, `planar-position`, `planar-pose`), and its e2e runs `--task position` on the 3R chain. The row's base inputs also take 'a task' (a registered task), so `--task <kind>` and `--task <task>` share one spelling with two domains. List the four values and state how the two are told apart (or give the IK kind its own option), otherwise the generated schema refuses `--task position` with 802 or resolves `pose` as a task name."
+  },
+  {
+   "bead": "N10-KA1",
+   "what": "Three specification beads of your part are M0 (SPEC-C-02, SPEC-C-05, SPEC-C-14); their acceptance says their rows (KA-040 to 042, KA-052 to 054, KA-085 to 087) 'are in the registry with tolerances and controls set' and their scripts run those rows by number; you enter the 55 records at M1. As it stands the three cannot close in M0, or each enters records your scope calls yours. All your dependencies are M0 (BD-025, N10a-01, N38a-12, N38b-05, STD-E2E, STD-TEST): become M0, or split the rows of the M0 constructions into an M0 part. The same holds for N10-CX and the plants of CX-020, CX-025 and CX-039. Once that is done the M0 specification beads can depend on you, as N10a-01's order rule intends ('the registry beads whose rows it binds')."
+  },
+  {
+   "bead": "SPEC-C-01",
+   "what": "For you and your siblings SPEC-C-04, SPEC-C-11, SPEC-C-12, SPEC-C-13 and SPEC-C-15 (all M1): each runs rows of N10-KA1 by number in its script and plants controls of N10-CX entries, and none depends on either registry; N10a-01's order rule lists them among a specification's dependencies, and the specification beads of U10b and U10c carry them. Slice S-02 added `N10-KA1` and `N10-CX` to SPEC-C-03, -06, -07, -08, -09, -10, N10a-10 and N10a-11 (no cycle: neither registry reaches a specification bead). Without the edge a specification is offered as ready before its rows exist and its row steps find nothing to select."
+  },
+  {
+   "bead": "N41-17",
+   "what": "Your check `not-ready-no-pilot` reads `pilots::fundable` for the bead's work package ('no bead labelled frontier or moonshot is in progress or closed pass while pilots::fundable for its work package was not Fundable'). N38a-09 answers per mechanism: a `Partial` package is opened for its fundable mechanisms, and a bead is ready when `pilots::fundable_bead(key)` is `Fundable`. Use `fundable_bead` in the check. Otherwise one held falsifier in a package with several mechanisms stops every frontier bead of it: the expected tie of PILOT-C-17 (N10b-05), whose record gates only BD-355 in WP-66, would stop BD-359, BD-363 and BD-364, which N12-30 says proceed unchanged."
+  },
+  {
+   "bead": "N38a-09",
+   "what": "Your text says a held falsifier must not block the fallback work, but a bead that no record lists in `gated_beads` takes the package answer and is blocked as soon as any mechanism of its package holds. Two cases from slice S-02: BD-333 (WP-64, gait orbits) is what the fallbacks of PILOT-C-10 and PILOT-C-16 ship ('orbits serve as stability diagnostics and warm starts') and is the mechanism of neither record (PILOT-C-16 now lists `gated_beads = [BD-334]`); BD-364 and the other beads of WP-66 that PILOT-C-17 does not gate (it lists `[BD-355]`). State how such a bead is answered: for example, a bead that no record lists is answered only by the records of its package that list no `gated_beads` at all, or give the record a field for the beads its fallback needs. Without it the first held falsifier in a multi-mechanism package stops the fallback it names."
+  },
+  {
+   "bead": "BD-355",
+   "what": "PILOT-C-17's record (N10b-05) lists you in `gated_beads`: you extend the specialized projections and stand on the branch of N12-30. State it: you are ready only when `cargo run -p frob-conformance --example pilots -- fundable --bead BD-355 --json` answers `Fundable`; after a tie or a false certificate at the pilot (`falsifier-holds`) you are closed `withdrawn` citing that `[[pilot.result]]` (N41-17 rule 7) and N12-30's outcome is `not-reached`. If BD-357 and BD-358 can be built on the generic solvers without you, say so there. Without this the bead gives no hint that its funding answer comes from the M1 pilot."
+  },
+  {
+   "bead": "BD-334",
+   "what": "PILOT-C-16's record (N10b-03) lists you in `gated_beads`: you are the orbit-adjoint gradient the pilot funds. State that you are ready only when `pilots fundable --bead BD-334` answers `Fundable`, and that after `falsifier-holds` you are closed `withdrawn` citing the `[[pilot.result]]` (N41-17 rule 7), gradients then coming from re-located finite differences while BD-333's orbits stay (the pilot's fallback)."
+  }
+ ],
+ "unchanged": 1,
+ "notes": "Resumed pass over the whole slice: 28 of 28 beads read in full, 27 changed over the two passes and 1 unchanged (SPEC-C-28, whose file the first pass had touched but which is byte-identical to the committed text: its definitions, the eleven statements, the call-count bound, the mutants, KA-142 to KA-144, CX-067 and CX-068, the gates, KILL-MCW and the agreement with its pilot N26a-06 all hold). The four beads the first pass had edited without recording (N10b-03, N10b-05, N10c-02, N10c-03) were complete as files; each was reviewed in full and corrected further. Both requests of the slice file are answered (N10a-03: F-U34's by the first pass, S-11's now). Every touched file parses (front matter, JSON lists, seven sections) and the graph has no cycle. For the lead: (1) the specification beads of U10a did not depend on the registries whose rows they run; fixed for the M1 and later beads of this slice, requested for the six siblings, and N10-KA1 and N10-CX are M1 while three specifications are M0 (request to N10-KA1). (2) The pilot register's package answer and N41-17's package-level check make a held falsifier stop fallback work in packages with several mechanisms (requests to N38a-09 and N41-17); PILOT-C-17's expected tie is the first case that would meet it. (3) N10-KA3's KA-146 truth cell still says the report labels the first case `but-for`, where the chapter's label function gives `alternative` (N10c-01 and N27-KA agree with the chapter). The slice looks settled apart from those answers."
+}

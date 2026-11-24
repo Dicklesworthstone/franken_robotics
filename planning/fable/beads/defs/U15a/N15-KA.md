@@ -4,7 +4,7 @@ title: "Sinew known-answer registry: KA-293 to KA-337 with truths, tolerances, t
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "sinew", "frob-actuate", "frob-conformance", "solid", "registry", "test"]
+labels: ["m1", "sinew", "frob-actuate", "frob-conformance", "solid", "registry", "test", "review-notes-open"]
 parent: "WP-09"
 deps: ["BD-025", "N38a-12", "N38a-40", "N38b-05", "STD-E2E", "STD-TEST"]
 needs: []

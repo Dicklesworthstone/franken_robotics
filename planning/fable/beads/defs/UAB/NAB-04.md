@@ -58,6 +58,9 @@ lower-cased term with hyphens, plus `-<sense>`.
   `finite-difference`, `refused`), `Fork classification` (five: continuation, exogenous, contact-affecting,
   information, structural).
 - Subsystem row: `Foundry`.
+- `energy-created` is the one row whose reference parenthetical holds words, "(§29.9; applied by §16.10)": its
+  record has `defined_in = ["§29.9", "§16.10"]` (the owning section first, then the section that applies the
+  flag) and empty `constructs`; the words "applied by" are not an identifier and go into neither field.
 - Formulas and numbers to transcribe exactly: decimation d = control period ÷ physics step h, and an env-step is
   d world-steps; defensive mixture q = β·p + (1 − β)·q′ with weights at most 1/β; the docking boundary
   ε < (U + ½)/4, equality excluded; the docking fixture: a unit mass, hidden gain g ∈ {1, 2}, three ticks, one

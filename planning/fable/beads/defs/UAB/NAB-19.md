@@ -45,11 +45,15 @@ In: 59 `[[family]]` records, ids `EV-F01` to `EV-F59`, table `frontier-moonshot`
 **Transcription rule.** One record per row, in table order, as in NAB-18. `decision` is `adopted` where the
 decision text begins "Adopted" or names a tier without "Admitted" (rows that read "[S] as …; [F] as …" are
 adopted at both tiers, larger part first); `admitted` where it begins "Admitted". `tiers` lists every tier the
-decision names. `queue` lists the Moonshot-queue items whose `family` names the row (NAB-21 assigns `MQ-01` …
-`MQ-21` and the mapping, its step 8): each of the twelve admitted rows has one, except skill transport
-(EV-F45), which has two (MQ-16 and MQ-17); three adopted rows whose [M] part waits in the queue have one
-though their text does not say "queued" (EV-F46 → MQ-10, EV-F55 → MQ-09, EV-F56 → MQ-11). `needed_by` is
-filled for the two adopted rows below 2.0 that are not Moonshots:
+decision names, the larger part (the part of this table) first, so the five rows that name [S] and [F]
+(EV-F03, EV-F11, EV-F14, EV-F37, EV-F39) have `["F", "S"]` whatever the order of their text, and EV-F24, whose
+text names no tier, has `["F"]`. `carried = true` for EV-F04, EV-F37 and EV-F40 only (NAB-17 rule 2). `queue`
+lists the Moonshot-queue items whose `family` names the row, entered from the mapping of NAB-21 step 8 (which
+assigns `MQ-01` … `MQ-21`): each of the twelve admitted rows has one, except skill transport (EV-F45), which
+has two (MQ-16 and MQ-17); three adopted rows whose [M] part waits in the queue have one though their text does
+not say "queued" (EV-F46 → MQ-10, EV-F55 → MQ-09, EV-F56 → MQ-11). Until NAB-21's records land these lists are
+a recorded skip of NAB-17's queue check (NAB-17 step 6). `needed_by` is filled for the two adopted rows below
+2.0 that are not Moonshots:
 
 - the tree-operator route for mechanisms above 64 degrees of freedom (1.5): needed because hybrid robots above
   64 degrees of freedom cannot use the dense factor; KILL-TREEOP keeps the dense factor and the cap;
@@ -156,13 +160,17 @@ Rows in this table: 59.
       lints of NAB-17 pass on them.
 - [ ] Every printed score equals the derived score; the first two rows score 12.0 and the last scores 0.6.
 - [ ] Exactly 16 rows are below 2.0; 14 of them have `"M"` in `tiers` and 2 have a non-empty `needed_by`.
-- [ ] 55 rows name at least one kill gate and each resolves in the gate register; the 4 rows without one are
-      the four listed above, and each has a fallback stated in its text or in its queue entry.
-- [ ] Every row whose text says "queued" has a non-empty `queue` whose ids exist in the Moonshot queue (NAB-21)
-      and name the row in their `family`, and every queue item that names a family of this table is listed by
-      that row: fifteen rows list sixteen items.
-- [ ] Every row's mechanism has a pilot row in the pilot ledger (the completeness check of that ledger passes
-      with this table as input).
+- [ ] 55 rows name at least one kill gate, each resolving in the gate register or, while the exit record of its
+      ledger group's milestone does not exist, on NAB-17's frozen list `tests/fixtures/ev/kill_gates.tsv` with a
+      recorded `skip` (NAB-17 step 6). The 4 rows without one are EV-F02, EV-F40, EV-F51 and EV-F52, with what
+      stands in for a kill gate as listed above.
+- [ ] The twelve admitted rows and the three adopted rows with a queued [M] part list the items of NAB-21's
+      step 8 mapping: fifteen rows list sixteen items, and every other row has `queue = []`. (That those ids
+      exist and name the row in their `family`, both ways, is NAB-21's `ev.queue-mismatch` criterion; NAB-21
+      comes after this bead.)
+- (Not this bead's close condition: that each upper-tier mechanism has a pilot row is the completeness check
+  of the pilot register, N38a-09, whose inputs are the capability records, kernel manifests and verb rows,
+  filled by the pilot beads of the owning units.)
 
 ## Test plan
 
@@ -174,17 +182,23 @@ Rows in this table: 59.
 - `scores`: spot values: baseline controller synthesis (5, 3, 3) → "5.0"; mission queries (5, 3, 4) → "3.8";
   the trapezoidal variational step (3, 3, 4) → "2.3"; coupled islands (2, 2, 5) → "0.8"; facility co-design
   (3, 1, 5) → "0.6"; the fused per-world step kernel (3, 1, 3) → "1.0".
-- `sixteen_below_two` with the split 14 Moonshot and 2 needed.
-- `kill_gate_rows_are_55`; `rows_without_kill_gate_are_four`.
+- `sixteen_below_two`: the rows below 2.0 are EV-F44 to EV-F59; 14 have `"M"` in `tiers` and 2 (EV-F44,
+  EV-F48) a non-empty `needed_by`.
+- `kill_gate_rows_are_55`; `rows_without_kill_gate_are_four` (EV-F02, EV-F40, EV-F51, EV-F52).
+- `tiers`: `["F", "S"]` for EV-F03, EV-F11, EV-F14, EV-F37, EV-F39; `["F", "M"]` for EV-F46, EV-F55, EV-F56;
+  `["F"]` for EV-F24.
 - `admitted_rows_are_queued`: the twelve `decision = "admitted"` rows (rotor port, skill transport, reachable-set
   tables, the geometric-algebra tree policy, numerical continuation, Study-quadric synthesis, tactile hands,
   firmware export, lifecycle compression, the fused step kernel, coupled islands, facility co-design) each have
   a non-empty `queue`.
-- `queue_lists_follow_queue_records`: EV-F45 → [MQ-16, MQ-17]; EV-F46 → [MQ-10]; EV-F55 → [MQ-09]; EV-F56 →
-  [MQ-11]; the rows without a queue item have `queue = []`.
-- `rescored_row`: the connection-curvature oracle has `rescored_from = "3.0"`, score "2.0".
+- `queue_lists`: EV-F43 → [MQ-03]; EV-F45 → [MQ-16, MQ-17]; EV-F46 → [MQ-10]; EV-F47 → [MQ-18]; EV-F49 →
+  [MQ-19]; EV-F50 → [MQ-14]; EV-F51 → [MQ-15]; EV-F52 → [MQ-04]; EV-F53 → [MQ-13]; EV-F54 → [MQ-12]; EV-F55 →
+  [MQ-09]; EV-F56 → [MQ-11]; EV-F57 → [MQ-01]; EV-F58 → [MQ-02]; EV-F59 → [MQ-20] (NAB-21 step 8); every
+  other row has `queue = []`.
+- `rescored_row`: the connection-curvature oracle has `carried = true`, `rescored_from = "3.0"`, score "2.0".
 - `split_tier_rows_sit_in_table_of_larger_part`.
-- `decision_text_frozen` against `tests/fixtures/ev/frontier_moonshot.tsv`.
+- `decision_text_frozen` against `tests/fixtures/ev/frontier_moonshot.tsv` (the columns of NAB-17 rule 2), for
+  every row whose `history` is empty.
 
 ### End-to-end script and logging
 
@@ -205,8 +219,9 @@ KILL-VARIATIONAL, KILL-LOADS, KILL-PACKET, KILL-TOLERANCE, KILL-TOPOPT, KILL-HAR
 KILL-REFLECT; M6: KILL-SLOSH, KILL-PROXY, KILL-ADVECT, KILL-SINEW-ROTOR, KILL-AUGUR-SYMEVENT, KILL-LIFECYCLE,
 KILL-AUGUR-PHASE, KILL-LIVING; M8: KILL-AUGUR-TRANSPORT, KILL-SKILL, KILL-TUBE, KILL-GATREE, KILL-SYNTH-CONT,
 KILL-FIRMWARE, KILL-MEGA, KILL-AUGUR-FACILITY. Negative controls: an [F]-only row at 1.5 with no `needed_by`
-(`ev.below-two-unjustified`); an "admitted" row with no queue entry (`ev.queue-mismatch`); a row whose kill
-gate was renamed in the gate register (`ev.kill-gate-unknown`).
+(`ev.below-two-unjustified`); an "admitted" row with no queue entry (`ev.queue-mismatch`); a row whose kill gate is renamed to a name in neither the gate register nor the
+frozen list (`ev.kill-gate-unknown` at once; a name of the frozen list missing from the register is only a
+skip until its group's exit).
 
 ## Considerations
 

@@ -72,7 +72,8 @@ receipt of that run moves the registry row, and the coverage run (N12-36) observ
 6. Relies on it: construction C-04 (the test "Ṁ − 2C is skew"); kinetic energy equals ½·vᵀM·v; passivity-based
    baseline controllers; the energy ledger.
 7. Artifacts: `docs/math/cards/T-33.md`; registry row with per-model, per-limb records; certificates or test
-   records; specimen for the planar two-link limb and mutants.
+   records; specimen `poly-identity/accept-T-33.frobcert` for the planar two-link limb and its mutants; the
+   card's script `scripts/e2e/card_t33.sh`.
 
 ## Acceptance criteria
 
@@ -103,13 +104,26 @@ cap named, then routed to the randomized test).
 
 ### End-to-end script and logging
 
-`scripts/e2e/lemma_coverage.sh` (bead N12-36) runs the per-limb identities and logs route, sizes, time, memory
-and verdict; `scripts/e2e/pilot_lemma_budget.sh` (bead N12-22) logs arm B. For this card their NDJSON lines
-(STD-E2E helper) carry `ts`, `script`, `bead` ("CARD-T-33"), `step` (`T-33/<model>/<limb>` or `T-33/<mutant>`),
-`event`, the exact command line, exit code, wall time, the limb's joint count, the route taken (identity or
-randomized), expression operations and basis size against their caps, peak memory in bytes, the class printed,
-the certificate's BLAKE3, the expected and observed verdict, and on a failure the first entry (i, j) whose sum is
-not in the ideal, with the path to reproduce.
+This card's own script, `scripts/e2e/card_t33.sh` (header `bead=CARD-T-33 milestone=M5 labels=lemma,frob-lemma
+seed=0 needs=cpu`; sources the STD-E2E helper, idempotent, writes only under `target/`; NDJSON at
+`target/e2e-logs/card_t33/<utc>.ndjson` with a transcript beside it), built on this card's dependencies only:
+`laws`, `cargo test -p frob-lemma --test cards -- t33`; `corpus`, `frob-verify --json` under `env -i` on the
+planar specimen `poly-identity/accept-T-33.frobcert` and its four mutants, asserting each verdict and the first
+failing rule; `live`, for each reference robot and limb, N12-20's invocation `frob-derive --manifest
+derive/kernels.toml --stage certify --kernel K-crba-level` and the same with `--kernel K-rnea-level` (the derived
+mass-matrix and bias kernels of BD-150), reading the T-33 rows of `target/derive/certify.json` (status, route,
+operations, basis size, the cap when one was hit) and replaying every certificate written through `frob-verify
+--json` under `env -i`, a limb over a cap being asserted `budget-exceeded` with the cap named and a `Tested` record
+of N12-21 beside it; `list`, `frob prove list --json`, asserting that the T-33 row prints the class per model and
+limb. `scripts/e2e/pilot_lemma_budget.sh` (bead N12-22, a dependency) logs arm B, and
+`scripts/e2e/lemma_coverage.sh` (bead N12-36, which depends on this card) observes the per-limb certificates again
+in the coverage measurement. For this card the NDJSON lines carry `ts`, `script`, `bead` ("CARD-T-33"), `step`
+(`T-33/<model>/<limb>` or `T-33/<mutant>`), `event`, the exact command line, exit code, wall time, the limb's joint
+count, the route taken (identity or randomized), expression operations and basis size against their caps, peak
+memory in bytes, the envelope's `evidence` block where `frob prove list` runs (claim, class, `KernelId`,
+certificate hash or test-record digest, checker identity), the certificate's BLAKE3, the expected and observed
+verdict, and on a failure the first entry (i, j) whose sum is not in the ideal, with the path to reproduce; the
+`summary` line counts limbs certified, limbs `Tested`, mutants caught and assertions passed and failed.
 
 ### Known answers and negative controls
 

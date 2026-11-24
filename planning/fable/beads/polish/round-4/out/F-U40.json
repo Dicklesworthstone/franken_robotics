@@ -1,0 +1,325 @@
+{
+ "round": 4,
+ "slice": "F-U40",
+ "reviewed": 33,
+ "changed": [
+  {
+   "bead": "N40-02",
+   "kinds": [
+    "request",
+    "registry",
+    "deadlock",
+    "broken"
+   ],
+   "what": "Step 5: one DESIGN table of the five rows that gain parts the compiled table does not print, each part with its scope and its one recording bead: GATE-MARROW-01 (M0 BD-011; M1 N13-19), GATE-HAB-01 (M2 N19a-42; M3 device tiers N19a-25) and GATE-HAB-13 (M2 N19c-17; M3 seven interior archetypes N19c-19) per F-U19c, GATE-ARENA-01 (M2 BD-201; M3 BD-253; M4 BD-368) per H-owners-2, GATE-LEMMA-03 (M1 N12-34; M2, M3, M4, M5, M8 recorded by that exit's review, BD-224, BD-319, BD-378, BD-412, BD-442) per the lead's note. Otherwise `record_gate --part M3` has no part for HAB/ARENA, the M3/M4 measurements cannot be recorded, and GATE-LEMMA-03 prints pass on the M1 kinds alone while no bead owns the later runs (convention 9). Exit reviews named because no checker bead of a milestone reaches its siblings while each review reaches all of them, N12-34's script and N38b-19 (checked with graph_check). Also: the four 'M3 (pilot); M4' rows (GATE-ATEL-07, -08, GATE-CORTEX-12, GATE-AUGUR-09) get M3 parts with scope `pilot: <id>` read from the pilot register (PILOT-RANK-01, PILOT-LADDER-01, PILOT-C-32): N38a-09 forbids a pilot result to set a part and no bead could record those M3 parts, so the M3 exit would block for ever (F-U25b's finding generalised). Counts: convergence parts per exit 11, 60, 81, 81, 51, 26, 7, 0, 8 = 325 (plan prints 315); parts_equal_exits 40 convergence rows; new tests parts_per_exit and pilot_parts. Graph-audit note applied (evidence holds: N40-02 does not reach BD-004, and BD-004 has no view row for the printout): the acceptance clause 'a hand edit fails `cargo xtask check-generated`' replaced by this bead's own regenerate-and-compare test (`printout_fresh`); step 7 states that N38b-20 registers the printout as a generated view and owns the hand-edit plant."
+  },
+  {
+   "bead": "N40-04",
+   "kinds": [
+    "request",
+    "registry",
+    "deadlock"
+   ],
+   "what": "Load table convergence row 11, 60, 81, 81, 51, 26, 7, 0, 8 (sum 325) with the reading naming the ten later parts of N40-02 step 5 (was 80, 77, 49, 25, 7 and sum 316: the HAB, ARENA and LEMMA-03 later parts were uncounted, so `due_counts_match_load_table` would fail on the register N40-02 now builds); Background '80' to 81; `due_counts_match_load_table` checks the plan's printed row on a copy without the ten parts. Pilot parts: a blocking-table row (non-blocking when the named pilot record holds a `[[pilot.result]]` whose receipt resolves; printed `pilot: <verdict>`, never `pass`; else `pilot-result-missing`), the pilot register as an input, dep N38a-09 (M0, no path either way), `blocking_table` fourteen fixtures and the test `pilot_part_read_from_pilot_record`. H-ka-3: R-31 added to the Known answers citation."
+  },
+  {
+   "bead": "N40-05",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Section 5a (F-U41-2, F-UAB): records cited as their owners write them: `premortem` (N41-PM, step 9, since M0, after risk-review, scripts/exit/premortem.sh wrapping `--example premortem -- read <Mn>`), `risk-plants` (N41-32, scripts/exit/risk-plants.sh wrapping `--example risks -- plants --exit <Mn>`, `--all` from M5 by N41-37), `decision-sweep` (NAB-22, step 8, since M0, its `--bin decision-sweep -- check --exit` command and the block `sweep.missing`), `bead-lifecycle` (N41-17) and `done-report` (N41-26, step 6, since M1, scripts/exit/done-report.sh); each exit review depends on its sweep bead NAB-23 to NAB-31. F-U41-1 was already applied. Step 7 (H-owners-2): a receipt set is read member by member, a missing or mismatched member gives `rejected: receipt-set-member` (test `receipt_set_members_read`); a pilot part takes no disposition. Section 5: a part whose register row names the exit review as recorder (GATE-LEMMA-03 after M1) is recorded by the review session before it starts the runner. The N41-OPEN8 counterpart needs nothing here: N41-04 already reaches N38a-12 and N40-02 by other paths (graph_check). Section 5a's list of attached records adds `gate-register-path` (N40-36, step 4), `kill-ledger` (N40-30, step 6) and `kill-decision-path` (N40-37, step 6, after kill-ledger), the three beads now attaching through the table."
+  },
+  {
+   "bead": "EPIC-M2",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Gate table: GATE-LEMMA-03 listed with its M2 part (recorded by BD-224); GATE-ARENA-01, GATE-HAB-01 and GATE-HAB-13 rows name their later parts; counts 81 convergence in the header, the epic check and Considerations (was 80). Without the row N40-02, which compiles parts from the epics' tables, has no M2 part for GATE-LEMMA-03."
+  },
+  {
+   "bead": "EPIC-M3",
+   "kinds": [
+    "request",
+    "registry",
+    "deadlock"
+   ],
+   "what": "H-owners-2 and F-U19c: rows for GATE-ARENA-01 (the four M3 task families, BD-253), GATE-HAB-01 (device tiers, N19a-25), GATE-HAB-13 (seven interior archetypes, N19c-19) and GATE-LEMMA-03 (recorded by BD-319); 81 convergence in Background, header and epic check (was 77). The acceptance on pilots now says the four M3 parts of GATE-CORTEX-12, -ATEL-07, -ATEL-08 and -AUGUR-09 are pilot parts read from their pilot records (a pilot result never sets a part, N38a-09)."
+  },
+  {
+   "bead": "EPIC-M4",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "H-owners-2: GATE-ARENA-01 listed with its M4 part (conveyors, stair and curb climbing, reach and carry; BD-368); GATE-LEMMA-03 listed with its M4 part (recorded by BD-378); 51 convergence in header and epic check (was 49)."
+  },
+  {
+   "bead": "BD-224",
+   "kinds": [
+    "request",
+    "registry",
+    "deadlock"
+   ],
+   "what": "H-owners-2: dep BET-12 added (no path either way; N41-16 check 3(b) holds BET-12 to be an ancestor of the M2 review, so the tracker check would report it orphan and block the exit). Section 2 and a new check: GATE-LEMMA-03's M2 part recorded by this review from N12-34's script at the candidate commit (`record_gate ... --part M2`) with an acceptance item; the M2 parts of GATE-HAB-01, -13 and GATE-ARENA-01 named as such; counts 81 convergence in section 2, `due_counts`, Known answers and Considerations (was 80)."
+  },
+  {
+   "bead": "BD-319",
+   "kinds": [
+    "request",
+    "registry",
+    "deadlock",
+    "convention"
+   ],
+   "what": "F-U16c: dep N16cp4-01 added and the narration 'no M3 bead yet takes the census... requested of the Kinesis unit' replaced by the key (convention 13; graph_check shows no path either way). F-U25b: the acceptance 'GATE-CORTEX-12 and GATE-AUGUR-09 recorded as pilots' could never be met (N38a-09; N25b-11 records only M4): now the four pilot parts (ATEL-07, -08, CORTEX-12, AUGUR-09) are read from PILOT-RANK-01, PILOT-LADDER-01 and PILOT-C-32 and printed `pilot: <verdict>`, AUGUR-09's together with KILL-AUGUR-REGION's M3 entry citing the pilot receipt; test `pilot_parts_m3`. Section 2 adds the M3 parts of GATE-HAB-01, -13, GATE-ARENA-01 and GATE-LEMMA-03, the latter recorded by this review (procedure and acceptance item); counts 81 convergence (was 77). Also: KILL-SEGMENT, introduced and due at M3 (N40-30), was absent: added with its decider N16bp4-01 (new dep and gate), an acceptance item and a `reread_and_deferred_due_m3` fixture."
+  },
+  {
+   "bead": "N40-24",
+   "kinds": [
+    "request",
+    "registry",
+    "broken",
+    "contradiction"
+   ],
+   "what": "F-U18a and H-owners-2: step 1a gives KILL-RESPONSE `scope_kind = \"family\"` (counterfactual, adjoint, stencil; N18a-26) and KILL-PROXY `scope_kind = \"mechanism\"` (chain-cord, hinged-rug; N19b-19; an entry fired on cost carries fallback_form \"articulated proxies in evaluation batches only\", one without it reads as \"not at all\", as N40-03 and N19b-19's outcome_mapping have it; the row said every fired entry names one, which N19b-19's test contradicts); without them the register load refuses N18a-26's and N19b-19's scoped entries; acceptance (eight rows) and `scoped_rows` updated. F-U16b: KILL-SEGMENT (M3, §29.11, PILOT-KIN-01 of N16b-09, mechanism N16b-08), KILL-RUNTIMECLOSURE (M6, §14.10, PILOT-KIN-05 of N16bx-01, mechanism N16bx-02, FROB-REF-724) and KILL-CONTINUUM (M8, PILOT-KIN-06 of N16bx-03) entered by `introduce` amendment in step 1b (seven rows), gates list, acceptance, `introduced_rows` and the e2e seed list; otherwise their pilot records keep `to-register` and N38a-09's funding read blocks them for ever. Also: each of the seven rows names its new decision bead (N18ap4-01, N18ap4-02, N18bp4-02, N18bp4-03, N16bp4-01, N16bp4-02, N16bp4-03), with the rule-7 split of N40-30 (mechanism-read clauses: the decision waits on the mechanism; pilot-only: the mechanism waits on the decision). KILL-RUNTIMECLOSURE's fallback said 'run-time loops admitted under strict on batch-cpu only', which contradicts its own trigger (clause (a) is a failure under strict) and N16bx-01's FAIL decision (compile-time weld only): now 'No run-time loops: a dual-arm variant carries its payload welded to both tools at compile time, with no grasp transition', the strict-only posture being the PARTIAL not-fired release."
+  },
+  {
+   "bead": "N40-30",
+   "kinds": [
+    "request",
+    "registry",
+    "convention",
+    "contradiction"
+   ],
+   "what": "H-ka-3: the C13 narration 'requested of N40-KA as a row beside R-26' replaced by the fact (N40-KA R-31, bound by reread_and_introduced_scheduled, with its control). F-U15b: KILL-SINEW-SEA printed '(N40-23; N15bp4-01)'. F-U16c: KILL-LOOPELIM's M3 re-read names N16cp4-01. The three Kinesis rows of N40-24 added (KILL-SEGMENT at M3, KILL-RUNTIMECLOSURE at M6, KILL-CONTINUUM in a new M8 row): thirteen introduced rows (1 M3, 3 M4, 8 M6, 1 M8) in Background, step 3, acceptance, the test and Known answers. F-U18a (deciders of KILL-HULL, -STRIBECK, -TYRE, -GRANULAR): no decision bead exists; the table now states that an introduced row printed with its ledger bead alone has no decision bead and becomes missing at its funding request; the decision beads are requested of the owning units. Step 3's table now names the decider of every introduced row: the seven new decision beads, N25a-31 for KILL-AUGUR-SOS; KILL-AUGUR-FAMILYKERNEL still has none (requested of N25c-06). Section 5 attached its test by 'adding it to step 6 of review.sh', against N40-05 section 5a (checks are attached by a record of scripts/exit/checks.toml whose command prints the check object; the runner is not edited): now the record `kill-ledger` (step 6, since M1, wrapper scripts/exit/kill-ledger.sh, each failing check a block naming its reason and gate), acceptance updated. Step 3's M7 row read 'all seven rules, per cell': KILL-TENFOLD-LEVER is decided M1 with reread M2 only and CERT/LEAK are standing rows already in the last column, so the M7 ten-fold column now lists the four per-cell rows."
+  },
+  {
+   "bead": "N40-29",
+   "kinds": [
+    "request"
+   ],
+   "what": "F-U16c: the re-read note names N16cp4-01 as the bead that takes KILL-LOOPELIM's M3 re-read and writes ADR-KILL-LOOPELIM-M3.md, beside N17bp1-01; the list of introduced rows adds the three Kinesis rows of N40-24 and N15bp4-01 as KILL-SINEW-SEA's decider. Without the key the M3 entry had no named writer and the exit read it as missing."
+  },
+  {
+   "bead": "N40-23",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Lead ruling on KILL-SINEW-SEA: the row's fallback names a flag `compliance not modelled` that nothing produced on the fallback's branch (N15b-18, the only producer, is never built there). Added the DESIGN statement: BD-069 admits a card's compliance fields as descriptive from the start and any L3 result binding a card that declares compliance while the compliant element is not in the build carries the flag; BD-069 holds the unit test and script step (requested: N40-23 is M0 and cannot reach BD-069's cards, so the test cannot live here). Also names N15bp4-01 as the row's decider."
+  },
+  {
+   "bead": "BD-378",
+   "kinds": [
+    "request",
+    "registry",
+    "deadlock"
+   ],
+   "what": "GATE-LEMMA-03's M4 part is recorded by this review (N40-02 step 5): a section 3 check runs N12-34's script unchanged at the candidate commit over the kinds enabled by M4 (N12-16, N12-17, N12-18, N12p2-01 and earlier) and records `record_gate --gate GATE-LEMMA-03 --receipt <hash> --part M4` before the runner, with an acceptance item; section 2 names it and GATE-ARENA-01's M4 part (BD-368); counts 51 convergence in section 2, `due_counts` and Known answers (was 49). KILL-RESPONSE added to the per-scope rows (`family:` entries, N18a-26) with a `scoped_entries` fixture. The Considerations' open point to the tracker check's owner replaced by the fact: N41-16 check 3(b) exempts the related upstream beads (convention 13). Also: dep N18bp4-02 (KILL-TYRE's decision bead) and its name in the introduced-rows sentence."
+  },
+  {
+   "bead": "BD-412",
+   "kinds": [
+    "request",
+    "registry",
+    "deadlock"
+   ],
+   "what": "GATE-LEMMA-03's M5 part is recorded by this review (N40-02 step 5): N12-34's script run unchanged at the candidate commit over the kinds enabled by M5 (`lean-capsule`, BD-381, new) and `record_gate ... --part M5` before the runner, with an acceptance item; counts 26 convergence in section 2, `due_counts` and Known answers (was 25). Without it the M5 part has no recorder and the exit blocks on a not-run part."
+  },
+  {
+   "bead": "BD-442",
+   "kinds": [
+    "request",
+    "registry",
+    "deadlock"
+   ],
+   "what": "GATE-LEMMA-03's M8 part is recorded by this review whether or not an epic is funded (N40-02 step 5), over the kinds enabled by M8 (N12-19 and N12p1-01 only if funded), with an acceptance item; counts 8 convergence in section 3, `due_counts` and Known answers (was 7). KILL-CONTINUUM (introduced by N40-24, decided M8 when the continuum arm asks for funding, `not-reached` otherwise) is read beside the compiled and late decisions, with an acceptance item. Also: dep N16bp4-03, KILL-CONTINUUM's decision bead, named."
+  },
+  {
+   "bead": "BD-427",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Section 2a: the introduced rows due at M6 are five, KILL-RUNTIMECLOSURE (N40-24, pilot N16bx-01, mechanism N16bx-02, both already deps) added; KILL-SINEW-SEA's decider N15bp4-01 named; KILL-PROXY is decided per mechanism (`mechanism:chain-cord`, `mechanism:hinged-rug`, N19b-19) with the fallback_form rule of N40-03. The acceptance item on introduced rows names KILL-RUNTIMECLOSURE and KILL-PROXY's per-mechanism entries, so an exit record with one unscoped KILL-PROXY entry is caught. Also: deps N18ap4-01, N18ap4-02, N18bp4-03, N16bp4-02 (the new decision beads of the M6 introduced rows) named in section 2a; KILL-STRIBECK's transactional form is a fallback_form."
+  },
+  {
+   "bead": "EPIC-M1",
+   "kinds": [
+    "registry"
+   ],
+   "what": "GATE-LEMMA-03's row named only M1; it now names the M1 part (kinds in use, recorded by N12-34) and the later parts at M2, M3, M4, M5 and M8 recorded by those exits' reviews (N40-02 step 5), as the GATE-MARROW-01 row names its two parts, so a reader of M1 does not take the M1 record as the gate's final value."
+  },
+  {
+   "bead": "N40-10",
+   "kinds": [
+    "request",
+    "broken"
+   ],
+   "what": "Graph-audit counterpart of N00-32 (evidence holds: N00-32 is M0 and does not reach N40-10, so its unit test `gate_named_by_late_mechanism_exists_once` reads a file it cannot depend on): the file side moves here, as an acceptance item (each late row once; KILL-COUPLING one row with two decision points; no late row repeating KILL-AUGUR-PROBE, KILL-RESPONSE, KILL-PACKET or KILL-TREEOP; a repeat fails the load) and the unit test of that name. The removal from N00-32 is requested (N00-32 is in no round-4 slice)."
+  },
+  {
+   "bead": "N40-28",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Step 5 put 'all seven at M3 and M7' in the due sets while step 2's fields (LEVER decided M1, reread M2; CERT and LEAK standing; four rows per cell M3 and reread M7) and the test `lever_two_decisions` give LEVER at M1 and M2 only: an exit query built from step 5 would demand a LEVER decision at M3 and M7 that no bead writes. Step 5 now states the due sets the fields give, LEVER afterwards applied through GATE-TENFOLD-09."
+  },
+  {
+   "bead": "N40-36",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Section 2a attached the script by editing step 4 of review.sh, against N40-05 section 5a: now the record `gate-register-path` of scripts/exit/checks.toml (step 4, since M1, wrapper printing the check object), acceptance updated. The C1-target note is a false alarm: the bead names `--test g1_known_answers` and says `--test g1` is not a target."
+  },
+  {
+   "bead": "N40-37",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Section 2a attached the script by editing step 6 of review.sh, against N40-05 section 5a: now the record `kill-decision-path` of scripts/exit/checks.toml (step 6, since M1, after `kill-ledger`, wrapper printing the check object), acceptance updated."
+  },
+  {
+   "bead": "N40-22",
+   "kinds": [
+    "broken"
+   ],
+   "what": "`frob report campaign --arms B,W,F --json` omitted the positional the verb requires (VERBS-report: a campaign or a registered comparison) and wrote `--ablate {information, controller, stepping}` as one call: now `frob report campaign <comparison> --arms B,W,F` and `--ablate information` (likewise controller, stepping), the comparison registered with `--register-comparison <manifest.json>` (N39b-46, a dep); the e2e script registers the fixture's comparison first."
+  },
+  {
+   "bead": "N40-33",
+   "kinds": [
+    "registry"
+   ],
+   "what": "GATE-HAB-01 was listed under rule (ii) (CPU and device rows at M2): its device tiers are its M3 part (N19a-25; N40-02 step 5) and its M2 part (N19a-42) runs on batch-cpu only, so it is now named as under neither rule, recorded as usual."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N18ap4-01",
+   "why": "KILL-HULL (introduced by N40-24, decided M6) had no bead to write its decision entry, ADR and owner declaration: N40-30's kill_ledger would fail owner-declaration-missing at BD-427 once funding is requested (F-U18a). Reads the pilot N18a-07 and, after one repair cycle, N18a-08's parity lane; depends on both (N40-30 rule 7's exception)."
+  },
+  {
+   "bead": "N18ap4-02",
+   "why": "KILL-STRIBECK's decider, as for KILL-HULL (F-U18a); pilot-only trigger over F1-F3, with the transactional-profiles form recorded as fallback_form when F2 alone holds (N40-03), so N18a-31's admission rule reads one entry."
+  },
+  {
+   "bead": "N18bp4-02",
+   "why": "KILL-TYRE's decider at M4 (F-U18a): reads the pilot N18b-03 and GATE-TRAC-08's tyre rows (BD-366) after one repair cycle of N18b-04; inconclusive pilots give not-reached or a deferral naming the rerun. A dependency of BD-378."
+  },
+  {
+   "bead": "N18bp4-03",
+   "why": "KILL-GRANULAR's decider at M6 (F-U18a): reads the pilot N18b-14 and N18b-15's force rows after one repair cycle; a record with no primary source is inconclusive and funds nothing."
+  },
+  {
+   "bead": "N16bp4-01",
+   "why": "KILL-SEGMENT, introduced and due at M3, had no decider and BD-319 did not list it: the decision from PILOT-KIN-01's two-class AUC rule, ADR-KILL-SEGMENT-M3.md, owner declaration in frob-opt. A dependency of BD-319."
+  },
+  {
+   "bead": "N16bp4-02",
+   "why": "KILL-RUNTIMECLOSURE's decider at M6: clauses (a) or (c) of PILOT-KIN-05 fire it; clause (b) alone is the PARTIAL not-fired release (strict only). A dependency of BD-427."
+  },
+  {
+   "bead": "N16bp4-03",
+   "why": "KILL-CONTINUUM's decider at M8 (Moonshot, no mechanism bead): the four clauses of PILOT-KIN-06's item 5; not-reached when the slot never asks or item 2 is unfunded (KILL-LIVING). A dependency of BD-442."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N40-KA",
+   "what": "R-07: 40 convergence rows with parts at more than one exit (the 35 of the compiled tables and the five rows of N40-02 step 5: GATE-MARROW-01 M0/M1, GATE-HAB-01 and -13 M2/M3, GATE-ARENA-01 M2/M3/M4, GATE-LEMMA-03 M1/M2/M3/M4/M5/M8) and 3 admission rows. R-11: convergence 11, 60, 81, 81, 51, 26, 7, 0, 8 (the plan prints 11, 59, 80, 77, 49, 25, 7, 0, 7; the ten later parts of N40-02 step 5 add 1, 1, 4, 2, 1, 1). `load_sums`: convergence 325. R-31: rows entered by `introduce` amendments are thirteen (N40-24 now also enters KILL-SEGMENT, decided M3; KILL-RUNTIMECLOSURE, M6; KILL-CONTINUUM, M8): decided 1 at M3, 3 at M4, 8 at M6, 1 at M8; `reread_and_introduced` 1 + 3 + 8 + 1 = 13."
+  },
+  {
+   "bead": "N40-01",
+   "what": "Considerations: 'among the compiled rows, 36 convergence rows (the 35 ... and GATE-MARROW-01...)' becomes 40 (the five rows of N40-02 step 5). The part record: a part whose `scope` begins `pilot: <PILOT-id>` (the four M3 parts of GATE-ATEL-07, -08, GATE-CORTEX-12, GATE-AUGUR-09) keeps `status = \"not-run\"`, has no recording bead, and is read by the exit query from the pilot register (N40-04 step 4); the validator should check that the id is of N38a-09's grammar."
+  },
+  {
+   "bead": "N38b-18",
+   "what": "Line 79 quotes '36 convergence gates, GATE-MARROW-01 ... among them' with parts at several milestones: 40 now (N40-02 step 5 adds GATE-HAB-01, GATE-HAB-13, GATE-ARENA-01 and GATE-LEMMA-03)."
+  },
+  {
+   "bead": "N38b-19",
+   "what": "Two register readings to state in the recorder: (1) a part whose scope begins `pilot:` is never recorded (a pilot result never sets a part, N38a-09): refuse `record_gate --part M3` on it with a reason such as `pilot-part-not-recordable`; (2) the recording bead of GATE-LEMMA-03's parts after M1 is the exit review of that milestone (BD-224, BD-319, BD-378, BD-412, BD-442; N40-02 step 5), recorded by the review session before the exit runner starts."
+  },
+  {
+   "bead": "N38b-20",
+   "what": "Graph-audit move from N40-02: add the view row 'printed gate register' (output docs/delivery/register/REGISTER.md, input registries/gates.toml, generator register::print::print_register), the plant that hand-edits the printout and is caught by `cargo xtask check-generated`, and the dep N40-02 (graph_check: no path either way, no cycle). N40-02 keeps its own regenerate-and-compare test."
+  },
+  {
+   "bead": "N40-03",
+   "what": "Step 4's list of rows entered by `introduce` amendments: add N40-24's KILL-SEGMENT, KILL-RUNTIMECLOSURE and KILL-CONTINUUM (pilots PILOT-KIN-01, -05, -06 of N16b-09, N16bx-01, N16bx-03)."
+  },
+  {
+   "bead": "N12-34",
+   "what": "The later parts of GATE-LEMMA-03 (M2, M3, M4, M5, M8) are recorded by that milestone's exit review (BD-224, BD-319, BD-378, BD-412, BD-442), which runs this script unchanged at the exit candidate commit (N40-02 step 5); say so where the bead describes the form of the later parts."
+  },
+  {
+   "bead": "N12-13",
+   "what": "Line 112 'the gate's M3 value is recorded by N12-34's re-run' and line 161 're-records GATE-LEMMA-03's ...': the M3 part is recorded by the M3 exit review BD-319, running N12-34's script unchanged (N40-02 step 5); N12-34 closes at M1."
+  },
+  {
+   "bead": "N12-14",
+   "what": "Line 197 'the script of N12-34 ... re-records GATE-LEMMA-03 for M3': the M3 part is recorded by the M3 exit review BD-319 running that script (N40-02 step 5)."
+  },
+  {
+   "bead": "N12-16",
+   "what": "Lines 101 and 151 'its M4 value is recorded by N12-34's re-run' / 're-records GATE-LEMMA-03 for M4': the M4 part is recorded by the M4 exit review BD-378 running N12-34's script (N40-02 step 5)."
+  },
+  {
+   "bead": "N12-17",
+   "what": "Lines 215-216 and 259 '(its M4 value is recorded by N12-34's re-run)': recorded by the M4 exit review BD-378 running N12-34's script (N40-02 step 5)."
+  },
+  {
+   "bead": "EPIC-M5",
+   "what": "List GATE-LEMMA-03 in the table of gates with a part due at M5 (every proof kind enabled by M5, `lean-capsule` of BD-381 new; recorded by BD-412; N40-02 step 5) and count 26 convergence parts (the plan prints 25)."
+  },
+  {
+   "bead": "EPIC-M8",
+   "what": "List GATE-LEMMA-03 in the table of gates with a part due at M8 (every kind enabled by M8; the Moonshot kinds of N12-19 and N12p1-01 when funded; recorded by BD-442; N40-02 step 5) and count 8 convergence parts (the plan prints 7)."
+  },
+  {
+   "bead": "N23b-16",
+   "what": "GATE-CORTEX-12's register row names 'BD-310 (pilot)' as recorder of the M3 part; a pilot result never sets a part (N38a-09, and BD-310 says so): the M3 part is a pilot part (`scope = \"pilot: PILOT-RANK-01\"`) with no recording bead, read by the exit query from the pilot register (N40-02 step 5; N40-04 step 4)."
+  },
+  {
+   "bead": "N28c-25",
+   "what": "GATE-ATEL-07 and -08 name 'BD-310 (pilot)' as recorders of their M3 parts: these are pilot parts (`pilot: PILOT-RANK-01`, `pilot: PILOT-LADDER-01`) with no recording bead (N40-02 step 5). Also the M4 recorder of GATE-ATEL-08 differs between this bead (BD-329) and N28b-18 (N28b-19): one recorder per part."
+  },
+  {
+   "bead": "N25d-41",
+   "what": "GATE-AUGUR-09 names 'BD-289 (pilot)' as recorder of its M3 part: it is a pilot part (`pilot: PILOT-C-32`) with no recording bead, read from the pilot register (N40-02 step 5); its M4 part's recorder is BD-358 here and N25b-11 in N25b-11's own text: one recorder per part."
+  },
+  {
+   "bead": "BD-069",
+   "what": "Lead ruling for KILL-SINEW-SEA's fallback (N40-23): admit a card's compliance fields (`series_stiffness`, `series_damping`, `deflection_limit`) as descriptive from the start, and make any L3 result that binds a card declaring compliance while the compliant element (N15b-18) is not in the build carry the flag `compliance not modelled` with the card and field; add the unit test and the e2e script step that show the flag. Today the field row says the option is N15b-18's and admitted only for measured stiffness, so on the fallback's branch nothing writes the flag."
+  },
+  {
+   "bead": "N16bx-01",
+   "what": "The Fallback paragraph ('run-time loops are admitted under strict on batch-cpu only; a lockstep request is refused with FROB-REF-724 ...; for training ... welded at compile time') contradicts the trigger it answers (clause (a) is a failure under strict) and this bead's own acceptance ('FAIL leaves the compile-time weld as the only dual-arm form'). N40-24's row now reads 'No run-time loops: a dual-arm variant carries its payload welded to both tools at compile time, with no grasp transition'; make the record's fallback.ships the same text and describe the strict-only posture as the PARTIAL decision. Also name N16bp4-02 as the bead that writes KILL-RUNTIMECLOSURE's decision."
+  },
+  {
+   "bead": "N16bx-02",
+   "what": "Add dep N16bp4-02 (KILL-RUNTIMECLOSURE's decision bead): the trigger is read from the pilot alone, so a branch-only bead depends on the decision bead (N40-30 step 2, rule 7); its release form (PASS both profiles, PARTIAL strict only) is read from that decision. No cycle (graph_check)."
+  },
+  {
+   "bead": "N18a-31",
+   "what": "Add dep N18ap4-02 (KILL-STRIBECK's decision bead; N40-30 rule 7, pilot-only trigger). Step 5's admission rule reads the pilot's falsifiers differently from the registered row: F3 alone (outcomes unchanged) admits the law on every tier here but fires KILL-STRIBECK to constant coefficients there, and F1 with F2 gives transactional-only here but constant coefficients there. Read the admission from the decision entry instead: not-fired every tier; fired with fallback_form 'the lagged law on transactional profiles only' (F2 alone) transactional profiles only; fired without it not offered."
+  },
+  {
+   "bead": "N16b-08",
+   "what": "Add dep N16bp4-01 (KILL-SEGMENT's decision bead): the segment mode is built only on its not-fired decision and dropped from scope, citing the ADR, on fired or not-reached (N40-30 rule 7, pilot-only trigger); the two other methods are untouched."
+  },
+  {
+   "bead": "N25c-06",
+   "what": "KILL-AUGUR-FAMILYKERNEL (introduced by N40-26, decided M4, mode pilot-before-funding) has no bead that writes its decision entry, docs/adr/ADR-KILL-AUGUR-FAMILYKERNEL-M4.md and owner declaration: this pilot records the funding decision only. Add a decision bead in N15bp4-01's form (as N25a-31 does for KILL-AUGUR-SOS), depending on this pilot, N40-26 and N40-30, and make BD-378 depend on it; otherwise a funding request makes the decision missing at the M4 exit."
+  },
+  {
+   "bead": "N00-32",
+   "what": "Graph-audit move (N40-10 took its side): drop the unit test `gate_named_by_late_mechanism_exists_once` and the file-reading half of acceptance item 4 ('each of the gates named above appears exactly once in the gate registry'): N00-32 is M0 and does not reach N40-10, which enters the late rows and now holds that test and item. Keep the coherence pass's check of those names against the text of the gate-register beads."
+  }
+ ],
+ "unchanged": 10,
+ "notes": "Every note addressed to this slice was answered. Requests already applied before this round: N40-05's F-U41-1 forms; BD-427's NAB-29 dep (present). N40-35's round-3 request (open_questions calendar form) was already applied; N40-36's C1-target note is a false alarm. Graph-audit note on N40-02 (BD-004) applied after checking: no path N40-02 -> BD-004 and BD-004 has no row for REGISTER.md; the move to N38b-20 is requested there. The N40-05 counterpart of N41-OPEN8 needs no change: N41-04 reaches N38a-12 and N40-02 through other paths. F-U25b's pilot finding holds for four gates, not one; the register now carries pilot parts. The F-U18a request (a decision bead per introduced row) is answered with seven new decision beads in N15bp4-01's form, covering also the three Kinesis rows; each is a dependency of its exit review, and graph_check reports no cycle. Unchanged: EPIC-M0, N40-07, N40-08, N40-12, N40-14, N40-16, N40-17, N40-25, N40-34, N40-35."
+}

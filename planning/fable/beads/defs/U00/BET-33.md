@@ -91,9 +91,14 @@ tested where it is applied, in N28b-36);
 `bet33_stale_key_mutant_not_caught_is_untested`.
 
 ### End-to-end script and logging
-`scripts/e2e/bet_33_decide.sh` replays three amendments of the campaign through `frob result revalidate` (or the
-mission form at M1), recomputes every carried verdict from scratch and compares, runs the stale-key mutant
-build, and recomputes the verdict. Logged per STD-E2E: amendment, verdicts carried, withdrawn and recomputed,
+`scripts/e2e/bet_33_decide.sh` replays three amendments of the frozen campaign through `frob result revalidate
+<design> --between <before> <after> --grades 3 --key b33-rev-<n> --json` (a run verb, one key
+per call; grade 3 under the session flag `frontier-revalidate-implication`, and `--grades 2` when N28b-36's
+KILL-REUSE record fired), recomputes every carried verdict from scratch and compares, runs the stale-key control
+in the Gauntlet form (`FROB_TEST_SEED=33 cargo test -p frob-conformance --test g1_known_answers --features
+gauntlet-mutations -- GATE-ATEL-11`) and asserts it caught, reads the verdict of BET-33 from the bet register's
+report (`cargo run -p frob-conformance --example bets -- status --json`, example `bets` of N00-28, the one
+verdict rule; no second verdict rule in the script) and checks `docs/adr/bet-33-m4.md` against it. Logged per STD-E2E: amendment, verdicts carried, withdrawn and recomputed,
 each carried verdict's fresh value and equality, the unnecessary share, the mutant's outcome; `summary` naming
 the three gates and two kill gates.
 

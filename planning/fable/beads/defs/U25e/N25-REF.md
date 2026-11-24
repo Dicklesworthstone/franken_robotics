@@ -4,7 +4,7 @@ title: "Augur refusal-code registry: FROB-REF-846 to -859, -868, -874, -877, -88
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "augur", "frob-core", "frob-mission", "frob-cert", "solid", "registry"]
+labels: ["m1", "augur", "frob-core", "frob-mission", "frob-cert", "solid", "registry", "review-notes-open"]
 parent: "WP-42"
 deps: ["BD-005", "BD-022", "STD-E2E"]
 needs: []

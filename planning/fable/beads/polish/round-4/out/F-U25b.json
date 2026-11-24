@@ -1,0 +1,147 @@
+{
+ "round": 4,
+ "slice": "F-U25b",
+ "reviewed": 24,
+ "changed": [
+  {
+   "bead": "BD-136",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "List D's 853 row is no longer an admission mutation: FROB-REF-853 is raised by mission.synthesize/refute on supplied evidence, never by admission, so run through `frob mission check` it could never fire and GATE-AUGUR-01 could not reach 64 of 64. It is now an answer reporting an unattained infimum as attained (N25-REF's 853 fixture), offered with `frob mission synthesize … --from a:… --key …`; step 9 names that route. The counts (64 owned, D14 pending) are unchanged. Review label removed."
+  },
+  {
+   "bead": "BD-289",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "N25d-40 moved from related to deps and the record named PILOT-C-32 (row 3), so the pilot cannot start before its register row exists. Added the M3 decision entry on KILL-AUGUR-REGION, which N25b-11 cites but nobody wrote, and the owner declaration N40-30 compares. Without the declaration `kill_ledger` fails owner-declaration-missing at the M3 exit. Added deps N40-03 and N40-30; the pilot receipt goes under receipts/pilots/. Review label removed."
+  },
+  {
+   "bead": "BD-357",
+   "kinds": [
+    "convention",
+    "registry"
+   ],
+   "what": "`--cuts`/`--quotient` were called 'requested of' the mission.synthesize row; the row carries them from M4, so the sentence now states that (convention 13). The final M4 entries are now also appended to N25b-17's owner declaration, so kill_ledger keeps passing after the final reading. Review label removed; the N25d-40 note was already applied."
+  },
+  {
+   "bead": "N25b-04",
+   "kinds": [
+    "request",
+    "registry",
+    "broken"
+   ],
+   "what": "Decision entries are now per proof kind: `scope = \"proofkind:<kind>\"`, sections of one ADR per exit, a `-reopened` suffix, and a rule fault fires only that kind. Without the scope every entry fails decision-scope-invalid. Step 5(e) commands fixed: mission.show takes the mission plus `--answer`, and evidence.trace takes only `clm:` (an `a:` id is 802). Step 6 no longer stores a count and a drill date in the kill row, which the register refuses because kill rows carry no measurement fields: the count comes from cert-kinds-status.toml and the drill receipt goes in `receipts`. Owner declaration, dep N40-30 and the unit test `entries_per_proofkind` added. Review label removed."
+  },
+  {
+   "bead": "N25b-05",
+   "kinds": [
+    "deadlock",
+    "registry"
+   ],
+   "what": "This M0 bead's acceptance needed GATE-WS-03's M1 record with N12-34's clause, from an M1 bead it does not and cannot depend on, so it could never close. It now delivers the script, the assembler and the M0 receipt (gate line `not-eligible`, part stays `not-run`). The nonexistent `--part M0` is gone: the gate has one part, M1. The M1 run and the record moved to the new bead N25bp4-01."
+  },
+  {
+   "bead": "N25b-07",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "`mission.new` raises only 868 (its VERBS row), so the claim that it runs check 15, and the acceptance and e2e asserting exit 3 with 877 from `mission new`, could not pass. Now `mission.check`, on a file or on the `q:` that `mission new` stored with exit 0, and the answering verbs' re-admission carry the check, and the repair is confirmed with `mission check`. The phantom 'static fixture of BD-126, cap 90 N' is replaced by this bead's own 4 × 80 N fixture."
+  },
+  {
+   "bead": "N25b-10",
+   "kinds": [
+    "convention"
+   ],
+   "what": "`--at` on mission.show was called 'requested of' its row; the row registers it from M4, so the sentence now states that (convention 13)."
+  },
+  {
+   "bead": "N25b-11",
+   "kinds": [
+    "convention",
+    "broken",
+    "registry"
+   ],
+   "what": "Step 2's `--estimate` call now carries `--key`, as convention 5 and the bead's own acceptance require. Step 3 now passes `--sync-wait-ms 0`, because the CLI otherwise waits to completion and the exit-8 handle the script expects never comes. The gate is recorded with `--part M4`, since GATE-AUGUR-09 has M3 and M4 parts. The M4 kill entry is appended to BD-289's owner declaration so kill_ledger passes at M4. Added dep N40-30 and an acceptance item for the part record."
+  },
+  {
+   "bead": "N25b-15",
+   "kinds": [
+    "convention"
+   ],
+   "what": "`--family-order` was called 'requested of' the mission.synthesize row; the row carries it from M4 (convention 13)."
+  },
+  {
+   "bead": "N25b-16",
+   "kinds": [
+    "broken",
+    "request"
+   ],
+   "what": "The ground-truth arm called `frob design check <leaf>` and `frob eval run <leaf>` on 1,024 leaves that were never stored as designs, so the script could not run. Each leaf is now created with `frob design new cut-<leaf> --template … --set … --key cut-new-<leaf>`, or `--file` where a fill is not a template parameter, and both verbs take `cut-<leaf>`. Review label removed; the N25d-40/PILOT-CUTS-01 note was already applied."
+  },
+  {
+   "bead": "N25b-17",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The deciding bead of KILL-AUGUR-CUTS wrote no owner declaration, so N40-30's kill_ledger would fail owner-declaration-missing at the M4 exit. It now writes one in frob-mission's contract.toml, with both half entries, to which BD-357 appends the final entries. Acceptance item and dep N40-30 added."
+  },
+  {
+   "bead": "N25b-25",
+   "kinds": [
+    "request"
+   ],
+   "what": "Review label removed: the N25d-40/PILOT-SEPARATE-01 note was already applied (dep present; step 1 stores the protocol digest in row 7)."
+  },
+  {
+   "bead": "N25b-26",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "The comparator's `--budget cpu_s=<b>` uses no registered unit (N32a-15 has `cpu_core_s`), so the call would be refused; fixed. The deciding bead now writes KILL-AUGUR-SEPARATE's owner declaration, without which kill_ledger fails at M3. Acceptance item and dep N40-30 added."
+  },
+  {
+   "bead": "N25b-29",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "`--budget cpu_s=600` was not a registered unit; it is now `cpu_core_s=600`. The deciding bead now writes KILL-AUGUR-ALIAS's owner declaration, with re-audit entries appended, without which kill_ledger fails at M3. Acceptance and dep N40-30 added."
+  },
+  {
+   "bead": "N25bp1-01",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Case 4's planted edit was printed (payload shift 0 to +0.04 m) although step 4 and the acceptance require sealed constants to differ from every value printed in a bead. A literal case would fail its own scan. The table now says 'one payload shift (sealed value)', and the KA paragraph marks the KA-607 numbers as the public analogue."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N25bp4-01",
+   "why": "Split from N25b-05 to end its deadlock. At M1 it runs auditor_independence.sh with N12-34's corpus-wide clause and records GATE-WS-03 `--part M1`. Parent WP-42; deps N12-34, N25b-05, N38b-19 and STD-E2E. It carries its full acceptance, its tests and logging, and an added refusal case for the M0 receipt."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-147",
+   "what": "The M1 exit review reads GATE-WS-03, whose M1 part is now recorded by N25bp4-01, split from N25b-05, which only measures three clauses at M0. Add N25bp4-01 to deps; BD-147 now reaches only N25b-05, via N25b-06."
+  },
+  {
+   "bead": "N34-25",
+   "what": "Lines 56, 101, 121 and 141 name N25b-05 as the writer of GATE-WS-03's row. N25b-05 still owns the script and the clause assembler, but the M1 run and the record are now N25bp4-01's. Update those pointers."
+  },
+  {
+   "bead": "BD-319",
+   "what": "Your acceptance expects GATE-AUGUR-09 'recorded as a pilot' at M3, but no bead records an M3 part. BD-289 appends a [[pilot.result]] to PILOT-C-32 and decides KILL-AUGUR-REGION; N38a-09 says a pilot result never sets a part of its integrated gate; N25b-11 records only `--part M4`. Either check the M3 reading through the PILOT-C-32 result and KILL-AUGUR-REGION's M3 entry, or name the bead that records an M3 part."
+  }
+ ],
+ "unchanged": 9,
+ "notes": "Unchanged, checked in full: BD-027, BD-133, BD-290, BD-293, N25b-02, N25b-03, N25b-08, N25b-22, N25b-28 (commands, codes, KA/CX values and arithmetic recomputed, e.g. the passive-jaw breakpoints and misaligned-contact family, the split-grip capacities, 459/512). Notes for BD-357, N25b-16 and N25b-25 were already in the beads; only the review label remained. Audit file C2 has no proposals for this slice. Open concern left unedited: N25b-29 step 4 runs its probe search with `nemesis.search`, which searches worlds, not probe behaviours, and has no 'transcript difference' objective. The right verb is not settled by any registry row I could verify. graph_check cycles: 0 after the edits."
+}

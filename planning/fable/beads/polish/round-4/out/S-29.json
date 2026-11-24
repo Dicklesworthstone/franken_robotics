@@ -1,0 +1,344 @@
+{
+ "round": 4,
+ "slice": "S-29",
+ "reviewed": 38,
+ "changed": [
+  {
+   "bead": "BD-317",
+   "kinds": [
+    "request",
+    "deadlock",
+    "convention",
+    "broken",
+    "contradiction"
+   ],
+   "what": "Applied the F-U39b request by its first option. BD-317 depended on its rehearsal N39b-12 while owning the closing code the rehearsal runs (`tenfold::close`, the late-error rule, the record, the step-13 inputs), so neither bead could finish first. The closing sequence is now the new mechanism bead N39bp4-01 (one resumable command, `frob-tenfold gate close`), a new dependency here; this bead keeps the sealed gate itself: the adjudicating session, the outcome ADRs (now stated to be under docs/adr/), the retirement and the hand-off. Its unit tests of `tenfold::close` moved there; it gains `outcome_adrs_cover_outcomes`. Also: steps 3 and 4 now say where the M3 entries of the two standing kill gates come from (ADR drafts and fragments left by N39b-03/N39b-04, entered by N40-15 with the gate row's receipt), which no bead wrote before, so the M3 exit would have listed both as missing decisions. Resumed review: the acceptance item had both closing files pass `frob-tenfold record check`, which reads only N39a-01's five harness schemas and refuses these two with `record-unknown-schema`, so the item could never pass: now `frob-tenfold gate check --gate M3-partial` (added to N39bp4-01). The not-approved paragraph said the whole gate is `not run` and M3 does not exit under the default, against N39b-29 step 6 and N41-15's exit check (CPU strata run and are recordable): an implementer following it would record no stratum and hold M3; now cites that rule."
+  },
+  {
+   "bead": "N39b-02",
+   "kinds": [
+    "convention",
+    "registry",
+    "deadlock"
+   ],
+   "what": "The bead had no script of its own (its e2e was a step of N39b-12, which depends on it: convention 11) and no command a script could drive: added `frob-tenfold leak controls` and `leak audit` with the evidence file and exit codes, and the owned script scripts/e2e/tenfold_leak_audit.sh with five plants. Added dep N39a-13: step 7 retires touched families through the family lifecycle and the test `retired_family_refused_for_sealing` needs it, yet no path reached N39a-13 (an agent could start and not finish). N39-CX names this bead as planting bead of TF-CX-12: the planted input is now written under the registry's plant name (fixtures/tenfold/controls/canary_in_transcript/), without which N39b-22's battery finds no fixture and GATE-TENFOLD-03 cannot record a pass. Acceptance no longer refers to the rehearsal corpus of a later bead."
+  },
+  {
+   "bead": "N39b-03",
+   "kinds": [
+    "convention",
+    "deadlock",
+    "registry"
+   ],
+   "what": "Convention 10: the bead named no ADR path, no register entry and no outcome of N40-03 (it wrote the status `killed: fallback adopted`), and no owner declaration. Added step 7: docs/adr/ADR-KILL-TENFOLD-CERT-<milestone>.md, one entry per reading on the standing row (decided whole; `fired`/`not-fired`; `reopened` for late discovery), who enters it (the session that enters the gate's row) with which receipt, and the owner declaration in frob-conformance's contract.toml; without these N40-30's kill_ledger fails owner-declaration-missing and the exit query reports a missing decision at M3. Conventions 7 and 11: acceptance and e2e used the rehearsal N39b-12, which depends on this bead; now the two subcommands `frob-tenfold kill-cert decide|record` and the owned script scripts/e2e/tenfold_kill_cert.sh on N39a-07's planted false certificate, with three plants. Dep STD-E2E added (it had a script and no harness dependency)."
+  },
+  {
+   "bead": "N39b-04",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "Same defects as N39b-03 for KILL-TENFOLD-LEAK: no ADR path, register entry, outcome or owner declaration (convention 10), and acceptance and e2e resting on the later rehearsal (conventions 7, 11). Added step 9 (docs/adr/ADR-KILL-TENFOLD-LEAK-<milestone>.md, one entry per reading, the receipt it cites including the void-gate case, the owner declaration), the subcommands `frob-tenfold kill-leak decide|record`, two unit tests (`numeric_alarm_needs_ruling`, `reading_outcome`) and the owned script scripts/e2e/tenfold_kill_leak.sh with three plants. Dep STD-E2E added."
+  },
+  {
+   "bead": "N39b-05",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 11: the engine's only end-to-end check was step `outcomes` of N39b-12, a later bead, and no command existed for a script to drive. Added the subcommand `frob-tenfold outcomes apply` (what the closing command's stage runs) and the owned script scripts/e2e/tenfold_outcomes.sh, one scored synthetic gate per row of the table with golden sentences and three plants (the word printed for `measured`, a block changed after the hash, a re-test on the same suite)."
+  },
+  {
+   "bead": "N39b-06",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "Convention 10: unlike its sibling N39b-07 the bead had no record step: no ADR path, no per-cell entries, the status `killed: fallback adopted` instead of an outcome, nothing for a cell that is not decidable, no owner declaration. Added step 9 (docs/adr/ADR-KILL-TENFOLD-SPEED-M3.md; one entry per cell with scope cell:<stratum>; fired / not-fired / deferred to M7; the owner declaration) and the test `reading_maps_to_outcome`. The entries cite the receipt of GATE-TENFOLD-06's M3 part, which exists only once N40-15 has entered the row: dep N40-15 added (no cycle), otherwise a not-fired entry could not be written when the bead became ready. Dep STD-E2E added; the script now asserts the fragment on a scratch register."
+  },
+  {
+   "bead": "N39b-11",
+   "kinds": [
+    "request"
+   ],
+   "what": "Applied the F-U39b request: the clause 'whose step-13 inputs N39b-12 has already asserted' is gone. The script now says how the kept directory gets those inputs: it runs `frob-tenfold gate close --through decision-inputs` (N39bp4-01), which resumes after whatever stage the rehearsal completed, and its own `check-inputs` is the only check of them. Before, the script checked a file nothing had written."
+  },
+  {
+   "bead": "N39b-14",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Convention 11: the report generator's e2e was step `report` of the later N39b-12, and its first acceptance item used that bead's rehearsal gate. Added the owned script scripts/e2e/tenfold_report_build.sh on its own scored synthetic gate (cold card, warm card, void and descriptive cells) with five plants mapped to FROB-REF-863, FROB-REF-865 and the INV-TENFOLD-08 refusal; acceptance restated on that gate."
+  },
+  {
+   "bead": "N39b-23",
+   "kinds": [
+    "convention",
+    "registry",
+    "deadlock"
+   ],
+   "what": "Dep N39a-36 added: the INV-TENFOLD-08 check reads the report record's ratio objects and no path reached the bead that defines them. Findings now name the registry's reasons (N39-REF gives this bead as raising bead of `role-conflict` and `family-reused`; with unnamed findings those rows never get a producing test and GATE-TENFOLD-03 keeps pending rows). TF-CX-24 added to the controls it catches, as N39-CX assigns. Conventions 7 and 11: acceptance used the rehearsal gate and 'a gate row cannot record a pass', which this bead cannot check; restated as what audit.json carries, with the row-side refusal placed in N40-15 (done) and N40-16 (requested). Owned script scripts/e2e/tenfold_audit.sh with eleven plants."
+  },
+  {
+   "bead": "N39b-28",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "Conventions 7 and 11: the bead's e2e was step `roles` of N39b-12 and its last acceptance item needed 'the rehearsal report', both from a later bead (N39b-12 reaches this bead through BD-314), although N41-15 says this bead tests its checks against a generated configuration record. Added the subcommand `frob-tenfold advocates check` (budget rule, spend, eligibility with the registry's `role-authorship`, label), the owned script scripts/e2e/tenfold_advocates.sh with three plants, dep STD-E2E, and the acceptance item restated on the script's own result table. Resumed review: step 6 derives the label from the role registry, but no path reached N39a-02 (same milestone), so the bead could become ready before roles.json exists: dep N39a-02 added (no cycle)."
+  },
+  {
+   "bead": "N39b-29",
+   "kinds": [
+    "contradiction",
+    "convention",
+    "deadlock",
+    "broken",
+    "plan"
+   ],
+   "what": "The bead made the `[envelope]` table of owner-inputs.toml the place where approval lives, but every campaign is admitted by N36-20, which reads the class in force from the request rows of registries/compute_envelope.toml (R6 for the partial gate, R9 for the tournament, N44-01; convention 14). Built as written, an approved ADR-PROG-16 would leave R6 `requested`, the class in force E0, and every gate campaign refused with FROB-REF-761. Added step 8: the ruling is entered in those rows too, with the per-run wall time (at least H) and cumulative device-hours the class defaults do not give; campaigns run under the scope the row admits; the two totals must agree (`envelope-not-approved`, exit 4, otherwise), with two unit tests. Conventions 7 and 11: e2e and the `not run` acceptance item rested on N39b-12 and on the report; added the owned script scripts/e2e/tenfold_envelope.sh driving `frob-launch` under a scratch registry (deterministic: refusal on the declared upper end), dep STD-E2E. Resumed review of the step-8 edit, which did not hold: (1) it entered this decision's ruling in R6, but N44-01 assigns R6's ruling to N41-08 (OPEN-PROG-4, whose variant A amends R6 to E1 with at most 12 device-hours): two beads would write one row's status, decision and limits, and the gate's ~300 device-hours would draw on the pilot's budget. The partial gate's campaigns now have a row of their own filed by this bead (next free identifier from R29, open question OPEN-TENFOLD-4 as plan §39.19 makes it); R9 is ruled by this decision. (2) The scope `gate:GATE-TENFOLD-06` can never be admitted above E1 (N36-20's needed class gives E2 only to a campaign scope; E1 is 2 h per run, 12 device-hours): every device-strata campaign would be refused with FROB-REF-761 at any approval. The rows now admit `campaign:tenfold-M3-partial` and `campaign:tenfold-M7-tournament`. (3) Script step 3 expected a 10-second E0 launch to be refused on a cumulative limit, but E0 has no cumulative limit, so it is admitted and the assertion fails: rewritten on the scratch root's deterministic decisions (held at `scratch_verdict: admitted`, refused on `device_hours`, gate scope `above every class`)."
+  },
+  {
+   "bead": "N39b-30",
+   "kinds": [
+    "request",
+    "convention",
+    "deadlock"
+   ],
+   "what": "Applied the F-U39a request: the provisional deadline is the stratum record's `development_deadline_s` and this decision writes `deadline_s` (N39a-12, now a dep: the bead writes a field of that registry and reached it by no path). Convention 4: the decision's only record was decisions/OPEN-TENFOLD-5.md; the open-question register's row needs an ADR to cite, so the record of authority is docs/adr/ADR-OPEN-TENFOLD-5.md with that file as its supporting file (as N39b-32 does for OPEN-TENFOLD-7); otherwise the M3 exit finds the question with no ADR. Conventions 7 and 11: the e2e was step `seal` of N39b-12; added the subcommand `frob-tenfold deadline set` and the owned script scripts/e2e/tenfold_deadline.sh on the worked example with three plants; dep STD-E2E. Resumed review: the refusal of a change of H after the suite hash (`frozen_after_suite_hash`, plant 3) reads the sealing ledger, and no path reached N39a-15: dep N39a-15 added (no cycle)."
+  },
+  {
+   "bead": "N39b-31",
+   "kinds": [
+    "deadlock",
+    "broken"
+   ],
+   "what": "Three acceptance items could not be met when this M1 bead closes: caps `final` derived from the baseline's measured runs (BD-143 depends on this bead), caps identical in every freeze manifest (manifests are M3, N39a-19) and 'reports state' (M3). Restated as what the bead delivers: the record and `agentpin`, the one-cap-per-kind rule, the derivation and the freeze check as commands. The script's steps had no command to call for the derivation and the freeze check: added `frob-tenfold agent show|check --require-final|derive-caps` and named `frob-tenfold campaign start` (N39a-03)."
+  },
+  {
+   "bead": "N39b-37",
+   "kinds": [
+    "deadlock",
+    "registry",
+    "convention"
+   ],
+   "what": "The bead required the sign-off and the pack digest 'before the suite hash, which is step 2 of sealing', yet the pack holds the freeze manifests and tuning logs, arms are frozen at step 4 after tuning at step 3, and N39a-15 refuses a manifest frozen before step 2 (`freeze-before-suite-commit`): the acceptance item could never be met and the suite could never be sealed. Now (DESIGN, with the reason and the plan's own sentence) the sign-off is an `audit-record` entry of step 5, after every arm's freeze and before `open`, and `open` is refused with tenfold.audit-incomplete through a registered step-6 precondition; unit test, acceptance, script and log fields follow. N39-CX names this bead as planting bead of TF-CX-20: the planted input is written under the registry's name (controls/pack_digest_changed/). E2E_SMALL used 'the synthetic arms of the rehearsal', a fixture of the later N39b-12: now the bead's own fixture."
+  },
+  {
+   "bead": "N39b-38",
+   "kinds": [
+    "convention",
+    "deadlock"
+   ],
+   "what": "Convention 11: the e2e was step `run` of the later N39b-12; added the owned script scripts/e2e/tenfold_protocol_controls.sh (plan determinism and balance, execution against the plan, fresh sessions, blind release, cross-read, publication set) with five plants. The acceptance item on the report's publication set needs the report record: dep N39a-36 added (no path reached it) and the item restated as this bead's check on a record in that form."
+  },
+  {
+   "bead": "N39b-40",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "Acceptance and the script run every mutant 'through acceptance', but neither the direct evaluation of family answers and unknowns (N39a-07) nor the battery for qualified designs (N39a-06) was a dependency, direct or transitive: an agent could start the bead and be unable to show one mutant rejected. Both added (M3, no cycle) and named in the acceptance item."
+  },
+  {
+   "bead": "N39b-41",
+   "kinds": [
+    "broken",
+    "convention",
+    "registry",
+    "request"
+   ],
+   "what": "The e2e 'extended' N39b-40's script with a step group carrying another bead and added `milestone=M7` to its header: STD-E2E's header has one bead and one milestone and `e2e_init` one bead per run, and an M7 header would take N39b-40's script out of the M3 selection. Now the owned script scripts/e2e/tenfold_suitegen_ii.sh (convention 11), which runs N39b-40's script unchanged as a stage. N39-CX names this bead as planting bead of TF-CX-21: the planted input is written under the registry's name (controls/missed_withdrawal/), which N39b-42's hygiene script runs. Resumed review, request of S-28 applied after checking N39a-14: its sealed quota `controls-consequence-exposed` needs at least one consequential and at least two inconsequential edits per sequence (`consequence_hidden` refuses one inconsequential edit), while this bead generated sequences with one of each: sequences it emitted would be refused at sealing. Approach step 2, the acceptance line and `sequence_has_both_kinds` now carry the floor. The earlier edit (own script, TF-CX-21 fixture) was checked whole and is complete."
+  },
+  {
+   "bead": "BD-429",
+   "kinds": [
+    "request",
+    "deadlock"
+   ],
+   "what": "Request of S-28 applied after checking N39a-34, which decides only the M3 reading and names this epic for the M7 one: without it nobody wrote the M7 ADR or entries and the M7 exit would find the re-reading of KILL-TENFOLD-REACH missing. Added part 9 (N39a-34's procedure unchanged at the tournament's sealing step 5; docs/adr/ADR-KILL-TENFOLD-REACH-M7.md; one M7 entry per proposed cell scoped cell:<stratum> with the pre-analysis record as receipt) and an acceptance line."
+  },
+  {
+   "bead": "EPIC-M5",
+   "kinds": [
+    "request"
+   ],
+   "what": "Request of F-U40 applied after checking N40-02 step 5 and BD-412: GATE-LEMMA-03 has an M5 part (every proof kind enabled by M5, `lean-capsule` of BD-381 new) recorded by BD-412, but the epic's table and its count of 25 left it out, so the M5 exit's epic-subset check (N40-09 rule 4) and the exit runner would see a due part the epic does not list. Row added, section heading and epic check now count 26 convergence parts (the plan prints 25)."
+  },
+  {
+   "bead": "EPIC-M8",
+   "kinds": [
+    "request"
+   ],
+   "what": "Request of F-U40 applied after checking N40-02 step 5 and BD-442: GATE-LEMMA-03's M8 part (every kind enabled by M8; `tube-inclusion` and `alpha-root` of N12-19 and N12p1-01 when funded; recorded by BD-442, due whether or not they are funded) was missing from the table and the count of 7. Row and paragraph added; 8 convergence parts."
+  },
+  {
+   "bead": "EPIC-M7",
+   "kinds": [
+    "registry"
+   ],
+   "what": "The acceptance item asked for one M7 register entry per cell for all six KILL-TENFOLD rules, but N40-28 makes -CERT and -LEAK standing gates decided whole (no `scope_kind`): an implementer following the epic would write cell-scoped entries that the kill-register loader refuses. Now one entry per cell for -SPEED, -TIE, -ADJ, -REACH and one unscoped entry each for -CERT and -LEAK."
+  },
+  {
+   "bead": "N40-06",
+   "kinds": [
+    "request",
+    "deadlock",
+    "registry",
+    "broken"
+   ],
+   "what": "Lead's [missing] BD-004 note and S-27's request applied: the script ran `cargo xtask check-generated` (BD-004, not reached), so the step could not run; the comparison of status-table milestone names with this file is N38b-20's, which depends on this bead and already does it; the step is removed with a pointer. Lead's [wrong-way] N40-05 note checked and not applied as proposed (F-U29a's objection holds: N40-05 is M0 and cannot reach N29a-09, M1); item 6 needed the exit runner and the real bead logs, neither reachable, so the bead could not close at M0. Item 6 is restated as a function this bead delivers, `times_supported`, which refuses a hand-typed `started`/`exited` that the supplied bead-log events do not support with `exit-time-unsupported` (RC-21), tested on `synthetic` event fixtures (new unit test and script plant); the schedule gate N40-11 (M1, reaches N29a-09 and this bead) runs it on the real logs. The load-time refusal was named `estimate-cited`, while the control register N40-CX names RC-20's refusal `threshold-cites-weeks`: the control's expected reason would never match; renamed. The event source of `times_supported` was 'the bead logs', but `frob.beadlog/1` (N29a-09, M1) has no in-progress event and does not exist for M0 beads: the check had no defined input. It is now the tracker history (the first commit of `.beads/issues.jsonl`, tracked in git, in which a bead labelled `m<n>` is `in_progress`) and the exit record's commit. RC-37 ('estimates change only by a dated amendment', caught by N40-11) had no amendment form anywhere: the schema gains `[[amendment]]` records (milestone, estimate_weeks, date, reason, adr; the row is never edited), `estimate(id)`, and the unit test `amendment_supersedes_estimate`; the readers list names N40-05 and N38b-20 instead of a 'README generator'."
+  },
+  {
+   "bead": "N40-09",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Request of F-U34 applied after checking N34x-02 (its switch-over says both checks read through `read_gate_decls` and neither needs the interim file): the bead still told the implementer to read `registries/gate_declarations.toml` until an agreement, a second reader N34x-02 forbids; dropped, and the script asserts the declarations read through `read_gate_decls` equal the count of `[[gate]]` blocks. The refusal reasons did not match N40-CX: RC-28 to RC-32 expect `owner-claim-method`, `owner-milestone-differs`, `owner-trigger-differs`, `row-without-owner`, `consumer-diagnostic-as-trigger`, while the bead named only `consumer-diverges` (and gave it for the KILL-DR plant): the five controls would fail their expected-reason assertion. Checks 1 to 3, the KILL-DR acceptance line and the script now name those reasons."
+  },
+  {
+   "bead": "N40-11",
+   "kinds": [
+    "broken",
+    "registry",
+    "contradiction"
+   ],
+   "what": "T was read 'from milestones.toml' up to the M1 exit, but M1's `exited` is written only after the review that computes T: T now ends at the exit candidate commit's time, and `started` of M0 is checked with N40-06's `times_supported` against the tracker history (RC-21). Three controls of N40-CX had no rule here: RC-37 (`estimate-raised-silently`: estimates compared with the file at M0's `started` commit, `[[amendment]]` records), RC-36 (`blocked-events-retagged`: a retag does not move time and is listed), RC-21; each gains a unit test and a script plant. The pause relied on 'the exit runner's pre-check', which no bead defines (N40-05 has none): the bead now builds it, an example `schedule -- may-start --bead <key>` (exit 3 while paused) and the attached check `schedule-gate` in N40-05's `scripts/exit/checks.toml` (step 12, since M1) returning `schedule-gate.not-met` at M1 and `started-during-schedule-pause` later; the re-plan ADR has a path. M0 beads worked before the per-bead log existed are listed `unlogged`."
+  },
+  {
+   "bead": "N40-13",
+   "kinds": [
+    "contradiction",
+    "convention",
+    "registry"
+   ],
+   "what": "The check required 12 missions 'across the two strata', so 12 `legged-quad` and 0 `wheeled` passed, while BD-143 (the measurement) requires at least six per stratum: added, with a unit test. The row had no receipt or recorder (convention 9): the check writes the verdict receipt, committed under `receipts/gates/`, recorded with `record_gate`; the registered control TF-CX-13 is named. The 'lint in the report generator' refusing the composed table duplicated N00-18's citation rule (reached through N00-20): the bead now cites it. The four controls' reasons are named (`ceiling-wrong-arm`, `missing-run`, N00-09 check g, N00-18), known answers cite TF-06 and TF-07."
+  },
+  {
+   "bead": "N40-15",
+   "kinds": [
+    "contradiction",
+    "convention",
+    "broken",
+    "deadlock"
+   ],
+   "what": "Considerations said that under the default envelope the whole gate is `not run` and M3 does not exit, against N39b-29 step 6, N41-15 and BD-317 (CPU strata run and are recorded): corrected. The row was entered 'with status pass' by hand: it is now recorded with `record_gate` from the check's receipt committed under `receipts/gates/`, the receipt N39b-06's per-cell entries and the CERT and LEAK entries cite. BD-317, N39b-03, N39b-04 and N39b-23 say this bead commits the CERT and LEAK M3 ADRs from BD-317's drafts, enters their entries and refuses a record without a passing `post-report` audit of the same digest; it did none of these (the M3 standing decisions would have had no writer): added, with the void-gate case, `frob-tenfold gate check` (N39bp4-01) on the closing files, a unit test and script steps. KILL-GYMADAPT's M3 entry is N23b-13's final reading, not N23b-14's: dep N23b-14 replaced by N23b-13 (reached already; no cycle) and the script no longer calls N40-03's `kill_gate_records.sh` as N23b-14's. The negative-control list named controls this check never plants; now the script's four plants, the gate's own controls attributed to N39b-12 and N39b-05."
+  },
+  {
+   "bead": "N40-18",
+   "kinds": [
+    "convention"
+   ],
+   "what": "Each recurring part was 'recorded by the exit review's session' with no receipt or recorder (convention 9): the verdict run writes the part's receipt (with the control runner's lines), committed under `receipts/gates/`, recorded with `record_gate` before the exit runner starts; the script records into a scratch register instead of asserting a part nobody wrote. Controls name their reasons and TF-CX-03."
+  },
+  {
+   "bead": "N40-19",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Request of F-U39b applied after checking N39b-36: the test target `--test tenfold_estimation` does not exist (convention 1); now `FROB_TEST_SEED=392010 cargo test -p frob-conformance --test g1_known_answers --features gauntlet-mutations -- GATE-TENFOLD-10`. The row was 'entered by a fresh-context session' with no receipt: `tenfold10()` writes the verdict receipt, recorded with `record_gate`; known answers cite TF-17 to TF-20."
+  },
+  {
+   "bead": "N40-20",
+   "kinds": [
+    "contradiction",
+    "deadlock",
+    "convention"
+   ],
+   "what": "The bead required the sign-off and pack digest 'before the suite hash' (approach, acceptance, a unit test and a script plant), but arms are frozen only after the suite hash and the sign-off is step 5's `audit-record` entry after every freeze entry (N39b-37, which states its reading is 'the same in N40-20'; the ledger refuses a manifest frozen earlier): the check would have failed every valid ledger. Restated with the order, its refusals and a test. Its acceptance required the M7 part while BD-319 (the M3 exit) depends on it: M3 could not exit before M7. The bead now records the M3 part (receipt, `record_gate`) and names the tournament's step 5 (N39b-13) as the M7 recording. Registered control TF-CX-20 and OPEN-TENFOLD-3's decider N39b-28 named."
+  },
+  {
+   "bead": "N40-21",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "The acceptance required every stratum to hold an easy win and an unresolved case, 100% of planted mutations rejected and zero missed withdrawals, while section 4 makes a stratum that fails one of them `descriptive` and still records the row: on an honest suite in which one property failed the bead could not close although the gate had done its job. The acceptance now asks that each property be reported per stratum, that a failing stratum (or arm, for a missed withdrawal) take the stated consequence, and that the row be recorded whichever way the properties fall."
+  },
+  {
+   "bead": "N40-27",
+   "kinds": [
+    "registry"
+   ],
+   "what": "N40-CX names this bead as the catcher of RC-42 (`kill-mcp-fired-early`) and RC-61 (`kill-mcp-no-reread`), but no test raised either reason: RC-61 was caught only as a missing M1 due entry and RC-42 only as 'trigger not met', so the registered reasons matched nothing and a `fired` KILL-MCP entry made before both upstream items were attempted would have been accepted. `decided_by_exit` and `mcp_needs_both_upstream_attempts` now refuse with the registered reasons, and the controls name them. Counts checked against the rows (1, 5, 1, 10, 1, 1 = 19) and the plan's tables."
+  },
+  {
+   "bead": "N40-31",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "Section 3 (d) makes this bead check at each exit that the README bets table is current, but no acceptance item or test covered it (the acceptance tested N00-28's `xtask check-generated` wiring instead, so the bead could close with check (d) unbuilt) and section 4 did not list a stale table among the blocking items: the acceptance, section 4 and a unit test `readme_table_current` now cover check (d). The e2e plants and the controls RC-46 to RC-48 name their registered reasons (`bet-held-on-not-run`, `bet-decider-not-listed`, `failed-bet-undecided`). All eight exit reviews reach this bead (BD-147 and BD-224 directly)."
+  },
+  {
+   "bead": "N40-32",
+   "kinds": [
+    "deadlock",
+    "registry"
+   ],
+   "what": "An M0 bead whose acceptance needed M1 work: coverage 'from the M1 exit, over all 37' and twenty rehearsals that read kill rows, though only N40-23's and N40-27's groups (KILL-FSIM, KILL-MCP, KILL-LEMMA, KILL-BAND, KILL-TOPOPT) exist at M0 and eleven rehearsals need N40-24 to N40-26 or N40-28 (M1), and the two variant rows need N40-33 (M2) and N40-34 (M4): the bead could not close. A kill gate whose group is not entered is now a synthetic kill row reading its bet's deciding gates (N00-28), reported `pending: <ledger bead>` as section 4 already did for coverage; variant rows pass the query a fixture record in the form N40-04 reads; the coverage acceptance uses a synthetic full ledger; new test `rehearsal_on_synthetic_kill_row`. The e2e plants name `device-only-gate-in-m2` and `fallback-exit-without-decision`; RC-13 was listed as a control but never planted: it now is (`kill-decision-without-receipt`)."
+  }
+ ],
+ "new_beads": [
+  {
+   "bead": "N39bp4-01",
+   "why": "split from BD-317 (request of F-U39b): the gate-closing command `frob-tenfold gate close` with twelve resumable stages, the late-error rule, the gate record gate_record.json and the decision inputs decision_inputs.json, its unit tests and its own script. The rehearsal N39b-12 runs this code and BD-317 depends on the rehearsal, so the code could not stay in BD-317. Completed on resumption (kinds broken, deadlock, contradiction): `frob-tenfold record check` cannot read its two files (not among N39a-01's five schemas), so it gains `frob-tenfold gate check`; it now writes the `cell-closed` entry per closed cell, without which N39a-32 refuses every verdict (`verdict-before-n`) and which no bead wrote, and handles a futility-stopped cell (its cancelled campaigns no longer refuse `close`; outcome by N39a-32's combiner); stage ends are registered `close-stage` entries, so resume has an entry to find; exit codes follow N39-REF (a recorded void exits 0; 2 only for the scorer's flags); the void-gate path runs `record` before `rotate`; a late error after scoring voids the cell (N39a-32 forbids a second verdict) instead of 'amending' it; the score-twice plant no longer varies the bootstrap seed, which is derived, not chosen."
+  }
+ ],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "N40-05",
+   "what": "At step 12 the runner fills the milestone row's `started` (the first commit of `.beads/issues.jsonl` in which a bead labelled `m<n>` is `in_progress`, with its UTC time) and `exited` (the exit record's commit and time) in `registries/milestones.toml`, checked with N40-06's `times_supported`. N40-06 and N40-11 say the exit runner writes them and no step of this bead does: `started` of M0 would stay empty and the schedule gate (N40-11) would have no T. N40-11 also attaches the check `schedule-gate` (step 12, since M1) to `scripts/exit/checks.toml`; list it with the other attached checks."
+  },
+  {
+   "bead": "N00-18",
+   "what": "Add a unit test for the clause of step 5 that N40-13 relies on: while GATE-TENFOLD-02 has no `pass` row, a report, funding record or gate record that cites any row of the composed table as a denominator is rejected (only the 'once measured' clause is tested now). N40-13 no longer holds a second copy of the rule and its control expects this rejection."
+  },
+  {
+   "bead": "N39b-13",
+   "what": "At step 5, after the rival audit's `audit-record` entry and before the opening, run N40-20's `tenfold11` on the refreshed pack and have a fresh-context session record GATE-TENFOLD-11's M7 part from its receipt with `cargo run -p frob-conformance --example record_gate -- --gate GATE-TENFOLD-11 --receipt <hash>`; add N40-20 (M3) to deps. N40-20 is M3 and the M3 exit depends on it, so it cannot wait for the M7 part; no bead records it now. Step 8 (close and reveal) onward runs through `frob-tenfold gate close --gate <the tournament's gate id>` (N39bp4-01, reached through BD-317; name it in deps), so the twelve stages, the `cell-closed` entries and the late-error rule are the same code as at the partial gate."
+  },
+  {
+   "bead": "N40-14",
+   "what": "Acceptance requires 'six parts (three gates × M3 and M7)', but this is an M3 bead and BD-319 (the M3 exit) depends on it: it cannot close before the M7 suite is sealed. Keep the three M3 parts as this bead's acceptance and name the M7 parts' recording (the tournament N39b-13 before its opening, as N40-20 now does for GATE-TENFOLD-11)."
+  },
+  {
+   "bead": "N39b-37",
+   "what": "The Out list says N40-20 holds 'the record of the protocol controls of the comparison (pairing, randomization, the blind adjudicator, the labelled best-of-rivals figure)'; N40-20 and N39b-38 say those are built and recorded by N39b-38 under GATE-TENFOLD-04, -06 and -07: name N39b-38 there."
+  },
+  {
+   "bead": "N39b-12",
+   "what": "Add N39bp4-01 to deps (no cycle; both M3): the closing code this rehearsal runs moved from BD-317 to N39bp4-01 (request of F-U39b). Run its `scripts/e2e/tenfold_gate_close.sh` as a stage, drive close to rotate through `frob-tenfold gate close --gate <id>`, take the decision inputs from its `decision_inputs.json`, and check the closing files with `frob-tenfold gate check` (`frob-tenfold record check` cannot read them: they are not among N39a-01's five schemas)."
+  },
+  {
+   "bead": "N40-16",
+   "what": "Commit `docs/adr/ADR-KILL-TENFOLD-CERT-M7.md` and `docs/adr/ADR-KILL-TENFOLD-LEAK-M7.md` from BD-317's drafts and enter their M7 entries citing GATE-TENFOLD-07's receipt, as N40-15 now does for M3; refuse an entry without a passing `post-report` audit (N39b-23) of the same digest. The two kill gates are in your `gates` but no step writes their M7 decisions, so the standing gates would have no M7 record."
+  },
+  {
+   "bead": "N39b-19",
+   "what": "The scorer refuses a cell whose planned campaigns are not all closed or excluded; at the partial gate a futility-stopped cell (N39a-32 step 6) never reaches n and has no `cell-closed` entry, so the scorer would refuse every run that contains one. Do not refuse it: list it 'not scored: futility stop' with the combiner's `withdrawn` outcome (N39a-32), and add a unit test."
+  },
+  {
+   "bead": "N44-01",
+   "what": "R6 names GATE-TENFOLD-06 and the partial gate's campaigns, but N39b-29 (OPEN-TENFOLD-4) files the partial gate's campaigns under a row of their own (next free id from R29, admits `campaign:tenfold-M3-partial`): R6 is the rank-agreement pilot's row, ruled by N41-08 on OPEN-PROG-4, and one row carries one cumulative limit, so the gate's campaigns would draw on the pilot's budget. Drop GATE-TENFOLD-06 and the partial gate from R6. R9 is listed among the rows 'governed by OPEN-SPARK-2 alone' and ruled here, but N39b-29 rules it on OPEN-TENFOLD-4 with admits `campaign:tenfold-M7-tournament`: move R9 to the list of rows ruled by their question's bead (R9 by N39b-29)."
+  },
+  {
+   "bead": "WP-60",
+   "what": "The Envelope bullet should cite the partial gate's own row (OPEN-TENFOLD-4, decided by N39b-29), not R6."
+  },
+  {
+   "bead": "WP-76",
+   "what": "The owner decision governing the tournament's envelope is OPEN-TENFOLD-4 (N39b-29); cite it in the Envelope bullet."
+  },
+  {
+   "bead": "WP-77",
+   "what": "The owner decision governing the tournament's envelope is OPEN-TENFOLD-4 (N39b-29); cite it in the Envelope bullet."
+  },
+  {
+   "bead": "N39-REF",
+   "what": "The `tenfold.parameters-frozen` row's trigger should include a changed `deadline_s` after sealing, and list N39b-30 (which sets `deadline_s`) among the raising beads."
+  }
+ ],
+ "unchanged": 5,
+ "notes": "Complete: all 38 beads of the slice reviewed in full against the conventions (14 items), the registry beads (VERBS, REF, KA, CX, the gate register) and the plan; the 16 beads the earlier reviewer had not reached are reviewed, and its 17 edits (N39b-41's last among them) were re-read and completed or corrected where needed. Unchanged: N39b-26, N39b-27, N39b-39, N39b-44, EPIC-M6. Every request and note addressed to the slice is answered: BD-317 (split into the new bead N39bp4-01), BD-429, N39b-11, N39b-30, N39b-41, EPIC-M5 and EPIC-M8 applied and checked; N40-06: the lead's [missing] BD-004 note applied by removing the step (N38b-20 has it), the [wrong-way] N40-05 note not applied as proposed (F-U29a's objection holds: N40-05 is M0 and cannot read M1 bead logs), answered instead by `times_supported` tested on fixtures here and run on real history by N40-11, the F-U29a and S-27 requests applied; N40-09 (F-U34) and N40-19 (F-U39b) applied. After the edits graph_check finds 0 cycles and every slice file parses (front matter, one-line lists, seven sections)."
+}

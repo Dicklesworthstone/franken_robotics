@@ -57,9 +57,8 @@ every other artifact (a still, a report, a replay, a run bundle, a scorecard) at
 exit 5, with FROB-REF-731 while the private mark applies and FROB-REF-733 for the licence set in a session
 holding `private:export` and the flag. Aggregate results are refused like the rest: an earlier draft of this
 bead allowed a scorecard without geometry under a logged user override, which the export door has no path for
-and the plan does not state; it is not built here, and a request to N37-18 asks the owner whether such an
-override is wanted (if it is, it belongs at the door, logged in the ledger with the user's capability, and
-never for geometry, stills or packs).
+and the plan does not state; it is not built here or anywhere (N37-18's table has no aggregate exception, and
+any such override would be a change to the door, never for geometry, stills or packs).
 
 **"Not used" checks.**
 

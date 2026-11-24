@@ -51,7 +51,10 @@ evidence-label and wording lints (N00-01); the identifier lint (N00-03); grading
 **1. Inputs scanned.** (a) every `crates/*/CONTRACT.md`, `surface/*/CONTRACT.md`, `spark/*/CONTRACT.md`,
 `derive/*/CONTRACT.md`; (b) the prose fields of each entry of `registries/verbs.toml` (`purpose` and the
 when-to-use sentence, from which the tool description is generated; the verb registry's schema names them); (c) the
-`meaning` fields of `registries/refusals.toml`; (d) `docs/*.md` except `docs/delivery/**` and generated files.
+`meaning` fields of `registries/refusals.toml`; (d) `docs/*.md` except `docs/delivery/**` and generated files. A
+generated file is one whose first line is the generator marker that `check-generated` requires (N34p4-03); the
+lint skips it whole, so a printout that quotes a rejected label (the killed-idea register's document) is not
+scanned.
 Fenced code blocks and inline code spans that are not registered code terms are skipped. The tree that is walked
 is the workspace root, or the directory named by the environment variable `FROB_LINT_ROOT` when it is set
 (DESIGN: the end-to-end script of NAB-08 runs the lint on a scratch copy holding its planted defects; the
@@ -120,8 +123,9 @@ nothing in the ledger and claims nothing about the system; it is hygiene.
       without a qualifier it fails `gloss.ambiguous-sense`.
 - [ ] `schemas/contract.schema.json` admits `[glossary] senses`; a fixture `contract.toml` carrying it passes
       `cargo xtask check-contracts`, and one carrying `[glossary] sense` (misspelled) fails `contract.schema`.
-- [ ] The eight ornamental labels are refused in a contract and accepted inside the killed-idea register's
-      generated document (which quotes them as the strong form that was rejected).
+- [ ] Each of the eight ornamental labels is refused in a contract with its plain name as the repair, and the
+      same text is accepted inside a generated document (a fixture file whose first line is the generator
+      marker, as the killed-idea register's printout will be; that printout is NAB-32's and is not built here).
 - [ ] The allow file holds no entry without a reason, and a 41st entry fails.
 - [ ] The lint is not an `xtask` subcommand, and the six-subcommand test still passes.
 - [ ] The lint finishes in under 5 s on the full tree (TARGET), with the measured time in its report.
@@ -146,7 +150,11 @@ nothing in the ledger and claims nothing about the system; it is hygiene.
   `[glossary] senses = { tier = "physics" }` resolves to `Tier (physics)`, and that `contract.toml` validates
   against `schemas/contract.schema.json`; a sense that the term does not have fails `gloss.ambiguous-sense`.
 - `ornamental_label_fails_with_plain_name`: "a cellular sheaf over the sensor graph" →
-  `gloss.ornamental-label`, repair "a least-squares pose graph".
+  `gloss.ornamental-label`, repair "a least-squares pose graph"; then each of the eight seed labels in turn, each
+  with its own `plain` as the repair.
+- `generated_file_is_exempt`: a fixture `docs/decisions/killed-ideas.md` whose first line is the generator marker
+  and which quotes "cellular sheaf" produces no finding; the same file with the marker line removed produces
+  `gloss.ornamental-label`.
 - `code_block_is_skipped`: an undefined phrase inside a fenced block produces no finding.
 - `prose_definition_absent_fails`: "The shadow budget (…) is the share of …" in Invariants, with no record for
   `shadow budget` → `gloss.undefined-term` (negative control 6).

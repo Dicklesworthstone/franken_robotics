@@ -10,7 +10,7 @@ deps: ["N12-06", "N12-20", "N12-22", "SPEC-C-06", "SPEC-C-37"]
 needs: []
 related: ["CARD-T-08", "N12-16", "N12-21", "N12-43", "N12-51", "N18b-31"]
 gates: []
-plan_refs: ["§12.3 (T-07)", "§10 C-06", "§10 C-37", "§18.12 (PO-TRAC-01)", "Appendix D.3 (friction cone, four-dimensional friction cone)", "Appendix I.1 (Cone::project)"]
+plan_refs: ["§12.3 (T-07)", "§10 C-06", "§10 C-37", "§18.15 (PO-TRAC-01)", "Appendix D.3 (friction cone, four-dimensional friction cone)", "Appendix I.1 (Cone::project)"]
 ---
 ## Background
 

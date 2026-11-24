@@ -80,7 +80,10 @@ for full, tag, target, text in requests_of(rnd):
     elif full not in delivered:
         notes[target].append(text); src["this round, made after the bead was re-read"] += 1
 for name, label in (("lint_findings.json", "mechanical check of the conventions (can be a false alarm)"),
-                    ("lead_notes.json", "note from the lead"), ("lead_notes_wrapup.json", "note from the lead")):
+                    ("lead_notes.json", "note from the lead"), ("lead_notes_wrapup.json", "note from the lead"),
+                    ("lint_findings_2.json", "mechanical check of the conventions (can be a false alarm)"),
+                    ("lead_notes_graph.json", "note from the lead, from the audit of the dependency graph"),
+                    ("lint_findings_3.json", "mechanical check of the conventions (can be a false alarm)"), ("lead_notes_late.json", "note from the lead")):
     f = R / name
     if not f.exists():
         continue
@@ -89,7 +92,7 @@ for name, label in (("lint_findings.json", "mechanical check of the conventions 
         for i, item in enumerate(items):
             if not t or (name == "lint_findings.json" and "[C13-pending]" in item):
                 continue
-            if t in pending or name == "lead_notes_wrapup.json" or ("%s:%s:%d" % (name, k, i)) not in delivered:
+            if t in pending or ("%s:%s:%d" % (name, k, i)) not in delivered:
                 notes[t].append("%s: %s" % (label, item)); src[label.split(" (")[0]] += 1
 
 out = {k: list(dict.fromkeys(v)) for k, v in sorted(notes.items())}

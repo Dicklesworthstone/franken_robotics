@@ -4,7 +4,7 @@ title: "registry: Reflex counterexamples CX-234 to CX-245 and nine appended entr
 type: "task"
 priority: 1
 milestone: "M1"
-labels: ["m1", "reflex", "frob-conformance", "registry", "test", "solid"]
+labels: ["m1", "reflex", "frob-conformance", "registry", "test", "solid", "review-notes-open"]
 parent: "WP-14"
 deps: ["BD-025", "N38a-40", "N38b-05", "STD-E2E", "STD-TEST"]
 needs: []

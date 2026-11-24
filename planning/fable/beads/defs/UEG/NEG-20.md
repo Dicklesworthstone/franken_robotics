@@ -4,7 +4,7 @@ title: "scene asset source `robocasa` (code MIT, assets CC BY 4.0): kitchen fixt
 type: "task"
 priority: 3
 milestone: "M5"
-labels: ["m5", "habitat", "frob-scene", "frontier", "test", "asset", "registry", "review-notes-open"]
+labels: ["m5", "habitat", "frob-scene", "frontier", "test", "asset", "registry"]
 parent: "WP-32"
 deps: ["BD-307", "N19a-05", "N19a-07", "N19a-40", "N19a-46", "N19b-02", "N37-18", "NAB-13"]
 needs: []
@@ -67,8 +67,14 @@ actually fit.
 **Validation.** Every articulated fixture opens and closes through its range without self-collision. The
 profile sweeps each joint kinematically from its lower to its upper limit and back, in steps of at most 1° for a
 hinged leaf or a knob and at most 5 mm for a drawer, against the fitted collision shapes of the fixture's own parts
-and frame; an interpenetration deeper than the recorded fitting error refuses the import with the part and the
-joint value named, and each jointed part's sweep (joint, range, step, minimum clearance, result) is written beside
+and frame; an interpenetration deeper than the recorded fitting error refuses the import with N35x-02's ledger
+row `import-articulation-interpenetrates` (registered by N19-REF: family `3xx`, exit 3, retry `after-change`, no
+interim; never FROB-REF-123, which is a design's self-collision), raised behind the one named constant
+`IMPORT_ARTICULATION_INTERPENETRATES` that holds the number the ledger assigned (never a literal number), with
+`pointer` the penetrating part and the swept joint, `observed` the penetration depth and the joint value at the
+deepest step, `required` the recorded fitting error, `unit` `m`, and the repairs in order: 1. correct the named
+joint's limits, or the named part's collision geometry, in the source asset and re-import; 2. import another
+asset. Nothing is imported. Each jointed part's sweep (joint, range, step, minimum clearance, result) is written beside
 the loss report's per-part articulation row (N19a-46), so the import envelope carries it. Joint
 limits finite; handles reachable (a height inside the task's declared reach heights or tagged); the imported
 scene passes scene acceptance; exports embed the attribution.
@@ -89,7 +95,9 @@ scene passes scene acceptance; exports embed the attribution.
 - `robocasa_fixture_maps_to_typed_joint`: axes, ranges, stops.
 - `robocasa_missing_torque_is_assumed`.
 - `robocasa_fixture_sweep_through_range`: a hinged leaf swept at 1° steps and a drawer at 5 mm steps report their
-  minimum clearance per part; the door that passes through its frame is refused with the part and joint value.
+  minimum clearance per part; the door that passes through its frame is refused with the code of
+  `IMPORT_ARTICULATION_INTERPENETRATES` (exit 3), `pointer` the part and joint, `observed` the depth and joint
+  value, and no pack written.
 - `robocasa_layout_to_grammar_parameters`: clearances regenerated exactly.
 - `robocasa_no_code_in_tree` (lint).
 - `robocasa_export_embeds_attribution`.
@@ -99,7 +107,8 @@ scene passes scene acceptance; exports embed the attribution.
 `scripts/e2e/assets_licences.sh` (the M5 scene-asset loop, owned and run by NEGp1-54, which depends on this
 bead; this bead lists the steps of its row), every `run` verb call with its own `--key`: the import of the five
 fixtures as written above (`--key al-rbc-f<n>`) and of one layout (`--key al-rbc-l1`); a fixture whose door passes
-through its frame (`--key al-rbc-x1`; the sweep refuses it, naming the part and the joint value); each fixture's
+through its frame (`--key al-rbc-x1`; the sweep refuses it with `import-articulation-interpenetrates`, asserted
+by the code of its constant and exit 3, naming the part and the joint value); each fixture's
 sweep read from its import envelope (every jointed part's row passed, at most 1° or 5 mm per step); after
 `e2e_scene_ready <pack>`, a referee run in each fixture pack (`frob --json sim run quad-a --scene <pack> --tier
 referee --seconds 2 --key al-rbc-run-<n>`) in which no fixture joint leaves its range; `frob --json scene show <layout pack>` (the aisle widths equal the parameter set's);

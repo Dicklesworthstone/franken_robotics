@@ -1,0 +1,233 @@
+{
+ "round": 4,
+ "slice": "S-20",
+ "reviewed": 34,
+ "changed": [
+  {
+   "bead": "BD-091",
+   "kinds": [
+    "request",
+    "contradiction",
+    "deadlock"
+   ],
+   "what": "Applied the F-U32a request after checking N32a-08, BD-210 and N29a-05, which all name the lease row run_lease(run PK, lease_gen) as BD-091's, and BD-090, whose `run` row is filled by Tether: this bead now creates run_lease beside chunk and frontier, reassign inserts it at generation 1 on a run's first assignment and increments it after (including a resume after restart, as N32a-08 calls it), and step 1 checks the generation in run_lease; Scope In names the table and a unit test run_lease_generations checks it. Left undone, three beads read a table that no bead creates while this one wrote lease_gen into Tether's run row. The first acceptance item required the 10^5-schedule battery and 100-of-100 planted violations of N29a-06, which depends on this bead, so BD-091 could never close: it now states this bead's part (mechanism, the property test, the three KA-711 mutants caught) and leaves the battery and the record to N29a-06."
+  },
+  {
+   "bead": "BD-210",
+   "kinds": [
+    "deadlock"
+   ],
+   "what": "The first acceptance item required the device rows of GATE-CHRON-04 and -11 and GATE-TETHER-08 to pass 'with N29a-24', which depends on this bead, so BD-210 could never close. It now states this bead's part (the mechanism those gates measure, every unit test passing) and leaves the batteries with their mutants, the script and the three records to N29a-24. Everything else checked: refusal rows 601, 607 (four attempts), 615, 702, 810, 875, 878 against N21-REF, N32-REF and N29-REF; the 22-device-chunk arithmetic at L = 256; the counting rule for lost trials against N29a-05; --sync-wait-ms against VERBS-sim."
+  },
+  {
+   "bead": "N29a-01",
+   "kinds": [
+    "broken",
+    "contradiction"
+   ],
+   "what": "The ownership map omitted the tables job_event and job_log (N32a-08) and run_lease (BD-091) that live in the same ledger, so ownership_map_is_total would fail whichever landed first; they are added with their writers. The end-to-end step read 'each table's writer column', which nothing recorded, through `cargo test -p frob-conformance --test ledger_dump -- --run <run>`, which libtest refuses (unknown option) and which no bead declared. Txn::put now stamps each row's `writer` (outside every hash), and the bead declares the example `ledger_dump` of frob-conformance (BD-025's form for a harness reader) with its two modes; the e2e step, an acceptance item and the unit test writer_stamped_from_handle use them. Left undone, N29a-08's ownership-* group had no command that could run and no data to read."
+  },
+  {
+   "bead": "N29a-04",
+   "kinds": [
+    "broken",
+    "registry"
+   ],
+   "what": "The page-* step group relied on 'a second process still publishing' and on 'the conformance harness's store interface', neither of which any bead defines. The group now starts the 64-world referee run in the background under its own key and pages it while it publishes, reading the run from `frob run list --state running`, and the bead adds the test-support example page_probe of frob-chronicle (an unpaged read at a given commit_seq, printing count and digest; and the store-level cursor mismatch that must print 896), named in Scope and Layout. This bead is CX-323's planting bead in N29-CX, but declared no feature for the order-by-tick mutant, so the seeded control had nothing to build: it now declares `mutant-chron-page-by-time` in frob-chronicle, implying `conformance`. Left undone, N29a-06's script had no way to make the comparison or the store-level check, and CX-323's control could never run."
+  },
+  {
+   "bead": "N29a-13",
+   "kinds": [
+    "registry"
+   ],
+   "what": "N29-CX names this bead as CX-319's carrier (the run-level quantile computed by the capacity-two compactor), but the bead's mutant list did not include it and declared no feature, so the control seeded from CX-319 had no build to run and GATE-CHRON-07 had no control from the catalogue. The bead now declares `mutant-chron-order-sketch` in frob-chronicle (implying `conformance`) under which GATE-CHRON-07's entries must fail. Arithmetic (octaves, sub-buckets, the 2.5 half-even case) rechecked and unchanged."
+  },
+  {
+   "bead": "N29a-19",
+   "kinds": [
+    "request",
+    "convention",
+    "broken"
+   ],
+   "what": "Applied the F-U29a request after checking it: the ring-* and reconstruct-* groups need a batched failure monitor to raise the failing bit (N29b-05), which N29a-19 did not reach; N29b-05 does not reach N29a-19, so dep N29b-05 is added. Step 2 of the script recorded the gate itself (convention 9); section 6 now says the script writes no record and this bead records GATE-CHRON-01 from the g5_determinism receipt in N38b-19's multi-machine form. The source run is the reference quadruped on rough ground, but `--workload Q` resolves to the first ground, flat (N36-33, N36-02); it is now `--workload Q:rough`. Checked: the binomial bounds 0.2991% and 0.7735%, 500 ticks in two chunks, sim.replay's --alone and --tier against VERBS-sim."
+  },
+  {
+   "bead": "N29a-25",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "The bead said `--conformance-plant` 'is not a verb parameter and is not in the verb registry' and does not exist on the agent surface, while VERBS-sim lists it as a conformance-build-only input of sim.run and sim.replay; it now says the option is absent from a production build's schema, where it is rejected as an unknown parameter (FROB-REF-802, exit 3), and the acceptance item names that refusal. The skip rule for a plant that would overflow did not cover the n = 1 case that produces a non-finite value; it now does (the largest finite value with n = 1). Left undone, a reader would build a release-build test that expects no option at all and an untested overflow branch."
+  },
+  {
+   "bead": "N29ap1-01",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "The e2e text said that sim.run on the batched tiers (N16b-25) and the publication of d and x (BD-207, BD-210) 'all depend on this bead', but N16b-25 is a dependency of this bead through BD-172; the text now says so, leaving only BD-207 and BD-210 as beads that depend on it. Left undone, a reader would defer the batched-tier steps of the script to a later bead although their mechanism is already reachable here."
+  },
+  {
+   "bead": "N29-CX",
+   "kinds": [
+    "convention",
+    "registry",
+    "deadlock",
+    "broken"
+   ],
+   "what": "Plants were bare flag names, but N38b-05's plant record requires `id = <planting bead>:<name>` and derives the control's `feature` from the name, so the seeding tool would reject all thirteen entries; each plant now has its id (the carrier holding the rule) and the C5 entry its two plants (fourteen controls, the linkage test and acceptance item updated). The linkage test and an acceptance item demanded at least one control for each of GATE-CHRON-01 to -14 at M1, yet GATE-CHRON-01 and -13 get controls only from BD-203, N29a-19 and N29a-17 at M2, so this M1 bead could not close: such a gate is now reported `pending` with the bead and milestone and fails once that milestone is reached. The e2e called `--control <NC-id>` on carrier scripts that no bead gives; it now runs the gate's tier with N38b-04's control runner (one build per mutation feature, `not-yet-due` by FROB_MILESTONE) and reads outcomes from the receipt, recording nothing; the 'silently removed mutant' control now expects `missed`. The K1-K3 acceptance item and its heading narrated a past filing (convention 13); they now state that the rows are N29-KA's. Arithmetic of C1, C3, CX-322, CX-324, K2 and K3 rechecked."
+  },
+  {
+   "bead": "N29b-03",
+   "kinds": [
+    "registry",
+    "broken"
+   ],
+   "what": "The acceptance item and the known-answer list gave KA-710's tolerance as ±0.0005 absolute (5·10^-4), but N29-KA's row says 10^-3 relative; the bead now uses the registry's tolerance. The e2e fed contact telemetry through 'the conformance binary `audit-oracle`', which no bead declares; this bead now declares the example `audit_oracle` of frob-chronicle (BD-025's form for a harness reader whose code is in the owning crate), with its command, in Scope and Layout, and pages the telemetry to its end. Checked: √2 = 1.4142 for (50, 50) N at μ = 0.5, 0.75% against 3% for the four-feet case, the integer 1% rule, ½·(1.5² − 0.5²) = 1.0 J, and the moving-surface rule against N29a-22."
+  },
+  {
+   "bead": "N29b-12",
+   "kinds": [
+    "request",
+    "convention"
+   ],
+   "what": "Applied the F-U29b request after checking BD-209, which records GATE-CHRON-12 from the g1_known_answers receipt: step (f) 'GATE-CHRON-12 is then run under the decided policy' and the acceptance item 'GATE-CHRON-12's record names the policy version' gave this decision bead a second recording of the gate (convention 9). Step (f) now re-runs the tier filter with the decided store.toml and cites that receipt in ADR-PROG-11, recording nothing, and the acceptance item asks that the re-run's receipt names the policy version. Checked: 120 kB per capture, 820 captures, 98 MB per batch, 5.9 GB/h, 142 GB/day, 11 h to 64 GB; 780 kB, 640 MB, 38 GB/h, under two hours; 64 × 10^9 bytes."
+  },
+  {
+   "bead": "N29b-19",
+   "kinds": [
+    "registry",
+    "contradiction"
+   ],
+   "what": "Design A's state was written `run.lease_gen`, but BD-091 now keeps the generation in its table run_lease and says the `run` row does not carry it; section 1 now names run_lease and BD-091's reassign. The device script ran 'a two-shard job on gpu-cuda and gpu-metal', but the two back ends sit on two machines (N29a-24 runs them one at a time) and the fleet scheduler across machines is out of scope at a later milestone, so that job cannot exist at M2; the script now runs a two-shard job on two devices of one machine (or two shards of one back end, labelled) on each machine in turn. Checked: 5/3,600 = 0.14% and 5/60 = 8.3%; 256 ticks at 50 Hz; the dependency of N29a-24 on this bead for the two-device rows."
+  },
+  {
+   "bead": "N29bx-01",
+   "kinds": [
+    "broken",
+    "convention",
+    "deadlock"
+   ],
+   "what": "The script ran the inv_chron target 'with `--plant bind-algorithmic-to-film`', an option nothing provides, and the unit tests `planted_*` 'enabled' each violation in the default build, though per-control mutation features are not in the gauntlet-mutations umbrella (BD-025) and three of the four control rows named no feature at all. The three features are now named and declared by this bead in frob-chronicle (`mutant-chron-residual-to-winding`, `mutant-chron-validator-accepts-store`, `mutant-chron-unsealed-heat`), each violation is one build under `--features gauntlet-mutations,frob-chronicle/<feature>`, and the script uses that form. The acceptance item required all four violations to fail the module, but the first is N29b-23's feature and N29b-23 depends on this bead; the item now covers this bead's three and reports the fourth `not-run` with N29b-23 named until N29b-23's inv-14-suite asserts it. Arithmetic rechecked: ½·m·g²·h = 1, 0.5 and 0.016 J/s; 4 W; 2 J."
+  },
+  {
+   "bead": "N30a-03",
+   "kinds": [
+    "request",
+    "contradiction"
+   ],
+   "what": "Applied the F-U30b request after checking BD-139 and N30b-01, which put the share in `evidence.card_guess_share = {guessed, total}` from M1: this bead named the same number `evidence.cards`, so an agent reading the envelope would find two names for one number. It now extends BD-139's field with the six column counts at M3, and the 14/20 acceptance item checks the field. The report tests sat in `crates/frob-chronicle/tests/`, but the report generator is BD-302's `crates/frob-opt/src/report/`; they now sit in frob-opt. Checked: 14/20 = 70.0%, 11/20 = 55.0% with candidate 3, 14/20 with generic 7 and synthetic 3."
+  },
+  {
+   "bead": "N30a-05",
+   "kinds": [
+    "convention",
+    "broken"
+   ],
+   "what": "This bead owns Ground's two execution modes, but never said how a process chooses one; six Ground scripts and tests (N30a-06, -19, -26, -39, -44 and this bead's) set `FROB_AIRLOCK=inproc|worker`, a variable no bead defined (BD-038's airlock modes are build features of the referee path), so their worker lane called nothing that exists. Step 1 now defines `FROB_AIRLOCK` (default inproc; worker sends the job bytes to frob-fsim-worker; any other value refused; the lane written into each receipt) with an acceptance item. The cap acceptance item listed six of the ten caps of step 2; it now covers iterations, evaluations, stream rows and the fiducial rule too, so a missing pre-check fails it. Checked: N(0,4) with y = 2 at variance 4 gives mean 1, variance 2; the common-mode floor; 1 against 4.01 in the stream design case."
+  },
+  {
+   "bead": "N30a-12",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The same-clock acceptance item and its negative control used two samples 1 ms apart, but with independent errors k·σ_Δ is 3·√2·50 µs = 212 µs, so a build that ignores the correlation also orders them and the control 'the 1 ms test fails' could never fail. The item and a new test `same_clock_100us_ordered` now use 100 µs (inside 212 µs, so the broken build reads Undecided while the correct one gives σ_Δ ≈ 7·10^-10 s). Checked: 7.07 ppm from √2·50 µs/10 s, 212 µs, KA-721 and GATE-GROUND-02."
+  },
+  {
+   "bead": "N30a-17",
+   "kinds": [
+    "request"
+   ],
+   "what": "Applied the lead's audit note after checking it: the bead never calls `experiment.suggest` (BD-351, M4); its EVSI is C-39's closed form, whose spec SPEC-C-39 is a dependency, and the identification and alias tests are passed in by the caller. BD-351 moves from deps to related, and the KILL-VOI consideration says the bead does not call it and evaluates C-39 itself. Left as it was, the bead waited on a verb it never uses. Checked: EVSI 0.0251 and 0.0084, Φ = 2·ln 2 for the toy, s̃² = 0.75 for F = 3; --budget-s and --decision against VERBS-ground."
+  },
+  {
+   "bead": "N30a-20",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The L2 envelope test asserted the 24 V and 36 V voltage-limited lines are '12 V/0.5 Ω = 24 A apart', which holds only if V_lim equals the bus voltage, while step 7 fits V_lim as a function of bus voltage through a modulation factor and the fixture never planted V_lim; a correct implementation on a fixture with another factor fails the test. The fixture and test now plant V_lim equal to the bus voltage (factor 1) and recover it. Checked: 0.07 and 0.070297 N·m, e^-25 and 1/26 at 5·v_s, 1/101 below 1% at 10·v_s, 8.0 s breakaway, 0.5 Ω, 30 K."
+  },
+  {
+   "bead": "N30a-21",
+   "kinds": [
+    "broken"
+   ],
+   "what": "The analytic acceptance item demanded recovery to 10^-9 relative with the zero-phase low-pass of step 2 applied, but filtering the current smears the Coulomb step while sgn(q̇) of the filtered velocity stays sharp, so the regression is not exact and the item could not pass. It now runs with the filter replaced by the identity, testing the regressor and solve alone; the 5% noisy case keeps the filter. Checked: the velocity masks 0.5 and 1.0 rad/s for v_s = 0.1."
+  },
+  {
+   "bead": "N30a-30",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "Reports were to print `cards: unit(unit-07)` or `cards: class(k=3)`, but `cards:` is the line whose grammar BD-139 and N30a-03 fix as `cards: guessed=<g>/<N> …` and parse round trip; two grammars on one key break that parser. The scope now prints on its own line, `card-scope: …`, under the unchanged `cards:` line, and the acceptance item checks both. Checked: k = 1 mean 1.0818, 0.013295, 0.1892; k = 3 σ_u² 0.0275, 0.0125, 0.20; the k-divisor control 0.0267."
+  },
+  {
+   "bead": "N30a-31",
+   "kinds": [
+    "request",
+    "registry"
+   ],
+   "what": "Applied the lead's audit note after checking it: only step 2's computed branch (256 correlated draws through N30a-27's card::sampler) used N30a-27; the schema, freezing, tolerances, conditions draw and refusals use none of it, the lineage is N30a-34's, and BD-392's step 4 already computes intervals over correlated card draws. The record now keeps each interval's `source` (caller or simulated) and stores world_addr and the replay digest as given; the computation, its acceptance item and the tests computed_interval_quantiles and replay_digest_matches go to BD-392 (request below); N30a-27 moves to related. The bead also called FROB-REF-102 'the interim code N30-REF assigns'; N30-REF lists it as a code Ground consumes, and the text now says so. Checked: σ = 0.012 s (0.02 refused, 0.03 accepted), margin 0.05 s with 0.04 and 0.06."
+  },
+  {
+   "bead": "N30a-38",
+   "kinds": [
+    "contradiction"
+   ],
+   "what": "The budget rule and its acceptance item said every claim whose cell is below ⌈(1 − α_j)/α_j⌉ (49 at five metrics) prints `band unbounded`, but N30a-36's quantile refuses a within-units pool below 19 with FROB-REF-889 before any index is computed, so a test written to this item would expect 'unbounded' where the dependency returns a refusal. The rule now covers 19 ≤ n < 49 as unbounded and n < 19 as the 889 refusal. Checked: [4.09, 4.33]; ±6.3 and ±2.1 points; level 0.98 and n ≥ 49; e-BH thresholds 40, 20, 13.3, 10; Fisher [0.15, 0.74]; at most two finite bands at n = 20; 1 − 0.9^5 = 0.41; 1/(1 − 0.25) = 1.333."
+  }
+ ],
+ "new_beads": [],
+ "superseded": [],
+ "requests": [
+  {
+   "bead": "BD-090",
+   "what": "Your table list says the ledger schema at version 1 has all tables, but it lacks run_lease(run PK, lease_gen), which BD-091 now creates beside chunk and frontier (filled by BD-091's reassign, called by the job engine), and the job engine's job_event and job_log (N32a-08, which says it is their only definition). Add the three rows with the beads that define them, and the operational column `writer` that N29a-01's Txn::put stamps on every row (outside every content hash, like trace identifiers and wall-clock times). Left undone, the schema bead and the beads that fill the ledger disagree on which tables exist and the writer stamp has no column."
+  },
+  {
+   "bead": "N29a-24",
+   "what": "BD-210 lists five mutants 'that the battery must catch'; your negative controls carry four of them but not 'a resume on another device family' (a conflict, FROB-REF-878). Add it to the device battery's controls (BD-210 now leaves the batteries and their mutants to you). Left undone, that planted defect is never run."
+  },
+  {
+   "bead": "BD-206",
+   "what": "N29-CX names you as CX-320's planting bead (`BD-206:mutant-chron-midpoint-pointwise`: a pointwise midpoint instead of the interval rule). Declare the Cargo feature `mutant-chron-midpoint-pointwise` of frob-chronicle, implying `conformance`, with that mutant behind it, and say which gate entries must fail under it. Left undone, the control seeded from CX-320 has no feature to build and is reported stale."
+  },
+  {
+   "bead": "N29a-12",
+   "what": "N29-CX names you as CX-325's planting bead (`N29a-12:mutant-chron-arrival-reservoir`: classic reservoir sampling by arrival order). Declare the Cargo feature `mutant-chron-arrival-reservoir` of frob-chronicle, implying `conformance`, with that mutant behind it. Left undone, the control seeded from CX-325 has no feature to build."
+  },
+  {
+   "bead": "BD-092",
+   "what": "N29-CX names you as the planting bead of two appended entries: C2 `BD-092:mutant-chron-conditional-mean-only` and C4 `BD-092:mutant-chron-net-bus` (bus power integrated as one signed sum). Declare both Cargo features in your crate, each implying `conformance`, with the mutants behind them. Left undone, both seeded controls have no feature to build."
+  },
+  {
+   "bead": "BD-094",
+   "what": "N29-CX's entry C5 has two plants on you: `BD-094:mutant-chron-numerical-as-failure` (a numerical outcome scored as a physical failure) and `BD-094:mutant-chron-numerical-dropped` (the outcome dropped from the denominator). Declare both Cargo features in your crate, implying `conformance`. Left undone, the two seeded controls of C5 (same_as CX-150) have no feature to build."
+  },
+  {
+   "bead": "BD-209",
+   "what": "N29-CX's entry C6 is planted on you as `BD-209:mutant-chron-pin-after-verdict` (verdict and pins written in two transactions, a collection cycle scheduled between them). Declare the Cargo feature `mutant-chron-pin-after-verdict` of frob-chronicle, implying `conformance`, and let GATE-CHRON-12's entries fail under it. Left undone, the seeded control has no feature to build."
+  },
+  {
+   "bead": "BD-205",
+   "what": "N29-CX's CX-321 is a `planted-input` control whose plant is `BD-205:cx-321`, so the seeding tool takes its fixture name as `cx-321`. Name the planted input of CX-321 with that fixture name in your tests. Left undone, the seeded control points at a fixture nobody provides."
+  },
+  {
+   "bead": "BD-264",
+   "what": "N29-CX's CX-324 is an `a-a` control whose plant is `BD-264:cx-324` (the scripted auditor that chooses audits after seeing fast-tier failures). Provide that fixture under the name `cx-324`. Left undone, the seeded control points at a fixture nobody provides."
+  },
+  {
+   "bead": "N29a-22",
+   "what": "N29-CX's C3 is a `planted-world` control on you, `N29a-22:chron-penalty-bounce`: the stiff-penalty bounce world that must raise both `energy-created` and `contact-active`. Name your planted trampolining fixture `chron-penalty-bounce` (or tell N29-CX its name). Left undone, the seeded control points at a fixture nobody provides."
+  },
+  {
+   "bead": "VERBS-ground",
+   "what": "N30a-09 lists the procedure through `frob ground band --status --json`: per cell and lineage the eleven step states with artifacts, the reality status and σ_r² with n (the cluster has no room for an eighth verb); N30a-38 prints through the same listing each cell's Pearson r with its 90% Fisher interval and Spearman ρ, and the ceiling statement on paired simulation. Your ground.band row says `--status` returns monitor states with their power facts only. Add the step states, σ_r² with n, the per-cell correlation and the ceiling statement to the `--status` output. Left undone, those beads' listings have no verb output to live in and an agent cannot see where a cell stands in the procedure."
+  },
+  {
+   "bead": "BD-392",
+   "what": "From the audit note applied to N30a-31: take the computed-interval branch that N30a-31 no longer holds. ground.predict computes each metric's interval by simulating the task under each drawn condition over 256 correlated draws of the cards' identified block (by address, through N30a-27's card::sampler) and the sensor noise; the interval at level 1 − α is the central (α/2, 1 − α/2) sample quantile interval, written with source = \"simulated\", and the record gets world_addr with the replay digest. Add the acceptance item 'computed intervals are reproducible from world_addr (same digest) and contain the stated share of the 256 simulated draws' and the tests computed_interval_quantiles (256 draws at level 0.90: at least 228 inside) and replay_digest_matches. Add N30a-27 to your deps (today you reach it only through N30a-34); the audit also proposes N30a-28, which is yours to check. Left undone, no bead computes a simulated interval."
+  }
+ ],
+ "unchanged": 11,
+ "notes": "Complete: all 34 beads read in full against the 14 conventions and the current registries (VERBS, N29-REF, N29-KA, N29-CX, N30-REF, N30-KA, N30-CX, the gate register). Unchanged: N29a-07, N29a-20, N30a-07, N30a-08, N30a-09, N30a-16, N30a-23, N30a-32, N30a-36, N30a-41, N30a-42, N30a-46 (arithmetic and registry rows rechecked; the miss-monitor power figures 0.702/0.918/0.990/1.000, 0.427/0.779/0.969 and 0.586/0.863/0.983 recomputed by first-passage recursion; N30a-09 and N30a-38 status listings are a request to VERBS-ground). Requests applied: BD-091, N29a-19, N29b-12, N30a-03; audit notes applied: N30a-17 (BD-351 to related), N30a-31 (computed intervals to BD-392, N30a-27 to related; N30a-34 already depends on N30a-27 directly, so no request there)."
+}

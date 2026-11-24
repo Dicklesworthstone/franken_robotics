@@ -4,7 +4,7 @@ title: "upstream frankensim: holonomic loop constraints and nonholonomic rolling
 type: "task"
 priority: 2
 milestone: "M2"
-labels: ["m2", "suite", "kinesis", "upstream", "frankensim", "solid"]
+labels: ["m2", "suite", "kinesis", "upstream", "frankensim", "solid", "review-notes-open"]
 parent: "WP-39"
 deps: ["BD-037", "BD-081", "BD-110", "N16b-23", "N33b-04", "STD-E2E"]
 needs: []

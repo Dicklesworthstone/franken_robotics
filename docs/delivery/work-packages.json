@@ -31855,8 +31855,8 @@
             "total": 4
           },
           "new": {
-            "closed": 0,
-            "open": 92,
+            "closed": 1,
+            "open": 91,
             "total": 92
           },
           "pilot": {
@@ -31876,8 +31876,8 @@
           }
         },
         "total": {
-          "closed": 0,
-          "open": 98,
+          "closed": 1,
+          "open": 97,
           "total": 98
         }
       },

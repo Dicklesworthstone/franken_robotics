@@ -27,8 +27,8 @@ DEP_TYPE_PARENT="parent-child"
 DEP_TYPE_BLOCKS="blocks"
 DEP_TYPE_RELATED="related"
 
-SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-REPO_ROOT=$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd)
+SCRIPT_DIR=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)
+REPO_ROOT=$(CDPATH='' cd -- "$SCRIPT_DIR/.." && pwd)
 AWK_GRAPH="$SCRIPT_DIR/lib/wp_graph.awk"
 
 MODE=""
@@ -132,10 +132,14 @@ fi
 SCRATCH_BASE="${BIG_SCRATCH:-${TMPDIR:-/tmp}}/frob-wp-table"
 mkdir -p "$SCRATCH_BASE"
 TMP_WORK=$(mktemp -d "$SCRATCH_BASE/run.XXXXXX")
+trap 'rm -rf "$TMP_WORK"' EXIT INT TERM
 
 # Convert plan TSV (if enabled) into JSON map for jq.
+# Write awk output to a file before invoking jq so POSIX sh (no pipefail) does
+# not swallow an invalid-header failure from awk.
 PLAN_JSON="$TMP_WORK/plan.json"
 if [ "$USE_PLAN" -eq 1 ]; then
+    PLAN_ROWS="$TMP_WORK/plan.rows.tsv"
     awk -F '\t' '
         NR == 1 {
             if ($1 != "package" || $2 != "first_milestone" || $3 != "depends_on") {
@@ -148,14 +152,15 @@ if [ "$USE_PLAN" -eq 1 ]; then
         {
             printf("%s\t%s\t%s\n", $1, $2, $3)
         }
-    ' "$PLAN_FILE" | jq -Rs '
+    ' "$PLAN_FILE" > "$PLAN_ROWS"
+    jq -Rs '
         split("\n") | map(select(length > 0)) |
         map(split("\t") | {
             key: .[0],
             first_milestone: .[1],
             depends_on: (if (.[2] // "-") == "-" or (.[2] // "") == "" then [] else (.[2] | split(",") | map(select(length > 0))) end)
         }) | sort_by(.key)
-    ' > "$PLAN_JSON"
+    ' "$PLAN_ROWS" > "$PLAN_JSON"
 else
     printf 'null\n' > "$PLAN_JSON"
 fi

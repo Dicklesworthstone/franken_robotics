@@ -2,7 +2,8 @@
 # Unit tests for scripts/admission/suite_survey.sh (bead N33c-07).
 #
 # All fixtures are `synthetic` small git repositories created in a scratch
-# directory and removed on exit. Never touches any real sibling repository.
+# directory under ${BIG_SCRATCH:-${TMPDIR:-/tmp}}/frob-suite-survey-test/
+# (never deleted, honoring standing order 9b). Never touches any real sibling.
 # Bash 3.2 compatible; runs on macOS and Linux.
 
 set -euo pipefail
@@ -12,8 +13,9 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 SURVEY_SH="$REPO_ROOT/scripts/admission/suite_survey.sh"
 EMBEDDED_BASELINE="$REPO_ROOT/tests/admission/survey_2026-11-21.json"
 
-SCRATCH="$(mktemp -d "${TMPDIR:-/tmp}/frob-suite-survey-test.XXXXXX")"
-trap 'rm -rf "$SCRATCH"' EXIT
+SCRATCH_BASE="${BIG_SCRATCH:-${TMPDIR:-/tmp}}/frob-suite-survey-test"
+mkdir -p "$SCRATCH_BASE"
+SCRATCH="$(mktemp -d "$SCRATCH_BASE/run-$(date -u +%Y%m%dT%H%M%SZ).XXXXXX")"
 
 PASS=0
 FAIL=0
@@ -981,6 +983,154 @@ EOF
   pass "$t"
 }
 
+# ---------------------------------------------------------------------------
+# Test 15: asupersync_0_5_semver_edge_cases
+# Verifies exact Cargo semver matching for 0.5.0:
+#   - ">=0.4.0, <0.6.0", "<=0.5.0", "0.*", "*" ALL allow 0.5.0 (must be flagged)
+#   - ">=0.5.0, ^0.6.2", ">=0.5.1, <0.6.0", "=0.5.0-alpha.1" exclude 0.5.0 (must NOT be flagged)
+# ---------------------------------------------------------------------------
+test_asupersync_0_5_semver_edge_cases() {
+  local t="asupersync_0_5_semver_edge_cases"
+  local base="$SCRATCH/$t"
+  local repo="$base/repo"
+  mkdir -p "$repo" "$base/out"
+
+  local spec_list="
+sib_span|>=0.4.0, <0.6.0
+sib_le|<=0.5.0
+sib_wild0|0.*
+sib_wild_any|*
+sib_caret06|>=0.5.0, ^0.6.2
+sib_gt_patch|>=0.5.1, <0.6.0
+sib_prerelease|=0.5.0-alpha.1
+"
+  printf 'schema = "frob.siblings/1"\n' >"$base/siblings.toml"
+  local name req
+  while IFS='|' read -r name req; do
+    [ -n "$name" ] || continue
+    init_git_fixture "$base/$name"
+    printf '[toolchain]\nchannel = "nightly-2026-08-31"\n' >"$base/$name/rust-toolchain.toml"
+    printf '[package]\nname = "%s"\nversion = "0.1.0"\n[dependencies]\nasupersync = "%s"\n' "$name" "$req" >"$base/$name/Cargo.toml"
+    commit_all "$base/$name" "init"
+    cat >>"$base/siblings.toml" <<EOF
+
+[[sibling]]
+name = "$name"
+path = "../$name"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "dependencies.asupersync"
+watched = {}
+EOF
+  done <<EOF
+$spec_list
+EOF
+  printf '{"rows":[],"schema":"frob.suite-survey/1"}\n' >"$base/empty_baseline.json"
+
+  local out rc=0
+  out="$("$SURVEY_SH" --repo-root "$repo" --register "$base/siblings.toml" --out-dir "$base/out" --baseline "$base/empty_baseline.json" --stack-lock "$base/missing.lock" 2>&1)" || rc=$?
+  if [ "$rc" -ne 0 ]; then
+    fail "$t" "expected exit 0, got $rc: $out"
+    return
+  fi
+  local rec
+  rec="$(extract_record_path "$out")"
+  if assert_py "$t" '
+import json, sys
+doc = json.load(open(sys.argv[1]))
+got = doc["asupersync_0_5_0_named_by"]
+expected = ["sib_span", "sib_le", "sib_wild0", "sib_wild_any"]
+assert got == expected, f"expected {expected}, got {got}"
+' "$rec"; then
+    pass "$t"
+  fi
+}
+
+# ---------------------------------------------------------------------------
+# Test 16: same_second_sequence_and_bare_dotdot_rejected
+# - Repeated runs with the same --date produce monotonically ordered filenames
+#   (-0001, -0002) so each run diffs against the immediately preceding survey.
+# - Bare path = ".." (no sibling directory name) is rejected with exit 2.
+# ---------------------------------------------------------------------------
+test_same_second_sequence_and_bare_dotdot_rejected() {
+  local t="same_second_sequence_and_bare_dotdot_rejected"
+  local base="$SCRATCH/$t"
+  local repo="$base/repo"
+  local sib="$base/sib_seq"
+  local out_dir="$base/out"
+  mkdir -p "$repo" "$out_dir"
+
+  init_git_fixture "$sib"
+  printf '[toolchain]\nchannel = "nightly-2026-08-31"\n' >"$sib/rust-toolchain.toml"
+  commit_all "$sib" "init"
+
+  cat >"$base/siblings.toml" <<'EOF'
+schema = "frob.siblings/1"
+
+[[sibling]]
+name = "sib_seq"
+path = "../sib_seq"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = ""
+watched = {}
+EOF
+  printf '{"rows":[],"schema":"frob.suite-survey/1"}\n' >"$base/empty_baseline.json"
+
+  # Run 1 at T0: channel nightly-2026-08-31
+  local o1 r1
+  o1="$("$SURVEY_SH" --repo-root "$repo" --register "$base/siblings.toml" --out-dir "$out_dir" --baseline "$base/empty_baseline.json" --stack-lock "$base/missing.lock" --date "2026-11-24T12:00:00Z" 2>&1)"
+  r1="$(extract_record_path "$o1")"
+  # Run 2 at same T0: change channel to nightly-2026-09-01
+  printf '[toolchain]\nchannel = "nightly-2026-09-01"\n' >"$sib/rust-toolchain.toml"
+  local o2 rc2=0 r2
+  o2="$("$SURVEY_SH" --repo-root "$repo" --register "$base/siblings.toml" --out-dir "$out_dir" --stack-lock "$base/missing.lock" --date "2026-11-24T12:00:00Z" 2>&1)" || rc2=$?
+  r2="$(extract_record_path "$o2")"
+  if [ "$rc2" -ne 3 ]; then
+    fail "$t" "run 2 expected rc=3, got $rc2: $o2"
+    return
+  fi
+  # Run 3 at same T0: change channel to nightly-2026-09-08 -> MUST diff against run 2 (09-01 -> 09-08), not run 1
+  printf '[toolchain]\nchannel = "nightly-2026-09-08"\n' >"$sib/rust-toolchain.toml"
+  local o3 rc3=0 r3
+  o3="$("$SURVEY_SH" --repo-root "$repo" --register "$base/siblings.toml" --out-dir "$out_dir" --stack-lock "$base/missing.lock" --date "2026-11-24T12:00:00Z" 2>&1)" || rc3=$?
+  r3="$(extract_record_path "$o3")"
+  if [ "$rc3" -ne 3 ]; then
+    fail "$t" "run 3 expected rc=3, got $rc3: $o3"
+    return
+  fi
+  if ! printf '%s\n' "$o3" | grep -q 'DIFF sib_seq channel: nightly-2026-09-01 -> nightly-2026-09-08'; then
+    fail "$t" "run 3 did not diff against run 2: $o3"
+    return
+  fi
+  if [ "$(basename "$r1")" != "20261124T120000Z.json" ] ||
+     [ "$(basename "$r2")" != "20261124T120000Z-0001.json" ] ||
+     [ "$(basename "$r3")" != "20261124T120000Z-0002.json" ]; then
+    fail "$t" "expected monotonic filenames .json, -0001.json, -0002.json; got $(basename "$r1"), $(basename "$r2"), $(basename "$r3")"
+    return
+  fi
+
+  # Bare path = ".." must be rejected with exit 2
+  cat >"$base/bare_dotdot.toml" <<'EOF'
+schema = "frob.siblings/1"
+
+[[sibling]]
+name = "parent_dir"
+path = ".."
+survey = true
+EOF
+  local rc4=0
+  "$SURVEY_SH" --repo-root "$repo" --register "$base/bare_dotdot.toml" --out-dir "$base/out_dd" --baseline "$base/empty_baseline.json" --stack-lock "$base/missing.lock" >/dev/null 2>&1 || rc4=$?
+  if [ "$rc4" -ne 2 ]; then
+    fail "$t" "expected exit 2 on bare path '..', got $rc4"
+    return
+  fi
+
+  pass "$t"
+}
+
 test_reads_channel_and_requirement
 test_path_requirement
 test_counts_modified_paths
@@ -995,6 +1145,8 @@ test_asupersync_0_5_range_and_exclusions
 test_workspace_exclude_respected_in_fallback
 test_default_features_underscore_alias
 test_path_traversal_and_date_validation
+test_asupersync_0_5_semver_edge_cases
+test_same_second_sequence_and_bare_dotdot_rejected
 
 printf '\nSUMMARY: %d passed, %d failed\n' "$PASS" "$FAIL"
 [ "$FAIL" -eq 0 ]

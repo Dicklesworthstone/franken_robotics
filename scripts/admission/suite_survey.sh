@@ -182,7 +182,10 @@ ALLOWED_ROW_KEYS = frozenset({
 })
 HEX40_RE = re.compile(r"^[0-9a-f]{40}$")
 UTC_ISO_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
-CARGO_COMP_RE = re.compile(r"^(>=|<=|!=|=|>|<|\^|~)?\s*(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[-+][^\s,]*)?$")
+CARGO_WILD_RE = re.compile(r"^(?:(\*|[xX])|(\d+)\.(\*|[xX])|(\d+)\.(\d+)\.(\*|[xX]))$")
+CARGO_COMP_RE = re.compile(
+    r"^(>=|<=|!=|=|>|<|\^|~)?\s*(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:-([0-9A-Za-z.-]+))?(?:\+[0-9A-Za-z.-]+)?$"
+)
 
 
 def nfc(obj):
@@ -251,9 +254,15 @@ def load_siblings_register(path: str) -> list[dict]:
         seen_names.add(name)
         if not isinstance(rel_path, str) or not rel_path:
             raise ValueError(f"{path}: sibling {name!r}: 'path' must be a non-empty string")
-        norm_parts = rel_path.replace("\\", "/").split("/")
-        if rel_path.startswith("/") or rel_path.startswith("~") or ".." in norm_parts[1:]:
-            raise ValueError(f"{path}: sibling {name!r}: 'path' must be relative with no secondary '..' traversal, got {rel_path!r}")
+        norm_parts = [p for p in rel_path.replace("\\", "/").split("/") if p and p != "."]
+        if (
+            rel_path.startswith("/")
+            or rel_path.startswith("~")
+            or not norm_parts
+            or norm_parts == [".."]
+            or ".." in norm_parts[1:]
+        ):
+            raise ValueError(f"{path}: sibling {name!r}: 'path' must be a relative sibling path with no secondary '..' traversal, got {rel_path!r}")
         if not isinstance(survey, bool):
             raise ValueError(f"{path}: sibling {name!r}: 'survey' must be a boolean")
 
@@ -614,6 +623,97 @@ def survey_one_sibling(repo_root: str, entry: dict) -> dict:
     }
 
 
+def _clause_matches_release(clause: str, target: tuple[int, int, int]) -> bool:
+    """Exact Cargo semver comparator evaluation against a release triple (M, m, p)."""
+    tmaj, tmin, tpat = target
+    wm = CARGO_WILD_RE.match(clause)
+    if wm:
+        if wm.group(1) is not None:
+            return True
+        if wm.group(2) is not None:
+            return tmaj == int(wm.group(2))
+        return tmaj == int(wm.group(4)) and tmin == int(wm.group(5))
+
+    m = CARGO_COMP_RE.match(clause)
+    if not m:
+        return False
+    op = m.group(1) or "^"
+    maj = int(m.group(2))
+    minor = int(m.group(3)) if m.group(3) is not None else None
+    patch = int(m.group(4)) if m.group(4) is not None else None
+    pre = m.group(5)  # Non-None means a pre-release comparator (e.g. -alpha.1)
+
+    if op == "^":
+        if minor is None:
+            lo, hi = (maj, 0, 0), (maj + 1, 0, 0)
+        elif patch is None:
+            lo = (maj, minor, 0)
+            hi = (maj + 1, 0, 0) if maj > 0 else (0, minor + 1, 0)
+        else:
+            lo = (maj, minor, patch)
+            if maj > 0:
+                hi = (maj + 1, 0, 0)
+            elif minor > 0:
+                hi = (0, minor + 1, 0)
+            else:
+                hi = (0, 0, patch + 1)
+        if pre is not None and target == lo:
+            # Release 0.5.0 is greater than 0.5.0-alpha.1, so ^0.5.0-alpha.1 matches 0.5.0
+            return lo <= target < hi
+        return lo <= target < hi
+
+    if op == "~":
+        if minor is None:
+            lo, hi = (maj, 0, 0), (maj + 1, 0, 0)
+        else:
+            lo, hi = (maj, minor, patch or 0), (maj, minor + 1, 0)
+        return lo <= target < hi
+
+    if op == "=":
+        if pre is not None:
+            return False
+        if minor is None:
+            return tmaj == maj
+        if patch is None:
+            return tmaj == maj and tmin == minor
+        return target == (maj, minor, patch)
+
+    if op == "!=":
+        if pre is not None:
+            return True
+        if minor is None:
+            return tmaj != maj
+        if patch is None:
+            return (tmaj, tmin) != (maj, minor)
+        return target != (maj, minor, patch)
+
+    if op == ">=":
+        return target >= (maj, minor or 0, patch or 0)
+
+    if op == ">":
+        if pre is not None and target == (maj, minor or 0, patch or 0):
+            return True
+        if minor is None:
+            return tmaj > maj
+        if patch is None:
+            return (tmaj, tmin) > (maj, minor)
+        return target > (maj, minor, patch)
+
+    if op == "<=":
+        if pre is not None and target == (maj, minor or 0, patch or 0):
+            return False
+        if minor is None:
+            return tmaj <= maj
+        if patch is None:
+            return (tmaj, tmin) <= (maj, minor)
+        return target <= (maj, minor, patch)
+
+    if op == "<":
+        return target < (maj, minor or 0, patch or 0)
+
+    return False
+
+
 def names_asupersync_0_5_0(asup: dict) -> bool:
     if not isinstance(asup, dict):
         return False
@@ -625,27 +725,7 @@ def names_asupersync_0_5_0(asup: dict) -> bool:
     clauses = [c.strip() for c in req.split(",") if c.strip()]
     if not clauses:
         return False
-    names_0_5 = False
-    for clause in clauses:
-        m = CARGO_COMP_RE.match(clause)
-        if not m:
-            continue
-        op = m.group(1) or ""
-        maj = int(m.group(2))
-        minor = int(m.group(3)) if m.group(3) is not None else None
-        patch = int(m.group(4)) if m.group(4) is not None else None
-        if maj == 0 and minor == 5:
-            if op in ("", "=", "^", "~", ">="):
-                names_0_5 = True
-            elif op in ("!=", ">") and (patch is None or patch == 0):
-                return False
-            elif op == "<" and (patch is None or patch == 0):
-                return False
-        elif op in ("<", "<=") and (maj, minor or 0) < (0, 5):
-            return False
-        elif op in (">", ">=") and (maj, minor or 0) > (0, 5):
-            return False
-    return names_0_5
+    return all(_clause_matches_release(clause, (0, 5, 0)) for clause in clauses)
 
 
 def compute_derived(rows: list[dict]) -> dict:
@@ -839,8 +919,10 @@ def main() -> int:
 
     os.makedirs(out_dir, exist_ok=True)
     out_file = os.path.join(out_dir, f"{utc_stem}.json")
-    if os.path.exists(out_file):
-        out_file = os.path.join(out_dir, f"{utc_stem}-{os.getpid()}.json")
+    seq = 1
+    while os.path.exists(out_file):
+        out_file = os.path.join(out_dir, f"{utc_stem}-{seq:04d}.json")
+        seq += 1
     tmp_file = f"{out_file}.tmp.{os.getpid()}"
     with open(tmp_file, "wb") as f:
         f.write(payload_bytes)

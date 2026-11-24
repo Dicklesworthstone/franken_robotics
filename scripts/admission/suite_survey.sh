@@ -126,6 +126,10 @@ if ! command -v git >/dev/null 2>&1; then
   echo "suite_survey: git is required" >&2
   exit 2
 fi
+if ! command -v b3sum >/dev/null 2>&1; then
+  echo "suite_survey: b3sum is required" >&2
+  exit 2
+fi
 
 export FROB_SURVEY_REPO_ROOT="$REPO_ROOT"
 export FROB_SURVEY_STACK_LOCK="$STACK_LOCK"
@@ -177,7 +181,8 @@ ALLOWED_ROW_KEYS = frozenset({
     "fallback",
 })
 HEX40_RE = re.compile(r"^[0-9a-f]{40}$")
-ASUP_0_5_RE = re.compile(r"(?:^|[=^~,\s])0\.5(?:\.[0-9]+)?(?:$|[,\s])")
+UTC_ISO_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
+CARGO_COMP_RE = re.compile(r"^(>=|<=|!=|=|>|<|\^|~)?\s*(\d+)(?:\.(\d+))?(?:\.(\d+))?(?:[-+][^\s,]*)?$")
 
 
 def nfc(obj):
@@ -246,8 +251,9 @@ def load_siblings_register(path: str) -> list[dict]:
         seen_names.add(name)
         if not isinstance(rel_path, str) or not rel_path:
             raise ValueError(f"{path}: sibling {name!r}: 'path' must be a non-empty string")
-        if rel_path.startswith("/") or rel_path.startswith("~"):
-            raise ValueError(f"{path}: sibling {name!r}: 'path' must be relative, got {rel_path!r}")
+        norm_parts = rel_path.replace("\\", "/").split("/")
+        if rel_path.startswith("/") or rel_path.startswith("~") or ".." in norm_parts[1:]:
+            raise ValueError(f"{path}: sibling {name!r}: 'path' must be relative with no secondary '..' traversal, got {rel_path!r}")
         if not isinstance(survey, bool):
             raise ValueError(f"{path}: sibling {name!r}: 'survey' must be a boolean")
 
@@ -401,7 +407,12 @@ def parse_asupersync_spec(val, key_path: str) -> dict:
         }
     if isinstance(val, dict):
         optional = bool(val.get("optional", False))
-        default_features = bool(val.get("default-features", True))
+        if "default-features" in val:
+            default_features = bool(val["default-features"])
+        elif "default_features" in val:
+            default_features = bool(val["default_features"])
+        else:
+            default_features = True
         if "path" in val and isinstance(val["path"], str):
             return {
                 "kind": "path",
@@ -470,11 +481,23 @@ def read_asupersync(sibling_dir: str, manifest_rel: str, key_path: str, watched_
                 if spec["kind"] != "none":
                     return spec
         members = lookup_dotted(root_doc, "workspace.members")
+        excludes = lookup_dotted(root_doc, "workspace.exclude")
+        excluded_dirs: set[str] = set()
+        if isinstance(excludes, list):
+            for epat in excludes:
+                if not isinstance(epat, str):
+                    continue
+                for edir in glob.glob(os.path.join(sibling_dir, epat)):
+                    excluded_dirs.add(os.path.realpath(edir))
+                excluded_dirs.add(os.path.realpath(os.path.join(sibling_dir, epat)))
         if isinstance(members, list):
             for pat in members:
                 if not isinstance(pat, str):
                     continue
                 for member_dir in sorted(glob.glob(os.path.join(sibling_dir, pat))):
+                    mreal = os.path.realpath(member_dir)
+                    if any(mreal == ed or mreal.startswith(ed + os.sep) for ed in excluded_dirs):
+                        continue
                     mdoc = read_toml_file(os.path.join(member_dir, "Cargo.toml"))
                     if mdoc is None:
                         continue
@@ -597,9 +620,32 @@ def names_asupersync_0_5_0(asup: dict) -> bool:
     if asup.get("kind") != "registry":
         return False
     req = asup.get("requirement")
-    if not isinstance(req, str):
+    if not isinstance(req, str) or not req.strip():
         return False
-    return bool(ASUP_0_5_RE.search(req))
+    clauses = [c.strip() for c in req.split(",") if c.strip()]
+    if not clauses:
+        return False
+    names_0_5 = False
+    for clause in clauses:
+        m = CARGO_COMP_RE.match(clause)
+        if not m:
+            continue
+        op = m.group(1) or ""
+        maj = int(m.group(2))
+        minor = int(m.group(3)) if m.group(3) is not None else None
+        patch = int(m.group(4)) if m.group(4) is not None else None
+        if maj == 0 and minor == 5:
+            if op in ("", "=", "^", "~", ">="):
+                names_0_5 = True
+            elif op in ("!=", ">") and (patch is None or patch == 0):
+                return False
+            elif op == "<" and (patch is None or patch == 0):
+                return False
+        elif op in ("<", "<=") and (maj, minor or 0) < (0, 5):
+            return False
+        elif op in (">", ">=") and (maj, minor or 0) > (0, 5):
+            return False
+    return names_0_5
 
 
 def compute_derived(rows: list[dict]) -> dict:
@@ -711,13 +757,17 @@ def find_previous_survey(out_dir: str, baseline_path: str, baseline_explicit: bo
 def main() -> int:
     derive_only = os.environ.get("FROB_SURVEY_DERIVE_ONLY", "")
     if derive_only:
-        with open(derive_only, "rb") as f:
-            doc = json.loads(f.read().decode("utf-8"))
-        rows = doc.get("rows", [])
-        out = dict(doc)
-        out.update(compute_derived(rows))
-        print(canonical_json(out))
-        return 0
+        try:
+            with open(derive_only, "rb") as f:
+                doc = json.loads(f.read().decode("utf-8"))
+            rows = doc.get("rows", [])
+            out = dict(doc)
+            out.update(compute_derived(rows))
+            print(canonical_json(out))
+            return 0
+        except Exception as exc:
+            print(f"suite_survey: derive-only error: {exc}", file=sys.stderr)
+            return 2
 
     repo_root = os.environ["FROB_SURVEY_REPO_ROOT"]
     stack_lock_path = os.environ["FROB_SURVEY_STACK_LOCK"]
@@ -762,6 +812,9 @@ def main() -> int:
         return 2
 
     if date_override:
+        if not UTC_ISO_RE.match(date_override):
+            print(f"suite_survey: invalid --date (expected YYYY-MM-DDTHH:MM:SSZ): {date_override!r}", file=sys.stderr)
+            return 2
         date_iso = date_override
         utc_stem = re.sub(r"[-:]", "", date_iso)
     else:
@@ -778,6 +831,12 @@ def main() -> int:
     record.update(compute_derived(rows))
 
     payload_bytes = canonical_json(record).encode("utf-8")
+    try:
+        record_hash = blake3_bytes(payload_bytes)
+    except Exception as exc:
+        print(f"suite_survey: hash error: {exc}", file=sys.stderr)
+        return 2
+
     os.makedirs(out_dir, exist_ok=True)
     out_file = os.path.join(out_dir, f"{utc_stem}.json")
     if os.path.exists(out_file):
@@ -787,7 +846,6 @@ def main() -> int:
         f.write(payload_bytes)
     os.replace(tmp_file, out_file)
 
-    record_hash = blake3_bytes(payload_bytes)
     rel_out = os.path.relpath(out_file, repo_root) if os.path.abspath(out_file).startswith(os.path.abspath(repo_root) + os.sep) else out_file
 
     diff_lines, consumed_changed = diff_surveys(prev_doc, rows, consumed_names)

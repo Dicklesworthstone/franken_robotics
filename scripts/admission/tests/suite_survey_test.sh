@@ -750,6 +750,237 @@ for k in ("channels_in_play", "asupersync_0_5_0_named_by", "not_on_candidate_a",
   fi
 }
 
+# ---------------------------------------------------------------------------
+# Test 11: asupersync_0_5_range_and_exclusions
+# Cargo version-req clauses like ">=0.5.0, <0.6" name the 0.5 line, while
+# exclusions like ">0.5.0" or "!=0.5.0" do not.
+# ---------------------------------------------------------------------------
+test_asupersync_0_5_range_and_exclusions() {
+  local t="asupersync_0_5_range_and_exclusions"
+  local base="$SCRATCH/$t"
+  local repo="$base/repo"
+  mkdir -p "$repo" "$base/out"
+
+  local name
+  for name in sib_range sib_gt sib_ne; do
+    init_git_fixture "$base/$name"
+    printf '[toolchain]\nchannel = "nightly-2026-08-31"\n' >"$base/$name/rust-toolchain.toml"
+  done
+  printf '[package]\nname = "a"\nversion = "0.1.0"\n[dependencies]\nasupersync = ">=0.5.0, <0.6"\n' >"$base/sib_range/Cargo.toml"
+  printf '[package]\nname = "b"\nversion = "0.1.0"\n[dependencies]\nasupersync = ">0.5.0"\n' >"$base/sib_gt/Cargo.toml"
+  printf '[package]\nname = "c"\nversion = "0.1.0"\n[dependencies]\nasupersync = "!=0.5.0"\n' >"$base/sib_ne/Cargo.toml"
+  for name in sib_range sib_gt sib_ne; do
+    commit_all "$base/$name" "init"
+  done
+
+  cat >"$base/siblings.toml" <<'EOF'
+schema = "frob.siblings/1"
+
+[[sibling]]
+name = "sib_range"
+path = "../sib_range"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "dependencies.asupersync"
+watched = {}
+
+[[sibling]]
+name = "sib_gt"
+path = "../sib_gt"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "dependencies.asupersync"
+watched = {}
+
+[[sibling]]
+name = "sib_ne"
+path = "../sib_ne"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "dependencies.asupersync"
+watched = {}
+EOF
+  printf '{"rows":[],"schema":"frob.suite-survey/1"}\n' >"$base/empty_baseline.json"
+
+  local out rc=0
+  out="$("$SURVEY_SH" --repo-root "$repo" --register "$base/siblings.toml" --out-dir "$base/out" --baseline "$base/empty_baseline.json" --stack-lock "$base/missing.lock" 2>&1)" || rc=$?
+  if [ "$rc" -ne 0 ]; then
+    fail "$t" "expected exit 0, got $rc: $out"
+    return
+  fi
+  local rec
+  rec="$(extract_record_path "$out")"
+  if assert_py "$t" '
+import json, sys
+doc = json.load(open(sys.argv[1]))
+assert doc["asupersync_0_5_0_named_by"] == ["sib_range"], doc["asupersync_0_5_0_named_by"]
+' "$rec"; then
+    pass "$t"
+  fi
+}
+
+# ---------------------------------------------------------------------------
+# Test 12: workspace_exclude_respected_in_fallback
+# A crate listed in [workspace] exclude must not be scanned as a workspace
+# member when falling back to member manifest inspection.
+# ---------------------------------------------------------------------------
+test_workspace_exclude_respected_in_fallback() {
+  local t="workspace_exclude_respected_in_fallback"
+  local base="$SCRATCH/$t"
+  local repo="$base/repo"
+  local sib="$base/sib_excl"
+  mkdir -p "$repo" "$base/out" "$sib/crates/real" "$sib/crates/excluded"
+
+  init_git_fixture "$sib"
+  printf '[toolchain]\nchannel = "nightly-2026-08-31"\n' >"$sib/rust-toolchain.toml"
+  cat >"$sib/Cargo.toml" <<'EOF'
+[workspace]
+members = ["crates/*"]
+exclude = ["crates/excluded"]
+EOF
+  printf '[package]\nname = "real"\nversion = "0.1.0"\n' >"$sib/crates/real/Cargo.toml"
+  printf '[package]\nname = "excluded"\nversion = "0.1.0"\n[dependencies]\nasupersync = "=0.5.0"\n' >"$sib/crates/excluded/Cargo.toml"
+  commit_all "$sib" "init"
+
+  cat >"$base/siblings.toml" <<'EOF'
+schema = "frob.siblings/1"
+
+[[sibling]]
+name = "sib_excl"
+path = "../sib_excl"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "workspace.dependencies.asupersync"
+watched = {}
+EOF
+  printf '{"rows":[],"schema":"frob.suite-survey/1"}\n' >"$base/empty_baseline.json"
+
+  local out rc=0
+  out="$("$SURVEY_SH" --repo-root "$repo" --register "$base/siblings.toml" --out-dir "$base/out" --baseline "$base/empty_baseline.json" --stack-lock "$base/missing.lock" 2>&1)" || rc=$?
+  if [ "$rc" -ne 0 ]; then
+    fail "$t" "expected exit 0, got $rc: $out"
+    return
+  fi
+  local rec
+  rec="$(extract_record_path "$out")"
+  if assert_py "$t" '
+import json, sys
+doc = json.load(open(sys.argv[1]))
+assert doc["rows"][0]["asupersync"]["kind"] == "none", doc["rows"][0]["asupersync"]
+assert doc["asupersync_0_5_0_named_by"] == [], doc["asupersync_0_5_0_named_by"]
+' "$rec"; then
+    pass "$t"
+  fi
+}
+
+# ---------------------------------------------------------------------------
+# Test 13: default_features_underscore_alias
+# Cargo accepts `default_features = false` as an alias for `default-features`.
+# ---------------------------------------------------------------------------
+test_default_features_underscore_alias() {
+  local t="default_features_underscore_alias"
+  local base="$SCRATCH/$t"
+  local repo="$base/repo"
+  local sib="$base/sib_df"
+  mkdir -p "$repo" "$base/out"
+
+  init_git_fixture "$sib"
+  printf '[toolchain]\nchannel = "nightly-2026-08-31"\n' >"$sib/rust-toolchain.toml"
+  printf '[package]\nname = "df"\nversion = "0.1.0"\n[dependencies]\nasupersync = { version = "0.6.2", default_features = false }\n' >"$sib/Cargo.toml"
+  commit_all "$sib" "init"
+
+  cat >"$base/siblings.toml" <<'EOF'
+schema = "frob.siblings/1"
+
+[[sibling]]
+name = "sib_df"
+path = "../sib_df"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "dependencies.asupersync"
+watched = {}
+EOF
+  printf '{"rows":[],"schema":"frob.suite-survey/1"}\n' >"$base/empty_baseline.json"
+
+  local out rc=0
+  out="$("$SURVEY_SH" --repo-root "$repo" --register "$base/siblings.toml" --out-dir "$base/out" --baseline "$base/empty_baseline.json" --stack-lock "$base/missing.lock" 2>&1)" || rc=$?
+  if [ "$rc" -ne 0 ]; then
+    fail "$t" "expected exit 0, got $rc: $out"
+    return
+  fi
+  local rec
+  rec="$(extract_record_path "$out")"
+  if assert_py "$t" '
+import json, sys
+doc = json.load(open(sys.argv[1]))
+assert doc["rows"][0]["asupersync"]["default_features"] is False, doc["rows"][0]["asupersync"]
+' "$rec"; then
+    pass "$t"
+  fi
+}
+
+# ---------------------------------------------------------------------------
+# Test 14: path_traversal_and_date_validation
+# Rejects secondary `..` segments in sibling path, rejects malformed --date,
+# and exits 2 cleanly without traceback on missing --derive-only file.
+# ---------------------------------------------------------------------------
+test_path_traversal_and_date_validation() {
+  local t="path_traversal_and_date_validation"
+  local base="$SCRATCH/$t"
+  local repo="$base/repo"
+  mkdir -p "$repo" "$base/out"
+
+  cat >"$base/bad_path.toml" <<'EOF'
+schema = "frob.siblings/1"
+
+[[sibling]]
+name = "escape"
+path = "../foo/../../etc"
+survey = true
+EOF
+  printf '{"rows":[],"schema":"frob.suite-survey/1"}\n' >"$base/empty_baseline.json"
+
+  local rc1=0
+  "$SURVEY_SH" --repo-root "$repo" --register "$base/bad_path.toml" --out-dir "$base/out" --baseline "$base/empty_baseline.json" --stack-lock "$base/missing.lock" >/dev/null 2>&1 || rc1=$?
+  if [ "$rc1" -ne 2 ]; then
+    fail "$t" "expected exit 2 on path traversal '../foo/../../etc', got $rc1"
+    return
+  fi
+
+  cat >"$base/ok.toml" <<'EOF'
+schema = "frob.siblings/1"
+
+[[sibling]]
+name = "missing_ok"
+path = "../missing_ok"
+survey = true
+EOF
+  local rc2=0
+  "$SURVEY_SH" --repo-root "$repo" --register "$base/ok.toml" --out-dir "$base/out" --baseline "$base/empty_baseline.json" --stack-lock "$base/missing.lock" --date "../../evil" >/dev/null 2>&1 || rc2=$?
+  if [ "$rc2" -ne 2 ]; then
+    fail "$t" "expected exit 2 on malformed --date '../../evil', got $rc2"
+    return
+  fi
+
+  local err3 rc3=0
+  err3="$("$SURVEY_SH" --derive-only "$base/does_not_exist.json" 2>&1)" || rc3=$?
+  if [ "$rc3" -ne 2 ]; then
+    fail "$t" "expected exit 2 on missing --derive-only file, got $rc3: $err3"
+    return
+  fi
+  if printf '%s\n' "$err3" | grep -q 'Traceback'; then
+    fail "$t" "expected clean error message without Python traceback: $err3"
+    return
+  fi
+
+  pass "$t"
+}
+
 test_reads_channel_and_requirement
 test_path_requirement
 test_counts_modified_paths
@@ -760,6 +991,10 @@ test_register_schema_shared
 test_known_answer_2026_11_21
 test_negative_control_toolchain_change_detected
 test_idempotent_rows_unchanged_tree
+test_asupersync_0_5_range_and_exclusions
+test_workspace_exclude_respected_in_fallback
+test_default_features_underscore_alias
+test_path_traversal_and_date_validation
 
 printf '\nSUMMARY: %d passed, %d failed\n' "$PASS" "$FAIL"
 [ "$FAIL" -eq 0 ]

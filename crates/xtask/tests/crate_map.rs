@@ -392,3 +392,125 @@ fn non_rust_caps_and_determinism() {
     assert_eq!(f_ab, f_ba);
     assert_eq!(f_ab.len(), 2);
 }
+
+#[test]
+fn valid_addition_inserted_in_layer_section_passes() {
+    // Regression: inserting a valid ADR-WS-01 addition inside its layer section
+    // (before the end of CRATE_MAP) must not falsely flag the last original row
+    // as AdditionWithOriginalReason.
+    let mut rows = CRATE_MAP.to_vec();
+    let insert_pos = rows
+        .iter()
+        .position(|r| r.name == "frob-scene")
+        .expect("frob-scene row")
+        + 1;
+    rows.insert(
+        insert_pos,
+        CrateRow {
+            name: "frob-layer2-extra",
+            dir: "crates/frob-layer2-extra",
+            layer: Layer::Core(2),
+            rank: 6,
+            tiers: &[Tier::Solid],
+            chapters: &["§14"],
+            cap_kloc: 4,
+            reason: Reason::Dependency,
+            adr: Some("ADR-WS-99"),
+            conditional: None,
+        },
+    );
+    assert_eq!(validate_table(&rows, TOMBSTONES), Ok(()));
+}
+
+#[test]
+fn wrong_directory_for_listed_crate_is_finding() {
+    // Regression: a workspace member reusing a listed crate name at the wrong
+    // directory (e.g. frob-mcp under crates/ instead of surface/frob-mcp) must
+    // yield a metadata mismatch finding rather than passing silently.
+    let root = make_scratch_dir("wrong-dir");
+    write_workspace_root(&root, &["crates/*"]);
+    write_member(
+        &root,
+        "crates/frob-mcp",
+        "frob-mcp",
+        "[package.metadata.frob]\nlayer = 7\nrank = 1",
+    );
+
+    let members = discover_workspace_members(&root).expect("discover");
+    let findings = validate(&members, &[]);
+    assert_eq!(findings.len(), 1, "expected 1 finding, got {findings:?}");
+    assert_eq!(findings[0].rule, RULE_METADATA_MISMATCH);
+    assert_eq!(findings[0].subject, "frob-mcp");
+    assert_eq!(findings[0].path, "crates/frob-mcp/Cargo.toml");
+    assert!(findings[0].message.contains("surface/frob-mcp"));
+}
+
+#[test]
+fn workspace_exclude_matches_subdirectory_members() {
+    // Regression: Cargo's [workspace] exclude = ["spark"] excludes members under
+    // spark/*, while preserving sibling prefixes like sparkplug/*.
+    let root = make_scratch_dir("exclude-prefix");
+    let toml = "[workspace]\nresolver = \"3\"\nmembers = [\"crates/*\", \"spark/*\", \"sparkplug/*\"]\nexclude = [\"spark\"]\n";
+    fs::write(root.join("Cargo.toml"), toml).expect("write root Cargo.toml");
+    write_member(&root, "crates/frob-core", "frob-core", "[package.metadata.frob]\nlayer = 0\nrank = 1");
+    write_member(
+        &root,
+        "spark/frob-spark-cuda",
+        "frob-spark-cuda",
+        "[package.metadata.frob]\nlayer = \"annex\"\nrank = 1",
+    );
+    write_member(&root, "sparkplug/frob-extra", "frob-extra", "");
+
+    let members = discover_workspace_members(&root).expect("discover");
+    let names: Vec<&str> = members.iter().map(|m| m.name.as_str()).collect();
+    assert_eq!(names, vec!["frob-core", "frob-extra"]);
+}
+
+#[test]
+fn toml_multiline_strings_and_malformed_values_handled() {
+    // Regression: [package.metadata.frob] inside a multi-line string must be ignored,
+    // and malformed integer/string literals must be rejected.
+    let fake_in_multiline = "\
+[package]
+name = \"frob-core\"
+description = \"\"\"
+[package.metadata.frob]
+layer = 0
+rank = 1
+\"\"\"
+";
+    assert_eq!(
+        xtask::crate_map::parse_manifest_metadata(fake_in_multiline),
+        Err(xtask::crate_map::MetadataError::MissingTable)
+    );
+
+    let real_after_multiline = "\
+[package]
+name = \"frob-core\"
+description = '''
+[package.metadata.frob]
+layer = 7
+rank = 5
+'''
+[package.metadata.frob]
+layer = 0
+rank = 1
+";
+    assert_eq!(
+        xtask::crate_map::parse_manifest_metadata(real_after_multiline),
+        Ok(xtask::crate_map::ManifestMetadata { layer: Layer::Core(0), rank: 1 })
+    );
+
+    // Malformed TOML integers (leading/trailing/double underscores, leading zero) must fail.
+    for bad_rank in ["_1", "1_", "1__2", "01"] {
+        let bad_toml = format!("[package.metadata.frob]\nlayer = 0\nrank = {bad_rank}\n");
+        assert!(
+            xtask::crate_map::parse_manifest_metadata(&bad_toml).is_err(),
+            "expected malformed integer `{bad_rank}` to fail"
+        );
+    }
+
+    // Malformed concatenated string with unescaped interior quote must fail.
+    let bad_name = "[package]\nname = \"frob\" + \"core\"\n";
+    assert!(xtask::crate_map::parse_package_name(bad_name).is_err());
+}

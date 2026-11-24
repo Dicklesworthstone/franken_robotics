@@ -272,7 +272,7 @@ pub fn validate_table(rows: &[CrateRow], tombstones: &[Tombstone]) -> Result<(),
     let mut counted_ranks_by_layer: BTreeMap<Layer, Vec<u8>> = BTreeMap::new();
     let tomb_map: BTreeMap<&str, &str> = tombstones.iter().map(|t| (t.name, t.adr)).collect();
 
-    let mut counted_idx = 0usize;
+    let mut original_counted = 0usize;
     for row in rows {
         if !seen_names.insert(row.name) {
             errors.push(TableError::DuplicateName(row.name.to_owned()));
@@ -326,10 +326,12 @@ pub fn validate_table(rows: &[CrateRow], tombstones: &[Tombstone]) -> Result<(),
             errors.push(TableError::DuplicateRankInLayer { layer: row.layer, rank: row.rank });
         }
         if row.is_counted() {
-            if counted_idx >= ORIGINAL_CRATE_COUNT && row.reason == Reason::Original {
-                errors.push(TableError::AdditionWithOriginalReason { name: row.name.to_owned() });
+            if row.reason == Reason::Original {
+                if original_counted >= ORIGINAL_CRATE_COUNT {
+                    errors.push(TableError::AdditionWithOriginalReason { name: row.name.to_owned() });
+                }
+                original_counted += 1;
             }
-            counted_idx += 1;
             counted_ranks_by_layer.entry(row.layer).or_default().push(row.rank);
         }
     }
@@ -384,9 +386,13 @@ pub fn parse_manifest_metadata(toml_text: &str) -> Result<ManifestMetadata, Meta
     let mut saw_frob_table = false;
     let mut layer_val: Option<Layer> = None;
     let mut rank_val: Option<u8> = None;
+    let mut ml_state = MultilineState::None;
 
     for raw_line in toml_text.lines() {
-        let line = strip_toml_comment(raw_line).trim();
+        let Some(stripped) = strip_toml_line(raw_line, &mut ml_state) else {
+            continue;
+        };
+        let line = stripped.trim();
         if line.is_empty() {
             continue;
         }
@@ -432,8 +438,12 @@ pub fn read_package_name(manifest_path: &Path) -> Result<String, MetadataError> 
 
 pub fn parse_package_name(toml_text: &str) -> Result<String, MetadataError> {
     let mut section = String::new();
+    let mut ml_state = MultilineState::None;
     for raw_line in toml_text.lines() {
-        let line = strip_toml_comment(raw_line).trim();
+        let Some(stripped) = strip_toml_line(raw_line, &mut ml_state) else {
+            continue;
+        };
+        let line = stripped.trim();
         if line.is_empty() {
             continue;
         }
@@ -456,31 +466,103 @@ pub fn parse_package_name(toml_text: &str) -> Result<String, MetadataError> {
     Err(MetadataError::MissingField("package.name"))
 }
 
-fn strip_toml_comment(line: &str) -> &str {
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum MultilineState {
+    None,
+    Basic,
+    Literal,
+}
+
+fn strip_toml_line<'a>(line: &'a str, state: &mut MultilineState) -> Option<&'a str> {
+    let bytes = line.as_bytes();
+    let mut i = 0usize;
+    if *state != MultilineState::None {
+        advance_multiline(bytes, &mut i, state);
+        return None;
+    }
     let (mut in_double, mut in_single, mut escaped) = (false, false, false);
-    for (idx, ch) in line.char_indices() {
+    while i < bytes.len() {
+        let b = bytes[i];
         if in_double {
             if escaped {
                 escaped = false;
-            } else if ch == '\\' {
+            } else if b == b'\\' {
                 escaped = true;
-            } else if ch == '"' {
+            } else if b == b'"' {
                 in_double = false;
             }
+            i += 1;
         } else if in_single {
-            if ch == '\'' {
+            if b == b'\'' {
                 in_single = false;
             }
+            i += 1;
+        } else if bytes[i..].starts_with(b"\"\"\"") {
+            i += 3;
+            *state = MultilineState::Basic;
+            advance_multiline(bytes, &mut i, state);
+        } else if bytes[i..].starts_with(b"'''") {
+            i += 3;
+            *state = MultilineState::Literal;
+            advance_multiline(bytes, &mut i, state);
+        } else if b == b'"' {
+            in_double = true;
+            i += 1;
+        } else if b == b'\'' {
+            in_single = true;
+            i += 1;
+        } else if b == b'#' {
+            return Some(&line[..i]);
         } else {
-            match ch {
-                '"' => in_double = true,
-                '\'' => in_single = true,
-                '#' => return line.split_at(idx).0,
-                _ => {}
+            i += 1;
+        }
+    }
+    Some(line)
+}
+
+fn advance_multiline(bytes: &[u8], i: &mut usize, state: &mut MultilineState) {
+    match *state {
+        MultilineState::None => {}
+        MultilineState::Basic => {
+            let mut escaped = false;
+            while *i < bytes.len() {
+                let b = bytes[*i];
+                if escaped {
+                    escaped = false;
+                    *i += 1;
+                } else if b == b'\\' {
+                    escaped = true;
+                    *i += 1;
+                } else if bytes[*i..].starts_with(b"\"\"\"") {
+                    *i += 3;
+                    let mut extra = 0;
+                    while *i < bytes.len() && bytes[*i] == b'"' && extra < 2 {
+                        *i += 1;
+                        extra += 1;
+                    }
+                    *state = MultilineState::None;
+                    return;
+                } else {
+                    *i += 1;
+                }
+            }
+        }
+        MultilineState::Literal => {
+            while *i < bytes.len() {
+                if bytes[*i..].starts_with(b"'''") {
+                    *i += 3;
+                    let mut extra = 0;
+                    while *i < bytes.len() && bytes[*i] == b'\'' && extra < 2 {
+                        *i += 1;
+                        extra += 1;
+                    }
+                    *state = MultilineState::None;
+                    return;
+                }
+                *i += 1;
             }
         }
     }
-    line
 }
 
 fn parse_table_header(line: &str) -> Option<String> {
@@ -519,6 +601,10 @@ fn parse_toml_string(raw: &str) -> Option<String> {
         let mut out = String::with_capacity(inner.len());
         let mut chars = inner.chars();
         while let Some(c) = chars.next() {
+            if c == '"' {
+                // Unescaped quote inside string literal means malformed/concatenated token.
+                return None;
+            }
             if c == '\\' {
                 match chars.next()? {
                     '"' => out.push('"'),
@@ -537,17 +623,33 @@ fn parse_toml_string(raw: &str) -> Option<String> {
         }
         return Some(out);
     }
-    s.strip_prefix('\'')
-        .and_then(|t| t.strip_suffix('\''))
-        .map(str::to_owned)
+    if let Some(inner) = s.strip_prefix('\'').and_then(|t| t.strip_suffix('\'')) {
+        if inner.contains('\'') {
+            return None;
+        }
+        return Some(inner.to_owned());
+    }
+    None
 }
 
 fn parse_u8_value(field: &'static str, raw: &str) -> Result<u8, MetadataError> {
-    let cleaned = raw.trim().replace('_', "");
-    if cleaned.is_empty() || !cleaned.bytes().all(|b| b.is_ascii_digit()) {
+    let trimmed = raw.trim();
+    if trimmed.is_empty()
+        || trimmed.starts_with('_')
+        || trimmed.ends_with('_')
+        || trimmed.contains("__")
+        || !trimmed.bytes().all(|b| b.is_ascii_digit() || b == b'_')
+    {
         return Err(MetadataError::InvalidField {
             field,
-            detail: format!("expected non-negative integer, got `{raw}`"),
+            detail: format!("expected non-negative TOML integer, got `{raw}`"),
+        });
+    }
+    let cleaned = trimmed.replace('_', "");
+    if cleaned.len() > 1 && cleaned.starts_with('0') {
+        return Err(MetadataError::InvalidField {
+            field,
+            detail: format!("leading zero forbidden in TOML integer `{raw}`"),
         });
     }
     cleaned.parse::<u8>().map_err(|e| MetadataError::InvalidField {
@@ -786,6 +888,24 @@ pub fn validate_with_table(
             continue;
         };
 
+        if member.rel_dir != row.dir {
+            findings.push(Finding {
+                rule: RULE_METADATA_MISMATCH,
+                subject: member.name.clone(),
+                path: rel_manifest,
+                line: None,
+                message: format!(
+                    "workspace member `{}` resides at `{}`, but CRATE_MAP specifies `{}`",
+                    member.name, member.rel_dir, row.dir
+                ),
+                repair: format!(
+                    "move crate `{}` to `{}` or update CRATE_MAP by ADR",
+                    member.name, row.dir
+                ),
+            });
+            continue;
+        }
+
         if row.conditional.is_some() && !member.manifest_path.parent().is_some_and(Path::is_dir) {
             findings.push(Finding {
                 rule: RULE_UNLISTED_CRATE,
@@ -875,14 +995,14 @@ pub fn discover_workspace_members(workspace_root: &Path) -> Result<Vec<Workspace
                         .strip_prefix(workspace_root)
                         .map(normalize_rel_dir)
                         .unwrap_or_default();
-                    if !excluded.contains(&rel) {
+                    if !is_excluded(&rel, &excluded) {
                         manifest_paths.push(candidate);
                     }
                 }
             }
         } else {
             let rel = normalize_rel_dir(Path::new(&pat));
-            if excluded.contains(&rel) {
+            if is_excluded(&rel, &excluded) {
                 continue;
             }
             let candidate = workspace_root.join(&pat).join("Cargo.toml");
@@ -900,13 +1020,26 @@ pub fn discover_workspace_members(workspace_root: &Path) -> Result<Vec<Workspace
         .collect()
 }
 
+fn is_excluded(rel: &str, excluded: &BTreeSet<String>) -> bool {
+    excluded.iter().any(|ex| {
+        rel == ex
+            || rel
+                .strip_prefix(ex.as_str())
+                .is_some_and(|rest| rest.starts_with('/'))
+    })
+}
+
 fn parse_workspace_array(toml_text: &str, key: &str) -> Vec<String> {
     let mut section = String::new();
     let mut collecting = false;
     let mut buf = String::new();
+    let mut ml_state = MultilineState::None;
 
     for raw_line in toml_text.lines() {
-        let line = strip_toml_comment(raw_line).trim();
+        let Some(stripped) = strip_toml_line(raw_line, &mut ml_state) else {
+            continue;
+        };
+        let line = stripped.trim();
         if line.is_empty() {
             continue;
         }

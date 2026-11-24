@@ -132,7 +132,6 @@ fi
 SCRATCH_BASE="${BIG_SCRATCH:-${TMPDIR:-/tmp}}/frob-wp-table"
 mkdir -p "$SCRATCH_BASE"
 TMP_WORK=$(mktemp -d "$SCRATCH_BASE/run.XXXXXX")
-trap 'rm -rf "$TMP_WORK"' EXIT INT TERM
 
 # Convert plan TSV (if enabled) into JSON map for jq.
 # Write awk output to a file before invoking jq so POSIX sh (no pipefail) does

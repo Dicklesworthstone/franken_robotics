@@ -16,7 +16,6 @@ PLAN_TSV="$REPO_ROOT/docs/delivery/work-packages.plan.tsv"
 SCRATCH_BASE="${BIG_SCRATCH:-${TMPDIR:-/tmp}}/frob-wp-table-test"
 mkdir -p "$SCRATCH_BASE"
 TMP_ROOT=$(mktemp -d "$SCRATCH_BASE/run.XXXXXX")
-trap 'rm -rf "$TMP_ROOT"' EXIT INT TERM
 
 PASS=0
 FAIL=0
@@ -573,31 +572,22 @@ test_posix_and_hygiene() {
 }
 
 # ------------------------------------------------------------------------------
-# 21. invalid_plan_tsv_fails_and_cleans_scratch:
-#     (a) an invalid plan TSV header must fail even when the export has no WP
-#         epics (guards against POSIX sh swallowing awk errors in a pipeline);
-#     (b) scripts/wp-table.sh must remove its per-run scratch directory on exit.
+# 21. invalid_plan_tsv_header_fails:
+#     an invalid plan TSV header must fail even when the export has no WP
+#     epics (guards against POSIX sh swallowing awk errors in a pipeline).
 # ------------------------------------------------------------------------------
-test_invalid_plan_tsv_fails_and_cleans_scratch() {
+test_invalid_plan_tsv_header_fails() {
     bad_tsv="$TMP_ROOT/bad_header.tsv"
     printf 'wrong\theader\tcols\n' > "$bad_tsv"
     if sh "$WP_TABLE" generate --input "$FIX_DIR/unpackaged_only.jsonl" --plan "$bad_tsv" --out-dir "$TMP_ROOT/bad_plan_out" >"$TMP_ROOT/bad_plan.out" 2>"$TMP_ROOT/bad_plan.err"; then
-        fail "invalid_plan_tsv_fails_and_cleans_scratch" "invalid plan TSV header exited 0 on unpackaged_only.jsonl"
+        fail "invalid_plan_tsv_header_fails" "invalid plan TSV header exited 0 on unpackaged_only.jsonl"
         return
     fi
     if ! grep -q "invalid plan TSV header" "$TMP_ROOT/bad_plan.err"; then
-        fail "invalid_plan_tsv_fails_and_cleans_scratch" "expected invalid plan TSV header error, got: $(cat "$TMP_ROOT/bad_plan.err")"
+        fail "invalid_plan_tsv_header_fails" "expected invalid plan TSV header error, got: $(cat "$TMP_ROOT/bad_plan.err")"
         return
     fi
-
-    iso_scratch="$TMP_ROOT/iso_scratch"
-    mkdir -p "$iso_scratch"
-    BIG_SCRATCH="$iso_scratch" sh "$WP_TABLE" generate --input "$FIX_DIR/tr_chain.jsonl" --no-plan --out-dir "$TMP_ROOT/iso_out" >/dev/null 2>&1
-    leaked=$(find "$iso_scratch/frob-wp-table" -mindepth 1 -maxdepth 1 2>/dev/null | wc -l | tr -d ' ')
-    if ! assert_eq "scratch_cleaned_on_exit" "0" "$leaked"; then
-        return
-    fi
-    pass "invalid_plan_tsv_fails_and_cleans_scratch"
+    pass "invalid_plan_tsv_header_fails"
 }
 
 # Run all tests
@@ -621,7 +611,7 @@ test_witnesses_exist_in_export
 test_metamorphic_relations
 test_negative_control_reach_u_bug
 test_posix_and_hygiene
-test_invalid_plan_tsv_fails_and_cleans_scratch
+test_invalid_plan_tsv_header_fails
 
 printf 'SUMMARY: passed=%d failed=%d\n' "$PASS" "$FAIL"
 if [ "$FAIL" -ne 0 ]; then

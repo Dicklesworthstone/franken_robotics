@@ -1,0 +1,23 @@
+[package]
+name = "frob-conformance"
+version.workspace = true
+edition.workspace = true
+license-file.workspace = true
+repository.workspace = true
+authors.workspace = true
+publish = false
+autobins = false
+description = "Gauntlet verification harness and end-to-end log tooling for FrankenRobotics."
+
+[lib]
+name = "frob_conformance"
+path = "src/lib.rs"
+
+[[bin]]
+name = "frob-e2e"
+path = "src/bin/frob-e2e.rs"
+
+[dependencies]
+
+[lints]
+workspace = true

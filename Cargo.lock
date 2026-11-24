@@ -3,6 +3,14 @@
 version = 4
 
 [[package]]
+name = "frob-cert"
+version = "0.0.1"
+
+[[package]]
+name = "frob-conformance"
+version = "0.0.1"
+
+[[package]]
 name = "xtask"
 version = "0.0.1"
 

@@ -1,0 +1,6 @@
+# Independent stable compiler pin for the offline auditor `frob-cert` (OPEN-WS-3, ADR-WS-02).
+# Moved only by an explicit ADR; independent of the workspace toolchain T so that a
+# standalone copy of `crates/frob-cert/` builds offline anywhere with zero dependencies.
+[toolchain]
+channel = "1.99.0"
+components = ["rustfmt", "clippy"]

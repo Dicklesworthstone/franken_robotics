@@ -1,0 +1,8 @@
+# Provisional T (candidate (a): the suite's common nightly) until
+# INT-TOOLCHAIN-01 (BD-031) chooses and records T, after which this file moves
+# only by a coordinated toolchain train (OPEN-SUITE-2).
+# This is the only toolchain file in the repository apart from the stable one
+# the independent auditor `frob-cert` will carry.
+[toolchain]
+channel = "nightly-2026-08-31"
+components = ["rustfmt", "clippy"]

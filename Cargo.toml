@@ -1,0 +1,98 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/*",
+]
+# Separate workspaces with their own lockfiles (annexes and out-of-core tools).
+# `surface/frob-mcp` is added to `members` by BD-023 when it exists.
+exclude = [
+    "spark",
+    "apps",
+    "derive",
+    "bindings",
+    "worker",
+]
+
+[workspace.package]
+version = "0.0.1"
+edition = "2024"
+license-file = "LICENSE"
+repository = "https://github.com/Dicklesworthstone/franken_robotics"
+authors = ["FrankenRobotics contributors"]
+# No `rust-version` key: the single workspace toolchain T is pinned by
+# `rust-toolchain.toml` (BD-001, OPEN-SUITE-2).
+
+# Repeated from `../frankensim/Cargo.toml` at HEAD d02ad9c170d5932667d15359cd362d3198ac4806:
+# Cargo does not propagate `[patch]` tables from path dependencies. Before any
+# workspace crate depends on `asupersync`, Cargo warns that this patch is unused;
+# that warning is expected and recorded (BD-001).
+[patch.crates-io]
+asupersync = { path = "../asupersync" }
+
+# Core workspace default policy: unsafe code is denied across all core crates.
+[workspace.lints.rust]
+unsafe_code = "deny"
+
+# Repeated verbatim from `../frankensim/Cargo.toml` at HEAD
+# d02ad9c170d5932667d15359cd362d3198ac4806: Cargo ignores profile overrides
+# declared by path dependencies. Preserve FrankenSQLite's opt-level = 1
+# development contract for its engine crates.
+[profile.dev.package.fsqlite]
+opt-level = 1
+
+[profile.dev.package.fsqlite-ast]
+opt-level = 1
+
+[profile.dev.package.fsqlite-btree]
+opt-level = 1
+
+[profile.dev.package.fsqlite-core]
+opt-level = 1
+
+[profile.dev.package.fsqlite-error]
+opt-level = 1
+
+[profile.dev.package.fsqlite-ext-fts5]
+opt-level = 1
+
+[profile.dev.package.fsqlite-ext-icu]
+opt-level = 1
+
+[profile.dev.package.fsqlite-ext-json]
+opt-level = 1
+
+[profile.dev.package.fsqlite-ext-misc]
+opt-level = 1
+
+[profile.dev.package.fsqlite-ext-rtree]
+opt-level = 1
+
+[profile.dev.package.fsqlite-func]
+opt-level = 1
+
+[profile.dev.package.fsqlite-mvcc]
+opt-level = 1
+
+[profile.dev.package.fsqlite-observability]
+opt-level = 1
+
+[profile.dev.package.fsqlite-pager]
+opt-level = 1
+
+[profile.dev.package.fsqlite-parser]
+opt-level = 1
+
+[profile.dev.package.fsqlite-planner]
+opt-level = 1
+
+[profile.dev.package.fsqlite-types]
+opt-level = 1
+
+[profile.dev.package.fsqlite-vdbe]
+opt-level = 1
+
+[profile.dev.package.fsqlite-vfs]
+opt-level = 1
+
+[profile.dev.package.fsqlite-wal]
+opt-level = 1

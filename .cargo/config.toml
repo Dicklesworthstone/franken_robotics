@@ -1,0 +1,9 @@
+# Build-identity equivalence class for FrankenSim's `fs-la/build.rs` when
+# consumed by path from outside FrankenSim's tree (BD-001, N33a-08).
+# Evidence-bearing performance builds export FRANKENSIM_DEPGRAPH_RECEIPT
+# instead; no script or wrapper in this repository supplies a fallback default.
+[env]
+FRANKENSIM_DEPGRAPH_SALT = "franken-robotics-dev-v1"
+
+[alias]
+xtask = "run --locked --package xtask --"

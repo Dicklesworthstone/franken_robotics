@@ -1,0 +1,108 @@
+# franken-stack.lock — Pinned FrankenSuite Foundation Revisions (BD-001, N33a-03)
+# Top-level `toolchain` names the provisional workspace toolchain T until
+# INT-TOOLCHAIN-01 (BD-031) records T. M0 foundations are entered here with
+# their sibling heads and toolchains read on 2026-11-24; N33a-02 adds the
+# remaining ten rows of the eighteen-foundation ledger.
+
+toolchain = "nightly-2026-08-31"
+
+[[foundation]]
+id = "FD-FSIM"
+name = "frankensim"
+posture = "consume-path"
+path = "../frankensim"
+git_rev = "d02ad9c170d5932667d15359cd362d3198ac4806"
+toolchain = "nightly-2026-07-06"
+features = ["referee", "geometry", "ledger"]
+build_env = { FRANKENSIM_DEPGRAPH_SALT = "franken-robotics-dev-v1" }
+confined_to = ["frob-fsim", "bedrock-direct"]
+admission_gate = "INT-FSIM-01"
+receipt = ""
+fallback = "KILL-FSIM: (a) pinned worker process exchanging whole jobs; (b) lift the minimal referee set."
+
+[[foundation]]
+id = "FD-ASUP"
+name = "asupersync"
+posture = "consume"
+path = "../asupersync"
+git_rev = "70a37b2cfb78ce39dc001739101e0a1a7fbee416"
+version = "=0.7.0"
+toolchain = "nightly-2026-08-31"
+confined_to = ["any"]
+admission_gate = "INT-ASUP-01"
+receipt = ""
+fallback = "FD-ASUP-01 aligns the siblings; a surface that still brings a second package: KILL-MCP fallback 1."
+
+[[foundation]]
+id = "FD-FSQL"
+name = "frankensqlite"
+posture = "consume"
+path = "../frankensqlite"
+git_rev = "976b63ccb573b941c24b78d1a64450eb632b1336"
+version = "=0.5.1"
+toolchain = "nightly-2026-08-31"
+confined_to = ["frob-chronicle"]
+admission_gate = "INT-FSQL-01"
+receipt = ""
+fallback = "An append-only JSON-lines ledger with the same schema; LRU eviction."
+
+[[foundation]]
+id = "FD-FT"
+name = "frankentorch"
+posture = "consume"
+path = "../frankentorch"
+git_rev = "d138a752cf7fe4abd5ba4baae3f6597c2202461e"
+version = "=0.1.3"
+toolchain = "nightly-2026-08-31"
+confined_to = ["spark/frob-spark-metal"]
+admission_gate = "INT-FT-01"
+receipt = ""
+fallback = "The annex binds objc2-metal directly (needs an owner decision); the CPU trainer uses the in-house kernels on batch-cpu."
+
+[[foundation]]
+id = "FD-CUDA"
+name = "cudarc"
+posture = "consume"
+version = "=0.19.9"
+confined_to = ["spark/frob-spark-cuda"]
+admission_gate = "INT-CUDA-01"
+receipt = ""
+fallback = "None needed for CPU and Metal; the CUDA tier is absent."
+
+[[foundation]]
+id = "FD-FSYM"
+name = "frankensympy"
+posture = "build-time"
+path = "../frankensympy"
+git_rev = "1b4cfab25b55aaeba2be4a62ed97048eca6bf4d5"
+toolchain = "nightly-2026-08-20"
+confined_to = ["derive/frob-derive"]
+admission_gate = "INT-FSYM-01"
+receipt = ""
+fallback = "KILL-KIR, KILL-LEMMA."
+
+[[foundation]]
+id = "FD-FMCP"
+name = "fastmcp_rust"
+posture = "consume"
+path = "../fastmcp_rust"
+git_rev = "83e918637222a98bffc568ef29e1b6ec9a69722a"
+version = "=0.14.0"
+toolchain = "nightly-2026-08-25"
+confined_to = ["surface/frob-mcp"]
+admission_gate = "INT-FMCP-01"
+receipt = ""
+fallback = "KILL-MCP."
+
+[[foundation]]
+id = "FD-FNP"
+name = "franken_numpy"
+posture = "consume"
+path = "../franken_numpy"
+git_rev = "d548147b049a3d2fe76c20d677cb87d7423b89eb"
+version = "=0.6.0"
+toolchain = "nightly-2026-08-31"
+confined_to = ["frob-chronicle", "frob-conformance", "bindings/frob-gymnasium"]
+admission_gate = "INT-FNP-01"
+receipt = ""
+fallback = "Plain binary columns; drop the oracle."

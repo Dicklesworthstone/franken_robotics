@@ -1,0 +1,298 @@
+# Sibling repository register (schema frob.siblings/1).
+#
+# Shared between the suite survey (N33c-07, owning the survey columns) and the
+# suite deny rules in `xtask check-deps` (N33c-09, owning the policy columns:
+# posture, cargo, allowed_in, forbidden_features, reason, fallback).
+#
+# Written strictly inside the `frob-core::registry::toml` subset (N34p2-01):
+# UTF-8, LF, basic strings only, homogeneous arrays, single-line inline tables
+# without trailing commas, no dotted keys on the left of `=`.
+
+schema = "frob.siblings/1"
+
+[[sibling]]
+name = "frankensim"
+path = "../frankensim"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "patch.crates-io.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "asupersync"
+path = "../asupersync"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "package.version"
+watched = { workspace_version = "Cargo.toml:package.version", rust_version = "Cargo.toml:package.rust-version", serde_json = "Cargo.toml:dependencies.serde_json" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "frankensqlite"
+path = "../frankensqlite"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "workspace.dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "Cargo.toml:workspace.dependencies.serde_json" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "frankentorch"
+path = "../frankentorch"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "workspace.dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "Cargo.toml:workspace.dependencies.serde_json" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "franken_numpy"
+path = "../franken_numpy"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "workspace.dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "Cargo.toml:workspace.dependencies.serde_json", asupersync_optional = "crates/fnp-runtime/Cargo.toml:dependencies.asupersync.optional" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "frankenscipy"
+path = "../frankenscipy"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "workspace.dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "Cargo.toml:workspace.dependencies.serde_json" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "frankensympy"
+path = "../frankensympy"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "workspace.dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "Cargo.toml:workspace.dependencies.serde_json" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "franken_lean"
+path = "../franken_lean"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "crates/fln-cli/Cargo.toml"
+asupersync_key = "dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "fastmcp_rust"
+path = "../fastmcp_rust"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "workspace.dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "Cargo.toml:workspace.dependencies.serde_json" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "frankentui"
+path = "../frankentui"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "crates/ftui-runtime/Cargo.toml"
+asupersync_key = "dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "crates/ftui-runtime/Cargo.toml:dependencies.serde_json" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "franken_threed"
+path = "../franken_threed"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "crates/f3d-runtime/Cargo.toml"
+asupersync_key = "dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "Cargo.toml:workspace.dependencies.serde_json" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "frankenjax"
+path = "../frankenjax"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "crates/fj-runtime/Cargo.toml"
+asupersync_key = "dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "crates/fj-conformance/Cargo.toml:dependencies.serde_json" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "franken_drone_geometry_reconstruction"
+path = "../franken_drone_geometry_reconstruction"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "workspace.dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "franken_textiles"
+path = "../franken_textiles"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "workspace.dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "Cargo.toml:workspace.dependencies.serde_json" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "franken_firmware"
+path = "../franken_firmware"
+survey = true
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "crates/franken-speaker/Cargo.toml"
+asupersync_key = "dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "Cargo.toml:workspace.dependencies.serde_json" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+# Non-surveyed siblings named by the suite deny rules (N33c-09).
+
+[[sibling]]
+name = "franken_networkx"
+path = "../franken_networkx"
+survey = false
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "crates/fnx-runtime/Cargo.toml"
+asupersync_key = "dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "franken_markdown"
+path = "../franken_markdown"
+survey = false
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:package.version", rust_version = "Cargo.toml:package.rust-version" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "frankenmermaid"
+path = "../frankenmermaid"
+survey = false
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "workspace.dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "Cargo.toml:workspace.dependencies.serde_json" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""
+
+[[sibling]]
+name = "franken_surveillance_system"
+path = "../franken_surveillance_system"
+survey = false
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "crates/fss-runtime/Cargo.toml"
+asupersync_key = "dependencies.asupersync"
+watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version" }
+posture = []
+cargo = ""
+allowed_in = []
+forbidden_features = []
+reason = ""
+fallback = ""

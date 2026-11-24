@@ -1,0 +1,5 @@
+{"id":"syn-wp-01","external_ref":"WP-01","issue_type":"epic","status":"open","title":"[WP-01] Two-milestone X","description":"","labels":["synthetic","m3"],"dependencies":[]}
+{"id":"syn-wp-02","external_ref":"WP-02","issue_type":"epic","status":"open","title":"[WP-02] One-milestone Y","description":"","labels":["synthetic","m4"],"dependencies":[]}
+{"id":"syn-x-m3","external_ref":"N01-01","issue_type":"task","status":"open","title":"[N01-01] X at M3","description":"","labels":["synthetic","m3"],"dependencies":[{"depends_on_id":"syn-wp-01","type":"parent-child"}]}
+{"id":"syn-x-m4","external_ref":"N01-02","issue_type":"task","status":"open","title":"[N01-02] X at M4","description":"","labels":["synthetic","m4"],"dependencies":[{"depends_on_id":"syn-wp-01","type":"parent-child"},{"depends_on_id":"syn-y-m4","type":"blocks"}]}
+{"id":"syn-y-m4","external_ref":"N02-01","issue_type":"task","status":"open","title":"[N02-01] Y at M4","description":"","labels":["synthetic","m4"],"dependencies":[{"depends_on_id":"syn-wp-02","type":"parent-child"},{"depends_on_id":"syn-x-m3","type":"blocks"}]}

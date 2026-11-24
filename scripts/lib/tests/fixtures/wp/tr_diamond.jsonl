@@ -1,0 +1,8 @@
+{"id":"syn-wp-01","external_ref":"WP-01","issue_type":"epic","status":"open","title":"[WP-01] Diamond A","description":"","labels":["synthetic","m0"],"dependencies":[]}
+{"id":"syn-wp-02","external_ref":"WP-02","issue_type":"epic","status":"open","title":"[WP-02] Diamond B","description":"","labels":["synthetic","m0"],"dependencies":[]}
+{"id":"syn-wp-03","external_ref":"WP-03","issue_type":"epic","status":"open","title":"[WP-03] Diamond C","description":"","labels":["synthetic","m0"],"dependencies":[]}
+{"id":"syn-wp-04","external_ref":"WP-04","issue_type":"epic","status":"open","title":"[WP-04] Diamond D","description":"","labels":["synthetic","m0"],"dependencies":[]}
+{"id":"syn-b-a","external_ref":"N01-01","issue_type":"task","status":"open","title":"[N01-01] a","description":"","labels":["synthetic","m0"],"dependencies":[{"depends_on_id":"syn-wp-01","type":"parent-child"},{"depends_on_id":"syn-b-b","type":"blocks"},{"depends_on_id":"syn-b-c","type":"blocks"},{"depends_on_id":"syn-b-d","type":"blocks"}]}
+{"id":"syn-b-b","external_ref":"N02-01","issue_type":"task","status":"open","title":"[N02-01] b","description":"","labels":["synthetic","m0"],"dependencies":[{"depends_on_id":"syn-wp-02","type":"parent-child"},{"depends_on_id":"syn-b-d","type":"blocks"}]}
+{"id":"syn-b-c","external_ref":"N03-01","issue_type":"task","status":"open","title":"[N03-01] c","description":"","labels":["synthetic","m0"],"dependencies":[{"depends_on_id":"syn-wp-03","type":"parent-child"},{"depends_on_id":"syn-b-d","type":"blocks"}]}
+{"id":"syn-b-d","external_ref":"N04-01","issue_type":"task","status":"open","title":"[N04-01] d","description":"","labels":["synthetic","m0"],"dependencies":[{"depends_on_id":"syn-wp-04","type":"parent-child"}]}

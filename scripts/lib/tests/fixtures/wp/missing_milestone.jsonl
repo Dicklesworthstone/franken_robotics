@@ -1,0 +1,2 @@
+{"id":"syn-wp-01","external_ref":"WP-01","issue_type":"epic","status":"open","title":"[WP-01] Valid WP","description":"","labels":["synthetic","m0"],"dependencies":[]}
+{"id":"syn-noms","external_ref":"BD-NOMS","issue_type":"task","status":"open","title":"[BD-NOMS] Missing milestone","description":"","labels":["synthetic","frob-core"],"dependencies":[{"depends_on_id":"syn-wp-01","type":"parent-child"}]}

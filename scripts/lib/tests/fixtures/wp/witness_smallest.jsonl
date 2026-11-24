@@ -1,0 +1,7 @@
+{"id":"syn-wp-01","external_ref":"WP-01","issue_type":"epic","status":"open","title":"[WP-01] Witness A","description":"","labels":["synthetic","m0"],"dependencies":[]}
+{"id":"syn-wp-02","external_ref":"WP-02","issue_type":"epic","status":"open","title":"[WP-02] Witness B","description":"","labels":["synthetic","m0"],"dependencies":[]}
+{"id":"syn-a1","external_ref":"N01-01","issue_type":"task","status":"open","title":"[N01-01] a1","description":"","labels":["synthetic","m0"],"dependencies":[{"depends_on_id":"syn-wp-01","type":"parent-child"},{"depends_on_id":"syn-b2","type":"blocks"}]}
+{"id":"syn-a2","external_ref":"BD-020","issue_type":"task","status":"open","title":"[BD-020] a2","description":"","labels":["synthetic","m0"],"dependencies":[{"depends_on_id":"syn-wp-01","type":"parent-child"},{"depends_on_id":"syn-b2","type":"blocks"}]}
+{"id":"syn-a3","external_ref":"BD-010","issue_type":"task","status":"open","title":"[BD-010] a3","description":"","labels":["synthetic","m0"],"dependencies":[{"depends_on_id":"syn-wp-01","type":"parent-child"},{"depends_on_id":"syn-b1","type":"blocks"},{"depends_on_id":"syn-b2","type":"blocks"}]}
+{"id":"syn-b1","external_ref":"BD-005","issue_type":"task","status":"open","title":"[BD-005] b1","description":"","labels":["synthetic","m0"],"dependencies":[{"depends_on_id":"syn-wp-02","type":"parent-child"}]}
+{"id":"syn-b2","external_ref":"BD-002","issue_type":"task","status":"open","title":"[BD-002] b2","description":"","labels":["synthetic","m0"],"dependencies":[{"depends_on_id":"syn-wp-02","type":"parent-child"}]}

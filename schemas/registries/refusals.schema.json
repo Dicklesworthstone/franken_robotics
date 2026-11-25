@@ -54,7 +54,7 @@
           },
           "retry": {
             "type": "string",
-            "enum": ["never", "after-change", "after-backoff", "same-key", "with-budget"]
+            "enum": ["never", "after-change", "backoff", "after-backoff", "same-key", "with-budget"]
           },
           "repairs": {
             "type": "array",
@@ -68,6 +68,13 @@
             "items": {
               "type": "string",
               "minLength": 1
+            }
+          },
+          "related": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^FROB-REF-[0-9]{3}$"
             }
           }
         }

@@ -1460,6 +1460,9 @@ pub fn validate_refusals_toml(bytes: &[u8]) -> Result<usize, StatusTableError> {
         let raw_raised = f
             .require_array("raised_by")
             .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let raw_related = f
+            .opt_array("related")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
         f.finish()
             .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
 
@@ -1486,7 +1489,7 @@ pub fn validate_refusals_toml(bytes: &[u8]) -> Result<usize, StatusTableError> {
         }
         if !matches!(
             retry.as_str(),
-            "never" | "after-change" | "after-backoff" | "same-key" | "with-budget"
+            "never" | "after-change" | "backoff" | "after-backoff" | "same-key" | "with-budget"
         ) {
             return Err(StatusTableError::new(
                 &ctx,
@@ -1495,6 +1498,16 @@ pub fn validate_refusals_toml(bytes: &[u8]) -> Result<usize, StatusTableError> {
         }
         let _ = extract_str_list(&raw_repairs, "repairs", &ctx, true)?;
         let _ = extract_str_list(&raw_raised, "raised_by", &ctx, true)?;
+        if let Some(items) = raw_related {
+            for rel in extract_str_list(&items, "related", &ctx, true)? {
+                if !is_refusal_code(&rel) {
+                    return Err(StatusTableError::new(
+                        &ctx,
+                        format!("refusal `{code}` related contains invalid code `{rel}`"),
+                    ));
+                }
+            }
+        }
     }
     Ok(seen_codes.len())
 }

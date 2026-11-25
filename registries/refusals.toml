@@ -1,9 +1,17 @@
 # FrankenRobotics refusal code registry (schema frob.refusals/1).
 #
-# Seeded by BD-005 with the fixed surface [exit_rule] table and the rows raised
-# or named by frob-core itself (FROB-REF-802, FROB-REF-816, FROB-REF-881), with
-# exact Appendix O meanings and exits. N35-33 and the chapter registry beads
-# complete the remaining rows, 7xx sub-family rules, and exception lists.
+# Seeded by BD-005 with the fixed surface [exit_rule] table and core rows
+# (FROB-REF-802, FROB-REF-816, FROB-REF-881). N32-REF populates the eighteen
+# Tether chapter rows (FROB-REF-701..704, 720, 723..725, 801..810) plus the two
+# first-round DESIGN rows (FROB-REF-726 mechanism-not-admitted, FROB-REF-990
+# internal-fault) and the conflict/integrity exception lists.
+#
+# Held 8xx requests (N35x-01; interim = none, NOT rows of this file):
+# - packet-over-byte-cap (proposed 836, exit 3, retry after-change)
+# - packet-frames-not-retained (proposed 837, exit 3, retry after-change)
+# - resource-read-over-cap (proposed 838, exit 3, retry after-change; repair:
+#   frob artifact read <digest> --range <start>-<end>, artifact.export)
+#
 # Codes are sorted numerically and never reused.
 
 schema = "frob.refusals/1"
@@ -21,8 +29,8 @@ schema = "frob.refusals/1"
 "79x" = 5
 "8xx" = 3
 "9xx" = 9
-conflict = []
-integrity = []
+conflict = ["FROB-REF-803", "FROB-REF-804", "FROB-REF-809"]
+integrity = ["FROB-REF-810"]
 capability = []
 
 [[refusal]]
@@ -35,6 +43,90 @@ repairs = ["Replace by the admitted form: a det_* function, the split product, c
 raised_by = ["BD-013"]
 
 [[refusal]]
+code = "FROB-REF-701"
+meaning = "The estimate's upper end exceeds the remaining session budget at admission (pointer /budget/<unit>; observed upper estimate, required remaining budget; due M2)"
+defined_in = "§32.18"
+exit = 4
+retry = "after-change"
+repairs = ["Ask a smaller question fitting within the largest worlds x seconds reported in the refusal", "Use a cheaper tier", "Open or derive a session with a larger budget"]
+raised_by = ["N32a-15", "run-verbs"]
+
+[[refusal]]
+code = "FROB-REF-702"
+meaning = "Budget exhausted during a run at a kernel-batch boundary; unpublished state is discarded, nothing partial is published as a result, and the acknowledgement names the last committed tick per world (pointer /budget/<unit>; due M1)"
+defined_in = "§32.18"
+exit = 4
+retry = "after-change"
+repairs = ["Resubmit with a larger budget and a new idempotency key (estimate against actual is attached)", "Reduce the question", "Read the telemetry committed up to the named tick"]
+raised_by = ["N32a-08", "N29a-05", "run-verbs", "job.wait", "job.status"]
+
+[[refusal]]
+code = "FROB-REF-703"
+meaning = "Admission guard triggered: device utilization >= 0.8 or shape-class queue already holds 64 jobs; carries poll_after_ms (pointer /queue; due M3)"
+defined_in = "§32.18"
+exit = 4
+retry = "backoff"
+repairs = ["Retry after the stated poll_after_ms delay with the same idempotency key", "Ask for a CPU tier", "Shrink the job into the interactive class (point estimate at most 30 s of device time)"]
+raised_by = ["dispatcher", "run-verbs"]
+
+[[refusal]]
+code = "FROB-REF-704"
+meaning = "A campaign-class job has no approved compute envelope for its scope (launcher token, cited envelope_scope, verb-derived scope, or adhoc), raised at daemon submission and at dispatch or resume on lapsed approval (pointer /envelope_scope; due M3)"
+defined_in = "§32.18"
+exit = 4
+retry = "after-change"
+repairs = ["Split the work below the machine compute envelope (envelope and estimate are attached)", "Ask the owner to approve an envelope in registries/compute_envelope.toml and resubmit with --envelope-scope <scope>"]
+raised_by = ["BD-296", "study.submit", "train.start", "opt.start", "opt.cascade", "mission.synthesize", "nemesis.search"]
+related = ["FROB-REF-761"]
+
+[[refusal]]
+code = "FROB-REF-720"
+meaning = "The session token lacks a capability scope required by the verb's registry entry, checked before the handler runs so no partial data exists (pointer /session/scopes; due M2)"
+defined_in = "§32.18"
+exit = 5
+retry = "after-change"
+repairs = ["Open a session that holds the required scope named in required", "Ask the parent session to derive a token that includes the required scope"]
+raised_by = ["N32b-01", "all-verbs"]
+
+[[refusal]]
+code = "FROB-REF-723"
+meaning = "Session token invalid, expired, closed, unverifiable without a reachable daemon, missing on a non-public daemon call, or widening attenuation beyond parent or root grant (pointer /session/token; due M2)"
+defined_in = "§32.18"
+exit = 5
+retry = "after-change"
+repairs = ["frob session open", "For derivation or root requests beyond the grant, request a subset within required (or have the owner add principal.<id> to safety.toml, or start frobd / drop the token to run local)"]
+raised_by = ["N32b-01", "N32b-02", "session.open", "all-verbs"]
+
+[[refusal]]
+code = "FROB-REF-724"
+meaning = "The verb or an explicitly named mechanism is not in this build: reason in {not-linked, feature-not-built, killed: <gate>} with mechanism and declared_tier when a mechanism is named (pointer /verb or /mechanism; due M0)"
+defined_in = "§32.18"
+exit = 5
+retry = "never"
+repairs = ["frob capabilities --json", "Use the alternative named by the capability entry (for a living-world mechanism, accept the recorded Solid alternative)"]
+raised_by = ["N32b-19", "N19b-03", "N32b-41", "all-verbs"]
+related = ["FROB-REF-726"]
+
+[[refusal]]
+code = "FROB-REF-725"
+meaning = "A mutate verb targets a mutable name or lineage whose owning namespace is not the session token's namespace (pointer /lineage; due M3)"
+defined_in = "§32.18"
+exit = 5
+retry = "after-change"
+repairs = ["frob design new <name> --from <content-address>", "Ask the owning namespace owner; the lineage identifier is usable as a mail thread identifier"]
+raised_by = ["N32b-03", "mutate-verbs"]
+
+[[refusal]]
+code = "FROB-REF-726"
+meaning = "Mechanism is built but not admitted for the run's declared purpose, tier, or inputs (mechanism-not-admitted): reason in {island-in-training, tier-not-eligible, purpose-not-eligible, card-provenance}; purpose check precedes build check; carries mechanism, reason, declared_tier, run_purpose, decision ADR path (for purpose-not-eligible), and field/provenance_found/provenances_admitted (for card-provenance) (pointer /mechanism or /actuator_level; due M3, card-provenance M6)"
+defined_in = "§32.18"
+exit = 5
+retry = "after-change"
+repairs = ["For island-in-training or tier-not-eligible: drop --require-living-tier to accept the recorded Solid alternative, or run under --purpose oracle-check or counterexample-verification on the CPU referee", "For purpose-not-eligible: drop --require-living-tier to accept the recorded Solid alternative, or run under --purpose evaluation", "For card-provenance: use a card revision whose required field has provenance measured or a cited datasheet, or run without the option and accept the model flag"]
+raised_by = ["N19b-03", "N19b-19", "N15b-18", "sim.run", "sim.estimate", "train.start", "eval.run", "study.submit", "task.fixture"]
+related = ["FROB-REF-724"]
+
+[[refusal]]
 code = "FROB-REF-790"
 meaning = "This binary was built without the airlock feature group the verb needs"
 defined_in = "§33.16"
@@ -44,13 +136,98 @@ repairs = ["Use a build that has the group (frob capabilities --json lists this 
 raised_by = ["N33a-11", "N33c-32"]
 
 [[refusal]]
-code = "FROB-REF-802"
-meaning = "Arguments fail the schema, including an unknown parameter or an out-of-range sync_wait_ms"
+code = "FROB-REF-801"
+meaning = "Unknown verb on the CLI (names no registry entry; MCP answers an unknown tool with JSON-RPC -32602; pointer /verb; due M0)"
 defined_in = "§32.18"
 exit = 3
 retry = "after-change"
-repairs = ["Check the reported pointer and supply arguments matching the required schema", "Remove any unknown or empty required parameters before retrying"]
-raised_by = ["BD-005"]
+repairs = ["For a retired name, invoke the registered verb from its [[retired_name]] row using its command skeleton (e.g. frob autopsy fork -> frob run fork ...)", "Try one of up to three nearest registered verb names by edit distance", "frob robot-docs"]
+raised_by = ["N32a-03", "NJL-04", "BD-022"]
+
+[[refusal]]
+code = "FROB-REF-802"
+meaning = "Arguments fail the schema, including an unknown parameter or a sync_wait_ms outside 0..=30000 (pointer /sync_wait_ms or offending parameter; nothing charged; due M0)"
+defined_in = "§32.18"
+exit = 3
+retry = "after-change"
+repairs = ["Use the nearest valid parameter name and check the reported pointer against the required schema", "frob schema <id>"]
+raised_by = ["BD-005", "N32a-02", "N32a-03", "BD-022", "BD-023", "all-verbs"]
+
+[[refusal]]
+code = "FROB-REF-803"
+meaning = "Idempotency key reused with different resolved canonical request content for (principal, verb, key); both resolutions are shown (pointer /idempotency_key; due M1)"
+defined_in = "§32.18"
+exit = 7
+retry = "after-change"
+repairs = ["Use a new idempotency key for the new request", "Resend the original content returned by job.find"]
+raised_by = ["N32a-09", "BD-211", "mutate-verbs", "run-verbs"]
+
+[[refusal]]
+code = "FROB-REF-804"
+meaning = "Stale parent (expected_parent is not lineage head) or stale field value in design.edit two-value form (set-param <field> <expected> <new>); payload carries head, field, expected, and current (pointer /expected_parent; due M1)"
+defined_in = "§32.18"
+exit = 7
+retry = "after-change"
+repairs = ["Run frob design diff <expected> <head>, re-apply the edit on the head, and resubmit (for design.edit set-param: read the field at head and resubmit with its current value as expected)", "Fork a new lineage from the old parent"]
+raised_by = ["BD-058", "design.edit", "mutate-verbs"]
+related = ["FROB-REF-112"]
+
+[[refusal]]
+code = "FROB-REF-805"
+meaning = "A mutate verb or job-submitting run verb arrived without an idempotency key, refused before anything is charged (pointer /idempotency_key; due M1)"
+defined_in = "§32.18"
+exit = 3
+retry = "after-change"
+repairs = ["Supply --key <string>", "For a look without spending, use --estimate, which needs no idempotency key"]
+raised_by = ["N32a-09", "mutate-verbs", "run-verbs"]
+
+[[refusal]]
+code = "FROB-REF-806"
+meaning = "Pagination cursor does not match the query digest (object, filters, ordering) or schema version, fails authentication tag verification, or was issued to another principal (pointer /cursor; due M1)"
+defined_in = "§32.18"
+exit = 3
+retry = "after-change"
+repairs = ["Start a new query without the stale cursor", "Repeat the original query filters and ordering with the cursor"]
+raised_by = ["N32a-10", "paginated-verbs"]
+related = ["FROB-REF-896"]
+
+[[refusal]]
+code = "FROB-REF-807"
+meaning = "Pagination cursor expired because the frontier pinned in the cursor has been garbage-collected (pointer /cursor; due M1)"
+defined_in = "§32.18"
+exit = 3
+retry = "after-change"
+repairs = ["Start a new query (the answer states the new frontier)", "Read sooner or use follow"]
+raised_by = ["N32a-10", "paginated-verbs"]
+
+[[refusal]]
+code = "FROB-REF-808"
+meaning = "An integer outside +/-(2^53 - 1) (+/-9007199254740991) in an int53 number-typed input field; input validation only (serializer out-of-range int53 is FROB-REF-990; due M1)"
+defined_in = "§32.18"
+exit = 3
+retry = "after-change"
+repairs = ["Send the value in the field's u64str or i64str string form named by the schema", "If the field is a count, reduce it to fit within +/-(2^53 - 1)"]
+raised_by = ["N32a-07", "input-validation"]
+related = ["FROB-REF-990"]
+
+[[refusal]]
+code = "FROB-REF-809"
+meaning = "Plan not found or bound to a superseded identity (design, scene, task, backend, or stack) in study.submit (pointer /plan_id; due M1)"
+defined_in = "§32.18"
+exit = 7
+retry = "after-change"
+repairs = ["Run study.plan again and submit the new plan identifier", "Run study.status to list live plans"]
+raised_by = ["N33b-19", "N32a-13", "study.submit"]
+
+[[refusal]]
+code = "FROB-REF-810"
+meaning = "Chunk conflict: different bytes offered for an already-committed extent; job fails as indeterminate with both content hashes attached (pointer /chunk; due M1)"
+defined_in = "§32.18"
+exit = 9
+retry = "never"
+repairs = ["Do not resubmit blindly: run frob job find by idempotency key", "Run frob spark check, then replay from the last committed checkpoint as a new job", "Keep both content hashes: this is an integrity alarm"]
+raised_by = ["N32a-08", "BD-210"]
+related = ["FROB-REF-878"]
 
 [[refusal]]
 code = "FROB-REF-816"
@@ -78,3 +255,12 @@ exit = 3
 retry = "after-change"
 repairs = ["Revalidate the older evidence under the current stack (result.revalidate)", "Re-run the computation under the current stack", "Present the two as separate results, each labelled with its stack"]
 raised_by = ["N33a-06"]
+
+[[refusal]]
+code = "FROB-REF-990"
+meaning = "Internal fault (internal-fault): handler panicked, returned an error mapping to no refusal code, or serializer refused an out-of-range int53; one envelope is still written with pointer naming the verb and observed holding the diagnostic file path; never listed in any verb's refusals (RL-06; due M0)"
+defined_in = "§32.4"
+exit = 9
+retry = "never"
+repairs = ["frob job find --verb <verb> --key <key>", "frob doctor"]
+raised_by = ["N32a-03", "BD-022", "BD-023", "N32a-07"]

@@ -1344,11 +1344,30 @@ fn validate_empty_or_typed_registry(
             "capsules.toml" => {
                 let mut f = Fields::new(rtbl.clone(), &ctx);
                 let _ = f.require_str("id").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-                let _ = f.require_str("crate").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-                let _ = f.require_str("module").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+                let _ = f.require_str("workspace").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+                let _ = f.require_str("path").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+                let raw_safe_api = f.require_array("safe_api").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+                let lines = f.require_int("lines").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+                let unsafe_blocks = f.require_int("unsafe_blocks").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 let _ = f.require_str("safety_doc").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-                let _ = f.require_str("justification").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+                let _ = f.require_str("reason").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 f.finish().map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+                let safe_api = extract_str_list(&raw_safe_api, "safe_api", &ctx, true)?;
+                if safe_api.is_empty() {
+                    return Err(StatusTableError::new(&ctx, "`safe_api` must not be empty"));
+                }
+                if !(1..=299).contains(&lines) {
+                    return Err(StatusTableError::new(
+                        &ctx,
+                        format!("`lines` ({lines}) must be in 1..=299"),
+                    ));
+                }
+                if unsafe_blocks < 1 {
+                    return Err(StatusTableError::new(
+                        &ctx,
+                        format!("`unsafe_blocks` ({unsafe_blocks}) must be >= 1"),
+                    ));
+                }
             }
             _ => {}
         }

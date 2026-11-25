@@ -6,6 +6,7 @@
 
 pub mod check_deps;
 pub mod check_layers;
+pub mod check_unsafe;
 pub mod cli;
 pub mod crate_map;
 pub mod inversions;

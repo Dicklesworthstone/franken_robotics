@@ -3,14 +3,16 @@ use std::process::ExitCode;
 
 use xtask::check_deps;
 use xtask::check_layers;
+use xtask::check_unsafe;
 use xtask::cli::{self, CheckFn};
 
 /// Closed command table for `cargo xtask` (N34p4-01 seeds `check-layers`,
-/// BD-003 adds `check-deps`; N34-07, N34-08, N34p4-03, and BD-004 add the
-/// remaining four checks).
+/// BD-003 adds `check-deps`, N34-07 adds `check-unsafe`; N34-08, N34p4-03,
+/// and BD-004 add the remaining three checks).
 const COMMANDS: &[(&str, CheckFn)] = &[
     ("check-layers", check_layers::run_command),
     ("check-deps", check_deps::run_command),
+    ("check-unsafe", check_unsafe::run_command),
 ];
 
 fn main() -> ExitCode {
@@ -38,6 +40,7 @@ mod tests {
         assert!(rendered.contains("usage: cargo xtask"));
         assert!(rendered.contains("check-layers"));
         assert!(rendered.contains("check-deps"));
+        assert!(rendered.contains("check-unsafe"));
     }
 
     #[test]
@@ -52,5 +55,6 @@ mod tests {
         assert!(rendered.contains("unknown subcommand"));
         assert!(rendered.contains("check-layers"));
         assert!(rendered.contains("check-deps"));
+        assert!(rendered.contains("check-unsafe"));
     }
 }

@@ -230,6 +230,73 @@ impl CheckReport {
             }
             let _ = writeln!(out, "    repair: {}", f.repair);
         }
+        if let Some(FactValue::Array(capsules)) = self.facts.get("capsules") {
+            let _ = writeln!(out, "capsules ({}):", capsules.len());
+            if capsules.is_empty() {
+                out.push_str("  (none)\n");
+            } else {
+                for item in capsules {
+                    if let FactValue::Object(map) = item {
+                        let id = match map.get("id") {
+                            Some(FactValue::Str(s)) => s.as_str(),
+                            _ => "?",
+                        };
+                        let ws = match map.get("workspace") {
+                            Some(FactValue::Str(s)) => s.as_str(),
+                            _ => "?",
+                        };
+                        let lines = match map.get("lines") {
+                            Some(FactValue::Int(n)) => *n,
+                            _ => 0,
+                        };
+                        let blocks = match map.get("unsafe_blocks") {
+                            Some(FactValue::Int(n)) => *n,
+                            _ => 0,
+                        };
+                        let api: Vec<&str> = match map.get("safe_api") {
+                            Some(FactValue::Array(arr)) => arr
+                                .iter()
+                                .filter_map(|v| match v {
+                                    FactValue::Str(s) => Some(s.as_str()),
+                                    _ => None,
+                                })
+                                .collect(),
+                            _ => Vec::new(),
+                        };
+                        let _ = writeln!(
+                            out,
+                            "  {id}  workspace={ws}  lines={lines}/299  unsafe_blocks={blocks}  safe_api=[{}]",
+                            api.join(", ")
+                        );
+                    }
+                }
+            }
+            if let Some(FactValue::Object(totals)) = self.facts.get("totals_per_annex")
+                && !totals.is_empty()
+            {
+                out.push_str("totals_per_annex:\n");
+                for (ws, val) in totals {
+                    if let FactValue::Object(t) = val {
+                        let caps = match t.get("capsules") {
+                            Some(FactValue::Int(n)) => *n,
+                            _ => 0,
+                        };
+                        let lines = match t.get("lines") {
+                            Some(FactValue::Int(n)) => *n,
+                            _ => 0,
+                        };
+                        let blocks = match t.get("unsafe_blocks") {
+                            Some(FactValue::Int(n)) => *n,
+                            _ => 0,
+                        };
+                        let _ = writeln!(
+                            out,
+                            "  {ws}: capsules={caps} lines={lines} unsafe_blocks={blocks}"
+                        );
+                    }
+                }
+            }
+        }
         out
     }
 }

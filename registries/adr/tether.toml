@@ -1,0 +1,167 @@
+# Tether Architecture Decision Record index (schema frob.adr-index/1, bead N32a-01).
+#
+# Written strictly in the frob-core::registry::toml subset (N34p2-01).
+# Records are never deleted: a changed decision transitions to status = "superseded"
+# with a named `superseded_by` successor.
+#
+# Every `accepted` record must carry a non-empty `enforced_by` list. Each check entry
+# is either `state = "active"` (must resolve to a live test, gate, or control today)
+# or `state = "pending"` with a `milestone` no later than the record's own
+# `first_milestone` and a named `owner_bead`.
+
+schema = "frob.adr-index/1"
+subsystem = "tether"
+current_milestone = "M0"
+principles_doc = "docs/adr/TETHER-PRINCIPLES.md"
+ownership_doc = "docs/adr/TETHER-OWNERSHIP.md"
+
+[[record]]
+id = "ADR-TETHER-01"
+doc = "docs/adr/ADR-TETHER-01.md"
+status = "accepted"
+bead = "N32a-02"
+first_milestone = "M0"
+enforced_by = [
+  { id = "frob-verbs::registry::table_sorted_and_unique", kind = "test", state = "active", milestone = "M0", source = "crates/frob-verbs/src/registry/mod.rs" },
+  { id = "verb_literal_lint_catches_plant", kind = "lint", state = "pending", milestone = "M0", owner_bead = "BD-022" },
+  { id = "GATE-TETHER-02", kind = "gate", state = "pending", milestone = "M0", owner_bead = "N32a-11" }
+]
+
+[[record]]
+id = "ADR-TETHER-02"
+doc = "docs/adr/ADR-TETHER-02.md"
+status = "accepted"
+bead = "N32a-02"
+first_milestone = "M0"
+enforced_by = [
+  { id = "frob-verbs::conformance::registry_only_has_no_physics", kind = "test", state = "active", milestone = "M0", source = "crates/frob-verbs/tests/conformance.rs" }
+]
+
+[[record]]
+id = "ADR-TETHER-03"
+doc = "docs/adr/ADR-TETHER-03.md"
+status = "accepted"
+bead = "N32a-04"
+first_milestone = "M0"
+enforced_by = [
+  { id = "INV-TETHER-10", kind = "test", state = "pending", milestone = "M0", owner_bead = "N32a-04" }
+]
+
+[[record]]
+id = "ADR-TETHER-04"
+doc = "docs/adr/ADR-TETHER-04.md"
+status = "accepted"
+bead = "N32a-16"
+first_milestone = "M2"
+enforced_by = [
+  { id = "GATE-TETHER-12", kind = "gate", state = "pending", milestone = "M2", owner_bead = "N32a-16" }
+]
+
+[[record]]
+id = "ADR-TETHER-05"
+doc = "docs/adr/ADR-TETHER-05.md"
+status = "accepted"
+bead = "N32a-17"
+first_milestone = "M2"
+enforced_by = [
+  { id = "INV-TETHER-11", kind = "test", state = "pending", milestone = "M2", owner_bead = "N32a-17" }
+]
+
+[[record]]
+id = "ADR-TETHER-06"
+doc = "docs/adr/ADR-TETHER-06.md"
+status = "accepted"
+bead = "N32a-30"
+first_milestone = "M3"
+enforced_by = [
+  { id = "mcp_handle_contract_without_tasks", kind = "test", state = "pending", milestone = "M3", owner_bead = "N32a-30" }
+]
+
+[[record]]
+id = "ADR-TETHER-07"
+doc = "docs/adr/ADR-TETHER-07.md"
+status = "accepted"
+bead = "BD-295"
+first_milestone = "M3"
+enforced_by = [
+  { id = "GATE-TETHER-09", kind = "gate", state = "pending", milestone = "M3", owner_bead = "BD-295" }
+]
+
+[[record]]
+id = "ADR-TETHER-08"
+doc = "docs/adr/ADR-TETHER-08.md"
+status = "accepted"
+bead = "N32a-21, BD-296"
+first_milestone = "M3"
+enforced_by = [
+  { id = "INV-TETHER-09", kind = "test", state = "pending", milestone = "M3", owner_bead = "N32a-21" },
+  { id = "GATE-TETHER-10", kind = "gate", state = "pending", milestone = "M3", owner_bead = "BD-296" }
+]
+
+[[record]]
+id = "ADR-TETHER-09"
+doc = "docs/adr/ADR-TETHER-09.md"
+status = "accepted"
+bead = "N32a-07"
+first_milestone = "M1"
+enforced_by = [
+  { id = "RL-INT", kind = "lint", state = "pending", milestone = "M1", owner_bead = "N32a-07" },
+  { id = "GATE-TETHER-07", kind = "gate", state = "pending", milestone = "M1", owner_bead = "N32a-07" }
+]
+
+[[record]]
+id = "ADR-TETHER-10"
+doc = "docs/adr/ADR-TETHER-10.md"
+status = "accepted"
+bead = "N32b-06, N32b-10"
+first_milestone = "M3"
+enforced_by = [
+  { id = "INV-TETHER-12", kind = "test", state = "pending", milestone = "M2", owner_bead = "N32b-10" },
+  { id = "GATE-TETHER-14", kind = "gate", state = "pending", milestone = "M3", owner_bead = "N32b-09" }
+]
+
+[[record]]
+id = "ADR-TETHER-11"
+doc = "docs/adr/ADR-TETHER-11.md"
+status = "accepted"
+bead = "N32a-09"
+first_milestone = "M1"
+enforced_by = [
+  { id = "idempotency_moved_name_keeps_bound_id", kind = "test", state = "pending", milestone = "M1", owner_bead = "N32a-09" }
+]
+
+[[principle_lint]]
+id = "principle-no-solver-step-verb"
+principle = 2
+kind = "registry-lint"
+description = "No verb exposes a solver iteration, a step call, or a kernel launch as its unit of work."
+state = "pending"
+milestone = "M1"
+owner_bead = "NJL-02"
+
+[[principle_lint]]
+id = "principle-five-explicits"
+principle = 3
+kind = "schema-lint"
+description = "Units, seeds, budgets, schema versions, and capabilities are never implicit."
+state = "pending"
+milestone = "M1"
+owner_bead = "N32a-07"
+
+[[principle_lint]]
+id = "principle-no-per-verb-surface-code"
+principle = 4
+kind = "workspace-lint"
+description = "No per-verb code in frob-cli or surface/frob-mcp outside the allowlisted MCP half of session.focus."
+state = "pending"
+milestone = "M0"
+owner_bead = "BD-022"
+
+[[principle_lint]]
+id = "principle-surface-claim-wording"
+principle = 6
+kind = "doc-lint"
+description = "README and robot-docs state the surface claim in Principle 6 wording and no broader one."
+state = "pending"
+milestone = "M0"
+owner_bead = "BD-022"

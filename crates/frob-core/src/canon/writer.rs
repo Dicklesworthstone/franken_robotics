@@ -22,7 +22,7 @@ use std::io::Write as _;
 use std::marker::PhantomData;
 
 use crate::id::{Blake3, CanonicalBytes, SchemaName, identity};
-use crate::json::{Admitted, INT53_MAX, INT53_MIN, Json, Spanned};
+use crate::json::{Admitted, DEFAULT_MAX_DEPTH, INT53_MAX, INT53_MIN, Json, Spanned};
 
 use super::number::{CanonInt, ExactDecimal, format_f64_shortest_into};
 
@@ -45,6 +45,10 @@ pub enum CanonError {
     NonFiniteFloat,
     /// Shortest binary64 re-parse verification failed to match input bits.
     FloatRoundTripFailed,
+    /// The canonical binary64 spelling would change an untyped number's exact decimal value.
+    InexactUntypedNumber,
+    /// Opening another container would exceed the reader's nesting limit.
+    DepthLimit,
     /// A value callback returned `Ok(())` without emitting a value, or `finish` was called
     /// without a completed root value.
     IncompleteValue,
@@ -88,6 +92,13 @@ impl fmt::Display for CanonError {
             Self::FloatRoundTripFailed => {
                 f.write_str("f64 shortest decimal failed bit-exact re-parse verification")
             }
+            Self::InexactUntypedNumber => {
+                f.write_str("canonicalizing this untyped number requires an explicit number policy")
+            }
+            Self::DepthLimit => write!(
+                f,
+                "canonical JSON exceeds {DEFAULT_MAX_DEPTH} nested containers"
+            ),
             Self::IncompleteValue => {
                 f.write_str("canonical writer value was not completely written")
             }
@@ -204,13 +215,13 @@ impl CanonWriter {
         Ok(Value {
             buf: &mut self.buf,
             written: &mut self.complete,
+            remaining_depth: DEFAULT_MAX_DEPTH,
         })
     }
 
     /// Write a [`Canonical`] term as the root value of this writer.
     pub fn write_term<T: Canonical + ?Sized>(&mut self, term: &T) -> Result<(), CanonError> {
-        let handle = self.value()?;
-        term.write(handle)?;
+        self.value()?.term(term)?;
         if !self.complete {
             return Err(CanonError::IncompleteValue);
         }
@@ -232,6 +243,7 @@ impl CanonWriter {
 pub struct Value<'w> {
     buf: &'w mut Vec<u8>,
     written: &'w mut bool,
+    remaining_depth: u16,
 }
 
 impl<'w> Value<'w> {
@@ -290,15 +302,11 @@ impl<'w> Value<'w> {
     /// Never silently reduces: non-positive denominators and unreduced pairs return an error.
     pub fn rational_pair(self, p: &CanonInt, q: &CanonInt) -> Result<(), CanonError> {
         validate_reduced_rational(p, q)?;
-        let p_str = p.to_decimal_string();
-        let q_str = q.to_decimal_string();
-        self.buf.push(b'[');
-        write_canonical_string(&p_str, self.buf);
-        self.buf.push(b',');
-        write_canonical_string(&q_str, self.buf);
-        self.buf.push(b']');
-        *self.written = true;
-        Ok(())
+        self.array(|array| {
+            array.push_str(&p.to_decimal_string());
+            array.push_str(&q.to_decimal_string());
+            Ok(())
+        })
     }
 
     /// Write a reduced rational `(p, q)` (`q > 0`, `gcd(|p|, q) == 1`) as `"p/q"`, or `"p"` when `q == 1`.
@@ -327,16 +335,39 @@ impl<'w> Value<'w> {
         Ok(())
     }
 
+    fn untyped_number(self, lexeme: &str, x: f64) -> Result<(), CanonError> {
+        let start = self.buf.len();
+        format_f64_shortest_into(x, self.buf)?;
+        let encoded = std::str::from_utf8(&self.buf[start..])
+            .map_err(|_| CanonError::FloatRoundTripFailed)?;
+        let same_value = lexeme == encoded
+            || ExactDecimal::parse(lexeme)
+                .ok()
+                .zip(ExactDecimal::parse(encoded).ok())
+                .is_some_and(|(input, output)| input == output);
+        if !same_value {
+            self.buf.truncate(start);
+            return Err(CanonError::InexactUntypedNumber);
+        }
+        *self.written = true;
+        Ok(())
+    }
+
     /// Write a JSON array preserving element insertion order (N34-18 Rule 5).
     pub fn array(
         self,
         f: impl FnOnce(&mut Array<'_>) -> Result<(), CanonError>,
     ) -> Result<(), CanonError> {
+        let remaining_depth = self
+            .remaining_depth
+            .checked_sub(1)
+            .ok_or(CanonError::DepthLimit)?;
         let start = self.buf.len();
         self.buf.push(b'[');
         let mut arr = Array {
             buf: self.buf,
             count: 0,
+            remaining_depth,
         };
         if let Err(err) = f(&mut arr) {
             self.buf.truncate(start);
@@ -353,10 +384,15 @@ impl<'w> Value<'w> {
         self,
         f: impl FnOnce(&mut Object<'_>) -> Result<(), CanonError>,
     ) -> Result<(), CanonError> {
+        let remaining_depth = self
+            .remaining_depth
+            .checked_sub(1)
+            .ok_or(CanonError::DepthLimit)?;
         let mut obj = Object {
             members: Vec::new(),
             seen: BTreeSet::new(),
             _marker: PhantomData,
+            remaining_depth,
         };
         f(&mut obj)?;
 
@@ -386,7 +422,15 @@ impl<'w> Value<'w> {
 
     /// Write any [`Canonical`] term into this value position.
     pub fn term<T: Canonical + ?Sized>(self, term: &T) -> Result<(), CanonError> {
-        term.write(self)
+        let result = term.write(Value {
+            buf: self.buf,
+            written: &mut *self.written,
+            remaining_depth: self.remaining_depth,
+        });
+        if result.is_err() {
+            *self.written = false;
+        }
+        result
     }
 }
 
@@ -394,6 +438,7 @@ impl<'w> Value<'w> {
 pub struct Array<'w> {
     buf: &'w mut Vec<u8>,
     count: usize,
+    remaining_depth: u16,
 }
 
 impl<'w> Array<'w> {
@@ -410,6 +455,7 @@ impl<'w> Array<'w> {
         let res = f(Value {
             buf: self.buf,
             written: &mut written,
+            remaining_depth: self.remaining_depth,
         });
         match res {
             Ok(()) if written => {
@@ -533,6 +579,7 @@ pub struct Object<'w> {
     members: Vec<(String, Vec<u8>)>,
     seen: BTreeSet<String>,
     _marker: PhantomData<&'w mut Vec<u8>>,
+    remaining_depth: u16,
 }
 
 impl<'w> Object<'w> {
@@ -554,6 +601,7 @@ impl<'w> Object<'w> {
         f(Value {
             buf: &mut val_buf,
             written: &mut written,
+            remaining_depth: self.remaining_depth,
         })?;
         if !written {
             return Err(CanonError::IncompleteValue);
@@ -698,6 +746,8 @@ pub fn canonical_identity<T: Canonical + ?Sized>(
 }
 
 /// Serialize an admitted [`Json`] value tree through [`CanonWriter`].
+///
+/// Refuses a number if canonicalizing it would change its exact decimal value.
 pub fn write_json(value: &Json<'_>) -> Result<CanonicalBytes, CanonError> {
     to_canonical(value)
 }
@@ -735,10 +785,10 @@ fn write_json_value(node: &Json<'_>, w: Value<'_>) -> Result<(), CanonError> {
             if let Ok(n) = node.as_int53() {
                 w.int53(n)
             } else {
-                let (_, x) = node
+                let (lexeme, x) = node
                     .as_f64_lexeme()
                     .map_err(|_| CanonError::NonFiniteFloat)?;
-                w.f64_shortest(x)
+                w.untyped_number(lexeme, x)
             }
         }
         Json::Arr(items) => w.array(|a| {

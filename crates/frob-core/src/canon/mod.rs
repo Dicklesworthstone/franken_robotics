@@ -599,6 +599,41 @@ mod tests {
     }
 
     #[test]
+    fn untyped_numbers_preserve_exact_decimal_value() {
+        let limits = Limits::default();
+        let schema = SchemaName::parse("frob.design/1").unwrap();
+        let exact = admit(b"9007199254740992", &limits).unwrap();
+        let bytes = write_admitted(&exact).unwrap();
+        assert_eq!(bytes.as_str(), "9007199254740992");
+        assert_eq!(
+            canonical_identity(&schema, &exact),
+            Ok(identity(&schema, &bytes))
+        );
+
+        for lexeme in ["9007199254740993", "1e-400", "1.0000000000000001"] {
+            let admitted = admit(lexeme.as_bytes(), &limits).unwrap();
+            assert_eq!(
+                write_admitted(&admitted),
+                Err(CanonError::InexactUntypedNumber)
+            );
+            assert_eq!(
+                canonical_identity(&schema, &admitted),
+                Err(CanonError::InexactUntypedNumber)
+            );
+        }
+
+        let respelled = admit(b"1.00e-1", &limits).unwrap();
+        assert_eq!(write_admitted(&respelled).unwrap().as_str(), "0.1");
+
+        let mut writer = CanonWriter::new();
+        writer.value().unwrap().f64_shortest(1e20).unwrap();
+        let bytes = writer.finish().unwrap();
+        assert_eq!(bytes.as_str(), "100000000000000000000");
+        let admitted = admit(bytes.as_bytes(), &limits).unwrap();
+        assert_eq!(admitted.into_canonical(), Ok(bytes));
+    }
+
+    #[test]
     fn roundtrip_random_terms() {
         let mut rng = XorShift64::new(0x0034_1800_2026_1124);
         let limits = Limits::default();
@@ -853,6 +888,65 @@ mod tests {
             Err(CanonError::IncompleteValue)
         );
         assert_eq!(w_arr.finish(), Err(CanonError::IncompleteValue));
+    }
+
+    #[test]
+    fn failed_root_write_cannot_finish() {
+        struct WritesThenFails;
+
+        impl Canonical for WritesThenFails {
+            fn write(&self, w: Value<'_>) -> Result<(), CanonError> {
+                w.null();
+                Err(CanonError::NonFiniteFloat)
+            }
+        }
+
+        let mut writer = CanonWriter::new();
+        assert_eq!(
+            writer.write_term(&WritesThenFails),
+            Err(CanonError::NonFiniteFloat)
+        );
+        assert_eq!(writer.finish(), Err(CanonError::IncompleteValue));
+
+        let mut writer = CanonWriter::new();
+        assert_eq!(
+            writer.value().unwrap().term(&WritesThenFails),
+            Err(CanonError::NonFiniteFloat)
+        );
+        assert_eq!(writer.finish(), Err(CanonError::IncompleteValue));
+    }
+
+    #[test]
+    fn writer_matches_admission_depth_limit() {
+        fn nested(w: Value<'_>, levels: u16, objects: bool, pair: bool) -> Result<(), CanonError> {
+            match (levels, objects, pair) {
+                (0, _, true) => w.rational_pair(&Int::from(1u64), &Int::from(2u64)),
+                (0, _, false) => {
+                    w.null();
+                    Ok(())
+                }
+                (_, true, _) => {
+                    w.object(|o| o.member("n", |v| nested(v, levels - 1, objects, pair)))
+                }
+                (_, false, _) => w.array(|a| a.push(|v| nested(v, levels - 1, objects, pair))),
+            }
+        }
+
+        for (objects, pair) in [(false, false), (true, false), (true, true)] {
+            let levels = 64 - u16::from(pair);
+            let mut writer = CanonWriter::new();
+            nested(writer.value().unwrap(), levels, objects, pair).unwrap();
+            let bytes = writer.finish().unwrap();
+            let admitted = admit(bytes.as_bytes(), &Limits::default()).unwrap();
+            assert_eq!(admitted.into_canonical(), Ok(bytes));
+
+            let mut writer = CanonWriter::new();
+            assert_eq!(
+                nested(writer.value().unwrap(), levels + 1, objects, pair),
+                Err(CanonError::DepthLimit)
+            );
+            assert_eq!(writer.finish(), Err(CanonError::IncompleteValue));
+        }
     }
 
     #[test]

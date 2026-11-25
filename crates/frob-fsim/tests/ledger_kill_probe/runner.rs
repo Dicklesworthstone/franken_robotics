@@ -12,8 +12,8 @@ use std::path::PathBuf;
 use frob_core::id::Blake3;
 use frob_fsim::ledger::probe::{
     CHAIN_HEAD_KEY, DEFAULT_ROWS_PER_TXN, DEFAULT_TXN_COUNT, KillPhase, KillPoint, ROW_VALUE_LEN,
-    chain_key, chain_step, encode_chain_head, kill_point_for_seed, row_key, row_value,
-    table_for_row, zero_chain,
+    chain_key, chain_step, encode_chain_head, kill_point_for_seed, open_at_recovery_checkpoint,
+    row_key, row_value, table_for_row, zero_chain,
 };
 use frob_fsim::ledger::{FsqliteLedger, OpenOptions, SchemaVersion, TableId};
 
@@ -320,21 +320,17 @@ where
 
     match args.mode {
         Mode::RecoverKill => {
-            emit_line(&mut stdout, "RECOVER_BEGIN")?;
-            let ledger = FsqliteLedger::open(&args.db, SchemaVersion::M0, OpenOptions::default())
-                .map_err(|e| format!("recover-kill open failed: {e}"))?;
-            let report = ledger
-                .integrity_check()
-                .map_err(|e| format!("recover-kill integrity_check failed: {e}"))?;
-            if !report.is_clean() {
-                return Err(format!("recover-kill integrity not clean: {report:?}"));
-            }
-            emit_line(
-                &mut stdout,
-                &format!("AT_RECOVER {}", ledger.recovered().as_str()),
-            )?;
-            wait_for_kill_signal();
-            Ok(())
+            open_at_recovery_checkpoint(&args.db, |report| {
+                writeln!(stdout, "AT_RECOVER {}", report.as_str())?;
+                stdout.flush()?;
+                wait_for_kill_signal();
+                Err(io::Error::new(
+                    io::ErrorKind::Interrupted,
+                    "probe released before SIGKILL",
+                ))
+            })
+            .map_err(|e| format!("recover-kill open failed: {e}"))?;
+            Err("recovery checkpoint was not reached".to_owned())
         }
         Mode::RunKill => {
             let mut ledger =

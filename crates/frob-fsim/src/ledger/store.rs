@@ -671,6 +671,15 @@ impl FsqliteLedger {
         schema: SchemaVersion,
         opts: OpenOptions,
     ) -> Result<Self, LedgerRefusal> {
+        Self::open_with_recovery_checkpoint(path, schema, opts, |_| Ok(()))
+    }
+
+    pub(super) fn open_with_recovery_checkpoint(
+        path: &Path,
+        schema: SchemaVersion,
+        opts: OpenOptions,
+        checkpoint: impl FnOnce(RecoveryReport) -> std::io::Result<()>,
+    ) -> Result<Self, LedgerRefusal> {
         let path_str = path.to_str().ok_or_else(|| {
             LedgerRefusal::invalid_input("open", "ledger path must be valid UTF-8")
         })?;
@@ -718,6 +727,8 @@ impl FsqliteLedger {
 
         // 1. Inspect existing on-disk header & WAL before opening (zero writes).
         let (recovered, pre_open_wal_findings) = inspect_recovery_before_open(path)?;
+        checkpoint(recovered)
+            .map_err(|e| LedgerRefusal::io("open.recovery_checkpoint", e.to_string()))?;
 
         // 2. Open underlying FrankenSQLite-backed ledger (refuses newer engine
         //    `PRAGMA user_version` BEFORE applying pragmas or migrating).

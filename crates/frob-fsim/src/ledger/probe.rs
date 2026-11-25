@@ -13,6 +13,22 @@ use frob_core::id::{Blake3, hash_blob};
 
 use super::TableId;
 
+/// Open an M0 ledger and let the crash probe pause after inspecting the
+/// on-disk recovery state, before the database engine opens it.
+#[cfg(feature = "ledger")]
+#[doc(hidden)]
+pub fn open_at_recovery_checkpoint(
+    path: &std::path::Path,
+    checkpoint: impl FnOnce(super::RecoveryReport) -> std::io::Result<()>,
+) -> Result<super::FsqliteLedger, super::LedgerRefusal> {
+    super::FsqliteLedger::open_with_recovery_checkpoint(
+        path,
+        super::SchemaVersion::M0,
+        super::OpenOptions::default(),
+        checkpoint,
+    )
+}
+
 /// Default transaction count per forced-kill trial (`BD-009`).
 pub const DEFAULT_TXN_COUNT: u64 = 200;
 

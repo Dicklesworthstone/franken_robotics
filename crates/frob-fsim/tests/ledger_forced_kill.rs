@@ -16,11 +16,12 @@ mod probe_runner;
 
 use std::fs;
 use std::io::{BufRead, BufReader, Write};
+#[cfg(unix)]
+use std::os::unix::process::ExitStatusExt;
 use std::path::{Path, PathBuf};
 use std::process::{Child, Command, Stdio};
 use std::sync::atomic::{AtomicU64, Ordering};
-use std::thread;
-use std::time::{Duration, SystemTime, UNIX_EPOCH};
+use std::time::{SystemTime, UNIX_EPOCH};
 
 use frob_core::id::Blake3;
 use frob_fsim::ledger::probe::{
@@ -109,13 +110,19 @@ impl ChildGuard {
     }
 
     fn kill_and_wait(&mut self) -> Result<(), String> {
-        let Some(mut child) = self.0.take() else {
-            return Ok(());
-        };
+        let child = self.0.as_mut().ok_or("child already reaped")?;
         child.kill().map_err(|e| format!("SIGKILL child: {e}"))?;
-        let _ = child
+        let status = child
             .wait()
             .map_err(|e| format!("wait killed child: {e}"))?;
+        self.0 = None;
+        #[cfg(unix)]
+        let killed = status.signal() == Some(9);
+        #[cfg(not(unix))]
+        let killed = !status.success();
+        if !killed {
+            return Err(format!("child did not die of SIGKILL: {status}"));
+        }
         Ok(())
     }
 
@@ -341,7 +348,10 @@ fn kill_recovery_child(db: &Path, seed: u64, n_txns: u64, k_rows: u32) -> Result
     .spawn()
     .map_err(|e| TrialFailure::HarnessError(format!("spawn recover-kill child: {e}")))?;
 
-    let _stdin = child.stdin.take();
+    let _stdin = child
+        .stdin
+        .take()
+        .ok_or_else(|| TrialFailure::HarnessError("recover-kill stdin missing".to_owned()))?;
     let stdout = child
         .stdout
         .take()
@@ -350,8 +360,6 @@ fn kill_recovery_child(db: &Path, seed: u64, n_txns: u64, k_rows: u32) -> Result
 
     let mut reader = BufReader::new(stdout);
     let mut line = String::new();
-    let wait_for_at_recover = seed % 2 == 1;
-
     loop {
         line.clear();
         let n = reader
@@ -362,18 +370,7 @@ fn kill_recovery_child(db: &Path, seed: u64, n_txns: u64, k_rows: u32) -> Result
                 "recover-kill child exited before SIGKILL".to_owned(),
             ));
         }
-        let trimmed = line.trim();
-        if trimmed == "RECOVER_BEGIN" {
-            if !wait_for_at_recover {
-                // Deterministic micro-offset inside open/recovery before SIGKILL.
-                let delay_ms = (seed.saturating_sub(90) % 10) * 2;
-                if delay_ms > 0 {
-                    thread::sleep(Duration::from_millis(delay_ms));
-                }
-                guard.kill_and_wait().map_err(TrialFailure::HarnessError)?;
-                return Ok(());
-            }
-        } else if trimmed.starts_with("AT_RECOVER") {
+        if line.trim().starts_with("AT_RECOVER ") {
             guard.kill_and_wait().map_err(TrialFailure::HarnessError)?;
             return Ok(());
         }

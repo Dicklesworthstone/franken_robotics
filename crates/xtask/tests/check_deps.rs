@@ -806,9 +806,17 @@ fn python_only_in_bindings() {
     let out_bad = check_deps(&bad.repo, &[WorkspaceRoot::core(&bad.repo)]).expect("bad py");
     assert_eq!(
         rules_of(&out_bad.findings),
-        vec![RULE_L5_PYTHON_OUTSIDE_BINDINGS]
+        vec![
+            RULE_L5_PYTHON_OUTSIDE_BINDINGS,
+            xtask::check_deps::RULE_CORE_FORBIDDEN_PACKAGE,
+        ]
     );
     assert_eq!(out_bad.findings[0].subject, "frob-learn -> pyo3");
+    assert!(
+        out_bad.findings[1].message.contains("annex = \"bindings\""),
+        "expected annex = \"bindings\" in core.forbidden-package finding: {:?}",
+        out_bad.findings[1]
+    );
 
     // 2. `pyo3` inside `bindings/frob-gymnasium` (annex workspace) -> passes.
     let ok = SynthEnv::new("python-inside-bindings");

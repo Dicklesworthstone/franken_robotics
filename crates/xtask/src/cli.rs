@@ -17,6 +17,7 @@ use std::time::Instant;
 
 use crate::metadata::WorkspaceRoot;
 use crate::report::{CheckReport, FactValue, Finding};
+use crate::workspaces;
 
 /// Clean run with zero findings.
 pub const EXIT_OK: u8 = 0;
@@ -182,7 +183,7 @@ pub fn run<WOut: Write, WErr: Write>(
     };
 
     let ctx = CheckContext {
-        roots: vec![WorkspaceRoot::core(&parsed.root)],
+        roots: workspaces::workspace_roots(&parsed.root),
         repo_root: parsed.root,
         extra_args: parsed.extra_args,
     };

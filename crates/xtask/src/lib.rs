@@ -17,3 +17,4 @@ pub mod metadata;
 pub mod report;
 pub mod stack;
 pub mod status_table;
+pub mod workspaces;

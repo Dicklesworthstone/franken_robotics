@@ -98,6 +98,21 @@ impl WorkspaceRoot {
     }
 
     #[must_use]
+    pub fn retarget(
+        name: impl Into<String>,
+        rel_dir: impl Into<String>,
+        root_dir: impl Into<PathBuf>,
+    ) -> Self {
+        Self {
+            name: name.into(),
+            rel_dir: normalize_rel_str(&rel_dir.into()),
+            root_dir: root_dir.into(),
+            kind: WorkspaceKind::Retarget,
+            link_packages: Vec::new(),
+        }
+    }
+
+    #[must_use]
     pub fn manifest_path(&self) -> PathBuf {
         self.root_dir.join("Cargo.toml")
     }

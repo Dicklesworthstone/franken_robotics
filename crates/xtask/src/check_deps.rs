@@ -39,6 +39,7 @@ use crate::stack::posture::{
     BEDROCK_DIRECT_CRATES, DepSpec, EdgeDecision, EdgeDenial, EdgeKind, Posture, check_edge,
     edge_allowed, is_exact_semver,
 };
+use crate::workspaces::{self, ForbiddenReason};
 
 /// Rule identifier for a FrankenSim volatile dependency outside `frob-fsim` (INV-SUITE-01).
 pub const RULE_FSIM_VOLATILE_EDGE: &str = "fsim.volatile-edge";
@@ -74,8 +75,11 @@ pub const RULE_FTUI_EXECUTOR_FEATURE: &str = "ftui.executor-feature";
 pub const RULE_SUITE_FORBIDDEN_PACKAGE: &str = "suite.forbidden-package";
 /// Rule identifier for the third-party `egg` crate in any resolved graph (arrives via frankenjax, N33c-09).
 pub const RULE_SUITE_EGG: &str = "suite.egg";
+/// Rule identifier for any package on the workspace table's core forbidden-package list
+/// appearing in the core `Cargo.lock` or resolved dependency graph (`N34p4-02`).
+pub const RULE_CORE_FORBIDDEN_PACKAGE: &str = "core.forbidden-package";
 
-/// Complete list of finding rule identifiers owned by `check-deps` (BD-003 + N33c-09).
+/// Complete list of finding rule identifiers owned by `check-deps` (BD-003 + N33c-09 + N34p4-02).
 pub const OWNED_RULES: &[&str] = &[
     RULE_FSIM_VOLATILE_EDGE,
     RULE_L2_FS_QTY_DIRECT,
@@ -94,6 +98,7 @@ pub const OWNED_RULES: &[&str] = &[
     RULE_FTUI_EXECUTOR_FEATURE,
     RULE_SUITE_FORBIDDEN_PACKAGE,
     RULE_SUITE_EGG,
+    RULE_CORE_FORBIDDEN_PACKAGE,
 ];
 
 /// Schema identifier for the shared sibling register (`N33c-07` / `N33c-09`).
@@ -589,71 +594,34 @@ pub fn validate_siblings_against_stack_lock(
     Ok(())
 }
 
-/// Discover all present FrankenRobotics workspaces under `repo_root` (`core`, GPU annexes,
-/// `apps/`, `derive/`, `bindings/`, `worker/`), deliberately excluding `tests/admission/`.
+/// Discover all present FrankenRobotics workspaces under `repo_root` using the
+/// authoritative workspace table (`workspaces::WORKSPACES`, `N34p4-02`), deliberately
+/// excluding `tests/admission/`.
 #[must_use]
 pub fn discover_workspace_roots(repo_root: &Path) -> Vec<WorkspaceRoot> {
     let mut roots = vec![WorkspaceRoot::core(repo_root)];
     let mut seen_rel = BTreeSet::new();
     seen_rel.insert(String::new());
 
-    let mut push_if_manifest = |ws: WorkspaceRoot| {
-        if ws.has_manifest() && seen_rel.insert(ws.rel_dir.clone()) {
+    for ws in workspaces::workspace_roots(repo_root) {
+        if ws.kind != WorkspaceKind::Core && ws.has_manifest() && seen_rel.insert(ws.rel_dir.clone())
+        {
             roots.push(ws);
         }
-    };
-
-    // GPU annexes (prefer workspace root `spark/` if present, otherwise per-annex crates).
-    let spark_root = WorkspaceRoot::annex("spark", "spark", repo_root.join("spark"));
-    if spark_root.has_manifest() {
-        push_if_manifest(spark_root);
-    } else {
-        push_if_manifest(WorkspaceRoot::annex(
-            "spark-metal",
-            "spark/frob-spark-metal",
-            repo_root.join("spark/frob-spark-metal"),
-        ));
-        push_if_manifest(WorkspaceRoot::annex(
-            "spark-cuda",
-            "spark/frob-spark-cuda",
-            repo_root.join("spark/frob-spark-cuda"),
-        ));
     }
 
-    push_if_manifest(WorkspaceRoot::link(
-        "apps",
-        "apps",
-        repo_root.join("apps"),
-        Vec::new(),
-    ));
-
-    let derive_root = WorkspaceRoot::annex("derive", "derive", repo_root.join("derive"));
-    if derive_root.has_manifest() {
-        push_if_manifest(derive_root);
-    } else {
-        push_if_manifest(WorkspaceRoot::annex(
-            "derive-frob-derive",
-            "derive/frob-derive",
-            repo_root.join("derive/frob-derive"),
-        ));
+    // Fallback for synthetic fixtures placing a workspace Cargo.toml directly at
+    // `spark/`, `derive/`, or `bindings/` when the per-annex subdirectory has none.
+    for (name, dir) in [("spark", "spark"), ("derive", "derive"), ("bindings", "bindings")] {
+        let prefix = format!("{dir}/");
+        let has_nested = seen_rel.iter().any(|r| r.starts_with(&prefix));
+        if !has_nested {
+            let ws = WorkspaceRoot::annex(name, dir, repo_root.join(dir));
+            if ws.has_manifest() && seen_rel.insert(ws.rel_dir.clone()) {
+                roots.push(ws);
+            }
+        }
     }
-
-    let bindings_root = WorkspaceRoot::annex("bindings", "bindings", repo_root.join("bindings"));
-    if bindings_root.has_manifest() {
-        push_if_manifest(bindings_root);
-    } else {
-        push_if_manifest(WorkspaceRoot::annex(
-            "bindings-gymnasium",
-            "bindings/frob-gymnasium",
-            repo_root.join("bindings/frob-gymnasium"),
-        ));
-    }
-
-    push_if_manifest(WorkspaceRoot::annex(
-        "worker",
-        "worker",
-        repo_root.join("worker"),
-    ));
 
     roots
 }
@@ -816,9 +784,9 @@ pub fn check_deps_with_config(
         let resolved = match load_resolved_metadata(repo_root, ws) {
             Ok(r) => r,
             Err(err) => {
-                // If an orphaned `asupersync 0.5.*` entry in this workspace's Cargo.lock
-                // caused `--locked` to reject the lockfile, still report `asup.v0_5_0`
-                // directly rather than hiding the ban behind a lockfile usage error.
+                // If an orphaned `asupersync 0.5.*` or core forbidden-package entry in this
+                // workspace's Cargo.lock caused `--locked` to reject the lockfile, still report
+                // the ban directly rather than hiding it behind a lockfile usage error.
                 let lock_file = ws.root_dir.join("Cargo.lock");
                 let mut lock_findings = Vec::new();
                 if lock_file.is_file() {
@@ -828,6 +796,15 @@ pub fn check_deps_with_config(
                         &reported_lock_asup,
                         &mut lock_findings,
                     );
+                    if ws.kind == WorkspaceKind::Core {
+                        let empty_resolved = BTreeSet::new();
+                        scan_core_lockfile_for_forbidden_packages(
+                            repo_root,
+                            &lock_file,
+                            &empty_resolved,
+                            &mut lock_findings,
+                        );
+                    }
                 }
                 if !lock_findings.is_empty() {
                     findings.extend(lock_findings);
@@ -870,6 +847,17 @@ pub fn check_deps_with_config(
             &mut reported_lock_asup,
             &mut findings,
         );
+
+        if ws.kind == WorkspaceKind::Core {
+            evaluate_core_forbidden_packages(
+                repo_root,
+                ws,
+                &declared.members,
+                &resolved,
+                &resolved_all,
+                &mut findings,
+            );
+        }
 
         ws_facts_map.insert(ws.name.clone(), build_workspace_closure_facts(&resolved));
     }
@@ -2727,6 +2715,180 @@ fn scan_single_lockfile_for_asup_0_5(
             ),
             repair: format!(
                 "remove `asupersync {ver}` from `{rel_lock}` and update any dependency or patch pulling the 0.5.* line"
+            ),
+        });
+    }
+}
+
+// ============================================================================
+// Step 8: Core forbidden-package rule (`core.forbidden-package`, N34p4-02)
+// ============================================================================
+
+/// Evaluate `core.forbidden-package` (`N34p4-02`) over the core workspace's resolved
+/// dependency graphs (`resolved` and `resolved_all`) and its committed `Cargo.lock`
+/// (parsed strictly through `frob_core::registry::toml`).
+///
+/// Matches both package-name / prefix-pattern entries in `workspaces::FORBIDDEN_CORE_PACKAGES`
+/// and manifest paths lying under `spark/`, `apps/`, `derive/`, or `bindings/`. Each finding
+/// reports the offending package, its justification (`annex = "..."`, `route = "..."`, or
+/// `nongoal = "..."`), and either a shortest dependency path from a core crate or
+/// `lockfile-only` when no edge of the resolved graph reaches the package.
+fn evaluate_core_forbidden_packages(
+    repo_root: &Path,
+    ws: &WorkspaceRoot,
+    declared_members: &[PackageMeta],
+    resolved: &ResolvedWorkspace,
+    resolved_all: &ResolvedWorkspace,
+    findings: &mut Vec<Finding>,
+) {
+    let members_by_id: BTreeMap<&str, &PackageMeta> = declared_members
+        .iter()
+        .map(|m| (m.id.as_str(), m))
+        .collect();
+    let default_manifest = if ws.rel_dir.is_empty() {
+        "Cargo.toml".to_owned()
+    } else {
+        format!("{}/Cargo.toml", ws.rel_dir)
+    };
+
+    let mut reported_pkg_names: BTreeSet<String> = BTreeSet::new();
+
+    for res in [resolved, resolved_all] {
+        let parent = build_resolved_bfs_parents(res);
+        let mut all_pkgs: Vec<(&str, &ResolvedPackage)> = res
+            .packages
+            .iter()
+            .map(|(id, pkg)| (id.as_str(), pkg))
+            .collect();
+        all_pkgs.sort_by(|a, b| {
+            a.1.name
+                .cmp(&b.1.name)
+                .then_with(|| a.1.version.cmp(&b.1.version))
+                .then_with(|| a.0.cmp(b.0))
+        });
+
+        for (pkg_id, pkg) in all_pkgs {
+            if reported_pkg_names.contains(&pkg.name) {
+                continue;
+            }
+            let reason = match workspaces::match_forbidden_core_package(&pkg.name) {
+                Some(entry) => entry.why,
+                None => pkg
+                    .rel_dir
+                    .as_deref()
+                    .and_then(workspaces::match_forbidden_core_manifest_dir),
+            };
+            let Some(reason) = reason else {
+                continue;
+            };
+            if !parent.contains_key(pkg_id) {
+                continue;
+            }
+
+            let (chain, root_member) =
+                reconstruct_chain(pkg_id, &parent, res, &members_by_id);
+            let chain_display = if chain.is_empty() {
+                pkg.name.clone()
+            } else {
+                chain.join(" -> ")
+            };
+            let manifest_rel = root_member
+                .map(|m| m.rel_manifest.clone())
+                .unwrap_or_else(|| default_manifest.clone());
+            let reason_tag = reason.format_tag();
+
+            reported_pkg_names.insert(pkg.name.clone());
+            findings.push(Finding {
+                rule: RULE_CORE_FORBIDDEN_PACKAGE,
+                subject: chain_display.clone(),
+                path: manifest_rel,
+                line: None,
+                message: format!(
+                    "core workspace contains forbidden package `{}` ({reason_tag}) via dependency path `{chain_display}` (N34p4-02)",
+                    pkg.name
+                ),
+                repair: format!(
+                    "remove `{}` from the core dependency graph ({reason_tag}); keep annex/route-excluded crates out of the core lockfile",
+                    pkg.name
+                ),
+            });
+        }
+    }
+
+    let lock_file = ws.root_dir.join("Cargo.lock");
+    if lock_file.is_file() {
+        scan_core_lockfile_for_forbidden_packages(
+            repo_root,
+            &lock_file,
+            &reported_pkg_names,
+            findings,
+        );
+    }
+}
+
+/// Scan the core `Cargo.lock` (read through `frob_core::registry::toml::parse`) for any
+/// forbidden package entry not already reported with a resolved dependency path, emitting
+/// `core.forbidden-package` with dependency path `lockfile-only`.
+fn scan_core_lockfile_for_forbidden_packages(
+    repo_root: &Path,
+    lock_path: &Path,
+    already_reported_pkgs: &BTreeSet<String>,
+    findings: &mut Vec<Finding>,
+) {
+    let Ok(bytes) = fs::read(lock_path) else {
+        return;
+    };
+    let Ok(root) = toml::parse(&bytes) else {
+        return;
+    };
+    let rel_lock = lock_path
+        .strip_prefix(repo_root)
+        .ok()
+        .map(normalize_rel_path)
+        .unwrap_or_else(|| normalize_rel_path(lock_path));
+
+    let mut lock_pkg_names: BTreeSet<String> = BTreeSet::new();
+    if let Some(Value::Array(items)) = root.get("package") {
+        for item in items {
+            if let Value::Table(tbl) = &item.value
+                && let Some(name) = tbl.get("name").and_then(Value::as_str)
+            {
+                lock_pkg_names.insert(name.to_owned());
+            }
+        }
+    }
+    if let Some(Value::Table(ptbl)) = root.get("patch")
+        && let Some(Value::Array(uarr)) = ptbl.get("unused")
+    {
+        for item in uarr {
+            if let Value::Table(tbl) = &item.value
+                && let Some(name) = tbl.get("name").and_then(Value::as_str)
+            {
+                lock_pkg_names.insert(name.to_owned());
+            }
+        }
+    }
+
+    for pkg_name in lock_pkg_names {
+        if already_reported_pkgs.contains(&pkg_name) {
+            continue;
+        }
+        let Some(entry) = workspaces::match_forbidden_core_package(&pkg_name) else {
+            continue;
+        };
+        let reason_tag = entry
+            .why
+            .map_or_else(|| "reason = \"missing\"".to_owned(), ForbiddenReason::format_tag);
+        findings.push(Finding {
+            rule: RULE_CORE_FORBIDDEN_PACKAGE,
+            subject: format!("{pkg_name} (lockfile-only)"),
+            path: rel_lock.clone(),
+            line: None,
+            message: format!(
+                "core lockfile `{rel_lock}` contains forbidden package `{pkg_name}` ({reason_tag}) with dependency path `lockfile-only` (N34p4-02)"
+            ),
+            repair: format!(
+                "remove `{pkg_name}` from `{rel_lock}` ({reason_tag}) and refresh the core lockfile"
             ),
         });
     }

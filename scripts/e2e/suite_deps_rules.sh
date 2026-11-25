@@ -29,6 +29,7 @@ mkdir -p "${XTASK_TARGET_DIR}"
 
 PLANTS_TOTAL=0
 PLANTS_CAUGHT=0
+LOCK_SEQ=0
 
 # Compute BLAKE3 digest of a file (falls back to frob-e2e sha256 if b3sum is absent).
 _hash_manifest() {
@@ -117,7 +118,14 @@ _write_root_workspace() {
 
 _gen_lock() {
   local ws_dir="$1"
-  (cd "${ws_dir}" && cargo generate-lockfile --offline --manifest-path "${ws_dir}/Cargo.toml" >/dev/null 2>&1)
+  local prev_dir="${PWD}"
+  LOCK_SEQ=$((LOCK_SEQ + 1))
+  local lock_name="gen_lock_${LOCK_SEQ}"
+  cd "${ws_dir}" || return 1
+  e2e_cmd --name "${lock_name}" -- \
+    cargo generate-lockfile --offline --manifest-path "${ws_dir}/Cargo.toml"
+  cd "${prev_dir}" || return 1
+  e2e_assert_eq "${lock_name}_exit_0" "${E2E_LAST_EXIT}" "0"
 }
 
 # Run `cargo xtask check-deps --root <repo> --json`, assert exit 2 and expected rule,

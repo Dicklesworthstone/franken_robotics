@@ -14,6 +14,7 @@
 //! - `tenfold`: ten-fold comparative benchmark harness skeleton, five harness records,
 //!   canonical bytes, append-only store, and dependency-free scorer boundary (`N39a-01`).
 
+pub mod admission;
 pub mod compendium;
 pub mod controls;
 pub mod design_golden;

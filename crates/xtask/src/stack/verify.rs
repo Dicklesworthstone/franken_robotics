@@ -22,6 +22,7 @@ use frob_core::registry::toml::{self, Value as TomlValue};
 use crate::cli::{CheckContext, CheckError, CheckOutcome};
 use crate::crate_map::Finding;
 use crate::report::FactValue;
+use crate::stack::admission::{self, ADMISSION_KIND_TO_RULE, RULE_ADMISSION, RULE_ADMISSION_RECORD};
 use crate::stack::guard;
 use crate::stack::lifts;
 use crate::stack::lock::{self, GateRef, GitRev, StackLock};
@@ -63,6 +64,8 @@ pub const OWNED_RULES: &[&str] = &[
     RULE_PATCH,
     RULE_PROFILE,
     RULE_ENV,
+    RULE_ADMISSION,
+    RULE_ADMISSION_RECORD,
 ];
 
 /// Authoritative kind-to-rule mapping: every kind belongs to exactly one `stack.*` identifier.
@@ -128,6 +131,19 @@ pub const KIND_TO_RULE: &[(&str, &str)] = &[
     ("profile-override-missing", RULE_PROFILE),
     ("build-env-missing", RULE_ENV),
     ("foreign-build-class", RULE_ENV),
+    ("unadmitted-use", RULE_ADMISSION),
+    ("admission-stale", RULE_ADMISSION),
+    ("lockfile-lacks-foundation", RULE_ADMISSION_RECORD),
+    ("commit-unreachable", RULE_ADMISSION_RECORD),
+    ("receipt-missing", RULE_ADMISSION_RECORD),
+    ("output-missing", RULE_ADMISSION_RECORD),
+    ("pass-on-dirty", RULE_ADMISSION_RECORD),
+    ("pass-without-control", RULE_ADMISSION_RECORD),
+    ("self-certified", RULE_ADMISSION_RECORD),
+    ("tool-unpinned", RULE_ADMISSION_RECORD),
+    ("measured-missing", RULE_ADMISSION_RECORD),
+    ("hash-mismatch", RULE_ADMISSION_RECORD),
+    ("parse-error", RULE_ADMISSION_RECORD),
 ];
 
 /// Reason accepted by `--write-receipt --reason <reason>`.
@@ -376,7 +392,11 @@ pub fn verify_repo(repo_root: &Path, opts: &VerifyOptions) -> Result<CheckOutcom
     };
 
     let lock_digest_hex = bytes_to_lower_hex(&stack_lock.digest());
-    for err in stack_lock.check_admitted(&opts.admitted, &receipts_dir) {
+    let mut effective_admitted = opts.admitted.clone();
+    if repo_root.join("receipts/admissions").is_dir() {
+        effective_admitted.extend(admission::admitted_gates(repo_root, &stack_lock));
+    }
+    for err in stack_lock.check_admitted(&effective_admitted, &receipts_dir) {
         let (rule, kind_name) = if err.rule == 10 && err.kind == "missing-receipt-file" {
             (RULE_RECEIPT_MISSING, "no-receipt".to_owned())
         } else {
@@ -965,6 +985,43 @@ pub fn verify_repo(repo_root: &Path, opts: &VerifyOptions) -> Result<CheckOutcom
         }
     }
 
+    // 7. Admission record validity (rules 1–8) and never-inherited check (N33a-07).
+    if repo_root.join("receipts/admissions").is_dir() {
+        for af in admission::validate_all(repo_root, &stack_lock) {
+            let kr = KindRecord {
+                rule: af.rule,
+                kind: af.kind.to_owned(),
+                fd: af.fd.clone(),
+                class: None,
+                fails: af.fails,
+            };
+            if af.fails {
+                failing.push((af.to_xtask_finding(), kr));
+            } else {
+                informational.push(kr);
+            }
+        }
+    }
+    if !tc_mismatch_lock && lockfiles_present {
+        if let Ok(ni) = admission::never_inherited(repo_root, &stack_lock, None) {
+            for af in ni.findings {
+                let kr = KindRecord {
+                    rule: af.rule,
+                    kind: af.kind.to_owned(),
+                    fd: af.fd.clone(),
+                    class: None,
+                    fails: af.fails,
+                };
+                if af.fails {
+                    failing.push((af.to_xtask_finding(), kr));
+                } else {
+                    informational.push(kr);
+                }
+            }
+        }
+    }
+    let _ = ADMISSION_KIND_TO_RULE;
+
     let guard_ok = newest_path
         .as_deref()
         .is_some_and(|p| guard::may_record_pass(p).is_ok())
@@ -1539,23 +1596,23 @@ mod tests {
         .expect("config");
         fs::write(
             repo.join("Cargo.toml"),
-            "[workspace]\nresolver = \"3\"\nmembers = [\"crates/app\"]\n\n\
+            "[workspace]\nresolver = \"3\"\nmembers = [\"crates/frob-conformance\"]\n\n\
 [patch.crates-io]\nsib-fsim = { path = \"../frankensim\" }\n\n\
 [profile.dev.package.fsqlite]\nopt-level = 1\n",
         )
         .expect("root Cargo.toml");
-        fs::create_dir_all(repo.join("crates/app/src")).expect("app src");
+        fs::create_dir_all(repo.join("crates/frob-conformance/src")).expect("conformance src");
         fs::write(
-            repo.join("crates/app/Cargo.toml"),
-            "[package]\nname = \"app\"\nversion = \"0.1.0\"\nedition = \"2024\"\n\n[dependencies]\nsib-fsim = { path = \"../../../frankensim\" }\n",
+            repo.join("crates/frob-conformance/Cargo.toml"),
+            "[package]\nname = \"frob-conformance\"\nversion = \"0.1.0\"\nedition = \"2024\"\n\n[dependencies]\nsib-fsim = { path = \"../../../frankensim\" }\n",
         )
-        .expect("app manifest");
-        fs::write(repo.join("crates/app/src/lib.rs"), "pub fn v() -> u32 { sib_fsim::V }\n")
-            .expect("app lib");
+        .expect("conformance manifest");
+        fs::write(repo.join("crates/frob-conformance/src/lib.rs"), "pub fn v() -> u32 { sib_fsim::V }\n")
+            .expect("conformance lib");
         fs::write(
             repo.join("Cargo.lock"),
             "# This file is automatically @generated by Cargo.\nversion = 4\n\n\
-[[package]]\nname = \"app\"\nversion = \"0.1.0\"\ndependencies = [\n \"sib-fsim\",\n]\n\n\
+[[package]]\nname = \"frob-conformance\"\nversion = \"0.1.0\"\ndependencies = [\n \"sib-fsim\",\n]\n\n\
 [[package]]\nname = \"sib-fsim\"\nversion = \"0.1.0\"\n\n\
 [[patch.unused]]\nname = \"sib-fsim\"\nversion = \"0.1.0\"\n",
         )
@@ -1573,7 +1630,7 @@ mod tests {
 [[foundation]]\nid = \"FD-FSIM\"\nname = \"frankensim\"\nposture = \"consume-path\"\n\
 path = \"../frankensim\"\ngit_rev = \"{sib_c2}\"\nfeatures = [\"referee\", \"geometry\", \"ledger\"]\n\
 build_env = {{ FRANKENSIM_DEPGRAPH_SALT = \"synthetic-dev-v1\" }}\n\
-confined_to = [\"app\"]\nadmission_gate = \"INT-FSIM-01\"\nfallback = \"KILL-FSIM\"\n"
+confined_to = [\"frob-conformance\"]\nadmission_gate = \"INT-FSIM-01\"\nfallback = \"KILL-FSIM\"\n"
             ),
         )
         .expect("stack lock");
@@ -2020,7 +2077,7 @@ confined_to = [\"app\"]\nadmission_gate = \"INT-FSIM-01\"\nfallback = \"KILL-FSI
 
         // Plant unregistered `// LIFTED from` file -> stack.lift finding.
         fs::write(
-            fx.repo.join("crates/app/src/lifted.rs"),
+            fx.repo.join("crates/frob-conformance/src/lifted.rs"),
             "// LIFTED from frankensim/src/x.rs at d02ad9c170d5932667d15359cd362d3198ac4806\npub fn x() {}\n",
         )
         .expect("plant lifted");

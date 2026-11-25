@@ -29,6 +29,10 @@ path = "src/bin/frob-tenfold.rs"
 name = "frob-tenfold-score"
 path = "src/bin/frob-tenfold-score.rs"
 
+[[example]]
+name = "admission"
+path = "examples/admission.rs"
+
 [features]
 default = []
 # Umbrella for workspace crate conformance facilities (BD-025 / ADR-GAUNT-03).

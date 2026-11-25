@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.admission/1",
+  "title": "FrankenRobotics Foundation Admission Record (frob.admission/1)",
+  "description": "Canonical content-addressed admission record stored under receipts/admissions/<gate>/<blake3>.json (N33a-07).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "gate",
+    "foundation",
+    "covers",
+    "repo_rev",
+    "workspace",
+    "stack_receipt",
+    "sibling_rev",
+    "toolchain",
+    "harness_receipt",
+    "command",
+    "exit",
+    "output_hash",
+    "output_excerpt",
+    "measured",
+    "controls",
+    "facts_reread",
+    "status",
+    "host",
+    "recorded"
+  ],
+  "properties": {
+    "schema": {
+      "const": "frob.admission/1"
+    },
+    "gate": {
+      "type": "string",
+      "pattern": "^(INT-[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]+|ADMIT-[A-Z0-9]+(?:-[A-Z0-9]+)*)$"
+    },
+    "foundation": {
+      "type": "string",
+      "pattern": "^(FD-[A-Z0-9]+|WORKSPACE)$"
+    },
+    "covers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["crates", "groups", "tool"],
+      "properties": {
+        "crates": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "groups": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "tool": {
+          "oneOf": [
+            { "type": "null" },
+            { "type": "string", "minLength": 1 },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["name", "rev", "binary_hash"],
+              "properties": {
+                "name": { "type": "string", "minLength": 1 },
+                "rev": {
+                  "oneOf": [
+                    { "type": "null" },
+                    { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+                  ]
+                },
+                "binary_hash": {
+                  "oneOf": [
+                    { "type": "null" },
+                    { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "repo_rev": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "workspace": {
+      "type": "string",
+      "enum": ["core", "apps", "bindings", "derive", "spark-cuda", "spark-metal", "worker"]
+    },
+    "stack_receipt": {
+      "type": "string",
+      "pattern": "^sr:[0-9a-f]{64}$"
+    },
+    "sibling_rev": {
+      "oneOf": [
+        { "type": "null" },
+        { "type": "string", "pattern": "^[0-9a-f]{40}$" }
+      ]
+    },
+    "toolchain": {
+      "type": "string",
+      "pattern": "^(nightly-[0-9]{4}-[0-9]{2}-[0-9]{2}|(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(\\.(0|[1-9][0-9]*))?)$"
+    },
+    "harness_receipt": {
+      "oneOf": [
+        { "type": "null" },
+        { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      ]
+    },
+    "command": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "exit": {
+      "type": "integer"
+    },
+    "output_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "output_excerpt": {
+      "type": "string",
+      "maxLength": 4096
+    },
+    "measured": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "unit", "threshold", "relation"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "value": { "oneOf": [{ "type": "number" }, { "type": "null" }] },
+          "unit": { "type": "string" },
+          "threshold": { "type": "number" },
+          "relation": { "type": "string", "enum": ["<=", "<", ">=", ">", "=="] }
+        }
+      }
+    },
+    "controls": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "caught"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "caught": { "type": "boolean" }
+        }
+      }
+    },
+    "facts_reread": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fact", "path", "value"],
+        "properties": {
+          "fact": { "type": "string", "minLength": 1 },
+          "path": { "type": "string", "minLength": 1 },
+          "value": { "type": "string" }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pass", "fail", "not-run", "killed"]
+    },
+    "host": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["class", "fingerprint"],
+      "properties": {
+        "class": { "type": "string", "enum": ["trj", "m5-ultra"] },
+        "fingerprint": {
+          "oneOf": [
+            { "type": "null" },
+            { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+          ]
+        }
+      }
+    },
+    "recorded": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["date", "session", "implemented_by"],
+      "properties": {
+        "date": { "type": "string", "minLength": 1 },
+        "session": { "type": "string" },
+        "implemented_by": { "type": "string" }
+      }
+    }
+  }
+}

@@ -10,6 +10,7 @@ pub mod check_layers;
 pub mod check_unsafe;
 pub mod cli;
 pub mod crate_map;
+pub mod generate;
 pub mod inversions;
 pub mod metadata;
 pub mod report;

@@ -16,6 +16,7 @@
 //! strictly through `frob_core::canon`, print nothing (rule L-7), use zero
 //! `unsafe` code, and never write or delete sibling files.
 
+pub mod admission;
 pub mod guard;
 pub mod ledger;
 pub mod lifts;

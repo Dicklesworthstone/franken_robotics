@@ -14,11 +14,12 @@
 
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 # shellcheck source=scripts/e2e/lib.sh
 source "${SCRIPT_DIR}/lib.sh"
 
 e2e_init "std_test_lint" "STD-TEST"
+e2e_gate "GATE-GAUNT-01"
 
 # Copy workspace source layout into a fresh scratch directory without target/ or .git/.
 _make_scratch_ws() {
@@ -164,14 +165,14 @@ e2e_expect_caught "gate-pass-evidence-without-caught" --gate "GATE-GAUNT-01" -- 
 # Step 2: Run std_test_lint on the clean workspace tree
 # ---------------------------------------------------------------------------
 e2e_step "clean_tree_lint" "Run std_test_lint on the clean repository tree"
-e2e_cmd "clean_std_test_lint" -- cargo test -p frob-conformance --test std_test_lint
+e2e_cmd --name clean_std_test_lint -- cargo test -p frob-conformance --test std_test_lint
 e2e_assert_eq "clean_std_test_lint_exit" "${E2E_LAST_EXIT}" "0" --gate "GATE-GAUNT-01"
 
 # ---------------------------------------------------------------------------
 # Step 3: Load the four registries of record and emit row / obligation metrics
 # ---------------------------------------------------------------------------
 e2e_step "registries_of_record" "Load the four registries of record and record counts"
-e2e_cmd "registry_of_record_loads" -- \
+e2e_cmd --name registry_of_record_loads -- \
   cargo test -p frob-core --features test-support --test testkit -- registry_of_record_loads --nocapture
 e2e_assert_eq "registry_of_record_loads_exit" "${E2E_LAST_EXIT}" "0" --gate "GATE-GAUNT-01"
 

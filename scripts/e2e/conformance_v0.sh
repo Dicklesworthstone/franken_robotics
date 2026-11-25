@@ -19,7 +19,7 @@
 
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 # shellcheck source=scripts/e2e/lib.sh
 source "${SCRIPT_DIR}/lib.sh"
 
@@ -57,16 +57,56 @@ _combined_output() {
 # Step 1: Build the crate (host-only, no device annex)
 # ---------------------------------------------------------------------------
 e2e_step "build_crate" "Build frob-conformance test targets with no device annex"
-e2e_cmd "build_frob_conformance" -- \
+e2e_cmd --name build_frob_conformance -- \
   cargo test -p frob-conformance --no-run
 e2e_assert_eq "build_frob_conformance_exit" "${E2E_LAST_EXIT}" "0" --gate "GATE-GAUNT-01"
 
 # ---------------------------------------------------------------------------
 # Step 2: Run registry_check on the clean tree and log gate/control counts
+#         (or against planted scratch workspace under E2E_PLANT_FAILURE)
 # ---------------------------------------------------------------------------
 e2e_step "clean_registry_check" "Run registry_check on the clean repository tree"
-e2e_cmd "clean_registry_check" -- \
-  cargo test -p frob-conformance --test registry_check -- --nocapture
+if e2e_plant "empty-controls"; then
+  WS_PLANT_EMPTY="$(_make_scratch_ws "env_plant_empty_controls")"
+  python3 - "${WS_PLANT_EMPTY}/registries/gates.toml" "${WS_PLANT_EMPTY}/crates/frob-conformance/registry/controls.toml" <<'PY'
+import re, sys
+gates_path, ctrls_path = sys.argv[1], sys.argv[2]
+gates_txt = open(gates_path, "r", encoding="utf-8").read()
+ctrls_txt = open(ctrls_path, "r", encoding="utf-8").read()
+gates_txt = re.sub(r'controls\s*=\s*\[[^\]]*\]', 'controls = []', gates_txt, count=1)
+m = re.search(r'\[\[gate\]\][^\[]*?id\s*=\s*"([^"]+)"', gates_txt, flags=re.S)
+if m:
+    gid = m.group(1)
+    blocks = ctrls_txt.split("[[control]]")
+    ctrls_txt = "[[control]]".join([blocks[0]] + [b for b in blocks[1:] if f'"{gid}"' not in b])
+gates_txt = re.sub(r'status\s*=\s*"not-run"', 'status = "pass"', gates_txt, count=1)
+gates_txt = re.sub(r'measured\s*=\s*""', 'measured = "planted-empty"', gates_txt, count=1)
+gates_txt = re.sub(r'session\s*=\s*""', 'session = "e2e-plant"', gates_txt, count=1)
+open(gates_path, "w", encoding="utf-8").write(gates_txt)
+open(ctrls_path, "w", encoding="utf-8").write(ctrls_txt)
+PY
+  e2e_cmd --name clean_registry_check -- \
+    env "FROB_CONFORMANCE_ROOT=${WS_PLANT_EMPTY}" \
+    cargo test -p frob-conformance --test registry_check -- registry_check_clean_tree --nocapture
+elif e2e_plant "dangling-control"; then
+  WS_PLANT_DANGLE="$(_make_scratch_ws "env_plant_dangling_control")"
+  python3 - "${WS_PLANT_DANGLE}/registries/gates.toml" <<'PY'
+import re, sys
+p = sys.argv[1]
+txt = open(p, "r", encoding="utf-8").read()
+def _add(m):
+    inner = m.group(1).strip()
+    return 'controls = ["NC-9999"]' if not inner else f'controls = [{inner}, "NC-9999"]'
+txt = re.sub(r'controls\s*=\s*\[([^\]]*)\]', _add, txt, count=1)
+open(p, "w", encoding="utf-8").write(txt)
+PY
+  e2e_cmd --name clean_registry_check -- \
+    env "FROB_CONFORMANCE_ROOT=${WS_PLANT_DANGLE}" \
+    cargo test -p frob-conformance --test registry_check -- registry_check_clean_tree --nocapture
+else
+  e2e_cmd --name clean_registry_check -- \
+    cargo test -p frob-conformance --test registry_check -- --nocapture
+fi
 e2e_assert_eq "clean_registry_check_exit" "${E2E_LAST_EXIT}" "0" --gate "GATE-GAUNT-01"
 
 if [ -n "${E2E_LAST_STDOUT:-}" ] && [ -f "${E2E_LAST_STDOUT}" ]; then
@@ -136,7 +176,7 @@ open(gates_path, "w", encoding="utf-8").write(gates_txt)
 open(ctrls_path, "w", encoding="utf-8").write(ctrls_txt)
 PY
 
-e2e_cmd "empty_controls_not_run" -- \
+e2e_cmd --name empty_controls_not_run -- \
   env FROB_CONFORMANCE_ROOT="${WS_EMPTY}" \
   cargo test -p frob-conformance --test registry_check -- registry_check_clean_tree --nocapture
 e2e_assert_eq "empty_controls_not_run_exit" "${E2E_LAST_EXIT}" "0" --gate "GATE-GAUNT-01"
@@ -221,8 +261,19 @@ e2e_assert_eq "dangling_control_reason" "${_has_dangling}" "1" --gate "GATE-GAUN
 # Step 5: Run no_conformance_command and binaries_declared on the clean tree
 # ---------------------------------------------------------------------------
 e2e_step "clean_command_and_binaries" "Run no_conformance_command and binaries_declared on clean tree"
-e2e_cmd "clean_no_conformance_command" -- \
-  cargo test -p frob-conformance --test no_conformance_command -- --nocapture
+if e2e_plant "wrong-command-forms"; then
+  WS_PLANT_CMD="$(_make_scratch_ws "env_plant_wrong_cmd")"
+  {
+    printf '#!/usr/bin/env bash\n'
+    printf '%s %s run GATE-ARENA-05\n' "frob" "conformance"
+  } > "${WS_PLANT_CMD}/scripts/planted_env_rule1.sh"
+  e2e_cmd --name clean_no_conformance_command -- \
+    env "FROB_CONFORMANCE_ROOT=${WS_PLANT_CMD}" \
+    cargo test -p frob-conformance --test no_conformance_command -- no_conformance_command_clean_tree --nocapture
+else
+  e2e_cmd --name clean_no_conformance_command -- \
+    cargo test -p frob-conformance --test no_conformance_command -- --nocapture
+fi
 e2e_assert_eq "clean_no_conformance_command_exit" "${E2E_LAST_EXIT}" "0" --gate "GATE-GAUNT-01"
 
 if [ -n "${E2E_LAST_STDOUT:-}" ] && [ -f "${E2E_LAST_STDOUT}" ]; then
@@ -236,7 +287,7 @@ PY
   e2e_metric "scripts_scanned" "${_scanned}" "scripts"
 fi
 
-e2e_cmd "clean_binaries_declared" -- \
+e2e_cmd --name clean_binaries_declared -- \
   cargo test -p frob-conformance --test binaries_declared
 e2e_assert_eq "clean_binaries_declared_exit" "${E2E_LAST_EXIT}" "0" --gate "GATE-GAUNT-01"
 
@@ -338,7 +389,8 @@ e2e_expect_caught "wrong-command-forms" --gate "GATE-GAUNT-01" -- \
 e2e_step "evidence_block" "Record and assert BD-025 evidence metadata"
 _ev_file="${E2E_ARTIFACTS_DIR}/evidence.json"
 printf '{"claim":"known-answer","class":"Tested","determinism":"D0","seed":%s,"gate":"GATE-GAUNT-01"}\n' "${E2E_SEED}" > "${_ev_file}"
-e2e_assert_json "evidence_claim" "${_ev_file}" "/claim" "known-answer" --gate "GATE-GAUNT-01"
-e2e_assert_json "evidence_class" "${_ev_file}" "/class" "Tested" --gate "GATE-GAUNT-01"
-e2e_assert_json "evidence_determinism" "${_ev_file}" "/determinism" "D0" --gate "GATE-GAUNT-01"
-e2e_assert_json "evidence_seed" "${_ev_file}" "/seed" "0" --gate "GATE-GAUNT-01"
+e2e_cmd --name emit_evidence_json -- cat "${_ev_file}"
+e2e_assert_json "evidence_claim" "/claim" "known-answer" --gate "GATE-GAUNT-01"
+e2e_assert_json "evidence_class" "/class" "Tested" --gate "GATE-GAUNT-01"
+e2e_assert_json "evidence_determinism" "/determinism" "D0" --gate "GATE-GAUNT-01"
+e2e_assert_json "evidence_seed" "/seed" "0" --gate "GATE-GAUNT-01"

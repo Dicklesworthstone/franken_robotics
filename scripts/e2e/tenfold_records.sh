@@ -11,8 +11,8 @@
 
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd -P)"
 
 # shellcheck source=scripts/e2e/lib.sh
 source "${REPO_ROOT}/scripts/e2e/lib.sh"
@@ -31,32 +31,41 @@ SCORER_TARGET="${TARGET_BASE}/frob-tenfold-kit-scorer-e2e"
 # ----------------------------------------------------------------------------
 # Step 1: Build both ten-fold binaries (frob-tenfold and frob-tenfold-score)
 # ----------------------------------------------------------------------------
-e2e_step "build_binaries"
+e2e_step "build_binaries" "Build frob-tenfold and frob-tenfold-score binaries and verify --help"
 
 TENFOLD_BIN="${FROB_TENFOLD_BIN:-}"
 SCORER_BIN="${FROB_TENFOLD_SCORE_BIN:-}"
 
 if [ -z "${TENFOLD_BIN}" ] || [ -z "${SCORER_BIN}" ]; then
-  e2e_cmd --allow-fail env CARGO_TARGET_DIR="${CONF_TARGET}" \
+  e2e_cmd --name build_tenfold_bins -- \
+    env "CARGO_TARGET_DIR=${CONF_TARGET}" \
     cargo build -p frob-conformance --bin frob-tenfold --bin frob-tenfold-score
-  e2e_assert_eq "${E2E_LAST_EXIT}" "0" "build frob-tenfold and frob-tenfold-score"
+  e2e_assert_eq "build_tenfold_bins_exit" "${E2E_LAST_EXIT}" "0"
   TENFOLD_BIN="${CONF_TARGET}/debug/frob-tenfold"
   SCORER_BIN="${CONF_TARGET}/debug/frob-tenfold-score"
 fi
 
-e2e_assert_file "${TENFOLD_BIN}" "frob-tenfold binary exists"
-e2e_assert_file "${SCORER_BIN}" "frob-tenfold-score binary exists"
+e2e_assert_file "frob_tenfold_binary_exists" "${TENFOLD_BIN}"
+e2e_assert_file "frob_tenfold_score_binary_exists" "${SCORER_BIN}"
 
-e2e_cmd "${TENFOLD_BIN}" --help
-e2e_assert_contains "${E2E_LAST_STDOUT}" "record check" "frob-tenfold --help lists subcommands"
+e2e_cmd --name frob_tenfold_help -- "${TENFOLD_BIN}" --help
+_has_tf_help="0"
+if [ -f "${E2E_LAST_STDOUT}" ] && grep -Fq "record check" "${E2E_LAST_STDOUT}"; then
+  _has_tf_help="1"
+fi
+e2e_assert_eq "frob_tenfold_help_subcommands" "${_has_tf_help}" "1"
 
-e2e_cmd "${SCORER_BIN}" --help
-e2e_assert_contains "${E2E_LAST_STDOUT}" "check <file>" "frob-tenfold-score --help lists subcommands"
+e2e_cmd --name frob_tenfold_score_help -- "${SCORER_BIN}" --help
+_has_sc_help="0"
+if [ -f "${E2E_LAST_STDOUT}" ] && grep -Fq "check <file>" "${E2E_LAST_STDOUT}"; then
+  _has_sc_help="1"
+fi
+e2e_assert_eq "frob_tenfold_score_help_subcommands" "${_has_sc_help}" "1"
 
 # ----------------------------------------------------------------------------
 # Step 2: Generate 5 valid non-sealed fixtures (one per schema) and check each
 # ----------------------------------------------------------------------------
-e2e_step "valid_fixtures"
+e2e_step "valid_fixtures" "Generate and validate all 5 non-sealed ten-fold harness record fixtures"
 
 python3 - "${FIXTURES}" "${BAD}" "${TENFOLD_BIN}" <<'PYEOF'
 import json, pathlib, subprocess, sys
@@ -236,15 +245,20 @@ PYEOF
 
 for name in mission freeze ledger receipt report; do
   fpath="${FIXTURES}/${name}.json"
-  e2e_cmd "${TENFOLD_BIN}" record check "${fpath}"
-  e2e_assert_contains "${E2E_LAST_STDOUT}" "\"schema\":\"frob.tenfold.${name}/1\"" "valid ${name} schema logged"
-  e2e_assert_contains "${E2E_LAST_STDOUT}" "\"address\":\"b3:" "valid ${name} b3 address logged"
+  e2e_cmd --name "check_valid_${name}" -- "${TENFOLD_BIN}" record check "${fpath}"
+  e2e_assert_json "valid_${name}_schema" "/schema" "frob.tenfold.${name}/1"
+  _addr="$(e2e_get "/address" || true)"
+  _has_b3="0"
+  case "${_addr}" in
+    b3:*) _has_b3="1" ;;
+  esac
+  e2e_assert_eq "valid_${name}_b3_address" "${_has_b3}" "1"
 done
 
 # ----------------------------------------------------------------------------
 # Step 3: Eight planted bad records (refusals with exact exit code & pointer)
 # ----------------------------------------------------------------------------
-e2e_step "planted_bad_records"
+e2e_step "planted_bad_records" "Verify all 8 planted bad records refuse with exact exit code, reason, and pointer"
 
 check_bad() {
   local fname="$1"
@@ -252,11 +266,12 @@ check_bad() {
   local exp_reason="$3"
   local exp_ptr="$4"
   local fpath="${BAD}/${fname}"
-  e2e_cmd --allow-fail "${TENFOLD_BIN}" record check "${fpath}"
-  e2e_assert_eq "${E2E_LAST_EXIT}" "${exp_exit}" "${fname} exit code is ${exp_exit}"
-  e2e_assert_contains "${E2E_LAST_STDOUT}" "\"reason\":\"${exp_reason}\"" "${fname} reason is ${exp_reason}"
+  local stem="${fname%.json}"
+  e2e_cmd --name "bad_${stem}" --expect-exit "${exp_exit}" -- "${TENFOLD_BIN}" record check "${fpath}"
+  e2e_assert_eq "bad_${stem}_exit" "${E2E_LAST_EXIT}" "${exp_exit}"
+  e2e_assert_json "bad_${stem}_reason" "/refusal/reason" "${exp_reason}"
   if [ -n "${exp_ptr}" ]; then
-    e2e_assert_contains "${E2E_LAST_STDOUT}" "\"pointer\":\"${exp_ptr}\"" "${fname} pointer is ${exp_ptr}"
+    e2e_assert_json "bad_${stem}_pointer" "/refusal/pointer" "${exp_ptr}"
   fi
 }
 
@@ -272,42 +287,43 @@ check_bad "08_auth_true.json"            "3" "record-noncanonical-number" "/exec
 # ----------------------------------------------------------------------------
 # Step 4: Build standalone scorer package kit/scorer offline & compare output
 # ----------------------------------------------------------------------------
-e2e_step "standalone_scorer_offline"
+e2e_step "standalone_scorer_offline" "Build standalone kit/scorer offline and verify identical ratio bytes"
 
 KIT_SCORER_BIN="${FROB_KIT_SCORER_BIN:-}"
 if [ -z "${KIT_SCORER_BIN}" ]; then
-  e2e_cmd --allow-fail env CARGO_TARGET_DIR="${SCORER_TARGET}" \
+  e2e_cmd --name build_kit_scorer_offline -- \
+    env "CARGO_TARGET_DIR=${SCORER_TARGET}" \
     cargo build --manifest-path "${REPO_ROOT}/kit/scorer/Cargo.toml" --offline
-  e2e_assert_eq "${E2E_LAST_EXIT}" "0" "kit/scorer builds offline with single frob-cert path dep"
+  e2e_assert_eq "kit_scorer_offline_build_exit" "${E2E_LAST_EXIT}" "0"
   KIT_SCORER_BIN="${SCORER_TARGET}/debug/frob-tenfold-scorer"
 fi
-e2e_assert_file "${KIT_SCORER_BIN}" "standalone kit/scorer binary exists"
+e2e_assert_file "standalone_kit_scorer_binary_exists" "${KIT_SCORER_BIN}"
 
-e2e_cmd "${SCORER_BIN}" ratio 54000 20400 --places 3 --mode point
-WS_RATIO_OUT="${E2E_LAST_STDOUT}"
-e2e_cmd "${KIT_SCORER_BIN}" ratio 54000 20400 --places 3 --mode point
-KIT_RATIO_OUT="${E2E_LAST_STDOUT}"
-e2e_assert_eq "${WS_RATIO_OUT}" "${KIT_RATIO_OUT}" "workspace scorer and kit/scorer emit identical ratio bytes"
-e2e_assert_contains "${KIT_RATIO_OUT}" "\"exact\":\"45/17\"" "54000/20400 reduces to 45/17"
-e2e_assert_contains "${KIT_RATIO_OUT}" "\"decimal\":\"2.647\"" "45/17 renders 2.647 half-to-even"
+e2e_cmd --name workspace_scorer_ratio -- "${SCORER_BIN}" ratio 54000 20400 --places 3 --mode point
+WS_RATIO_OUT="$(cat "${E2E_LAST_STDOUT}")"
+e2e_cmd --name kit_scorer_ratio -- "${KIT_SCORER_BIN}" ratio 54000 20400 --places 3 --mode point
+KIT_RATIO_OUT="$(cat "${E2E_LAST_STDOUT}")"
+e2e_assert_eq "workspace_and_kit_scorer_ratio_identical" "${WS_RATIO_OUT}" "${KIT_RATIO_OUT}"
+e2e_assert_json "ratio_54000_20400_exact" "/exact" "45/17"
+e2e_assert_json "ratio_54000_20400_decimal" "/decimal" "2.647"
 
 # ----------------------------------------------------------------------------
 # Step 5: Print each valid fixture's content address twice and compare D0 bytes
 # ----------------------------------------------------------------------------
-e2e_step "address_determinism"
+e2e_step "address_determinism" "Verify D0 content address determinism across repeated invocations"
 
 for name in mission freeze ledger receipt report; do
   fpath="${FIXTURES}/${name}.json"
   a1_file="${WORK}/${name}.addr1"
   a2_file="${WORK}/${name}.addr2"
 
-  e2e_cmd "${TENFOLD_BIN}" record address "${fpath}"
-  ADDR1="${E2E_LAST_STDOUT}"
-  printf '%s' "${ADDR1}" > "${a1_file}"
+  e2e_cmd --name "address_${name}_run1" -- "${TENFOLD_BIN}" record address "${fpath}"
+  ADDR1="$(tr -d '\r\n' < "${E2E_LAST_STDOUT}")"
+  cp "${E2E_LAST_STDOUT}" "${a1_file}"
 
-  e2e_cmd "${TENFOLD_BIN}" record address "${fpath}"
-  ADDR2="${E2E_LAST_STDOUT}"
-  printf '%s' "${ADDR2}" > "${a2_file}"
+  e2e_cmd --name "address_${name}_run2" -- "${TENFOLD_BIN}" record address "${fpath}"
+  ADDR2="$(tr -d '\r\n' < "${E2E_LAST_STDOUT}")"
+  cp "${E2E_LAST_STDOUT}" "${a2_file}"
 
   if [ "${ADDR1}" != "${ADDR2}" ]; then
     DIFF_OFFSET="$(python3 - "${a1_file}" "${a2_file}" <<'PYEOF'
@@ -319,10 +335,8 @@ off = next((i for i in range(n) if b1[i] != b2[i]), n)
 print(f"first_diff_byte={off} path1={sys.argv[1]} path2={sys.argv[2]}")
 PYEOF
 )"
-    e2e_assert_eq "${ADDR1}" "${ADDR2}" "D0 address mismatch for ${name}: ${DIFF_OFFSET}"
+    e2e_assert_eq "d0_address_${name}_identical" "${ADDR1} (${DIFF_OFFSET})" "${ADDR2}"
   else
-    e2e_assert_eq "${ADDR1}" "${ADDR2}" "D0 identical address twice for ${name} (${ADDR1})"
+    e2e_assert_eq "d0_address_${name}_identical" "${ADDR1}" "${ADDR2}"
   fi
 done
-
-printf 'tenfold_records e2e passed\n'

@@ -199,6 +199,27 @@ impl Table {
             ka == kb && va.value.eq_values(&vb.value)
         })
     }
+
+    fn insert_kv(
+        &mut self,
+        key: String,
+        value: Value,
+        line: u32,
+        column: u32,
+    ) -> Result<(), TomlError> {
+        use std::collections::btree_map::Entry;
+        match self.entries.entry(key) {
+            Entry::Vacant(slot) => {
+                slot.insert(Spanned::new(value, line, column));
+                Ok(())
+            }
+            Entry::Occupied(slot) => Err(TomlError::new(
+                line,
+                column,
+                TomlErrorKind::DuplicateKey(slot.key().clone()),
+            )),
+        }
+    }
 }
 
 /// Parse or loader error with 1-based line and Unicode-scalar column.
@@ -512,49 +533,23 @@ enum TableOrigin {
     Root,
     Implicit,
     Explicit,
-    Inline,
 }
 
-#[derive(Clone, Copy, PartialEq, Eq)]
-enum ValueTag {
-    Str,
-    Int,
-    Bool,
-    Array,
-    Table,
-}
-
-enum BuildNode {
-    Str(String),
-    Int(i64),
-    Bool(bool),
-    Array {
-        items: Vec<Spanned<BuildNode>>,
-        from_aot: bool,
-    },
+enum HeaderNode {
+    Array(Vec<BuildTable>),
     Table(BuildTable),
 }
 
-impl BuildNode {
-    const fn tag(&self) -> ValueTag {
-        match self {
-            Self::Str(_) => ValueTag::Str,
-            Self::Int(_) => ValueTag::Int,
-            Self::Bool(_) => ValueTag::Bool,
-            Self::Array { .. } => ValueTag::Array,
-            Self::Table(_) => ValueTag::Table,
-        }
-    }
-
+impl HeaderNode {
     fn into_value(self) -> Value {
         match self {
-            Self::Str(s) => Value::Str(s),
-            Self::Int(v) => Value::Int(v),
-            Self::Bool(v) => Value::Bool(v),
-            Self::Array { items, .. } => Value::Array(
+            Self::Array(items) => Value::Array(
                 items
                     .into_iter()
-                    .map(|sp| Spanned::new(sp.value.into_value(), sp.line, sp.column))
+                    .map(|row| {
+                        let (line, column) = row.table.span;
+                        Spanned::new(Value::Table(row.into_table()), line, column)
+                    })
                     .collect(),
             ),
             Self::Table(t) => Value::Table(t.into_table()),
@@ -564,43 +559,43 @@ impl BuildNode {
 
 struct BuildTable {
     origin: TableOrigin,
-    span: (u32, u32),
-    entries: BTreeMap<String, Spanned<BuildNode>>,
+    table: Table,
+    // Only header-created children need origin tracking.
+    headers: BTreeMap<String, Spanned<HeaderNode>>,
 }
 
 impl BuildTable {
     fn new(origin: TableOrigin, span: (u32, u32)) -> Self {
         Self {
             origin,
-            span,
-            entries: BTreeMap::new(),
+            table: Table {
+                span,
+                ..Table::new()
+            },
+            headers: BTreeMap::new(),
         }
     }
 
     fn insert_kv(
         &mut self,
         key: String,
-        node: BuildNode,
+        value: Value,
         line: u32,
         column: u32,
     ) -> Result<(), TomlError> {
-        if self.entries.contains_key(&key) {
+        if self.headers.contains_key(&key) {
             return Err(TomlError::new(line, column, TomlErrorKind::DuplicateKey(key)));
         }
-        self.entries.insert(key, Spanned::new(node, line, column));
-        Ok(())
+        self.table.insert_kv(key, value, line, column)
     }
 
-    fn into_table(self) -> Table {
-        let entries = self
-            .entries
-            .into_iter()
-            .map(|(k, sp)| (k, Spanned::new(sp.value.into_value(), sp.line, sp.column)))
-            .collect();
-        Table {
-            span: self.span,
-            entries,
-        }
+    fn into_table(mut self) -> Table {
+        self.table.entries.extend(
+            self.headers
+                .into_iter()
+                .map(|(k, sp)| (k, Spanned::new(sp.value.into_value(), sp.line, sp.column))),
+        );
+        self.table
     }
 }
 
@@ -655,6 +650,15 @@ impl<'a> Parser<'a> {
         Some(ch)
     }
 
+    /// Advance over a newline-free ASCII run, counting each byte as one column.
+    fn take_ascii(&mut self, keep: impl Fn(u8) -> bool) -> &'a str {
+        let start = self.pos;
+        let len = self.bytes[start..].iter().take_while(|&&b| keep(b)).count();
+        self.pos += len;
+        self.col = self.col.saturating_add(len as u32);
+        &self.src[start..self.pos]
+    }
+
     fn err(&self, kind: TomlErrorKind) -> TomlError {
         TomlError::new(self.line, self.col, kind)
     }
@@ -698,7 +702,9 @@ impl<'a> Parser<'a> {
         }
         self.pos += 1;
         self.col = self.col.saturating_add(1);
-        while let Some(ch) = self.peek_char() {
+        loop {
+            self.take_ascii(is_ascii_text);
+            let Some(ch) = self.peek_char() else { break };
             if ch == '\n' {
                 break;
             }
@@ -904,19 +910,10 @@ impl<'a> Parser<'a> {
     }
 
     fn parse_bare_key(&mut self) -> String {
-        let start = self.pos;
-        while let Some(b) = self.peek_byte() {
-            if is_bare_key_byte(b) {
-                self.pos += 1;
-                self.col = self.col.saturating_add(1);
-            } else {
-                break;
-            }
-        }
-        self.src.get(start..self.pos).unwrap_or("").to_owned()
+        self.take_ascii(is_bare_key_byte).to_owned()
     }
 
-    fn parse_value(&mut self, depth: usize) -> Result<BuildNode, TomlError> {
+    fn parse_value(&mut self, depth: usize) -> Result<Value, TomlError> {
         match self.peek_byte() {
             None => Err(self.syntax("unexpected end of input where a value was expected")),
             Some(b'"') => {
@@ -929,7 +926,7 @@ impl<'a> Parser<'a> {
                         TomlErrorKind::OutsideSubset("multi-line string"),
                     ));
                 }
-                Ok(BuildNode::Str(self.parse_basic_string()?))
+                Ok(Value::Str(self.parse_basic_string()?))
             }
             Some(b'\'') => {
                 let (l, c) = (self.line, self.col);
@@ -950,7 +947,7 @@ impl<'a> Parser<'a> {
         }
     }
 
-    fn parse_array(&mut self, depth: usize) -> Result<BuildNode, TomlError> {
+    fn parse_array(&mut self, depth: usize) -> Result<Value, TomlError> {
         let next_depth = depth + 1;
         if next_depth > MAX_NESTING_DEPTH {
             return Err(self.err(TomlErrorKind::TooDeep));
@@ -958,20 +955,20 @@ impl<'a> Parser<'a> {
         self.pos += 1;
         self.col = self.col.saturating_add(1);
 
-        let mut items: Vec<Spanned<BuildNode>> = Vec::new();
-        let mut expected_tag: Option<ValueTag> = None;
+        let mut items = Vec::new();
+        let mut expected_tag = None;
 
         self.skip_ws_newlines_comments()?;
         if self.peek_byte() == Some(b']') {
             self.pos += 1;
             self.col = self.col.saturating_add(1);
-            return Ok(BuildNode::Array { items, from_aot: false });
+            return Ok(Value::Array(items));
         }
 
         loop {
             let (e_line, e_col) = (self.line, self.col);
             let elem = self.parse_value(next_depth)?;
-            let tag = elem.tag();
+            let tag = std::mem::discriminant(&elem);
             match expected_tag {
                 None => expected_tag = Some(tag),
                 Some(first) if first != tag => {
@@ -990,7 +987,7 @@ impl<'a> Parser<'a> {
                 Some(b']') => {
                     self.pos += 1;
                     self.col = self.col.saturating_add(1);
-                    return Ok(BuildNode::Array { items, from_aot: false });
+                    return Ok(Value::Array(items));
                 }
                 Some(b',') => {
                     self.pos += 1;
@@ -999,7 +996,7 @@ impl<'a> Parser<'a> {
                     if self.peek_byte() == Some(b']') {
                         self.pos += 1;
                         self.col = self.col.saturating_add(1);
-                        return Ok(BuildNode::Array { items, from_aot: false });
+                        return Ok(Value::Array(items));
                     }
                 }
                 _ => return Err(self.syntax("expected `,` or `]` in array")),
@@ -1007,7 +1004,7 @@ impl<'a> Parser<'a> {
         }
     }
 
-    fn parse_inline_table(&mut self, depth: usize) -> Result<BuildNode, TomlError> {
+    fn parse_inline_table(&mut self, depth: usize) -> Result<Value, TomlError> {
         let next_depth = depth + 1;
         if next_depth > MAX_NESTING_DEPTH {
             return Err(self.err(TomlErrorKind::TooDeep));
@@ -1016,12 +1013,15 @@ impl<'a> Parser<'a> {
         self.pos += 1;
         self.col = self.col.saturating_add(1);
 
-        let mut table = BuildTable::new(TableOrigin::Inline, (t_line, t_col));
+        let mut table = Table {
+            span: (t_line, t_col),
+            ..Table::new()
+        };
         self.skip_ws();
         if self.peek_byte() == Some(b'}') {
             self.pos += 1;
             self.col = self.col.saturating_add(1);
-            return Ok(BuildNode::Table(table));
+            return Ok(Value::Table(table));
         }
 
         loop {
@@ -1059,7 +1059,7 @@ impl<'a> Parser<'a> {
                 Some(b'}') => {
                     self.pos += 1;
                     self.col = self.col.saturating_add(1);
-                    return Ok(BuildNode::Table(table));
+                    return Ok(Value::Table(table));
                 }
                 Some(b',') => {
                     self.pos += 1;
@@ -1086,7 +1086,9 @@ impl<'a> Parser<'a> {
         let mut out = String::new();
         let mut outside_escape: Option<(u32, u32, &'static str)> = None;
 
-        while let Some(ch) = self.peek_char() {
+        loop {
+            out.push_str(self.take_ascii(|b| is_ascii_text(b) && !matches!(b, b'"' | b'\\')));
+            let Some(ch) = self.peek_char() else { break };
             match ch {
                 '"' => {
                     self.next_char();
@@ -1327,7 +1329,7 @@ impl<'a> Parser<'a> {
         Err(self.syntax("unterminated multi-line literal string"))
     }
 
-    fn parse_unquoted_scalar(&mut self) -> Result<BuildNode, TomlError> {
+    fn parse_unquoted_scalar(&mut self) -> Result<Value, TomlError> {
         let (start_line, start_col) = (self.line, self.col);
         let start = self.pos;
 
@@ -1369,8 +1371,8 @@ impl<'a> Parser<'a> {
         }
 
         match token {
-            "true" => return Ok(BuildNode::Bool(true)),
-            "false" => return Ok(BuildNode::Bool(false)),
+            "true" => return Ok(Value::Bool(true)),
+            "false" => return Ok(Value::Bool(false)),
             "inf" | "+inf" | "-inf" | "nan" | "+nan" | "-nan" => {
                 return Err(TomlError::new(
                     start_line,
@@ -1440,7 +1442,7 @@ impl<'a> Parser<'a> {
             ));
         }
 
-        parse_decimal_int(token, start_line, start_col).map(BuildNode::Int)
+        parse_decimal_int(token, start_line, start_col).map(Value::Int)
     }
 }
 
@@ -1452,7 +1454,6 @@ fn open_header_table<'a>(
 ) -> Result<&'a mut BuildTable, TomlError> {
     use std::collections::btree_map::Entry;
 
-    let full_name = path.join(".");
     let Some((last, parents)) = path.split_last() else {
         return Err(TomlError::new(
             span.0,
@@ -1460,127 +1461,71 @@ fn open_header_table<'a>(
             TomlErrorKind::Syntax("empty table header".to_owned()),
         ));
     };
+    let redefined = || {
+        TomlError::new(
+            span.0,
+            span.1,
+            TomlErrorKind::TableRedefined(path.join(".")),
+        )
+    };
 
     let mut cur = root;
     for seg in parents {
-        let entry = cur.entries.entry(seg.clone()).or_insert_with(|| {
+        if cur.table.contains_key(seg) {
+            return Err(redefined());
+        }
+        let entry = cur.headers.entry(seg.clone()).or_insert_with(|| {
             Spanned::new(
-                BuildNode::Table(BuildTable::new(TableOrigin::Implicit, span)),
+                HeaderNode::Table(BuildTable::new(TableOrigin::Implicit, span)),
                 span.0,
                 span.1,
             )
         });
-        match &mut entry.value {
-            BuildNode::Table(sub) => {
-                if sub.origin == TableOrigin::Inline {
-                    return Err(TomlError::new(
-                        span.0,
-                        span.1,
-                        TomlErrorKind::TableRedefined(full_name),
-                    ));
-                }
-                cur = sub;
-            }
-            BuildNode::Array { items, from_aot: true } => {
-                let Some(last_item) = items.last_mut() else {
-                    return Err(TomlError::new(
-                        span.0,
-                        span.1,
-                        TomlErrorKind::TableRedefined(full_name),
-                    ));
-                };
-                match &mut last_item.value {
-                    BuildNode::Table(sub) => cur = sub,
-                    _ => {
-                        return Err(TomlError::new(
-                            span.0,
-                            span.1,
-                            TomlErrorKind::TableRedefined(full_name),
-                        ));
-                    }
-                }
-            }
-            _ => {
-                return Err(TomlError::new(
-                    span.0,
-                    span.1,
-                    TomlErrorKind::TableRedefined(full_name),
-                ));
-            }
-        }
+        cur = match &mut entry.value {
+            HeaderNode::Table(sub) => sub,
+            HeaderNode::Array(items) => items.last_mut().ok_or_else(&redefined)?,
+        };
+    }
+
+    if cur.table.contains_key(last) {
+        return Err(redefined());
     }
 
     if is_aot {
-        let entry = cur.entries.entry(last.clone()).or_insert_with(|| {
-            Spanned::new(
-                BuildNode::Array {
-                    items: Vec::new(),
-                    from_aot: true,
-                },
-                span.0,
-                span.1,
-            )
-        });
-        match &mut entry.value {
-            BuildNode::Array { items, from_aot: true } => {
-                items.push(Spanned::new(
-                    BuildNode::Table(BuildTable::new(TableOrigin::Explicit, span)),
-                    span.0,
-                    span.1,
-                ));
-                if let Some(Spanned {
-                    value: BuildNode::Table(t),
-                    ..
-                }) = items.last_mut()
-                {
-                    Ok(t)
-                } else {
-                    Err(TomlError::new(
-                        span.0,
-                        span.1,
-                        TomlErrorKind::TableRedefined(full_name),
-                    ))
-                }
-            }
-            _ => Err(TomlError::new(
-                span.0,
-                span.1,
-                TomlErrorKind::TableRedefined(full_name),
-            )),
-        }
+        let entry = cur
+            .headers
+            .entry(last.clone())
+            .or_insert_with(|| Spanned::new(HeaderNode::Array(Vec::new()), span.0, span.1));
+        let HeaderNode::Array(items) = &mut entry.value else {
+            return Err(redefined());
+        };
+        items.push(BuildTable::new(TableOrigin::Explicit, span));
+        items.last_mut().ok_or_else(redefined)
     } else {
-        match cur.entries.entry(last.clone()) {
+        match cur.headers.entry(last.clone()) {
             Entry::Vacant(slot) => {
                 let inserted = slot.insert(Spanned::new(
-                    BuildNode::Table(BuildTable::new(TableOrigin::Explicit, span)),
+                    HeaderNode::Table(BuildTable::new(TableOrigin::Explicit, span)),
                     span.0,
                     span.1,
                 ));
-                if let BuildNode::Table(t) = &mut inserted.value {
+                if let HeaderNode::Table(t) = &mut inserted.value {
                     Ok(t)
                 } else {
-                    Err(TomlError::new(
-                        span.0,
-                        span.1,
-                        TomlErrorKind::TableRedefined(full_name),
-                    ))
+                    Err(redefined())
                 }
             }
             Entry::Occupied(slot) => {
                 let entry = slot.into_mut();
                 match &mut entry.value {
-                    BuildNode::Table(sub) if sub.origin == TableOrigin::Implicit => {
+                    HeaderNode::Table(sub) if sub.origin == TableOrigin::Implicit => {
                         sub.origin = TableOrigin::Explicit;
-                        sub.span = span;
+                        sub.table.span = span;
                         entry.line = span.0;
                         entry.column = span.1;
                         Ok(sub)
                     }
-                    _ => Err(TomlError::new(
-                        span.0,
-                        span.1,
-                        TomlErrorKind::TableRedefined(full_name),
-                    )),
+                    _ => Err(redefined()),
                 }
             }
         }
@@ -1593,6 +1538,10 @@ fn open_header_table<'a>(
 
 const fn is_bare_key_byte(b: u8) -> bool {
     b.is_ascii_alphanumeric() || b == b'_' || b == b'-'
+}
+
+const fn is_ascii_text(b: u8) -> bool {
+    matches!(b, b'\t' | b' '..=b'~')
 }
 
 const fn is_value_delimiter(b: u8) -> bool {

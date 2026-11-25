@@ -35,6 +35,7 @@ The compiled registry, schemas, and local or Unix socket dispatch on supported h
 ## Oracles
 
 `frob doctor --section stack_receipt --json` reports the digests embedded from `receipts/HEAD` and `receipts/LOCK_DIGEST`. `tests/cli.rs` checks the actual process status and reads envelopes with the shared validator.
+Unit-test conventions (STD-TEST) are in [docs/testing/CONVENTIONS.md](../../docs/testing/CONVENTIONS.md).
 
 ## Known gaps
 

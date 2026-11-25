@@ -45,6 +45,7 @@ pub enum ControlReason {
     DefectOrExpectEmpty,
     BoundaryNotControl,
     UnknownSeedForm,
+    PermanentControlRemoved,
     // Registry check reasons (4)
     NoControl,
     DanglingControl,
@@ -70,6 +71,7 @@ impl ControlReason {
             Self::DefectOrExpectEmpty => "defect-or-expect-empty",
             Self::BoundaryNotControl => "boundary-not-control",
             Self::UnknownSeedForm => "unknown-seed-form",
+            Self::PermanentControlRemoved => "permanent-control-removed",
             Self::NoControl => "no-control",
             Self::DanglingControl => "dangling-control",
             Self::OneWayLink => "one-way-link",
@@ -360,16 +362,54 @@ pub fn validate(
         current_by_id.insert(c.id.as_str(), c);
     }
 
-    // Rule 1b: diff against previous commit (append-only; one-time placeholder target replacement).
+    // Rule 1b & N38b-04 Rule 5: diff against previous commit (append-only; one-time
+    // placeholder target replacement; permanent controls cannot be deleted or detached).
     if let Some(prev) = previous {
         for old in prev.all() {
             match current_by_id.get(old.id.as_str()) {
-                None => findings.push(ControlFinding {
-                    record: old.id.clone(),
-                    reason: ControlReason::Removed,
-                    detail: format!("control `{}` from previous commit was removed", old.id),
-                }),
+                None => {
+                    if old.permanent {
+                        findings.push(ControlFinding {
+                            record: old.id.clone(),
+                            reason: ControlReason::PermanentControlRemoved,
+                            detail: format!(
+                                "permanent control `{}` from previous commit cannot be deleted",
+                                old.id
+                            ),
+                        });
+                    } else {
+                        findings.push(ControlFinding {
+                            record: old.id.clone(),
+                            reason: ControlReason::Removed,
+                            detail: format!("control `{}` from previous commit was removed", old.id),
+                        });
+                    }
+                }
                 Some(new) => {
+                    if old.permanent {
+                        if !new.permanent {
+                            findings.push(ControlFinding {
+                                record: old.id.clone(),
+                                reason: ControlReason::PermanentControlRemoved,
+                                detail: format!(
+                                    "permanent control `{}` cannot clear `permanent = true`",
+                                    old.id
+                                ),
+                            });
+                        }
+                        for old_gate in &old.gate {
+                            if !new.gate.iter().any(|g| g == old_gate) {
+                                findings.push(ControlFinding {
+                                    record: old.id.clone(),
+                                    reason: ControlReason::PermanentControlRemoved,
+                                    detail: format!(
+                                        "permanent control `{}` cannot be detached from gate `{old_gate}`",
+                                        old.id
+                                    ),
+                                });
+                            }
+                        }
+                    }
                     if new.seed != old.seed {
                         findings.push(ControlFinding {
                             record: old.id.clone(),

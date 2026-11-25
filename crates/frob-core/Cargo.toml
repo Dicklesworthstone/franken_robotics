@@ -13,8 +13,8 @@ layer = 0
 rank = 1
 
 [dependencies]
-fs-blake3 = { path = "../../../frankensim/crates/fs-blake3" }
-fs-qty = { path = "../../../frankensim/crates/fs-qty" }
+fs-blake3 = { path = "../../../frankensim/crates/fs-blake3", default-features = false }
+fs-qty = { path = "../../../frankensim/crates/fs-qty", default-features = false }
 
 [features]
 default = []

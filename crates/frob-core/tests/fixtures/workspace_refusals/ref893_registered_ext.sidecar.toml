@@ -1,0 +1,6 @@
+code = "FROB-REF-893"
+fixture = "ref893_registered_ext.fbot"
+parameter_kind = "foreign-file"
+observed = "FMT-FBOT (.fbot)"
+required = "pass via the format owner's typed parameter"
+is_view = false

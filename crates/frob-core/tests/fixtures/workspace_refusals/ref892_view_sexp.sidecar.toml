@@ -1,0 +1,6 @@
+code = "FROB-REF-892"
+fixture = "ref892_view_sexp.sexp"
+parameter_kind = "identity-required"
+observed = "view:sexp"
+required = "canonical artifact file or content identity"
+is_view = true

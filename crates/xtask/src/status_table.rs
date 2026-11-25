@@ -318,7 +318,8 @@ fn is_refusal_code(s: &str) -> bool {
     let Some(rest) = s.strip_prefix("FROB-REF-") else {
         return false;
     };
-    rest.len() == 3 && rest.bytes().all(|b| b.is_ascii_digit())
+    let b = rest.as_bytes();
+    matches!(b.len(), 3 | 4) && matches!(b[0], b'1'..=b'9') && b[1..].iter().all(u8::is_ascii_digit)
 }
 
 fn is_b3_digest(s: &str) -> bool {
@@ -1389,6 +1390,9 @@ pub fn validate_refusals_toml(bytes: &[u8]) -> Result<usize, StatusTableError> {
     let raw_rows = rf
         .opt_array("refusal")
         .map_err(|e| StatusTableError::new("refusals.toml", e.to_string()))?;
+    let raw_details = rf
+        .opt_array("detail")
+        .map_err(|e| StatusTableError::new("refusals.toml", e.to_string()))?;
     rf.finish()
         .map_err(|e| StatusTableError::new("refusals.toml", e.to_string()))?;
 
@@ -1507,6 +1511,37 @@ pub fn validate_refusals_toml(bytes: &[u8]) -> Result<usize, StatusTableError> {
                     ));
                 }
             }
+        }
+    }
+    if let Some(items) = raw_details {
+        for (idx, dtbl) in extract_table_list(items, "detail", "refusals.toml")?.into_iter().enumerate() {
+            let ctx = format!("refusals.toml:detail[{idx}]");
+            let mut f = Fields::new(dtbl, &ctx);
+            let _ = f.require_str("slug").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+            let _ = f.require_str("detail").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+            let raw_interim = f.require_array("interim").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+            let exit = f.require_int("exit").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+            let retry = f.require_str("retry").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+            let _ = f.require_str("pointer").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+            let raw_obs = f.require_array("observed").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+            let raw_rep = f.require_array("repairs").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+            let raw_raised = f.require_array("raised_by").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+            let _ = f.require_str("ledger").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+            f.finish().map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+            if !(1..=255).contains(&exit) {
+                return Err(StatusTableError::new(&ctx, format!("detail exit `{exit}` out of 1..=255")));
+            }
+            if !matches!(retry.as_str(), "never" | "after-change" | "backoff" | "after-backoff" | "same-key" | "with-budget") {
+                return Err(StatusTableError::new(&ctx, format!("detail invalid retry `{retry}`")));
+            }
+            for c in extract_str_list(&raw_interim, "interim", &ctx, true)? {
+                if !is_refusal_code(&c) {
+                    return Err(StatusTableError::new(&ctx, format!("detail interim invalid code `{c}`")));
+                }
+            }
+            let _ = extract_str_list(&raw_obs, "observed", &ctx, true)?;
+            let _ = extract_str_list(&raw_rep, "repairs", &ctx, true)?;
+            let _ = extract_str_list(&raw_raised, "raised_by", &ctx, true)?;
         }
     }
     Ok(seen_codes.len())

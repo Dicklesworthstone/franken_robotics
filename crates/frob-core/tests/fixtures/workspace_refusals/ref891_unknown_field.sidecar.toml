@@ -1,0 +1,6 @@
+code = "FROB-REF-891"
+fixture = "ref891_unknown_field.json"
+parameter_kind = "artifact"
+observed = "contact_law_selector"
+required = "declared schema fields of frob.card/1"
+is_view = false

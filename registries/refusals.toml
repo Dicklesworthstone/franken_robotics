@@ -257,6 +257,33 @@ repairs = ["Revalidate the older evidence under the current stack (result.revali
 raised_by = ["N33a-06"]
 
 [[refusal]]
+code = "FROB-REF-891"
+meaning = "Format version unsupported (format-version-unsupported): unknown schema major version or unknown required field; pointer is the schema member or JSON Pointer of the unknown field; fixture crates/frob-core/tests/fixtures/workspace_refusals/ref891_major_raised.json (and ref891_unknown_field.json); affected_claims filled per occurrence from the verb's declared outputs (CX-361)"
+defined_in = "§34.9"
+exit = 3
+retry = "after-change"
+repairs = ["Migrate the artifact with the owner's migration edit, which produces a new artifact with a link to the old one (the old identity stays valid for citing old evidence)", "Use a build that reads this schema revision; observed and required name the found and supported versions", "If the field is a misspelling, correct it"]
+raised_by = ["N34-19", "format-owner-readers"]
+
+[[refusal]]
+code = "FROB-REF-892"
+meaning = "View is not identity (view-is-not-identity): a registered view, non-canonical JSON, or stored-view reference is offered where an identity is required; pointer is the parameter with observed view:<kind> or non-canonical-spelling; fixture crates/frob-core/tests/fixtures/workspace_refusals/ref892_view_sexp.sexp (and ref892_noncanonical.json); affected_claims filled per occurrence from the verb's declared outputs (CX-360)"
+defined_in = "§34.9"
+exit = 3
+retry = "after-change"
+repairs = ["Convert with the owner's view verb (for a design, frob design view --as json) and pass the canonical file or its identity", "Pass the identity printed in the bound field of the envelope that produced the artifact (there is no option to hash the view)"]
+raised_by = ["N34-24", "artifact-input-stage"]
+
+[[refusal]]
+code = "FROB-REF-893"
+meaning = "Format owner bypass (format-owner-bypass): a file with a registered extension or JSON with a registered top-level schema reaches a verb outside its owner's reader; pointer is the parameter and file with observed naming the registered format; fixture crates/frob-core/tests/fixtures/workspace_refusals/ref893_registered_ext.fbot (and ref893_registered_schema.json); affected_claims filled per occurrence from the verb's declared outputs (CX-358)"
+defined_in = "§34.9"
+exit = 3
+retry = "after-change"
+repairs = ["Pass the file to the parameter of its own format so that its owner's reader admits it", "If a conversion was intended, use the owner's import or view verb", "If the file is genuinely foreign and merely shares an extension, rename it"]
+raised_by = ["N34-24", "artifact-input-stage"]
+
+[[refusal]]
 code = "FROB-REF-990"
 meaning = "Internal fault (internal-fault): handler panicked, returned an error mapping to no refusal code, or serializer refused an out-of-range int53; one envelope is still written with pointer naming the verb and observed holding the diagnostic file path; never listed in any verb's refusals (RL-06; due M0)"
 defined_in = "§32.4"
@@ -264,3 +291,40 @@ exit = 9
 retry = "never"
 repairs = ["frob job find --verb <verb> --key <key>", "frob doctor"]
 raised_by = ["N32a-03", "BD-022", "BD-023", "N32a-07"]
+
+# Interim detail mappings for uncoded workspace admission and fixture-resolution faults (N34-REF; N35x-01/N35x-02).
+[[detail]]
+slug = "duplicate-member-name"
+detail = "duplicate-member-name"
+interim = ["FROB-REF-802", "FROB-REF-891"]
+exit = 3
+retry = "after-change"
+pointer = "request parameter or artifact member path (design owner raises FROB-REF-103 once registered)"
+observed = ["duplicate-member:<name>"]
+repairs = ["Remove the repeated JSON member name after escape decoding", "Regenerate the input through a canonical writer"]
+raised_by = ["N34-17", "N34-20"]
+ledger = "registries/refusal_allocations.toml#duplicate-member-name (N35x-02, family 8xx, held under N35x-01)"
+
+[[detail]]
+slug = "identifier-not-printable"
+detail = "identifier-not-printable"
+interim = ["FROB-REF-802"]
+exit = 3
+retry = "after-change"
+pointer = "request parameter or identifier field"
+observed = ["identifier-not-printable:<code point>"]
+repairs = ["Supply a non-empty printable identifier with no control or non-printable code points", "Check the field schema with frob schema <id>"]
+raised_by = ["N34-17", "N34-20"]
+ledger = "registries/refusal_allocations.toml#identifier-not-printable (N35x-02, family 8xx, held under N35x-01)"
+
+[[detail]]
+slug = "fixture-reference-unresolved"
+detail = "fixture-reference-unresolved"
+interim = ["FROB-REF-802"]
+exit = 3
+retry = "after-change"
+pointer = "parameter carrying the @fixture:<name> reference"
+observed = ["fixture-name-invalid", "fixtures-root-absent", "fixture-unknown:<name>", "fixture-outside-root:<name>", "fixture-ambiguous:<name>:<count>", "fixture-empty:<name>"]
+repairs = ["Pass the reference of the file itself", "Pass a path"]
+raised_by = ["N34p3-01", "N34-24"]
+ledger = "registries/refusal_allocations.toml#fixture-reference-unresolved (N35x-02, family 8xx, held under N35x-01)"

@@ -1,0 +1,6 @@
+code = "FROB-REF-893"
+fixture = "ref893_registered_schema.json"
+parameter_kind = "foreign-file"
+observed = "frob.design/1"
+required = "pass via the format owner's typed parameter"
+is_view = false

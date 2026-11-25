@@ -1,0 +1,6 @@
+code = "FROB-REF-891"
+fixture = "ref891_major_raised.json"
+parameter_kind = "artifact"
+observed = "frob.card/2"
+required = "frob.card/1"
+is_view = false

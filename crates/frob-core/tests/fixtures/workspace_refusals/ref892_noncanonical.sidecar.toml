@@ -1,0 +1,6 @@
+code = "FROB-REF-892"
+fixture = "ref892_noncanonical.json"
+parameter_kind = "identity-required"
+observed = "non-canonical-spelling"
+required = "byte-for-byte canonical JSON or content identity"
+is_view = false

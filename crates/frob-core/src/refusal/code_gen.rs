@@ -57,6 +57,12 @@ pub enum RefusalCode {
     FrobRef881 = 881,
     /// FROB-REF-890 (§33.16): Evidence recorded under another stack receipt is offered as same-stack evidence without revalidation
     FrobRef890 = 890,
+    /// FROB-REF-891 (§34.9): Format version unsupported (format-version-unsupported): unknown schema major version or unknown required field; pointer is the schema member or JSON Pointer of the unknown field; fixture crates/frob-core/tests/fixtures/workspace_refusals/ref891_major_raised.json (and ref891_unknown_field.json); affected_claims filled per occurrence from the verb's declared outputs (CX-361)
+    FrobRef891 = 891,
+    /// FROB-REF-892 (§34.9): View is not identity (view-is-not-identity): a registered view, non-canonical JSON, or stored-view reference is offered where an identity is required; pointer is the parameter with observed view:<kind> or non-canonical-spelling; fixture crates/frob-core/tests/fixtures/workspace_refusals/ref892_view_sexp.sexp (and ref892_noncanonical.json); affected_claims filled per occurrence from the verb's declared outputs (CX-360)
+    FrobRef892 = 892,
+    /// FROB-REF-893 (§34.9): Format owner bypass (format-owner-bypass): a file with a registered extension or JSON with a registered top-level schema reaches a verb outside its owner's reader; pointer is the parameter and file with observed naming the registered format; fixture crates/frob-core/tests/fixtures/workspace_refusals/ref893_registered_ext.fbot (and ref893_registered_schema.json); affected_claims filled per occurrence from the verb's declared outputs (CX-358)
+    FrobRef893 = 893,
     /// FROB-REF-990 (§32.4): Internal fault (internal-fault): handler panicked, returned an error mapping to no refusal code, or serializer refused an out-of-range int53; one envelope is still written with pointer naming the verb and observed holding the diagnostic file path; never listed in any verb's refusals (RL-06; due M0)
     FrobRef990 = 990,
 }
@@ -88,6 +94,9 @@ impl RefusalCode {
         Self::FrobRef816,
         Self::FrobRef881,
         Self::FrobRef890,
+        Self::FrobRef891,
+        Self::FrobRef892,
+        Self::FrobRef893,
         Self::FrobRef990,
     ];
 
@@ -132,6 +141,9 @@ impl RefusalCode {
             Self::FrobRef816 => "FROB-REF-816",
             Self::FrobRef881 => "FROB-REF-881",
             Self::FrobRef890 => "FROB-REF-890",
+            Self::FrobRef891 => "FROB-REF-891",
+            Self::FrobRef892 => "FROB-REF-892",
+            Self::FrobRef893 => "FROB-REF-893",
             Self::FrobRef990 => "FROB-REF-990",
         }
     }
@@ -164,6 +176,9 @@ impl RefusalCode {
             "FROB-REF-816" => Some(Self::FrobRef816),
             "FROB-REF-881" => Some(Self::FrobRef881),
             "FROB-REF-890" => Some(Self::FrobRef890),
+            "FROB-REF-891" => Some(Self::FrobRef891),
+            "FROB-REF-892" => Some(Self::FrobRef892),
+            "FROB-REF-893" => Some(Self::FrobRef893),
             "FROB-REF-990" => Some(Self::FrobRef990),
             _ => None,
         }

@@ -28,6 +28,8 @@ pub enum RefusalRegistryError {
     ExitMismatch { row: String, rule_entry: String, observed: u8, expected: Option<u8>, reason: String },
     OverlappingExceptionList { code: String, first_list: &'static str, second_list: &'static str },
     ExceptionCodeMissing { list: &'static str, code: String },
+    EmptyRaisedBy { code: String },
+    EmptyRepairs { code: String },
 }
 
 impl From<TomlError> for RefusalRegistryError { fn from(e: TomlError) -> Self { Self::Toml(e) } }
@@ -44,6 +46,8 @@ impl fmt::Display for RefusalRegistryError {
             Self::ExitMismatch { row, rule_entry, observed, expected, reason } => write!(f, "exit mismatch for `{row}` under `{rule_entry}`: observed {observed}, expected {expected:?} ({reason})"),
             Self::OverlappingExceptionList { code, first_list, second_list } => write!(f, "code `{code}` in both `{first_list}` and `{second_list}`"),
             Self::ExceptionCodeMissing { list, code } => write!(f, "exception list `{list}` names missing code `{code}`"),
+            Self::EmptyRaisedBy { code } => write!(f, "refusal `{code}` has empty `raised_by`"),
+            Self::EmptyRepairs { code } => write!(f, "refusal `{code}` has empty `repairs`"),
         }
     }
 }
@@ -84,10 +88,25 @@ pub struct RefusalRow {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
+pub struct DetailRow {
+    pub slug: String,
+    pub detail: String,
+    pub interim: Vec<String>,
+    pub exit: u8,
+    pub retry: RetryPolicy,
+    pub pointer: String,
+    pub observed: Vec<String>,
+    pub repairs: Vec<String>,
+    pub raised_by: Vec<String>,
+    pub ledger: String,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct RefusalRegistry {
     schema: String,
     exit_rule: ExitRule,
     rows: Vec<RefusalRow>,
+    details: Vec<DetailRow>,
     by_number: BTreeMap<u16, usize>,
 }
 
@@ -102,6 +121,7 @@ impl RefusalRegistry {
         }
         let exit_rule_tbl = fields.require_table("exit_rule")?;
         let refusal_tables = fields.opt_array("refusal")?.unwrap_or_default();
+        let detail_tables = fields.opt_array("detail")?.unwrap_or_default();
         fields.finish()?;
         let exit_rule = parse_exit_rule(exit_rule_tbl)?;
 
@@ -121,9 +141,17 @@ impl RefusalRegistry {
                 if !seen.contains(&n) { return Err(RefusalRegistryError::ExceptionCodeMissing { list, code: format_code(n) }); }
             }
         }
+        let mut details = Vec::with_capacity(detail_tables.len());
+        for (idx, sp) in detail_tables.into_iter().enumerate() {
+            let Value::Table(tbl) = sp.value else {
+                return Err(TomlError::new(sp.line, sp.column, toml::TomlErrorKind::TypeMismatch { key: format!("detail[{idx}]"), expected: "table", found: sp.value.type_name() }).into());
+            };
+            let d = parse_detail_row(tbl, &seen, idx)?;
+            details.push(d);
+        }
         rows.sort_by_key(|r| (code_family(r.number), r.number));
         let by_number = rows.iter().enumerate().map(|(i, r)| (r.number, i)).collect();
-        Ok(Self { schema, exit_rule, rows, by_number })
+        Ok(Self { schema, exit_rule, rows, details, by_number })
     }
 
     pub fn load_with_verbs(refusals_bytes: &[u8], verbs_bytes: &[u8]) -> Result<Self, RefusalRegistryError> {
@@ -158,7 +186,18 @@ impl RefusalRegistry {
     #[must_use] pub fn schema(&self) -> &str { &self.schema }
     #[must_use] pub const fn exit_rule(&self) -> &ExitRule { &self.exit_rule }
     #[must_use] pub fn rows(&self) -> &[RefusalRow] { &self.rows }
+    #[must_use] pub fn details(&self) -> &[DetailRow] { &self.details }
     #[must_use] pub fn row(&self, code: RefusalCode) -> Option<&RefusalRow> { self.by_number.get(&code.number()).map(|&i| &self.rows[i]) }
+
+    /// Enforce row-level completeness on production registries: every row must declare non-empty
+    /// `raised_by` and non-empty `repairs` (N34-REF / N35-REF).
+    pub fn validate_row_metadata(&self) -> Result<(), RefusalRegistryError> {
+        for r in &self.rows {
+            if r.raised_by.is_empty() { return Err(RefusalRegistryError::EmptyRaisedBy { code: r.code.clone() }); }
+            if r.repairs.is_empty() { return Err(RefusalRegistryError::EmptyRepairs { code: r.code.clone() }); }
+        }
+        Ok(())
+    }
 
     pub fn lookup(&self, code: &str, context: &str) -> Result<&RefusalRow, RefusalRegistryError> {
         parse_code_number(code).and_then(|n| self.by_number.get(&n)).map(|&i| &self.rows[i])
@@ -348,6 +387,32 @@ fn parse_refusal_row(table: Table, exit_rule: &ExitRule, idx: usize) -> Result<R
         return Err(RefusalRegistryError::ExitMismatch { row: code, rule_entry: "exit_rule.9xx".into(), observed: exit, expected: Some(9), reason: "9xx requires retry = \"never\"".into() });
     }
     Ok(RefusalRow { code, number, meaning, defined_in, exit, retry, repairs, raised_by, related })
+}
+
+fn parse_detail_row(table: Table, seen: &BTreeSet<u16>, idx: usize) -> Result<DetailRow, RefusalRegistryError> {
+    let (line, col) = table.span();
+    let mut f = Fields::new(table, format!("detail[{idx}]"));
+    let slug = f.require_str("slug")?;
+    let detail = f.require_str("detail")?;
+    let interim = extract_str_arr("interim", f.require_array("interim")?).map_err(|e| f.fail(e))?;
+    let exit = checked_exit_u8(f.require_int("exit")?, &slug, "detail.exit").map_err(|e| f.fail(e))?;
+    let retry_s = f.require_str("retry")?;
+    let retry = RetryPolicy::parse(&retry_s).ok_or_else(|| {
+        f.fail(RefusalRegistryError::InvalidRetry { code: slug.clone(), value: retry_s, line, column: col })
+    })?;
+    let pointer = f.require_str("pointer")?;
+    let observed = extract_str_arr("observed", f.require_array("observed")?).map_err(|e| f.fail(e))?;
+    let repairs = extract_str_arr("repairs", f.require_array("repairs")?).map_err(|e| f.fail(e))?;
+    let raised_by = extract_str_arr("raised_by", f.require_array("raised_by")?).map_err(|e| f.fail(e))?;
+    let ledger = f.require_str("ledger")?;
+    f.finish()?;
+
+    for code in &interim {
+        if !parse_code_number(code).is_some_and(|n| seen.contains(&n)) {
+            return Err(RefusalRegistryError::UnknownRefusalCode { code: code.clone(), context: format!("detail `{slug}`") });
+        }
+    }
+    Ok(DetailRow { slug, detail, interim, exit, retry, pointer, observed, repairs, raised_by, ledger })
 }
 
 fn checked_exit_u8(val: i64, row: &str, rule_entry: &str) -> Result<u8, RefusalRegistryError> {

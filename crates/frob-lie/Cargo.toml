@@ -1,0 +1,38 @@
+[package]
+name = "frob-lie"
+version = { workspace = true }
+edition = { workspace = true }
+license-file = { workspace = true }
+repository = { workspace = true }
+authors = { workspace = true }
+publish = false
+description = "Marrow Lie-theoretic vocabulary: LieGroup/LieAlgebra traits, SO(3) and SE(3) over fs-ga, and generic Real reference kernels (BD-010)."
+
+[package.metadata.frob]
+layer = 1
+rank = 1
+
+[dependencies]
+frob-core = { path = "../frob-core" }
+fs-ad = { path = "../../../frankensim/crates/fs-ad", default-features = false }
+fs-ga = { path = "../../../frankensim/crates/fs-ga", default-features = false }
+fs-math = { path = "../../../frankensim/crates/fs-math", default-features = false }
+
+[dev-dependencies]
+fs-rand = { path = "../../../frankensim/crates/fs-rand", default-features = false }
+
+[features]
+default = []
+# Conformance-only mutation guard (N38b-04): refused under release builds via compile_error!.
+conformance = []
+# Negative-control defect (i) / N13-18 M5: angular and linear twist parts exchanged.
+twist-swap = ["conformance"]
+# Negative-control defect (ii) / plant BD-010:ad-inverse: Ad_g replaced by Ad_{g^-1}.
+ad-inverse = ["conformance"]
+# Negative-control defect (iii) / N13-18 M6: Lie bracket arguments exchanged.
+bracket-swap = ["conformance"]
+# Negative-control defect (iv) / N13-18 M2: group coadjoint replaced by its inverse.
+coadjoint-inverse = ["conformance"]
+
+[lints]
+workspace = true

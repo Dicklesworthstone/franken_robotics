@@ -1,0 +1,26 @@
+# Machine-readable crate contract for frob-lie (BD-010, N34-08).
+
+[crate]
+name = "frob-lie"
+layer = 1
+rank = 1
+plane = "compute"
+determinism = "D2"
+evidence = "Tested"
+gates = []
+refusals = []
+
+[budgets]
+wall_ms = 50
+memory_mib = 64
+
+[safe_mode]
+on_budget = "reference-path"
+on_calibration = "reference-path"
+
+[features]
+conformance = { tier = "S", dev_only = true }
+twist-swap = { tier = "S", dev_only = true }
+ad-inverse = { tier = "S", dev_only = true }
+bracket-swap = { tier = "S", dev_only = true }
+coadjoint-inverse = { tier = "S", dev_only = true }

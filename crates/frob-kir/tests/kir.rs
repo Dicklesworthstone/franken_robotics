@@ -402,14 +402,15 @@ fn typecheck_homogeneous_sums() {
         let mut builder = ProgramBuilder::new("homogeneous", "ref", DetClass::D0Exact);
         let x = builder.input("x", Ty::F32, a).unwrap();
         let y = builder.input("y", Ty::F32, b).unwrap();
-        let z = builder.input("z", Ty::F32, sum).unwrap();
         let xy = builder.mul(x, y, "x*y").unwrap();
+        // Addition sorts by node ID. Keep xy first so inference retains its
+        // dimension when the sum check is disabled.
+        let z = builder.input("z", Ty::F32, sum).unwrap();
         let addition = builder.add(xy, z, "x*y + z").unwrap();
         builder.output("result", Ty::F32, sum, addition);
         let mut mutant = builder.build().map_err(|r| r.message)?;
 
-        // Only the right addend changes. The left addend and result annotations
-        // stay valid under the planted checker, so no earlier refusal masks it.
+        // Change the right addend's port and input node together.
         let mut wrong = sum;
         wrong.0[2] += delta;
         assert_ne!(wrong, sum);

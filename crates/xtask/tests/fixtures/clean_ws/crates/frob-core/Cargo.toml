@@ -1,0 +1,9 @@
+# synthetic fixture for N34p4-01: frob-core (layer 0, rank 1)
+[package]
+name = "frob-core"
+version = "0.0.1"
+edition = "2024"
+
+[package.metadata.frob]
+layer = 0
+rank = 1

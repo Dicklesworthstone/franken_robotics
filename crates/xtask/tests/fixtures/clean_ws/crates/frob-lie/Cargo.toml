@@ -1,0 +1,12 @@
+# synthetic fixture for N34p4-01: frob-lie (layer 1, rank 1) depending downward on frob-core
+[package]
+name = "frob-lie"
+version = "0.0.1"
+edition = "2024"
+
+[package.metadata.frob]
+layer = 1
+rank = 1
+
+[dependencies]
+frob-core = { path = "../frob-core" }

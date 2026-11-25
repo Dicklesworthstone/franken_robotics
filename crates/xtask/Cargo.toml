@@ -6,7 +6,11 @@ license-file.workspace = true
 repository.workspace = true
 authors.workspace = true
 publish = false
-description = "Workspace verification tooling for FrankenRobotics (skeleton; checks arrive in BD-003/BD-004)."
+description = "Workspace verification tooling for FrankenRobotics (command surface, check-layers, and workspace tables)."
+
+[package.metadata.frob]
+layer = 7
+rank = 5
 
 [dependencies]
 frob-core = { path = "../frob-core" }

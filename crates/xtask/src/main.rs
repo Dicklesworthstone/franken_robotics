@@ -1,51 +1,49 @@
-use std::io::{self, Write};
+use std::io;
 use std::process::ExitCode;
 
-/// Exit code reserved for usage errors across the `xtask` CLI surface
-/// (0 clean, 2 findings, 3 usage; kept by N34p4-01, BD-003, BD-004).
-const EXIT_USAGE: u8 = 3;
+use xtask::check_layers;
+use xtask::cli::{self, CheckFn};
 
-const USAGE: &str = "\
-usage: cargo xtask <check> [--root <dir>] [--json]
-
-No checks are registered in the BD-001 workspace skeleton yet;
-subcommands arrive with N34p4-01, BD-003, and BD-004.
-Exit codes: 0 clean, 2 findings, 3 usage error.
-";
-
-fn run<W: Write>(_args: &[String], out: &mut W) -> ExitCode {
-    let _ = out.write_all(USAGE.as_bytes());
-    ExitCode::from(EXIT_USAGE)
-}
+/// Closed command table for `cargo xtask` (N34p4-01 seeds `check-layers`;
+/// BD-003, N34-07, N34-08, N34p4-03, and BD-004 add the remaining five checks).
+const COMMANDS: &[(&str, CheckFn)] = &[("check-layers", check_layers::run_command)];
 
 fn main() -> ExitCode {
     let args: Vec<String> = std::env::args().skip(1).collect();
+    let mut stdout = io::stdout().lock();
     let mut stderr = io::stderr().lock();
-    run(&args, &mut stderr)
+    cli::run(COMMANDS, &args, &mut stdout, &mut stderr)
 }
 
 #[cfg(test)]
 mod tests {
-    use super::{EXIT_USAGE, USAGE, run};
     use std::process::ExitCode;
 
+    use super::COMMANDS;
+    use xtask::cli::{self, EXIT_USAGE};
+
     #[test]
-    fn xtask_skeleton_prints_usage_and_exits_3() {
-        let mut buf = Vec::new();
-        let code = run(&[], &mut buf);
+    fn no_argument_prints_subcommands_and_exits_3() {
+        let mut out = Vec::new();
+        let mut err = Vec::new();
+        let code = cli::run(COMMANDS, &[], &mut out, &mut err);
         assert_eq!(code, ExitCode::from(EXIT_USAGE));
-        let rendered = String::from_utf8(buf).expect("usage text must be valid UTF-8");
-        assert_eq!(rendered, USAGE);
+        assert!(out.is_empty());
+        let rendered = String::from_utf8(err).expect("stderr must be valid UTF-8");
         assert!(rendered.contains("usage: cargo xtask"));
+        assert!(rendered.contains("check-layers"));
     }
 
     #[test]
-    fn xtask_skeleton_unknown_subcommand_prints_usage_and_exits_3() {
-        let mut buf = Vec::new();
-        let args = vec!["nonexistent".to_string()];
-        let code = run(&args, &mut buf);
+    fn unknown_subcommand_prints_subcommands_and_exits_3() {
+        let mut out = Vec::new();
+        let mut err = Vec::new();
+        let args = vec!["nonexistent".to_owned()];
+        let code = cli::run(COMMANDS, &args, &mut out, &mut err);
         assert_eq!(code, ExitCode::from(EXIT_USAGE));
-        let rendered = String::from_utf8(buf).expect("usage text must be valid UTF-8");
-        assert_eq!(rendered, USAGE);
+        assert!(out.is_empty());
+        let rendered = String::from_utf8(err).expect("stderr must be valid UTF-8");
+        assert!(rendered.contains("unknown subcommand"));
+        assert!(rendered.contains("check-layers"));
     }
 }

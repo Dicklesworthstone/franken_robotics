@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankenrobotics.local/schemas/xtask.report.schema.json",
+  "title": "FrankenRobotics xtask Check Report (frob.xtask.report/1)",
+  "description": "Hand-written canonical JSON report emitted by `cargo xtask <check> --json` (N34p4-01). Kept outside schemas/frob.*.json so check-generated does not treat it as an orphan.",
+  "type": "object",
+  "required": [
+    "schema",
+    "check",
+    "ok",
+    "root",
+    "findings",
+    "facts",
+    "elapsed_ms"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "frob.xtask.report/1"
+    },
+    "check": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "root": {
+      "type": "string",
+      "minLength": 1
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "rule",
+          "subject",
+          "path",
+          "line",
+          "message",
+          "repair"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "rule": {
+            "type": "string",
+            "minLength": 1
+          },
+          "subject": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "line": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          },
+          "repair": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "facts": {
+      "type": "object"
+    },
+    "elapsed_ms": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

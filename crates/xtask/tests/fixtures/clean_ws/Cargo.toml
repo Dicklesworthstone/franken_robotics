@@ -1,0 +1,4 @@
+# synthetic fixture for N34p4-01: clean two-crate workspace (frob-lie -> frob-core)
+[workspace]
+resolver = "3"
+members = ["crates/*"]

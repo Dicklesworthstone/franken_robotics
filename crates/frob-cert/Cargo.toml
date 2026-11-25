@@ -5,6 +5,10 @@ edition = "2024"
 publish = false
 description = "Independent std-only certificate auditor and frob-verify CLI for FrankenRobotics (BD-026)"
 
+[package.metadata.frob]
+layer = 6
+rank = 1
+
 [lib]
 name = "frob_cert"
 path = "src/lib.rs"

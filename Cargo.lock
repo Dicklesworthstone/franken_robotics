@@ -10,6 +10,7 @@ version = "0.0.1"
 name = "frob-conformance"
 version = "0.0.1"
 dependencies = [
+ "frob-cert",
  "frob-core",
 ]
 

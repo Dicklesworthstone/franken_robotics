@@ -33,6 +33,8 @@
 | Binary | Path | Owning bead | Reads | Writes | Registries |
 |---|---|---|---|---|---|
 | `frob-e2e` | `src/bin/frob-e2e.rs` | `STD-E2E` | Script headers (`# e2e:`), `frob.e2elog/1` NDJSON logs, and the captured output of the commands it runs | `frob.e2elog/1` NDJSON logs, transcripts, capture artifacts, mode-`0600` session token files, the gate report (`gates.json`, `gates.md`), and the `frob.e2elog/1` schema print | Reads and writes no registry |
+| `frob-tenfold` | `src/bin/frob-tenfold.rs` | `N39a-01` | Gate store `tenfold/<gate>/`, ten-fold harness records (`frob.tenfold.*/1`), and harness registries | Gate store `tenfold/<gate>/` (append-only) and harness registries | Reads and writes no product registry (`registries/gates.toml` untouched) |
+| `frob-tenfold-score` | `src/bin/frob-tenfold-score.rs` | `N39a-01` | Ten-fold harness records (`frob.tenfold.*/1`) | Scorer's derived records only, append-only, never rewriting an input | Reads and writes no registry |
 
 ## 4. Invariants
 
@@ -77,3 +79,67 @@ The negative-control registry check and structural lints produce evidence of cla
 - Automated control execution and staleness detection land in `N38b-04`; deterministic seeding of all 384 counterexamples and 510 stated control cells lands in `N38b-05`.
 - Full gate register fields, cross-field validation, and the `record_gate` example land in `N38b-18`, `N38b-19`, and `N40-01`.
 - 325 plan-time known-answer rows carry no stated negative control yet; they fail closed as obligations until their owning chapter beads (`N38b-28` onward) register controls.
+
+## Ten-fold harness
+
+### 1. Purpose
+
+The ten-fold harness (`src/tenfold/`, binaries `frob-tenfold` and `frob-tenfold-score`, standalone scorer `kit/scorer/`, test target `tests/tenfold.rs`; owned by `N39a-01`, Plan §39, BET-13, BET-14) is the independent comparative measuring instrument for FrankenRobotics. It measures wall-clock time from a robot-design question to an independently accepted answer across arms `A` (FrankenRobotics), `B` (strongest composed rival), `C` (ablation over an incumbent engine), and `D` (optional product layer over an incumbent engine). It exposes no product `frob` verb, is never exposed over MCP, and drives FrankenRobotics strictly through public `frob` verbs and rival tools strictly out of process (`ADR-GAUNT-01`, `ADR-GAUNT-04`).
+
+### 2. Inputs
+
+- The five harness record schemas (never product formats): `frob.tenfold.mission/1`, `frob.tenfold.freeze/1`, `frob.tenfold.ledger/1`, `frob.tenfold.receipt/1`, and `frob.tenfold.report/1`.
+- Common header fields (`schema`, `gate` in `M0-baseline | M1-baseline | M3-partial | M7-tournament | rehearsal-<name>`), identifier types (`GateId`, `Arm`, `StratumId`, `FamilyId`, `MissionHash`, `CampaignIndex`, `Regime`, `Phase`, `Millis`, `Hash32`), canonical decimal seconds strings (`^(0|[1-9][0-9]*)(\.[0-9]{0,2}[1-9])?$`), and exact reduced rationals (`"p/q"` or `"p"`).
+- Gate store directories under `tenfold/<gate>/` (`roles.json`, `seal.ndjson`, `comments.ndjson`, `strata.json`, `families.json`, `preanalysis.json`, `cards/`, `sealed/`, `freeze/`, `campaigns/`, `report.json`).
+
+### 3. Outputs
+
+- Unique canonical UTF-8 JSON bytes (reusing `frob-cert`'s canonical JSON serializer unchanged: bytewise sorted object keys, zero insignificant whitespace, minimal string escapes).
+- `b3:<64 lowercase hex>` BLAKE3 content addresses over canonical bytes (with `manifest_hash`, `receipt_hash`, or `report_hash` blanked to `""` before hashing).
+- Exact reduced rationals paired with exact decimal renderings (point estimates rounded half-to-even; upper/lower confidence bounds rounded outward).
+- Structured `N39-REF`-shaped refusal JSON (`{"refusal":{"observed":...,"pointer":...,"reason":...,"repairs":[...],"required":...}}`) on stdout with exit code `3` (input/schema) or `9` (integrity).
+- Append-only artifacts inside `tenfold/<gate>/` written via staging file + rename; never writes `registries/gates.toml`.
+
+### 4. Invariants
+
+- **Scorer boundary (`BOUNDARY_FILES`):** Every file under `tenfold/score/`, plus `tenfold/ids.rs`, `tenfold/refusal.rs`, `tenfold/canon.rs`, and `tenfold/records/*.rs`, imports strictly `std`, `frob_cert`, and listed boundary files; calls zero platform transcendental math (`f64::ln`, `exp`, `powf`, etc.); and builds standalone offline via `kit/scorer/Cargo.toml` with `frob-cert` as its sole path dependency, matched one-to-one by `#[path]` modules in `kit/scorer/src/lib.rs`.
+- **Canonicalization idempotency & key-order invariance:** `canon(canon(x)) == canon(x)` and permuting object keys leaves canonical bytes and `b3:` content addresses bit-identical.
+- **Self-hash integrity:** `manifest_hash`, `receipt_hash`, and `report_hash` are always computed with that top-level field blanked to `""`; any mismatch fails closed with `record-hash-mismatch` (exit `9`).
+- **No-authorization & simulation-only flags:** Every record carries `execution_authorized: false`, `hardware_safety_signoff: false`, `sim_to_real_certified: false`, and `reality: "no-claim"`.
+- **Append-only gate store:** Re-writing identical bytes is a no-op; attempting to overwrite an existing path with different bytes fails closed with `store-overwrite` (exit `9`).
+- **Closed exclusive phase accounting:** The fourteen `Phase` buckets (thirteen phases plus `unattributed`) sum in exact integer milliseconds to `clock_s`.
+
+### 5. Refusals
+
+Harness records fail closed without repairing input, citing the RFC 6901 JSON pointer at fault (`N39-REF` shape):
+- `record-unknown-field` (exit `3`): unrecognized object key.
+- `record-missing-field` (exit `3`): absent required field.
+- `record-duplicate-key` (exit `3`): duplicate JSON key at any nesting level.
+- `record-noncanonical-number` (exit `3`): quantity passed as a JSON number, non-canonical duration (`"01"`, `"1.50"`, `"1.500"`, `"1.0005"`, `"1."`, `"-1"`, `"1e3"`), invalid enum/identifier/rational/flag, or phase sum mismatch.
+- `record-unknown-schema` (exit `3`): schema outside the closed set of five names.
+- `record-hash-mismatch` (exit `9`, integrity): stored content address or self-hash fails recomputation.
+- `store-overwrite` (exit `9`, integrity): second write of different bytes to an existing store path.
+
+### 6. Determinism Class
+
+**D0 (bit-exact deterministic across machines, operating systems, and debug/release profiles).** Record parsing, canonicalization, BLAKE3 content addressing, exact rational rendering, and all `tenfold/score/` computations are pure functions of their inputs using integer milliseconds, `BigInt`, and `Rational` (zero floats in stored quantities; no platform math libraries). Measured campaign wall times are empirical measurements and carry no determinism class.
+
+### 7. Evidence Class of Outputs
+
+Harness records and scorer outputs carry evidence class **`Tested`** (never `Certified` or `Proved`, and always `reality: "no-claim"`). Gate values cited from ten-fold records are entered in `registries/gates.toml` exclusively by `examples/record_gate.rs`, never by `frob-tenfold` or `frob-tenfold-score`.
+
+### 8. Validity Domain
+
+- UTF-8 JSON harness records within `frob-cert`'s compiled resource limits (`max_file_bytes`, `max_json_depth`, `max_numeric_entries`, `max_bigint_bits`) and small counts within `±(2^53 - 1)`.
+- Durations in exact milliseconds representable in `u64` (`0..=u64::MAX / 1000` seconds).
+- Offline standalone scorer builds (`kit/scorer/Cargo.toml`) on host toolchains without network access or third-party crates.
+
+### 9. Oracles
+
+- **Exact phase-ledger known answer (`N39a-01`, `N39a-23`):** Exclusive phases `[600, 360, 20, 0, 12, 96, 150, 60, 40, 0, 30, 42, 90, 0]` s sum exactly to `1,500` s (`1,500,000` ms).
+- **Exact rational & outward-rounding known answers (`N39a-01`):** `54,000 / 20,400` reduces to `45/17` and renders half-to-even as `2.647`; `15,255 / 130,000` (`0.11734615...`) renders outward-upper as `0.1174` and outward-lower as `0.1173`.
+- **Negative controls (`tests/tenfold.rs`, `scripts/e2e/tenfold_records.sh`):** Duration as JSON number, renamed/unknown field, missing field, duplicate key, non-canonical duration (`"1.50"`), unknown schema, unblanked/mismatched self-hash, `execution_authorized: true`, planted `use rand` / `x.ln()` / `crate::tenfold::store` inside `BOUNDARY_FILES`, and store overwrite with differing bytes.
+
+### 10. Known Gaps
+
+- At skeleton commit (`N39a-01`), domain-specific fields and runtime workflows for mission cards (`N39a-05`), freeze manifests (`N39a-18`), full phase attribution & 2% closure (`N39a-23`, `N39a-24`), receipts (`N39a-09`), full reports (`N39a-36`), roles/sealing (`N39a-02`, `N39a-15`), strata/grid (`N39a-12`), bootstrap/verdict statistics (`N39a-27`..`N39a-37`), and the full `N39-REF` refusal registry binding are staged as empty boundary-clean skeleton modules owned by their respective beads.

@@ -1,0 +1,19 @@
+[workspace]
+
+[package]
+name = "frob-tenfold-scorer"
+version = "0.0.1"
+edition = "2024"
+publish = false
+description = "Standalone dependency-free ten-fold harness scorer (N39a-01); links only std and frob-cert."
+
+[lib]
+name = "frob_tenfold_scorer"
+path = "src/lib.rs"
+
+[[bin]]
+name = "frob-tenfold-scorer"
+path = "src/main.rs"
+
+[dependencies]
+frob-cert = { path = "../../crates/frob-cert" }

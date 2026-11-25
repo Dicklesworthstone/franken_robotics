@@ -5,8 +5,11 @@
 //! - `gates_v0`: v0 reader for `registries/gates.toml` (`frob.gates/1`, `BD-025`).
 //! - `controls`: negative-control registry validator, serializer, and `GATE-GAUNT-01`
 //!   registry check (`BD-025`).
+//! - `tenfold`: ten-fold comparative benchmark harness skeleton, five harness records,
+//!   canonical bytes, append-only store, and dependency-free scorer boundary (`N39a-01`).
 
 pub mod compendium;
 pub mod controls;
 pub mod e2e;
 pub mod gates_v0;
+pub mod tenfold;

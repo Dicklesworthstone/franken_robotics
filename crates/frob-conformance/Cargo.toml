@@ -21,6 +21,14 @@ path = "src/lib.rs"
 name = "frob-e2e"
 path = "src/bin/frob-e2e.rs"
 
+[[bin]]
+name = "frob-tenfold"
+path = "src/bin/frob-tenfold.rs"
+
+[[bin]]
+name = "frob-tenfold-score"
+path = "src/bin/frob-tenfold-score.rs"
+
 [features]
 default = []
 # Umbrella for workspace crate conformance facilities (BD-025 / ADR-GAUNT-03).
@@ -36,6 +44,7 @@ cuda = []
 metal = []
 
 [dependencies]
+frob-cert = { path = "../frob-cert" }
 frob-core = { path = "../frob-core", features = ["test-support"] }
 
 [lints]

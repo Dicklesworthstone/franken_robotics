@@ -1,12 +1,13 @@
-//! Declared-edge `cargo metadata` reader for `xtask` (bead N34p4-01).
+//! Declared-edge and resolved-graph `cargo metadata` readers for `xtask`
+//! (beads N34p4-01 and BD-003).
 //!
-//! Invokes `cargo metadata --format-version 1 --no-deps --locked --offline`
-//! through `PATH` (never an absolute cargo path), admits the raw JSON bytes
-//! with `frob_core::json::admit` (N34-17), and extracts workspace members,
-//! `[package.metadata.frob]` tables, and declared direct dependency edges.
-//! Compiles nothing and touches no network.
+//! Invokes `cargo metadata` through `PATH` (never an absolute cargo path) with
+//! `--locked --offline`, admits raw JSON bytes via `frob_core::json::admit`
+//! (N34-17), and extracts workspace members, `[package.metadata.frob]` tables,
+//! declared direct edges, resolved package `links` / build-deps, and the
+//! resolved dependency graph. Compiles nothing and touches no network.
 
-use std::collections::BTreeSet;
+use std::collections::{BTreeMap, BTreeSet};
 use std::fmt;
 use std::fs;
 use std::path::{Component, Path, PathBuf};
@@ -144,6 +145,8 @@ pub struct DeclaredDep {
     pub path: Option<PathBuf>,
     /// Repository-relative target directory when `path` lies inside `repo_root`.
     pub rel_path: Option<String>,
+    /// Relative path from `repo_root` when `path` lies outside `repo_root` (e.g. `../frankensim/crates/fs-ga`).
+    pub sibling_rel_path: Option<String>,
     pub uses_default_features: bool,
     pub features: Vec<String>,
     pub optional: bool,
@@ -187,7 +190,56 @@ pub struct DeclaredWorkspace {
     pub members: Vec<PackageMeta>,
 }
 
-/// Failure loading or parsing declared `cargo metadata`.
+/// One package in the resolved `cargo metadata --locked --offline` closure (BD-003).
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ResolvedPackage {
+    pub id: String,
+    pub name: String,
+    pub version: String,
+    pub source: Option<String>,
+    pub links: Option<String>,
+    pub manifest_path: PathBuf,
+    pub rel_dir: Option<String>,
+    pub sibling_rel_path: Option<String>,
+    pub dependencies: Vec<DeclaredDep>,
+}
+
+impl ResolvedPackage {
+    #[must_use]
+    pub fn is_registry(&self) -> bool {
+        self.source
+            .as_deref()
+            .is_some_and(|s| s.starts_with("registry+"))
+    }
+}
+
+/// One resolved dependency edge on a [`ResolveNode`].
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ResolveDep {
+    pub pkg: String,
+    pub name: String,
+    pub dep_kinds: Vec<DepKind>,
+}
+
+/// One node in the `resolve.nodes` graph of `cargo metadata`.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ResolveNode {
+    pub id: String,
+    pub dependencies: Vec<String>,
+    pub deps: Vec<ResolveDep>,
+    pub features: Vec<String>,
+}
+
+/// Resolved workspace metadata read by one `--locked --offline` invocation (BD-003).
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ResolvedWorkspace {
+    pub workspace_root: PathBuf,
+    pub workspace_members: BTreeSet<String>,
+    pub packages: BTreeMap<String, ResolvedPackage>,
+    pub nodes: BTreeMap<String, ResolveNode>,
+}
+
+/// Failure loading or parsing `cargo metadata`.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum MetadataLoadError {
     MissingManifest(PathBuf),
@@ -237,22 +289,36 @@ pub fn load_declared_metadata(
     repo_root: &Path,
     ws: &WorkspaceRoot,
 ) -> Result<DeclaredWorkspace, MetadataLoadError> {
+    let stdout = run_cargo_metadata(ws, true)?;
+    parse_declared_metadata_json(repo_root, &stdout)
+}
+
+/// Run `cargo metadata --format-version 1 --locked --offline` (resolved closure) for `ws`
+/// and parse the result through `frob_core::json::admit`.
+pub fn load_resolved_metadata(
+    repo_root: &Path,
+    ws: &WorkspaceRoot,
+) -> Result<ResolvedWorkspace, MetadataLoadError> {
+    let stdout = run_cargo_metadata(ws, false)?;
+    parse_resolved_metadata_json(repo_root, &stdout)
+}
+
+fn run_cargo_metadata(ws: &WorkspaceRoot, no_deps: bool) -> Result<Vec<u8>, MetadataLoadError> {
     let manifest_path = ws.manifest_path();
     if !manifest_path.is_file() {
         return Err(MetadataLoadError::MissingManifest(manifest_path));
     }
 
-    let output = Command::new("cargo")
-        .args([
-            "metadata",
-            "--format-version",
-            "1",
-            "--no-deps",
-            "--locked",
-            "--offline",
-            "--manifest-path",
-        ])
-        .arg(&manifest_path)
+    let mut cmd = Command::new("cargo");
+    cmd.current_dir(&ws.root_dir);
+    cmd.args(["metadata", "--format-version", "1"]);
+    if no_deps {
+        cmd.arg("--no-deps");
+    }
+    cmd.args(["--locked", "--offline", "--manifest-path"])
+        .arg(&manifest_path);
+
+    let output = cmd
         .output()
         .map_err(|e| MetadataLoadError::SpawnFailed(e.to_string()))?;
 
@@ -264,10 +330,10 @@ pub fn load_declared_metadata(
         return Err(MetadataLoadError::CargoFailed { detail: stderr });
     }
 
-    parse_declared_metadata_json(repo_root, &output.stdout)
+    Ok(output.stdout)
 }
 
-/// Detect Cargo stderr diagnostics indicating an offline/network cache miss.
+/// Detect Cargo stderr diagnostics indicating an offline/network cache miss or missing lockfile.
 #[must_use]
 pub fn looks_like_offline_or_network_error(stderr: &str) -> bool {
     let lower = stderr.to_ascii_lowercase();
@@ -280,8 +346,10 @@ pub fn looks_like_offline_or_network_error(stderr: &str) -> bool {
         "failed to download",
         "could not resolve host",
         "no matching package named",
+        "failed to select a version",
         "failed to get `",
         "lock file",
+        "cannot create the lock file",
         "needs to be updated but --locked was passed",
         "cannot update the lock file",
         "unable to update",
@@ -304,17 +372,7 @@ pub fn parse_declared_metadata_json(
         .ok_or_else(|| MetadataLoadError::Schema("missing string `workspace_root`".to_owned()))?;
     let workspace_root = PathBuf::from(ws_root_str);
 
-    let member_ids_arr = root_obj
-        .get("workspace_members")
-        .and_then(|v| v.as_array())
-        .ok_or_else(|| MetadataLoadError::Schema("missing array `workspace_members`".to_owned()))?;
-    let mut member_ids = BTreeSet::new();
-    for item in member_ids_arr {
-        let id = item
-            .as_str()
-            .ok_or_else(|| MetadataLoadError::Schema("non-string entry in `workspace_members`".to_owned()))?;
-        member_ids.insert(id.to_owned());
-    }
+    let member_ids = parse_workspace_member_ids(root_obj)?;
 
     let packages_arr = root_obj
         .get("packages")
@@ -351,15 +409,7 @@ pub fn parse_declared_metadata_json(
         };
 
         let frob_metadata = parse_frob_metadata_json(pkg_node.get("metadata").map(|s| &s.value));
-
-        let deps_arr = pkg_node
-            .get("dependencies")
-            .and_then(|v| v.as_array())
-            .ok_or_else(|| MetadataLoadError::Schema("package missing array `dependencies`".to_owned()))?;
-        let mut dependencies = Vec::with_capacity(deps_arr.len());
-        for dep_node in deps_arr {
-            dependencies.push(parse_dep_json(&canon_repo, dep_node)?);
-        }
+        let dependencies = parse_deps_array(&canon_repo, pkg_node)?;
 
         members.push(PackageMeta {
             id: id.to_owned(),
@@ -379,6 +429,211 @@ pub fn parse_declared_metadata_json(
     })
 }
 
+/// Parse raw `cargo metadata --format-version 1` (resolved) JSON bytes through `frob_core::json::admit`.
+pub fn parse_resolved_metadata_json(
+    repo_root: &Path,
+    raw_json: &[u8],
+) -> Result<ResolvedWorkspace, MetadataLoadError> {
+    let admitted = admit(raw_json, &Limits::default())
+        .map_err(|e| MetadataLoadError::JsonAdmission(e.to_string()))?;
+    let root_obj = admitted.value();
+
+    let ws_root_str = root_obj
+        .get("workspace_root")
+        .and_then(|v| v.as_str())
+        .ok_or_else(|| MetadataLoadError::Schema("missing string `workspace_root`".to_owned()))?;
+    let workspace_root = PathBuf::from(ws_root_str);
+
+    let workspace_members = parse_workspace_member_ids(root_obj)?;
+    let packages_arr = root_obj
+        .get("packages")
+        .and_then(|v| v.as_array())
+        .ok_or_else(|| MetadataLoadError::Schema("missing array `packages`".to_owned()))?;
+
+    let canon_repo = canonical_or_clean(repo_root);
+    let mut packages = BTreeMap::new();
+    for pkg_node in packages_arr {
+        let id = pkg_node
+            .get("id")
+            .and_then(|v| v.as_str())
+            .ok_or_else(|| MetadataLoadError::Schema("package missing string `id`".to_owned()))?
+            .to_owned();
+        let name = pkg_node
+            .get("name")
+            .and_then(|v| v.as_str())
+            .ok_or_else(|| MetadataLoadError::Schema("package missing string `name`".to_owned()))?
+            .to_owned();
+        let version = pkg_node
+            .get("version")
+            .and_then(|v| v.as_str())
+            .unwrap_or("")
+            .to_owned();
+        let source = pkg_node
+            .get("source")
+            .and_then(|v| v.as_str())
+            .map(str::to_owned);
+        let links = pkg_node
+            .get("links")
+            .and_then(|v| v.as_str())
+            .map(str::to_owned);
+        let manifest_str = pkg_node
+            .get("manifest_path")
+            .and_then(|v| v.as_str())
+            .ok_or_else(|| MetadataLoadError::Schema("package missing string `manifest_path`".to_owned()))?;
+        let manifest_path = PathBuf::from(manifest_str);
+        let pkg_dir = manifest_path.parent().unwrap_or(Path::new("."));
+        let rel_dir = relative_dir_inside(&canon_repo, pkg_dir);
+        let sibling_rel_path = if rel_dir.is_none() && source.is_none() {
+            sibling_relative_path(&canon_repo, pkg_dir)
+        } else {
+            None
+        };
+        let dependencies = parse_deps_array(&canon_repo, pkg_node)?;
+
+        packages.insert(
+            id.clone(),
+            ResolvedPackage {
+                id,
+                name,
+                version,
+                source,
+                links,
+                manifest_path,
+                rel_dir,
+                sibling_rel_path,
+                dependencies,
+            },
+        );
+    }
+
+    let mut nodes = BTreeMap::new();
+    if let Some(resolve_obj) = root_obj.get("resolve")
+        && !resolve_obj.is_null()
+        && let Some(nodes_arr) = resolve_obj.get("nodes").and_then(|v| v.as_array())
+    {
+        for node in nodes_arr {
+            let id = node
+                .get("id")
+                .and_then(|v| v.as_str())
+                .ok_or_else(|| MetadataLoadError::Schema("resolve node missing `id`".to_owned()))?
+                .to_owned();
+            let mut dependencies = Vec::new();
+            if let Some(arr) = node.get("dependencies").and_then(|v| v.as_array()) {
+                for item in arr {
+                    if let Some(s) = item.as_str() {
+                        dependencies.push(s.to_owned());
+                    }
+                }
+            }
+            let mut deps = Vec::new();
+            if let Some(arr) = node.get("deps").and_then(|v| v.as_array()) {
+                for dep in arr {
+                    let pkg = dep
+                        .get("pkg")
+                        .and_then(|v| v.as_str())
+                        .ok_or_else(|| {
+                            MetadataLoadError::Schema("resolve dep missing `pkg`".to_owned())
+                        })?
+                        .to_owned();
+                    let name = dep
+                        .get("name")
+                        .and_then(|v| v.as_str())
+                        .unwrap_or("")
+                        .to_owned();
+                    let mut dep_kinds = Vec::new();
+                    if let Some(kinds_arr) = dep.get("dep_kinds").and_then(|v| v.as_array()) {
+                        for k in kinds_arr {
+                            dep_kinds.push(parse_dep_kind_value(
+                                k.get("kind").map(|v| &v.value),
+                                &name,
+                            )?);
+                        }
+                    }
+                    if dep_kinds.is_empty() {
+                        dep_kinds.push(DepKind::Normal);
+                    }
+                    deps.push(ResolveDep {
+                        pkg,
+                        name,
+                        dep_kinds,
+                    });
+                }
+            }
+            let mut features = Vec::new();
+            if let Some(arr) = node.get("features").and_then(|v| v.as_array()) {
+                for item in arr {
+                    if let Some(s) = item.as_str() {
+                        features.push(s.to_owned());
+                    }
+                }
+            }
+            nodes.insert(
+                id.clone(),
+                ResolveNode {
+                    id,
+                    dependencies,
+                    deps,
+                    features,
+                },
+            );
+        }
+    }
+
+    Ok(ResolvedWorkspace {
+        workspace_root,
+        workspace_members,
+        packages,
+        nodes,
+    })
+}
+
+fn parse_workspace_member_ids(root_obj: &Json<'_>) -> Result<BTreeSet<String>, MetadataLoadError> {
+    let member_ids_arr = root_obj
+        .get("workspace_members")
+        .and_then(|v| v.as_array())
+        .ok_or_else(|| MetadataLoadError::Schema("missing array `workspace_members`".to_owned()))?;
+    let mut member_ids = BTreeSet::new();
+    for item in member_ids_arr {
+        let id = item
+            .as_str()
+            .ok_or_else(|| MetadataLoadError::Schema("non-string entry in `workspace_members`".to_owned()))?;
+        member_ids.insert(id.to_owned());
+    }
+    Ok(member_ids)
+}
+
+fn parse_deps_array(
+    canon_repo: &Path,
+    pkg_node: &Json<'_>,
+) -> Result<Vec<DeclaredDep>, MetadataLoadError> {
+    let deps_arr = pkg_node
+        .get("dependencies")
+        .and_then(|v| v.as_array())
+        .ok_or_else(|| MetadataLoadError::Schema("package missing array `dependencies`".to_owned()))?;
+    let mut dependencies = Vec::with_capacity(deps_arr.len());
+    for dep_node in deps_arr {
+        dependencies.push(parse_dep_json(canon_repo, dep_node)?);
+    }
+    Ok(dependencies)
+}
+
+fn parse_dep_kind_value(
+    kind_node: Option<&Json<'_>>,
+    dep_name: &str,
+) -> Result<DepKind, MetadataLoadError> {
+    match kind_node {
+        None | Some(Json::Null) => Ok(DepKind::Normal),
+        Some(Json::Str(s)) if s == "dev" => Ok(DepKind::Dev),
+        Some(Json::Str(s)) if s == "build" => Ok(DepKind::Build),
+        Some(Json::Str(other)) => Err(MetadataLoadError::Schema(format!(
+            "unknown dependency kind `{other}` for `{dep_name}`"
+        ))),
+        Some(_) => Err(MetadataLoadError::Schema(format!(
+            "non-string dependency kind for `{dep_name}`"
+        ))),
+    }
+}
+
 fn parse_dep_json(canon_repo: &Path, dep_node: &Json<'_>) -> Result<DeclaredDep, MetadataLoadError> {
     let name = dep_node
         .get("name")
@@ -389,21 +644,7 @@ fn parse_dep_json(canon_repo: &Path, dep_node: &Json<'_>) -> Result<DeclaredDep,
         .get("rename")
         .and_then(|v| v.as_str())
         .map(str::to_owned);
-    let kind = match dep_node.get("kind").map(|v| &v.value) {
-        None | Some(Json::Null) => DepKind::Normal,
-        Some(Json::Str(s)) if s == "dev" => DepKind::Dev,
-        Some(Json::Str(s)) if s == "build" => DepKind::Build,
-        Some(Json::Str(other)) => {
-            return Err(MetadataLoadError::Schema(format!(
-                "unknown dependency kind `{other}` for `{name}`"
-            )));
-        }
-        Some(_) => {
-            return Err(MetadataLoadError::Schema(format!(
-                "non-string dependency kind for `{name}`"
-            )));
-        }
-    };
+    let kind = parse_dep_kind_value(dep_node.get("kind").map(|v| &v.value), &name)?;
     let req = dep_node
         .get("req")
         .and_then(|v| v.as_str())
@@ -420,6 +661,12 @@ fn parse_dep_json(canon_repo: &Path, dep_node: &Json<'_>) -> Result<DeclaredDep,
     let rel_path = path
         .as_deref()
         .and_then(|p| relative_dir_inside(canon_repo, p));
+    let sibling_rel_path = if rel_path.is_none() {
+        path.as_deref()
+            .and_then(|p| sibling_relative_path(canon_repo, p))
+    } else {
+        None
+    };
     let uses_default_features = dep_node
         .get("uses_default_features")
         .and_then(|v| v.as_bool())
@@ -449,6 +696,7 @@ fn parse_dep_json(canon_repo: &Path, dep_node: &Json<'_>) -> Result<DeclaredDep,
         source,
         path,
         rel_path,
+        sibling_rel_path,
         uses_default_features,
         features,
         optional,
@@ -546,6 +794,42 @@ pub fn relative_dir_inside(canon_repo: &Path, target: &Path) -> Option<String> {
     let canon_target = canonical_or_clean(target);
     let rel = canon_target.strip_prefix(canon_repo).ok()?;
     Some(normalize_rel_path(rel))
+}
+
+/// Compute a POSIX relative path (`../<sibling>/...`) from `canon_repo` to `target`
+/// when `target` lies outside `canon_repo`. Returns `None` if `target` lies inside `canon_repo`.
+#[must_use]
+pub fn sibling_relative_path(canon_repo: &Path, target: &Path) -> Option<String> {
+    let canon_target = canonical_or_clean(target);
+    if canon_target.strip_prefix(canon_repo).is_ok() {
+        return None;
+    }
+    let repo_comps: Vec<Component<'_>> = canon_repo.components().collect();
+    let target_comps: Vec<Component<'_>> = canon_target.components().collect();
+    let mut common = 0usize;
+    while common < repo_comps.len()
+        && common < target_comps.len()
+        && repo_comps[common] == target_comps[common]
+    {
+        common += 1;
+    }
+    if common == 0 {
+        return None;
+    }
+    let mut parts: Vec<String> = Vec::new();
+    for _ in common..repo_comps.len() {
+        parts.push("..".to_owned());
+    }
+    for comp in &target_comps[common..] {
+        if let Component::Normal(s) = comp {
+            parts.push(s.to_string_lossy().into_owned());
+        }
+    }
+    if parts.is_empty() {
+        None
+    } else {
+        Some(parts.join("/"))
+    }
 }
 
 #[must_use]

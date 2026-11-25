@@ -4,6 +4,7 @@
 //! six `xtask` subcommands (`check-layers`, `check-deps`, `check-unsafe`,
 //! `check-generated`, `check-contracts`, `check-stack`).
 
+pub mod check_deps;
 pub mod check_layers;
 pub mod cli;
 pub mod crate_map;

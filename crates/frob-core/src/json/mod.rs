@@ -342,6 +342,14 @@ mod tests {
             admitted.root().as_f64_lexeme().expect("f64 max"),
             (hard, f64::MAX)
         );
+
+        // Binary64 spacing at 2^53 is two. The exact midpoint rounds to the
+        // even significand at 2^53 (exponent 53 + 1023, fraction zero).
+        let midpoint = "9007199254740993.0";
+        let admitted = ok(midpoint.as_bytes());
+        let (lexeme, value) = admitted.root().as_f64_lexeme().expect("rounded midpoint");
+        assert_eq!(lexeme, midpoint);
+        assert_eq!(value.to_bits(), 0x4340_0000_0000_0000);
     }
 
     #[test]
@@ -422,6 +430,13 @@ mod tests {
         let fault = err(b"{} true");
         assert_eq!(fault.kind, FaultKind::TrailingData);
         assert_eq!(fault.offset, 3);
+
+        let fault = err(br#"{"a":1,"a":2} true"#);
+        assert_eq!(fault.kind, FaultKind::TrailingData);
+        assert_eq!(fault.offset, 14);
+        let fault = err(br#"[{"a":1,"a":2},]"#);
+        assert_eq!(fault.kind, FaultKind::Syntax);
+        assert_eq!(fault.offset, 15);
     }
 
     #[test]
@@ -432,6 +447,26 @@ mod tests {
         let fault = err(depth65.as_bytes());
         assert_eq!(fault.kind, FaultKind::TooDeep);
         assert_eq!(fault.offset, 64);
+
+        let raised = Limits {
+            max_depth: u16::MAX,
+            ..Limits::default()
+        };
+        let fault = admit(depth65.as_bytes(), &raised).expect_err("depth exceeds hard cap");
+        assert_eq!(fault.kind, FaultKind::TooDeep);
+        assert_eq!(fault.offset, 64);
+        std::thread::Builder::new()
+            .stack_size(256 * 1024)
+            .spawn(move || {
+                let left = admit(depth64.as_bytes(), &raised).expect("admit at depth cap");
+                let right = admit(depth64.as_bytes(), &raised).expect("admit at depth cap");
+                assert_eq!(left, right);
+                assert!(left.value().eq_ordered(right.value()));
+                drop((left, right));
+            })
+            .expect("start bounded-stack test thread")
+            .join()
+            .expect("compare and drop trees at depth cap");
     }
 
     #[test]

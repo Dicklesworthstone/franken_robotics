@@ -134,6 +134,23 @@ fn resolve_build_identity_mode(
 }
 
 fn main() {
+    // Cargo classifies PROFILE by inheritance, independent of debug assertions.
+    if env::var("PROFILE").as_deref() == Ok("release")
+        && [
+            "CARGO_FEATURE_GAUNTLET_MUTATIONS",
+            "CARGO_FEATURE_DUP_FIRST_WINS",
+            "CARGO_FEATURE_DUP_LAST_WINS",
+            "CARGO_FEATURE_SKIP_ESCAPE_DECODE",
+        ]
+        .iter()
+        .any(|feature| env::var_os(feature).is_some())
+    {
+        eprintln!(
+            "frob-core build failed: gauntlet mutation features are forbidden in release profiles"
+        );
+        process::exit(1);
+    }
+
     let root = workspace_root();
     let head_path = root.join("receipts").join("HEAD");
     let lock_digest_path = root.join("receipts").join("LOCK_DIGEST");

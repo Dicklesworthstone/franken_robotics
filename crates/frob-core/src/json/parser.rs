@@ -9,7 +9,7 @@ use std::cmp::Ordering;
 use std::fmt::Write as _;
 
 use crate::json::types::{
-    AdmissionFault, Admitted, FaultKind, Json, Limits, Member, Span, Spanned,
+    AdmissionFault, Admitted, DEFAULT_MAX_DEPTH, FaultKind, Json, Limits, Member, Span, Spanned,
 };
 
 const UTF8_BOM: [u8; 3] = [0xEF, 0xBB, 0xBF];
@@ -33,16 +33,19 @@ struct Parser<'a> {
     pos: usize,
     limits: Limits,
     frames: Vec<Frame<'a>>,
+    duplicate_fault: Option<AdmissionFault>,
 }
 
 impl<'a> Parser<'a> {
-    fn new(bytes: &'a [u8], text: &'a str, limits: Limits) -> Self {
+    fn new(bytes: &'a [u8], text: &'a str, mut limits: Limits) -> Self {
+        limits.max_depth = limits.max_depth.min(DEFAULT_MAX_DEPTH);
         Self {
             bytes,
             text,
             pos: 0,
             limits,
             frames: Vec::new(),
+            duplicate_fault: None,
         }
     }
 
@@ -96,6 +99,9 @@ impl<'a> Parser<'a> {
         self.skip_ws();
         if self.pos < self.bytes.len() {
             return Err(self.fail(FaultKind::TrailingData, "trailing data after root value"));
+        }
+        if let Some(fault) = self.duplicate_fault {
+            return Err(fault);
         }
         Ok(Admitted::new(root, self.bytes))
     }
@@ -170,7 +176,7 @@ impl<'a> Parser<'a> {
                             }
                             Some(b'}') => {
                                 self.pos += 1;
-                                let checked = self.finalize_object(members)?;
+                                let checked = self.finalize_object(members);
                                 completed = Some(Spanned::new(
                                     Span::new(start, self.pos),
                                     Json::Obj(checked),
@@ -519,9 +525,9 @@ impl<'a> Parser<'a> {
         Ok((lexeme, Span::new(start, self.pos)))
     }
 
-    fn finalize_object(&self, members: Vec<Member<'a>>) -> Result<Vec<Member<'a>>, AdmissionFault> {
-        if members.len() <= 1 {
-            return Ok(members);
+    fn finalize_object(&mut self, members: Vec<Member<'a>>) -> Vec<Member<'a>> {
+        if members.len() <= 1 || self.duplicate_fault.is_some() {
+            return members;
         }
         let mut order: Vec<usize> = (0..members.len()).collect();
         order.sort_by(|&a, &b| match (members.get(a), members.get(b)) {
@@ -552,11 +558,11 @@ impl<'a> Parser<'a> {
                     }
                 }
             }
-            return Ok(members
+            return members
                 .into_iter()
                 .enumerate()
                 .filter_map(|(i, m)| keep.get(i).copied().unwrap_or(false).then_some(m))
-                .collect());
+                .collect();
         }
 
         #[cfg(not(any(feature = "dup-first-wins", feature = "dup-last-wins")))]
@@ -578,14 +584,15 @@ impl<'a> Parser<'a> {
             if let Some((fi, si)) = earliest
                 && let (Some(first), Some(second)) = (members.get(fi), members.get(si))
             {
-                return Err(AdmissionFault::duplicate_member(
+                // Preserve the first duplicate found while checking the remainder of the document.
+                self.duplicate_fault = Some(AdmissionFault::duplicate_member(
                     first.name.clone(),
                     first.name_span.start,
                     second.name_span.start,
                     self.pointer(),
                 ));
             }
-            Ok(members)
+            members
         }
     }
 

@@ -13,7 +13,7 @@ pub const INT53_MAX: i64 = 9_007_199_254_740_991;
 pub const INT53_MIN: i64 = -INT53_MAX;
 /// Default maximum input size in bytes (64 MiB).
 pub const DEFAULT_MAX_BYTES: usize = 64 * 1024 * 1024;
-/// Default maximum container nesting depth.
+/// Default and maximum container nesting depth for admitted trees.
 pub const DEFAULT_MAX_DEPTH: u16 = 64;
 /// Default maximum number lexeme length in characters.
 pub const DEFAULT_MAX_NUMBER_LEN: usize = 1024;
@@ -49,6 +49,7 @@ impl Span {
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Limits {
     pub max_bytes: usize,
+    /// Container nesting limit, clamped to `DEFAULT_MAX_DEPTH` to bound recursive tree operations.
     pub max_depth: u16,
     pub max_string: usize,
     pub max_number_len: usize,

@@ -27,5 +27,5 @@ pub mod refusal;
 pub mod registry;
 pub mod stack;
 
-#[cfg(feature = "test-support")]
+#[cfg(any(test, feature = "test-support"))]
 pub mod testkit;

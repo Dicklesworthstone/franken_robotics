@@ -70,20 +70,43 @@ impl FastTier {
 }
 impl fmt::Display for FastTier { fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result { f.write_str(self.as_str()) } }
 
-/// Physics tier meet lattice: `Static` > `Referee` > mutually incomparable fast tiers.
+/// Nonempty set built by [`TierMeet::fast`] and [`TierMeet::meet`].
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub enum TierMeet { Static, Referee, Fast(BTreeSet<FastTier>) }
+pub struct FastTiers(BTreeSet<FastTier>);
+
+/// Physics tier meet lattice: `Static` > `Referee` > mutually incomparable fast tiers.
+///
+/// ```compile_fail,E0308
+/// use frob_core::evidence::TierMeet;
+/// let _ = TierMeet::Fast(std::collections::BTreeSet::new());
+/// ```
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub enum TierMeet {
+    Static,
+    Referee,
+    Fast(FastTiers),
+}
 
 impl TierMeet {
-    #[must_use] pub fn fast(tier: FastTier) -> Self { let mut s = BTreeSet::new(); s.insert(tier); Self::Fast(s) }
-    #[must_use] pub const fn is_provisional(&self) -> bool { matches!(self, Self::Fast(_)) }
+    #[must_use]
+    pub fn fast(tier: FastTier) -> Self {
+        Self::Fast(FastTiers(BTreeSet::from([tier])))
+    }
+    #[must_use]
+    pub const fn is_provisional(&self) -> bool {
+        matches!(self, Self::Fast(_))
+    }
     #[must_use]
     pub fn meet(&self, other: &Self) -> Self {
         match (self, other) {
             (Self::Static, x) | (x, Self::Static) => x.clone(),
             (Self::Referee, Self::Referee) => Self::Referee,
-            (Self::Referee, Self::Fast(s)) | (Self::Fast(s), Self::Referee) => Self::Fast(s.clone()),
-            (Self::Fast(a), Self::Fast(b)) => { let mut m = a.clone(); m.extend(b.iter().copied()); Self::Fast(m) }
+            (Self::Referee, Self::Fast(s)) | (Self::Fast(s), Self::Referee) => {
+                Self::Fast(s.clone())
+            }
+            (Self::Fast(a), Self::Fast(b)) => {
+                Self::Fast(FastTiers(a.0.union(&b.0).copied().collect()))
+            }
         }
     }
 }
@@ -94,7 +117,12 @@ impl fmt::Display for TierMeet {
             Self::Static => f.write_str("static"),
             Self::Referee => f.write_str("referee"),
             Self::Fast(set) => {
-                for (i, t) in set.iter().enumerate() { if i > 0 { f.write_str("+")?; } f.write_str(t.as_str())?; }
+                for (i, t) in set.0.iter().enumerate() {
+                    if i > 0 {
+                        f.write_str("+")?;
+                    }
+                    f.write_str(t.as_str())?;
+                }
                 Ok(())
             }
         }
@@ -396,31 +424,83 @@ impl ClaimProduct {
 mod tests {
     use super::*;
     use crate::id::hash_blob;
+    use crate::testkit::prop::{self, Gen};
 
-    struct Rng(u64);
-    impl Rng {
-        fn next(&mut self) -> u64 { self.0 = self.0.wrapping_add(0x9E37_79B9_7F4A_7C15); let mut z = self.0; z = (z ^ (z >> 30)).wrapping_mul(0xBF58_476D_1CE4_E5B9); z = (z ^ (z >> 27)).wrapping_mul(0x94D0_49BB_1331_11EB); z ^ (z >> 31) }
-        fn idx(&mut self, n: usize) -> usize { (self.next() as usize) % n }
-        fn shuffle<T>(&mut self, s: &mut [T]) { for i in (1..s.len()).rev() { let j = self.idx(i + 1); s.swap(i, j); } }
-    }
+    const KINDS: [ClaimKind; 7] = [
+        ClaimKind::Proof,
+        ClaimKind::KnownAnswer,
+        ClaimKind::Parity,
+        ClaimKind::Fidelity,
+        ClaimKind::DesignComparison,
+        ClaimKind::Reality,
+        ClaimKind::Performance,
+    ];
+    const FLAGS: [ConditionFlag; 3] = [
+        ConditionFlag::TierSensitive,
+        ConditionFlag::ControllerSensitive,
+        ConditionFlag::ModelConditional,
+    ];
 
-    fn rand_part(r: &mut Rng, q: &QuantifierPrefix) -> ClaimProduct {
-        const KINDS: [ClaimKind; 7] = [ClaimKind::Proof, ClaimKind::KnownAnswer, ClaimKind::Parity, ClaimKind::Fidelity, ClaimKind::DesignComparison, ClaimKind::Reality, ClaimKind::Performance];
-        const CLASSES: [EvidenceClass; 4] = [EvidenceClass::Estimated, EvidenceClass::Tested, EvidenceClass::Certified, EvidenceClass::Proved];
-        const DETS: [DetClass; 5] = [DetClass::D4Unspecified, DetClass::D3Tolerance, DetClass::D2PerBackend, DetClass::D1CrossBackend, DetClass::D0Exact];
-        let kind = KINDS[r.idx(7)];
-        let raw = CLASSES[r.idx(4)];
-        let class = if kind == ClaimKind::Proof { raw } else { raw.meet(EvidenceClass::Tested) };
-        let tier = match r.idx(5) { 0 => TierMeet::Static, 1 => TierMeet::Referee, 2 => TierMeet::fast(FastTier::BatchCpu), 3 => TierMeet::fast(FastTier::GpuCuda), _ => TierMeet::fast(FastTier::GpuMetal) };
-        let reality = match r.idx(3) { 0 => RealityScope::NoClaim, 1 => RealityScope::CalibratedFamily("fam-a".into()), _ => RealityScope::CalibratedFamily("fam-b".into()) };
-        let b = r.next();
-        let mut conds = FlagSet::new();
-        if (b & 1) != 0 { conds.insert(ConditionFlag::TierSensitive); }
-        if (b & 2) != 0 { conds.insert(ConditionFlag::ControllerSensitive); }
-        if (b & 4) != 0 { conds.insert(ConditionFlag::ModelConditional); }
-        let inp = InputRef::new(hash_blob(&r.next().to_le_bytes()), format!("/f/{}", r.idx(8)));
-        let scope = Scope { design_family: if (b & 8) != 0 { ScopeDomain::Unrestricted } else { ScopeDomain::Named("quad".into()) }, world_family: ScopeDomain::Named("flat".into()), quantifiers: q.clone(), horizon_steps: ((b & 16) != 0).then(|| (r.next() % 500) + 1), validity_region: ScopeDomain::Unrestricted };
-        ClaimProduct::leaf_with_class(kind, class, inp, scope, tier, DETS[r.idx(5)], reality, conds)
+    fn rand_part(draws: &Gen, part: u64, quantifiers: &QuantifierPrefix) -> ClaimProduct {
+        let draw = |stream| draws.draw_at(stream, part);
+        let kind = KINDS[(draw(3) % KINDS.len() as u64) as usize];
+        let class = match (kind, draw(4) % 4) {
+            (_, 0) => EvidenceClass::Estimated,
+            (ClaimKind::Proof, 2) => EvidenceClass::Certified,
+            (ClaimKind::Proof, 3) => EvidenceClass::Proved,
+            _ => EvidenceClass::Tested,
+        };
+        let tier = match draw(5) % 5 {
+            0 => TierMeet::Static,
+            1 => TierMeet::Referee,
+            2 => TierMeet::fast(FastTier::BatchCpu),
+            3 => TierMeet::fast(FastTier::GpuCuda),
+            _ => TierMeet::fast(FastTier::GpuMetal),
+        };
+        let reality = match draw(6) % 3 {
+            0 => RealityScope::NoClaim,
+            1 => RealityScope::CalibratedFamily("fam-a".into()),
+            _ => RealityScope::CalibratedFamily("fam-b".into()),
+        };
+        let bits = draw(7);
+        let conditions = FlagSet::from_flags(
+            FLAGS
+                .into_iter()
+                .enumerate()
+                .filter_map(|(bit, flag)| (bits & (1 << bit) != 0).then_some(flag)),
+        );
+        let input = InputRef::new(
+            hash_blob(&draw(8).to_le_bytes()),
+            format!("/f/{}", draw(9) % 8),
+        );
+        let scope = Scope {
+            design_family: if bits & 8 != 0 {
+                ScopeDomain::Unrestricted
+            } else {
+                ScopeDomain::Named("quad".into())
+            },
+            world_family: ScopeDomain::Named("flat".into()),
+            quantifiers: quantifiers.clone(),
+            horizon_steps: (bits & 16 != 0).then(|| draw(10) % 500 + 1),
+            validity_region: ScopeDomain::Unrestricted,
+        };
+        let determinism = match draw(11) % 5 {
+            0 => DetClass::D4Unspecified,
+            1 => DetClass::D3Tolerance,
+            2 => DetClass::D2PerBackend,
+            3 => DetClass::D1CrossBackend,
+            _ => DetClass::D0Exact,
+        };
+        ClaimProduct::leaf_with_class(
+            kind,
+            class,
+            input,
+            scope,
+            tier,
+            determinism,
+            reality,
+            conditions,
+        )
     }
 
     #[test]
@@ -469,31 +549,82 @@ mod tests {
 
     #[test]
     fn combine_is_order_independent() {
-        const KINDS: [ClaimKind; 7] = [ClaimKind::Proof, ClaimKind::KnownAnswer, ClaimKind::Parity, ClaimKind::Fidelity, ClaimKind::DesignComparison, ClaimKind::Reality, ClaimKind::Performance];
-        let mut r = Rng(0xBD00_5E11_D000_0001);
-        let q = QuantifierPrefix(vec![QuantifierBinder::exists("policy"), QuantifierBinder::for_all("world")]);
-        for _ in 0..10_000 {
-            let mut parts: Vec<_> = (0..1 + r.idx(6)).map(|_| rand_part(&mut r, &q)).collect();
-            let kind = KINDS[r.idx(7)];
-            let raw_min = parts.iter().map(ClaimProduct::class).min().unwrap();
-            let exp_class = if kind == ClaimKind::Proof { raw_min } else { raw_min.meet(EvidenceClass::Tested) };
-            let exp_det = parts.iter().map(ClaimProduct::determinism).min().unwrap();
-            let p1 = ClaimProduct::combine(kind, &parts).unwrap();
-            assert_eq!((p1.class(), p1.determinism()), (exp_class, exp_det));
-            for p in &parts { assert!(p1.conditions().is_superset(p.conditions())); }
-            r.shuffle(&mut parts);
-            assert_eq!(p1, ClaimProduct::combine(kind, &parts).unwrap());
+        let quantifiers = QuantifierPrefix(vec![
+            QuantifierBinder::exists("policy"),
+            QuantifierBinder::for_all("world"),
+        ]);
+        prop::check("combine_is_order_independent", 10_000, |draws| {
+            let count = draws.u64_range(0, 1, 6);
+            let mut parts: Vec<_> = (0..count)
+                .map(|part| rand_part(draws, part, &quantifiers))
+                .collect();
+            let kind = KINDS[draws.u64_range(1, 0, KINDS.len() as u64 - 1) as usize];
+            let min_class = parts.iter().map(ClaimProduct::class).min().unwrap();
+            let expected_class = if kind == ClaimKind::Proof {
+                min_class
+            } else {
+                min_class.min(EvidenceClass::Tested)
+            };
+            let expected_det = parts.iter().map(ClaimProduct::determinism).min().unwrap();
+            let product = ClaimProduct::combine(kind, &parts).map_err(|err| err.to_string())?;
+            if (product.class(), product.determinism()) != (expected_class, expected_det) {
+                return Err(format!(
+                    "expected ({expected_class:?}, {expected_det:?}), got ({:?}, {:?})",
+                    product.class(),
+                    product.determinism(),
+                ));
+            }
+            condition_union_matches(&product, &parts)?;
+            for i in (1..parts.len()).rev() {
+                parts.swap(i, draws.u64_range(2, 0, i as u64) as usize);
+            }
+            let permuted = ClaimProduct::combine(kind, &parts).map_err(|err| err.to_string())?;
+            if product != permuted {
+                return Err("product changed after permuting its parts".into());
+            }
+            Ok(())
+        });
+    }
+
+    fn condition_union_matches(
+        product: &ClaimProduct,
+        parts: &[ClaimProduct],
+    ) -> Result<(), String> {
+        let expected: BTreeSet<_> = parts
+            .iter()
+            .flat_map(|part| part.conditions().iter().copied())
+            .collect();
+        if product.conditions().iter().eq(expected.iter()) {
+            Ok(())
+        } else {
+            Err(format!(
+                "expected condition union {expected:?}, got {:?}",
+                product.conditions()
+            ))
         }
     }
 
     #[test]
-    fn conditions_cannot_be_dropped() {
-        let mut r = Rng(0xC0AD_1710_A500_0002);
-        let q = QuantifierPrefix::default();
-        for _ in 0..1_000 {
-            let parts: Vec<_> = (0..1 + r.idx(5)).map(|_| rand_part(&mut r, &q)).collect();
-            let prod = ClaimProduct::combine(ClaimKind::Fidelity, &parts).unwrap();
-            for p in &parts { for f in p.conditions().iter() { assert!(prod.conditions().contains(*f)); } }
+    fn condition_union_rejects_planted_flags() {
+        let leaf = |flags: &[ConditionFlag]| {
+            ClaimProduct::estimated(
+                ClaimKind::Fidelity,
+                InputRef::new(hash_blob(b"card"), "/card"),
+                Scope::default(),
+                TierMeet::Static,
+                DetClass::D0Exact,
+                RealityScope::NoClaim,
+                FlagSet::from_flags(flags.iter().copied()),
+            )
+        };
+        for parts in [
+            [leaf(&[]), leaf(&[])],
+            [leaf(&[FLAGS[0]]), leaf(&[FLAGS[1]])],
+        ] {
+            let mut product = ClaimProduct::combine(ClaimKind::Fidelity, &parts).unwrap();
+            condition_union_matches(&product, &parts).unwrap();
+            product.conditions = FlagSet::from_flags(FLAGS);
+            assert!(condition_union_matches(&product, &parts).is_err());
         }
     }
 

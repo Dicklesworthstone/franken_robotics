@@ -42,6 +42,10 @@ name = "pilots"
 path = "examples/pilots.rs"
 
 [[example]]
+name = "record_gate"
+path = "examples/record_gate.rs"
+
+[[example]]
 name = "validate_register"
 path = "examples/validate_register.rs"
 

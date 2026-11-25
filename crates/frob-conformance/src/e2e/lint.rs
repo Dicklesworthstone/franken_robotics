@@ -34,6 +34,48 @@ fn has_strs(val: &JsonValue, keys: &[&str]) -> bool {
     keys.iter().all(|k| val.get(k).and_then(JsonValue::as_str).is_some())
 }
 
+fn private_root_needles(private_root: Option<&str>) -> Vec<String> {
+    let mut needles = Vec::new();
+    let Some(raw) = private_root.map(|s| s.trim_end_matches('/')).filter(|s| !s.is_empty()) else { return needles; };
+    needles.push(raw.to_string());
+    if let Ok(canon) = fs::canonicalize(raw) {
+        let cs = canon.to_string_lossy().trim_end_matches('/').to_string();
+        if !cs.is_empty() && !needles.contains(&cs) { needles.push(cs); }
+    }
+    needles
+}
+
+fn is_path_boundary(b: Option<u8>) -> bool {
+    b.is_none_or(|c| c == b'/' || c.is_ascii_whitespace() || matches!(c, b'\'' | b'"' | b',' | b';' | b')' | b']' | b'}'))
+}
+
+fn contains_path_needle(hay: &str, needle: &str) -> bool {
+    let mut rest = hay;
+    while let Some(idx) = rest.find(needle) {
+        let after = &rest[idx + needle.len()..];
+        if is_path_boundary(after.as_bytes().first().copied()) { return true; }
+        rest = after;
+    }
+    false
+}
+
+fn collect_decoded_strings<'a>(val: &'a JsonValue, out: &mut Vec<&'a str>) {
+    match val {
+        JsonValue::String(s) => out.push(s.as_str()),
+        JsonValue::Array(xs) => for x in xs { collect_decoded_strings(x, out); },
+        JsonValue::Object(ps) => for (k, v) in ps { out.push(k.as_str()); collect_decoded_strings(v, out); },
+        _ => {}
+    }
+}
+
+fn collect_files_rec(dir: &Path, out: &mut BTreeSet<PathBuf>) {
+    let Ok(rd) = fs::read_dir(dir) else { return; };
+    for entry in rd.flatten() {
+        let p = entry.path();
+        if p.is_dir() { collect_files_rec(&p, out); } else if p.is_file() { out.insert(p); }
+    }
+}
+
 pub fn lint_log_file(path: &Path, extra_canaries: &[String], private_root: Option<&str>) -> Result<Vec<LintFinding>, String> {
     let raw = fs::read(path).map_err(|e| format!("read {}: {e}", path.display()))?;
     let fstr = path.to_string_lossy().into_owned();
@@ -42,13 +84,14 @@ pub fn lint_log_file(path: &Path, extra_canaries: &[String], private_root: Optio
     };
     let mut canaries: Vec<&str> = vec![PRIVATE_CANARY, TOKEN_CANARY];
     canaries.extend(extra_canaries.iter().map(String::as_str).filter(|s| !s.is_empty()));
-    let priv_needle = private_root.map(|s| s.trim_end_matches('/')).filter(|s| !s.is_empty());
+    let priv_needles = private_root_needles(private_root);
 
-    let (mut lines, mut off) = (Vec::new(), 0usize);
+    let (mut lines, mut off, mut phys_ln) = (Vec::new(), 0usize, 0usize);
     for chunk in text.split_inclusive('\n') {
+        phys_ln += 1;
         let no_lf = chunk.strip_suffix('\n').unwrap_or(chunk);
         let t = no_lf.strip_suffix('\r').unwrap_or(no_lf);
-        if !t.is_empty() { lines.push((off, t)); }
+        if !t.is_empty() { lines.push((phys_ln, off, t)); }
         off += chunk.len();
     }
     let mut out = Vec::new();
@@ -62,17 +105,23 @@ pub fn lint_log_file(path: &Path, extra_canaries: &[String], private_root: Optio
     let (mut ap, mut af, mut ask, mut cc, mut cm, mut re, mut ru) = (0u64, 0u64, 0u64, 0u64, 0u64, 0u64, 0u64);
     let mut artifacts = BTreeSet::<PathBuf>::new();
 
-    for (idx, &(byte_off, raw_line)) in lines.iter().enumerate() {
-        let ln = idx + 1;
+    for (idx, &(ln, byte_off, raw_line)) in lines.iter().enumerate() {
         if raw_line.len() > MAX_LINE_BYTES { push(&mut out, "redaction-violation", &fstr, ln, format!("line exceeds {MAX_LINE_BYTES} bytes")); }
-        for &c in &canaries { if raw_line.contains(c) { push(&mut out, "redaction-violation", &fstr, ln, format!("canary leaked: {c}")); } }
-        if let Some(n) = priv_needle && raw_line.contains(n) { push(&mut out, "redaction-violation", &fstr, ln, format!("unredacted private root path: {n}")); }
+        let (mut seen_c, mut seen_p) = (BTreeSet::<&str>::new(), BTreeSet::<&str>::new());
+        for &c in &canaries { if raw_line.contains(c) && seen_c.insert(c) { push(&mut out, "redaction-violation", &fstr, ln, format!("canary leaked: {c}")); } }
+        for n in &priv_needles { if contains_path_needle(raw_line, n) && seen_p.insert(n.as_str()) { push(&mut out, "redaction-violation", &fstr, ln, format!("unredacted private root path: {n}")); } }
         let val = match json::parse_strict(raw_line) {
             Ok(v) if v.as_object().is_some() => v,
             Ok(_) => { push(&mut out, "schema", &fstr, ln, "line must be a JSON object"); continue; }
             Err(e) => { push(&mut out, "schema", &fstr, ln, e.to_string()); continue; }
         };
         if let Err(e) = json::check_redaction_tree(&val, "") { push(&mut out, "redaction-violation", &fstr, ln, e); }
+        let mut decoded = Vec::new();
+        collect_decoded_strings(&val, &mut decoded);
+        for s in decoded {
+            for &c in &canaries { if s.contains(c) && seen_c.insert(c) { push(&mut out, "redaction-violation", &fstr, ln, format!("canary leaked (JSON-escaped): {c}")); } }
+            for n in &priv_needles { if contains_path_needle(s, n) && seen_p.insert(n.as_str()) { push(&mut out, "redaction-violation", &fstr, ln, format!("unredacted private root path (JSON-escaped): {n}")); } }
+        }
         check_common(&val, idx as u64, &fstr, ln, &mut out);
 
         let ev = val.get("event").and_then(JsonValue::as_str).unwrap_or("");
@@ -163,6 +212,7 @@ pub fn lint_log_file(path: &Path, extra_canaries: &[String], private_root: Optio
                 push(&mut out, "schema", &fstr, ln, "end requires wall_ms, asserts_passed, asserts_failed");
             },
             "summary" => {
+                if idx + 1 != lines.len() { push(&mut out, "schema", &fstr, ln, "summary must be the final line"); }
                 let exp_sha = sha256_hex(&raw[..byte_off]);
                 if val.get("body_sha256").and_then(JsonValue::as_str) != Some(exp_sha.as_str()) {
                     push(&mut out, "body-sha256-mismatch", &fstr, ln, format!("body_sha256 mismatch (expected {exp_sha})"));
@@ -179,9 +229,9 @@ pub fn lint_log_file(path: &Path, extra_canaries: &[String], private_root: Optio
                 if claimable && reg == "override" { push(&mut out, "scratch-registries", &fstr, ln, "log claims gates under registries=override"); }
                 match val.get("gates").and_then(JsonValue::as_array) {
                     Some(gates) => for g in gates {
-                        if g.get("measured_ok").and_then(JsonValue::as_bool) == Some(true) && g.get("controls_caught").and_then(JsonValue::as_u64) == Some(0) {
-                            push(&mut out, "no-control", &fstr, ln, format!("gate '{}' has measured_ok=true with controls_caught=0", g.get("id").and_then(JsonValue::as_str).unwrap_or("?")));
-                        }
+                        let (gid, mok, gcc) = (g.get("id").and_then(JsonValue::as_str).filter(|s| !s.is_empty()), g.get("measured_ok").and_then(JsonValue::as_bool), g.get("controls_caught").and_then(JsonValue::as_u64));
+                        if gid.is_none() || mok.is_none() || gcc.is_none() { push(&mut out, "schema", &fstr, ln, "summary gate requires id, measured_ok, controls_caught"); }
+                        if mok == Some(true) && gcc.unwrap_or(0) == 0 { push(&mut out, "no-control", &fstr, ln, format!("gate '{}' has measured_ok=true with controls_caught=0", gid.unwrap_or("?"))); }
                     },
                     None => push(&mut out, "schema", &fstr, ln, "summary missing gates array"),
                 }
@@ -190,20 +240,26 @@ pub fn lint_log_file(path: &Path, extra_canaries: &[String], private_root: Optio
         }
     }
 
-    if last_event != "summary" { push(&mut out, "missing-summary", &fstr, lines.len(), "last line must be summary"); }
+    if last_event != "summary" { push(&mut out, "missing-summary", &fstr, lines.last().map_or(0, |l| l.0), "last line must be summary"); }
+    let mut transcript_path = None;
     if let Some(stem) = fstr.strip_suffix(".ndjson") {
         let tr = PathBuf::from(format!("{stem}.transcript.txt"));
-        if tr.is_file() { artifacts.insert(tr); }
+        if tr.is_file() { transcript_path = Some(tr.clone()); artifacts.insert(tr); }
         let adir = PathBuf::from(format!("{stem}.artifacts"));
-        if adir.is_dir() && let Ok(rd) = fs::read_dir(&adir) {
-            artifacts.extend(rd.flatten().map(|e| e.path()).filter(|p| p.is_file()));
-        }
+        if adir.is_dir() { collect_files_rec(&adir, &mut artifacts); }
     }
     for art in artifacts {
         if let Ok(bytes) = fs::read(&art) {
             for &c in &canaries {
                 if bytes.windows(c.len()).any(|w| w == c.as_bytes()) {
                     push(&mut out, "redaction-violation", &art.to_string_lossy(), 0, format!("canary leaked in artifact: {c}"));
+                }
+            }
+            if transcript_path.as_ref() == Some(&art) && let Ok(tr_text) = std::str::from_utf8(&bytes) {
+                for n in &priv_needles {
+                    if contains_path_needle(tr_text, n) {
+                        push(&mut out, "redaction-violation", &art.to_string_lossy(), 0, format!("unredacted private root path in transcript: {n}"));
+                    }
                 }
             }
         }

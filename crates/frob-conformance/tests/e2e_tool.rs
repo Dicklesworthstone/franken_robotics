@@ -837,3 +837,123 @@ fn sha256_dir_and_pointer_escapes() {
     assert_eq!(doc.pointer("/m~0n").and_then(JsonValue::as_i64), Some(2));
     assert_eq!(doc.pointer("/~01").and_then(JsonValue::as_i64), Some(3));
 }
+
+#[test]
+fn lint_catches_transcript_priv_escaped_json_recursive_artifacts_dup_summary_and_missing_controls() {
+    let dir = scratch_dir("lint_artifact_priv_and_escapes");
+    let priv_root = dir.join("private_scans");
+    fs::create_dir_all(&priv_root).unwrap();
+    let priv_root_s = priv_root.to_string_lossy().into_owned();
+
+    // 1. Transcript private-root leak and nested artifact canary leak fail lint;
+    //    stdout capture containing a private path does not break st_priv_path.
+    let log1 = dir.join("20261124T120000Z.ndjson");
+    let tr1 = dir.join("20261124T120000Z.transcript.txt");
+    let art_dir = dir.join("20261124T120000Z.artifacts");
+    let nested = art_dir.join("sub");
+    fs::create_dir_all(&nested).unwrap();
+    emit_basic_start(&log1, "STD-E2E", "full");
+    emit_pass_assert(&log1, "STD-E2E", "ok", None);
+    emit_summary(&log1, "STD-E2E", "of-record");
+    fs::write(art_dir.join("priv_path.1.stdout"), format!("{priv_root_s}/room.dat\n")).unwrap();
+    assert!(lint_log_file(&log1, &[], Some(&priv_root_s)).unwrap().is_empty());
+
+    fs::write(&tr1, format!("cmd printf {priv_root_s}/kitchen/scan.step\n")).unwrap();
+    fs::write(nested.join("leak.txt"), format!("nested {PRIVATE_CANARY}\n")).unwrap();
+    let f1 = lint_log_file(&log1, &[], Some(&priv_root_s)).unwrap();
+    assert!(
+        f1.iter().any(|f| f.rule == "redaction-violation" && f.detail.contains("transcript")),
+        "expected transcript private-root redaction-violation, got {f1:?}"
+    );
+    assert!(
+        f1.iter().any(|f| f.rule == "redaction-violation" && f.detail.contains(PRIVATE_CANARY)),
+        "expected recursive artifact canary violation, got {f1:?}"
+    );
+
+    // 2. JSON-escaped canary (\u0046...) and JSON-escaped private root (\/...) must fail lint.
+    let log2 = dir.join("escaped_leaks.ndjson");
+    emit_basic_start(&log2, "STD-E2E", "full");
+    let escaped_priv = priv_root_s.replace('/', r"\/");
+    let raw_assert = format!(
+        r#"{{"schema":"frob.e2elog/1","ts":"2026-11-24T12:00:01.000Z","seq":1,"run_id":"20261124T120000Z-deadbeef","script":"st_fixture","bead":"STD-E2E","step":"s1","event":"assert","seed":"1","name":"esc","kind":"eq","status":"pass","observed":"\u0046ROB-PRIVATE-CANARY-7f3a","expected":"{escaped_priv}\/part.step"}}"#
+    );
+    let log2_s = log2.to_string_lossy().into_owned();
+    run_emit(&svec(&["--log", &log2_s, "--raw-json", &raw_assert])).unwrap();
+    emit_summary(&log2, "STD-E2E", "of-record");
+    let f2 = lint_log_file(&log2, &[], Some(&priv_root_s)).unwrap();
+    assert!(
+        f2.iter().any(|f| f.rule == "redaction-violation" && f.detail.contains(PRIVATE_CANARY)),
+        "expected JSON-escaped canary violation, got {f2:?}"
+    );
+    assert!(
+        f2.iter().any(|f| f.rule == "redaction-violation" && f.detail.contains("private root")),
+        "expected JSON-escaped private-root violation, got {f2:?}"
+    );
+
+    // 3. Summary gate with measured_ok=true and missing controls_caught must fail lint.
+    let log3 = dir.join("missing_controls_caught.ndjson");
+    emit_basic_start(&log3, "STD-E2E", "full");
+    emit_pass_assert(&log3, "STD-E2E", "a1", Some("GATE-MISSING-CC"));
+    emit_summary(&log3, "STD-E2E", "of-record");
+    let text3 = fs::read_to_string(&log3).unwrap();
+    let tampered3 = text3.replacen(r#","controls_caught":0"#, "", 1);
+    fs::write(&log3, tampered3).unwrap();
+    let f3 = lint_log_file(&log3, &[], None).unwrap();
+    assert!(
+        f3.iter().any(|f| f.rule == "schema") && f3.iter().any(|f| f.rule == "no-control"),
+        "expected schema + no-control on missing controls_caught, got {f3:?}"
+    );
+
+    // 4. Duplicate/mid-log summary fails lint, and blank lines preserve physical line numbers.
+    let log4 = dir.join("dup_summary_and_blank.ndjson");
+    emit_basic_start(&log4, "STD-E2E", "full");
+    emit_summary(&log4, "STD-E2E", "of-record");
+    emit_summary(&log4, "STD-E2E", "of-record");
+    let mut t4 = fs::read_to_string(&log4).unwrap();
+    t4 = t4.replacen('\n', "\n\n", 1); // blank line on physical line 2 -> first summary is on line 3
+    fs::write(&log4, t4).unwrap();
+    let f4 = lint_log_file(&log4, &[], None).unwrap();
+    assert!(
+        f4.iter().any(|f| f.rule == "schema" && f.detail.contains("final line") && f.line == 3),
+        "expected mid-log summary finding at physical line 3, got {f4:?}"
+    );
+}
+
+#[test]
+fn rfc3339_validation_redact_boundary_and_step_tag_sanitization() {
+    use frob_conformance::e2e::line::parse_utc_rfc3339_ms;
+
+    assert!(parse_utc_rfc3339_ms("2024-02-29T23:59:59.999Z").is_some());
+    assert!(parse_utc_rfc3339_ms("2026-02-29T00:00:00.000Z").is_none(), "2026 is not a leap year");
+    assert!(parse_utc_rfc3339_ms("2026-02-31T00:00:00.000Z").is_none(), "Feb 31 is invalid");
+    assert!(parse_utc_rfc3339_ms("2026-01-01T-1:-2:-3.-04Z").is_none(), "signed digits invalid");
+    assert!(parse_utc_rfc3339_ms("+026-01-01T+1:00:00.000Z").is_none(), "leading '+' invalid");
+
+    // Sibling prefix sharing characters must not be falsely redacted.
+    let root = "/Users/owner/private_scans";
+    let sibling = "read /Users/owner/private_scans_public/fixture.json";
+    assert_eq!(redact_path(sibling, Some(root)), sibling);
+    let inside = "read /Users/owner/private_scans/secret/part.step";
+    let redacted = redact_path(inside, Some(root));
+    assert!(redacted.contains("<private:") && !redacted.contains("secret"));
+
+    // Slash and parent-dir traversal in --step must sanitize capture filenames inside arts_dir.
+    let dir = scratch_dir("step_tag_sanitize");
+    let log = dir.join("run.ndjson");
+    let arts = dir.join("run.artifacts");
+    let log_s = log.to_string_lossy().into_owned();
+    let arts_s = arts.to_string_lossy().into_owned();
+    emit_basic_start(&log, "STD-E2E", "full");
+    for step in ["registry/table", "../../escape/step"] {
+        let out = run_exec(&svec(&[
+            "--log", &log_s, "--artifacts-dir", &arts_s,
+            "--run-id", "20261124T120000Z-deadbeef", "--script", "st_step", "--bead", "STD-E2E",
+            "--step", step, "--seed", "1", "--", "printf", "ok",
+        ]))
+        .expect("run_exec with slash/dotdot step should succeed");
+        assert!(out.contains("E2E_LAST_EXIT=0"), "out: {out}");
+    }
+    assert!(arts.join("registry_table.1.stdout").is_file());
+    assert!(arts.join("____escape_step.2.stdout").is_file());
+    assert!(!dir.join("escape").exists());
+}

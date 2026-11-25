@@ -305,6 +305,10 @@ pub fn format_utc_compact(epoch_ms: i64) -> String {
     format!("{y:04}{m:02}{d:02}T{:02}{:02}{:02}Z", rem / 3600, (rem % 3600) / 60, rem % 60)
 }
 
+fn parse_ascii_u32(s: &str) -> Option<u32> {
+    (!s.is_empty() && s.bytes().all(|b| b.is_ascii_digit())).then(|| s.parse().ok()).flatten()
+}
+
 pub fn parse_utc_rfc3339_ms(s: &str) -> Option<i64> {
     let b = s.as_bytes();
     if b.len() != 24 || b[4] != b'-' || b[7] != b'-' || b[10] != b'T' || b[13] != b':'
@@ -312,12 +316,15 @@ pub fn parse_utc_rfc3339_ms(s: &str) -> Option<i64> {
     {
         return None;
     }
-    let (y, m, d): (i64, u32, u32) = (s[0..4].parse().ok()?, s[5..7].parse().ok()?, s[8..10].parse().ok()?);
-    let (hh, mm, ss, ms): (i64, i64, i64, i64) = (
-        s[11..13].parse().ok()?, s[14..16].parse().ok()?, s[17..19].parse().ok()?, s[20..23].parse().ok()?,
+    let (y, m, d) = (i64::from(parse_ascii_u32(&s[0..4])?), parse_ascii_u32(&s[5..7])?, parse_ascii_u32(&s[8..10])?);
+    let (hh, mm, ss, ms) = (
+        i64::from(parse_ascii_u32(&s[11..13])?), i64::from(parse_ascii_u32(&s[14..16])?),
+        i64::from(parse_ascii_u32(&s[17..19])?), i64::from(parse_ascii_u32(&s[20..23])?),
     );
-    if !(1..=12).contains(&m) || !(1..=31).contains(&d) || hh > 23 || mm > 59 || ss > 60 { return None; }
-    Some((days_from_civil(y, m, d) * 86_400 + hh * 3600 + mm * 60 + ss) * 1000 + ms)
+    if !(1..=12).contains(&m) || d == 0 || hh > 23 || mm > 59 || ss > 60 { return None; }
+    let days = days_from_civil(y, m, d);
+    if civil_from_days(days) != (y, m, d) { return None; }
+    Some((days * 86_400 + hh * 3600 + mm * 60 + ss) * 1000 + ms)
 }
 
 pub fn normalize_lexical(path: &Path) -> PathBuf {
@@ -338,32 +345,38 @@ pub fn path_is_under_root(candidate: &Path, root: &Path) -> bool {
     matches!((fs::canonicalize(root), fs::canonicalize(candidate)), (Ok(cr), Ok(cc)) if cc == cr || cc.starts_with(&cr))
 }
 
+fn redact_root_needle(input: &str, needle: &str) -> String {
+    if needle.is_empty() || !input.contains(needle) { return input.to_string(); }
+    let (mut out, mut rest) = (String::with_capacity(input.len()), input);
+    while let Some(idx) = rest.find(needle) {
+        let after = &rest[idx + needle.len()..];
+        let boundary = after.as_bytes().first().is_none_or(|&b| b == b'/' || b.is_ascii_whitespace() || matches!(b, b'\'' | b'"' | b',' | b';' | b')' | b']' | b'}'));
+        if !boundary { out.push_str(&rest[..idx + needle.len()]); rest = after; continue; }
+        out.push_str(&rest[..idx]);
+        let tail = &rest[idx..];
+        let end = tail.find(|c: char| c.is_whitespace() || matches!(c, '\'' | '"' | ',' | ';')).unwrap_or(tail.len());
+        out.push_str(&format!("<private:{}>", sha256_hex_prefix12(tail[..end].as_bytes())));
+        rest = &tail[end..];
+    }
+    out.push_str(rest);
+    out
+}
+
 pub fn redact_private_path(input: &str, private_root: Option<&str>) -> String {
     let Some(root_str) = private_root.filter(|r| !r.is_empty()) else { return input.to_string(); };
     let root = Path::new(root_str);
-    if let Some((prefix, val)) = input.split_once('=')
-        && prefix.starts_with('-') && path_is_under_root(Path::new(val), root)
-    {
+    if let Some((prefix, val)) = input.split_once('=') && prefix.starts_with('-') && path_is_under_root(Path::new(val), root) {
         return format!("{prefix}=<private:{}>", sha256_hex_prefix12(val.as_bytes()));
     }
-    if path_is_under_root(Path::new(input), root) {
-        return format!("<private:{}>", sha256_hex_prefix12(input.as_bytes()));
-    }
+    if path_is_under_root(Path::new(input), root) { return format!("<private:{}>", sha256_hex_prefix12(input.as_bytes())); }
     let trimmed = root_str.trim_end_matches('/');
-    if !trimmed.is_empty() && input.contains(trimmed) {
-        let mut out = String::with_capacity(input.len());
-        let mut rest = input;
-        while let Some(idx) = rest.find(trimmed) {
-            out.push_str(&rest[..idx]);
-            let tail = &rest[idx..];
-            let end = tail.find(|c: char| c.is_whitespace() || matches!(c, '\'' | '"' | ',' | ';')).unwrap_or(tail.len());
-            out.push_str(&format!("<private:{}>", sha256_hex_prefix12(tail[..end].as_bytes())));
-            rest = &tail[end..];
-        }
-        out.push_str(rest);
-        return out;
+    let mut out = redact_root_needle(input, trimmed);
+    if let Ok(canon) = fs::canonicalize(root) {
+        let cs = canon.to_string_lossy();
+        let ctrim = cs.trim_end_matches('/');
+        if !ctrim.is_empty() && ctrim != trimmed { out = redact_root_needle(&out, ctrim); }
     }
-    input.to_string()
+    out
 }
 
 pub fn effective_private_root(flag: Option<&str>) -> Option<String> {
@@ -919,7 +932,10 @@ pub fn run_exec(args: &[String]) -> Result<String, String> {
     let env_opt = std::str::from_utf8(&stdout_bytes).ok().and_then(|t| json::parse_strict(t).ok()).filter(is_frob_envelope);
     let is_priv = env_opt.as_ref().is_some_and(envelope_is_private);
     let stdout_sha256 = sha256_hex(&stdout_bytes);
-    let step_tag = if step.is_empty() { "script" } else { step };
+    let mut safe_step: String = step.chars().map(|c| if c.is_ascii_alphanumeric() || matches!(c, '.' | '_' | '-') { c } else { '_' }).collect();
+    while safe_step.contains("..") { safe_step = safe_step.replace("..", "_"); }
+    let trimmed_step = safe_step.trim_start_matches('.');
+    let step_tag = if trimmed_step.is_empty() { "script" } else { trimmed_step };
     let (out_name, err_name) = (format!("{step_tag}.{cmd_seq}.stdout"), format!("{step_tag}.{cmd_seq}.stderr"));
     let (stdout_p, stderr_p) = if is_priv {
         if let Some(root) = pr {

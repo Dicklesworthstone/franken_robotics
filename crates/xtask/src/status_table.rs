@@ -1693,7 +1693,8 @@ pub fn validate_contract_toml(bytes: &[u8]) -> Result<(), StatusTableError> {
                     .opt_array(list_key)
                     .map_err(|e| StatusTableError::new(&fctx, e.to_string()))?
                 {
-                    let _ = extract_str_list(&arr, list_key, &fctx, true)?;
+                    let _ = extract_str_list(&arr, list_key, &fctx, true)
+                        .map_err(|e| ff.fail(e))?;
                 }
             }
             for str_key in ["first_milestone", "gate", "parent_group"] {
@@ -1702,10 +1703,10 @@ pub fn validate_contract_toml(bytes: &[u8]) -> Result<(), StatusTableError> {
                     .map_err(|e| StatusTableError::new(&fctx, e.to_string()))?
                     && s.trim().is_empty()
                 {
-                    return Err(StatusTableError::new(
+                    return Err(ff.fail(StatusTableError::new(
                         &fctx,
                         format!("`{str_key}` must not be empty"),
-                    ));
+                    )));
                 }
             }
             ff.finish()

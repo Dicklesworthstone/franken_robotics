@@ -253,7 +253,10 @@ fn generation_is_deterministic() {
 
 #[test]
 fn readme_block_is_current() {
-    let root = repo_root();
+    let root = env::var_os("FROB_STATUS_ROOT")
+        .filter(|v| !v.is_empty())
+        .map(PathBuf::from)
+        .unwrap_or_else(repo_root);
     let readme_path = root.join("README.md");
     let gates_path = root.join("registries/gates.toml");
     let bless = env::var("FROB_BLESS").as_deref() == Ok("1");
@@ -591,4 +594,67 @@ fn demo_absent_claim_id_fails_validation() {
     let err = validate_demo_yaml(&bad, &gates)
         .expect_err("claim_id absent from gates.toml must fail");
     assert!(err.to_string().contains("clm:DOES-NOT-EXIST"), "{err}");
+}
+
+#[test]
+fn first_commit_documents_and_admission_header() {
+    let root = repo_root();
+    for rel in [
+        "AGENTS.md",
+        "README.md",
+        "DEPENDENCY_ADMISSION.md",
+        "schemas/demo.schema.json",
+        "schemas/contract.schema.json",
+        "registries/verbs.toml",
+        "registries/refusals.toml",
+        "registries/kernels.toml",
+        "registries/gates.toml",
+        "registries/formats.toml",
+        "registries/upstream.toml",
+        "registries/lifts.toml",
+        "registries/capsules.toml",
+    ] {
+        assert!(root.join(rel).is_file(), "missing required BD-002 file `{rel}`");
+    }
+    assert!(root.join("registries/cards").is_dir(), "missing registries/cards/");
+
+    let agents = fs::read_to_string(root.join("AGENTS.md")).expect("read AGENTS.md");
+    for needle in [
+        "rch",
+        "~/projects",
+        "${RCH_TARGET_BASE",
+        "16 GiB",
+        "ubs",
+        "br",
+        "bv --robot-*",
+        "xtask check-stack",
+    ] {
+        assert!(agents.contains(needle), "AGENTS.md missing working rule `{needle}`");
+    }
+
+    let adm = fs::read_to_string(root.join("DEPENDENCY_ADMISSION.md"))
+        .expect("read DEPENDENCY_ADMISSION.md");
+    for needle in [
+        "Validity rule",
+        "Cargo.lock",
+        "receipt hash",
+        "One record per admission gate run, passing or failing",
+        "Fields shown by each record",
+        "TARGET",
+        "Never inherited",
+    ] {
+        assert!(
+            adm.contains(needle),
+            "DEPENDENCY_ADMISSION.md missing required header rule `{needle}`"
+        );
+    }
+    let records_dir = root.join("receipts/admissions");
+    if records_dir.is_dir() {
+        let json_count = fs::read_dir(&records_dir)
+            .expect("read receipts/admissions")
+            .flatten()
+            .filter(|e| e.path().extension().and_then(|s| s.to_str()) == Some("json"))
+            .count();
+        assert_eq!(json_count, 0, "expected zero committed admission records at M0");
+    }
 }

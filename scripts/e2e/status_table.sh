@@ -35,22 +35,22 @@ python3 - "${E2E_REPO_ROOT}" "${REPO_COPY}" <<'PY'
 import os, shutil, sys
 
 src, dst = sys.argv[1:3]
-top_files = [
-    "Cargo.toml",
-    "Cargo.lock",
-    "rust-toolchain.toml",
+rel_files = [
     "README.md",
     "AGENTS.md",
     "DEPENDENCY_ADMISSION.md",
-    "LICENSE",
     "franken-stack.lock",
+    "crates/frob-core/src/refusal/code_gen.rs",
+    "crates/xtask/src/stack/lock.rs",
 ]
-for fn in top_files:
-    sp = os.path.join(src, fn)
+for rel in rel_files:
+    sp = os.path.join(src, rel)
     if os.path.isfile(sp):
-        shutil.copy2(sp, os.path.join(dst, fn))
+        dp = os.path.join(dst, rel)
+        os.makedirs(os.path.dirname(dp), exist_ok=True)
+        shutil.copy2(sp, dp)
 
-for rel_dir in [".cargo", "crates", "registries", "schemas", "receipts", "kernels"]:
+for rel_dir in ["registries", "schemas", "receipts", "kernels"]:
     sp = os.path.join(src, rel_dir)
     if os.path.isdir(sp):
         shutil.copytree(sp, os.path.join(dst, rel_dir), dirs_exist_ok=True)
@@ -158,12 +158,12 @@ EOF
 if e2e_plant "pass-without-measured"; then
   # Planted negative-control verification: invert expectation so --verify-plants confirms failure detection.
   e2e_cmd --name bless_5row_planted --expect-exit "0" -- \
-    env FROB_BLESS=1 "CARGO_TARGET_DIR=${TARGET_DIR}" \
-    cargo test -p xtask --manifest-path "${REPO_COPY}/Cargo.toml" --test status_table readme_block_is_current -- --exact
+    env "FROB_STATUS_ROOT=${REPO_COPY}" FROB_BLESS=1 "CARGO_TARGET_DIR=${TARGET_DIR}" \
+    cargo test --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p xtask --test status_table readme_block_is_current -- --exact
 else
   e2e_expect_caught "pass_without_measured" --gate "GATE-GAUNT-10" -- \
-    env FROB_BLESS=1 "CARGO_TARGET_DIR=${TARGET_DIR}" \
-    cargo test -p xtask --manifest-path "${REPO_COPY}/Cargo.toml" --test status_table readme_block_is_current -- --exact
+    env "FROB_STATUS_ROOT=${REPO_COPY}" FROB_BLESS=1 "CARGO_TARGET_DIR=${TARGET_DIR}" \
+    cargo test --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p xtask --test status_table readme_block_is_current -- --exact
   if grep -q "GATE-SYN-03-BADPASS" "${E2E_LAST_STDOUT}" "${E2E_LAST_STDERR}" 2>/dev/null; then
     e2e_assert_eq "empty_measured_names_row" "named" "named" --gate "GATE-GAUNT-10"
   else
@@ -251,8 +251,8 @@ recorded = { date = "2026-11-24", session = "session:reviewer", implemented_by =
 EOF
 
 e2e_cmd --name bless_4row --expect-exit "0" -- \
-  env FROB_BLESS=1 "CARGO_TARGET_DIR=${TARGET_DIR}" \
-  cargo test -p xtask --manifest-path "${REPO_COPY}/Cargo.toml" --test status_table readme_block_is_current -- --exact
+  env "FROB_STATUS_ROOT=${REPO_COPY}" FROB_BLESS=1 "CARGO_TARGET_DIR=${TARGET_DIR}" \
+  cargo test --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p xtask --test status_table readme_block_is_current -- --exact
 
 BLOCK_FILE="${E2E_WORK_DIR}/blessed_block.md"
 python3 - "${REPO_COPY}/README.md" "${BLOCK_FILE}" <<'PY'
@@ -280,8 +280,8 @@ done
 e2e_step "verify_clean_check" "Run readme_block_is_current without FROB_BLESS and assert exit 0"
 
 e2e_cmd --name check_clean --expect-exit "0" -- \
-  env "CARGO_TARGET_DIR=${TARGET_DIR}" \
-  cargo test -p xtask --manifest-path "${REPO_COPY}/Cargo.toml" --test status_table readme_block_is_current -- --exact
+  env "FROB_STATUS_ROOT=${REPO_COPY}" "CARGO_TARGET_DIR=${TARGET_DIR}" \
+  cargo test --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p xtask --test status_table readme_block_is_current -- --exact
 
 # ---------------------------------------------------------------------------
 # Step 5: Negative control — hand-edit README block and assert diff names line
@@ -299,12 +299,12 @@ PY
 
 if e2e_plant "hand-edited-block"; then
   e2e_cmd --name check_hand_edited_planted --expect-exit "0" -- \
-    env "CARGO_TARGET_DIR=${TARGET_DIR}" \
-    cargo test -p xtask --manifest-path "${REPO_COPY}/Cargo.toml" --test status_table readme_block_is_current -- --exact
+    env "FROB_STATUS_ROOT=${REPO_COPY}" "CARGO_TARGET_DIR=${TARGET_DIR}" \
+    cargo test --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p xtask --test status_table readme_block_is_current -- --exact
 else
   e2e_expect_caught "hand_edited_readme_block" --gate "GATE-GAUNT-10" -- \
-    env "CARGO_TARGET_DIR=${TARGET_DIR}" \
-    cargo test -p xtask --manifest-path "${REPO_COPY}/Cargo.toml" --test status_table readme_block_is_current -- --exact
+    env "FROB_STATUS_ROOT=${REPO_COPY}" "CARGO_TARGET_DIR=${TARGET_DIR}" \
+    cargo test --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p xtask --test status_table readme_block_is_current -- --exact
   if grep -q "first differing line: line " "${E2E_LAST_STDOUT}" "${E2E_LAST_STDERR}" 2>/dev/null; then
     e2e_assert_eq "hand_edit_names_diff_line" "named" "named" --gate "GATE-GAUNT-10"
   else
@@ -410,7 +410,7 @@ EOF
 
 e2e_cmd --name check_generated_write_5row_invalid --expect-exit "2" -- \
   env "CARGO_TARGET_DIR=${TARGET_DIR}" \
-  cargo xtask check-generated --root "${REPO_COPY}" --json --write
+  cargo run --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p xtask -- check-generated --root "${REPO_COPY}" --json --write
 e2e_assert_json "check_generated_5row_rule" "/findings/0/rule" "gen.status-invalid" --gate "GATE-GAUNT-10"
 
 e2e_step "check_generated_valid_4row" "Remove invalid row, run check-generated --write then check-generated, assert exit 0"
@@ -491,12 +491,12 @@ EOF
 
 e2e_cmd --name check_generated_write_4row --expect-exit "0" -- \
   env "CARGO_TARGET_DIR=${TARGET_DIR}" \
-  cargo xtask check-generated --root "${REPO_COPY}" --json --write
+  cargo run --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p xtask -- check-generated --root "${REPO_COPY}" --json --write
 e2e_assert_json "check_generated_write_ok" "/ok" "true" --gate "GATE-GAUNT-10"
 
 e2e_cmd --name check_generated_verify_4row --expect-exit "0" -- \
   env "CARGO_TARGET_DIR=${TARGET_DIR}" \
-  cargo xtask check-generated --root "${REPO_COPY}" --json
+  cargo run --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p xtask -- check-generated --root "${REPO_COPY}" --json
 e2e_assert_json "check_generated_verify_ok" "/ok" "true" --gate "GATE-GAUNT-10"
 
 e2e_step "check_generated_hand_edit" "Hand-edit README status block and assert check-generated exits 2 with gen.differs and line number"
@@ -515,7 +515,7 @@ PY
 
 e2e_cmd --name check_generated_hand_edit_fail --expect-exit "2" -- \
   env "CARGO_TARGET_DIR=${TARGET_DIR}" \
-  cargo xtask check-generated --root "${REPO_COPY}" --json
+  cargo run --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p xtask -- check-generated --root "${REPO_COPY}" --json
 e2e_assert_json "check_generated_hand_edit_rule" "/findings/0/rule" "gen.differs" --gate "GATE-GAUNT-10"
 e2e_assert_json "check_generated_hand_edit_path" "/findings/0/path" "README.md" --gate "GATE-GAUNT-10"
 e2e_assert_json "check_generated_hand_edit_line" "/findings/0/line" "${EDIT_LINE}" --gate "GATE-GAUNT-10"

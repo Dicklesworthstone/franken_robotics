@@ -2046,7 +2046,43 @@ admission_gate = \"INT-SIB-01\"\nfallback = \"synthetic fallback\"\n"
         let (repo, _, _) = build_synthetic_stack(&base, "../sib_crate");
         let (_, bytes, _) = build_receipt(&repo, &repo.join("franken-stack.lock")).expect("build");
         let text = std::str::from_utf8(bytes.as_bytes()).expect("utf8");
-        assert!(!text.contains(": "), "canonical JSON must have no space after colon");
+        // Canonical form has no insignificant whitespace: no byte outside a string literal is a JSON
+        // whitespace byte. A string value may itself contain ": " (the fixture's
+        // `[profile.dev.package.fsqlite] opt-level = 1` is recorded as `fsqlite*: opt-level 1`), so a
+        // substring search over the whole text does not test the property.
+        assert!(
+            text.contains("\"fsqlite*: opt-level 1\""),
+            "the fixture's fsqlite override must reach the receipt: {text}"
+        );
+        /// Offset of the first JSON whitespace byte outside a string literal, if any.
+        fn whitespace_outside_strings(s: &str) -> Option<usize> {
+            let (mut in_str, mut escaped) = (false, false);
+            for (i, b) in s.bytes().enumerate() {
+                if in_str {
+                    if escaped {
+                        escaped = false;
+                    } else if b == b'\\' {
+                        escaped = true;
+                    } else if b == b'"' {
+                        in_str = false;
+                    }
+                } else if b == b'"' {
+                    in_str = true;
+                } else if matches!(b, b' ' | b'\t' | b'\n' | b'\r') {
+                    return Some(i);
+                }
+            }
+            None
+        }
+        // The check itself: it flags a planted space after a colon and does not flag one inside a
+        // string, including after an escaped quote.
+        assert_eq!(whitespace_outside_strings(r#"{"a": 1}"#), Some(5));
+        assert_eq!(whitespace_outside_strings(r#"{"a":"x\" y: z"}"#), None);
+        assert_eq!(
+            whitespace_outside_strings(&text),
+            None,
+            "canonical JSON must have no whitespace outside strings: {text}"
+        );
         assert!(!text.ends_with('\n'), "canonical JSON must have no trailing newline");
 
         let admitted = json::admit(bytes.as_bytes(), &Limits::default()).expect("admit");

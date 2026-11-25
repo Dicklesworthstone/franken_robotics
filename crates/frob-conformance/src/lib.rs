@@ -3,6 +3,9 @@
 //! - `compendium`: exact mathematical oracle library, registry validator, and doc renderer (`N12-41`).
 //! - `e2e`: `std`-only end-to-end log tooling (`STD-E2E`).
 //! - `gates_v0`: v0 reader for `registries/gates.toml` (`frob.gates/1`, `BD-025`).
+//! - `hypotheses`: hypothesis verdict register (`registry/hypotheses.toml`, `frob.hypothesis/1`),
+//!   append-only change rule, wording lint, scope binding, open disagreements, and
+//!   `frob.prove.effects.out/1` certificate-effect read-out (`N00-10`).
 //! - `controls`: negative-control registry validator, serializer, and `GATE-GAUNT-01`
 //!   registry check (`BD-025`).
 //! - `design_golden`: independent golden corpus harness for `frob.design/1` canonical
@@ -23,6 +26,7 @@ pub mod controls;
 pub mod design_golden;
 pub mod e2e;
 pub mod gates_v0;
+pub mod hypotheses;
 pub mod oracles;
 pub mod perf;
 pub mod reasons;

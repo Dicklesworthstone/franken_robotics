@@ -33,6 +33,10 @@ path = "src/bin/frob-tenfold-score.rs"
 name = "admission"
 path = "examples/admission.rs"
 
+[[example]]
+name = "evidence_ledger"
+path = "examples/evidence_ledger.rs"
+
 [features]
 default = []
 # Umbrella for workspace crate conformance facilities (BD-025 / ADR-GAUNT-03).

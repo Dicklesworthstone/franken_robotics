@@ -16,7 +16,7 @@
 
 ## 2. Inputs
 
-- The Gauntlet registries under `crates/frob-conformance/registry/`: `controls.toml`, `known_answers.toml`, `relations.toml`, `counterexamples.toml`, `pilots.toml`, `reasons.toml` (parsed exclusively through `frob_core::testkit::registry` and `frob_core::registry::toml`).
+- The Gauntlet registries under `crates/frob-conformance/registry/`: `controls.toml`, `known_answers.toml`, `relations.toml`, `counterexamples.toml`, `pilots.toml`, `reasons.toml`, `hypotheses.toml` (`frob.hypothesis/1`, `N00-10`) (parsed exclusively through `frob_core::testkit::registry` and `frob_core::registry::toml`).
 - The workspace gate register `registries/gates.toml` (`frob.gates/1`).
 - Previous-commit snapshots of `controls.toml` for append-only and placeholder-target checks.
 - End-to-end script headers (`# e2e:`) and `frob.e2elog/1` NDJSON logs for `frob-e2e`.

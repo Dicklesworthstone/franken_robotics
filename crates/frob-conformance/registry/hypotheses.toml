@@ -1,0 +1,445 @@
+# Hypothesis verdict register and open disagreements (schema frob.hypothesis/1).
+# Rules and wording lint owned by N00-10; row audit and arithmetic owned by N00-11 (H-01..H-12b) and N00-12 (H-13..H-29).
+# Append-only: history entries are never edited or removed; REFUTED rows with only reversal_proposed cannot move until an owner decision sets reversal.
+
+schema = "frob.hypothesis/1"
+
+[[hypothesis]]
+id = "H-01"
+statement = "Sampling control with zero training"
+state = "NARROWED"
+survives = "A screening rung and an out-of-distribution fallback, at about 0.3-1 GPU-minute per quadruped episode and 1-5 per humanoid episode: cheaper than one training run up to about 30 episodes per quadruped design and 60 per humanoid design at a 20 ms planning step (6 and 12 at 4 ms). Published successes are legged robots with hand-built swing or stepping references; there is no success rate over a varied corpus and nothing for tracked robots. Never stands in for a trained policy as acceptance evidence. Where the sampling controller is itself the delivered controller, its own episodes are the evidence; break-even against training once is 2.0 GPU-seconds per 20 s episode for a quadruped and 12 for a humanoid, which published settings miss by 10x and 5x."
+binds = ["BET-27", "BET-06"]
+banned = ["no training needed", "zero-training control", "sampling[- ]controller episodes? (as|cited as|stand in for) acceptance evidence"]
+settled_by = ["BET-27"]
+history = [
+  { date = "2026-11-21", state = "NARROWED", evidence = "primary-source cost comparison and break-even recomputation", kind = "primary-source-reread" },
+]
+
+[[hypothesis]]
+id = "H-02"
+statement = "A universal policy prior"
+state = "NARROWED"
+survives = "Within one morphology class, on flat or mildly varied ground with fixed actuation: zero-shot at 70-85% of specialist return; fine-tuning at about 2-25% of a from-scratch run stopped at matched return (1-10% against the fixed budget one source used). Across topology-diverse designs at affordable pretraining: zero-shot at 10-40%, a fine-tuning gain of 2-3x at best and none on flat ground. Within a class on interior terrain, with payload or actuator-card changes: no published figure."
+binds = ["BET-15"]
+banned = ["universal policy", "one policy for all morphologies"]
+settled_by = ["BET-15"]
+history = [
+  { date = "2026-11-21", state = "NARROWED", evidence = "primary-source review of cross-morphology policy transfer", kind = "primary-source-reread" },
+]
+
+[[hypothesis]]
+id = "H-03"
+statement = "Topology as data"
+state = "NARROWED"
+survives = "Mixed-topology populations with few worlds per design, in size buckets. One incumbent solver publishes a mixed batch of three body plans at 0.86 of the harmonic mean of its homogeneous rates; that solver is maximal-coordinate, not deterministic, and slower than reduced-coordinate solvers of its framework. Three differentiators remain: measured mixed-batch throughput, time from an edit to the first GPU step, and run-to-run replay and forks inside a mixed batch."
+binds = ["BET-18"]
+banned = ["mixed topologies in one batch.*(first|incumbent gap)"]
+settled_by = ["BET-18"]
+history = [
+  { date = "2026-11-21", state = "NARROWED", evidence = "incumbent mixed-batch benchmark and documentation reread", kind = "primary-source-reread" },
+]
+
+[[hypothesis]]
+id = "H-04"
+statement = "Supercompiled kernels"
+state = "REFUTED"
+scope = "recursion-only specialization"
+survives = "The Lie-algebraic recursions are 16-20% of two incumbent step traces, so the ceiling is about 1.2x and reaching it needs the recursions more than five times faster. Derived derivative kernels for CPU solvers survive."
+binds = ["BET-01", "KILL-SPECIALIZE", "GATE-SPARK-14"]
+reversal = "a specializable share of at least one third on our own profile"
+banned = ["per-design kernel specialization (as|is) (the )?default", "per-design kernel specialization.*throughput lever", "supercompiled kernels? (as|is) (the )?(default|goal|lever)"]
+settled_by = ["GATE-SPARK-14"]
+history = [
+  { date = "2026-11-21", state = "REFUTED", evidence = "arithmetic on two incumbent step traces (16-20% recursion share)", kind = "recomputation" },
+]
+
+[[hypothesis]]
+id = "H-04b"
+statement = "Structure-exploiting constraint assembly and solve"
+state = "ACTIVE"
+survives = "Constraint assembly and the solve are 62% of the same incumbent trace: a ceiling of 2.6x if both vanished and 1.7x at a three-fold reduction. Ancestor-sparse rows and a tree-ordered factor cut operation counts 2.6x to 4.1x for the factor and 3.8x to 8.1x per foot row. Shares inside the solve stage are unmeasured, fewer operations do not imply a faster device step, and sparsity is carried as data rather than compiled per design."
+binds = ["GATE-SPARK-15", "KILL-SPARSE-SOLVE", "BET-01"]
+banned = []
+settled_by = ["GATE-SPARK-15"]
+history = [
+  { date = "2026-11-21", state = "ACTIVE", evidence = "incumbent trace share 0.62 and tree-factor operation-count calculation", kind = "recomputation" },
+]
+
+[[hypothesis]]
+id = "H-05"
+statement = "Gait continuation"
+state = "NARROWED"
+survives = "Full-order orbit solves take about 4-260 s of CPU at 20-68 states: a screening signal for periodic gaits on regular ground, at about 1% to 63% of a 410 s training run. Not a referee-ready controller."
+binds = ["BET-26"]
+banned = []
+settled_by = ["BET-26"]
+history = [
+  { date = "2026-11-21", state = "NARROWED", evidence = "orbit-solve CPU timing against 410 s training run", kind = "primary-source-reread" },
+]
+
+[[hypothesis]]
+id = "H-06"
+statement = "Region certificates"
+state = "NARROWED"
+survives = "Certificates per constraint. Bisection is confined to a split set of about six sensitive parameters; others are enclosed at full range, and a box of any dimension is admitted when that enclosure is narrower than the constraint margin. Isotropic paving of a 10-20 dimensional box is out of reach; whether robot constraints have narrow weak-variable enclosures is unmeasured."
+binds = ["BET-20"]
+banned = []
+settled_by = ["BET-20"]
+history = [
+  { date = "2026-11-21", state = "NARROWED", evidence = "dimensional scaling analysis of isotropic paving vs six-parameter split sets", kind = "recomputation" },
+]
+
+[[hypothesis]]
+id = "H-07"
+statement = "A rare-event engine"
+state = "NARROWED"
+survives = "Search finds failures; a bound comes from a proposal frozen before confirming draws with bounded weights, or from crude sampling. Published measured gains are 2-20x and about 5x in mean-square error; 10-100x at 1e-4 to 1e-5 is a TARGET. Proposals may act on static scene parameters as well as per-step disturbances; a failure mode the proposal misses costs up to 1/epsilon times crude sampling, so absence is never certified more cheaply."
+binds = ["BET-32"]
+banned = []
+settled_by = ["BET-32"]
+history = [
+  { date = "2026-11-21", state = "NARROWED", evidence = "importance-sampling weight-bound analysis and primary-source gains", kind = "primary-source-reread" },
+]
+
+[[hypothesis]]
+id = "H-08"
+statement = "Counterfactual autopsy"
+state = "NARROWED"
+survives = "Interventional contrasts reported with a flip rate under perturbations at or above round-off scale. Temporary interventions fork from the snapshot; design-parameter interventions re-run from the episode start. Single-precision round-off stays below 4e-5 of state scale over fork windows up to about 1 s and reaches 2% at 2 s; double precision is the default for one failure and escalation for marginal cases."
+binds = ["BET-23"]
+banned = []
+settled_by = ["BET-23"]
+history = [
+  { date = "2026-11-21", state = "NARROWED", evidence = "round-off divergence computation across 1 s and 2 s fork windows", kind = "recomputation" },
+]
+
+[[hypothesis]]
+id = "H-09"
+statement = "Incremental evaluation"
+state = "REFUTED"
+scope = "exact reuse"
+survives = "Exact reuse of rollouts after a mass or geometry edit is at most about 10% of compute. Training avoided by warm starts belongs to H-21 and is counted once. A memo graph for analyses, step plans, kernels and scene compiles survives as hygiene; dependency-directed revalidation of verdicts survives as an evidence rule."
+binds = ["BET-33"]
+reversal_proposed = "reopened only by a measurement showing exact reuse above 10% of compute"
+banned = ["incremental re-simulation", "rollout reuse across edits.*speed lever"]
+settled_by = ["BET-33"]
+history = [
+  { date = "2026-11-21", state = "REFUTED", evidence = "exact rollout reuse ceiling <= 10% after mass or geometry edit", kind = "recomputation" },
+]
+
+[[hypothesis]]
+id = "H-10"
+statement = "Value of information"
+state = "NARROWED"
+survives = "2-5x from stopping and elimination when candidates are separated; about 1x otherwise. Used at the finalist stage and for choosing measurements."
+binds = ["GATE-ATEL-VOI"]
+banned = []
+settled_by = ["GATE-ATEL-VOI"]
+history = [
+  { date = "2026-11-21", state = "NARROWED", evidence = "sequential-elimination gain analysis for separated vs tied candidates", kind = "recomputation" },
+]
+
+[[hypothesis]]
+id = "H-11"
+statement = "An always-on referee"
+state = "NARROWED"
+survives = "A sampled snapshot referee on any backend: a correctness guard that saves no compute. Coverage is unmeasured and scales with referee speed: about 0.1-2.4% of GPU world-seconds if the referee runs at 0.2-1.0x real time per core on 24 cores. Its samples with recorded inclusion probabilities also serve paired tier correction."
+binds = ["BET-34", "GATE-FID-07"]
+banned = ["every world is refereed", "always-on referee"]
+settled_by = ["BET-34", "GATE-FID-07"]
+history = [
+  { date = "2026-11-21", state = "NARROWED", evidence = "24-core referee throughput ratio against GPU world-seconds", kind = "recomputation" },
+]
+
+[[hypothesis]]
+id = "H-12"
+statement = "Generative structure"
+state = "DEFERRED"
+scope = "as a decision-time lever"
+survives = "Links 7-30% lighter than engineered parts: 2-8% of robot mass on the one quadruped with a published mass breakdown, and no figure for humanoids. Improves the output, not the time to a decision."
+binds = ["BET-29"]
+banned = ["generative structure.*(ten-fold )?lever", "ten-fold levers?.*generative structure", "levers?:.*generative structure"]
+settled_by = ["BET-29"]
+history = [
+  { date = "2026-11-21", state = "DEFERRED", evidence = "quadruped mass breakdown showing output quality gain rather than decision-time speedup", kind = "primary-source-reread" },
+]
+
+[[hypothesis]]
+id = "H-12b"
+statement = "Member sizing inside screening"
+state = "ACTIVE"
+survives = "A closed-form check that a declared link wall survives the design's own loads keeps screening from rewarding links that cannot be built. How often it changes the winning actuator or gear ratio is unmeasured."
+binds = ["GATE-FOUNDRY-BEAM"]
+banned = []
+settled_by = ["GATE-FOUNDRY-BEAM"]
+history = [
+  { date = "2026-11-21", state = "ACTIVE", evidence = "closed-form preflight beam check defined for screening rung", kind = "recomputation" },
+]
+
+[[hypothesis]]
+id = "H-13"
+statement = "Requirements replace rewards"
+state = "NARROWED"
+survives = "Bounded-time requirements as the acceptance metric and as a falsification score. Not a replacement for shaped rewards."
+binds = ["BET-24"]
+banned = ["requirements replace rewards"]
+settled_by = ["BET-24"]
+history = [
+  { date = "2026-11-21", state = "NARROWED", evidence = "policy-optimization literature review on sparse requirement satisfaction vs shaped rewards", kind = "primary-source-reread" },
+]
+
+[[hypothesis]]
+id = "H-14"
+statement = "Conformal reality bands"
+state = "NARROWED"
+survives = "Coverage within one calibrated robot and task family, varying by about six points at n = 20. Nothing for designs that were never built."
+binds = ["BET-28"]
+banned = ["(reality band|sim-to-real).*unbuilt design", "(reality band|sim-to-real).*never built"]
+settled_by = ["BET-28"]
+history = [
+  { date = "2026-11-21", state = "NARROWED", evidence = "conformal finite-sample coverage variance calculation at n = 20", kind = "recomputation" },
+]
+
+[[hypothesis]]
+id = "H-15"
+statement = "Half precision"
+state = "REFUTED"
+survives = "The condition number times half-precision round-off is at or above one in 37-64% of sampled contact states, and refinement alone costs more than the single-precision factorization. Single precision with diagonal scaling survives."
+binds = ["BET-08"]
+reversal_proposed = "reopened only by a measurement on our own contact battery showing kappa * u < 1 in at least 99% of states after scaling"
+banned = ["(half[- ]precision|16-bit floats?|tensor cores?).*contact solves?", "contact solves?.*(half[- ]precision|16-bit floats?|tensor cores?)"]
+settled_by = ["BET-08"]
+history = [
+  { date = "2026-11-21", state = "REFUTED", evidence = "CPU pilot showing kappa * u_fp16 >= 1 in 37-64% of sampled contact states", kind = "pilot" },
+]
+
+[[hypothesis]]
+id = "H-16"
+statement = "Living multiphysics in every world"
+state = "REFUTED"
+scope = "as stated"
+survives = "Full-room fluid is out of memory by orders of magnitude, and coupled cloth and cable at batch speed are out of reach on present foundations. A contact-level film-friction law and rigid proxies are the Solid substitutes; whether they reproduce the failures of coupled models is untested."
+binds = ["BET-36"]
+reversal_proposed = "reopened only by a byte model and a measured step cost showing a full-room field fits the device budget at batch size"
+banned = ["full multiphysics in every world", "fluid in every training world", "living multiphysics in every world"]
+settled_by = ["BET-36"]
+history = [
+  { date = "2026-11-21", state = "REFUTED", evidence = "batch device memory budget calculation for full-room fluid fields", kind = "recomputation" },
+]
+
+[[hypothesis]]
+id = "H-17"
+statement = "From mission to design by solving"
+state = "NARROWED"
+survives = "Trajectory optimization with design variables as local refinement (about 12 degrees of freedom, up to 17 parameters, 4-10 minutes). Polynomial synthesis only inside symbolic library caps. Monotone catalog selection of actuators, batteries and compute with no measured timing. Pass rate under independent closed-loop evaluation is unknown."
+binds = ["GATE-SYNTH-LOOP"]
+banned = ["mission to design by solving"]
+settled_by = ["GATE-SYNTH-LOOP"]
+history = [
+  { date = "2026-11-21", state = "NARROWED", evidence = "primary-source scope check of co-design trajectory optimization and symbolic caps", kind = "primary-source-reread" },
+]
+
+[[hypothesis]]
+id = "H-18"
+statement = "Information, not the engine, is the lever"
+state = "ACTIVE"
+survives = "No instrumented design session exists. Where every candidate is trained, training is about 96% of an illustrative campaign and information features that do not remove training cap near 1.04x. Once controller acquisition is amortized, agent turns are about two thirds of elapsed time. Which regime a mission is in is a measurement."
+binds = ["GATE-TENFOLD-01", "BET-13"]
+banned = []
+settled_by = ["GATE-TENFOLD-01", "BET-13"]
+history = [
+  { date = "2026-11-21", state = "ACTIVE", evidence = "Amdahl split showing 1.04x ceiling under per-candidate training vs 2/3 agent-turn regime", kind = "recomputation" },
+]
+
+[[hypothesis]]
+id = "H-19"
+statement = "A thin layer over an incumbent would do"
+state = "ACTIVE"
+survives = "Decided by a measured recovery ratio, not by a count of gaps. Documented engine-internal gaps: mixed-topology batch with run-to-run replay; a Metal tier. Unconfirmed gaps to check before relying on them: replay of one world outside its batch; solver-internal certificates. The ten-fold test reports how much gain a composed incumbent recovers."
+binds = ["BET-14"]
+banned = []
+settled_by = ["BET-14"]
+history = [
+  { date = "2026-11-21", state = "ACTIVE", evidence = "incumbent documentation reread of solver paths and recovery-ratio framing", kind = "primary-source-reread" },
+]
+
+[[hypothesis]]
+id = "H-20"
+statement = "Proof-guided control"
+state = "NARROWED"
+survives = "Reduced-order barrier shields with a statistically measured margin. No full-order certificates; runtime filters are classed Tested."
+binds = ["BET-25"]
+banned = ["provably safe", "certified controller", "full-order safety certificates?", "deployable (safety filter|controller)"]
+settled_by = ["BET-25"]
+history = [
+  { date = "2026-11-21", state = "NARROWED", evidence = "contact-hybrid full-order safety certificate boundary analysis", kind = "primary-source-reread" },
+]
+
+[[hypothesis]]
+id = "H-21"
+statement = "Policy inheritance"
+state = "NARROWED"
+survives = "No published figure measures a small typed parameter edit from parent to child. Transfer from a multi-embodiment prior to a similar body costs about 2-25% of a from-scratch run stopped at matched return; one parent-to-child figure is about 50%. Single-limb topology edits: 33-100%. Chained inheritance risks plasticity loss and narrows diversity."
+binds = ["BET-16"]
+banned = []
+settled_by = ["BET-16"]
+history = [
+  { date = "2026-11-21", state = "NARROWED", evidence = "primary-source transfer and plasticity literature reread", kind = "primary-source-reread" },
+]
+
+[[hypothesis]]
+id = "H-22a"
+statement = "Rank fidelity between rungs"
+state = "ACTIVE"
+survives = "No published rank agreement between a shared policy and specialists was found; the nearest figure (0.40) compares a critic with its own policy. High rank correlation does not protect the winner: with 40 designs and the true best at cheap rank 3, Kendall tau is 0.91 on the top ten yet a cut to two discards it."
+binds = ["BET-17"]
+banned = []
+settled_by = ["BET-17"]
+history = [
+  { date = "2026-11-21", state = "ACTIVE", evidence = "top-ten Kendall tau 41/45 = 0.911 counterexample showing winner loss under cut to two", kind = "recomputation" },
+]
+
+[[hypothesis]]
+id = "H-22b"
+statement = "The fast tier as a paired control"
+state = "ACTIVE"
+survives = "A paired correction gains 1/(1 - rho^2) before cost: 2.0x at rho = 0.7 (1.96), 2.8x at rho = 0.8 (2.78), 5.3x at rho = 0.9 (5.26). The correlation is unmeasured and is reported separately for continuous metrics and binary outcomes."
+binds = ["GATE-CORR-01"]
+banned = []
+settled_by = ["GATE-CORR-01"]
+history = [
+  { date = "2026-11-21", state = "ACTIVE", evidence = "control-variate variance-reduction identity 1/(1 - rho^2)", kind = "recomputation" },
+]
+
+[[hypothesis]]
+id = "H-23"
+statement = "A family per dispatch"
+state = "NARROWED"
+survives = "Fewer rounds are plausible; measured compute gains in published population methods are about 3-4x. Paired finite-difference gradients are unproven over long contact-rich horizons."
+binds = ["GATE-ATEL-FAMILY"]
+banned = []
+settled_by = ["GATE-ATEL-FAMILY"]
+history = [
+  { date = "2026-11-21", state = "NARROWED", evidence = "primary-source review of population search gains and contact-rich gradient variance", kind = "primary-source-reread" },
+]
+
+[[hypothesis]]
+id = "H-24"
+statement = "A geometric-algebra tree policy"
+state = "NARROWED"
+survives = "Invariance to heading and description conventions is necessary, and augmentation recovers most of it. There is no locomotion evidence for geometric-algebra specifics: expect 0-1.3x. A Moonshot experiment with a plain morphology transformer as control arm."
+binds = ["BET-30"]
+banned = ["geometric-algebra (tree )?polic(y|ies).*(advantage|superior|better)"]
+settled_by = ["BET-30"]
+history = [
+  { date = "2026-11-21", state = "NARROWED", evidence = "primary-source comparison of equivariant architectures vs augmentation", kind = "primary-source-reread" },
+]
+
+[[hypothesis]]
+id = "H-25"
+statement = "Brackets on what a body can achieve"
+state = "ACTIVE"
+survives = "A controller-independent upper bound and an achieved lower bound on task utility; controller effort stops only when a checked upper bound falls below a competitor's lower bound. The bound is often vacuous for contact-rich full-order tasks."
+binds = ["GATE-ATEL-BRACKET"]
+banned = []
+settled_by = ["GATE-ATEL-BRACKET"]
+history = [
+  { date = "2026-11-21", state = "ACTIVE", evidence = "dominance-stop formulation for utility brackets", kind = "recomputation" },
+]
+
+[[hypothesis]]
+id = "H-26"
+statement = "Common randomness compiled from the task"
+state = "ACTIVE"
+survives = "Separate address domains for world fields, absolute time and task-triggered events keep paired draws paired across retiming and topology changes. A paired contrast's variance scales with 1 - rho; any change in a marginal distribution is a failure of the mechanism."
+binds = ["GATE-TASK-COUPLING"]
+banned = []
+settled_by = ["GATE-TASK-COUPLING"]
+history = [
+  { date = "2026-11-21", state = "ACTIVE", evidence = "paired-contrast variance scaling 1 - rho with address-keyed streams", kind = "recomputation" },
+]
+
+[[hypothesis]]
+id = "H-27"
+statement = "Step adjoints with short-horizon joint training"
+state = "ACTIVE"
+survives = "Implicit-function adjoints through the converged contact solve are exact for a fixed active set and cheap. Several incumbents differentiate their step, so this is no differentiator. Gradients say nothing about outcomes decided by a change of contact sequence."
+binds = ["GATE-DIFF-ADJOINT"]
+banned = ["(differentiability|gradients? through contact).*(differentiator|unique advantage)"]
+settled_by = ["GATE-DIFF-ADJOINT"]
+history = [
+  { date = "2026-11-21", state = "ACTIVE", evidence = "incumbent differentiable-physics survey and fixed-active-set adjoint limits", kind = "primary-source-reread" },
+]
+
+[[hypothesis]]
+id = "H-28"
+statement = "Placement and sizing along a prescribed motion"
+state = "ACTIVE"
+survives = "Inverse dynamics is linear in inertial parameters and contact forces for a fixed motion, so placement and sizing is one cone program. Its certificate excludes a motion, not a design; gear ratios are enumerated; link lengths are not variables."
+binds = ["GATE-MISSION-SIZING"]
+banned = []
+settled_by = ["GATE-MISSION-SIZING"]
+history = [
+  { date = "2026-11-21", state = "ACTIVE", evidence = "convex inverse-dynamics linearity formulation along prescribed motions", kind = "recomputation" },
+]
+
+[[hypothesis]]
+id = "H-29"
+statement = "Visibility and observability in sensor placement"
+state = "ACTIVE"
+survives = "Visibility along a motion with the robot's own limbs and payload as occluders is a cheap, missing analysis. The observability index is exact only without bias states. The share of estimated-state failures it explains is unknown."
+binds = ["GATE-SENSOR-VISIBILITY"]
+banned = []
+settled_by = ["GATE-SENSOR-VISIBILITY"]
+history = [
+  { date = "2026-11-21", state = "ACTIVE", evidence = "self-occlusion visibility and bias-free observability boundary analysis", kind = "recomputation" },
+]
+
+[[disagreement]]
+id = "OD-01"
+question = "Whether a thin layer over an incumbent recovers the gain"
+settled_by = ["BET-14"]
+status = "open"
+
+[[disagreement]]
+id = "OD-02"
+question = "Whether design missions are dominated by training or by agent turns and diagnosis"
+settled_by = ["GATE-TENFOLD-01", "BET-13"]
+status = "open"
+
+[[disagreement]]
+id = "OD-03"
+question = "Whether cheap rungs rank designs as specialists do, and how well tiers correlate"
+settled_by = ["BET-17"]
+status = "open"
+
+[[disagreement]]
+id = "OD-04"
+question = "Whether a family policy holds within a class on interior terrain, and what an inherited edit costs"
+settled_by = ["BET-15", "BET-16"]
+status = "open"
+
+[[disagreement]]
+id = "OD-05"
+question = "Whether a sampling controller is more than a screen"
+settled_by = ["BET-06", "BET-27"]
+status = "open"
+
+[[disagreement]]
+id = "OD-06"
+question = "Whether a structure-exploiting solve beats parity, and whether per-design code adds to it"
+settled_by = ["BET-01", "KILL-SPECIALIZE"]
+status = "open"
+
+[[disagreement]]
+id = "OD-07"
+question = "Whether rigid proxies reproduce the failures of coupled models"
+settled_by = ["BET-36"]
+status = "open"
+
+[[disagreement]]
+id = "OD-08"
+question = "Whether formal certificates change any design decision"
+settled_by = ["BET-11", "BET-20"]
+status = "open"

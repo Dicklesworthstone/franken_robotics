@@ -761,6 +761,7 @@ dependencies = [
  "frob-cert",
  "frob-core",
  "frob-fsim",
+ "frob-kir",
  "frob-lie",
  "frob-verbs",
 ]

@@ -640,6 +640,14 @@ fixture = "fixtures/a.toml"
         "expected one-way-link on GATE-GAUNT-01, got: {:?}",
         report.findings
     );
+    assert!(
+        report
+            .findings
+            .iter()
+            .any(|f| f.record == "GATE-GAUNT-05" && f.reason == ControlReason::OneWayLink),
+        "expected one-way-link on the not-run gate with an empty list, got: {:?}",
+        report.findings
+    );
 }
 
 #[test]
@@ -879,8 +887,14 @@ fn due_filter_skips_future_milestone_controls() {
         "pass",
         "sess-m0",
     ));
-    let controls = Controls::parse_str(
-        r#"schema = "frob.gauntlet.controls/1"
+    let workspace = scratch_dir("due_filter");
+    fs::create_dir_all(workspace.join("fixtures")).expect("create fixtures directory");
+    fs::write(
+        workspace.join("fixtures/a.toml"),
+        "# synthetic\nvalue = 1\n",
+    )
+    .expect("write the due M0 fixture");
+    let raw_controls = r#"schema = "frob.gauntlet.controls/1"
 
 [[control]]
 id = "NC-0001"
@@ -904,13 +918,29 @@ defect = "m1 seeded control not yet run at M0"
 expect = "fails row with spectral radius 1.497"
 feature = "cx-262"
 due = "M1"
-"#,
-        CONTROLS_PATH,
-    )
-    .expect("parse due-filter controls");
+"#;
+    let controls = load_and_validate(raw_controls, CONTROLS_PATH, None, &gates, &workspace)
+        .expect("the unbuilt M1 plant must load at M0");
 
     let rep = check_registry(&gates, &controls);
-    assert!(rep.is_ok(), "M1 control must not fail M0 pass gate: {:?}", rep.findings);
+    assert!(
+        rep.is_ok(),
+        "M1 control must not fail M0 pass gate: {:?}",
+        rep.findings
+    );
+
+    let gates_at_m1 = parse_gates(&sample_gate(
+        "GATE-GAUNT-01",
+        "M1",
+        "\"NC-0001\", \"NC-0002\"",
+        "pass",
+        "sess-m1",
+    ));
+    let findings = load_and_validate(raw_controls, CONTROLS_PATH, None, &gates_at_m1, &workspace)
+        .expect_err("the missing plant must be refused once due");
+    assert!(findings.iter().any(|finding| {
+        finding.record == "NC-0002" && finding.reason == ControlReason::FeatureMissing
+    }));
 
     // 2) M0 not-run part whose controls are ALL due at M1 -> reported not-eligible.
     let gates_future_only = parse_gates(&sample_gate("GATE-WS-07", "M0", "\"NC-0002\"", "not-run", ""));

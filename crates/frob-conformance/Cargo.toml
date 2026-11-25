@@ -83,6 +83,8 @@ default = []
 gauntlet-mutations = [
     "dep:frob-fsim",
     "frob-fsim/conformance",
+    "dep:frob-kir",
+    "frob-kir/conformance",
     "dep:frob-lie",
     "frob-lie/conformance",
     "dep:frob-verbs",
@@ -106,6 +108,7 @@ metal = []
 frob-cert = { path = "../frob-cert" }
 frob-core = { path = "../frob-core", features = ["test-support"] }
 frob-fsim = { path = "../frob-fsim", default-features = false, optional = true }
+frob-kir = { path = "../frob-kir", default-features = false, optional = true }
 frob-lie = { path = "../frob-lie", optional = true }
 frob-verbs = { path = "../frob-verbs", optional = true }
 

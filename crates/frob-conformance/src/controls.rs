@@ -316,14 +316,23 @@ pub fn validate(
 ) -> Vec<ControlFinding> {
     let mut findings = Vec::new();
 
-    // Precompute which control IDs are referenced by at least one gate with status != not-run.
-    let mut non_not_run_gate_controls: BTreeSet<&str> = BTreeSet::new();
-    let mut non_not_run_gate_ids: BTreeSet<&str> = BTreeSet::new();
-    for g in gates.all() {
-        if g.has_non_not_run_part() {
-            non_not_run_gate_ids.insert(g.id.as_str());
-            for cid in &g.controls {
-                non_not_run_gate_controls.insert(cid.as_str());
+    // The latest recorded part determines which plants must already exist.
+    let mut active_gates = BTreeMap::new();
+    let mut active_controls = BTreeMap::<&str, u32>::new();
+    for gate in gates.all() {
+        let milestone = gate
+            .parts
+            .iter()
+            .filter(|part| !part.status.is_not_run())
+            .filter_map(|part| parse_milestone_num(&part.milestone))
+            .max();
+        if let Some(milestone) = milestone {
+            active_gates.insert(gate.id.as_str(), milestone);
+            for control_id in &gate.controls {
+                active_controls
+                    .entry(control_id.as_str())
+                    .and_modify(|latest| *latest = (*latest).max(milestone))
+                    .or_insert(milestone);
             }
         }
     }
@@ -474,9 +483,16 @@ pub fn validate(
         }
 
         // Rule 3: mutation names a feature; other four kinds name a fixture.
-        // Existence on disk / in target crate manifest is checked when listed by any non-not-run gate.
-        let active_gate = non_not_run_gate_controls.contains(c.id.as_str())
-            || c.gate.iter().any(|g| non_not_run_gate_ids.contains(g.as_str()));
+        // A plant must exist if it is due for any part with a recorded status.
+        let active_gate = active_controls
+            .get(c.id.as_str())
+            .into_iter()
+            .chain(
+                c.gate
+                    .iter()
+                    .filter_map(|gate| active_gates.get(gate.as_str())),
+            )
+            .any(|milestone| !is_control_deferred_for_part(c, Some(*milestone)));
 
         match c.kind {
             ControlKind::Mutation => match c.feature.as_deref().map(str::trim) {
@@ -713,13 +729,10 @@ pub fn check_registry(gates: &GateRegistry, controls: &Controls) -> RegistryChec
     }
 
     // Bidirectional link integrity (control -> gate) for controls pointing at existing gates.
-    // Skip when the target gate is `not-run` with an empty `controls` list so emptying a
-    // `not-run` gate's controls yields `not-eligible` (and fails with `no-control` if marked `pass`).
     for ctrl in controls.all() {
         for gid in &ctrl.gate {
             if let Some(gate) = gates_by_id.get(gid.as_str())
                 && !gate.controls.iter().any(|c| c == &ctrl.id)
-                && (gate.has_non_not_run_part() || !gate.controls.is_empty())
             {
                 findings.push(ControlFinding {
                     record: gate.id.clone(),

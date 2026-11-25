@@ -53,6 +53,18 @@ _combined_output() {
   fi
 }
 
+_lint_diagnostic() {
+  local rule="$1" file="$2" line="$3" replacement="$4"
+  _combined_output | grep -F -- "[rule-${rule}] scripts/${file}:${line}:" \
+    | grep -F -- ' -> use: ' | grep -F -- "${replacement}" >/dev/null
+}
+
+_assert_lint_diagnostic() {
+  local detected=0
+  if _lint_diagnostic "$@"; then detected=1; fi
+  e2e_assert_eq "cmd_rule${1}_line${3}_replacement_printed" "${detected}" "1" --gate "GATE-GAUNT-01"
+}
+
 # ---------------------------------------------------------------------------
 # Step 1: Build the crate (host-only, no device annex)
 # ---------------------------------------------------------------------------
@@ -63,50 +75,10 @@ e2e_assert_eq "build_frob_conformance_exit" "${E2E_LAST_EXIT}" "0" --gate "GATE-
 
 # ---------------------------------------------------------------------------
 # Step 2: Run registry_check on the clean tree and log gate/control counts
-#         (or against planted scratch workspace under E2E_PLANT_FAILURE)
 # ---------------------------------------------------------------------------
 e2e_step "clean_registry_check" "Run registry_check on the clean repository tree"
-if e2e_plant "empty-controls"; then
-  WS_PLANT_EMPTY="$(_make_scratch_ws "env_plant_empty_controls")"
-  python3 - "${WS_PLANT_EMPTY}/registries/gates.toml" "${WS_PLANT_EMPTY}/crates/frob-conformance/registry/controls.toml" <<'PY'
-import re, sys
-gates_path, ctrls_path = sys.argv[1], sys.argv[2]
-gates_txt = open(gates_path, "r", encoding="utf-8").read()
-ctrls_txt = open(ctrls_path, "r", encoding="utf-8").read()
-gates_txt = re.sub(r'controls\s*=\s*\[[^\]]*\]', 'controls = []', gates_txt, count=1)
-m = re.search(r'\[\[gate\]\][^\[]*?id\s*=\s*"([^"]+)"', gates_txt, flags=re.S)
-if m:
-    gid = m.group(1)
-    blocks = ctrls_txt.split("[[control]]")
-    ctrls_txt = "[[control]]".join([blocks[0]] + [b for b in blocks[1:] if f'"{gid}"' not in b])
-gates_txt = re.sub(r'status\s*=\s*"not-run"', 'status = "pass"', gates_txt, count=1)
-gates_txt = re.sub(r'measured\s*=\s*""', 'measured = "planted-empty"', gates_txt, count=1)
-gates_txt = re.sub(r'session\s*=\s*""', 'session = "e2e-plant"', gates_txt, count=1)
-open(gates_path, "w", encoding="utf-8").write(gates_txt)
-open(ctrls_path, "w", encoding="utf-8").write(ctrls_txt)
-PY
-  e2e_cmd --name clean_registry_check -- \
-    env "FROB_CONFORMANCE_ROOT=${WS_PLANT_EMPTY}" \
-    cargo test -p frob-conformance --test registry_check -- registry_check_clean_tree --nocapture
-elif e2e_plant "dangling-control"; then
-  WS_PLANT_DANGLE="$(_make_scratch_ws "env_plant_dangling_control")"
-  python3 - "${WS_PLANT_DANGLE}/registries/gates.toml" <<'PY'
-import re, sys
-p = sys.argv[1]
-txt = open(p, "r", encoding="utf-8").read()
-def _add(m):
-    inner = m.group(1).strip()
-    return 'controls = ["NC-9999"]' if not inner else f'controls = [{inner}, "NC-9999"]'
-txt = re.sub(r'controls\s*=\s*\[([^\]]*)\]', _add, txt, count=1)
-open(p, "w", encoding="utf-8").write(txt)
-PY
-  e2e_cmd --name clean_registry_check -- \
-    env "FROB_CONFORMANCE_ROOT=${WS_PLANT_DANGLE}" \
-    cargo test -p frob-conformance --test registry_check -- registry_check_clean_tree --nocapture
-else
-  e2e_cmd --name clean_registry_check -- \
-    cargo test -p frob-conformance --test registry_check -- --nocapture
-fi
+e2e_cmd --name clean_registry_check -- \
+  cargo test -p frob-conformance --test registry_check -- --nocapture
 e2e_assert_eq "clean_registry_check_exit" "${E2E_LAST_EXIT}" "0" --gate "GATE-GAUNT-01"
 
 if [ -n "${E2E_LAST_STDOUT:-}" ] && [ -f "${E2E_LAST_STDOUT}" ]; then
@@ -198,14 +170,17 @@ txt = re.sub(r'session\s*=\s*""', 'session = "e2e-plant"', txt, count=1)
 open(p, "w", encoding="utf-8").write(txt)
 PY
 
-e2e_expect_caught "empty-controls" --gate "GATE-GAUNT-01" -- \
+e2e_expect_caught "empty_controls_refusal" --gate "GATE-GAUNT-01" -- \
   env FROB_CONFORMANCE_ROOT="${WS_EMPTY}" \
   cargo test -p frob-conformance --test registry_check -- registry_check_clean_tree --nocapture
 _has_no_control="0"
-if _combined_output | grep -Fq "no-control"; then
+if [ "${E2E_LAST_EXIT}" = 101 ] && _combined_output | grep -F '[no-control] ' >/dev/null; then
   _has_no_control="1"
 fi
-e2e_assert_eq "empty_controls_reason_no_control" "${_has_no_control}" "1" --gate "GATE-GAUNT-01"
+# The external lane expects the detected plant to fail an assertion named for it.
+_expected=1
+if e2e_plant "empty-controls"; then _expected=0; fi
+e2e_assert_eq "empty-controls" "${_has_no_control}" "${_expected}" --gate "GATE-GAUNT-01"
 
 # ---------------------------------------------------------------------------
 # Step 4: Plant a dangling control identifier -> must fail with `dangling-control`
@@ -248,32 +223,23 @@ else:
 open(p, "w", encoding="utf-8").write(txt)
 PY
 
-e2e_expect_caught "dangling-control" --gate "GATE-GAUNT-01" -- \
+e2e_expect_caught "dangling_control_refusal" --gate "GATE-GAUNT-01" -- \
   env FROB_CONFORMANCE_ROOT="${WS_DANGLING}" \
   cargo test -p frob-conformance --test registry_check -- registry_check_clean_tree --nocapture
 _has_dangling="0"
-if _combined_output | grep -Fq "dangling-control"; then
+if [ "${E2E_LAST_EXIT}" = 101 ] && _combined_output | grep -F '[dangling-control] ' >/dev/null; then
   _has_dangling="1"
 fi
-e2e_assert_eq "dangling_control_reason" "${_has_dangling}" "1" --gate "GATE-GAUNT-01"
+_expected=1
+if e2e_plant "dangling-control"; then _expected=0; fi
+e2e_assert_eq "dangling-control" "${_has_dangling}" "${_expected}" --gate "GATE-GAUNT-01"
 
 # ---------------------------------------------------------------------------
 # Step 5: Run no_conformance_command and binaries_declared on the clean tree
 # ---------------------------------------------------------------------------
 e2e_step "clean_command_and_binaries" "Run no_conformance_command and binaries_declared on clean tree"
-if e2e_plant "wrong-command-forms"; then
-  WS_PLANT_CMD="$(_make_scratch_ws "env_plant_wrong_cmd")"
-  {
-    printf '#!/usr/bin/env bash\n'
-    printf '%s %s run GATE-ARENA-05\n' "frob" "conformance"
-  } > "${WS_PLANT_CMD}/scripts/planted_env_rule1.sh"
-  e2e_cmd --name clean_no_conformance_command -- \
-    env "FROB_CONFORMANCE_ROOT=${WS_PLANT_CMD}" \
-    cargo test -p frob-conformance --test no_conformance_command -- no_conformance_command_clean_tree --nocapture
-else
-  e2e_cmd --name clean_no_conformance_command -- \
-    cargo test -p frob-conformance --test no_conformance_command -- --nocapture
-fi
+e2e_cmd --name clean_no_conformance_command -- \
+  cargo test -p frob-conformance --test no_conformance_command -- --nocapture
 e2e_assert_eq "clean_no_conformance_command_exit" "${E2E_LAST_EXIT}" "0" --gate "GATE-GAUNT-01"
 
 if [ -n "${E2E_LAST_STDOUT:-}" ] && [ -f "${E2E_LAST_STDOUT}" ]; then
@@ -306,12 +272,10 @@ WS_R1="$(_make_scratch_ws "cmd_rule1")"
   printf '#!/usr/bin/env bash\n'
   printf '%s %s run GATE-ARENA-05\n' "${_frob}" "${_conf}"
 } > "${WS_R1}/scripts/planted_rule1.sh"
-e2e_expect_caught "wrong-command-forms:rule-1" --gate "GATE-GAUNT-01" -- \
+e2e_expect_caught "command_rule_1" --gate "GATE-GAUNT-01" -- \
   env FROB_CONFORMANCE_ROOT="${WS_R1}" \
   cargo test -p frob-conformance --test no_conformance_command -- no_conformance_command_clean_tree --nocapture
-_r1_ok="0"
-if _combined_output | grep -Fq -- "--test <tier>"; then _r1_ok="1"; fi
-e2e_assert_eq "cmd_rule1_replacement_printed" "${_r1_ok}" "1" --gate "GATE-GAUNT-01"
+_assert_lint_diagnostic 1 planted_rule1.sh 2 '--test <tier>'
 
 # Rule 2: frob-conformance in command position
 WS_R2="$(_make_scratch_ws "cmd_rule2")"
@@ -320,12 +284,11 @@ WS_R2="$(_make_scratch_ws "cmd_rule2")"
   printf '%s run ground.identify --json\n' "${_fc}"
   printf 'x=1 %s record --gate GATE-X\n' "${_fc}"
 } > "${WS_R2}/scripts/planted_rule2.sh"
-e2e_expect_caught "wrong-command-forms:rule-2" --gate "GATE-GAUNT-01" -- \
+e2e_expect_caught "command_rule_2" --gate "GATE-GAUNT-01" -- \
   env FROB_CONFORMANCE_ROOT="${WS_R2}" \
   cargo test -p frob-conformance --test no_conformance_command -- no_conformance_command_clean_tree --nocapture
-_r2_ok="0"
-if _combined_output | grep -Fq -- "--example record_gate"; then _r2_ok="1"; fi
-e2e_assert_eq "cmd_rule2_replacement_printed" "${_r2_ok}" "1" --gate "GATE-GAUNT-01"
+_assert_lint_diagnostic 2 planted_rule2.sh 2 '--example record_gate'
+_assert_lint_diagnostic 2 planted_rule2.sh 3 '--example record_gate'
 
 # Rule 3: cargo run -p frob-conformance without --bin or --example
 WS_R3="$(_make_scratch_ws "cmd_rule3")"
@@ -333,12 +296,10 @@ WS_R3="$(_make_scratch_ws "cmd_rule3")"
   printf '#!/usr/bin/env bash\n'
   printf 'cargo run -p %s -- pilots fundable --all --json\n' "${_fc}"
 } > "${WS_R3}/scripts/planted_rule3.sh"
-e2e_expect_caught "wrong-command-forms:rule-3" --gate "GATE-GAUNT-01" -- \
+e2e_expect_caught "command_rule_3" --gate "GATE-GAUNT-01" -- \
   env FROB_CONFORMANCE_ROOT="${WS_R3}" \
   cargo test -p frob-conformance --test no_conformance_command -- no_conformance_command_clean_tree --nocapture
-_r3_ok="0"
-if _combined_output | grep -Fq -- "--example pilots"; then _r3_ok="1"; fi
-e2e_assert_eq "cmd_rule3_replacement_printed" "${_r3_ok}" "1" --gate "GATE-GAUNT-01"
+_assert_lint_diagnostic 3 planted_rule3.sh 2 '--example pilots'
 
 # Rule 4: short tier target --test g1
 WS_R4="$(_make_scratch_ws "cmd_rule4")"
@@ -346,12 +307,10 @@ WS_R4="$(_make_scratch_ws "cmd_rule4")"
   printf '#!/usr/bin/env bash\n'
   printf 'cargo test -p %s --test %s -- KA-501\n' "${_fc}" "g1"
 } > "${WS_R4}/scripts/planted_rule4.sh"
-e2e_expect_caught "wrong-command-forms:rule-4" --gate "GATE-GAUNT-01" -- \
+e2e_expect_caught "command_rule_4" --gate "GATE-GAUNT-01" -- \
   env FROB_CONFORMANCE_ROOT="${WS_R4}" \
   cargo test -p frob-conformance --test no_conformance_command -- no_conformance_command_clean_tree --nocapture
-_r4_ok="0"
-if _combined_output | grep -Fq "g1_known_answers"; then _r4_ok="1"; fi
-e2e_assert_eq "cmd_rule4_replacement_printed" "${_r4_ok}" "1" --gate "GATE-GAUNT-01"
+_assert_lint_diagnostic 4 planted_rule4.sh 2 'g1_known_answers'
 
 # Rule 5: unknown target (--example no_such_tool / --bin frob-conformance)
 WS_R5="$(_make_scratch_ws "cmd_rule5")"
@@ -360,12 +319,11 @@ WS_R5="$(_make_scratch_ws "cmd_rule5")"
   printf 'cargo run -p %s --example %s\n' "${_fc}" "no_such_tool"
   printf 'cargo run -p %s --bin %s\n' "${_fc}" "${_fc}"
 } > "${WS_R5}/scripts/planted_rule5.sh"
-e2e_expect_caught "wrong-command-forms:rule-5" --gate "GATE-GAUNT-01" -- \
+e2e_expect_caught "command_rule_5" --gate "GATE-GAUNT-01" -- \
   env FROB_CONFORMANCE_ROOT="${WS_R5}" \
   cargo test -p frob-conformance --test no_conformance_command -- no_conformance_command_clean_tree --nocapture
-_r5_ok="0"
-if _combined_output | grep -Fq "unknown-target"; then _r5_ok="1"; fi
-e2e_assert_eq "cmd_rule5_replacement_printed" "${_r5_ok}" "1" --gate "GATE-GAUNT-01"
+_assert_lint_diagnostic 5 planted_rule5.sh 2 'unknown-target'
+_assert_lint_diagnostic 5 planted_rule5.sh 3 'unknown-target'
 
 # Combined scratch script holding all five refused forms together
 WS_ALL="$(_make_scratch_ws "cmd_all_five")"
@@ -379,9 +337,23 @@ WS_ALL="$(_make_scratch_ws "cmd_all_five")"
   printf 'cargo run -p %s --example %s\n' "${_fc}" "no_such_tool"
   printf 'cargo run -p %s --bin %s\n' "${_fc}" "${_fc}"
 } > "${WS_ALL}/scripts/planted_all_five.sh"
-e2e_expect_caught "wrong-command-forms" --gate "GATE-GAUNT-01" -- \
+e2e_expect_caught "combined_command_refusal" --gate "GATE-GAUNT-01" -- \
   env FROB_CONFORMANCE_ROOT="${WS_ALL}" \
   cargo test -p frob-conformance --test no_conformance_command -- no_conformance_command_clean_tree --nocapture
+_combined_detected=0
+if [ "${E2E_LAST_EXIT}" = 101 ] &&
+    _lint_diagnostic 1 planted_all_five.sh 2 '--test <tier>' &&
+    _lint_diagnostic 2 planted_all_five.sh 3 '--example record_gate' &&
+    _lint_diagnostic 2 planted_all_five.sh 4 '--example record_gate' &&
+    _lint_diagnostic 3 planted_all_five.sh 5 '--example pilots' &&
+    _lint_diagnostic 4 planted_all_five.sh 6 'g1_known_answers' &&
+    _lint_diagnostic 5 planted_all_five.sh 7 'unknown-target' &&
+    _lint_diagnostic 5 planted_all_five.sh 8 'unknown-target'; then
+  _combined_detected=1
+fi
+_expected=1
+if e2e_plant "wrong-command-forms"; then _expected=0; fi
+e2e_assert_eq "wrong-command-forms" "${_combined_detected}" "${_expected}" --gate "GATE-GAUNT-01"
 
 # ---------------------------------------------------------------------------
 # Step 7: Evidence block (claim=known-answer, class=Tested, D0, seed=0)

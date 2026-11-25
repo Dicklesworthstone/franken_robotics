@@ -544,9 +544,12 @@ impl RefusalRegistry {
         Ok(reg)
     }
 
+    /// Check refusal references in a verb registry. Verb metadata and retired names are
+    /// validated by the verb registry loader.
     pub fn validate_verb_refusals(&self, verbs_bytes: &[u8]) -> Result<(), RefusalRegistryError> {
         let mut fields = Fields::new(toml::parse(verbs_bytes)?, "<verbs>");
         let _schema = fields.opt_str("schema")?;
+        let _ = fields.opt_array("retired_name")?;
         let verbs = fields.opt_array("verb")?.unwrap_or_default();
         fields.finish()?;
         for (idx, sp) in verbs.into_iter().enumerate() {
@@ -562,7 +565,16 @@ impl RefusalRegistry {
                 )
                 .into());
             };
+            // Project the parsed row onto the fields this cross-check owns.
+            let other_keys: Vec<_> = tbl
+                .keys()
+                .filter(|key| !matches!(key.as_str(), "name" | "refusals"))
+                .cloned()
+                .collect();
             let mut vf = Fields::new(tbl, format!("verb[{idx}]"));
+            for key in other_keys {
+                let _ = vf.take(&key);
+            }
             let name = vf.require_str("name")?;
             let refs = vf
                 .opt_array("refusals")?
@@ -743,15 +755,23 @@ fn parse_exit_rule(table: Table) -> Result<ExitRule, RefusalRegistryError> {
     for (k, fam) in four_digit_keys {
         if let Some(v) = fields.opt_int(&k)? {
             let exit = checked_exit_u8(v, "exit_rule", &k).map_err(|e| fields.fail(e))?;
-            if let Some(fixed) = fixed_family_exit(fam)
-                && exit != fixed
-            {
+            let expected = if fam == 7 {
+                // A budget continuation inherits the exit of the corresponding decade.
+                ranges.get(&k[..3]).copied()
+            } else {
+                fixed_family_exit(fam)
+            };
+            if expected != Some(exit) {
                 return Err(fields.fail(RefusalRegistryError::ExitMismatch {
                     row: "[exit_rule]".into(),
                     rule_entry: format!("exit_rule.{k}"),
                     observed: exit,
-                    expected: Some(fixed),
-                    reason: "contradicts fixed surface exit table".into(),
+                    expected,
+                    reason: if fam == 7 {
+                        format!("must inherit the exit of exit_rule.{}", &k[..3])
+                    } else {
+                        "contradicts fixed surface exit table".into()
+                    },
                 }));
             }
             ranges.insert(k, exit);
@@ -1108,6 +1128,28 @@ mod tests {
     }
 
     #[test]
+    fn live_verb_registry_checks_refusal_references() {
+        let verbs = include_str!("../../../../registries/verbs.toml");
+        RefusalRegistry::load_with_verbs(EMBEDDED_REFUSALS_TOML.as_bytes(), verbs.as_bytes())
+            .expect("live verb registry loads with retired names and full verb rows");
+        let field = "output_schema = \"frob.doctor.out/1\"\nrefusals = ";
+        let original = format!("{field}[]");
+        assert_eq!(verbs.matches(&original).count(), 1);
+        let planted = verbs.replacen(&original, &format!("{field}[\"FROB-REF-999\"]"), 1);
+        assert_eq!(
+            RefusalRegistry::load_with_verbs(
+                EMBEDDED_REFUSALS_TOML.as_bytes(),
+                planted.as_bytes(),
+            )
+            .unwrap_err(),
+            RefusalRegistryError::UnknownRefusalCode {
+                code: "FROB-REF-999".into(),
+                context: "verb `doctor`".into(),
+            }
+        );
+    }
+
+    #[test]
     fn registry_duplicate_code_fails() {
         let doc = format!(
             "{}{}{}",
@@ -1436,5 +1478,38 @@ mod tests {
                 "expected InvalidRefusalCode for {bad}"
             );
         }
+    }
+
+    #[test]
+    fn four_digit_budget_exit_inherits_decade() {
+        let header = hdr("\"70xx\" = 4\n\"79x\" = 5\n\"79xx\" = 5\n", "", "", "");
+        let valid = format!(
+            "{header}{}{}",
+            row("FROB-REF-7000", 4, "after-change"),
+            row("FROB-REF-7900", 5, "after-change"),
+        );
+        let registry = RefusalRegistry::from_bytes(valid.as_bytes()).unwrap();
+        assert_eq!(registry.lookup("FROB-REF-7000", "test").unwrap().exit, 4);
+        assert_eq!(registry.lookup("FROB-REF-7900", "test").unwrap().exit, 5);
+
+        let contradictory = format!(
+            "{}{}",
+            hdr("\"70xx\" = 3\n", "", "", ""),
+            row("FROB-REF-7000", 3, "after-change"),
+        );
+        assert!(matches!(
+            RefusalRegistry::from_bytes(contradictory.as_bytes()),
+            Err(RefusalRegistryError::ExitMismatch {
+                rule_entry, observed: 3, expected: Some(4), ..
+            }) if rule_entry == "exit_rule.70xx"
+        ));
+
+        let no_decade = hdr("\"77xx\" = 4\n", "", "", "");
+        assert!(matches!(
+            RefusalRegistry::from_bytes(no_decade.as_bytes()),
+            Err(RefusalRegistryError::ExitMismatch {
+                rule_entry, expected: None, ..
+            }) if rule_entry == "exit_rule.77xx"
+        ));
     }
 }

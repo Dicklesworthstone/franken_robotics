@@ -6,6 +6,7 @@
 //! {n,} {n,m}` (greedy). Anything else (look-around, back-references, lazy quantifiers,
 //! word boundaries) is a compile error, so a schema can never assert less than it says.
 //! Matching is unanchored (JSON Schema semantics); patterns anchor with `^`/`$`.
+//! One step budget covers all starting offsets, branches and repetition attempts.
 
 use std::fmt;
 
@@ -76,15 +77,30 @@ impl Pattern {
         &self.source
     }
 
-    /// `true` iff the pattern matches somewhere in `text`.
-    #[must_use]
-    pub fn is_match(&self, text: &str) -> bool {
+    /// Search `text`, distinguishing a non-match from exhausted search work.
+    pub(super) fn is_match(&self, text: &str) -> MatchResult {
         let chars: Vec<char> = text.chars().collect();
-        (0..=chars.len()).any(|start| {
-            self.alts
-                .iter()
-                .any(|seq| match_seq(seq, &chars, start, &mut |_| true))
-        })
+        let mut state = MatchState {
+            text: &chars,
+            // Leave room for a linear scan of large values while bounding extra search work.
+            remaining: 65_536usize.saturating_add(chars.len().saturating_mul(4)),
+        };
+        let anchored = |seq: &[Node]| matches!(seq.first(), Some(Node::Start));
+        let last_start = if self.alts.iter().all(|seq| anchored(seq)) {
+            0
+        } else {
+            chars.len()
+        };
+        for start in 0..=last_start {
+            for seq in &self.alts {
+                if (start == 0 || !anchored(seq))
+                    && match_seq(seq, start, &mut state, &mut |_, _| Ok(true))?
+                {
+                    return Ok(true);
+                }
+            }
+        }
+        Ok(false)
     }
 }
 
@@ -330,27 +346,70 @@ fn class_has(ranges: &[(char, char)], negated: bool, c: char) -> bool {
     ranges.iter().any(|&(lo, hi)| lo <= c && c <= hi) != negated
 }
 
-fn match_seq(seq: &[Node], text: &[char], pos: usize, k: &mut dyn FnMut(usize) -> bool) -> bool {
-    match seq.split_first() {
-        None => k(pos),
-        Some((first, rest)) => match_node(first, text, pos, &mut |p| match_seq(rest, text, p, k)),
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(super) struct MatchLimit;
+
+type MatchResult = Result<bool, MatchLimit>;
+type Continuation<'a, 'text> = dyn FnMut(usize, &mut MatchState<'text>) -> MatchResult + 'a;
+
+struct MatchState<'text> {
+    text: &'text [char],
+    remaining: usize,
+}
+
+impl MatchState<'_> {
+    fn step(&mut self) -> Result<(), MatchLimit> {
+        self.remaining = self.remaining.checked_sub(1).ok_or(MatchLimit)?;
+        Ok(())
     }
 }
 
-fn match_node(node: &Node, text: &[char], pos: usize, k: &mut dyn FnMut(usize) -> bool) -> bool {
-    match node {
-        Node::Char(c) => text.get(pos) == Some(c) && k(pos + 1),
-        Node::Any => text.get(pos).is_some_and(|&c| c != '\n' && c != '\r') && k(pos + 1),
-        Node::Class { ranges, negated } => {
-            text.get(pos)
-                .is_some_and(|&c| class_has(ranges, *negated, c))
-                && k(pos + 1)
-        }
-        Node::Start => pos == 0 && k(pos),
-        Node::End => pos == text.len() && k(pos),
-        Node::Group(alts) => alts.iter().any(|seq| match_seq(seq, text, pos, k)),
-        Node::Repeat { node, min, max } => match_repeat(node, *min, *max, 0, text, pos, k),
+fn match_seq<'text>(
+    seq: &[Node],
+    pos: usize,
+    state: &mut MatchState<'text>,
+    k: &mut Continuation<'_, 'text>,
+) -> MatchResult {
+    state.step()?;
+    match seq.split_first() {
+        None => k(pos, state),
+        Some((first, rest)) => match_node(first, pos, state, &mut |p, state| {
+            match_seq(rest, p, state, k)
+        }),
     }
+}
+
+fn match_node<'text>(
+    node: &Node,
+    pos: usize,
+    state: &mut MatchState<'text>,
+    k: &mut Continuation<'_, 'text>,
+) -> MatchResult {
+    let next = match node {
+        Node::Char(c) if state.text.get(pos) == Some(c) => pos + 1,
+        Node::Any if state.text.get(pos).is_some_and(|&c| c != '\n' && c != '\r') => pos + 1,
+        Node::Class { ranges, negated }
+            if state
+                .text
+                .get(pos)
+                .is_some_and(|&c| class_has(ranges, *negated, c)) =>
+        {
+            pos + 1
+        }
+        Node::Start if pos == 0 => pos,
+        Node::End if pos == state.text.len() => pos,
+        Node::Group(alts) => {
+            for seq in alts {
+                if match_seq(seq, pos, state, k)? {
+                    return Ok(true);
+                }
+            }
+            return Ok(false);
+        }
+        Node::Repeat { node, min, max } => return match_repeat(node, *min, *max, 0, pos, state, k),
+        _ => return Ok(false),
+    };
+    k(next, state)
 }
 
 /// Most iterations of a repeated group (single-character operands repeat iteratively and
@@ -358,15 +417,16 @@ fn match_node(node: &Node, text: &[char], pos: usize, k: &mut dyn FnMut(usize) -
 /// compile time; a value needing more iterations than this fails to match (fail-closed).
 const MAX_GROUP_REPEAT: u32 = 64;
 
-fn match_repeat(
+fn match_repeat<'text>(
     node: &Node,
     min: u32,
     max: Option<u32>,
     count: u32,
-    text: &[char],
     pos: usize,
-    k: &mut dyn FnMut(usize) -> bool,
-) -> bool {
+    state: &mut MatchState<'text>,
+    k: &mut Continuation<'_, 'text>,
+) -> MatchResult {
+    state.step()?;
     // Single-character operands repeat iteratively (no recursion per consumed character),
     // so long strings cannot exhaust the stack.
     let single = |c: char| match node {
@@ -378,14 +438,16 @@ fn match_repeat(
     if matches!(node, Node::Char(_) | Node::Any | Node::Class { .. }) {
         let limit = max.map_or(usize::MAX, |m| m as usize);
         let mut run = 0usize;
-        while run < limit && text.get(pos + run).is_some_and(|&c| single(c)) {
+        while run < limit && state.text.get(pos + run).is_some_and(|&c| single(c)) {
+            state.step()?;
             run += 1;
         }
-        let min = min as usize;
-        if run < min {
-            return false;
+        for n in (min as usize..=run).rev() {
+            if k(pos + n, state)? {
+                return Ok(true);
+            }
         }
-        return (min..=run).rev().any(|n| k(pos + n));
+        return Ok(false);
     }
     // A repeated group recurses once per iteration. Cap the iterations so a hostile input
     // (a tier of thousands of `+gpu-cuda` segments) cannot exhaust the stack: past the cap
@@ -393,26 +455,30 @@ fn match_repeat(
     // the value (fail-closed). No schema of ours repeats a group more than a few times
     // (a tier has at most three segments); each iteration nests some tens of frames.
     if count < MAX_GROUP_REPEAT && max.is_none_or(|m| count < m) {
-        let more = match_node(node, text, pos, &mut |p| {
+        let more = match_node(node, pos, state, &mut |p, state| {
             // An iteration that consumed nothing cannot make progress once `min` is met.
             if p == pos && count >= min {
-                return false;
+                return Ok(false);
             }
-            match_repeat(node, min, max, count + 1, text, p, k)
-        });
+            match_repeat(node, min, max, count + 1, p, state, k)
+        })?;
         if more {
-            return true;
+            return Ok(true);
         }
     }
-    count >= min && k(pos)
+    if count >= min {
+        k(pos, state)
+    } else {
+        Ok(false)
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::Pattern;
+    use super::{MatchLimit, Pattern};
 
     fn m(p: &str, t: &str) -> bool {
-        Pattern::compile(p).expect("pattern compiles").is_match(t)
+        Pattern::compile(p).expect("pattern compiles").is_match(t) == Ok(true)
     }
 
     #[test]
@@ -448,6 +514,9 @@ mod tests {
     fn pattern_unanchored_search_and_classes() {
         assert!(m("b+", "abbbc"));
         assert!(!m("^b+", "abbbc"));
+        assert!(m("^a|b", "xb"));
+        assert!(!m("^a|^b", "xb"));
+        assert!(m("(^a|b)$", "xb"));
         assert!(m("^[^/].*$", "fixtures/a.toml"));
         assert!(!m("^[^/].*$", "/abs/a.toml"));
         assert!(m("^[a-z][a-z0-9-]*$", "executor-in-process"));
@@ -460,6 +529,13 @@ mod tests {
         let long = "x".repeat(200_000);
         assert!(m("^calibrated:.+$", &format!("calibrated:{long}")));
         assert!(!m("^calibrated:.+$", "calibrated:"));
+    }
+
+    #[test]
+    fn pattern_backtracking_budget_stops_ambiguous_nonmatch() {
+        let pattern = Pattern::compile("^(a|a)*b$").expect("pattern compiles");
+        assert_eq!(pattern.is_match("aaaaab"), Ok(true));
+        assert_eq!(pattern.is_match(&"a".repeat(32_768)), Err(MatchLimit));
     }
 
     #[test]

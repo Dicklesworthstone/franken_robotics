@@ -205,7 +205,9 @@ impl Schema {
     /// differing field in document order).
     pub fn validate(&self, instance: &Tree) -> Result<(), Vec<Violation>> {
         let mut out = Vec::new();
-        self.eval(&self.root, instance, "", "", &mut out, 0);
+        if let Err(limit) = self.eval(&self.root, instance, "", "", &mut out, 0) {
+            out.push(limit);
+        }
         if out.is_empty() { Ok(()) } else { Err(out) }
     }
 
@@ -250,7 +252,7 @@ impl Schema {
         kp: &str,
         out: &mut Vec<Violation>,
         depth: usize,
-    ) {
+    ) -> Result<(), Violation> {
         let fail = |out: &mut Vec<Violation>, kw: &str, msg: String| {
             out.push(Violation {
                 instance: ip.to_owned(),
@@ -260,19 +262,19 @@ impl Schema {
         };
         if depth > 128 {
             fail(out, "$ref", "schema recursion deeper than 128".into());
-            return;
+            return Ok(());
         }
         let r = match node {
-            Node::Bool(true) => return,
+            Node::Bool(true) => return Ok(()),
             Node::Bool(false) => {
                 fail(out, "false", "no value is allowed here".into());
-                return;
+                return Ok(());
             }
             Node::Rules(r) => r,
         };
         if let Some(target) = &r.reference {
             match self.resolve(target) {
-                Some(n) => self.eval(n, v, ip, target.trim_start_matches('#'), out, depth + 1),
+                Some(n) => self.eval(n, v, ip, target.trim_start_matches('#'), out, depth + 1)?,
                 None => fail(out, "$ref", format!("unresolvable `{target}`")),
             }
         }
@@ -339,7 +341,7 @@ impl Schema {
                             &format!("{kp}/properties/{}", escape_ptr(k)),
                             out,
                             depth + 1,
-                        );
+                        )?;
                     } else if let Some(add) = &r.additional {
                         if matches!(add, Node::Bool(false)) {
                             out.push(Violation {
@@ -355,7 +357,7 @@ impl Schema {
                                 &format!("{kp}/additionalProperties"),
                                 out,
                                 depth + 1,
-                            );
+                            )?;
                         }
                     }
                     if let Some(names) = &r.property_names {
@@ -366,7 +368,7 @@ impl Schema {
                             &format!("{kp}/propertyNames"),
                             out,
                             depth + 1,
-                        );
+                        )?;
                     }
                 }
             }
@@ -397,7 +399,7 @@ impl Schema {
                             &format!("{kp}/items"),
                             out,
                             depth + 1,
-                        );
+                        )?;
                     }
                 }
             }
@@ -410,7 +412,11 @@ impl Schema {
                     fail(out, "maxLength", format!("length {len}"));
                 }
                 if let Some(p) = &r.pattern
-                    && !p.is_match(s)
+                    && !p.is_match(s).map_err(|_| Violation {
+                        instance: ip.to_owned(),
+                        keyword: format!("{kp}/pattern"),
+                        message: "pattern step budget exhausted".into(),
+                    })?
                 {
                     fail(
                         out,
@@ -434,16 +440,22 @@ impl Schema {
             Tree::Null | Tree::Bool(_) => {}
         }
         for (i, sub) in r.all_of.iter().enumerate() {
-            self.eval(sub, v, ip, &format!("{kp}/allOf/{i}"), out, depth + 1);
+            self.eval(sub, v, ip, &format!("{kp}/allOf/{i}"), out, depth + 1)?;
         }
+        let count_passing = |nodes: &[Node], keyword: &str| {
+            nodes.iter().enumerate().try_fold(0, |count, (i, sub)| {
+                self.passes(sub, v, ip, &format!("{kp}/{keyword}/{i}"), depth)
+                    .map(|passed| count + usize::from(passed))
+            })
+        };
         if !r.any_of.is_empty() {
-            let passing = r.any_of.iter().filter(|s| self.passes(s, v, depth)).count();
+            let passing = count_passing(&r.any_of, "anyOf")?;
             if passing == 0 {
                 fail(out, "anyOf", "no alternative matches".into());
             }
         }
         if !r.one_of.is_empty() {
-            let passing = r.one_of.iter().filter(|s| self.passes(s, v, depth)).count();
+            let passing = count_passing(&r.one_of, "oneOf")?;
             if passing != 1 {
                 fail(
                     out,
@@ -453,25 +465,33 @@ impl Schema {
             }
         }
         if let Some(n) = &r.not
-            && self.passes(n, v, depth)
+            && self.passes(n, v, ip, &format!("{kp}/not"), depth)?
         {
             fail(out, "not", "value matches a forbidden schema".into());
         }
         if let Some((cond, then, other)) = &r.if_then_else {
-            if self.passes(cond, v, depth) {
+            if self.passes(cond, v, ip, &format!("{kp}/if"), depth)? {
                 if let Some(t) = then {
-                    self.eval(t, v, ip, &format!("{kp}/then"), out, depth + 1);
+                    self.eval(t, v, ip, &format!("{kp}/then"), out, depth + 1)?;
                 }
             } else if let Some(e) = other {
-                self.eval(e, v, ip, &format!("{kp}/else"), out, depth + 1);
+                self.eval(e, v, ip, &format!("{kp}/else"), out, depth + 1)?;
             }
         }
+        Ok(())
     }
 
-    fn passes(&self, node: &Node, v: &Tree, depth: usize) -> bool {
+    fn passes(
+        &self,
+        node: &Node,
+        v: &Tree,
+        ip: &str,
+        kp: &str,
+        depth: usize,
+    ) -> Result<bool, Violation> {
         let mut scratch = Vec::new();
-        self.eval(node, v, "", "", &mut scratch, depth + 1);
-        scratch.is_empty()
+        self.eval(node, v, ip, kp, &mut scratch, depth + 1)?;
+        Ok(scratch.is_empty())
     }
 }
 
@@ -719,6 +739,22 @@ mod tests {
         for number in ["100.0", "1e20", "9007199254740992", "9007199254740993"] {
             assert!(schema.validate(&tree(number)).is_err(), "{number}");
         }
+    }
+
+    #[test]
+    fn validator_refuses_pattern_budget_exhaustion_inside_not() {
+        let schema =
+            Schema::compile_json(r#"{"not":{"properties":{"value":{"pattern":"^(a|a)*b$"}}}}"#)
+                .expect("schema");
+        assert!(schema.validate(&tree(r#"{"value":"c"}"#)).is_ok());
+        assert!(schema.validate(&tree(r#"{"value":"ab"}"#)).is_err());
+        let value = Tree::Obj(vec![("value".into(), Tree::Str("a".repeat(32_768)))]);
+        let errors = schema
+            .validate(&value)
+            .expect_err("exhaustion must refuse under not");
+        assert_eq!(errors[0].instance, "/value");
+        assert_eq!(errors[0].keyword, "/not/properties/value/pattern");
+        assert_eq!(errors[0].message, "pattern step budget exhausted");
     }
 
     #[test]

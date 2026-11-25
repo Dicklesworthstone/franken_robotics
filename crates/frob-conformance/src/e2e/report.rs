@@ -73,7 +73,9 @@ pub fn list_scripts(scripts_dir: &Path) -> Result<Vec<ScriptHeader>, String> {
     Ok(out)
 }
 
-fn milestone_num(m: &str) -> Option<u32> { m.strip_prefix('M')?.parse().ok() }
+fn milestone_num(m: &str) -> Option<u32> {
+    m.strip_prefix('M').filter(|s| !s.is_empty() && s.bytes().all(|b| b.is_ascii_digit()))?.parse().ok()
+}
 
 pub fn cmd_list(args: &[String]) -> i32 {
     const VALUED: &[&str] = &["--scripts-dir", "--milestone", "--through", "--label", "--gate", "--bead", "--script"];
@@ -136,10 +138,10 @@ fn newest_log_for_script(logs_dir: &Path, script: &str) -> Option<PathBuf> {
 
 fn parse_log_for_report(path: &Path) -> Option<ParsedLogSummary> {
     let text = fs::read_to_string(path).ok()?;
-    let (mut scale, mut registries, mut exit, mut ts, mut has_summary) = ("full".into(), "of-record".into(), 2i64, String::new(), false);
+    let (mut scale, mut registries, mut exit, mut ts, mut summary_count, mut corrupt) = ("full".into(), "of-record".into(), 2i64, String::new(), 0u32, false);
     let (mut receipts, mut gates, mut metrics) = (Vec::new(), BTreeMap::new(), Vec::new());
     for line in text.lines().filter(|l| !l.is_empty()) {
-        let val = json::parse_strict(line).ok()?;
+        let Ok(val) = json::parse_strict(line) else { corrupt = true; break; };
         let (ev, step) = (val.get("event").and_then(JsonValue::as_str).unwrap_or(""), val.get("step").and_then(JsonValue::as_str).unwrap_or(""));
         match ev {
             "start" if step.is_empty() => if let Some(s) = val.get("scale").and_then(JsonValue::as_str) { scale = s.into(); },
@@ -154,7 +156,7 @@ fn parse_log_for_report(path: &Path) -> Option<ParsedLogSummary> {
                 metrics.push((g.into(), obj(m)));
             },
             "summary" => {
-                has_summary = true;
+                summary_count += 1;
                 if let Some(r) = val.get("registries").and_then(JsonValue::as_str) { registries = r.into(); }
                 exit = val.get("exit").and_then(JsonValue::as_i64).unwrap_or(2);
                 ts = val.get("ts").and_then(JsonValue::as_str).unwrap_or("").into();
@@ -172,7 +174,7 @@ fn parse_log_for_report(path: &Path) -> Option<ParsedLogSummary> {
             _ => {}
         }
     }
-    if !has_summary { exit = 2; }
+    if corrupt || summary_count != 1 { exit = 2; }
     Some(ParsedLogSummary { scale, registries, exit, ts, receipts, gates, metrics })
 }
 
@@ -190,12 +192,12 @@ pub fn generate_gate_report(scripts_dir: &Path, logs_dir: &Path, out_dir: &Path)
 
     #[derive(Default)]
     struct Agg {
-        milestone: String, scripts: BTreeSet<String>, last_run: Option<String>, ran_any: bool,
-        any_fail: bool, all_small: bool, cc: u64, receipts: BTreeSet<String>, metrics: Vec<JsonValue>,
+        milestone: String, scripts: BTreeSet<String>, last_run: Option<String>, any_fail: bool,
+        any_missing: bool, any_non_claimable: bool, cc: u64, receipts: BTreeSet<String>, metrics: Vec<JsonValue>,
     }
     let mut gates = BTreeMap::<String, Agg>::new();
     let mut touch = |gid: &str, sname: &str, ms: &str| {
-        let e = gates.entry(gid.into()).or_insert_with(|| Agg { all_small: true, ..Agg::default() });
+        let e = gates.entry(gid.into()).or_default();
         if e.milestone.is_empty() && !ms.is_empty() { e.milestone = ms.into(); }
         e.scripts.insert(sname.into());
     };
@@ -206,20 +208,19 @@ pub fn generate_gate_report(scripts_dir: &Path, logs_dir: &Path, out_dir: &Path)
     let mut md = String::from("# Gate Report (View Only — No Registry Written)\n\n| Gate | Milestone | Result | Controls Caught | Scripts | Receipts | Last Run |\n|---|---|---|---|---|---|---|\n");
     for (gid, mut a) in gates {
         for s in &a.scripts {
-            let Some(log) = logs.get(s) else { continue; };
-            if log.exit == 77 { continue; }
-            a.ran_any = true;
+            let Some(log) = logs.get(s) else { a.any_missing = true; continue; };
+            if log.exit == 77 { a.any_missing = true; continue; }
             if !log.ts.is_empty() && a.last_run.as_ref().is_none_or(|p| &log.ts > p) { a.last_run = Some(log.ts.clone()); }
-            if log.scale == "full" && log.registries == "of-record" { a.all_small = false; }
+            if log.scale != "full" || log.registries != "of-record" { a.any_non_claimable = true; }
             match log.gates.get(&gid) {
                 Some(&(ok, cc)) => { if !ok || log.exit != 0 { a.any_fail = true; } a.cc += cc; }
                 None if log.exit != 0 => a.any_fail = true,
-                None => {}
+                None => a.any_missing = true,
             }
             a.receipts.extend(log.receipts.iter().cloned());
             a.metrics.extend(log.metrics.iter().filter(|(mg, _)| mg == &gid).map(|(_, m)| m.clone()));
         }
-        let res = if !a.ran_any { "not-run" } else if a.any_fail { "fail" } else if a.all_small { "small-only" } else if a.cc == 0 { "no-control" } else { "pass" };
+        let res = if a.any_fail { "fail" } else if a.any_missing { "not-run" } else if a.any_non_claimable { "small-only" } else if a.cc == 0 { "no-control" } else { "pass" };
         let (sv, rv): (Vec<String>, Vec<String>) = (a.scripts.into_iter().collect(), a.receipts.into_iter().collect());
         md.push_str(&format!(
             "| {gid} | {} | {res} | {} | {} | {} | {} |\n",

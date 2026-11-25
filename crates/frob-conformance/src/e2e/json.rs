@@ -43,7 +43,7 @@ impl JsonValue {
             match cur {
                 Self::Object(pairs) => cur = pairs.iter().find(|(k, _)| k == &token).map(|(_, v)| v)?,
                 Self::Array(items) => {
-                    if token.len() > 1 && token.starts_with('0') { return None; }
+                    if token.is_empty() || !token.bytes().all(|b| b.is_ascii_digit()) || (token.len() > 1 && token.starts_with('0')) { return None; }
                     cur = items.get(token.parse::<usize>().ok()?)?;
                 }
                 _ => return None,
@@ -184,7 +184,7 @@ impl<'a> Parser<'a> {
         let start = self.pos;
         if self.peek() == Some(b'-') { self.pos += 1; }
         match self.peek() {
-            Some(b'0') => self.pos += 1,
+            Some(b'0') => { self.pos += 1; if matches!(self.peek(), Some(b'0'..=b'9')) { return Err(self.err("leading zero in number")); } }
             Some(b'1'..=b'9') => { self.pos += 1; while matches!(self.peek(), Some(b'0'..=b'9')) { self.pos += 1; } }
             _ => return Err(self.err("invalid number")),
         }

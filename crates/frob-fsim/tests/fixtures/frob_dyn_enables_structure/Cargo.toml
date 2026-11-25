@@ -1,3 +1,4 @@
+# synthetic
 # Planted negative-control fixture for INV-SUITE-01 airlock group confinement
 # (N33a-11 Review Note 3; refusal asserted by N33c-29's `airlock_fixture_frob_dyn_structure_refused`).
 # Not a workspace member; fixture only, never live proof.

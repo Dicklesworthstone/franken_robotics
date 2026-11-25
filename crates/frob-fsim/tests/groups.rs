@@ -3,7 +3,7 @@
 //! Airlock feature-group, `BUILT_WITH`, `FROB-REF-790`, stub, `conformance`
 //! isolation, and public-API hygiene tests (`N33a-11`).
 
-use std::collections::BTreeSet;
+use std::collections::{BTreeMap, BTreeSet};
 use std::fs;
 use std::path::{Path, PathBuf};
 
@@ -46,81 +46,250 @@ fn str_list(tbl: &Table, key: &str) -> Vec<String> {
         .collect()
 }
 
-fn manifest_enables_frob_fsim_feature(manifest: &Table, target_feature: &str) -> bool {
-    for dep_section in ["dependencies", "dev-dependencies", "build-dependencies"] {
-        if let Some(deps) = manifest.get(dep_section).and_then(Value::as_table)
-            && let Some(spec) = deps.get("frob-fsim").and_then(Value::as_table)
-            && let Some(feats) = spec.get("features").and_then(Value::as_array)
-            && feats
-                .iter()
-                .any(|sp| sp.value.as_str() == Some(target_feature))
-        {
-            return true;
-        }
-    }
-
-    let needle = format!("frob-fsim/{target_feature}");
-    if let Some(features) = manifest.get("features").and_then(Value::as_table) {
-        for (_fname, sp) in features.iter() {
-            if let Some(items) = sp.value.as_array()
-                && items.iter().any(|x| x.value.as_str() == Some(needle.as_str()))
-            {
-                return true;
-            }
-        }
-    }
-    false
+#[derive(Debug, Default)]
+struct CargoDepSpec {
+    optional: bool,
+    features: Vec<String>,
 }
 
-fn manifest_enables_feature_in_default(manifest: &Table, target_feature: &str) -> bool {
-    // 1. Direct dependency on `frob-fsim` with `target_feature` enabled unconditionally (not optional).
-    if let Some(deps) = manifest.get("dependencies").and_then(Value::as_table)
-        && let Some(spec) = deps.get("frob-fsim").and_then(Value::as_table)
-    {
-        let is_optional = spec.get("optional").and_then(Value::as_bool).unwrap_or(false);
-        if !is_optional
-            && let Some(feats) = spec.get("features").and_then(Value::as_array)
-            && feats
-                .iter()
-                .any(|sp| sp.value.as_str() == Some(target_feature))
-        {
-            return true;
+#[derive(Debug, Default)]
+struct ParsedCargoManifest {
+    package_name: String,
+    normal_frob_fsim: Option<CargoDepSpec>,
+    any_frob_fsim_features: BTreeSet<String>,
+    features: BTreeMap<String, Vec<String>>,
+}
+
+fn strip_toml_comment(line: &str) -> &str {
+    let (mut in_dq, mut in_sq, mut esc) = (false, false, false);
+    for (i, b) in line.bytes().enumerate() {
+        if esc {
+            esc = false;
+            continue;
+        }
+        if in_dq {
+            if b == b'\\' {
+                esc = true;
+            } else if b == b'"' {
+                in_dq = false;
+            }
+        } else if in_sq {
+            if b == b'\'' {
+                in_sq = false;
+            }
+        } else if b == b'"' {
+            in_dq = true;
+        } else if b == b'\'' {
+            in_sq = true;
+        } else if b == b'#' {
+            return &line[..i];
         }
     }
+    line
+}
 
-    // 2. Transitive reachability from `[features].default` to `frob-fsim/<target_feature>` or `<target_feature>`.
-    let Some(features) = manifest.get("features").and_then(Value::as_table) else {
-        return false;
-    };
-    let needle = format!("frob-fsim/{target_feature}");
-    let pkg_name = manifest
-        .get("package")
-        .and_then(Value::as_table)
-        .and_then(|p| p.get("name"))
-        .and_then(Value::as_str)
-        .unwrap_or("");
+fn parse_string_array(raw: &str) -> Vec<String> {
+    let mut out = Vec::new();
+    let bytes = raw.as_bytes();
+    let mut i = 0usize;
+    while i < bytes.len() {
+        if bytes[i] == b'"' || bytes[i] == b'\'' {
+            let q = bytes[i];
+            i += 1;
+            let start = i;
+            while i < bytes.len() && bytes[i] != q {
+                if bytes[i] == b'\\' && q == b'"' && i + 1 < bytes.len() {
+                    i += 2;
+                    continue;
+                }
+                i += 1;
+            }
+            out.push(raw[start..i].to_owned());
+            if i < bytes.len() {
+                i += 1;
+            }
+            continue;
+        }
+        i += 1;
+    }
+    out
+}
 
-    let mut visited = BTreeSet::new();
-    let mut stack: Vec<String> = Vec::new();
-    if let Some(def) = features.get("default").and_then(Value::as_array) {
-        for sp in def {
-            if let Some(s) = sp.value.as_str() {
-                stack.push(s.to_owned());
+fn parse_inline_dep_spec(val: &str) -> CargoDepSpec {
+    let mut spec = CargoDepSpec::default();
+    let inner = val
+        .trim()
+        .strip_prefix('{')
+        .and_then(|s| s.strip_suffix('}'))
+        .unwrap_or(val);
+    if let Some(pos) = inner.find("features")
+        && let Some(eq) = inner[pos..].find('=')
+        && let Some(lb) = inner[pos + eq..].find('[')
+        && let Some(rb) = inner[pos + eq + lb..].find(']')
+    {
+        spec.features = parse_string_array(&inner[pos + eq + lb..=pos + eq + lb + rb]);
+    }
+    if let Some(pos) = inner.find("optional")
+        && let Some(eq) = inner[pos..].find('=')
+    {
+        let after = inner[pos + eq + 1..].trim_start();
+        if after.starts_with("true") {
+            spec.optional = true;
+        }
+    }
+    spec
+}
+
+/// Minimal Cargo manifest reader that tolerates Cargo's full TOML syntax
+/// (such as `version.workspace = true` dotted keys) while extracting `[package].name`,
+/// `frob-fsim` dependency feature lists, and `[features]` tables.
+fn parse_cargo_manifest(path: &Path) -> ParsedCargoManifest {
+    let content = fs::read_to_string(path)
+        .unwrap_or_else(|e| panic!("failed reading {}: {e}", path.display()));
+    let mut out = ParsedCargoManifest::default();
+    let mut section = String::new();
+    let mut open_feature: Option<(String, String)> = None;
+
+    let flush_feature =
+        |feats: &mut BTreeMap<String, Vec<String>>, open: &mut Option<(String, String)>| {
+            if let Some((k, buf)) = open.take() {
+                feats.insert(k, parse_string_array(&buf));
+            }
+        };
+
+    for raw_line in content.lines() {
+        let line = strip_toml_comment(raw_line).trim();
+        if line.is_empty() {
+            continue;
+        }
+        if let Some((_, ref mut buf)) = open_feature {
+            buf.push(' ');
+            buf.push_str(line);
+            if line.contains(']') {
+                flush_feature(&mut out.features, &mut open_feature);
+            }
+            continue;
+        }
+        if line.starts_with('[') && line.ends_with(']') {
+            section = line.to_owned();
+            continue;
+        }
+        let Some((k_raw, v_raw)) = line.split_once('=') else {
+            continue;
+        };
+        let key = k_raw.trim().trim_matches('"').trim_matches('\'');
+        let val = v_raw.trim();
+
+        match section.as_str() {
+            "[package]" => {
+                if key == "name" {
+                    out.package_name = val.trim_matches('"').trim_matches('\'').to_owned();
+                }
+            }
+            "[features]" => {
+                if val.contains('[') && !val.contains(']') {
+                    open_feature = Some((key.to_owned(), val.to_owned()));
+                } else {
+                    out.features.insert(key.to_owned(), parse_string_array(val));
+                }
+            }
+            "[dependencies]" | "[dev-dependencies]" | "[build-dependencies]" => {
+                if key == "frob-fsim"
+                    || (val.contains("package") && val.contains("\"frob-fsim\""))
+                {
+                    let spec = parse_inline_dep_spec(val);
+                    for f in &spec.features {
+                        out.any_frob_fsim_features.insert(f.clone());
+                    }
+                    if section == "[dependencies]" {
+                        out.normal_frob_fsim = Some(spec);
+                    }
+                }
+            }
+            "[dependencies.frob-fsim]"
+            | "[dev-dependencies.frob-fsim]"
+            | "[build-dependencies.frob-fsim]" => {
+                let is_normal = section == "[dependencies.frob-fsim]";
+                if key == "features" {
+                    let fs = parse_string_array(val);
+                    for f in &fs {
+                        out.any_frob_fsim_features.insert(f.clone());
+                    }
+                    if is_normal {
+                        out.normal_frob_fsim
+                            .get_or_insert_with(CargoDepSpec::default)
+                            .features
+                            .extend(fs);
+                    }
+                } else if key == "optional" && is_normal {
+                    out.normal_frob_fsim
+                        .get_or_insert_with(CargoDepSpec::default)
+                        .optional = val == "true";
+                }
+            }
+            _ => {
+                if section.ends_with(".dependencies]")
+                    && (key == "frob-fsim"
+                        || (val.contains("package") && val.contains("\"frob-fsim\"")))
+                {
+                    let spec = parse_inline_dep_spec(val);
+                    for f in &spec.features {
+                        out.any_frob_fsim_features.insert(f.clone());
+                    }
+                }
             }
         }
     }
+    flush_feature(&mut out.features, &mut open_feature);
+    out
+}
+
+fn manifest_enables_frob_fsim_feature(
+    manifest: &ParsedCargoManifest,
+    target_feature: &str,
+) -> bool {
+    if manifest.any_frob_fsim_features.contains(target_feature) {
+        return true;
+    }
+    let needle_direct = format!("frob-fsim/{target_feature}");
+    let needle_weak = format!("frob-fsim?/{target_feature}");
+    manifest.features.values().any(|items| {
+        items
+            .iter()
+            .any(|x| x == &needle_direct || x == &needle_weak)
+    })
+}
+
+fn manifest_enables_feature_in_default(
+    manifest: &ParsedCargoManifest,
+    target_feature: &str,
+) -> bool {
+    if let Some(spec) = &manifest.normal_frob_fsim
+        && !spec.optional
+        && spec.features.iter().any(|f| f == target_feature)
+    {
+        return true;
+    }
+
+    let needle_direct = format!("frob-fsim/{target_feature}");
+    let needle_weak = format!("frob-fsim?/{target_feature}");
+    let mut visited = BTreeSet::new();
+    let mut stack: Vec<String> = manifest
+        .features
+        .get("default")
+        .cloned()
+        .unwrap_or_default();
     while let Some(item) = stack.pop() {
-        if item == needle || (pkg_name == "frob-fsim" && item == target_feature) {
+        if item == needle_direct
+            || item == needle_weak
+            || (manifest.package_name == "frob-fsim" && item == target_feature)
+        {
             return true;
         }
         if visited.insert(item.clone())
-            && let Some(sub) = features.get(&item).and_then(Value::as_array)
+            && let Some(sub) = manifest.features.get(&item)
         {
-            for sp in sub {
-                if let Some(s) = sp.value.as_str() {
-                    stack.push(s.to_owned());
-                }
-            }
+            stack.extend(sub.iter().cloned());
         }
     }
     false
@@ -679,16 +848,11 @@ fn conformance_enabled_only_by_frob_conformance() {
         if !manifest_path.is_file() {
             continue;
         }
-        let tbl = parse_toml_file(&manifest_path);
-        let pkg = tbl
-            .get("package")
-            .and_then(Value::as_table)
-            .and_then(|p| p.get("name"))
-            .and_then(Value::as_str)
-            .unwrap_or("");
+        let manifest = parse_cargo_manifest(&manifest_path);
+        let pkg = manifest.package_name.as_str();
         if pkg != "frob-conformance" {
             assert!(
-                !manifest_enables_frob_fsim_feature(&tbl, "conformance"),
+                !manifest_enables_frob_fsim_feature(&manifest, "conformance"),
                 "workspace crate `{pkg}` ({}) must not enable `frob-fsim/conformance`",
                 manifest_path.display()
             );
@@ -697,7 +861,7 @@ fn conformance_enabled_only_by_frob_conformance() {
 
     // Negative control fixture: planted `frob-verbs` manifest enabling `frob-fsim/conformance` is caught.
     let planted_path = crate_dir().join("tests/fixtures/frob_verbs_enables_conformance/Cargo.toml");
-    let planted = parse_toml_file(&planted_path);
+    let planted = parse_cargo_manifest(&planted_path);
     assert!(
         manifest_enables_frob_fsim_feature(&planted, "conformance"),
         "planted fixture `{}` enabling frob-fsim/conformance must be reported",
@@ -790,9 +954,9 @@ fn multiphysics_not_in_any_default() {
         if !manifest_path.is_file() {
             continue;
         }
-        let tbl = parse_toml_file(&manifest_path);
+        let manifest = parse_cargo_manifest(&manifest_path);
         assert!(
-            !manifest_enables_feature_in_default(&tbl, "multiphysics"),
+            !manifest_enables_feature_in_default(&manifest, "multiphysics"),
             "manifest `{}` must not enable `multiphysics` in default features",
             manifest_path.display()
         );
@@ -803,15 +967,10 @@ fn multiphysics_not_in_any_default() {
 fn planted_frob_dyn_structure_fixture_exists() {
     // Shipped for N33c-29's `airlock_fixture_frob_dyn_structure_refused` test (Review Note 3).
     let path = crate_dir().join("tests/fixtures/frob_dyn_enables_structure/Cargo.toml");
-    let tbl = parse_toml_file(&path);
-    let pkg = tbl
-        .get("package")
-        .and_then(Value::as_table)
-        .and_then(|p| p.get("name"))
-        .and_then(Value::as_str);
-    assert_eq!(pkg, Some("frob-dyn"));
+    let manifest = parse_cargo_manifest(&path);
+    assert_eq!(manifest.package_name, "frob-dyn");
     assert!(
-        manifest_enables_frob_fsim_feature(&tbl, "structure"),
+        manifest_enables_frob_fsim_feature(&manifest, "structure"),
         "planted fixture must enable `frob-fsim` feature `structure`"
     );
 }

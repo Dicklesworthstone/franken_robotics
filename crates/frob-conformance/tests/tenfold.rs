@@ -1099,3 +1099,573 @@ mod records {
         assert_eq!(err.pointer, "/execution_authorized");
     }
 }
+
+/// Phase vocabulary, raw interval record, turn-phase rule, and exclusive
+/// critical-path attribution tests (bead `N39a-23`, §39.6).
+///
+/// Run as: `cargo test -p frob-conformance --test tenfold -- phase::exclusive::`
+mod phase {
+    pub mod exclusive {
+        use frob_conformance::tenfold::ids::{Millis, Phase};
+        use frob_conformance::tenfold::phase::{
+            AttributionWindow, FLAG_CENSORED_REMAINDER, Interval, IntervalKind,
+            PRODUCT_PHASE_MAP, ProductVocabulary, ResourceInfo, attribute_exclusive,
+            diagnose_instant, map_product_phase, parse_intervals_ndjson, product_names_for_phase,
+            turn_phase, write_intervals_ndjson,
+        };
+        use frob_conformance::tenfold::refusal::RefusalReason;
+
+        /// Deterministic SplitMix64 PRNG (class D0, zero external crates).
+        struct SplitMix64(u64);
+
+        impl SplitMix64 {
+            fn next_u64(&mut self) -> u64 {
+                self.0 = self.0.wrapping_add(0x9E37_79B9_7F4A_7C15);
+                let mut z = self.0;
+                z = (z ^ (z >> 30)).wrapping_mul(0xBF58_476D_1CE4_E5B9);
+                z = (z ^ (z >> 27)).wrapping_mul(0x94D0_49BB_1331_11EB);
+                z ^ (z >> 31)
+            }
+
+            fn range(&mut self, bound: u64) -> u64 {
+                if bound == 0 {
+                    0
+                } else {
+                    self.next_u64() % bound
+                }
+            }
+
+            fn shuffle<T>(&mut self, slice: &mut [T]) {
+                let n = slice.len();
+                for i in (1..n).rev() {
+                    let j = (self.next_u64() as usize) % (i + 1);
+                    slice.swap(i, j);
+                }
+            }
+        }
+
+        fn worked_fixture_intervals() -> Vec<Interval> {
+            // N39a-23 §5: t0 = 0, t_stop = 100 s (100_000 ms).
+            // Turn 1 [0, 10s) propose;
+            // Block [10s, 60s) awaiting job 1 (compile [10s, 22s), screen [22s, 40s)) and job 2 (train [12s, 60s));
+            // Turn 2 [60s, 70s) propose;
+            // Block [70s, 90s) awaiting adjudication [70s, 90s);
+            // Nothing in [90s, 100s).
+            vec![
+                Interval::turn(1, Phase::Propose, 0, 10_000),
+                Interval::block(2, 10_000, 60_000, vec![3, 4, 5]),
+                Interval::work(3, Phase::Compile, 10_000, 22_000, Some("job-1".to_owned())),
+                Interval::work(4, Phase::Screen, 22_000, 40_000, Some("job-1".to_owned())),
+                Interval::work(5, Phase::Train, 12_000, 60_000, Some("job-2".to_owned())),
+                Interval::turn(6, Phase::Propose, 60_000, 70_000),
+                Interval::block(7, 70_000, 90_000, vec![8]),
+                Interval::adjudication(8, 70_000, 90_000),
+            ]
+        }
+
+        #[test]
+        fn worked_fixture() {
+            let ivs = worked_fixture_intervals();
+            let table = attribute_exclusive(&ivs, AttributionWindow::new(0, 100_000))
+                .expect("worked fixture must attribute cleanly");
+
+            assert_eq!(table.clock_ms, 100_000);
+            assert_eq!(table.sum_ms(), 100_000);
+            assert_eq!(table.ms(Phase::Propose), 20_000);
+            assert_eq!(table.ms(Phase::Wait), 2_000);
+            assert_eq!(table.ms(Phase::Train), 48_000);
+            assert_eq!(table.ms(Phase::Adjudicate), 20_000);
+            assert_eq!(table.ms(Phase::Unattributed), 10_000);
+            for p in [
+                Phase::Author,
+                Phase::Check,
+                Phase::Synthesize,
+                Phase::Compile,
+                Phase::Screen,
+                Phase::Evaluate,
+                Phase::Qualify,
+                Phase::Certify,
+                Phase::Diagnose,
+            ] {
+                assert_eq!(table.ms(p), 0, "phase {p} must be 0 in worked fixture");
+            }
+
+            // Round-trip through NDJSON parser and verify identical canonical table JSON.
+            let ndjson = write_intervals_ndjson(&ivs);
+            let reparsed = parse_intervals_ndjson(&ndjson).expect("roundtrip ndjson");
+            let table2 = attribute_exclusive(&reparsed, AttributionWindow::new(0, 100_000))
+                .expect("re-attribute");
+            assert_eq!(table.to_canonical_bytes(), table2.to_canonical_bytes());
+
+            // Verify failure diagnosis on [10s, 12s) (owner job-2 hasn't started -> wait).
+            let diag = diagnose_instant(&ivs, AttributionWindow::new(0, 100_000), 11_000)
+                .expect("diagnose 11s");
+            assert_eq!(diag.attributed_phase, Phase::Wait);
+            assert_eq!(diag.rule, "rule-2b:block-owner");
+            assert!(diag.covering_interval_ids.contains(&2));
+            assert!(diag.covering_interval_ids.contains(&3));
+        }
+
+        #[test]
+        fn sums_to_clock_property() {
+            let mut rng = SplitMix64(0x39A2_3000_0000_0001);
+            let phases13 = Phase::PHASES;
+
+            for trial in 0..10_000_u64 {
+                let t0 = rng.range(200);
+                let span = rng.range(2_000);
+                let t_stop = t0 + span;
+                let count = rng.range(18) as usize;
+
+                let mut ivs: Vec<Interval> = Vec::with_capacity(count);
+                let mut awaitable_ids: Vec<u64> = Vec::new();
+                let mut next_id = 1_u64 + trial * 32;
+
+                // First emit work/harness/adjudication so blocks can await real ids (plus occasional missing/multi-phase).
+                let work_count = count / 2;
+                for k in 0..work_count {
+                    let a = rng.range(t_stop + 250);
+                    let b = a + rng.range(400);
+                    let id = next_id;
+                    next_id += 1;
+                    let iv = match rng.range(5) {
+                        0 => Interval::harness(id, a, b),
+                        1 => Interval::adjudication(id, a, b),
+                        _ => {
+                            let phase = phases13[rng.range(13) as usize];
+                            let proc_opt = if k > 0 && rng.range(3) == 0 {
+                                Some(format!("p{}", rng.range(3)))
+                            } else {
+                                None
+                            };
+                            Interval::work(id, phase, a, b, proc_opt)
+                        }
+                    };
+                    awaitable_ids.push(id);
+                    ivs.push(iv);
+                }
+
+                for _ in work_count..count {
+                    let a = rng.range(t_stop + 250);
+                    let b = a + rng.range(400);
+                    let id = next_id;
+                    next_id += 1;
+                    if rng.range(2) == 0 {
+                        let phase = phases13[rng.range(13) as usize];
+                        ivs.push(Interval::turn(id, phase, a, b));
+                    } else {
+                        let mut awaits = Vec::new();
+                        if !awaitable_ids.is_empty() {
+                            let k_aw = rng.range(4) as usize;
+                            for _ in 0..k_aw {
+                                let pick = awaitable_ids[rng.range(awaitable_ids.len() as u64) as usize];
+                                awaits.push(pick);
+                            }
+                        }
+                        ivs.push(Interval::block(id, a, b, awaits));
+                    }
+                }
+
+                let table = attribute_exclusive(&ivs, AttributionWindow::new(t0, t_stop))
+                    .expect("random interval set must attribute");
+                assert_eq!(
+                    table.sum_ms(),
+                    t_stop - t0,
+                    "trial {trial}: sum(phases) must equal T={}",
+                    t_stop - t0
+                );
+                assert_eq!(table.clock_ms, t_stop - t0);
+            }
+        }
+
+        #[test]
+        fn turn_beats_block() {
+            let ivs = vec![
+                Interval::block(1, 0, 50_000, vec![2]),
+                Interval::work(2, Phase::Train, 0, 50_000, Some("j-train".to_owned())),
+                Interval::turn(3, Phase::Diagnose, 15_000, 35_000),
+            ];
+            let table = attribute_exclusive(&ivs, AttributionWindow::new(0, 50_000))
+                .expect("turn_beats_block");
+            assert_eq!(table.ms(Phase::Diagnose), 20_000);
+            assert_eq!(table.ms(Phase::Train), 30_000);
+            assert_eq!(table.sum_ms(), 50_000);
+        }
+
+        #[test]
+        fn last_finisher_owns() {
+            // Awaited works ending at 40 and 60 -> the second owns [start, 60).
+            let ivs = vec![
+                Interval::block(1, 10_000, 60_000, vec![2, 3]),
+                Interval::work(2, Phase::Compile, 10_000, 40_000, Some("j1".to_owned())),
+                Interval::work(3, Phase::Train, 10_000, 60_000, Some("j2".to_owned())),
+            ];
+            let table = attribute_exclusive(&ivs, AttributionWindow::new(10_000, 60_000))
+                .expect("last_finisher_owns");
+            assert_eq!(table.ms(Phase::Train), 50_000);
+            assert_eq!(table.ms(Phase::Compile), 0);
+            assert_eq!(table.sum_ms(), 50_000);
+        }
+
+        #[test]
+        fn tie_break_lower_id() {
+            // Equal ends (60_000) -> lower id owns the block regardless of input order.
+            let ivs_a = vec![
+                Interval::block(1, 0, 60_000, vec![20, 10]),
+                Interval::work(20, Phase::Train, 0, 60_000, Some("j20".to_owned())),
+                Interval::work(10, Phase::Evaluate, 0, 60_000, Some("j10".to_owned())),
+            ];
+            let ivs_b = vec![
+                Interval::work(10, Phase::Evaluate, 0, 60_000, Some("j10".to_owned())),
+                Interval::work(20, Phase::Train, 0, 60_000, Some("j20".to_owned())),
+                Interval::block(1, 0, 60_000, vec![10, 20]),
+            ];
+            let ta = attribute_exclusive(&ivs_a, AttributionWindow::new(0, 60_000)).unwrap();
+            let tb = attribute_exclusive(&ivs_b, AttributionWindow::new(0, 60_000)).unwrap();
+            assert_eq!(ta.ms(Phase::Evaluate), 60_000);
+            assert_eq!(ta.ms(Phase::Train), 0);
+            assert_eq!(ta, tb);
+        }
+
+        #[test]
+        fn adjudication_owner() {
+            // Block [20, 80) awaiting a training job [20, 50) and an adjudication [30, 80) ->
+            // adjudication ends last and owns the block: [20, 30) is wait, [30, 80) is adjudicate;
+            // training job's 30 s appear only in the resource table.
+            let ivs = vec![
+                Interval::block(1, 20_000, 80_000, vec![2, 3]),
+                Interval::work(2, Phase::Train, 20_000, 50_000, Some("train-1".to_owned())),
+                Interval::adjudication(3, 30_000, 80_000),
+            ];
+            let table = attribute_exclusive(&ivs, AttributionWindow::new(20_000, 80_000))
+                .expect("adjudication_owner");
+            assert_eq!(table.clock_ms, 60_000);
+            assert_eq!(table.sum_ms(), 60_000);
+            assert_eq!(table.ms(Phase::Wait), 10_000);
+            assert_eq!(table.ms(Phase::Adjudicate), 50_000);
+            assert_eq!(table.ms(Phase::Train), 0);
+        }
+
+        #[test]
+        fn turn_phase_rule() {
+            assert_eq!(turn_phase(&[Phase::Author, Phase::Author]), Phase::Author);
+            assert_eq!(turn_phase(&[Phase::Author, Phase::Screen]), Phase::Propose);
+            assert_eq!(turn_phase(&[]), Phase::Propose);
+            assert_eq!(turn_phase(&[Phase::Diagnose]), Phase::Diagnose);
+            assert_eq!(
+                turn_phase(&[Phase::Diagnose, Phase::Diagnose]),
+                Phase::Diagnose
+            );
+            assert_eq!(
+                turn_phase(&[Phase::Author, Phase::Diagnose]),
+                Phase::Propose
+            );
+            assert_eq!(turn_phase(&[Phase::Train]), Phase::Propose);
+        }
+
+        #[test]
+        fn order_invariance() {
+            let mut ivs = worked_fixture_intervals();
+            let baseline = attribute_exclusive(&ivs, AttributionWindow::new(0, 100_000))
+                .expect("baseline");
+            let mut rng = SplitMix64(0xDEAD_BEEF_CAFE_0023);
+            for _ in 0..64 {
+                rng.shuffle(&mut ivs);
+                let shuffled = attribute_exclusive(&ivs, AttributionWindow::new(0, 100_000))
+                    .expect("shuffled");
+                assert_eq!(baseline, shuffled);
+                assert_eq!(baseline.to_canonical_bytes(), shuffled.to_canonical_bytes());
+            }
+        }
+
+        #[test]
+        fn censored_clip() {
+            // Case 1: Deadline censoring at H = 50 s (t0 = 10 s, t_stop = 60 s).
+            // Intervals extending past 60 s are clipped to [10 s, 60 s).
+            let ivs = vec![
+                Interval::turn(1, Phase::Author, 5_000, 25_000), // clipped to [10s, 25s) -> 15s
+                Interval::block(2, 25_000, 120_000, vec![3]),    // clipped to [25s, 60s) -> 35s
+                Interval::work(3, Phase::Train, 25_000, 120_000, Some("train".to_owned())),
+            ];
+            let censored = attribute_exclusive(&ivs, AttributionWindow::new(10_000, 60_000))
+                .expect("deadline censored");
+            assert_eq!(censored.clock_ms, 50_000);
+            assert_eq!(censored.sum_ms(), 50_000);
+            assert_eq!(censored.ms(Phase::Author), 15_000);
+            assert_eq!(censored.ms(Phase::Train), 35_000);
+            assert_eq!(censored.censored_remainder_ms, 0);
+            assert!(!censored.has_flag(FLAG_CENSORED_REMAINDER));
+
+            // Case 2: Cap breach at breach = 40 s on horizon H = 100 s (t0 = 10 s).
+            // [10s, 40s) is attributed (15s author + 15s train = 30s);
+            // remainder H - (breach - t0) = 100s - 30s = 70s goes to `wait` with flag `censored-remainder`.
+            let breached = attribute_exclusive(
+                &ivs,
+                AttributionWindow::cap_breach(10_000, 40_000, 100_000),
+            )
+            .expect("cap breached");
+            assert_eq!(breached.clock_ms, 100_000);
+            assert_eq!(breached.sum_ms(), 100_000);
+            assert_eq!(breached.ms(Phase::Author), 15_000);
+            assert_eq!(breached.ms(Phase::Train), 15_000);
+            assert_eq!(breached.ms(Phase::Wait), 70_000);
+            assert_eq!(breached.censored_remainder_ms, 70_000);
+            assert!(breached.has_flag(FLAG_CENSORED_REMAINDER));
+            let json = breached.to_canonical_json();
+            assert!(json.contains("\"censored-remainder\""));
+            assert!(json.contains("\"execution_authorized\":false"));
+            assert!(json.contains("\"reality\":\"no-claim\""));
+        }
+
+        #[test]
+        fn unknown_phase_refused() {
+            // Fourteenth phase name refused at read time.
+            let line_14th = r#"{"end_ms":"1000","id":1,"kind":"work","phase":"rehearse","start_ms":"0"}"#;
+            let err1 = parse_intervals_ndjson(line_14th).expect_err("14th phase must be refused");
+            assert_eq!(err1.reason, RefusalReason::RecordUnknownField);
+            assert_eq!(err1.exit_code(), 3);
+            assert_eq!(err1.pointer, "/phase");
+
+            // `unattributed` is not a phase and must also be refused on an interval at read time.
+            let line_unattr =
+                r#"{"end_ms":"1000","id":2,"kind":"work","phase":"unattributed","start_ms":"0"}"#;
+            let err2 =
+                parse_intervals_ndjson(line_unattr).expect_err("unattributed is not a phase");
+            assert_eq!(err2.reason, RefusalReason::RecordUnknownField);
+            assert_eq!(err2.exit_code(), 3);
+            assert_eq!(err2.pointer, "/phase");
+
+            // Exact phase counts: 13 phases + 1 non-phase bucket = 14 total.
+            assert_eq!(Phase::PHASES.len(), 13);
+            assert_eq!(Phase::ALL.len(), 14);
+            assert!(Phase::PHASES.iter().all(|p| p.is_phase()));
+            assert!(!Phase::Unattributed.is_phase());
+        }
+
+        #[test]
+        fn multi_phase_job_compile_then_run_and_gap() {
+            // Multi-phase job sharing `proc = "sim-job"`:
+            // compile [10s, 22s) up to first device step, gap [22s, 25s) -> wait, screen [25s, 45s).
+            // Block awaits only the first interval id (2), and still owns the entire job through 45s.
+            let ivs = vec![
+                Interval::block(1, 10_000, 45_000, vec![2]),
+                Interval::work(2, Phase::Compile, 10_000, 22_000, Some("sim-job".to_owned())),
+                Interval::work(3, Phase::Screen, 25_000, 45_000, Some("sim-job".to_owned())),
+            ];
+            let table = attribute_exclusive(&ivs, AttributionWindow::new(10_000, 45_000))
+                .expect("multi-phase job");
+            assert_eq!(table.ms(Phase::Compile), 12_000);
+            assert_eq!(table.ms(Phase::Wait), 3_000);
+            assert_eq!(table.ms(Phase::Screen), 20_000);
+            assert_eq!(table.sum_ms(), 35_000);
+        }
+
+        #[test]
+        fn single_pair_card_known_answers() {
+            // Known answers from N39a-23 §Known answers (single-pair card):
+            // Arm B (clock 9,000 s): author 900, propose 1080, check 240, synthesize 0,
+            //   compile 540, screen 0, train 4920, evaluate 360, qualify 0, certify 0,
+            //   diagnose 600, wait 180, adjudicate 180, unattributed 0.
+            // Arm A (clock 1,500 s): author 600, propose 360, check 20, synthesize 0,
+            //   compile 12, screen 96, train 150, evaluate 60, qualify 40, certify 0,
+            //   diagnose 30, wait 42, adjudicate 90, unattributed 0.
+            let arm_b = vec![
+                Interval::turn(1, Phase::Author, 0, 900_000),
+                Interval::turn(2, Phase::Propose, 900_000, 1_980_000),
+                Interval::block(3, 1_980_000, 2_220_000, vec![4]),
+                Interval::work(4, Phase::Check, 1_980_000, 2_220_000, Some("b-chk".to_owned())),
+                // Multi-phase compile + train job with 180s launch delay (wait) + shadow work.
+                Interval::block(5, 2_220_000, 7_860_000, vec![6, 7, 8]),
+                Interval::work(6, Phase::Compile, 2_400_000, 2_940_000, Some("b-run".to_owned())),
+                Interval::work(7, Phase::Train, 2_940_000, 7_860_000, Some("b-run".to_owned())),
+                Interval::work(8, Phase::Screen, 2_220_000, 3_000_000, Some("b-shadow".to_owned())),
+                Interval::block(9, 7_860_000, 8_220_000, vec![10]),
+                Interval::work(10, Phase::Evaluate, 7_860_000, 8_220_000, Some("b-eval".to_owned())),
+                Interval::turn(11, Phase::Diagnose, 8_220_000, 8_820_000),
+                Interval::block(12, 8_820_000, 9_000_000, vec![13]),
+                Interval::adjudication(13, 8_820_000, 9_000_000),
+            ];
+            let tb = attribute_exclusive(&arm_b, AttributionWindow::new(0, 9_000_000))
+                .expect("arm B known answer");
+            assert_eq!(tb.sum_ms(), 9_000_000);
+            assert_eq!(tb.get(Phase::Author), Millis(900_000));
+            assert_eq!(tb.get(Phase::Propose), Millis(1_080_000));
+            assert_eq!(tb.get(Phase::Check), Millis(240_000));
+            assert_eq!(tb.get(Phase::Synthesize), Millis(0));
+            assert_eq!(tb.get(Phase::Compile), Millis(540_000));
+            assert_eq!(tb.get(Phase::Screen), Millis(0));
+            assert_eq!(tb.get(Phase::Train), Millis(4_920_000));
+            assert_eq!(tb.get(Phase::Evaluate), Millis(360_000));
+            assert_eq!(tb.get(Phase::Qualify), Millis(0));
+            assert_eq!(tb.get(Phase::Certify), Millis(0));
+            assert_eq!(tb.get(Phase::Diagnose), Millis(600_000));
+            assert_eq!(tb.get(Phase::Wait), Millis(180_000));
+            assert_eq!(tb.get(Phase::Adjudicate), Millis(180_000));
+            assert_eq!(tb.get(Phase::Unattributed), Millis(0));
+
+            let arm_a = vec![
+                Interval::turn(1, Phase::Author, 0, 600_000),
+                Interval::turn(2, Phase::Propose, 600_000, 960_000),
+                Interval::block(3, 960_000, 980_000, vec![4]),
+                Interval::work(4, Phase::Check, 960_000, 980_000, Some("a-chk".to_owned())),
+                Interval::block(5, 980_000, 1_130_000, vec![6, 7]),
+                Interval::work(6, Phase::Compile, 1_022_000, 1_034_000, Some("a-sim".to_owned())),
+                Interval::work(7, Phase::Screen, 1_034_000, 1_130_000, Some("a-sim".to_owned())),
+                Interval::block(8, 1_130_000, 1_280_000, vec![9]),
+                Interval::work(9, Phase::Train, 1_130_000, 1_280_000, Some("a-tr".to_owned())),
+                Interval::block(10, 1_280_000, 1_340_000, vec![11]),
+                Interval::work(11, Phase::Evaluate, 1_280_000, 1_340_000, Some("a-ev".to_owned())),
+                Interval::block(12, 1_340_000, 1_380_000, vec![13]),
+                Interval::work(13, Phase::Qualify, 1_340_000, 1_380_000, Some("a-ql".to_owned())),
+                Interval::turn(14, Phase::Diagnose, 1_380_000, 1_410_000),
+                Interval::block(15, 1_410_000, 1_500_000, vec![16]),
+                Interval::adjudication(16, 1_410_000, 1_500_000),
+            ];
+            let ta = attribute_exclusive(&arm_a, AttributionWindow::new(0, 1_500_000))
+                .expect("arm A known answer");
+            assert_eq!(ta.sum_ms(), 1_500_000);
+            assert_eq!(ta.get(Phase::Author), Millis(600_000));
+            assert_eq!(ta.get(Phase::Propose), Millis(360_000));
+            assert_eq!(ta.get(Phase::Check), Millis(20_000));
+            assert_eq!(ta.get(Phase::Synthesize), Millis(0));
+            assert_eq!(ta.get(Phase::Compile), Millis(12_000));
+            assert_eq!(ta.get(Phase::Screen), Millis(96_000));
+            assert_eq!(ta.get(Phase::Train), Millis(150_000));
+            assert_eq!(ta.get(Phase::Evaluate), Millis(60_000));
+            assert_eq!(ta.get(Phase::Qualify), Millis(40_000));
+            assert_eq!(ta.get(Phase::Certify), Millis(0));
+            assert_eq!(ta.get(Phase::Diagnose), Millis(30_000));
+            assert_eq!(ta.get(Phase::Wait), Millis(42_000));
+            assert_eq!(ta.get(Phase::Adjudicate), Millis(90_000));
+            assert_eq!(ta.get(Phase::Unattributed), Millis(0));
+        }
+
+        #[test]
+        fn product_phase_vocabulary_mapping() {
+            assert_eq!(
+                map_product_phase(ProductVocabulary::StudioLoop, "authoring", "/p").unwrap(),
+                &[Phase::Author][..]
+            );
+            assert_eq!(
+                map_product_phase(ProductVocabulary::StudioLoop, "review", "/p").unwrap(),
+                &[Phase::Propose, Phase::Diagnose][..]
+            );
+            assert_eq!(
+                map_product_phase(ProductVocabulary::PerformanceProgram, "compilation", "/p")
+                    .unwrap(),
+                &[Phase::Compile][..]
+            );
+            assert_eq!(
+                map_product_phase(ProductVocabulary::PerformanceProgram, "admission", "/p")
+                    .unwrap(),
+                &[Phase::Compile][..]
+            );
+            assert!(product_names_for_phase(Phase::Certify).is_empty());
+            assert!(product_names_for_phase(Phase::Adjudicate).is_empty());
+            assert!(product_names_for_phase(Phase::Unattributed).is_empty());
+            assert!(
+                map_product_phase(ProductVocabulary::StudioLoop, "unknown", "/p").is_err()
+            );
+            assert_eq!(PRODUCT_PHASE_MAP.len(), 15);
+        }
+
+        #[test]
+        fn overlapping_turns_first_start_then_lower_id() {
+            // Rule 2a: turn starting first owns overlap; equal start -> lower id.
+            let ivs = vec![
+                Interval::turn(20, Phase::Author, 0, 30_000),
+                Interval::turn(10, Phase::Diagnose, 10_000, 40_000),
+                // Equal start at 40s: id 5 beats id 15.
+                Interval::turn(15, Phase::Propose, 40_000, 60_000),
+                Interval::turn(5, Phase::Author, 40_000, 60_000),
+            ];
+            let t = attribute_exclusive(&ivs, AttributionWindow::new(0, 60_000)).unwrap();
+            assert_eq!(t.ms(Phase::Author), 50_000); // [0, 30s) + [40s, 60s)
+            assert_eq!(t.ms(Phase::Diagnose), 10_000); // [30s, 40s)
+            assert_eq!(t.ms(Phase::Propose), 0);
+        }
+
+        #[test]
+        fn harness_and_adjudication_without_turn_or_block() {
+            // Rule 2c: bare adjudication -> adjudicate (and beats bare harness); bare harness -> wait.
+            let ivs = vec![
+                Interval::harness(1, 0, 30_000),
+                Interval::adjudication(2, 10_000, 20_000),
+            ];
+            let t = attribute_exclusive(&ivs, AttributionWindow::new(0, 40_000)).unwrap();
+            assert_eq!(t.ms(Phase::Wait), 20_000);
+            assert_eq!(t.ms(Phase::Adjudicate), 10_000);
+            assert_eq!(t.ms(Phase::Unattributed), 10_000);
+            assert_eq!(t.sum_ms(), 40_000);
+        }
+
+        #[test]
+        fn negative_controls_fail_invariants() {
+            // Planted buggy attributions named in N39a-23 §Negative controls must fail the invariants.
+            let ivs = worked_fixture_intervals();
+            let clock = 100_000_u64;
+
+            // NC-1: Summing all activity (concurrent jobs exceed clock: 20+12+18+48+20 = 118s > 100s).
+            let sum_all: u64 = ivs
+                .iter()
+                .filter(|iv| iv.kind != IntervalKind::Block)
+                .map(|iv| iv.end_ms - iv.start_ms)
+                .sum();
+            assert!(sum_all > clock, "sum-all-activity must exceed clock");
+
+            // NC-2: Splitting blocked time evenly among awaited jobs gives train = 24s != 48s.
+            let even_split_train = 48_000_u64 / 2;
+            let good = attribute_exclusive(&ivs, AttributionWindow::new(0, clock)).unwrap();
+            assert_ne!(even_split_train, good.ms(Phase::Train));
+
+            // NC-3: Dropping gaps instead of marking unattributed makes sum fall short (90s < 100s).
+            let drop_gaps_sum = good.sum_ms() - good.ms(Phase::Unattributed);
+            assert!(drop_gaps_sum < clock, "dropping gaps must fall short of clock");
+        }
+
+        #[test]
+        fn duplicate_id_and_bad_timestamps_refused() {
+            // Duplicate interval id refused.
+            let dup = "{\"end_ms\":\"10\",\"id\":7,\"kind\":\"harness\",\"phase\":null,\"start_ms\":\"0\"}\n\
+                       {\"end_ms\":\"20\",\"id\":7,\"kind\":\"harness\",\"phase\":null,\"start_ms\":\"10\"}\n";
+            let e_dup = parse_intervals_ndjson(dup).expect_err("duplicate id must fail");
+            assert_eq!(e_dup.reason, RefusalReason::RecordDuplicateKey);
+            assert_eq!(e_dup.pointer, "/id");
+
+            // Inverted timestamps refused.
+            let inv = r#"{"end_ms":"5","id":1,"kind":"harness","phase":null,"start_ms":"10"}"#;
+            let e_inv = parse_intervals_ndjson(inv).expect_err("end < start must fail");
+            assert_eq!(e_inv.reason, RefusalReason::RecordNoncanonicalNumber);
+            assert_eq!(e_inv.pointer, "/end_ms");
+
+            // Numeric start_ms refused (must be canonical string).
+            let num = r#"{"end_ms":"10","id":1,"kind":"harness","phase":null,"start_ms":0}"#;
+            let e_num = parse_intervals_ndjson(num).expect_err("numeric start_ms must fail");
+            assert_eq!(e_num.reason, RefusalReason::RecordNoncanonicalNumber);
+            assert_eq!(e_num.pointer, "/start_ms");
+
+            // Full rich interval with resource + tokens round-trips cleanly.
+            let mut rich = Interval::work(
+                17,
+                Phase::Train,
+                1_000,
+                5_000,
+                Some("train-worker-1".to_owned()),
+            );
+            rich.resource = Some(ResourceInfo {
+                devices: vec![0, 1],
+                cores: Some(8),
+                cpu_ms: Some(12_000),
+                learner_ms: Some(900),
+            });
+            rich.tag_rule = Some("rule:train-ppo".to_owned());
+            let mut rich_turn = Interval::turn(18, Phase::Propose, 0, 1_000);
+            rich_turn.tokens_in = Some(4096);
+            rich_turn.tokens_out = Some(512);
+            rich_turn.tool_calls = Some(2);
+            let nd = write_intervals_ndjson(&[rich.clone(), rich_turn.clone()]);
+            let parsed = parse_intervals_ndjson(&nd).expect("rich intervals roundtrip");
+            assert_eq!(parsed, vec![rich, rich_turn]);
+        }
+    }
+}

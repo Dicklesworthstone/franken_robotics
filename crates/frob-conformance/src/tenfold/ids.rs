@@ -250,6 +250,24 @@ pub enum Phase {
 }
 
 impl Phase {
+    /// The thirteen exclusive phases in canonical specification order (`N39a-23`),
+    /// excluding the fourteenth non-phase bucket `unattributed`.
+    pub const PHASES: [Self; 13] = [
+        Self::Author,
+        Self::Propose,
+        Self::Check,
+        Self::Synthesize,
+        Self::Compile,
+        Self::Screen,
+        Self::Train,
+        Self::Evaluate,
+        Self::Qualify,
+        Self::Certify,
+        Self::Diagnose,
+        Self::Wait,
+        Self::Adjudicate,
+    ];
+
     /// All fourteen phase ledger buckets in canonical specification order.
     pub const ALL: [Self; 14] = [
         Self::Author,
@@ -267,6 +285,33 @@ impl Phase {
         Self::Adjudicate,
         Self::Unattributed,
     ];
+
+    /// Dense index `0..14` matching `Phase::ALL`.
+    #[must_use]
+    pub const fn index(self) -> usize {
+        match self {
+            Self::Author => 0,
+            Self::Propose => 1,
+            Self::Check => 2,
+            Self::Synthesize => 3,
+            Self::Compile => 4,
+            Self::Screen => 5,
+            Self::Train => 6,
+            Self::Evaluate => 7,
+            Self::Qualify => 8,
+            Self::Certify => 9,
+            Self::Diagnose => 10,
+            Self::Wait => 11,
+            Self::Adjudicate => 12,
+            Self::Unattributed => 13,
+        }
+    }
+
+    /// True for the thirteen phases; false for the fourteenth bucket `unattributed`.
+    #[must_use]
+    pub const fn is_phase(self) -> bool {
+        !matches!(self, Self::Unattributed)
+    }
 
     #[must_use]
     pub const fn as_str(self) -> &'static str {
@@ -288,7 +333,9 @@ impl Phase {
         }
     }
 
-    pub fn parse(raw: &str, pointer: &str) -> Result<Self, TenfoldRefusal> {
+    /// Strictly parse one of the thirteen phases for raw interval records (`N39a-23`).
+    /// Refuses `"unattributed"` and any unknown/fourteenth phase name at read time.
+    pub fn parse_phase(raw: &str, pointer: &str) -> Result<Self, TenfoldRefusal> {
         match raw {
             "author" => Ok(Self::Author),
             "propose" => Ok(Self::Propose),
@@ -303,13 +350,25 @@ impl Phase {
             "diagnose" => Ok(Self::Diagnose),
             "wait" => Ok(Self::Wait),
             "adjudicate" => Ok(Self::Adjudicate),
-            "unattributed" => Ok(Self::Unattributed),
             other => Err(TenfoldRefusal::unknown_field(
                 pointer,
                 format!("{other:?}"),
-                "one of the thirteen phases plus unattributed",
+                "one of the thirteen phases (author, propose, check, synthesize, compile, screen, train, evaluate, qualify, certify, diagnose, wait, adjudicate)",
             )),
         }
+    }
+
+    pub fn parse(raw: &str, pointer: &str) -> Result<Self, TenfoldRefusal> {
+        if raw == "unattributed" {
+            return Ok(Self::Unattributed);
+        }
+        Self::parse_phase(raw, pointer).map_err(|_| {
+            TenfoldRefusal::unknown_field(
+                pointer,
+                format!("{raw:?}"),
+                "one of the thirteen phases plus unattributed",
+            )
+        })
     }
 }
 

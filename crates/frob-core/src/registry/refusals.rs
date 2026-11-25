@@ -703,7 +703,7 @@ pub fn render_refusal_code_enum(reg: &RefusalRegistry) -> String {
         out.push_str(&format!("        Self::FrobRef{},\n", r.number));
     }
     out.push_str("    ];\n\n    /// Numeric code matching `FROB-REF-[1-9][0-9]{2,3}`.\n    #[must_use]\n    pub const fn number(self) -> u16 {\n        self as u16\n    }\n\n");
-    out.push_str("    /// Family digit (`1..=9`).\n    #[must_use]\n    pub const fn family(self) -> u8 {\n        let n = self.number();\n        if n >= 1000 { (n / 1000) as u8 } else { (n / 100) as u8 }\n    }\n\n");
+    out.push_str("    /// Family digit (`1..=9`).\n    #[must_use]\n    pub const fn family(self) -> u8 {\n        let n = self.number();\n        if n >= 1000 {\n            (n / 1000) as u8\n        } else {\n            (n / 100) as u8\n        }\n    }\n\n");
     out.push_str("    /// Canonical wire spelling `FROB-REF-[1-9][0-9]{2,3}`.\n    #[must_use]\n    pub const fn as_str(self) -> &'static str {\n        match self {\n");
     for r in reg.rows() {
         out.push_str(&format!(

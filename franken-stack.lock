@@ -1,8 +1,10 @@
-# franken-stack.lock — Pinned FrankenSuite Foundation Revisions (BD-001, N33a-03)
+# franken-stack.lock — Pinned FrankenSuite Foundation Ledger (BD-001, N33a-02, N33a-03)
+# Schema: frob.stack-lock/1 (strict frob_core::registry::toml subset).
 # Top-level `toolchain` names the provisional workspace toolchain T until
-# INT-TOOLCHAIN-01 (BD-031) records T. M0 foundations are entered here with
-# their sibling heads and toolchains read on 2026-11-24; N33a-02 adds the
-# remaining ten rows of the eighteen-foundation ledger.
+# INT-TOOLCHAIN-01 (BD-031) records T.
+# All eighteen foundation rows are listed with their uses, confinement lists,
+# admission gates, fallbacks, first-needed milestones, critical-path flags,
+# honest notes, and sibling heads read read-only from `../<sibling>`.
 
 toolchain = "nightly-2026-08-31"
 
@@ -11,53 +13,92 @@ id = "FD-FSIM"
 name = "frankensim"
 posture = "consume-path"
 path = "../frankensim"
-git_rev = "d02ad9c170d5932667d15359cd362d3198ac4806"
+git_rev = "08e9195c6faea3363377b7fdfb6d6b07f5b552f3"
 toolchain = "nightly-2026-07-06"
 features = ["referee", "geometry", "ledger"]
 build_env = { FRANKENSIM_DEPGRAPH_SALT = "franken-robotics-dev-v1" }
 confined_to = ["frob-fsim", "bedrock-direct"]
-admission_gate = "INT-FSIM-01"
+admission_gate = "INT-FSIM-01..18"
 receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
 fallback = "KILL-FSIM: (a) pinned worker process exchanging whole jobs; (b) lift the minimal referee set."
+first_needed = "M0"
+critical_path = true
 
 [[foundation]]
 id = "FD-ASUP"
 name = "asupersync"
 posture = "consume"
 path = "../asupersync"
-git_rev = "70a37b2cfb78ce39dc001739101e0a1a7fbee416"
+git_rev = "d07d88811f40b19bcba407f32753bb20d2386431"
 version = "=0.7.0"
 toolchain = "nightly-2026-08-31"
 confined_to = ["any"]
-admission_gate = "INT-ASUP-01"
+admission_gate = "INT-ASUP-01..02"
 receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
-fallback = "FD-ASUP-01 aligns the siblings; a surface that still brings a second package: KILL-MCP fallback 1."
+fallback = "A surface that still brings a second package moves to its own workspace (for the MCP server: KILL-MCP fallback 1)."
+first_needed = "M0"
+critical_path = true
 
 [[foundation]]
 id = "FD-FSQL"
 name = "frankensqlite"
-posture = "consume"
 path = "../frankensqlite"
-git_rev = "976b63ccb573b941c24b78d1a64450eb632b1336"
+git_rev = "8a4b4a5fa047423cce6cc4ef6158cf23bd8ab771"
 version = "=0.5.1"
 toolchain = "nightly-2026-08-31"
-confined_to = ["frob-chronicle"]
-admission_gate = "INT-FSQL-01"
+admission_gate = "INT-FSQL-01..02"
 receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
 fallback = "An append-only JSON-lines ledger with the same schema; LRU eviction."
+first_needed = "M0"
+critical_path = true
+
+[[foundation.uses]]
+posture = "consume"
+purpose = "Chronicle ledger and qualification ledger (through fs-ledger where it fits)"
+confined_to = ["frob-chronicle"]
+tier = "solid"
+first_needed = "M0"
+
+[[foundation.uses]]
+posture = "pattern"
+purpose = "Eviction and pager policies of the memo store"
+confined_to = []
+tier = "solid"
+first_needed = "M0"
+
+[[foundation.uses]]
+posture = "oracle"
+purpose = "Pager-policy conformance oracle"
+confined_to = ["frob-conformance"]
+tier = "solid"
+first_needed = "M0"
 
 [[foundation]]
 id = "FD-FT"
 name = "frankentorch"
-posture = "consume"
 path = "../frankentorch"
 git_rev = "d138a752cf7fe4abd5ba4baae3f6597c2202461e"
 version = "=0.1.3"
 toolchain = "nightly-2026-08-31"
-confined_to = ["spark/frob-spark-metal"]
-admission_gate = "INT-FT-01"
+admission_gate = "INT-FT-01..02"
 receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
 fallback = "The annex binds objc2-metal directly (needs an owner decision); the CPU trainer uses the in-house kernels on batch-cpu."
+first_needed = "M0"
+note = "frankentorch tensors live on the host. Device::Metal and Device::Cuda are tags, and ft-nn and ft-autograd run on the CPU (reported from source reading; re-read at INT-FT-02). A device tag earns no GPU operator coverage; on-device learning kernels are written in this project in the shared kernel dialect."
+
+[[foundation.uses]]
+posture = "consume"
+purpose = "ft-kernel-metal (the Metal gateway) in the Metal annex"
+confined_to = ["spark/frob-spark-metal"]
+tier = "solid"
+first_needed = "M0"
+
+[[foundation.uses]]
+posture = "consume"
+purpose = "ft-api, ft-nn, ft-optim, ft-serialize as CPU trainer, gradient oracle, and policy interchange behind a feature"
+confined_to = ["frob-learn"]
+tier = "solid"
+first_needed = "M2"
 
 [[foundation]]
 id = "FD-CUDA"
@@ -68,18 +109,104 @@ confined_to = ["spark/frob-spark-cuda"]
 admission_gate = "INT-CUDA-01"
 receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
 fallback = "None needed for CPU and Metal; the CUDA tier is absent."
+first_needed = "M0"
+
+[[foundation]]
+id = "FD-FNP"
+name = "franken_numpy"
+path = "../franken_numpy"
+git_rev = "1c6450814adedf930d57985256f38b30a4def450"
+version = "=0.6.0"
+toolchain = "nightly-2026-08-31"
+admission_gate = "INT-FNP-01..02"
+receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
+fallback = "Plain binary columns; drop the oracle."
+first_needed = "M0"
+note = "franken_numpy is an f64 array library on heap vectors with no single-precision storage and no fixed-size matrix types, and it lists GPU arrays and automatic differentiation as out of scope. It is the right tool at the interchange boundary and as an oracle, never in a hot path. Its stride convention differs from FrankenTorch (signed byte strides vs unsigned element strides), requiring a typed converter at the boundary (BD-036)."
+
+[[foundation.uses]]
+posture = "consume"
+purpose = "Array files at the export boundary (fnp-io)"
+confined_to = ["frob-chronicle", "frob-conformance", "bindings/frob-gymnasium"]
+tier = "solid"
+first_needed = "M0"
+
+[[foundation.uses]]
+posture = "oracle"
+purpose = "fnp-linalg batch routines as an f64 oracle for small-matrix kernels"
+confined_to = ["frob-conformance"]
+tier = "solid"
+first_needed = "M2"
+
+[[foundation]]
+id = "FD-FSCI"
+name = "frankenscipy"
+posture = "oracle"
+path = "../frankenscipy"
+git_rev = "15579834360fb517e2be89d53b8776bf213e4f54"
+version = "=0.5.1"
+toolchain = "nightly-2026-08-31"
+confined_to = ["frob-conformance"]
+admission_gate = "INT-FSIM-01"
+fallback = "Drop the cross-checks."
+first_needed = "M1"
 
 [[foundation]]
 id = "FD-FSYM"
 name = "frankensympy"
-posture = "build-time"
 path = "../frankensympy"
-git_rev = "1b4cfab25b55aaeba2be4a62ed97048eca6bf4d5"
+git_rev = "bd69ba90e80f275e644db3d09c8bb6e0e1867265"
 toolchain = "nightly-2026-08-20"
-confined_to = ["derive/frob-derive"]
-admission_gate = "INT-FSYM-01"
+admission_gate = "INT-FSYM-01..02"
 receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
 fallback = "KILL-KIR, KILL-LEMMA."
+first_needed = "M0"
+note = "frankensympy workspace refers to two sibling pin directories (../franken_numpy-pin and ../frankenscipy-pin) absent on this machine and pins a different nightly (frankensympy/Cargo.toml:95-96, frankensympy/rust-toolchain.toml). derive/ therefore depends on individual fsym-* crates by path, builds on T, has no toolchain file of its own, and FrankenSymPy moves to T on the toolchain train."
+
+[[foundation.uses]]
+posture = "build-time"
+purpose = "Derivation of kernel arithmetic; polynomial, interval, and rational certificates"
+confined_to = ["derive/frob-derive"]
+tier = "solid"
+first_needed = "M0"
+
+[[foundation.uses]]
+posture = "subprocess"
+purpose = "Exact lane of linkage synthesis, reached as a subprocess"
+confined_to = ["derive/frob-derive"]
+tier = "solid"
+first_needed = "M0"
+
+[[foundation.uses]]
+posture = "oracle"
+purpose = "Independent re-check of certificate bundles beside frob-verify"
+confined_to = ["frob-conformance"]
+tier = "solid"
+first_needed = "M0"
+
+[[foundation]]
+id = "FD-FLN"
+name = "franken_lean"
+path = "../franken_lean"
+git_rev = "09ce30557d88301d8f26e78e8c4640625bad75ef"
+toolchain = "nightly-2026-08-31"
+admission_gate = "INT-FLN-01..02"
+fallback = "Stock Lean alone, recorded as a single-kernel check."
+first_needed = "M5"
+
+[[foundation.uses]]
+posture = "subprocess"
+purpose = "Independent re-check and sealing of Lean proofs"
+confined_to = ["lean/"]
+tier = "solid"
+first_needed = "M5"
+
+[[foundation.uses]]
+posture = "subprocess"
+purpose = "Kernel reflection"
+confined_to = ["lean/"]
+tier = "frontier"
+first_needed = "M5"
 
 [[foundation]]
 id = "FD-FMCP"
@@ -93,16 +220,160 @@ confined_to = ["surface/frob-mcp"]
 admission_gate = "INT-FMCP-01"
 receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
 fallback = "KILL-MCP."
+first_needed = "M0"
 
 [[foundation]]
-id = "FD-FNP"
-name = "franken_numpy"
-posture = "consume"
-path = "../franken_numpy"
-git_rev = "d548147b049a3d2fe76c20d677cb87d7423b89eb"
-version = "=0.6.0"
+id = "FD-FTUI"
+name = "frankentui"
+path = "../frankentui"
+git_rev = "354f39cd1fa51239f5e4e4b703a83fc480c48e71"
+version = "=0.11.0"
 toolchain = "nightly-2026-08-31"
-confined_to = ["frob-chronicle", "frob-conformance", "bindings/frob-gymnasium"]
-admission_gate = "INT-FNP-01"
-receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
-fallback = "Plain binary columns; drop the oracle."
+admission_gate = "INT-FTUI-01"
+fallback = "No dashboard; line-delimited JSON job events."
+first_needed = "M3"
+
+[[foundation.uses]]
+posture = "consume"
+purpose = "The terminal dashboard"
+confined_to = ["frob-tui"]
+tier = "frontier"
+first_needed = "M3"
+
+[[foundation]]
+id = "FD-F3D"
+name = "franken_threed"
+path = "../franken_threed"
+git_rev = "879821489621819dcce739eef079ba62df91f555"
+toolchain = "nightly-2026-08-31"
+admission_gate = "INT-F3D-01"
+fallback = "A plain Three.js bundle."
+first_needed = "M3"
+note = "franken_threed does not yet package a single self-contained page (franken_threed/README.md, Honest status). The viewer's self-contained HTML export is this project's own build step."
+
+[[foundation.uses]]
+posture = "pattern"
+purpose = "Admission-record discipline"
+confined_to = []
+tier = "solid"
+first_needed = "M3"
+
+[[foundation.uses]]
+posture = "subprocess"
+purpose = "Optional renderer route for the viewer"
+confined_to = ["viewer/"]
+tier = "frontier"
+first_needed = "M3"
+
+[[foundation]]
+id = "FD-FDGR"
+name = "franken_drone_geometry_reconstruction"
+path = "../franken_drone_geometry_reconstruction"
+git_rev = "db45703afc5ef451d25218b0598d397205031bcd"
+toolchain = "nightly-2026-08-31"
+admission_gate = "INT-FDGR-01"
+fallback = "Mesh and point-cloud import through fs-io, scale declared by the operator."
+first_needed = "M3"
+
+[[foundation.uses]]
+posture = "pattern"
+purpose = "Schema adapter for coverage, uncertainty, and scale authority"
+confined_to = ["frob-scene"]
+tier = "solid"
+first_needed = "M3"
+
+[[foundation.uses]]
+posture = "subprocess"
+purpose = "Scan-import lane with coverage, uncertainty, and scale authority"
+confined_to = ["frob-scene"]
+tier = "frontier"
+first_needed = "M5"
+
+[[foundation]]
+id = "FD-FJAX"
+name = "frankenjax"
+git_rev = "fa93fb775e1cd73471cd9b2b3e3a014762d1066c"
+toolchain = "nightly-2026-08-31"
+admission_gate = "INT-FJAX-01"
+fallback = "Common-subexpression elimination only."
+first_needed = "M2"
+
+[[foundation.uses]]
+posture = "pattern"
+purpose = "Reference semantics for batching and differentiation transforms; rule sets of its e-graph crate"
+confined_to = []
+tier = "frontier"
+first_needed = "M2"
+
+[[foundation]]
+id = "FD-FKER"
+name = "franken-kernel"
+path = "../asupersync/franken_kernel"
+git_rev = "d07d88811f40b19bcba407f32753bb20d2386431"
+toolchain = "nightly-2026-08-31"
+admission_gate = "INT-ASUP-01"
+fallback = "Local identifier types with the same text form."
+first_needed = "M1"
+
+[[foundation.uses]]
+posture = "pattern"
+purpose = "Wire shape of trace, decision, and policy identifiers (franken-kernel, franken-evidence)"
+confined_to = ["frob-core"]
+tier = "solid"
+first_needed = "M1"
+
+[[foundation.uses]]
+posture = "oracle"
+purpose = "Round-trip conformance oracle for franken-kernel and franken-evidence identifiers"
+confined_to = ["frob-conformance"]
+tier = "solid"
+first_needed = "M1"
+
+[[foundation]]
+id = "FD-FTX"
+name = "franken_textiles"
+path = "../franken_textiles"
+git_rev = "6229a38d7004d72ac4c97c39bdd2bc33ee67d89c"
+toolchain = "nightly-2026-08-31"
+admission_gate = "INT-FTX-01"
+fallback = "No cloth tier; rigid proxies."
+first_needed = "M6"
+
+[[foundation.uses]]
+posture = "subprocess"
+purpose = "Oracle worker for cloth evaluation tier (ftx-drape) in its own workspace; never a Cargo dependency"
+confined_to = ["tools/oracle/"]
+tier = "moonshot"
+first_needed = "M6"
+
+[[foundation]]
+id = "FD-FFW"
+name = "franken_firmware"
+git_rev = "151f9ca991e71fb18bf64b565ef5730e5f632440"
+toolchain = "1.99.0"
+admission_gate = "none"
+fallback = "No firmware export."
+first_needed = "M8"
+
+[[foundation.uses]]
+posture = "pattern"
+purpose = "Hardware-abstraction boundary for firmware export"
+confined_to = []
+tier = "moonshot"
+first_needed = "M8"
+
+[[foundation]]
+id = "FD-FSS"
+name = "franken_surveillance_system"
+git_rev = "6d8056d9ec3d51fc43f1df23d99e120f4a0ac1a9"
+toolchain = "nightly-2026-08-31"
+admission_gate = "none"
+fallback = "none"
+first_needed = "M5"
+
+[[foundation.uses]]
+posture = "pattern"
+purpose = "Twin package and camera-model contract"
+confined_to = []
+tier = "solid"
+first_needed = "M5"

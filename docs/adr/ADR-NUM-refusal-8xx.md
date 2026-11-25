@@ -22,9 +22,12 @@ Consequences, each owned by the bead that owns the artifact:
 - Codes are compared as whole tokens everywhere. `FROB-REF-810` is a prefix of `FROB-REF-8100`, so a substring or
   prefix match is a defect. The registry test plants one.
 - The printout sorts by family, then numerically.
-- The four free numbers `836` to `839` are assigned by the allocation rule like any other free number. The hold
-  described in N35x-01 is not needed for `8xx`. The `[[hold]]` mechanism itself is still built, because it is generic.
-- The second allocation round (N35x-02) is run under this ruling. It is a pure function of the ledger and the registry.
+- The first allocation round (N35-33) is unchanged. Under its rule 8, its `8xx` requests stay `requested` with reason
+  `owner-decision`, and it assigns no `8xx` number.
+- The second allocation round (N35x-02) allocates every `8xx` request of both rounds under this ruling: first the free
+  numbers `836` to `839`, then `8100` onward. It is a pure function of the ledger and the registry.
+- N35x-01's `[[hold]]` mechanism is still built and tested as its acceptance states, with a planted hold. The committed
+  ledger needs no hold on `8xx`, because the ruling is already recorded.
 
 ## Reason
 

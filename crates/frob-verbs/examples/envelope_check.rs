@@ -4,13 +4,14 @@
 //! Usage: `envelope_check <stdout-file>`. Prints one JSON line: on success
 //! `{"ok":true,"progress_lines":N,"exit":E,"envelope_ok":B,"code":C,"evidence":{...}}`
 //! (`code` only on a refusal), otherwise
-//! `{"ok":false,"error":"...","first_field":"..."}`. Exits 0 when the output is valid, 1 when
-//! it is not, 2 on a usage or I/O error.
+//! `{"ok":false,"error":"...","first_field":"..."}`. `first_field` is a JSON pointer within
+//! the invalid line and is absent for stream-level failures. Exits 0 when the output is valid,
+//! 1 when it is not, 2 on a usage or I/O error.
 
 use std::process::ExitCode;
 
 use frob_core::canon::{self, CanonError, Canonical, Value};
-use frob_verbs::envelope::{StreamError, Tree, check_stream};
+use frob_verbs::envelope::{Tree, check_stream};
 
 struct Report<'a> {
     ok: bool,
@@ -56,17 +57,6 @@ impl Canonical for Report<'_> {
     }
 }
 
-fn first_field(e: &StreamError) -> String {
-    match e {
-        StreamError::BadLine { line, .. }
-        | StreamError::ProgressAfterEnvelope { line }
-        | StreamError::SecondEnvelope { line } => {
-            format!("line {line}")
-        }
-        other => other.to_string(),
-    }
-}
-
 fn main() -> ExitCode {
     let mut args = std::env::args().skip(1);
     let (Some(path), None) = (args.next(), args.next()) else {
@@ -104,7 +94,7 @@ fn main() -> ExitCode {
                 code: None,
                 evidence: None,
                 error: Some(e.to_string()),
-                first_field: Some(first_field(&e)),
+                first_field: e.first_field().map(str::to_owned),
             });
             (line, false)
         }

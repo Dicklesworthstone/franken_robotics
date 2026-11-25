@@ -267,7 +267,11 @@ pub enum StreamError {
     /// The last line is not terminated by `\n`.
     Unterminated,
     /// A line is neither a valid progress event nor a valid envelope.
-    BadLine { line: usize, reason: String },
+    BadLine {
+        line: usize,
+        first_field: String,
+        reason: String,
+    },
     /// A progress event after the envelope.
     ProgressAfterEnvelope { line: usize },
     /// A second envelope.
@@ -278,12 +282,23 @@ pub enum StreamError {
     Setup(EnvelopeError),
 }
 
+impl StreamError {
+    /// JSON pointer within the invalid line, or `None` for stream-level failures.
+    #[must_use]
+    pub fn first_field(&self) -> Option<&str> {
+        match self {
+            Self::BadLine { first_field, .. } => Some(first_field),
+            _ => None,
+        }
+    }
+}
+
 impl fmt::Display for StreamError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::Empty => f.write_str("no output"),
             Self::Unterminated => f.write_str("last line not newline-terminated"),
-            Self::BadLine { line, reason } => write!(f, "line {line}: {reason}"),
+            Self::BadLine { line, reason, .. } => write!(f, "line {line}: {reason}"),
             Self::ProgressAfterEnvelope { line } => {
                 write!(f, "line {line}: progress after the envelope")
             }
@@ -323,6 +338,7 @@ pub fn check_stream_with(
         let line = i + 1;
         let tree = Tree::parse(raw).map_err(|e| StreamError::BadLine {
             line,
+            first_field: e.pointer.clone(),
             reason: format!("not JSON: {}", e.message),
         })?;
         match tree.get("schema").and_then(Tree::as_str) {
@@ -332,6 +348,7 @@ pub fn check_stream_with(
                 }
                 progress.validate(&tree).map_err(|v| StreamError::BadLine {
                     line,
+                    first_field: v.first().map_or_else(String::new, |v| v.instance.clone()),
                     reason: v.first().map_or_else(String::new, ToString::to_string),
                 })?;
                 let count = |field| {
@@ -339,6 +356,7 @@ pub fn check_stream_with(
                         .and_then(Tree::as_int53)
                         .ok_or_else(|| StreamError::BadLine {
                             line,
+                            first_field: format!("/{field}"),
                             reason: format!("`/{field}` requires an int53"),
                         })
                 };
@@ -347,6 +365,7 @@ pub fn check_stream_with(
                 if done > total {
                     return Err(StreamError::BadLine {
                         line,
+                        first_field: "/done".into(),
                         reason: format!("done {done} exceeds total {total}"),
                     });
                 }
@@ -354,6 +373,7 @@ pub fn check_stream_with(
                 if job.as_deref().is_some_and(|j| j != id) {
                     return Err(StreamError::BadLine {
                         line,
+                        first_field: "/job".into(),
                         reason: "a second job id".into(),
                     });
                 }
@@ -367,6 +387,7 @@ pub fn check_stream_with(
                 let read = read_envelope_with(raw, envelope_schema, registry).map_err(
                     |e: ReadError| StreamError::BadLine {
                         line,
+                        first_field: e.first_field(),
                         reason: e.to_string(),
                     },
                 )?;
@@ -375,6 +396,7 @@ pub fn check_stream_with(
             _ => {
                 return Err(StreamError::BadLine {
                     line,
+                    first_field: "/schema".into(),
                     reason: "neither a progress event nor an envelope".into(),
                 });
             }

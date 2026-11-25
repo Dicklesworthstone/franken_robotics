@@ -143,7 +143,18 @@ while IFS="$(printf '\t')" read -r id want_ok want_exit want_code exercised mech
 
   e2e_cmd --name "row_${id}_envelope_check" -- \
     cargo run --manifest-path "${MANIFEST}" -p frob-verbs --example envelope_check -- "${ROW_STDOUT}"
-  e2e_assert_eq "row_${id}_envelope_check_exit" "${E2E_LAST_EXIT}" "0" --gate GATE-TETHER-03
+  if [ "${E2E_LAST_EXIT}" = "0" ]; then
+    e2e_assert_eq "row_${id}_envelope_check_exit" "${E2E_LAST_EXIT}" "0" --gate GATE-TETHER-03
+  else
+    FIRST_FIELD="$(e2e_get /first_field)" || FIRST_FIELD="<unavailable>"
+    CHECK_ERROR="$(e2e_get /error)" || CHECK_ERROR="checker exit ${E2E_LAST_EXIT}"
+    _e2e_extract_tags --gate GATE-TETHER-03
+    _e2e_emit_assert "row_${id}_envelope_check_exit" "eq" "fail" \
+      --observed "${E2E_LAST_EXIT}" --expected "0" \
+      --diff-path "${FIRST_FIELD}" --diff-observed "${CHECK_ERROR}" --diff-expected "schema-valid output" \
+      --artifact "${ROW_STDOUT}" \
+      ${_E2E_TAG_ARGS[@]+"${_E2E_TAG_ARGS[@]}"}
+  fi
   e2e_assert_json "row_${id}_one_schema_valid_envelope" "/ok" "true" --gate GATE-TETHER-03
   e2e_assert_json "row_${id}_envelope_exit" "/exit" "${want_exit}" --gate GATE-TETHER-03 --ka KA-755
   e2e_assert_json "row_${id}_refusal_code" "/code" "${want_code}" --gate GATE-TETHER-03 --ka KA-755

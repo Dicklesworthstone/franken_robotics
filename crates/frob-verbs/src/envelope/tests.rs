@@ -1220,9 +1220,8 @@ fn readers_refuse_non_int53_progress_counts() {
             let bad_progress = progress.replace(&target, &replacement);
             let error = check_stream_with(format!("{bad_progress}\n{env}").as_bytes(), &registry)
                 .expect_err(number);
-            assert!(
-                matches!(error, StreamError::BadLine { line: 1, reason } if reason.contains(&format!("/{field}")))
-            );
+            assert!(matches!(error, StreamError::BadLine { line: 1, .. }));
+            assert_eq!(error.first_field(), Some(format!("/{field}").as_str()));
         }
     }
 }
@@ -1236,6 +1235,18 @@ fn reader_refuses_unordered_job_eta() {
         let error = read_envelope(planted.trim_end().as_bytes()).expect_err(invalid);
         assert_eq!(error.first_field(), "/job/eta_s");
     }
+}
+
+#[test]
+fn stream_reports_envelope_field_pointer() {
+    let registry = mirror();
+    let env = canonical_line(&build_deferred());
+    assert!(check_stream_with(env.as_bytes(), &registry).is_ok());
+    let planted = env.replace("\"poll_after_ms\":2000", "\"poll_after_ms\":0.5");
+    let err =
+        check_stream_with(planted.as_bytes(), &registry).expect_err("non-int53 poll interval");
+    assert_eq!(err.first_field(), Some("/job/poll_after_ms"));
+    assert_eq!(StreamError::Unterminated.first_field(), None);
 }
 
 #[test]

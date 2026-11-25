@@ -1,0 +1,271 @@
+{
+  "foundation": "FD-FSIM",
+  "workspace": "core",
+  "covers": {
+    "crates": [
+      "fs-blake3",
+      "fs-contact",
+      "fs-ga",
+      "fs-mbd",
+      "fs-query",
+      "fs-time"
+    ],
+    "groups": [
+      "referee"
+    ],
+    "tool": null
+  },
+  "command": [
+    "cargo",
+    "test",
+    "--offline",
+    "-p",
+    "frob-fsim",
+    "--test",
+    "referee",
+    "-j",
+    "1"
+  ],
+  "measured": [
+    {
+      "name": "cold_check_s",
+      "value": 649.346,
+      "unit": "s",
+      "threshold": 3600,
+      "relation": "<="
+    },
+    {
+      "name": "cold_check_remote_s",
+      "value": 455.895,
+      "unit": "s",
+      "threshold": 3600,
+      "relation": "<="
+    },
+    {
+      "name": "warm_check_s",
+      "value": 1.58,
+      "unit": "s",
+      "threshold": 3600,
+      "relation": "<="
+    },
+    {
+      "name": "warm_check_e2e_s",
+      "value": 151.086,
+      "unit": "s",
+      "threshold": 3600,
+      "relation": "<="
+    },
+    {
+      "name": "warm_touch_s",
+      "value": 1.66,
+      "unit": "s",
+      "threshold": 3600,
+      "relation": "<="
+    },
+    {
+      "name": "warm_touch_e2e_s",
+      "value": 192.827,
+      "unit": "s",
+      "threshold": 3600,
+      "relation": "<="
+    },
+    {
+      "name": "peak_rss_bytes",
+      "value": 1131048960,
+      "unit": "bytes",
+      "threshold": 17179869184,
+      "relation": "<="
+    },
+    {
+      "name": "jobs",
+      "value": 1,
+      "unit": "cores",
+      "threshold": 8,
+      "relation": "<="
+    },
+    {
+      "name": "max_single_process_rss_bytes",
+      "value": 974606336,
+      "unit": "bytes",
+      "threshold": 17179869184,
+      "relation": "<="
+    },
+    {
+      "name": "local_client_max_rss_bytes",
+      "value": 101613568,
+      "unit": "bytes",
+      "threshold": 17179869184,
+      "relation": "<="
+    },
+    {
+      "name": "fsim_crates_compiled",
+      "value": 45,
+      "unit": "crates",
+      "threshold": 1,
+      "relation": ">="
+    },
+    {
+      "name": "fsim_lib_lines_compiled",
+      "value": 1734377,
+      "unit": "lines",
+      "threshold": 1,
+      "relation": ">="
+    },
+    {
+      "name": "lockfile_packages_total",
+      "value": 233,
+      "unit": "packages",
+      "threshold": 1,
+      "relation": ">="
+    },
+    {
+      "name": "lockfile_packages_registry",
+      "value": 175,
+      "unit": "packages",
+      "threshold": 0,
+      "relation": ">="
+    },
+    {
+      "name": "asupersync_packages",
+      "value": 1,
+      "unit": "packages",
+      "threshold": 1,
+      "relation": "=="
+    },
+    {
+      "name": "necessity_patch_removed_5crate_exit",
+      "value": 0,
+      "unit": "exit_code",
+      "threshold": 0,
+      "relation": "=="
+    },
+    {
+      "name": "necessity_patch_removed_5crate_asupersync",
+      "value": 1,
+      "unit": "packages",
+      "threshold": 1,
+      "relation": "=="
+    },
+    {
+      "name": "necessity_patch_removed_registry_consumer_asupersync",
+      "value": 2,
+      "unit": "packages",
+      "threshold": 2,
+      "relation": "=="
+    },
+    {
+      "name": "necessity_patch_present_registry_consumer_asupersync",
+      "value": 1,
+      "unit": "packages",
+      "threshold": 1,
+      "relation": "=="
+    },
+    {
+      "name": "necessity_profiles_removed_exit",
+      "value": 0,
+      "unit": "exit_code",
+      "threshold": 0,
+      "relation": "=="
+    },
+    {
+      "name": "necessity_salt_cleared_exit",
+      "value": 101,
+      "unit": "exit_code",
+      "threshold": 1,
+      "relation": ">="
+    },
+    {
+      "name": "g1_fd_digest_match",
+      "value": null,
+      "unit": "bool",
+      "threshold": 1,
+      "relation": "=="
+    },
+    {
+      "name": "g1_rollout_2s_digest_match",
+      "value": null,
+      "unit": "bool",
+      "threshold": 1,
+      "relation": "=="
+    }
+  ],
+  "controls": [
+    {
+      "id": "NC-INT-FSIM-01-unset-build-identity",
+      "caught": true
+    },
+    {
+      "id": "NC-INT-FSIM-01-ulp-perturbation",
+      "caught": false
+    },
+    {
+      "id": "NC-INT-FSIM-01-torque-perturbation",
+      "caught": false
+    },
+    {
+      "id": "NC-INT-FSIM-01-copied-fixture",
+      "caught": false
+    }
+  ],
+  "facts_reread": [
+    {
+      "fact": "toolchain_matrix_core_row_candidate_a",
+      "path": "rust-toolchain.toml",
+      "value": "nightly-2026-08-31: builds (exit 0 on rch worker hz3; 45 FrankenSim crates including fs-qty and fs-la compiled cleanly; candidate (b) nightly-2026-07-06 not needed)"
+    },
+    {
+      "fact": "admitted_items_exercised",
+      "path": "crates/frob-fsim/src/lib.rs",
+      "value": "fs_contact::ballistic::first_ballistic_contact, fs_ga::Vec3::cross+Quat::rotate, fs_mbd::Vec3::dot+cross, fs_query::closest_triangle_point, fs_time::verlet_step (all default-features = false)"
+    },
+    {
+      "fact": "oracle_g1_fd_digest",
+      "path": "tests/fixtures/oracle/fsim/g1_fd_digest.toml",
+      "value": "dac0825655a37d38b1704c031718cbccb32db12ec99af91e7bf4ae52594436ab (pin=08e9195c6faea3363377b7fdfb6d6b07f5b552f3; Unitree G1 30-link reference state, zero torques, gravity [0, 0, -9.80665] m/s^2)"
+    },
+    {
+      "fact": "oracle_g1_rollout_2s_digest",
+      "path": "tests/fixtures/oracle/fsim/g1_fd_digest.toml",
+      "value": "20a61e1bf8faa852d2ae40beb3d7a11fcd58e672f8314e80ecd28377b362685c (960 steps of h=1/480 s = 1.0/480.0, zero torques, contact-free Lie midpoint step)"
+    },
+    {
+      "fact": "oracle_toolchain",
+      "path": "tests/fixtures/oracle/fsim/g1_fd_digest.capture.log",
+      "value": "nightly-2026-07-06; rustc 1.99.0-nightly (3659db0d3 2026-07-05); host x86_64-unknown-linux-gnu; cargo 1.99.0-nightly (2f0e7011e 2026-07-05); executed on rch worker ovh-b job j-30123702905472511"
+    },
+    {
+      "fact": "oracle_capture_log_blake3",
+      "path": "tests/fixtures/oracle/fsim/g1_fd_digest.capture.log",
+      "value": "95dba82acb49616c26a3fb3974d62ef185d528596f5c1faa86c6615d2de85b92"
+    },
+    {
+      "fact": "oracle_digest_source_blake3",
+      "path": "crates/frob-fsim/src/referee/digest.rs",
+      "value": "53af1f004e1aee081e1296539afca3da839add25b179af6b57271cc7b7ac5f7d (byte-for-byte identical in frob-fsim and apps/frob-digest-probe)"
+    },
+    {
+      "fact": "oracle_g1_model_facts",
+      "path": "tests/fixtures/oracle/fsim/g1_fd_digest.toml",
+      "value": "links=30, nq=36, nv=35, actuators=29, mass_kg=31.96314202, orientation_parameterization=unit-quaternion-wxyz (all 29 actuated joints revolute)"
+    },
+    {
+      "fact": "synthetic_digest_known_answer",
+      "path": "crates/frob-fsim/tests/referee.rs",
+      "value": "50-byte string (links=1, nq=1, nv=1, q=[1.0], v=[-0.0], tag=0x00) -> 8b709fdf8d41050ac2efa7d32f266637318db7a15e9d95be128822de6ebe0893; v=[+0.0] -> 9acf26e2bdc3aab4b074b73845a65de73a5640eef11b7e18a800af6d71786851 (independent Python + b3sum)"
+    },
+    {
+      "fact": "admission_schema_measure_num_note",
+      "path": "schemas/admission.schema.json",
+      "value": "frob.admission/1 types measured[].value and threshold as numeric MeasureNum (number|null), not 64-hex string; therefore g1_fd_digest_match and g1_rollout_2s_digest_match use numeric bool (null until central orchestrator cargo test -p frob-fsim --test referee runs) while exact 64-hex oracle digests, oracle toolchain, and capture_log_blake3 are recorded in facts_reread. A fresh non-implementing session records pass after central tests execute."
+    }
+  ],
+  "host": {
+    "class": "m5-ultra",
+    "fingerprint": null
+  },
+  "recorded": {
+    "date": "2026-11-25T06:54:00Z",
+    "session": "",
+    "implemented_by": "CopperDove"
+  }
+}

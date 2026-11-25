@@ -1,0 +1,43 @@
+# FrankenSim in-tree oracle capture log (BD-007, INT-FSIM-01)
+pin=08e9195c6faea3363377b7fdfb6d6b07f5b552f3
+asupersync_pin=d07d88811f40b19bcba407f32753bb20d2386431
+toolchain=nightly-2026-07-06
+captured_utc=2026-11-25T06:19:50Z
+digest_source_blake3=53af1f004e1aee081e1296539afca3da839add25b179af6b57271cc7b7ac5f7d
+cargo_version=cargo 1.99.0-nightly (2f0e7011e 2026-07-05)
+--- worker rustc -vV ---
+rustc 1.99.0-nightly (3659db0d3 2026-07-05)
+binary: rustc
+commit-hash: 3659db0d3e2cd634c766fcda79ed118eca31a9fd
+commit-date: 2026-07-05
+host: x86_64-unknown-linux-gnu
+release: 1.99.0-nightly
+LLVM version: 22.1.8
+--- remote build summary (ovh-b j-30123702905472511) ---
+[*] Job j-30123702905472511 submitted to ovh-b (2 slots remaining, speed 40.3)
+   Compiling fs-blake3 v0.0.1 (/data/tmp/rch/offroot/c855be45a8cc5edc/frob-fsim-intree/08e9195c6faea3363377b7fdfb6d6b07f5b552f3/run-20261125T060454Z-14231/frankensim/crates/fs-blake3)
+   Compiling fs-ga v0.0.1 (/data/tmp/rch/offroot/c855be45a8cc5edc/frob-fsim-intree/08e9195c6faea3363377b7fdfb6d6b07f5b552f3/run-20261125T060454Z-14231/frankensim/crates/fs-ga)
+   Compiling fs-mbd v0.0.1 (/data/tmp/rch/offroot/c855be45a8cc5edc/frob-fsim-intree/08e9195c6faea3363377b7fdfb6d6b07f5b552f3/run-20261125T060454Z-14231/frankensim/crates/fs-mbd)
+   Compiling frob-digest-probe v0.0.1 (/data/tmp/rch/offroot/c855be45a8cc5edc/frob-fsim-intree/08e9195c6faea3363377b7fdfb6d6b07f5b552f3/run-20261125T060454Z-14231/frankensim/apps/frob-digest-probe)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 13m 37s
+[W] Worker: ovh-b | Job: j-30123702905472511
+[T] Total: 869.4s (sync 35.3s, build 834.1s, artifacts --)
+[T] Cache: MISS
+[RCH] remote ovh-b (881.8s)
+--- probe stdout ---
+target_arch=x86_64
+target_os=linux
+links=30
+nq=36
+nv=35
+actuators=29
+mass_kg=31.96314202
+orientation_parameterization=unit-quaternion-wxyz
+gravity_world_m_s2=0.0,0.0,-9.80665
+rollout_steps=960
+rollout_h=1/480
+fd_digest=dac0825655a37d38b1704c031718cbccb32db12ec99af91e7bf4ae52594436ab
+rollout_2s_digest=20a61e1bf8faa852d2ae40beb3d7a11fcd58e672f8314e80ecd28377b362685c
+link_names=pelvis,left_hip_pitch_link,left_hip_roll_link,left_hip_yaw_link,left_knee_link,left_ankle_pitch_link,left_ankle_roll_link,right_hip_pitch_link,right_hip_roll_link,right_hip_yaw_link,right_knee_link,right_ankle_pitch_link,right_ankle_roll_link,waist_yaw_link,waist_roll_link,torso_link,left_shoulder_pitch_link,left_shoulder_roll_link,left_shoulder_yaw_link,left_elbow_link,left_wrist_roll_link,left_wrist_pitch_link,left_wrist_yaw_link,right_shoulder_pitch_link,right_shoulder_roll_link,right_shoulder_yaw_link,right_elbow_link,right_wrist_roll_link,right_wrist_pitch_link,right_wrist_yaw_link
+joint_names=left_hip_pitch_joint,left_hip_roll_joint,left_hip_yaw_joint,left_knee_joint,left_ankle_pitch_joint,left_ankle_roll_joint,right_hip_pitch_joint,right_hip_roll_joint,right_hip_yaw_joint,right_knee_joint,right_ankle_pitch_joint,right_ankle_roll_joint,waist_yaw_joint,waist_roll_joint,waist_pitch_joint,left_shoulder_pitch_joint,left_shoulder_roll_joint,left_shoulder_yaw_joint,left_elbow_joint,left_wrist_roll_joint,left_wrist_pitch_joint,left_wrist_yaw_joint,right_shoulder_pitch_joint,right_shoulder_roll_joint,right_shoulder_yaw_joint,right_elbow_joint,right_wrist_roll_joint,right_wrist_pitch_joint,right_wrist_yaw_joint
+joint_kinds=revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute,revolute

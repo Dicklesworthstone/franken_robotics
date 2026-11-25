@@ -1,0 +1,35 @@
+# oracle
+# Captured directly inside a read-only git archive export of FrankenSim at the pinned commit.
+# Produced exclusively by tools/oracle/fsim_g1_digest.sh (BD-007, INT-FSIM-01).
+# Never hand-edit or regenerate from candidate output.
+kind = "oracle"
+oracle = "frankensim-intree-g1"
+pin = "08e9195c6faea3363377b7fdfb6d6b07f5b552f3"
+toolchain = "nightly-2026-07-06"
+rustc_version = "rustc 1.99.0-nightly (3659db0d3 2026-07-05)"
+target_arch = "x86_64"
+target_os = "linux"
+captured_on = "2026-11-25"
+capture_script = "tools/oracle/fsim_g1_digest.sh"
+capture_script_sha256 = "89c4e3be2cccc47a5b4d3b4330526826a722912e1d0c05ee0c9af8e73fcd86b6"
+capture_log = "tests/fixtures/oracle/fsim/g1_fd_digest.capture.log"
+capture_log_blake3 = "95dba82acb49616c26a3fb3974d62ef185d528596f5c1faa86c6615d2de85b92"
+digest_source_blake3 = "53af1f004e1aee081e1296539afca3da839add25b179af6b57271cc7b7ac5f7d"
+fd_digest = "dac0825655a37d38b1704c031718cbccb32db12ec99af91e7bf4ae52594436ab"
+rollout_2s_digest = "20a61e1bf8faa852d2ae40beb3d7a11fcd58e672f8314e80ecd28377b362685c"
+rollout_steps = 960
+rollout_h = [1, 480]
+gravity_world_m_s2 = ["0.0", "0.0", "-9.80665"]
+links = 30
+nq = 36
+nv = 35
+actuators = 29
+mass_kg = "31.96314202"
+orientation_parameterization = "unit-quaternion-wxyz"
+
+[layout]
+link_names = ["pelvis", "left_hip_pitch_link", "left_hip_roll_link", "left_hip_yaw_link", "left_knee_link", "left_ankle_pitch_link", "left_ankle_roll_link", "right_hip_pitch_link", "right_hip_roll_link", "right_hip_yaw_link", "right_knee_link", "right_ankle_pitch_link", "right_ankle_roll_link", "waist_yaw_link", "waist_roll_link", "torso_link", "left_shoulder_pitch_link", "left_shoulder_roll_link", "left_shoulder_yaw_link", "left_elbow_link", "left_wrist_roll_link", "left_wrist_pitch_link", "left_wrist_yaw_link", "right_shoulder_pitch_link", "right_shoulder_roll_link", "right_shoulder_yaw_link", "right_elbow_link", "right_wrist_roll_link", "right_wrist_pitch_link", "right_wrist_yaw_link"]
+joint_names = ["left_hip_pitch_joint", "left_hip_roll_joint", "left_hip_yaw_joint", "left_knee_joint", "left_ankle_pitch_joint", "left_ankle_roll_joint", "right_hip_pitch_joint", "right_hip_roll_joint", "right_hip_yaw_joint", "right_knee_joint", "right_ankle_pitch_joint", "right_ankle_roll_joint", "waist_yaw_joint", "waist_roll_joint", "waist_pitch_joint", "left_shoulder_pitch_joint", "left_shoulder_roll_joint", "left_shoulder_yaw_joint", "left_elbow_joint", "left_wrist_roll_joint", "left_wrist_pitch_joint", "left_wrist_yaw_joint", "right_shoulder_pitch_joint", "right_shoulder_roll_joint", "right_shoulder_yaw_joint", "right_elbow_joint", "right_wrist_roll_joint", "right_wrist_pitch_joint", "right_wrist_yaw_joint"]
+joint_kinds = ["revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute", "revolute"]
+position_coords = ["0:base_x:base-position:m", "1:base_y:base-position:m", "2:base_z:base-position:m", "3:base_qw:base-orientation-quat-wxyz:1", "4:base_qx:base-orientation-quat-wxyz:1", "5:base_qy:base-orientation-quat-wxyz:1", "6:base_qz:base-orientation-quat-wxyz:1", "7:left_hip_pitch_joint:revolute-joint:rad", "8:left_hip_roll_joint:revolute-joint:rad", "9:left_hip_yaw_joint:revolute-joint:rad", "10:left_knee_joint:revolute-joint:rad", "11:left_ankle_pitch_joint:revolute-joint:rad", "12:left_ankle_roll_joint:revolute-joint:rad", "13:right_hip_pitch_joint:revolute-joint:rad", "14:right_hip_roll_joint:revolute-joint:rad", "15:right_hip_yaw_joint:revolute-joint:rad", "16:right_knee_joint:revolute-joint:rad", "17:right_ankle_pitch_joint:revolute-joint:rad", "18:right_ankle_roll_joint:revolute-joint:rad", "19:waist_yaw_joint:revolute-joint:rad", "20:waist_roll_joint:revolute-joint:rad", "21:waist_pitch_joint:revolute-joint:rad", "22:left_shoulder_pitch_joint:revolute-joint:rad", "23:left_shoulder_roll_joint:revolute-joint:rad", "24:left_shoulder_yaw_joint:revolute-joint:rad", "25:left_elbow_joint:revolute-joint:rad", "26:left_wrist_roll_joint:revolute-joint:rad", "27:left_wrist_pitch_joint:revolute-joint:rad", "28:left_wrist_yaw_joint:revolute-joint:rad", "29:right_shoulder_pitch_joint:revolute-joint:rad", "30:right_shoulder_roll_joint:revolute-joint:rad", "31:right_shoulder_yaw_joint:revolute-joint:rad", "32:right_elbow_joint:revolute-joint:rad", "33:right_wrist_roll_joint:revolute-joint:rad", "34:right_wrist_pitch_joint:revolute-joint:rad", "35:right_wrist_yaw_joint:revolute-joint:rad"]
+velocity_coords = ["0:base_wx_body:base-angular-velocity-body:rad/s", "1:base_wy_body:base-angular-velocity-body:rad/s", "2:base_wz_body:base-angular-velocity-body:rad/s", "3:base_vx_body:base-linear-velocity-body:m/s", "4:base_vy_body:base-linear-velocity-body:m/s", "5:base_vz_body:base-linear-velocity-body:m/s", "6:left_hip_pitch_joint_vel:revolute-joint:rad/s", "7:left_hip_roll_joint_vel:revolute-joint:rad/s", "8:left_hip_yaw_joint_vel:revolute-joint:rad/s", "9:left_knee_joint_vel:revolute-joint:rad/s", "10:left_ankle_pitch_joint_vel:revolute-joint:rad/s", "11:left_ankle_roll_joint_vel:revolute-joint:rad/s", "12:right_hip_pitch_joint_vel:revolute-joint:rad/s", "13:right_hip_roll_joint_vel:revolute-joint:rad/s", "14:right_hip_yaw_joint_vel:revolute-joint:rad/s", "15:right_knee_joint_vel:revolute-joint:rad/s", "16:right_ankle_pitch_joint_vel:revolute-joint:rad/s", "17:right_ankle_roll_joint_vel:revolute-joint:rad/s", "18:waist_yaw_joint_vel:revolute-joint:rad/s", "19:waist_roll_joint_vel:revolute-joint:rad/s", "20:waist_pitch_joint_vel:revolute-joint:rad/s", "21:left_shoulder_pitch_joint_vel:revolute-joint:rad/s", "22:left_shoulder_roll_joint_vel:revolute-joint:rad/s", "23:left_shoulder_yaw_joint_vel:revolute-joint:rad/s", "24:left_elbow_joint_vel:revolute-joint:rad/s", "25:left_wrist_roll_joint_vel:revolute-joint:rad/s", "26:left_wrist_pitch_joint_vel:revolute-joint:rad/s", "27:left_wrist_yaw_joint_vel:revolute-joint:rad/s", "28:right_shoulder_pitch_joint_vel:revolute-joint:rad/s", "29:right_shoulder_roll_joint_vel:revolute-joint:rad/s", "30:right_shoulder_yaw_joint_vel:revolute-joint:rad/s", "31:right_elbow_joint_vel:revolute-joint:rad/s", "32:right_wrist_roll_joint_vel:revolute-joint:rad/s", "33:right_wrist_pitch_joint_vel:revolute-joint:rad/s", "34:right_wrist_yaw_joint_vel:revolute-joint:rad/s"]

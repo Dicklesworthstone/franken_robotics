@@ -1,0 +1,8 @@
+oracle: frankensim-intree-g1
+pin: 08e9195c6faea3363377b7fdfb6d6b07f5b552f3
+toolchain: nightly-2026-07-06
+rustc_version: rustc 1.99.0-nightly (3659db0d3 2026-07-05)
+captured_on: 2026-11-25
+producer: tools/oracle/fsim_g1_digest.sh
+capture_log_blake3: 95dba82acb49616c26a3fb3974d62ef185d528596f5c1faa86c6615d2de85b92
+note: Unitree G1 forward-dynamics and 2s rollout digests captured inside FrankenSim at the pinned commit (BD-007, INT-FSIM-01). Never hand-edited or regenerated from candidate output.

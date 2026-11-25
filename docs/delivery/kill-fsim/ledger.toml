@@ -4,5 +4,8 @@
 
 [effort_clock]
 started = "2026-11-24"
-entries = [ { date = "2026-11-24", session = "BronzePelican", hours = 2, note = "BD-006: created frob-fsim airlock (5 path deps), cold check exit 0 on nightly-2026-08-31 via hz3 (649.3s e2e / 455.9s remote, peak tree RSS 1.05 GiB, 45 fsim crates / 1734377 lib LOC), warm 1.58s / touch 1.66s remote, 3 necessity tests + fail-closed salt control caught (exit 101)" } ]
+entries = [
+  { date = "2026-11-24", session = "BronzePelican", hours = 2, note = "BD-006: created frob-fsim airlock (5 path deps), cold check exit 0 on nightly-2026-08-31 via hz3 (649.3s e2e / 455.9s remote, peak tree RSS 1.05 GiB, 45 fsim crates / 1734377 lib LOC), warm 1.58s / touch 1.66s remote, 3 necessity tests + fail-closed salt control caught (exit 101)" },
+  { date = "2026-11-25", session = "CopperDove", hours = 2, note = "BD-007: implemented RefereeDynamics (InProcRefereeDynamics over fs_mbd::articulated), canonical digest (frob.referee-state/1), in-tree probe + capture script tools/oracle/fsim_g1_digest.sh, 13 referee tests, and CONTRACT.md section; captured G1 oracle digests at pin 08e9195c6faea3363377b7fdfb6d6b07f5b552f3 on ovh-b (nightly-2026-07-06, x86_64-unknown-linux-gnu, j-30123702905472511): fd_digest=dac0825655a37d38b1704c031718cbccb32db12ec99af91e7bf4ae52594436ab, rollout_2s_digest=20a61e1bf8faa852d2ae40beb3d7a11fcd58e672f8314e80ecd28377b362685c, capture_log_blake3=95dba82acb49616c26a3fb3974d62ef185d528596f5c1faa86c6615d2de85b92; cargo check -p frob-fsim --all-targets exit 0 on hz4 (j-30123702905472547); awaiting central orchestrator test run and fresh-session INT-FSIM-01 pass record" },
+]
 passed_on = ""

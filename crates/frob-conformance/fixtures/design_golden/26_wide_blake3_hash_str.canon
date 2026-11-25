@@ -1,0 +1,1 @@
+{"name":"wide-hash-64hex","root":{"body":"torso","collision":"region","fill":"solid","material":"al-6061-t6","region":{"mesh":"b3:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef","unit":"m"},"visual":"b3:fedcba9876543210fedcba9876543210fedcba9876543210fedcba9876543210"},"schema":"frob.design/1"}

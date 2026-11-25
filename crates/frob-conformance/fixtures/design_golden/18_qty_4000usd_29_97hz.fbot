@@ -1,0 +1,1 @@
+{"schema": "frob.design/1", "name": "qty-usd-hz", "root": {"body": "torso", "region": {"box": ["0.5 m", "0.25 m", "0.125 m"]}, "fill": "solid", "material": "al-6061-t6", "collision": "region"}, "budgets": {"cost_max": "4000 USD"}, "sensors": [{"id": "cam", "card": "cam-generic", "parent": "torso", "rate": "29.97 Hz", "clock": "mcu"}]}

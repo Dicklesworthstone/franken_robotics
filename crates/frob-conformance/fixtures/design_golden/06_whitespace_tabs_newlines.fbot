@@ -1,0 +1,16 @@
+{
+	"schema" :  "frob.design/1" ,
+	"name"	:	"ko-base",
+	"root" : {
+		"body" : "torso",
+		"collision" : "region",
+		"fill" : "solid",
+		"material" : "al-6061-t6",
+		"ports" : {
+			"b_port" : { "xyz" : [ "0.25 m" , "0 m" , "0 m" ] , "rot" : { "axis" : [ 0 , 0 , 1 ] , "angle" : "0 turn" } } ,
+			"a_port" : { "xyz" : [ "0 m" , "0 m" , "0 m" ] , "rot" : { "axis" : [ 0 , 0 , 1 ] , "angle" : "0 turn" } }
+		},
+		"region" : { "box" : [ "0.5 m" , "0.25 m" , "0.125 m" ] }
+	},
+	"symmetry" : { "assert_obs" : "C2" , "assert_mech" : "C2" }
+}

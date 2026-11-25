@@ -1,0 +1,1 @@
+{"name":"def-members","power_bus":{"battery":"li-6s-5ah","current_max":"60 A","id":"main","members":"*","nominal":"24 V","regen":"to-battery","sink":{"conductance":"1.5 W/K"}},"root":{"body":"torso","collision":"region","fill":"solid","material":"al-6061-t6","region":{"box":["0.5 m","0.25 m","0.125 m"]}},"schema":"frob.design/1"}

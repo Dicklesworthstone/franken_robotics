@@ -1,0 +1,1 @@
+{"schema": "frob.design/1", "name": "qty-third", "root": {"body": "torso", "region": {"sphere": "1/3 m"}, "fill": "solid", "material": "al-6061-t6", "collision": "region"}}

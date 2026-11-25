@@ -1,0 +1,1 @@
+{"schema": "frob.design/1", "name": "def-members", "root": {"body": "torso", "region": {"box": ["0.5 m", "0.25 m", "0.125 m"]}, "fill": "solid", "material": "al-6061-t6", "collision": "region"}, "power_bus": {"id": "main", "battery": "li-6s-5ah", "nominal": "24 V", "current_max": "60 A", "regen": "to-battery", "sink": {"conductance": "1.5 W/K"}, "members": "*"}}

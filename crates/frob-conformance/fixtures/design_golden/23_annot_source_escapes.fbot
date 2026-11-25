@@ -1,0 +1,1 @@
+{"schema": "frob.design/1", "name": "annot-escapes", "root": {"body": "torso", "region": {"sphere": {"value": "0.5 m", "provenance": "datasheet", "source": "rev \"A\" \\ line1\nline2\tctrl\u0001delcafé"}}, "fill": "solid", "material": "al-6061-t6", "collision": "region"}}

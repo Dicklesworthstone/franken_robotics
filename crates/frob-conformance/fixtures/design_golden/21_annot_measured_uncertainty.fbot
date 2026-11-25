@@ -1,0 +1,1 @@
+{"schema": "frob.design/1", "name": "annot-measured", "root": {"body": "torso", "region": {"sphere": {"value": "0.5 m", "provenance": "measured", "uncertainty": "0.125 m"}}, "fill": "solid", "material": "al-6061-t6", "collision": "region"}}

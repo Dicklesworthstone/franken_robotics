@@ -1,0 +1,5 @@
+kind: oracle
+repo: franken_robotics
+commit: independent-reference-tools/oracle/design_canon
+producer: tools/oracle/design_canon/regenerate.sh
+note: Golden inputs (*.fbot), canonical expectations (*.canon), and manifest.toml for frob.design/1 (N14a-26). Never hand-edited to match product code; see tools/oracle/design_canon/README.md.

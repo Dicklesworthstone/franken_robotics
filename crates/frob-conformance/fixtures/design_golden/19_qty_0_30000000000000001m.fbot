@@ -1,0 +1,1 @@
+{"schema": "frob.design/1", "name": "qty-ulp1", "root": {"body": "torso", "region": {"sphere": "0.30000000000000001 m"}, "fill": "solid", "material": "al-6061-t6", "collision": "region"}}

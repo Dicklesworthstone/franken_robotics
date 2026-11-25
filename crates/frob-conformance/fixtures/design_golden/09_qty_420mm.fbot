@@ -1,0 +1,1 @@
+{"schema": "frob.design/1", "name": "qty-len", "root": {"body": "torso", "region": {"box": ["420 mm", "0.25 m", "0.125 m"]}, "fill": "solid", "material": "al-6061-t6", "collision": "region"}}

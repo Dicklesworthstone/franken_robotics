@@ -1381,7 +1381,8 @@ fn walk_fixture_files(dir: &Path, out: &mut Vec<PathBuf>) {
     for p in entries {
         let name = p.file_name().and_then(|s| s.to_str()).unwrap_or("");
         if p.is_dir() {
-            if name != ".git" && name != "target" {
+            // `design_golden` is a self-manifested golden corpus checked by `design_golden` (N14a-26).
+            if name != ".git" && name != "target" && name != "design_golden" {
                 walk_fixture_files(&p, out);
             }
         } else if p.is_file() && !matches!(name, "README.md" | "LICENSE" | ".gitkeep" | "PIN.txt") {

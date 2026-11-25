@@ -1,0 +1,1 @@
+{"schema": "frob.design/1", "name": "def-locked", "root": {"body": "torso", "region": {"box": ["0.5 m", "0.25 m", "0.125 m"]}, "fill": "solid", "material": "al-6061-t6", "collision": "region"}, "levers": [{"id": "width", "path": "/root/region/box/0", "bounds": ["0.25 m", "1 m"], "manifold": "R+", "locked": false}]}

@@ -1,0 +1,1 @@
+{"name":"qty-third","root":{"body":"torso","collision":"region","fill":"solid","material":"al-6061-t6","region":{"sphere":"1/3 m"}},"schema":"frob.design/1"}

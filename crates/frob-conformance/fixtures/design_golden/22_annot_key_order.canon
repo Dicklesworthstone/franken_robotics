@@ -1,0 +1,1 @@
+{"name":"annot-key-order","root":{"body":"torso","collision":"region","fill":"solid","material":"al-6061-t6","region":{"sphere":{"provenance":"measured","source":"caliper-2026","uncertainty":"0.0625 m","value":"0.5 m"}}},"schema":"frob.design/1"}

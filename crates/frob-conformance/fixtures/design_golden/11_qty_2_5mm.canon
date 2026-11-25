@@ -1,0 +1,1 @@
+{"name":"qty-shell","root":{"body":"torso","collision":"region","fill":{"shell":"0.0025 m"},"material":"al-6061-t6","region":{"box":["0.5 m","0.25 m","0.125 m"]}},"schema":"frob.design/1"}

@@ -1,0 +1,1 @@
+{"schema": "frob.design/1", "name": "qty-exp", "root": {"body": "torso", "region": {"box": ["0.5 m", "0.25 m", "0.125 m"]}, "fill": {"shell": "1e-3 m"}, "material": "al-6061-t6", "collision": "region"}}

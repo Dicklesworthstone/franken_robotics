@@ -1,0 +1,1 @@
+{"schema": "frob.design/1", "name": "annot-collapse", "root": {"body": "torso", "region": {"sphere": {"value": "500 mm", "provenance": "designed"}}, "fill": "solid", "material": "al-6061-t6", "collision": "region"}}

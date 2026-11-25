@@ -5,6 +5,8 @@
 //! - `gates_v0`: v0 reader for `registries/gates.toml` (`frob.gates/1`, `BD-025`).
 //! - `controls`: negative-control registry validator, serializer, and `GATE-GAUNT-01`
 //!   registry check (`BD-025`).
+//! - `design_golden`: independent golden corpus harness for `frob.design/1` canonical
+//!   bytes and `DesignId` (`N14a-26`).
 //! - `oracles`: oracle register (`registry/oracles.toml`), role grammar, pin-move audit,
 //!   pinned fixtures, and disagreement findings (`N38a-04`).
 //! - `tenfold`: ten-fold comparative benchmark harness skeleton, five harness records,
@@ -12,6 +14,7 @@
 
 pub mod compendium;
 pub mod controls;
+pub mod design_golden;
 pub mod e2e;
 pub mod gates_v0;
 pub mod oracles;

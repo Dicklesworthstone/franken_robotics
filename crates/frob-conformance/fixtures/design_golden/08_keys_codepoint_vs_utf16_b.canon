@@ -1,0 +1,1 @@
+{"name":"codepoint-vs-utf16-b","root":{"body":"torso","collision":"region","fill":"solid","material":"al-6061-t6","ports":{"！":{"rot":{"angle":"0 turn","axis":[0,0,1]},"xyz":["0.5 m","0 m","0 m"]},"🤖":{"rot":{"angle":"0 turn","axis":[0,0,1]},"xyz":["0 m","0 m","0 m"]}},"region":{"box":["0.5 m","0.25 m","0.125 m"]}},"schema":"frob.design/1"}

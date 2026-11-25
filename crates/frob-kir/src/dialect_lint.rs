@@ -461,7 +461,7 @@ fn check_compile_options(options: &CompileOptions, findings: &mut Vec<LintFindin
 enum TokenKind {
     Ident(String),
     Number(String),
-    StringLit,
+    StringLit(String),
     CharLit,
     DoubleColon,
     DoubleLBracket,
@@ -479,93 +479,120 @@ struct Token {
     column: usize,
 }
 
-fn tokenize(src: &str) -> Vec<Token> {
-    let bytes = src.as_bytes();
-    let n = bytes.len();
-    let mut tokens = Vec::new();
-    let mut i = 0usize;
+#[derive(Debug, Clone, Copy)]
+struct SplicedChar {
+    ch: char,
+    line: usize,
+    col: usize,
+}
+
+/// ISO C/C++ translation phase 2: splice `\` + newline (`\n` or `\r\n`) before
+/// tokenization while keeping the exact 1-based physical `(line, col)` of every
+/// surviving character. Prevents `rsq\\\nrt`, `fm\\\naf`, `whi\\\nle` evasion.
+fn splice_backslash_newlines(src: &str) -> Vec<SplicedChar> {
+    let mut out = Vec::with_capacity(src.len());
+    let mut chars = src.chars().peekable();
     let mut line = 1usize;
     let mut col = 1usize;
+
+    while let Some(ch) = chars.next() {
+        if ch == '\\' {
+            if chars.peek() == Some(&'\n') {
+                chars.next();
+                line += 1;
+                col = 1;
+                continue;
+            }
+            if chars.peek() == Some(&'\r') {
+                let mut clone = chars.clone();
+                clone.next();
+                if clone.peek() == Some(&'\n') {
+                    chars.next();
+                    chars.next();
+                    line += 1;
+                    col = 1;
+                    continue;
+                }
+            }
+        }
+        if ch == '\r' {
+            if chars.peek() == Some(&'\n') {
+                chars.next();
+            }
+            out.push(SplicedChar {
+                ch: '\n',
+                line,
+                col,
+            });
+            line += 1;
+            col = 1;
+            continue;
+        }
+        if ch == '\n' {
+            out.push(SplicedChar { ch, line, col });
+            line += 1;
+            col = 1;
+            continue;
+        }
+        out.push(SplicedChar { ch, line, col });
+        col += 1;
+    }
+
+    out
+}
+
+fn tokenize(src: &str) -> Vec<Token> {
+    let sc = splice_backslash_newlines(src);
+    let n = sc.len();
+    let mut tokens = Vec::new();
+    let mut i = 0usize;
     let mut at_line_start = true;
 
     while i < n {
-        let b = bytes[i];
+        let cur = sc[i];
+        let ch = cur.ch;
 
         // Newline
-        if b == b'\n' {
+        if ch == '\n' {
             i += 1;
-            line += 1;
-            col = 1;
-            at_line_start = true;
-            continue;
-        }
-        if b == b'\r' {
-            i += 1;
-            if i < n && bytes[i] == b'\n' {
-                i += 1;
-            }
-            line += 1;
-            col = 1;
             at_line_start = true;
             continue;
         }
 
         // Horizontal whitespace
-        if b == b' ' || b == b'\t' || b == b'\x0c' || b == b'\x0b' {
+        if matches!(ch, ' ' | '\t' | '\x0c' | '\x0b') {
             i += 1;
-            col += 1;
             continue;
         }
 
         // Line comment `//...`
-        if b == b'/' && i + 1 < n && bytes[i + 1] == b'/' {
+        if ch == '/' && i + 1 < n && sc[i + 1].ch == '/' {
             i += 2;
-            col += 2;
-            while i < n && bytes[i] != b'\n' && bytes[i] != b'\r' {
-                let ch = next_char(src, i);
-                i += ch.len_utf8();
-                col += 1;
+            while i < n && sc[i].ch != '\n' {
+                i += 1;
             }
             continue;
         }
 
         // Block comment `/* ... */`
-        if b == b'/' && i + 1 < n && bytes[i + 1] == b'*' {
+        if ch == '/' && i + 1 < n && sc[i + 1].ch == '*' {
             i += 2;
-            col += 2;
             while i < n {
-                if bytes[i] == b'*' && i + 1 < n && bytes[i + 1] == b'/' {
+                if sc[i].ch == '*' && i + 1 < n && sc[i + 1].ch == '/' {
                     i += 2;
-                    col += 2;
                     break;
                 }
-                if bytes[i] == b'\n' {
-                    i += 1;
-                    line += 1;
-                    col = 1;
-                } else if bytes[i] == b'\r' {
-                    i += 1;
-                    if i < n && bytes[i] == b'\n' {
-                        i += 1;
-                    }
-                    line += 1;
-                    col = 1;
-                } else {
-                    let ch = next_char(src, i);
-                    i += ch.len_utf8();
-                    col += 1;
-                }
+                i += 1;
             }
             continue;
         }
 
         // Preprocessor directive at start of logical line
-        if b == b'#' && at_line_start {
-            let start_line = line;
-            let start_col = col;
+        if ch == '#' && at_line_start {
+            let start_line = cur.line;
+            let start_col = cur.col;
             i += 1;
-            col += 1;
-            let raw = consume_preprocessor_rest(src, &mut i, &mut line, &mut col);
+            let raw = consume_preprocessor_rest(&sc, &mut i);
             let clean = strip_comments_inline(&raw);
             let trimmed = clean.trim();
             let (name, body) = split_directive_head(trimmed);
@@ -583,51 +610,41 @@ fn tokenize(src: &str) -> Vec<Token> {
 
         at_line_start = false;
 
-        // String literal
-        if b == b'"' {
-            let start_line = line;
-            let start_col = col;
+        // String literal (retain decoded content for `_Pragma("...")` inspection)
+        if ch == '"' {
+            let start_line = cur.line;
+            let start_col = cur.col;
+            let mut decoded = String::new();
             i += 1;
-            col += 1;
             while i < n {
-                if bytes[i] == b'\\' && i + 1 < n {
-                    if bytes[i + 1] == b'\n' {
-                        i += 2;
-                        line += 1;
-                        col = 1;
-                    } else if bytes[i + 1] == b'\r' {
-                        i += 2;
-                        if i < n && bytes[i] == b'\n' {
-                            i += 1;
+                if sc[i].ch == '\\' && i + 1 < n {
+                    let esc = sc[i + 1].ch;
+                    match esc {
+                        '"' => decoded.push('"'),
+                        '\\' => decoded.push('\\'),
+                        'n' => decoded.push('\n'),
+                        't' => decoded.push('\t'),
+                        other => {
+                            decoded.push('\\');
+                            decoded.push(other);
                         }
-                        line += 1;
-                        col = 1;
-                    } else {
-                        i += 1;
-                        col += 1;
-                        let ch = next_char(src, i);
-                        i += ch.len_utf8();
-                        col += 1;
                     }
+                    i += 2;
                     continue;
                 }
-                if bytes[i] == b'"' {
+                if sc[i].ch == '"' {
                     i += 1;
-                    col += 1;
                     break;
                 }
-                if bytes[i] == b'\n' {
+                if sc[i].ch == '\n' {
                     i += 1;
-                    line += 1;
-                    col = 1;
                     break;
                 }
-                let ch = next_char(src, i);
-                i += ch.len_utf8();
-                col += 1;
+                decoded.push(sc[i].ch);
+                i += 1;
             }
             tokens.push(Token {
-                kind: TokenKind::StringLit,
+                kind: TokenKind::StringLit(decoded),
                 line: start_line,
                 column: start_col,
             });
@@ -635,31 +652,23 @@ fn tokenize(src: &str) -> Vec<Token> {
         }
 
         // Character literal
-        if b == b'\'' {
-            let start_line = line;
-            let start_col = col;
+        if ch == '\'' {
+            let start_line = cur.line;
+            let start_col = cur.col;
             i += 1;
-            col += 1;
             while i < n {
-                if bytes[i] == b'\\' && i + 1 < n {
-                    i += 1;
-                    col += 1;
-                    let ch = next_char(src, i);
-                    i += ch.len_utf8();
-                    col += 1;
+                if sc[i].ch == '\\' && i + 1 < n {
+                    i += 2;
                     continue;
                 }
-                if bytes[i] == b'\'' {
+                if sc[i].ch == '\'' {
                     i += 1;
-                    col += 1;
                     break;
                 }
-                if bytes[i] == b'\n' {
+                if sc[i].ch == '\n' {
                     break;
                 }
-                let ch = next_char(src, i);
-                i += ch.len_utf8();
-                col += 1;
+                i += 1;
             }
             tokens.push(Token {
                 kind: TokenKind::CharLit,
@@ -670,135 +679,145 @@ fn tokenize(src: &str) -> Vec<Token> {
         }
 
         // Identifier
-        if b.is_ascii_alphabetic() || b == b'_' {
-            let start = i;
-            let start_col = col;
-            while i < n && (bytes[i].is_ascii_alphanumeric() || bytes[i] == b'_') {
+        if ch.is_ascii_alphabetic() || ch == '_' {
+            let start_line = cur.line;
+            let start_col = cur.col;
+            let mut ident = String::new();
+            while i < n && (sc[i].ch.is_ascii_alphanumeric() || sc[i].ch == '_') {
+                ident.push(sc[i].ch);
                 i += 1;
-                col += 1;
             }
             tokens.push(Token {
-                kind: TokenKind::Ident(src[start..i].to_owned()),
-                line,
+                kind: TokenKind::Ident(ident),
+                line: start_line,
                 column: start_col,
             });
             continue;
         }
 
         // Numeric literal
-        if b.is_ascii_digit() {
-            let start = i;
-            let start_col = col;
-            while i < n
-                && (bytes[i].is_ascii_alphanumeric() || bytes[i] == b'.' || bytes[i] == b'_')
+        if ch.is_ascii_digit() {
+            let start_line = cur.line;
+            let start_col = cur.col;
+            let mut num = String::new();
+            while i < n && (sc[i].ch.is_ascii_alphanumeric() || sc[i].ch == '.' || sc[i].ch == '_')
             {
-                if matches!(bytes[i], b'e' | b'E' | b'p' | b'P')
+                if matches!(sc[i].ch, 'e' | 'E' | 'p' | 'P')
                     && i + 1 < n
-                    && matches!(bytes[i + 1], b'+' | b'-')
+                    && matches!(sc[i + 1].ch, '+' | '-')
                 {
+                    num.push(sc[i].ch);
+                    num.push(sc[i + 1].ch);
                     i += 2;
-                    col += 2;
                     continue;
                 }
+                num.push(sc[i].ch);
                 i += 1;
-                col += 1;
             }
             tokens.push(Token {
-                kind: TokenKind::Number(src[start..i].to_owned()),
-                line,
+                kind: TokenKind::Number(num),
+                line: start_line,
                 column: start_col,
             });
             continue;
         }
 
         // Multi-char punctuation: `::` and `[[`
-        if b == b':' && i + 1 < n && bytes[i + 1] == b':' {
+        if ch == ':' && i + 1 < n && sc[i + 1].ch == ':' {
             tokens.push(Token {
                 kind: TokenKind::DoubleColon,
-                line,
-                column: col,
+                line: cur.line,
+                column: cur.col,
             });
             i += 2;
-            col += 2;
             continue;
         }
-        if b == b'[' && i + 1 < n && bytes[i + 1] == b'[' {
+        if ch == '[' && i + 1 < n && sc[i + 1].ch == '[' {
             tokens.push(Token {
                 kind: TokenKind::DoubleLBracket,
-                line,
-                column: col,
+                line: cur.line,
+                column: cur.col,
             });
             i += 2;
-            col += 2;
             continue;
         }
 
-        let ch = next_char(src, i);
         tokens.push(Token {
             kind: TokenKind::Punct(ch),
-            line,
-            column: col,
+            line: cur.line,
+            column: cur.col,
         });
-        i += ch.len_utf8();
-        col += 1;
+        i += 1;
     }
 
     tokens
 }
 
-fn next_char(s: &str, idx: usize) -> char {
-    s[idx..].chars().next().unwrap_or('\0')
-}
-
-/// Consume the rest of a preprocessor line, honoring `\` line continuations.
-fn consume_preprocessor_rest(
-    src: &str,
-    i: &mut usize,
-    line: &mut usize,
-    col: &mut usize,
-) -> String {
-    let bytes = src.as_bytes();
-    let n = bytes.len();
+/// Consume the rest of a logical preprocessor directive, keeping multi-line
+/// `/* ... */` block comments inside the directive instead of truncating it.
+fn consume_preprocessor_rest(sc: &[SplicedChar], i: &mut usize) -> String {
+    let n = sc.len();
     let mut out = String::new();
+    let mut in_block_comment = false;
+    let mut in_str = false;
+
     while *i < n {
-        let b = bytes[*i];
-        if b == b'\\' {
-            if *i + 1 < n && bytes[*i + 1] == b'\n' {
+        let ch = sc[*i].ch;
+        if in_block_comment {
+            if ch == '*' && *i + 1 < n && sc[*i + 1].ch == '/' {
+                out.push('*');
+                out.push('/');
                 *i += 2;
-                *line += 1;
-                *col = 1;
-                out.push(' ');
-                continue;
-            }
-            if *i + 2 < n && bytes[*i + 1] == b'\r' && bytes[*i + 2] == b'\n' {
-                *i += 3;
-                *line += 1;
-                *col = 1;
-                out.push(' ');
-                continue;
-            }
-        }
-        if b == b'\n' {
-            *i += 1;
-            *line += 1;
-            *col = 1;
-            break;
-        }
-        if b == b'\r' {
-            *i += 1;
-            if *i < n && bytes[*i] == b'\n' {
+                in_block_comment = false;
+            } else {
+                out.push(if ch == '\n' { ' ' } else { ch });
                 *i += 1;
             }
-            *line += 1;
-            *col = 1;
+            continue;
+        }
+        if in_str {
+            if ch == '\\' && *i + 1 < n {
+                out.push('\\');
+                out.push(sc[*i + 1].ch);
+                *i += 2;
+                continue;
+            }
+            if ch == '"' {
+                in_str = false;
+            }
+            if ch == '\n' {
+                *i += 1;
+                break;
+            }
+            out.push(ch);
+            *i += 1;
+            continue;
+        }
+        if ch == '"' {
+            in_str = true;
+            out.push('"');
+            *i += 1;
+            continue;
+        }
+        if ch == '/' && *i + 1 < n && sc[*i + 1].ch == '*' {
+            out.push('/');
+            out.push('*');
+            *i += 2;
+            in_block_comment = true;
+            continue;
+        }
+        if ch == '\n' {
+            *i += 1;
             break;
         }
-        let ch = next_char(src, *i);
         out.push(ch);
-        *i += ch.len_utf8();
-        *col += 1;
+        *i += 1;
     }
     out
+}
+
+fn next_char(s: &str, idx: usize) -> char {
+    s[idx..].chars().next().unwrap_or('\0')
 }
 
 fn strip_comments_inline(raw: &str) -> String {
@@ -953,69 +972,102 @@ fn is_unsigned_or_int_literal(s: &str) -> bool {
 }
 
 /// Prelude header: exempt from rule 1, but checked for rules 3, 4 (contraction/fast-math
-/// pragmas and explicit FMA), and 6 (spin loops / grid barriers).
+/// pragmas, `_Pragma`, `fast::`, and explicit FMA), and 6 (spin loops / grid barriers).
 fn lint_prelude(file: &SourceFile, findings: &mut Vec<LintFinding>) {
     let tokens = tokenize(&file.contents);
-    for tok in &tokens {
+    scan_prelude_tokens(&file.name, &tokens, None, findings);
+}
+
+fn scan_prelude_tokens(
+    file: &str,
+    tokens: &[Token],
+    override_pos: Option<(usize, usize)>,
+    findings: &mut Vec<LintFinding>,
+) {
+    let len = tokens.len();
+    let mut i = 0usize;
+    while i < len {
+        let tok = &tokens[i];
+        let (line, col) = override_pos.unwrap_or((tok.line, tok.column));
         match &tok.kind {
             TokenKind::Directive { name, body } if name == "pragma" => {
                 if is_forbidden_fp_pragma(body) {
                     findings.push(LintFinding::new(
                         4,
-                        &file.name,
-                        tok.line,
-                        tok.column,
+                        file,
+                        line,
+                        col,
                         format!("#pragma {body}"),
                         "contraction-on or fast-math #pragma is forbidden by dialect rule 4",
                     ));
                 }
+                i += 1;
             }
             TokenKind::Directive { name, body } if name == "define" => {
-                // Scan macro expansion body for explicit FMA/transcendentals/spin loops.
-                // Skip the macro name itself so macro definitions like `FROB_SQRT` are fine.
                 let rhs = skip_define_head(body);
-                for inner in tokenize(rhs) {
-                    if let TokenKind::Ident(ref id) = inner.kind {
-                        if is_explicit_fma_ident(id) {
-                            findings.push(LintFinding::new(
-                                4,
-                                &file.name,
-                                tok.line,
-                                tok.column,
-                                id,
-                                "explicit fused multiply-add in prelude is forbidden by dialect rule 4",
-                            ));
-                        }
-                        if is_transcendental_or_rsqrt_ident(id) {
-                            findings.push(LintFinding::new(
-                                3,
-                                &file.name,
-                                tok.line,
-                                tok.column,
-                                id,
-                                "built-in transcendental or rsqrt in prelude is forbidden by dialect rule 3",
-                            ));
-                        }
-                        if is_spin_or_grid_barrier_ident(id) {
-                            findings.push(LintFinding::new(
-                                6,
-                                &file.name,
-                                tok.line,
-                                tok.column,
-                                id,
-                                "spin loop or grid-wide barrier in prelude is forbidden by dialect rule 6",
-                            ));
-                        }
-                    }
-                }
+                let inner = tokenize(rhs);
+                scan_prelude_tokens(file, &inner, Some((line, col)), findings);
+                i += 1;
             }
             TokenKind::Ident(id) => {
+                if id == "_Pragma"
+                    && let Some((pragma_body, next_i)) = extract_underscore_pragma_arg(tokens, i)
+                {
+                    if is_forbidden_fp_pragma(&pragma_body) {
+                        findings.push(LintFinding::new(
+                            4,
+                            file,
+                            line,
+                            col,
+                            format!("_Pragma(\"{pragma_body}\")"),
+                            "contraction-on or fast-math `_Pragma` in prelude is forbidden by dialect rule 4",
+                        ));
+                    }
+                    i = next_i;
+                    continue;
+                }
+                if id == "fast" && i + 1 < len && tokens[i + 1].kind == TokenKind::DoubleColon {
+                    let member = if i + 2 < len {
+                        match &tokens[i + 2].kind {
+                            TokenKind::Ident(m) => Some(m.as_str()),
+                            _ => None,
+                        }
+                    } else {
+                        None
+                    };
+                    let full = match member {
+                        Some(m) => format!("fast::{m}"),
+                        None => "fast::".to_owned(),
+                    };
+                    if let Some(m) = member
+                        && is_transcendental_or_rsqrt_ident(m)
+                    {
+                        findings.push(LintFinding::new(
+                            3,
+                            file,
+                            line,
+                            col,
+                            &full,
+                            "built-in transcendental or rsqrt in prelude is forbidden by dialect rule 3",
+                        ));
+                    }
+                    findings.push(LintFinding::new(
+                        4,
+                        file,
+                        line,
+                        col,
+                        full,
+                        "`fast::` math relaxation in prelude is forbidden by dialect rule 4",
+                    ));
+                    i += if member.is_some() { 3 } else { 2 };
+                    continue;
+                }
                 if is_explicit_fma_ident(id) {
                     findings.push(LintFinding::new(
                         4,
-                        &file.name,
-                        tok.line,
-                        tok.column,
+                        file,
+                        line,
+                        col,
                         id,
                         "explicit fused multiply-add in prelude is forbidden by dialect rule 4",
                     ));
@@ -1023,9 +1075,9 @@ fn lint_prelude(file: &SourceFile, findings: &mut Vec<LintFinding>) {
                 if is_transcendental_or_rsqrt_ident(id) {
                     findings.push(LintFinding::new(
                         3,
-                        &file.name,
-                        tok.line,
-                        tok.column,
+                        file,
+                        line,
+                        col,
                         id,
                         "built-in transcendental or rsqrt in prelude is forbidden by dialect rule 3",
                     ));
@@ -1033,16 +1085,42 @@ fn lint_prelude(file: &SourceFile, findings: &mut Vec<LintFinding>) {
                 if is_spin_or_grid_barrier_ident(id) {
                     findings.push(LintFinding::new(
                         6,
-                        &file.name,
-                        tok.line,
-                        tok.column,
+                        file,
+                        line,
+                        col,
                         id,
                         "spin loop or grid-wide barrier in prelude is forbidden by dialect rule 6",
                     ));
                 }
+                i += 1;
             }
-            _ => {}
+            _ => {
+                i += 1;
+            }
         }
+    }
+}
+
+fn extract_underscore_pragma_arg(tokens: &[Token], idx: usize) -> Option<(String, usize)> {
+    if idx + 2 >= tokens.len() || tokens[idx + 1].kind != TokenKind::Punct('(') {
+        return None;
+    }
+    let mut j = idx + 2;
+    let mut combined = String::new();
+    let mut saw_str = false;
+    while j < tokens.len() {
+        if let TokenKind::StringLit(ref s) = tokens[j].kind {
+            combined.push_str(s);
+            saw_str = true;
+            j += 1;
+        } else {
+            break;
+        }
+    }
+    if saw_str && j < tokens.len() && tokens[j].kind == TokenKind::Punct(')') {
+        Some((combined, j + 1))
+    } else {
+        None
     }
 }
 
@@ -1074,7 +1152,7 @@ fn lint_kernel_source(file: &SourceFile, findings: &mut Vec<LintFinding>) {
                 i += 1;
             }
             TokenKind::DoubleLBracket => {
-                let attr = collect_attribute_text(&tokens, i);
+                let (attr, next_i) = collect_attribute_text_and_end(&tokens, i);
                 findings.push(LintFinding::new(
                     1,
                     &file.name,
@@ -1083,7 +1161,7 @@ fn lint_kernel_source(file: &SourceFile, findings: &mut Vec<LintFinding>) {
                     attr,
                     "backend attribute `[[...]]` is forbidden outside the prelude (rule 1)",
                 ));
-                i += 1;
+                i = next_i;
             }
             TokenKind::Ident(id) => {
                 // Check namespace-qualified `ns::member` first.
@@ -1110,17 +1188,39 @@ fn lint_kernel_source(file: &SourceFile, findings: &mut Vec<LintFinding>) {
                     }
                 }
 
-                // `_Pragma(...)` operator outside prelude
+                // `_Pragma(...)` operator outside prelude (also rule 4 if contraction/fast-math)
                 if id == "_Pragma" {
-                    findings.push(LintFinding::new(
-                        1,
-                        &file.name,
-                        tok.line,
-                        tok.column,
-                        "_Pragma",
-                        "`_Pragma` is forbidden outside the prelude (rule 1)",
-                    ));
-                    i += 1;
+                    if let Some((pragma_body, next_i)) = extract_underscore_pragma_arg(&tokens, i) {
+                        findings.push(LintFinding::new(
+                            1,
+                            &file.name,
+                            tok.line,
+                            tok.column,
+                            format!("_Pragma(\"{pragma_body}\")"),
+                            "`_Pragma` is forbidden outside the prelude (rule 1)",
+                        ));
+                        if is_forbidden_fp_pragma(&pragma_body) {
+                            findings.push(LintFinding::new(
+                                4,
+                                &file.name,
+                                tok.line,
+                                tok.column,
+                                format!("_Pragma(\"{pragma_body}\")"),
+                                "contraction-on or fast-math `_Pragma` is forbidden (rule 4)",
+                            ));
+                        }
+                        i = next_i;
+                    } else {
+                        findings.push(LintFinding::new(
+                            1,
+                            &file.name,
+                            tok.line,
+                            tok.column,
+                            "_Pragma",
+                            "`_Pragma` is forbidden outside the prelude (rule 1)",
+                        ));
+                        i += 1;
+                    }
                     continue;
                 }
 
@@ -1212,7 +1312,7 @@ fn is_prelude_include(body: &str) -> bool {
         || path.ends_with("/prelude_metal.h")
 }
 
-fn collect_attribute_text(tokens: &[Token], start: usize) -> String {
+fn collect_attribute_text_and_end(tokens: &[Token], start: usize) -> (String, usize) {
     let mut out = String::from("[[");
     let mut j = start + 1;
     while j < tokens.len() {
@@ -1221,14 +1321,15 @@ fn collect_attribute_text(tokens: &[Token], start: usize) -> String {
             && tokens[j + 1].kind == TokenKind::Punct(']')
         {
             out.push_str("]]");
-            break;
+            return (out, j + 2);
         }
         if out.len() < 48 {
             out.push_str(&token_label(&tokens[j].kind));
         }
         j += 1;
     }
-    out
+    // Unclosed `[[`: do not swallow subsequent source tokens.
+    (out, start + 1)
 }
 
 fn handle_qualified_ident(
@@ -1313,7 +1414,7 @@ fn handle_qualified_ident(
             }
             true
         }
-        "metal" | "cuda" | "cooperative_groups" => {
+        "metal" | "cuda" | "cooperative_groups" | "std" => {
             let full = match member {
                 Some(m) => format!("{ns}::{m}"),
                 None => format!("{ns}::"),
@@ -1701,7 +1802,7 @@ fn is_spin_or_grid_barrier_ident(id: &str) -> bool {
 fn token_label(kind: &TokenKind) -> String {
     match kind {
         TokenKind::Ident(s) | TokenKind::Number(s) => s.clone(),
-        TokenKind::StringLit => "\"...\"".to_owned(),
+        TokenKind::StringLit(_) => "\"...\"".to_owned(),
         TokenKind::CharLit => "'...'".to_owned(),
         TokenKind::DoubleColon => "::".to_owned(),
         TokenKind::DoubleLBracket => "[[".to_owned(),
@@ -2035,5 +2136,96 @@ mod tests {
             lint(&bad_pre, &CompileOptions::metal_safe()).unwrap_err().code,
             RefusalCode::FrobRef251
         );
+    }
+
+    #[test]
+    fn lint_catches_backslash_newline_line_splicing_evasion() {
+        let opts = CompileOptions::cuda_safe("sm_89");
+        let cases: &[(&str, &[u8], &str)] = &[
+            ("f32 y = rsq\\\nrt(x);\n", &[3], "rsqrt"),
+            ("f32 y = fm\\\r\naf(a, b, c);\n", &[4], "fmaf"),
+            ("whi\\\nle (FROB_ATOMIC_MAX_U32(p, 0u) < n) {}\n", &[6], "while"),
+            ("atomic\\\nAdd(&acc, v);\n", &[1, 2], "atomicAdd"),
+        ];
+        for &(src, expected_rules, expected_tok) in cases {
+            let unit = DialectUnit::single_source("splice.h", src);
+            let findings = collect_findings(&unit, &opts);
+            let obs_rules: BTreeSet<u8> = findings.iter().map(|f| f.rule).collect();
+            let exp_rules: BTreeSet<u8> = expected_rules.iter().copied().collect();
+            assert_eq!(obs_rules, exp_rules, "src={src:?} findings={findings:?}");
+            assert!(
+                findings.iter().all(|f| f.token == expected_tok && f.line == 1),
+                "src={src:?} findings={findings:?}"
+            );
+            assert_eq!(lint(&unit, &opts).unwrap_err().code, RefusalCode::FrobRef251);
+        }
+    }
+
+    #[test]
+    fn lint_catches_multiline_comment_in_pragma_and_underscore_pragma() {
+        let opts = CompileOptions::metal_safe();
+
+        // Multi-line block comment inside `#pragma` must not truncate the directive.
+        let split_pragma = DialectUnit::single_source(
+            "split_pragma.h",
+            "#pragma /*\n  comment */ clang fp contract(fast)\nf32 y = a * b;\n",
+        );
+        let sf = collect_findings(&split_pragma, &opts);
+        assert!(sf.iter().any(|f| f.rule == 1), "expected rule 1 in {sf:?}");
+        assert!(sf.iter().any(|f| f.rule == 4), "expected rule 4 in {sf:?}");
+
+        // `_Pragma("clang fp contract(fast)")` inside a prelude must still trigger rule 4.
+        let bad_pre_pragma = DialectUnit::default()
+            .with_prelude(SourceFile::new(
+                "prelude_bad.h",
+                "_Pragma(\"clang fp \" \"contract(fast)\")\n",
+            ))
+            .with_source(SourceFile::new("ok.h", "f32 y = a * b;\n"));
+        let pf = collect_findings(&bad_pre_pragma, &opts);
+        assert_eq!(pf.len(), 1, "got {pf:?}");
+        assert_eq!(pf[0].rule, 4);
+
+        // `_Pragma("STDC FP_CONTRACT ON")` in kernel source triggers both rule 1 and rule 4.
+        let src_pragma = DialectUnit::single_source(
+            "src_pragma.h",
+            "_Pragma(\"STDC FP_CONTRACT ON\")\nf32 y = a * b;\n",
+        );
+        let spf = collect_findings(&src_pragma, &opts);
+        assert!(spf.iter().any(|f| f.rule == 1), "got {spf:?}");
+        assert!(spf.iter().any(|f| f.rule == 4), "got {spf:?}");
+
+        // `fast::divide` hidden inside a prelude macro triggers rule 4.
+        let bad_pre_fast = DialectUnit::default()
+            .with_prelude(SourceFile::new(
+                "prelude_fast.h",
+                "#define MY_DIV(a, b) fast::divide((a), (b))\n",
+            ))
+            .with_source(SourceFile::new("ok.h", "f32 y = a * b;\n"));
+        let ff = collect_findings(&bad_pre_fast, &opts);
+        assert_eq!(ff.len(), 1, "got {ff:?}");
+        assert_eq!(ff[0].rule, 4);
+    }
+
+    #[test]
+    fn lint_catches_std_namespace_and_single_attribute_finding() {
+        let opts = CompileOptions::cuda_safe("sm_89");
+
+        let std_sqrt = DialectUnit::single_source("std.h", "f32 y = std::sqrt(x);\n");
+        let f1 = collect_findings(&std_sqrt, &opts);
+        assert_eq!(f1.len(), 1, "got {f1:?}");
+        assert_eq!(f1[0].rule, 1);
+        assert_eq!(f1[0].token, "std::sqrt");
+
+        let std_fma = DialectUnit::single_source("std_fma.h", "f32 y = std::fma(a, b, c);\n");
+        let f2 = collect_findings(&std_fma, &opts);
+        let rules: BTreeSet<u8> = f2.iter().map(|f| f.rule).collect();
+        assert_eq!(rules, BTreeSet::from([1, 4]), "got {f2:?}");
+
+        // `[[threadgroup(0)]]` yields one clean rule-1 finding (not a duplicate on `threadgroup`).
+        let attr_unit = DialectUnit::single_source("attr.h", "void f(u32 x [[threadgroup(0)]]) {}\n");
+        let f3 = collect_findings(&attr_unit, &opts);
+        assert_eq!(f3.len(), 1, "expected single attribute finding, got {f3:?}");
+        assert_eq!(f3[0].rule, 1);
+        assert_eq!(f3[0].token, "[[threadgroup(0)]]");
     }
 }

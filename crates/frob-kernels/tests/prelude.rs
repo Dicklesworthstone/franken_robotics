@@ -326,26 +326,45 @@ fn prelude_metal_msl_3_1_and_buffer_limit() {
             );
         }
 
-        // Verify every FROB_BUF / FROB_BUF_RO index stays strictly below METAL_MAX_ARGUMENTS (31).
-        for line in src.lines() {
-            let trimmed = line.trim();
-            if trimmed.starts_with("FROB_BUF(") || trimmed.starts_with("FROB_BUF_RO(") {
-                let inner = trimmed
-                    .split_once('(')
-                    .and_then(|(_, rest)| rest.split_once(')'))
-                    .map(|(a, _)| a)
-                    .expect("well-formed FROB_BUF macro");
+        // Verify every FROB_BUF / FROB_BUF_RO index anywhere in source stays strictly below METAL_MAX_ARGUMENTS (31).
+        let indices = extract_frob_buf_indices(src);
+        assert!(!indices.is_empty(), "{name}: expected at least one FROB_BUF* binding");
+        for idx in indices {
+            assert!(
+                idx < METAL_MAX_ARGUMENTS,
+                "{name}: buffer index {idx} must be < {METAL_MAX_ARGUMENTS}"
+            );
+        }
+    }
+
+    // Verify inline single-line FROB_BUF(..., 31) is also detected (not just line-leading).
+    let inline_bad = "FROB_KERNEL(k_too_many, FROB_BUF(f32, a, 0), FROB_BUF(f32, b, 31)) FROB_KERNEL_END";
+    let inline_indices = extract_frob_buf_indices(inline_bad);
+    assert_eq!(inline_indices, vec![0, 31]);
+    assert!(inline_indices.iter().any(|&i| i >= METAL_MAX_ARGUMENTS));
+}
+
+fn extract_frob_buf_indices(src: &str) -> Vec<usize> {
+    let mut out = Vec::new();
+    for needle in ["FROB_BUF(", "FROB_BUF_RO("] {
+        let mut rest = src;
+        while let Some(pos) = rest.find(needle) {
+            let after = &rest[pos + needle.len()..];
+            if let Some(close) = after.find(')') {
+                let inner = &after[..close];
                 let idx_str = inner.split(',').nth(2).expect("buffer index arg").trim();
                 let idx: usize = idx_str
                     .parse()
                     .unwrap_or_else(|e| panic!("non-integer buffer index `{idx_str}`: {e}"));
-                assert!(
-                    idx < METAL_MAX_ARGUMENTS,
-                    "{name}: buffer index {idx} must be < {METAL_MAX_ARGUMENTS}"
-                );
+                out.push(idx);
+                rest = &after[close + 1..];
+            } else {
+                break;
             }
         }
     }
+    out.sort_unstable();
+    out
 }
 
 #[test]

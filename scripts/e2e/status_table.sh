@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# e2e: bead=BD-002 milestone=M0 labels=delivery,gate,m0,registry,solid,workspace gates=GATE-GAUNT-10 seed=0 timeout_s=600 needs=cpu plants=hand-edited-block,pass-without-measured
+# e2e: bead=BD-002 milestone=M0 labels=delivery,gate,m0,registry,solid,workspace gates=GATE-GAUNT-10 seed=0 timeout_s=600 needs=cpu plants=hand-edited-block,pass-without-measured,status-block-digest
 #
 # scripts/e2e/status_table.sh
 # End-to-end verification of the README honest-status table generator (BD-002,
@@ -15,6 +15,12 @@
 
 set -euo pipefail
 
+# The RCH job wrapper sets these on the worker so its Cargo shim stays there.
+if [ "${RCH_CARGO_WRAPPER_BYPASS:-}" != "1" ] || [ "${RCH_CARGO_WRAPPER_ORIGIN:-}" != "rch" ]; then
+  printf '%s\n' 'Run the full lane on one worker: rch exec --require-remote --job --result-dir target/e2e-logs -- bash scripts/e2e/run-all.sh --script status_table --devices cpu' >&2
+  exit 2
+fi
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 # shellcheck source=scripts/e2e/lib.sh
 source "${SCRIPT_DIR}/lib.sh"
@@ -23,8 +29,8 @@ e2e_init "status_table" "BD-002" "$@"
 e2e_gate "GATE-GAUNT-10"
 
 REPO_COPY="${E2E_WORK_DIR}/repo_copy"
-TARGET_DIR="${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/frob-status-table-e2e"
-mkdir -p "${REPO_COPY}" "${TARGET_DIR}"
+TARGET_DIR="$(mktemp -d "${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/frob-status-table-e2e.XXXXXXXX")"
+mkdir -p "${REPO_COPY}"
 
 # ---------------------------------------------------------------------------
 # Step 1: Copy workspace into scratch directory (read-only on repo; no deletions)
@@ -157,7 +163,7 @@ EOF
 
 if e2e_plant "pass-without-measured"; then
   # Planted negative-control verification: invert expectation so --verify-plants confirms failure detection.
-  e2e_cmd --name bless_5row_planted --expect-exit "0" -- \
+  e2e_cmd --name pass-without-measured --expect-exit "0" -- \
     env "FROB_STATUS_ROOT=${REPO_COPY}" FROB_BLESS=1 "CARGO_TARGET_DIR=${TARGET_DIR}" \
     cargo test --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p xtask --test status_table readme_block_is_current -- --exact
 else
@@ -255,24 +261,21 @@ e2e_cmd --name bless_4row --expect-exit "0" -- \
   cargo test --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p xtask --test status_table readme_block_is_current -- --exact
 
 BLOCK_FILE="${E2E_WORK_DIR}/blessed_block.md"
-python3 - "${REPO_COPY}/README.md" "${BLOCK_FILE}" <<'PY'
+python3 - "${REPO_COPY}/README.md" "${BLOCK_FILE}" "${E2E_PLANT_FAILURE:-}" <<'PY'
 import sys
 txt = open(sys.argv[1], encoding="utf-8").read()
 b = txt.index("<!-- status:begin -->\n") + len("<!-- status:begin -->\n")
 e = txt.index("<!-- status:end -->")
-open(sys.argv[2], "w", encoding="utf-8").write(txt[b:e])
+block = txt[b:e]
+if sys.argv[3] == "status-block-digest":
+    block = block.replace("561 of 561 cells", "560 of 561 cells", 1)
+open(sys.argv[2], "w", encoding="utf-8").write(block)
 PY
 
 BLOCK_SHA="$("${FROB_E2E_TOOL}" cmp sha256 "${BLOCK_FILE}")"
-e2e_assert_digest_eq "blessed_block_digest_recorded" "${BLOCK_SHA}" "${BLOCK_SHA}" --gate "GATE-GAUNT-10"
-
-for token in "open" "pass" "561 of 561 cells" "killed (KILL-FSIM: pinned worker process)" "no-claim" "Summary: 4 gates"; do
-  if grep -Fq "$token" "${BLOCK_FILE}"; then
-    e2e_assert_eq "status_token_${token%% *}" "present" "present" --gate "GATE-GAUNT-10"
-  else
-    e2e_assert_eq "status_token_${token%% *}" "missing" "present" --gate "GATE-GAUNT-10"
-  fi
-done
+# Pinned from the four expected rows, their column spacing and the exact counts.
+e2e_assert_digest_eq "status-block-digest" "${BLOCK_SHA}" \
+  "96569e70c874e4847831cfd0924f240959afbabb319c373e8956f24d931ca528" --gate "GATE-GAUNT-10"
 
 # ---------------------------------------------------------------------------
 # Step 4: Verify clean check without FROB_BLESS (exit 0)
@@ -298,7 +301,7 @@ open(p, "w", encoding="utf-8").write(txt)
 PY
 
 if e2e_plant "hand-edited-block"; then
-  e2e_cmd --name check_hand_edited_planted --expect-exit "0" -- \
+  e2e_cmd --name hand-edited-block --expect-exit "0" -- \
     env "FROB_STATUS_ROOT=${REPO_COPY}" "CARGO_TARGET_DIR=${TARGET_DIR}" \
     cargo test --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p xtask --test status_table readme_block_is_current -- --exact
 else

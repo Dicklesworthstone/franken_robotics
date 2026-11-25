@@ -383,6 +383,12 @@ pub fn validate_gate_row(gate: &GateRow) -> Result<(), StatusTableError> {
                         ),
                     ));
                 }
+                if part.measured == gate.threshold {
+                    return Err(StatusTableError::new(
+                        &pctx,
+                        "status `pass` requires an actual measurement; `measured` is byte-equal to `threshold`",
+                    ));
+                }
                 let session = part.recorded.session.trim();
                 if session.is_empty() {
                     return Err(StatusTableError::new(
@@ -479,6 +485,19 @@ pub fn parse_gates_toml(bytes: &[u8]) -> Result<GateRegistry, StatusTableError> 
     let raw_gates_arr = rf
         .opt_array("gate")
         .map_err(|e| StatusTableError::new("gates.toml", e.to_string()))?;
+    // These extension tables are validated by the conformance register.
+    for field in [
+        "retired_ids",
+        "amendment",
+        "shared_fixture",
+        "related_threshold",
+        "fallback_exit",
+        "variant",
+    ] {
+        let _ = rf
+            .opt_array(field)
+            .map_err(|e| StatusTableError::new("gates.toml", e.to_string()))?;
+    }
     rf.finish()
         .map_err(|e| StatusTableError::new("gates.toml", e.to_string()))?;
 
@@ -521,14 +540,64 @@ pub fn parse_gates_toml(bytes: &[u8]) -> Result<GateRegistry, StatusTableError> 
         let id = gf
             .require_str("id")
             .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let section = gf
+            .require_str("section")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let kind = gf
+            .opt_str("kind")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        if !seen_ids.insert(id.clone()) {
+            return Err(gf.fail(StatusTableError::new(
+                &ctx,
+                format!("duplicate gate id `{id}`"),
+            )));
+        }
+        for field in [
+            "consumers",
+            "sources",
+            "recurring",
+            "needs",
+            "blocks_exit",
+            "foundation",
+            "first_needed",
+            "trigger",
+            "fallback",
+            "decided",
+            "mode",
+            "reads",
+            "decision",
+            "reread",
+            "scope_kind",
+        ] {
+            let _ = gf.take(field);
+        }
+        match kind.as_deref() {
+            Some("kill") => {
+                if id.trim().is_empty() || section.trim().is_empty() {
+                    return Err(gf.fail(StatusTableError::new(
+                        &ctx,
+                        "kill row requires non-empty id and section",
+                    )));
+                }
+                // Kill rows carry decisions, not claims, and have no status table row.
+                let _ = gf.take("milestone");
+                gf.finish()
+                    .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+                continue;
+            }
+            None | Some("admission" | "convergence" | "program") => {}
+            Some(other) => {
+                return Err(gf.fail(StatusTableError::new(
+                    &ctx,
+                    format!("unknown gate kind `{other}`"),
+                )));
+            }
+        }
         let claim_s = gf
             .require_str("claim")
             .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
         let claim_id = gf
             .require_str("claim_id")
-            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-        let section = gf
-            .require_str("section")
             .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
         let threshold = gf
             .require_str("threshold")
@@ -548,12 +617,6 @@ pub fn parse_gates_toml(bytes: &[u8]) -> Result<GateRegistry, StatusTableError> 
         gf.finish()
             .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
 
-        if !seen_ids.insert(id.clone()) {
-            return Err(StatusTableError::new(
-                &ctx,
-                format!("duplicate gate id `{id}`"),
-            ));
-        }
         let claim = ClaimKind::parse(&claim_s).ok_or_else(|| {
             StatusTableError::new(
                 &ctx,
@@ -617,6 +680,18 @@ pub fn parse_gates_toml(bytes: &[u8]) -> Result<GateRegistry, StatusTableError> 
             let detail = pf
                 .opt_str("detail")
                 .map_err(|e| StatusTableError::new(&pctx, e.to_string()))?;
+            for field in [
+                "scope",
+                "commit",
+                "command",
+                "receipt",
+                "fingerprint",
+                "seed",
+            ] {
+                let _ = pf
+                    .opt_str(field)
+                    .map_err(|e| StatusTableError::new(&pctx, e.to_string()))?;
+            }
             pf.finish()
                 .map_err(|e| StatusTableError::new(&pctx, e.to_string()))?;
 
@@ -1284,6 +1359,21 @@ fn validate_empty_or_typed_registry(
     let raw_rows = rf
         .opt_array(row_key)
         .map_err(|e| StatusTableError::new(file_name, e.to_string()))?;
+    if file_name == "verbs.toml" {
+        for key in ["retired_name", "task_cluster", "addition"] {
+            if let Some(items) = rf
+                .opt_array(key)
+                .map_err(|e| StatusTableError::new(file_name, e.to_string()))?
+            {
+                if let Err(err) = extract_table_list(items, key, file_name) {
+                    return Err(rf.fail(err));
+                }
+            }
+        }
+        let _ = rf
+            .opt_table("counts")
+            .map_err(|e| StatusTableError::new(file_name, e.to_string()))?;
+    }
     rf.finish()
         .map_err(|e| StatusTableError::new(file_name, e.to_string()))?;
 
@@ -1302,18 +1392,22 @@ fn validate_empty_or_typed_registry(
         let ctx = format!("{file_name}:{row_key}[{idx}]");
         match file_name {
             "verbs.toml" => {
+                // frob-verbs' build already validates the full registry. Keep xtask usable
+                // for diagnosing it by projecting just the fields this audit checks.
                 let mut f = Fields::new(rtbl.clone(), &ctx);
+                for key in rtbl.keys() {
+                    if !matches!(key.as_str(), "name" | "cluster" | "owner" | "refusals") {
+                        let _ = f.take(key);
+                    }
+                }
                 let _ = f.require_str("name").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 let _ = f.require_str("cluster").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 let _ = f.require_str("owner").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-                let _ = f.require_str("summary").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-                let _ = f.opt_str("tier").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-                let _ = f.opt_str("milestone").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-                let raw_refs = f.opt_array("refusals").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+                let raw_refs = f
+                    .require_array("refusals")
+                    .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 f.finish().map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-                if let Some(items) = raw_refs {
-                    let _ = extract_str_list(&items, "refusals", &ctx, true)?;
-                }
+                let _ = extract_str_list(&raw_refs, "refusals", &ctx, true)?;
             }
             "kernels.toml" => {
                 let mut f = Fields::new(rtbl.clone(), &ctx);
@@ -1374,6 +1468,22 @@ fn validate_empty_or_typed_registry(
         }
     }
     Ok(rows.len())
+}
+
+#[test]
+fn verb_projection_rejects_non_string_refusal() {
+    let planted = br#"schema = "frob.verbs/1"
+[[verb]]
+name = "doctor"
+cluster = "utility"
+owner = "frob-cli"
+purpose = "Check installation"
+use_when = "Diagnosing the local stack"
+refusals = [123]
+"#;
+    let error = validate_empty_or_typed_registry("verbs.toml", "frob.verbs/1", "verb", planted)
+        .expect_err("projected refusal entries must be strings");
+    assert!(error.message.contains("refusals"), "{error}");
 }
 
 /// Validate `registries/refusals.toml` (schema `frob.refusals/1`, empty or populated).

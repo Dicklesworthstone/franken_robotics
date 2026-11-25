@@ -351,6 +351,11 @@ fn every_registry_validates() {
     let audit = validate_all_registries(&root).expect("all registries and schemas must validate");
     assert_eq!(audit.format_count, 13);
     assert!(audit.validated_files.contains(&"registries/gates.toml".to_owned()));
+    assert!(
+        audit
+            .validated_files
+            .contains(&"registries/verbs.toml".to_owned())
+    );
     assert!(audit.validated_files.contains(&"registries/cards".to_owned()));
     assert!(audit.validated_files.len() >= 20);
 
@@ -360,6 +365,51 @@ fn every_registry_validates() {
         let bytes = fs::read(&core_contract).expect("read crates/frob-core/contract.toml");
         validate_contract_toml(&bytes).expect("crates/frob-core/contract.toml must validate");
     }
+}
+
+const MEASURED_GATE: &str = r#"
+schema = "frob.gates/1"
+
+[[gate]]
+id = "GATE-MEASURED"
+claim = "known-answer"
+claim_id = "clm:measured"
+section = "38.13"
+threshold = "561 cells"
+milestone = "M1"
+tier = ["G1:host"]
+controls = ["NC-0001"]
+
+[[gate.part]]
+milestone = "M1"
+status = "pass"
+measured = "561 of 561 cells"
+evidence = ["seq:1"]
+recorded = { date = "2026-11-24", session = "session:reviewer", implemented_by = "session:author" }
+"#;
+
+#[test]
+fn readme_pass_refuses_copied_threshold() {
+    let valid = parse_gates_toml(MEASURED_GATE.as_bytes()).unwrap();
+    assert!(status_table(&valid).unwrap().contains("561 of 561 cells"));
+    let planted = MEASURED_GATE.replace("561 of 561 cells", "561 cells");
+    let err = generate_from_toml(planted.as_bytes()).expect_err("copied TARGET must fail");
+    assert!(err.context.contains("GATE-MEASURED"), "{err}");
+    assert!(err.message.contains("byte-equal"), "{err}");
+}
+
+#[test]
+fn gate_projection_accepts_registry_extensions() {
+    let extended = MEASURED_GATE
+        .replace("claim =", "kind = \"program\"\nclaim =")
+        .replace("status =", "scope = \"host\"\nstatus =");
+    let extended =
+        format!("{extended}\n[[gate]]\nid = \"KILL-TEST\"\nkind = \"kill\"\nsection = \"38.13\"\n");
+    let table = generate_from_toml(extended.as_bytes()).expect("gate metadata must render");
+    assert_eq!(table, generate_from_toml(MEASURED_GATE.as_bytes()).unwrap());
+    let planted = extended.replace("scope =", "scp =");
+    let err = generate_from_toml(planted.as_bytes()).expect_err("unknown part key must fail");
+    assert!(err.message.contains("scp"), "{err}");
 }
 
 #[test]

@@ -16,6 +16,7 @@ use frob_core::refusal::{Refusal, RefusalCode, Repair, RetryPolicy};
 
 /// Schema identifier of the v0 straight-line kernel IR.
 pub const KIR_SCHEMA: &str = "frob.kir/1";
+const MATH_MODE: &str = "Ieee754Safe";
 
 /// Base dimension vector length sourced from `frob_core::qty` (never hard-coded).
 pub const DIM_LEN: usize = Length::DIMENSION.len();
@@ -207,6 +208,21 @@ pub struct OpCounts {
 }
 
 impl OpCounts {
+    fn fields(self) -> [(&'static str, u32); 10] {
+        [
+            ("add_sub", self.add_sub),
+            ("cmp", self.cmp),
+            ("consts", self.consts),
+            ("div", self.div),
+            ("inputs", self.inputs),
+            ("min_max", self.min_max),
+            ("mul", self.mul),
+            ("select", self.select),
+            ("sqrt", self.sqrt),
+            ("unary", self.unary),
+        ]
+    }
+
     #[must_use]
     pub fn from_nodes(nodes: &[Node]) -> Self {
         let mut c = Self::default();
@@ -259,6 +275,24 @@ pub struct ProgramBuilder {
     outputs: Vec<(Port, NodeId)>,
     nodes: Vec<Node>,
     cse: BTreeMap<(Op, Ty, Dim), NodeId>,
+}
+
+macro_rules! same_dimension {
+    ($name:ident, $op:ident, $commutative:literal) => {
+        pub fn $name(
+            &mut self,
+            a: NodeId,
+            b: NodeId,
+            expr: impl Into<String>,
+        ) -> Result<NodeId, Refusal> {
+            let (x, y) = if $commutative {
+                sort_pair(a, b)
+            } else {
+                (a, b)
+            };
+            self.bin_same_dim(Op::$op(x, y), a, b, expr.into())
+        }
+    };
 }
 
 impl ProgramBuilder {
@@ -325,24 +359,10 @@ impl ProgramBuilder {
         )
     }
 
-    pub fn add(
-        &mut self,
-        a: NodeId,
-        b: NodeId,
-        expr: impl Into<String>,
-    ) -> Result<NodeId, Refusal> {
-        let (x, y) = sort_pair(a, b);
-        self.bin_same_dim(Op::Add(x, y), a, b, expr.into())
-    }
-
-    pub fn sub(
-        &mut self,
-        a: NodeId,
-        b: NodeId,
-        expr: impl Into<String>,
-    ) -> Result<NodeId, Refusal> {
-        self.bin_same_dim(Op::Sub(a, b), a, b, expr.into())
-    }
+    same_dimension!(add, Add, true);
+    same_dimension!(sub, Sub, false);
+    same_dimension!(min, Min, true);
+    same_dimension!(max, Max, true);
 
     pub fn mul(
         &mut self,
@@ -399,26 +419,6 @@ impl ProgramBuilder {
     pub fn abs(&mut self, a: NodeId, expr: impl Into<String>) -> Result<NodeId, Refusal> {
         let (ty, dim) = (self.nodes[a].ty, self.nodes[a].dim);
         self.push_node(Op::Abs(a), ty, dim, expr.into())
-    }
-
-    pub fn min(
-        &mut self,
-        a: NodeId,
-        b: NodeId,
-        expr: impl Into<String>,
-    ) -> Result<NodeId, Refusal> {
-        let (x, y) = sort_pair(a, b);
-        self.bin_same_dim(Op::Min(x, y), a, b, expr.into())
-    }
-
-    pub fn max(
-        &mut self,
-        a: NodeId,
-        b: NodeId,
-        expr: impl Into<String>,
-    ) -> Result<NodeId, Refusal> {
-        let (x, y) = sort_pair(a, b);
-        self.bin_same_dim(Op::Max(x, y), a, b, expr.into())
     }
 
     pub fn cmp(
@@ -486,7 +486,7 @@ impl ProgramBuilder {
             outputs: self.outputs,
             nodes: self.nodes,
             meta: ProgramMeta {
-                math_mode: "Ieee754Safe".into(),
+                math_mode: MATH_MODE.into(),
                 op_counts,
                 cpu_reference: self.cpu_reference,
                 determinism: self.determinism,
@@ -585,169 +585,84 @@ impl Program {
         let mut inferred_dim: Vec<Dim> = Vec::with_capacity(self.nodes.len());
 
         for (idx, node) in self.nodes.iter().enumerate() {
+            let error = |observed, required, reason| {
+                dim_refusal(&self.name, idx, &node.expr_name, observed, required, reason)
+            };
             let check_ref = |r: NodeId| -> Result<(Ty, Dim), Refusal> {
                 if r >= idx {
-                    return Err(dim_refusal(
-                        &self.name,
-                        idx,
-                        &node.expr_name,
+                    return Err(error(
                         node.dim,
                         node.dim,
-                        "SSA order violation: operand index >= node index",
+                        "operand index must precede its node",
                     ));
                 }
                 Ok((inferred_ty[r], inferred_dim[r]))
             };
+            let numeric = |a, b| {
+                let (ta, da) = check_ref(a)?;
+                let (tb, db) = check_ref(b)?;
+                if ta != tb || ta == Ty::Bool {
+                    return Err(error(da, db, "numeric operand type mismatch"));
+                }
+                Ok((ta, da, db))
+            };
             let (ty, dim) = match node.op {
                 Op::Input { port } => {
-                    let p = self.inputs.get(port).ok_or_else(|| {
-                        dim_refusal(
-                            &self.name,
-                            idx,
-                            &node.expr_name,
-                            node.dim,
-                            node.dim,
-                            "input port out of range",
-                        )
-                    })?;
+                    let p = self
+                        .inputs
+                        .get(port)
+                        .ok_or_else(|| error(node.dim, node.dim, "input port out of range"))?;
                     (p.ty, p.dim)
                 }
-                Op::Const { ty, dim, .. } => (ty, dim),
+                Op::Const { bits, ty, dim } => {
+                    if (ty == Ty::F32 && u32::try_from(bits).is_err())
+                        || (ty == Ty::Bool && bits > 1)
+                    {
+                        return Err(error(dim, dim, "constant bits exceed the declared type"));
+                    }
+                    (ty, dim)
+                }
                 Op::Add(a, b) | Op::Sub(a, b) | Op::Min(a, b) | Op::Max(a, b) => {
-                    let (ta, da) = check_ref(a)?;
-                    let (tb, db) = check_ref(b)?;
-                    if ta != tb || ta == Ty::Bool {
-                        return Err(dim_refusal(
-                            &self.name,
-                            idx,
-                            &node.expr_name,
-                            da,
-                            db,
-                            "numeric operand type mismatch",
-                        ));
+                    let (ty, da, db) = numeric(a, b)?;
+                    let skip_sum =
+                        cfg!(feature = "skip-sum-dim-check") && matches!(node.op, Op::Add(..));
+                    if da != db && !skip_sum {
+                        return Err(error(da, db, "inhomogeneous sum/difference/min/max"));
                     }
-                    if da != db {
-                        return Err(dim_refusal(
-                            &self.name,
-                            idx,
-                            &node.expr_name,
-                            da,
-                            db,
-                            "inhomogeneous sum/difference/min/max",
-                        ));
-                    }
-                    (ta, da)
+                    (ty, da)
                 }
-                Op::Mul(a, b) => {
-                    let (ta, da) = check_ref(a)?;
-                    let (tb, db) = check_ref(b)?;
-                    if ta != tb || ta == Ty::Bool {
-                        return Err(dim_refusal(
-                            &self.name,
-                            idx,
-                            &node.expr_name,
-                            da,
-                            db,
-                            "mul operand type mismatch",
-                        ));
+                Op::Mul(a, b) | Op::Div(a, b) => {
+                    let (ty, da, db) = numeric(a, b)?;
+                    let dim = if matches!(node.op, Op::Mul(..)) {
+                        da.add(db)
+                    } else {
+                        da.sub(db)
+                    };
+                    (
+                        ty,
+                        dim.ok_or_else(|| error(da, db, "dimension exponent overflow"))?,
+                    )
+                }
+                Op::Sqrt(a) | Op::Neg(a) | Op::Abs(a) => {
+                    let (ty, dim) = check_ref(a)?;
+                    if ty == Ty::Bool {
+                        return Err(error(dim, dim, "numeric unary operation on bool"));
                     }
-                    let d = da.add(db).ok_or_else(|| {
-                        dim_refusal(
-                            &self.name,
-                            idx,
-                            &node.expr_name,
-                            da,
-                            db,
-                            "dimension exponent overflow",
+                    if matches!(node.op, Op::Sqrt(_)) {
+                        (
+                            ty,
+                            dim.halve_even().ok_or_else(|| {
+                                error(dim, Dim::DIMENSIONLESS, "sqrt of odd dimension exponent")
+                            })?,
                         )
-                    })?;
-                    (ta, d)
-                }
-                Op::Div(a, b) => {
-                    let (ta, da) = check_ref(a)?;
-                    let (tb, db) = check_ref(b)?;
-                    if ta != tb || ta == Ty::Bool {
-                        return Err(dim_refusal(
-                            &self.name,
-                            idx,
-                            &node.expr_name,
-                            da,
-                            db,
-                            "div operand type mismatch",
-                        ));
+                    } else {
+                        (ty, dim)
                     }
-                    let d = da.sub(db).ok_or_else(|| {
-                        dim_refusal(
-                            &self.name,
-                            idx,
-                            &node.expr_name,
-                            da,
-                            db,
-                            "dimension exponent overflow",
-                        )
-                    })?;
-                    (ta, d)
-                }
-                Op::Sqrt(a) => {
-                    let (ta, da) = check_ref(a)?;
-                    if ta == Ty::Bool {
-                        return Err(dim_refusal(
-                            &self.name,
-                            idx,
-                            &node.expr_name,
-                            da,
-                            Dim::DIMENSIONLESS,
-                            "sqrt on bool",
-                        ));
-                    }
-                    let d = da.halve_even().ok_or_else(|| {
-                        dim_refusal(
-                            &self.name,
-                            idx,
-                            &node.expr_name,
-                            da,
-                            Dim::DIMENSIONLESS,
-                            "sqrt of odd dimension exponent",
-                        )
-                    })?;
-                    (ta, d)
-                }
-                Op::Neg(a) | Op::Abs(a) => {
-                    let (ta, da) = check_ref(a)?;
-                    if ta == Ty::Bool {
-                        return Err(dim_refusal(
-                            &self.name,
-                            idx,
-                            &node.expr_name,
-                            da,
-                            da,
-                            "neg/abs on bool",
-                        ));
-                    }
-                    (ta, da)
                 }
                 Op::Cmp(_, a, b) => {
-                    let (ta, da) = check_ref(a)?;
-                    let (tb, db) = check_ref(b)?;
-                    if ta != tb || ta == Ty::Bool {
-                        return Err(dim_refusal(
-                            &self.name,
-                            idx,
-                            &node.expr_name,
-                            da,
-                            db,
-                            "cmp operand type mismatch",
-                        ));
-                    }
+                    let (_, da, db) = numeric(a, b)?;
                     if da != db {
-                        return Err(dim_refusal(
-                            &self.name,
-                            idx,
-                            &node.expr_name,
-                            da,
-                            db,
-                            "cmp operands have different dimensions",
-                        ));
+                        return Err(error(da, db, "cmp operands have different dimensions"));
                     }
                     (Ty::Bool, Dim::DIMENSIONLESS)
                 }
@@ -756,33 +671,19 @@ impl Program {
                     let (ta, da) = check_ref(a)?;
                     let (tb, db) = check_ref(b)?;
                     if tp != Ty::Bool || ta != tb {
-                        return Err(dim_refusal(
-                            &self.name,
-                            idx,
-                            &node.expr_name,
-                            da,
-                            db,
-                            "select type mismatch",
-                        ));
+                        return Err(error(da, db, "select type mismatch"));
                     }
                     if da != db {
-                        return Err(dim_refusal(
-                            &self.name,
-                            idx,
-                            &node.expr_name,
-                            da,
-                            db,
-                            "select arms have different dimensions",
-                        ));
+                        return Err(error(da, db, "select arms have different dimensions"));
                     }
                     (ta, da)
                 }
             };
+            if ty == Ty::Bool && dim != Dim::DIMENSIONLESS {
+                return Err(error(dim, Dim::DIMENSIONLESS, "bool must be dimensionless"));
+            }
             if ty != node.ty || dim != node.dim {
-                return Err(dim_refusal(
-                    &self.name,
-                    idx,
-                    &node.expr_name,
+                return Err(error(
                     dim,
                     node.dim,
                     "annotated node type/dim disagrees with inferred",
@@ -825,7 +726,7 @@ impl Program {
             o.member("inputs", |iv| {
                 iv.array(|ia| {
                     for p in &self.inputs {
-                        write_port(p, ia)?;
+                        write_port(p, None, ia)?;
                     }
                     Ok(())
                 })
@@ -838,16 +739,9 @@ impl Program {
                     mo.member("op_counts", |ov| {
                         let c = self.meta.op_counts;
                         ov.object(|oo| {
-                            oo.int53("add_sub", i64::from(c.add_sub))?;
-                            oo.int53("cmp", i64::from(c.cmp))?;
-                            oo.int53("consts", i64::from(c.consts))?;
-                            oo.int53("div", i64::from(c.div))?;
-                            oo.int53("inputs", i64::from(c.inputs))?;
-                            oo.int53("min_max", i64::from(c.min_max))?;
-                            oo.int53("mul", i64::from(c.mul))?;
-                            oo.int53("select", i64::from(c.select))?;
-                            oo.int53("sqrt", i64::from(c.sqrt))?;
-                            oo.int53("unary", i64::from(c.unary))?;
+                            for (key, count) in c.fields() {
+                                oo.int53(key, i64::from(count))?;
+                            }
                             Ok(())
                         })
                     })?;
@@ -873,40 +767,15 @@ impl Program {
                                     | Op::Mul(a, b)
                                     | Op::Div(a, b)
                                     | Op::Min(a, b)
-                                    | Op::Max(a, b) => {
-                                        no.member("args", |av| {
-                                            av.array(|aa| {
-                                                aa.push_int53(a as i64)?;
-                                                aa.push_int53(b as i64)?;
-                                                Ok(())
-                                            })
-                                        })?;
-                                    }
+                                    | Op::Max(a, b) => write_args(no, &[a, b])?,
                                     Op::Sqrt(a) | Op::Neg(a) | Op::Abs(a) => {
-                                        no.member("args", |av| {
-                                            av.array(|aa| aa.push_int53(a as i64))
-                                        })?;
+                                        write_args(no, &[a])?;
                                     }
                                     Op::Cmp(cop, a, b) => {
                                         no.str("cmp", cop.as_str())?;
-                                        no.member("args", |av| {
-                                            av.array(|aa| {
-                                                aa.push_int53(a as i64)?;
-                                                aa.push_int53(b as i64)?;
-                                                Ok(())
-                                            })
-                                        })?;
+                                        write_args(no, &[a, b])?;
                                     }
-                                    Op::Select(p, a, b) => {
-                                        no.member("args", |av| {
-                                            av.array(|aa| {
-                                                aa.push_int53(p as i64)?;
-                                                aa.push_int53(a as i64)?;
-                                                aa.push_int53(b as i64)?;
-                                                Ok(())
-                                            })
-                                        })?;
-                                    }
+                                    Op::Select(p, a, b) => write_args(no, &[p, a, b])?,
                                 }
                                 no.str("ty", n.ty.as_str())?;
                                 Ok(())
@@ -919,15 +788,7 @@ impl Program {
             o.member("outputs", |ov| {
                 ov.array(|oa| {
                     for (p, nid) in &self.outputs {
-                        oa.push(|ev| {
-                            ev.object(|po| {
-                                po.member("dim", |dv| write_dim(p.dim, dv))?;
-                                po.str("name", &p.name)?;
-                                po.int53("node", *nid as i64)?;
-                                po.str("ty", p.ty.as_str())?;
-                                Ok(())
-                            })
-                        })?;
+                        write_port(p, Some(*nid), oa)?;
                     }
                     Ok(())
                 })
@@ -949,6 +810,10 @@ impl Program {
     pub fn parse_json(bytes: &[u8]) -> Result<Self, String> {
         let adm = admit(bytes, &Limits::default()).map_err(|e| e.to_string())?;
         let root = obj(adm.root(), "program")?;
+        keys(
+            &root,
+            &["schema", "name", "inputs", "outputs", "nodes", "meta"],
+        )?;
         let schema = s_req(&root, "schema")?;
         if schema != KIR_SCHEMA {
             return Err(format!("expected schema `{KIR_SCHEMA}`, got `{schema}`"));
@@ -957,24 +822,14 @@ impl Program {
         let mut inputs = Vec::new();
         for item in a_req(&root, "inputs")? {
             let po = obj(item, "input")?;
-            inputs.push(Port {
-                name: s_req(&po, "name")?.to_owned(),
-                ty: Ty::parse(s_req(&po, "ty")?)?,
-                dim: parse_dim(f_req(&po, "dim")?)?,
-            });
+            keys(&po, &["name", "ty", "dim"])?;
+            inputs.push(parse_port(&po)?);
         }
         let mut outputs = Vec::new();
         for item in a_req(&root, "outputs")? {
             let po = obj(item, "output")?;
-            let nid = u_req(&po, "node")?;
-            outputs.push((
-                Port {
-                    name: s_req(&po, "name")?.to_owned(),
-                    ty: Ty::parse(s_req(&po, "ty")?)?,
-                    dim: parse_dim(f_req(&po, "dim")?)?,
-                },
-                nid,
-            ));
+            keys(&po, &["name", "ty", "dim", "node"])?;
+            outputs.push((parse_port(&po)?, u_req(&po, "node")?));
         }
         let mut nodes = Vec::new();
         for item in a_req(&root, "nodes")? {
@@ -982,40 +837,42 @@ impl Program {
             let ty = Ty::parse(s_req(&no, "ty")?)?;
             let dim = parse_dim(f_req(&no, "dim")?)?;
             let expr_name = s_req(&no, "expr_name")?.to_owned();
-            let op = match s_req(&no, "op")? {
+            let tag = s_req(&no, "op")?;
+            let extra = match tag {
+                "input" => &["port"][..],
+                "const" => &["bits_hex"],
+                "cmp" => &["args", "cmp"],
+                _ => &["args"],
+            };
+            if let Some(key) = no
+                .keys()
+                .copied()
+                .find(|key| !["op", "ty", "dim", "expr_name"].contains(key) && !extra.contains(key))
+            {
+                return Err(format!("unknown node field `{key}`"));
+            }
+            let binary = |op: fn(NodeId, NodeId) -> Op| args2(&no).map(|(a, b)| op(a, b));
+            let op = match tag {
                 "input" => Op::Input {
                     port: u_req(&no, "port")?,
                 },
                 "const" => {
                     let hex = s_req(&no, "bits_hex")?;
+                    if hex.len() != 16
+                        || !hex.bytes().all(|b| matches!(b, b'0'..=b'9' | b'a'..=b'f'))
+                    {
+                        return Err("bits_hex must contain 16 lowercase hex digits".into());
+                    }
                     let bits =
                         u64::from_str_radix(hex, 16).map_err(|e| format!("bits_hex: {e}"))?;
                     Op::Const { bits, ty, dim }
                 }
-                "add" => {
-                    let a = args2(&no)?;
-                    Op::Add(a.0, a.1)
-                }
-                "sub" => {
-                    let a = args2(&no)?;
-                    Op::Sub(a.0, a.1)
-                }
-                "mul" => {
-                    let a = args2(&no)?;
-                    Op::Mul(a.0, a.1)
-                }
-                "div" => {
-                    let a = args2(&no)?;
-                    Op::Div(a.0, a.1)
-                }
-                "min" => {
-                    let a = args2(&no)?;
-                    Op::Min(a.0, a.1)
-                }
-                "max" => {
-                    let a = args2(&no)?;
-                    Op::Max(a.0, a.1)
-                }
+                "add" => binary(Op::Add)?,
+                "sub" => binary(Op::Sub)?,
+                "mul" => binary(Op::Mul)?,
+                "div" => binary(Op::Div)?,
+                "min" => binary(Op::Min)?,
+                "max" => binary(Op::Max)?,
                 "sqrt" => Op::Sqrt(args1(&no)?),
                 "neg" => Op::Neg(args1(&no)?),
                 "abs" => Op::Abs(args1(&no)?),
@@ -1041,26 +898,47 @@ impl Program {
             });
         }
         let mo = obj(f_req(&root, "meta")?, "meta")?;
-        let math_mode = s_req(&mo, "math_mode")?.to_owned();
+        keys(
+            &mo,
+            &["math_mode", "cpu_reference", "determinism", "op_counts"],
+        )?;
+        let math_mode = s_req(&mo, "math_mode")?;
+        if math_mode != MATH_MODE {
+            return Err(format!(
+                "expected math_mode `{MATH_MODE}`, got `{math_mode}`"
+            ));
+        }
         let cpu_reference = s_req(&mo, "cpu_reference")?.to_owned();
         let det_s = s_req(&mo, "determinism")?;
         let determinism = DetClass::parse(det_s).ok_or_else(|| format!("bad det `{det_s}`"))?;
         let op_counts = OpCounts::from_nodes(&nodes);
-        Ok(Self {
+        let counts = obj(f_req(&mo, "op_counts")?, "op_counts")?;
+        for (key, count) in op_counts.fields() {
+            if f_req(&counts, key)?.as_int53().map_err(|e| e.to_string())? != i64::from(count) {
+                return Err(format!("op_counts.{key} disagrees with nodes"));
+            }
+        }
+        if counts.len() != op_counts.fields().len() {
+            return Err("unknown op_counts field".into());
+        }
+        let program = Self {
             name,
             inputs,
             outputs,
             nodes,
             meta: ProgramMeta {
-                math_mode,
+                math_mode: math_mode.to_owned(),
                 op_counts,
                 cpu_reference,
                 determinism,
             },
-        })
+        };
+        program.typecheck().map_err(|r| r.message)?;
+        Ok(program)
     }
 
-    /// Bit-exact reference interpreter for `F32`/`Bool` programs.
+    /// Reference interpreter for `F32`/`Bool` programs. Bool ports use 0/1
+    /// in the input/output slices; `F64` requires a different evaluator.
     pub fn eval_f32(&self, inputs: &[f32]) -> Result<Vec<f32>, String> {
         if inputs.len() != self.inputs.len() {
             return Err(format!(
@@ -1069,6 +947,18 @@ impl Program {
                 inputs.len()
             ));
         }
+        self.typecheck().map_err(|r| r.message)?;
+        let inputs = self
+            .inputs
+            .iter()
+            .zip(inputs)
+            .map(|(port, &value)| match port.ty {
+                Ty::F32 => Ok(Val::F32(value)),
+                Ty::Bool if value == 0.0 || value == 1.0 => Ok(Val::Bool(value == 1.0)),
+                Ty::Bool => Err(format!("bool input `{}` requires 0 or 1", port.name)),
+                Ty::F64 => Err(format!("eval_f32 does not run f64 input `{}`", port.name)),
+            })
+            .collect::<Result<Vec<_>, String>>()?;
         #[derive(Clone, Copy)]
         enum Val {
             F32(f32),
@@ -1089,7 +979,7 @@ impl Program {
         };
         for n in &self.nodes {
             let v = match n.op {
-                Op::Input { port } => Val::F32(inputs[port]),
+                Op::Input { port } => inputs[port],
                 Op::Const {
                     bits, ty: Ty::F32, ..
                 } => Val::F32(f32::from_bits(bits as u32)),
@@ -1105,7 +995,14 @@ impl Program {
                 Op::Div(a, b) => Val::F32(get_f(&vals, a)? / get_f(&vals, b)?),
                 Op::Sqrt(a) => Val::F32(get_f(&vals, a)?.sqrt()),
                 Op::Neg(a) => Val::F32(-get_f(&vals, a)?),
-                Op::Abs(a) => Val::F32(get_f(&vals, a)?.abs()),
+                Op::Abs(a) => {
+                    let x = get_f(&vals, a)?;
+                    Val::F32(if x.is_nan() {
+                        f32::from_bits(0x7fc0_0000)
+                    } else {
+                        x.abs()
+                    })
+                }
                 Op::Min(a, b) => Val::F32(ieee_min_f32(get_f(&vals, a)?, get_f(&vals, b)?)),
                 Op::Max(a, b) => Val::F32(ieee_max_f32(get_f(&vals, a)?, get_f(&vals, b)?)),
                 Op::Cmp(op, a, b) => {
@@ -1120,17 +1017,16 @@ impl Program {
                     };
                     Val::Bool(r)
                 }
-                Op::Select(p, a, b) => {
-                    let cond = get_b(&vals, p)?;
-                    let (x, y) = (get_f(&vals, a)?, get_f(&vals, b)?);
-                    Val::F32(if cond { x } else { y })
-                }
+                Op::Select(p, a, b) => vals[if get_b(&vals, p)? { a } else { b }],
             };
             vals.push(v);
         }
         let mut out = Vec::with_capacity(self.outputs.len());
         for (_, nid) in &self.outputs {
-            out.push(get_f(&vals, *nid)?);
+            out.push(match vals[*nid] {
+                Val::F32(value) => value,
+                Val::Bool(value) => f32::from(u8::from(value)),
+            });
         }
         Ok(out)
     }
@@ -1141,15 +1037,9 @@ impl Program {
 #[inline]
 #[must_use]
 pub fn ieee_min_f32(a: f32, b: f32) -> f32 {
-    if a != a {
-        a
-    } else if b != b {
-        b
-    } else if a < b {
-        a
-    } else if b < a {
-        b
-    } else if a.to_bits() == (-0.0_f32).to_bits() {
+    if a.is_nan() || b.is_nan() {
+        f32::from_bits(0x7fc0_0000)
+    } else if a < b || (a == 0.0 && b == 0.0 && a.is_sign_negative()) {
         a
     } else {
         b
@@ -1161,15 +1051,9 @@ pub fn ieee_min_f32(a: f32, b: f32) -> f32 {
 #[inline]
 #[must_use]
 pub fn ieee_max_f32(a: f32, b: f32) -> f32 {
-    if a != a {
-        a
-    } else if b != b {
-        b
-    } else if a > b {
-        a
-    } else if b > a {
-        b
-    } else if a.to_bits() == (0.0_f32).to_bits() {
+    if a.is_nan() || b.is_nan() {
+        f32::from_bits(0x7fc0_0000)
+    } else if a > b || (a == 0.0 && b == 0.0 && a.is_sign_positive()) {
         a
     } else {
         b
@@ -1185,14 +1069,40 @@ fn write_dim(d: Dim, v: frob_core::canon::Value<'_>) -> Result<(), CanonError> {
     })
 }
 
-fn write_port(p: &Port, arr: &mut frob_core::canon::Array<'_>) -> Result<(), CanonError> {
+fn write_port(
+    p: &Port,
+    node: Option<NodeId>,
+    arr: &mut frob_core::canon::Array<'_>,
+) -> Result<(), CanonError> {
     arr.push(|ev| {
         ev.object(|po| {
             po.member("dim", |dv| write_dim(p.dim, dv))?;
             po.str("name", &p.name)?;
+            if let Some(node) = node {
+                po.int53("node", node as i64)?;
+            }
             po.str("ty", p.ty.as_str())?;
             Ok(())
         })
+    })
+}
+
+fn write_args(o: &mut frob_core::canon::Object<'_>, args: &[NodeId]) -> Result<(), CanonError> {
+    o.member("args", |v| {
+        v.array(|a| {
+            for &id in args {
+                a.push_int53(id as i64)?;
+            }
+            Ok(())
+        })
+    })
+}
+
+fn parse_port(o: &BTreeMap<&str, &Spanned<'_>>) -> Result<Port, String> {
+    Ok(Port {
+        name: s_req(o, "name")?.to_owned(),
+        ty: Ty::parse(s_req(o, "ty")?)?,
+        dim: parse_dim(f_req(o, "dim")?)?,
     })
 }
 
@@ -1206,6 +1116,13 @@ fn obj<'a>(sp: &'a Spanned<'a>, ctx: &str) -> Result<BTreeMap<&'a str, &'a Spann
         m.insert(mem.name.as_str(), &mem.value);
     }
     Ok(m)
+}
+
+fn keys(m: &BTreeMap<&str, &Spanned<'_>>, allowed: &[&str]) -> Result<(), String> {
+    if let Some(key) = m.keys().copied().find(|key| !allowed.contains(key)) {
+        return Err(format!("unknown field `{key}`"));
+    }
+    Ok(())
 }
 
 fn f_req<'a>(m: &BTreeMap<&'a str, &'a Spanned<'a>>, k: &str) -> Result<&'a Spanned<'a>, String> {

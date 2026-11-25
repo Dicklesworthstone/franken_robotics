@@ -4,6 +4,9 @@
 //!
 //! Determinism class `D0`; zero `unsafe`; prints nothing to stdout/stderr (L-7).
 
+#[cfg(all(feature = "conformance", not(debug_assertions)))]
+compile_error!("frob-kir conformance mutations are forbidden in release builds (N38b-04)");
+
 pub mod cay_step;
 pub mod dialect_lint;
 pub mod emit;

@@ -15,5 +15,12 @@ rank = 3
 [dependencies]
 frob-core = { path = "../frob-core" }
 
+[dev-dependencies]
+frob-core = { path = "../frob-core", features = ["test-support"] }
+
+[features]
+conformance = []
+skip-sum-dim-check = ["conformance"]
+
 [lints]
 workspace = true

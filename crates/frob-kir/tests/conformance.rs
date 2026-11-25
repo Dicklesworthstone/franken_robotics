@@ -88,8 +88,19 @@ fn contract_toml_validates_against_strict_toml_and_refusal_registry() {
 
     let mut safe = Fields::new(top.require_table("safe_mode").unwrap(), "safe_mode");
     assert_eq!(safe.require_str("on_budget").unwrap(), "reference-path");
-    assert_eq!(safe.require_str("on_calibration").unwrap(), "reference-path");
+    assert_eq!(
+        safe.require_str("on_calibration").unwrap(),
+        "reference-path"
+    );
     safe.finish().unwrap();
+    let mut features = Fields::new(top.require_table("features").unwrap(), "features");
+    for name in ["conformance", "skip-sum-dim-check"] {
+        let mut feature = Fields::new(features.require_table(name).unwrap(), name);
+        assert_eq!(feature.require_str("tier").unwrap(), "S");
+        assert!(feature.require_bool("dev_only").unwrap());
+        feature.finish().unwrap();
+    }
+    features.finish().unwrap();
     top.finish().unwrap();
 
     assert_eq!(reg.exit_for(RefusalCode::FrobRef251).unwrap(), 3);
@@ -101,11 +112,10 @@ fn contract_toml_validates_against_strict_toml_and_refusal_registry() {
 
 #[test]
 fn det_twice_dialect_lint_report_and_refusal_json_identical() {
-    let bad_unit = DialectUnit::default()
-        .with_source(SourceFile::new(
-            "bad.h",
-            "f32 a = sinf(x);\natomicAdd(&acc, a);\nf32 b = fmaf(a, x, y);\nwhile (n > 0u) {}\n",
-        ));
+    let bad_unit = DialectUnit::default().with_source(SourceFile::new(
+        "bad.h",
+        "f32 a = sinf(x);\natomicAdd(&acc, a);\nf32 b = fmaf(a, x, y);\nwhile (n > 0u) {}\n",
+    ));
     let opts = CompileOptions::Metal {
         math_mode: MetalMathMode::Fast,
     };

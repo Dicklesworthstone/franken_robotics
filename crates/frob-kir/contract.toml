@@ -17,3 +17,7 @@ memory_mib = 64
 [safe_mode]
 on_budget = "reference-path"
 on_calibration = "reference-path"
+
+[features]
+conformance = { tier = "S", dev_only = true }
+skip-sum-dim-check = { tier = "S", dev_only = true }

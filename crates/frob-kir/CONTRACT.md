@@ -34,6 +34,9 @@ Provide the static shared-dialect lint (`dialect_lint`, BD-013) that inspects CU
 - **Exact 1-based line and column tracking:** C/C++ line (`//`) and block (`/* ... */`) comments are stripped without shifting line or column coordinates of subsequent tokens.
 - **Schema `frob.kir/1` v0 layout (`BD-018`, exported as `frob_kir::KIR_SCHEMA`):** canonical JSON object with required members `schema` (`"frob.kir/1"`), `name`, `inputs` (`[{name, ty, dim[6]}]`), `outputs` (`[{name, ty, dim[6], node}]`), `nodes` (SSA index-ordered `[{op, ty, dim[6], expr_name, port|bits_hex|args|cmp}]` over `Input`, `Const`, `Add`, `Sub`, `Mul`, `Div`, `Sqrt`, `Neg`, `Abs`, `Min`, `Max`, `Cmp`, `Select`), and `meta` (`{math_mode: "Ieee754Safe", op_counts, cpu_reference, determinism}`). Content hash is domain-separated BLAKE3 over those canonical bytes. Bounded hash-consing CSE (default cap 65,536 nodes) merges exact commutative pairs (`Add`/`Mul`/`Min`/`Max`) without reassociation, distribution, or inexact constant folding; `+0.0` and `-0.0` are distinct constants. Rust and shared-dialect emitters write strictly one operation per statement with bit-encoded constants (`f32::from_bits` / `FROB_F32_BITS`), zero decimal float literals, and build-time refusal of `F64` on the dialect emitter.
 - **Not a seventh `xtask` subcommand (INV-WS-05):** The lint is a library module called by crate tests, `xtask check-generated`, and backend compile paths.
+- The KIR reader checks SSA references and port types before admitting a program. It accepts `Ieee754Safe` and requires operation counts to match the nodes. The ten count keys are `add_sub`, `cmp`, `consts`, `div`, `inputs`, `min_max`, `mul`, `select`, `sqrt`, and `unary`.
+- After validation, emitters number arguments and results by port order. Port names are unique across inputs and outputs and use an ASCII letter followed by letters, digits or underscores, excluding reserved words and the `FROB_` prefix.
+- The `F32` interpreter represents Boolean ports as `0` or `1` and refuses `F64`. `Min`, `Max`, and `Abs` canonicalize NaN to positive quiet NaN. `Min` preserves negative zero for mixed zeros, `Max` returns positive zero, and `Abs` returns positive zero for either input zero.
 
 ## Refusals
 
@@ -59,6 +62,7 @@ Provide the static shared-dialect lint (`dialect_lint`, BD-013) that inspects CU
 - Planted negative controls for rules 1, 2, 3, 4, and 6 in `src/dialect_lint.rs` (including the twelve rejected plants of BD-013, CX-221's `BD-013:spin-loop-source` spin-wait plant, two-defect exact line/column checks, and prelude-only diff BLAKE3 digest equality).
 - Crate conformance tests in `tests/conformance.rs` checking `CONTRACT.md`, `contract.toml`, `RefusalRegistry` alignment for `FROB-REF-251`, and D0 determinism.
 - Unit-test conventions (`STD-TEST`): [docs/testing/CONVENTIONS.md](../../docs/testing/CONVENTIONS.md) governs test placement, registry-bound naming, the no-mocks rule, and determinism lanes.
+- The compiled Cayley body comes from `tests/generated/k_cay_step.rs`. `emit_rust_matches_compiled_fixture` compares it byte for byte with the emitter, and the Cayley tests call that body. `typecheck_homogeneous_sums` catches the debug-only `skip-sum-dim-check` control.
 
 ## Known gaps
 

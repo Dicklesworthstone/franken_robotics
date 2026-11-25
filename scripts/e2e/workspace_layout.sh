@@ -228,7 +228,12 @@ cudarc = { version = "=0.19.9", default-features = false }
 EOF
 printf '// synthetic core crate with planted cudarc dependency\n' > "${PLANT_REPO}/crates/frob-core/src/lib.rs"
 
-(cd "${PLANT_REPO}" && cargo generate-lockfile --offline --manifest-path "${PLANT_REPO}/Cargo.toml" >/dev/null 2>&1)
+PREV_DIR="${PWD}"
+cd "${PLANT_REPO}" || exit 1
+e2e_cmd --name "gen_lock_plant_cudarc" -- \
+  cargo generate-lockfile --offline --manifest-path "${PLANT_REPO}/Cargo.toml"
+cd "${PREV_DIR}" || exit 1
+e2e_assert_eq "gen_lock_plant_cudarc_exit_0" "${E2E_LAST_EXIT}" "0"
 
 e2e_cmd --name "check_deps_plant_cudarc" --expect-exit 2 -- \
   env "CARGO_TARGET_DIR=${XTASK_TARGET_DIR}" \

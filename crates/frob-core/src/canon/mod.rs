@@ -889,9 +889,9 @@ mod tests {
         assert!(big_p < big_q);
 
         // Multiplying both by 3 breaks coprimality.
-        let p3 = CanonInt::parse_decimal("370370367037037036703703703703703703703703703703709")
+        let p3 = CanonInt::parse_decimal("370370367037037036703703703670370370367037037036709")
             .expect("3p");
-        let q3 = CanonInt::parse_decimal("370370367037037036703703703703703703703703703703712")
+        let q3 = CanonInt::parse_decimal("370370367037037036703703703670370370367037037036712")
             .expect("3q");
         assert!(!p3.is_coprime_with(&q3));
 

@@ -445,7 +445,22 @@ test_disk_preflight_refuses_when_short() {
 make_scratch_precommit_repo() {
   _mpr_dir="$1"
   _mpr_fmt_rc="$2"
+  _mpr_usage="${3:-}"
   mkdir -p "${_mpr_dir}/bin" "${_mpr_dir}/scripts/lib/tests" "${_mpr_dir}/src"
+  # The no-argument `cargo xtask` usage text the synthetic shim prints: the indented
+  # default below, or a caller-supplied file.
+  if [ -n "$_mpr_usage" ]; then
+    cp "$_mpr_usage" "${_mpr_dir}/bin/xtask_usage.txt"
+  else
+    cat > "${_mpr_dir}/bin/xtask_usage.txt" <<'USAGE'
+usage: cargo xtask <check> [--root <dir>] [--json]
+
+Checks:
+  check-alpha    First synthetic check
+  check-beta     Second synthetic check
+Exit codes: 0 clean, 2 findings, 3 usage error.
+USAGE
+  fi
   cp "${ENVELOPE_SH}" "${_mpr_dir}/scripts/lib/envelope.sh"
 
   cat > "${_mpr_dir}/Cargo.toml" <<'EOF'
@@ -473,14 +488,7 @@ if [ "\$1" = "fmt" ]; then
 fi
 if [ "\$1" = "xtask" ]; then
   if [ "\$#" -eq 1 ]; then
-    cat >&2 <<'USAGE'
-usage: cargo xtask <check> [--root <dir>] [--json]
-
-Checks:
-  check-alpha    First synthetic check
-  check-beta     Second synthetic check
-Exit codes: 0 clean, 2 findings, 3 usage error.
-USAGE
+    cat "${_mpr_dir}/bin/xtask_usage.txt" >&2
     exit 3
   fi
   echo "xtask:\$2" >> "\${PRECOMMIT_XTASK_TRACE}"
@@ -633,6 +641,85 @@ test_live_proof_raising_wall_s_passes
 test_memory_limit_kills
 test_process_group_is_reaped
 test_signal_to_parent_reaps_children
+
+# Runs scripts/precommit.sh in a scratch repo whose synthetic `cargo xtask` prints the
+# usage text in file $2; sets _rc, _ran (comma-joined checks run) and _out.
+run_precommit_with_usage() {
+  _name="$1"
+  _repo="${TMP_ROOT}/${_name}"
+  make_scratch_precommit_repo "$_repo" 0 "$2"
+  _trace="${TMP_ROOT}/${_name}.trace"
+  _xtrace="${TMP_ROOT}/${_name}.xtask"
+  _out="${TMP_ROOT}/${_name}.out"
+  : > "$_trace"
+  : > "$_xtrace"
+  _rc=0
+  PATH="${_repo}/bin:${PATH}" \
+  PRECOMMIT_TRACE="$_trace" \
+  PRECOMMIT_XTASK_TRACE="$_xtrace" \
+  FROB_ENVELOPE_LOG_FILE="${TMP_ROOT}/${_name}.env.ndjson" \
+    sh "${PRECOMMIT_SH}" --root "$_repo" --target-dir "${TMP_ROOT}/${_name}_target" >"$_out" 2>&1 || _rc=$?
+  _ran="$(tr '\n' ',' < "$_xtrace" | sed 's/,$//')"
+}
+
+# The exact text crates/xtask/src/cli.rs `format_usage` prints after "error: missing
+# subcommand": an inline, capitalised `Subcommands:` list. Before the fix the parser
+# matched only lower-case inline lists, so step 5 ran zero checks and recorded a pass.
+test_precommit_parses_real_xtask_usage() {
+  _usage="${TMP_ROOT}/real_usage.txt"
+  cat > "$_usage" <<'USAGE'
+error: missing subcommand
+usage: cargo xtask <check> [--root <dir>] [--json]
+
+Subcommands: check-alpha, check-beta
+Exit codes: 0 clean, 2 findings, 3 usage error.
+USAGE
+  run_precommit_with_usage pc_real "$_usage"
+  if [ "$_rc" -eq 0 ] && [ "$_ran" = "xtask:check-alpha,xtask:check-beta" ] &&
+     grep -Fq "cargo xtask check-alpha" "$_out" && grep -Fq "cargo xtask check-beta" "$_out"; then
+    pass "precommit_parses_real_xtask_usage"
+  else
+    fail "precommit_parses_real_xtask_usage" "rc=${_rc} xtask_ran='${_ran}' out=$(tail -n 10 "$_out")"
+  fi
+}
+
+# A usage text that names checks in a form the parser cannot read must fail step 5,
+# never pass with zero checks run.
+test_precommit_refuses_unparseable_xtask_usage() {
+  _usage="${TMP_ROOT}/garbled_usage.txt"
+  cat > "$_usage" <<'USAGE'
+usage: cargo xtask <check> [--root <dir>] [--json]
+
+Subcommands -> check-alpha | check-beta
+USAGE
+  run_precommit_with_usage pc_garbled "$_usage"
+  if [ "$_rc" -eq 1 ] && [ ! -s "$_xtrace" ] &&
+     grep -Fq "[FAIL] step 5 (xtask-checks)" "$_out" &&
+     ! grep -Fq "[PASS] step 5 (xtask-checks)" "$_out"; then
+    pass "precommit_refuses_unparseable_xtask_usage"
+  else
+    fail "precommit_refuses_unparseable_xtask_usage" "rc=${_rc} xtask_ran='${_ran}' out=$(tail -n 10 "$_out")"
+  fi
+}
+
+# `Subcommands: (none)` is the honest empty registry: step 5 passes and runs nothing.
+test_precommit_passes_when_xtask_lists_none() {
+  _usage="${TMP_ROOT}/none_usage.txt"
+  cat > "$_usage" <<'USAGE'
+usage: cargo xtask <check> [--root <dir>] [--json]
+
+Subcommands: (none)
+Exit codes: 0 clean, 2 findings, 3 usage error.
+USAGE
+  run_precommit_with_usage pc_none "$_usage"
+  if [ "$_rc" -eq 0 ] && [ ! -s "$_xtrace" ] &&
+     grep -Fq "no checks registered" "$_out"; then
+    pass "precommit_passes_when_xtask_lists_none"
+  else
+    fail "precommit_passes_when_xtask_lists_none" "rc=${_rc} xtask_ran='${_ran}' out=$(tail -n 10 "$_out")"
+  fi
+}
+
 test_class_above_default_needs_approval
 test_approval_class_mismatch_refuses
 test_approval_row_requested_refuses
@@ -645,6 +732,9 @@ test_target_dir_convention
 test_disk_preflight_refuses_when_short
 test_precommit_runs_listed_checks_and_prints_block
 test_precommit_fails_on_failing_step
+test_precommit_parses_real_xtask_usage
+test_precommit_refuses_unparseable_xtask_usage
+test_precommit_passes_when_xtask_lists_none
 test_device_lane_outside_launcher_is_flagged
 
 printf '\nenvelope_test.sh: passed=%d failed=%d\n' "$PASS" "$FAIL"

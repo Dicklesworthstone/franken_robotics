@@ -277,7 +277,8 @@ fi
 # Parse listed check subcommands from no-arg `cargo xtask` output.
 # Accepts:
 #   - indented lines (`  check-foo   description...`)
-#   - inline `checks: a, b` or `subcommands: a b` lines
+#   - inline `checks: a, b` or `subcommands: a b` lines, in any letter case
+#     (crates/xtask/src/cli.rs format_usage prints `Subcommands: a, b`)
 XTASK_CHECKS="${SCRATCH_DIR}/xtask_checks.txt"
 awk '
   function is_ident(tok) {
@@ -292,7 +293,7 @@ awk '
     }
     next
   }
-  /^[[:space:]]*(checks|subcommands|commands|available checks)[[:space:]]*:[[:space:]]*[^[:space:]]/ {
+  tolower($0) ~ /^[[:space:]]*(checks|subcommands|commands|available checks)[[:space:]]*:[[:space:]]*[^[:space:]]/ {
     low = tolower($0)
     sub(/^[[:space:]]*(checks|subcommands|commands|available checks)[[:space:]]*:[[:space:]]*/, "", low)
     gsub(/,/, " ", low)
@@ -315,8 +316,13 @@ if [ -s "$XTASK_CHECKS" ]; then
     fi
     record_result "PASS" "$STEP5" "$_chk_cmd" "0"
   done < "$XTASK_CHECKS"
+elif grep -Fq "(none)" "$XTASK_USAGE_OUT"; then
+  record_result "PASS" "$STEP5" "cargo xtask (no checks registered; usage exit ${_xt_rc})" "0"
 else
-  record_result "PASS" "$STEP5" "cargo xtask (0 checks listed; usage exit ${_xt_rc})" "0"
+  # A usage text that names no parseable check and does not say "(none)" means the
+  # format drifted: refuse rather than record a pass that ran zero checks.
+  cat "$XTASK_USAGE_OUT" >&2
+  fail_step "$STEP5" "cargo xtask (usage output lists no parseable check)" 1
 fi
 
 # Rule 8: print copy-pasteable commit-message verification block.

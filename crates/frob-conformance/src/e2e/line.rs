@@ -588,8 +588,10 @@ pub fn format_transcript_lines(val: &JsonValue) -> Vec<String> {
         "refusal" => {
             let exp = val.get("expected").and_then(JsonValue::as_bool).unwrap_or(false);
             let code = s_of(val, "code");
+            let reason = s_of(val, "reason");
+            let tag = if !code.is_empty() { code } else { reason };
             let mut l = format!(
-                "[{ts}] [{st}] REFUSAL {code} exit={} expected={exp}: {}",
+                "[{ts}] [{st}] REFUSAL {tag} exit={} expected={exp}: {}",
                 val.get("exit").and_then(JsonValue::as_i64).unwrap_or(-1), s_of(val, "message")
             );
             if let Some(first) = val.get("repairs").and_then(JsonValue::as_array).and_then(|a| a.first()) {
@@ -782,13 +784,23 @@ pub fn run_emit(args: &[String]) -> Result<String, String> {
             if let Some(g) = f.get("--gate") { pairs.push(("gate".into(), JsonValue::String(g.into()))); }
         }
         "refusal" => {
-            let code = f.get("--code").ok_or("refusal requires --code")?;
+            let code = f.get("--code").filter(|s| !s.is_empty());
+            let reason = f.get("--reason").filter(|s| !s.is_empty());
+            if code.is_none() && reason.is_none() {
+                return Err("refusal requires --code or --reason".into());
+            }
             let ex = f.get("--exit").map(|v| v.parse::<i64>().map_err(|_| format!("invalid --exit: {v}"))).transpose()?.unwrap_or(3);
             let retry = f.get("--retry").map(|v| parse_bool(v, "--retry")).transpose()?.unwrap_or(false);
             let expected = f.get("--expected").map(|v| parse_bool(v, "--expected")).transpose()?.unwrap_or(false);
             let repairs = f.get_or("--repairs", "").split(',').filter(|s| !s.is_empty()).map(|s| JsonValue::String(s.into())).collect();
+            if let Some(c) = code {
+                pairs.push(("code".into(), JsonValue::String(c.into())));
+            }
+            if let Some(r) = reason {
+                pairs.push(("reason".into(), JsonValue::String(r.into())));
+            }
             pairs.extend([
-                ("code".into(), JsonValue::String(code.into())), ("exit".into(), JsonValue::Number(ex.to_string())),
+                ("exit".into(), JsonValue::Number(ex.to_string())),
                 ("message".into(), JsonValue::String(redact_private_path(f.get_or("--message", ""), pr))),
                 ("pointer".into(), JsonValue::String(f.get_or("--pointer", "").into())),
                 ("observed".into(), JsonValue::String(redact_private_path(f.get_or("--observed", ""), pr))),

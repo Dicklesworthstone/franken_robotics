@@ -10,7 +10,8 @@
 //! cargo test -p frob-conformance --test e2e_selftest -- --ignored
 //! ```
 //!
-//! Green requires all three: the script exits 0, its `end` event reports at least one passed
+//! Green requires all three: the script exits 0, its final `summary` event (the script-wide
+//! totals; per-step `end` events carry only that step's counts) reports at least one passed
 //! assertion, and it reports zero failed assertions. Exit 0 alone could hide a run that asserted
 //! nothing.
 
@@ -40,19 +41,32 @@ fn field_u64(line: &str, key: &str) -> Option<u64> {
     digits.parse().ok()
 }
 
-/// `(asserts_passed, asserts_failed)` from the last line of `log` that carries both.
-fn assertion_counts(log: &str) -> Option<(u64, u64)> {
-    log.lines().rev().find_map(|line| {
-        Some((
-            field_u64(line, "asserts_passed")?,
-            field_u64(line, "asserts_failed")?,
-        ))
+/// Whether the string field `key` of one NDJSON line equals `value`.
+fn field_is(line: &str, key: &str, value: &str) -> bool {
+    let needle = format!("\"{key}\":");
+    line.find(&needle).is_some_and(|i| {
+        line[i + needle.len()..]
+            .trim_start()
+            .starts_with(&format!("\"{value}\""))
     })
 }
 
+/// `(asserts_passed, asserts_failed)` from the last `summary` event in `log`.
+fn assertion_counts(log: &str) -> Option<(u64, u64)> {
+    log.lines()
+        .rev()
+        .filter(|line| field_is(line, "event", "summary"))
+        .find_map(|line| {
+            Some((
+                field_u64(line, "asserts_passed")?,
+                field_u64(line, "asserts_failed")?,
+            ))
+        })
+}
+
 #[test]
-fn field_u64_reads_counts_and_rejects_absent_keys() {
-    let line = r#"{"event":"end","asserts_passed": 412,"asserts_failed":0,"wall_ms":9}"#;
+fn summary_counts_read_and_reject_absent_keys_and_step_ends() {
+    let line = r#"{"event":"summary","asserts_passed": 412,"asserts_failed":0,"wall_ms":9}"#;
     assert_eq!(field_u64(line, "asserts_passed"), Some(412));
     assert_eq!(field_u64(line, "asserts_failed"), Some(0));
     assert_eq!(field_u64(line, "asserts_skipped"), None);
@@ -61,6 +75,13 @@ fn field_u64_reads_counts_and_rejects_absent_keys() {
         Some((412, 0))
     );
     assert_eq!(assertion_counts("{\"event\":\"step\"}\n"), None);
+    // A per-step `end` line after the summary must not stand in for the script-wide totals.
+    let step_end = r#"{"event":"end","asserts_passed":0,"asserts_failed":0}"#;
+    assert_eq!(
+        assertion_counts(&format!("{line}\n{step_end}\n")),
+        Some((412, 0))
+    );
+    assert_eq!(assertion_counts(&format!("{step_end}\n")), None);
 }
 
 #[test]

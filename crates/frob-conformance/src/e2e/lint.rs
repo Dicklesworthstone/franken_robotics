@@ -203,8 +203,13 @@ pub fn lint_log_file(path: &Path, extra_canaries: &[String], private_root: Optio
                 }
             }
             "refusal" => {
-                if val.get("code").and_then(JsonValue::as_str).is_none() || val.get("exit").and_then(JsonValue::as_i64).is_none() || val.get("expected").and_then(JsonValue::as_bool).is_none() {
-                    push(&mut out, "schema", &fstr, ln, "refusal requires code, exit, expected");
+                let has_code = val.get("code").and_then(JsonValue::as_str).is_some_and(|s| !s.is_empty());
+                let has_reason = val.get("reason").and_then(JsonValue::as_str).is_some_and(|s| !s.is_empty());
+                if (!has_code && !has_reason)
+                    || val.get("exit").and_then(JsonValue::as_i64).is_none()
+                    || val.get("expected").and_then(JsonValue::as_bool).is_none()
+                {
+                    push(&mut out, "schema", &fstr, ln, "refusal requires non-empty code or reason, plus exit and expected");
                 }
                 if val.get("expected").and_then(JsonValue::as_bool) == Some(true) { re += 1; } else { ru += 1; }
             }

@@ -20,3 +20,11 @@ on_calibration = "reference-path"
 
 [features]
 test-support = { tier = "S" }
+gauntlet-mutations = { tier = "S" }
+dup-first-wins = { tier = "S" }
+dup-last-wins = { tier = "S" }
+skip-escape-decode = { tier = "S" }
+
+[api.float_ok]
+"json::Json::as_f64_lexeme" = "dimensionless JSON binary64 accessor returning raw lexeme and rounded f64 per N34-17; physical quantities use qty or exact strings"
+"json::Spanned::as_f64_lexeme" = "dimensionless JSON binary64 accessor delegating to json::Json::as_f64_lexeme per N34-17"

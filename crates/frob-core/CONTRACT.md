@@ -4,7 +4,7 @@
 
 ## Purpose
 
-Provide the shared, dependency-minimal vocabulary that must mean the same thing across every crate in the workspace: content-addressed identities and domain-separated hashing (`id`), evidence classes and the weakest-input-wins claim product (`evidence`), constant-false no-authorization flags (`auth`), typed refusals and the refusal-registry loader (`refusal`, `registry::refusals`), the strict TOML-subset reader (`registry::toml`), the closed SI quantity re-export surface (`qty`), and the opt-in test-support kit (`testkit` behind feature `test-support`).
+Provide the shared, dependency-minimal vocabulary that must mean the same thing across every crate in the workspace: content-addressed identities and domain-separated hashing (`id`), evidence classes and the weakest-input-wins claim product (`evidence`), constant-false no-authorization flags (`auth`), raw-byte strict JSON admission (`json`), typed refusals and the refusal-registry loader (`refusal`, `registry::refusals`), the strict TOML-subset reader (`registry::toml`), the closed SI quantity re-export surface (`qty`), and the opt-in test-support kit (`testkit` behind feature `test-support`).
 
 ## Inputs
 
@@ -65,6 +65,6 @@ Provide the shared, dependency-minimal vocabulary that must mean the same thing 
 ## Known gaps
 
 - `CanonicalBytes` constructors (`CanonWriter::finish` and `Admitted::into_canonical`) land in N34-18; BD-005 exposes no public constructor.
-- The strict JSON admission reader lands in N34-17; `auth` and `refusal` currently include minimal std-only JSON parsing for their own closed objects.
+- `frob_core::json` lands raw-byte JSON admission, duplicate-member rejection after escape decoding, typed number accessors, and printable identifier validation (N34-17); `auth` and `refusal` still include minimal std-only JSON parsing for their own closed objects until surface wiring in N34-20.
 - `registries/refusals.toml` is seeded with `FROB-REF-802`, `FROB-REF-816`, and `FROB-REF-881` plus the fixed surface `[exit_rule]`; N35-33 and chapter registry beads populate the full 294+ rows, `74x`/`76x`/`79x` rules, and exception lists.
 - Full `DetProvenance` and kernel-class mapping land in N35-01; artifact-graph IDs (`clm:`, `ev:`) land in N34-11; L-10 inversion traits land in N34-06; registry-generated `qty` product tables and `frob-units` escape hatch land in N33c-03 and N33c-05.

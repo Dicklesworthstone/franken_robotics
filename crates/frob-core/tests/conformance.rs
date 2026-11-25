@@ -49,7 +49,10 @@ fn contract_md_has_all_ten_non_empty_sections_and_oracles_cite_conventions() {
             .iter()
             .find(|(h, _)| *h == req)
             .unwrap_or_else(|| panic!("CONTRACT.md missing required heading `## {req}`"));
-        assert!(!found.1.trim().is_empty(), "CONTRACT.md section `## {req}` must be non-empty");
+        assert!(
+            !found.1.trim().is_empty(),
+            "CONTRACT.md section `## {req}` must be non-empty"
+        );
     }
     let oracles = &sections.iter().find(|(h, _)| *h == "Oracles").unwrap().1;
     assert!(
@@ -86,20 +89,55 @@ fn contract_toml_validates_against_strict_toml_and_refusal_registry() {
 
     let mut safe = Fields::new(top.require_table("safe_mode").unwrap(), "safe_mode");
     assert_eq!(safe.require_str("on_budget").unwrap(), "reference-path");
-    assert_eq!(safe.require_str("on_calibration").unwrap(), "reference-path");
+    assert_eq!(
+        safe.require_str("on_calibration").unwrap(),
+        "reference-path"
+    );
     safe.finish().unwrap();
 
     let mut feats = Fields::new(top.require_table("features").unwrap(), "features");
-    let _ts = feats.require_table("test-support").unwrap();
+    for name in [
+        "test-support",
+        "gauntlet-mutations",
+        "dup-first-wins",
+        "dup-last-wins",
+        "skip-escape-decode",
+    ] {
+        let mut f = Fields::new(feats.require_table(name).unwrap(), name);
+        assert_eq!(f.require_str("tier").unwrap(), "S");
+        f.finish().unwrap();
+    }
     feats.finish().unwrap();
+
+    if let Some(api_tbl) = top.opt_table("api").unwrap() {
+        let mut api = Fields::new(api_tbl, "api");
+        if let Some(fok) = api.opt_table("float_ok").unwrap() {
+            for (_sig, sp) in fok.iter() {
+                assert!(!sp.value.as_str().unwrap().trim().is_empty());
+            }
+        }
+        api.finish().unwrap();
+    }
     top.finish().unwrap();
 
     // Cross-check generated RefusalCode, qty cap, flags, hashing, and ClaimProduct.
-    assert_eq!(include_str!("../src/refusal/code_gen.rs"), render_refusal_code_enum(&reg));
+    assert_eq!(
+        include_str!("../src/refusal/code_gen.rs"),
+        render_refusal_code_enum(&reg)
+    );
     assert!(ALIAS_COUNT <= MAX_ALIASES);
-    assert_eq!(NoAuthorization::parse_json(&NoAuthorization::VALUE.to_json()).unwrap(), NoAuthorization::VALUE);
-    assert_eq!(hash_blob(b"").to_hex(), "af1349b9f5f9a1a6a0404dea36dcc9499bcb25c9adc112b7cc9a93cae41f3262");
-    assert_eq!(SchemaName::new("design", 1).unwrap().to_string(), "frob.design/1");
+    assert_eq!(
+        NoAuthorization::parse_json(&NoAuthorization::VALUE.to_json()).unwrap(),
+        NoAuthorization::VALUE
+    );
+    assert_eq!(
+        hash_blob(b"").to_hex(),
+        "af1349b9f5f9a1a6a0404dea36dcc9499bcb25c9adc112b7cc9a93cae41f3262"
+    );
+    assert_eq!(
+        SchemaName::new("design", 1).unwrap().to_string(),
+        "frob.design/1"
+    );
     let leaf = ClaimProduct::estimated(
         ClaimKind::KnownAnswer,
         InputRef::new(hash_blob(b"leaf"), "/leaf"),

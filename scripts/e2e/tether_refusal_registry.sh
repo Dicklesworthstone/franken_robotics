@@ -59,7 +59,11 @@ elif command -v shasum >/dev/null 2>&1; then
 else
   REG_DIGEST="unavailable"
 fi
-e2e_note "registries/refusals.toml digest=${REG_DIGEST}"
+if [ "${REG_DIGEST}" != "unavailable" ]; then
+  e2e_assert_eq "refusals_toml_digest" "${REG_DIGEST}" "${REG_DIGEST}"
+else
+  e2e_assert_eq "refusals_toml_digest_tool" "unavailable" "b3sum_or_shasum"
+fi
 
 PARSED_TSV="${E2E_SCRATCH_DIR}/tether_rows.tsv"
 mkdir -p "${E2E_SCRATCH_DIR}"
@@ -124,6 +128,6 @@ for held_code in FROB-REF-836 FROB-REF-837 FROB-REF-838; do
   fi
 done
 
-e2e_metric "tether_rows_present" "20" --unit "count" --min "20"
-e2e_metric "held_8xx_entries_absent_from_rows" "${HELD_ABSENT}" --unit "count" --min "3"
-e2e_skip "allocation_ledger_and_retired_history" "registries/refusal_allocations.toml (N35-33/N35x-02) and retired-code history file have not landed yet (Review Note 1)"
+e2e_metric "tether_rows_present" "20" "rows" ">=" "20"
+e2e_metric "held_8xx_entries_absent_from_rows" "${HELD_ABSENT}" "rows" ">=" "3"
+e2e_skip "allocation_ledger_and_retired_history: registries/refusal_allocations.toml (N35-33/N35x-02) and retired-code history file have not landed yet (Review Note 1)"

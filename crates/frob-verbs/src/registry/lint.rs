@@ -40,6 +40,7 @@ pub const PROCESS_FLAGS: &[(&str, bool)] = &[
     ("session", true),
     ("registries-root", true),
     ("session-token-file", true),
+    ("no-daemon", false),
 ];
 
 /// Registered FrankenRobotics identity prefixes admitted as abbreviated identities in RL-07.
@@ -886,6 +887,35 @@ pub fn lint_registry(reg: &ParsedRegistry, ctx: &LintContext) -> Result<LintRepo
         *slot = rendered;
     }
 
+    // Post-strip NJL-01 lints against the served embedded input schemas:
+    // `common-property-shadowed` and `RL-11` (`description-too-long`).
+    for entry in &reg.verbs {
+        let served_in = embedded_schemas
+            .get(&entry.input_schema)
+            .map(String::as_str)
+            .unwrap_or("{}");
+        if let Err(err) = entry.check_shadowing(served_in) {
+            return Err(LintError::new(
+                &entry.name,
+                "NJL-01",
+                "common-property-shadowed",
+                err.property.clone(),
+                err.to_string(),
+            ));
+        }
+        if let Err(doc_len) = entry.short_doc_checked_with(served_in, &ctx.refusals) {
+            return Err(LintError::new(
+                &entry.name,
+                RESERVED_RL11.0,
+                RESERVED_RL11.1,
+                format!("{doc_len} chars"),
+                format!(
+                    "derived `short_doc` is {doc_len} characters, exceeding {MAX_DESCRIPTION_CHARS}"
+                ),
+            ));
+        }
+    }
+
     let largest_task_cluster = task_cluster_counts.values().copied().max().unwrap_or(0);
     Ok(LintReport {
         warnings,
@@ -970,7 +1000,11 @@ fn extract_input_schema_info(root: &Json<'_>) -> InputSchemaInfo {
             }
         }
     }
-    if let Some(pos_arr) = root.get("x-frob-positionals").and_then(|v| v.as_array()) {
+    let declared_positionals = root
+        .get("x-frob-cli")
+        .and_then(|cli| cli.get("positional"))
+        .or_else(|| root.get("x-frob-positionals"));
+    if let Some(pos_arr) = declared_positionals.and_then(|value| value.as_array()) {
         for item in pos_arr {
             if let Some(s) = item.as_str() {
                 info.positionals.push(s.to_owned());
@@ -1218,7 +1252,7 @@ fn validate_example(
         idx += 1;
     }
 
-    // Bind positional arguments against declared `x-frob-positionals` (or ordered required
+    // Bind positional arguments against declared positional metadata (or ordered required
     // properties when no explicit positional metadata is declared).
     let positional_targets: Vec<String> = if !schema.positionals.is_empty() {
         schema.positionals.clone()

@@ -5,6 +5,7 @@
 //! build script and library execute identical parsing, linting, and codegen logic.
 
 pub mod codegen;
+pub mod derive;
 pub mod entry;
 pub mod lint;
 pub mod names;

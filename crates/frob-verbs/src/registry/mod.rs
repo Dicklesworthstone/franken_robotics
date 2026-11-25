@@ -4,11 +4,16 @@
 //! from `registries/verbs.toml` and `schemas/` into `$OUT_DIR/verbs_table.rs`.
 
 pub mod codegen;
+pub mod derive;
 pub mod entry;
 pub mod lint;
 pub mod names;
 pub mod schema_id;
 
+pub use derive::{
+    Annotations, CommonProperty, DeriveError, KeyRule, ListedRefusal, MAX_SHORT_DOC_CHARS,
+    PROCESS_OPTIONS, RefusalOrigin, RefusalSource, ShadowError, Source, entry_schema_json,
+};
 pub use entry::{
     Action, AdditionRecord, CountsRecord, Kind, Milestone, OwnedAction, OwnedParamKind,
     OwnedTaskCluster, OwnedVerbEntry, OwnedWaitDefault, ParamKind, ParseError, ParsedRegistry,
@@ -40,6 +45,13 @@ pub fn lookup(name: &str) -> Option<&'static VerbEntry> {
     lookup_in(&VERBS, name)
 }
 
+/// Look up the canonical JSON registry row for an exact verb name.
+#[must_use]
+pub fn lookup_entry_json(name: &str) -> Option<&'static str> {
+    let index = VERBS.binary_search_by_key(&name, |entry| entry.name).ok()?;
+    VERB_ENTRY_JSON.get(index).copied()
+}
+
 /// Look up a registered verb by its MCP tool name (`"."` and `"-"` mapped to `"_"`).
 #[must_use]
 pub fn lookup_tool(tool: &str) -> Option<&'static VerbEntry> {
@@ -68,6 +80,69 @@ pub fn lookup_in<'a>(table: &'a [VerbEntry], name: &str) -> Option<&'a VerbEntry
 #[must_use]
 pub fn lookup_tool_in<'a>(table: &'a [VerbEntry], tool: &str) -> Option<&'a VerbEntry> {
     table.iter().find(|entry| entry.tool_name() == tool)
+}
+
+impl VerbEntry {
+    /// Compiled input schema with common properties and cross-action rules (NJL-01).
+    pub fn input_schema_with_common_fields(
+        &self,
+    ) -> Result<crate::envelope::Schema, crate::envelope::EnvelopeError> {
+        let id = self.input_schema.as_str();
+        let raw = lookup_schema(id).ok_or_else(|| {
+            crate::envelope::EnvelopeError::Schema(format!(
+                "input schema `{id}` of `{}` is not embedded",
+                self.name
+            ))
+        })?;
+        self.input_schema_with_common_fields_for(raw)
+    }
+
+    /// Compiled input schema with common properties for an explicit raw input schema JSON string.
+    pub fn input_schema_with_common_fields_for(
+        &self,
+        raw_input_schema: &str,
+    ) -> Result<crate::envelope::Schema, crate::envelope::EnvelopeError> {
+        let merged = self
+            .input_schema_with_common_fields_json(raw_input_schema)
+            .map_err(|e| crate::envelope::EnvelopeError::Schema(e.to_string()))?;
+        crate::envelope::Schema::compile_json(&merged)
+            .map_err(|e| crate::envelope::EnvelopeError::Schema(e.to_string()))
+    }
+
+    /// Per-verb `frob.envelope/1` schema, delegating directly to N32a-03's [`crate::envelope::envelope_schema`].
+    pub fn envelope_schema(
+        &self,
+    ) -> Result<crate::envelope::Schema, crate::envelope::EnvelopeError> {
+        crate::envelope::envelope_schema(self)
+    }
+
+    /// Per-verb `frob.envelope/1` schema for an explicit output schema JSON string (delegates to N32a-03).
+    pub fn envelope_schema_for(
+        &self,
+        output_schema: &str,
+    ) -> Result<crate::envelope::Schema, crate::envelope::EnvelopeError> {
+        crate::envelope::envelope_schema_for(self, output_schema)
+    }
+
+    /// Full refusal list using the embedded input schema and embedded refusal registry.
+    #[must_use]
+    pub fn all_refusals(&self) -> Vec<ListedRefusal> {
+        let raw = lookup_schema(self.input_schema.as_str()).unwrap_or("{}");
+        match crate::envelope::embedded_registry() {
+            Ok(reg) => self.all_refusals_with(raw, reg),
+            Err(_) => Vec::new(),
+        }
+    }
+
+    /// Generated `short_doc` description (at most 800 characters) using embedded schema and registry.
+    #[must_use]
+    pub fn short_doc(&self) -> String {
+        let raw = lookup_schema(self.input_schema.as_str()).unwrap_or("{}");
+        match crate::envelope::embedded_registry() {
+            Ok(reg) => self.short_doc_with(raw, reg),
+            Err(_) => String::new(),
+        }
+    }
 }
 
 #[cfg(test)]

@@ -22,8 +22,12 @@ on_calibration = "reference-path"
 registry-only = { tier = "S" }
 handlers = { tier = "S" }
 conformance = { tier = "S" }
+gauntlet-mutations = { tier = "S" }
 nc-bare-unknown-verb = { tier = "S" }
 nc-second-envelope = { tier = "S" }
+nc-omit-805 = { tier = "S" }
+nc-key-in-required = { tier = "S" }
+nc-append-990 = { tier = "S" }
 
 [api.float_ok]
 "envelope::Cost" = "frob.envelope/1 cost block: cpu_core_s and gpu_s are named resource-accounting seconds written as shortest binary64 per N34-18; never a physical quantity, never a digest or evidence input (INV-TETHER-09)"

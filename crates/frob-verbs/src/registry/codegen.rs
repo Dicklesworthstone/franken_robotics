@@ -12,7 +12,7 @@
 
 use std::fmt::Write as _;
 
-use frob_core::id::Blake3;
+use frob_core::{canon::to_canonical, id::Blake3};
 
 use super::entry::{
     Kind, Milestone, OwnedAction, OwnedParamKind, OwnedTaskCluster, OwnedVerbEntry, ParsedRegistry,
@@ -91,6 +91,22 @@ fn render_validated_registry(
     );
     for entry in &sorted_verbs {
         emit_verb_entry(&mut out, entry, ctx)?;
+    }
+    out.push_str("];\n\n");
+
+    // Canonical JSON rows use the same ordering and writer as the registry digest.
+    out.push_str("static VERB_ENTRY_JSON: &[&str] = &[\n");
+    for entry in &sorted_verbs {
+        let bytes = to_canonical(*entry).map_err(|err| {
+            LintError::new(
+                &entry.name,
+                "RL-13",
+                "canonical-entry",
+                &entry.name,
+                err.to_string(),
+            )
+        })?;
+        let _ = writeln!(out, "    {},", rust_str(bytes.as_str()));
     }
     out.push_str("];\n\n");
 

@@ -103,8 +103,12 @@ fn contract_toml_validates_against_strict_toml_and_refusal_registry() {
         "registry-only",
         "handlers",
         "conformance",
+        "gauntlet-mutations",
         "nc-bare-unknown-verb",
         "nc-second-envelope",
+        "nc-omit-805",
+        "nc-key-in-required",
+        "nc-append-990",
     ] {
         let mut f = Fields::new(feats.require_table(name).unwrap(), name);
         assert_eq!(f.require_str("tier").unwrap(), "S");
@@ -122,7 +126,10 @@ fn contract_toml_validates_against_strict_toml_and_refusal_registry() {
         "envelope::Tree::as_f64",
     ] {
         let reason = float_ok.require_str(sig).unwrap();
-        assert!(!reason.trim().is_empty(), "`[api.float_ok].\"{sig}\"` needs a reason");
+        assert!(
+            !reason.trim().is_empty(),
+            "`[api.float_ok].\"{sig}\"` needs a reason"
+        );
     }
     float_ok.finish().unwrap();
     api.finish().unwrap();

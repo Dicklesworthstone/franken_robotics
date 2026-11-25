@@ -26,9 +26,13 @@ default = ["handlers"]
 registry-only = []
 handlers = []
 conformance = []
-# Planted defects for GATE-TETHER-03's negative controls (N32a-03); never enabled in a build.
+# Planted defects for GATE-TETHER-03 and GATE-TETHER-02 negative controls (N32a-03, NJL-01); never enabled in a build.
+gauntlet-mutations = []
 nc-bare-unknown-verb = []
 nc-second-envelope = []
+nc-omit-805 = ["gauntlet-mutations"]
+nc-key-in-required = ["gauntlet-mutations"]
+nc-append-990 = ["gauntlet-mutations"]
 
 [lints]
 workspace = true

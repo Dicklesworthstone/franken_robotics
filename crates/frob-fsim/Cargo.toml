@@ -209,5 +209,16 @@ name = "admission_int_fsim_01"
 path = "tests/admission_int_fsim_01.rs"
 required-features = ["referee", "geometry"]
 
+[[test]]
+name = "ledger_forced_kill"
+path = "tests/ledger_forced_kill.rs"
+required-features = ["ledger"]
+
+[[test]]
+name = "ledger_kill_probe"
+path = "tests/ledger_kill_probe/main.rs"
+harness = false
+required-features = ["ledger"]
+
 [lints]
 workspace = true

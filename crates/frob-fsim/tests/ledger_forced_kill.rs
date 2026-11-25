@@ -28,9 +28,7 @@ use frob_fsim::ledger::probe::{
     GOLDEN_SEED_17_N200_K8, KillPhase, KillPoint, chain_key, chain_step, decode_chain_head,
     kill_point_for_seed, reference_chain_digest, row_key, row_value, table_for_row, zero_chain,
 };
-use frob_fsim::ledger::{
-    FsqliteLedger, Ledger, OpenOptions, RecoveryReport, SchemaVersion, TableId,
-};
+use frob_fsim::ledger::{FsqliteLedger, OpenOptions, RecoveryReport, SchemaVersion, TableId};
 
 const CHILD_ARGS_ENV: &str = "FROB_LEDGER_KILL_PROBE_ARGS";
 const CHILD_ARG_SEP: &str = "\x1f";

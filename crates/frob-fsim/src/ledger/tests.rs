@@ -17,6 +17,23 @@ use super::{
     TableId,
 };
 
+/// Exercise the public `Ledger` / `LedgerTxn` trait surface generically (not just
+/// `FsqliteLedger` inherent methods) so trait bounds remain compile-verified.
+fn trait_roundtrip_put<L: Ledger>(
+    ledger: &mut L,
+    table: TableId,
+    key: &[u8],
+    val: &[u8],
+) -> CommitSeq {
+    let mut txn = ledger.begin().expect("trait begin");
+    txn.put(table, key, val).expect("trait put");
+    assert_eq!(
+        txn.get(table, key).expect("trait get").as_deref(),
+        Some(val)
+    );
+    txn.commit().expect("trait commit")
+}
+
 static SCRATCH_SEQ: AtomicU64 = AtomicU64::new(0);
 
 fn scratch_db(tag: &str) -> PathBuf {
@@ -120,6 +137,9 @@ fn open_write_read() {
         let seq = txn.commit().expect("commit transaction");
         assert_eq!(seq, CommitSeq::new(1));
         assert_eq!(seq.to_json_string(), "1");
+
+        let seq2 = trait_roundtrip_put(&mut ledger, TableId::Meta, b"trait-check", b"trait-ok");
+        assert_eq!(seq2, CommitSeq::new(2));
     }
 
     // Reopen and verify all 8 rows read back byte-identical and integrity_check is clean.

@@ -84,13 +84,56 @@ enabling `frob_fsim::conformance` for `frob-conformance` only).
 - `crates/frob-fsim/tests/groups.rs`: verifies `BUILT_WITH` across default, no-group (`mode-inproc`), and optional-group builds, `FROB-REF-790` fields and exit class 5 against `registries/refusals.toml`, disabled stub `GroupAbsent` returns, manifest-vs-`contract.toml` parity, `conformance` isolation (including planted `frob-verbs` fixture), public-API volatile-type scan, and `multiphysics` non-default check.
 - `crates/frob-fsim/tests/fixtures/frob_dyn_enables_structure/Cargo.toml`: planted negative-control fixture shipped here for `N33c-29`'s `airlock_fixture_frob_dyn_structure_refused` check-deps test (Review Note 3).
 - `crates/frob-fsim/tests/admission_int_fsim_01.rs`: five-crate analytic smokes, build-identity check, `asupersync` count, and closure-count guard.
+- `crates/frob-fsim/tests/ledger_forced_kill.rs`, `crates/frob-fsim/src/ledger/tests.rs`, `tests/admission/recompute_int_fsql_01_chain.py`, and `tests/admission/int_fsql_01_input.json`: `BD-009` / `INT-FSQL-01` unit suite, 100-seed forced-kill harness (including 10 recovery kills), two negative controls (`--plant split-writer`, `--plant row-swap`), and independent BLAKE3 reference verifier.
 
 ## Known gaps
 
-- Remaining adapter bodies for other groups land only with their owning admission beads (`BD-009`, `N33a-14..19`, `N33a-30..31`, `N33b-11..16`).
+- Remaining adapter bodies for other groups land only with their owning admission beads (`N33a-14..19`, `N33a-30..31`, `N33b-11..16`); `referee` (`BD-007`) and `ledger` v0 (`BD-009`) landed.
 - Upstream refusal conversion (`FROB-REF-792`) lands in `N33a-13`; `mode-remote` client and mutually-exclusive mode compile guards land in `N33c-11`.
 - Verb-level `needs_groups` checking, `admitted` status, and ranked-repair envelope attachment land in `N33c-32`; `check-deps` airlock consumer allow-lists land in `N34-03` / `N33b-09` / `N33c-29`.
 - Upstream `FD-ASUP-01`: `../frankensqlite/Cargo.toml` currently pins `asupersync = "0.6.2"` while `../asupersync` is `0.7.0`, so enabling `ledger` (in `default`) currently pulls both `0.6.2` and `0.7.0` until `FD-ASUP-01` aligns `frankensqlite`.
+
+## Ledger adapter (`ledger` group, `BD-009`, `INT-FSQL-01`)
+
+- **Durability configuration at the pin (`fs-ledger` over FrankenSQLite `0.5.1`):**
+  `PRAGMA journal_mode=WAL`, `PRAGMA synchronous=FULL`, `PRAGMA foreign_keys=ON`,
+  and engine `PRAGMA busy_timeout=5000` (read directly from `fs-ledger` at the pinned
+  revision and surfaced via `Ledger::durability_config()`).
+- **Durability scope (process death vs. power loss):** The `INT-FSQL-01` forced-kill
+  harness (`SIGKILL` across 100 deterministic seeds, including 10 kills during recovery)
+  proves process-crash atomicity and durability against OS process termination. Power-loss
+  durability depends on platform full-sync semantics (e.g., macOS `F_FULLFSYNC` vs. plain
+  `fsync`) and storage hardware; M0 records the sync level in force and makes no
+  power-loss claim.
+- **Recovery behaviour (`RecoveryReport`):** Opening a ledger inspects the SQLite main
+  header and active WAL sidecar read-only before opening the engine, classifying on-disk
+  state as `Clean`, `RolledBackIncompleteTxn`, or `ReplayedLog`. Open after an unclean
+  stop either rolls back an incomplete transaction or replays complete committed WAL
+  frames; it never exposes part of a transaction. Opening a ledger whose stored
+  `SchemaVersion` is newer than the binary's is refused read-only (`LedgerRefusalKind::NewerSchema`)
+  without writing to durable files. Every upstream engine error is translated into a
+  typed `LedgerRefusal` carrying `upstream_reason`; corruption (`LedgerRefusalKind::Integrity`)
+  and schema-mismatch refusals are never retryable.
+- **Single-writer rule:** One writer at a time is deliberate at M0 (FrankenSQLite's
+  concurrent-writer mode is not relied on). `Ledger::begin(&mut self)` enforces single
+  active transaction per handle at compile time, while cross-handle and cross-process
+  writers synchronize on an advisory writer lock (`<db>.frob-writer.lock`, released by
+  the kernel automatically on `SIGKILL`) bounded by `OpenOptions::busy_timeout`; a
+  contending writer receives retryable `LedgerRefusalKind::Busy` rather than hanging
+  or deadlocking.
+- **M0 tables and integrity check:** Closed M0 table set `meta`, `run`, `episode`
+  (`TableId`), storing caller-owned canonical byte rows via content-addressed BLAKE3
+  artifacts and monotone 64-bit `CommitSeq` (rendered as a decimal string in JSON views).
+  `Ledger::integrity_check()` validates the SQLite 100-byte header, active WAL cumulative
+  frame checksums (including pre-open corruption on committed transactions), underlying
+  referential lint, BLAKE3 payload hashes, and M0 control records.
+- **Declared JSON-lines fallback (`JsonlFallbackLedger`):** Pre-named fallback implementing
+  the same `Ledger` / `LedgerTxn` trait (`one canonical record per line` with a per-line
+  BLAKE3 checksum, discarding a truncated final line on open; queries scan). Declared at
+  M0 and built only if `INT-FSQL-01` fails.
+- **Test-helper binary:** `ledger_kill_probe` is registered strictly as a dev `[[test]]`
+  target (`tests/ledger_kill_probe/main.rs`, `harness = false`, `required-features = ["ledger"]`)
+  and ships in no product binary.
 
 ## `RefereeDynamics` (`BD-007`, feature `referee`)
 

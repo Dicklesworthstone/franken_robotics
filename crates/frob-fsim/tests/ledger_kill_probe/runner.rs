@@ -15,7 +15,7 @@ use frob_fsim::ledger::probe::{
     chain_key, chain_step, encode_chain_head, kill_point_for_seed, row_key, row_value,
     table_for_row, zero_chain,
 };
-use frob_fsim::ledger::{FsqliteLedger, Ledger, LedgerTxn, OpenOptions, SchemaVersion, TableId};
+use frob_fsim::ledger::{FsqliteLedger, OpenOptions, SchemaVersion, TableId};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum Mode {

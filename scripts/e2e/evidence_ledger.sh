@@ -166,5 +166,3 @@ if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
   e2e_assert_json "planted_h15_not_ok" "/ok" "false"
   e2e_metric "plants_caught" "4" "count" --observe
 fi
-
-e2e_finish

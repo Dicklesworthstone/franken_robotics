@@ -328,10 +328,6 @@ fn is_b3_digest(s: &str) -> bool {
     rest.len() == 64 && rest.bytes().all(|b| matches!(b, b'0'..=b'9' | b'a'..=b'f'))
 }
 
-fn is_hex40(s: &str) -> bool {
-    s.len() == 40 && s.bytes().all(|b| matches!(b, b'0'..=b'9' | b'a'..=b'f'))
-}
-
 /// Validate every schema rule on one [`GateRow`] and all of its [`GatePart`]s.
 pub fn validate_gate_row(gate: &GateRow) -> Result<(), StatusTableError> {
     let ctx = format!("gate `{}`", gate.id);
@@ -1345,18 +1341,6 @@ fn validate_empty_or_typed_registry(
                 let _ = f.opt_str("priority").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 f.finish().map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
             }
-            "lifts.toml" => {
-                let mut f = Fields::new(rtbl.clone(), &ctx);
-                let _ = f.require_str("id").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-                let _ = f.require_str("source_repo").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-                let rev = f.require_str("source_rev").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-                let _ = f.require_str("target_path").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-                let _ = f.require_str("reason").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-                f.finish().map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-                if !is_hex40(&rev) {
-                    return Err(StatusTableError::new(&ctx, format!("invalid source_rev `{rev}`")));
-                }
-            }
             "capsules.toml" => {
                 let mut f = Fields::new(rtbl.clone(), &ctx);
                 let _ = f.require_str("id").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
@@ -1744,11 +1728,16 @@ pub fn validate_all_registries(root: &Path) -> Result<RegistryAudit, StatusTable
     let refusal_count = validate_refusals_toml(&refusals_bytes)?;
     validated_files.push("registries/refusals.toml".to_owned());
 
+    let lifts_bytes = fs::read(root.join("registries/lifts.toml"))
+        .map_err(|e| StatusTableError::new("registries/lifts.toml", e.to_string()))?;
+    let _ = crate::stack::lifts::parse_lifts_toml(&lifts_bytes)
+        .map_err(|e| StatusTableError::new("registries/lifts.toml", e.to_string()))?;
+    validated_files.push("registries/lifts.toml".to_owned());
+
     for (fname, schema_name, row_key) in [
         ("verbs.toml", "frob.verbs/1", "verb"),
         ("kernels.toml", "frob.kernels/1", "kernel"),
         ("upstream.toml", "frob.upstream/1", "ask"),
-        ("lifts.toml", "frob.lifts/1", "lift"),
         ("capsules.toml", "frob.capsules/1", "capsule"),
     ] {
         let rel = format!("registries/{fname}");

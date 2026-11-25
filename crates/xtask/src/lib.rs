@@ -5,4 +5,5 @@
 //! `check-generated`, `check-contracts`, `check-stack`).
 
 pub mod crate_map;
+pub mod stack;
 pub mod status_table;

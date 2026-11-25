@@ -123,7 +123,7 @@ impl SuiteEnv {
     fn write_sibling_crate(&self, sib_rel_dir: &str, name: &str, version: &str, extra_toml: &str) {
         let dir = self.base.join(sib_rel_dir);
         let manifest = format!(
-            "# synthetic sibling crate for N33c-09\n[package]\nname = \"{name}\"\nversion = \"{version}\"\nedition = \"2021\"\n\n{extra_toml}\n"
+            "# synthetic sibling crate for N33c-09\n[package]\nname = \"{name}\"\nversion = \"{version}\"\nedition = \"2021\"\n\n[workspace]\n\n{extra_toml}\n"
         );
         write_file(&dir.join("Cargo.toml"), &manifest);
         write_file(&dir.join("src/lib.rs"), "// synthetic sibling crate\n");
@@ -502,7 +502,7 @@ fn denies_never_dependency_sibling() {
         "frob-derive",
         "\"annex\"",
         1,
-        "[dependencies]\nfj-egraph = { path = \"../../../frankenjax/crates/fj-egraph\" }\n",
+        "[workspace]\n\n[dependencies]\nfj-egraph = { path = \"../../../frankenjax/crates/fj-egraph\" }\n",
     );
     derive_env.copy_real_stack_lock();
     derive_env.copy_real_siblings_register();
@@ -617,7 +617,7 @@ fn forbidden_package_admitted_only_by_stack_lock_row() {
         "frob-derive",
         "\"annex\"",
         1,
-        "[dependencies]\nfj-egraph = { path = \"../../../frankenjax/crates/fj-egraph\" }\n",
+        "[workspace]\n\n[dependencies]\nfj-egraph = { path = \"../../../frankenjax/crates/fj-egraph\" }\n",
     );
     env.write_stack_lock_raw(&admitted_lock);
     env.generate_lockfile(&env.repo);
@@ -666,7 +666,7 @@ fn forbidden_package_admitted_only_by_stack_lock_row() {
         "frob-derive",
         "\"annex\"",
         1,
-        "[dependencies]\nfj-egraph = { path = \"../../../frankenjax/crates/fj-egraph\" }\n",
+        "[workspace]\n\n[dependencies]\nfj-egraph = { path = \"../../../frankenjax/crates/fj-egraph\" }\n",
     );
     no_gate.write_stack_lock_raw(&admitted_lock.replace("INT-FJAX-01", "none"));
     no_gate.generate_lockfile(&no_gate.repo);
@@ -693,7 +693,7 @@ fn forbidden_package_admitted_only_by_stack_lock_row() {
         "f3d-probe",
         "",
         0,
-        "[dependencies]\nf3d-math = { path = \"../../../../franken_threed/crates/f3d-math\" }\n",
+        "[workspace]\n\n[dependencies]\nf3d-math = { path = \"../../../../franken_threed/crates/f3d-math\" }\n",
     );
     probe.copy_real_stack_lock();
     probe.copy_real_siblings_register();

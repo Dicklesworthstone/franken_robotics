@@ -1,3 +1,4 @@
+# synthetic: N34-REF FROB-REF-891 unknown-field fixture sidecar
 code = "FROB-REF-891"
 fixture = "ref891_unknown_field.json"
 parameter_kind = "artifact"

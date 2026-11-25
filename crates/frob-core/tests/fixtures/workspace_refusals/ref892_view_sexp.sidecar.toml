@@ -1,3 +1,4 @@
+# synthetic: N34-REF FROB-REF-892 registered S-expression view fixture sidecar
 code = "FROB-REF-892"
 fixture = "ref892_view_sexp.sexp"
 parameter_kind = "identity-required"

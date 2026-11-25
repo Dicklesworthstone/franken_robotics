@@ -1,3 +1,4 @@
+# synthetic: N34-REF FROB-REF-892 non-canonical JSON fixture sidecar
 code = "FROB-REF-892"
 fixture = "ref892_noncanonical.json"
 parameter_kind = "identity-required"

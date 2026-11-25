@@ -1,3 +1,4 @@
+# synthetic: N34-REF FROB-REF-891 major-version-raised fixture sidecar
 code = "FROB-REF-891"
 fixture = "ref891_major_raised.json"
 parameter_kind = "artifact"

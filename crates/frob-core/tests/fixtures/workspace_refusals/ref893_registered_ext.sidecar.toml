@@ -1,3 +1,4 @@
+# synthetic: N34-REF FROB-REF-893 registered-extension fixture sidecar
 code = "FROB-REF-893"
 fixture = "ref893_registered_ext.fbot"
 parameter_kind = "foreign-file"

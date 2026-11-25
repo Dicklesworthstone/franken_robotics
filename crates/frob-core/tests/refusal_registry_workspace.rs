@@ -4,6 +4,7 @@
 use std::fs;
 use std::path::PathBuf;
 
+use frob_core::canon::{CanonError, write_json};
 use frob_core::json::{Limits, admit};
 use frob_core::refusal::{RefusalCode, RetryPolicy};
 use frob_core::registry::refusals::{
@@ -204,13 +205,35 @@ fn fixtures_exist_and_admit() {
         let raw = fs::read(dir.join(&fixture)).expect(&fixture);
         if is_view {
             let text = std::str::from_utf8(&raw).expect("view fixture is UTF-8");
-            assert!(text.trim_start().starts_with("(design "), "registered sexp view expected");
+            let first_form = text
+                .lines()
+                .map(str::trim)
+                .find(|l| !l.is_empty() && !l.starts_with(';'))
+                .expect("view fixture has non-comment form");
+            assert!(
+                first_form.starts_with("(design "),
+                "registered sexp view expected"
+            );
         } else {
             let admitted = admit(&raw, &limits)
                 .unwrap_or_else(|e| panic!("fixture `{fixture}` must pass raw-byte admission: {e}"));
             if observed == "non-canonical-spelling" {
-                let canon = admitted.into_canonical().expect("canonicalizes");
-                assert_ne!(raw.trim_ascii(), canon.as_bytes(), "892 non-canonical fixture must differ from canonical bytes");
+                let canon = write_json(admitted.value()).expect("can encode the admitted value");
+                assert_ne!(
+                    raw.trim_ascii(),
+                    canon.as_bytes(),
+                    "892 fixture must differ even without its surrounding whitespace"
+                );
+                assert!(matches!(
+                    admitted.into_canonical(),
+                    Err(CanonError::NotCanonical { .. })
+                ));
+                assert!(
+                    admit(canon.as_bytes(), &limits)
+                        .expect("canonical control admits")
+                        .into_canonical()
+                        .is_ok()
+                );
             }
         }
     }

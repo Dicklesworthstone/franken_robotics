@@ -1,3 +1,4 @@
+# synthetic: N34-REF FROB-REF-893 registered-schema fixture sidecar
 code = "FROB-REF-893"
 fixture = "ref893_registered_schema.json"
 parameter_kind = "foreign-file"

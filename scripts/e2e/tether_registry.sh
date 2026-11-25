@@ -70,9 +70,9 @@ if [ -n "${GEN_1}" ] && [ -f "${GEN_1}" ] && [ -n "${GEN_2}" ] && [ -f "${GEN_2}
   fi
   DIGEST_HEX="$(grep '^pub const REGISTRY_DIGEST_HEX:' "${GEN_1}" | sed -E 's/.*"([0-9a-f]{64})".*/\1/' || true)"
   ENTRY_COUNT="$(grep '^pub static VERBS:' "${GEN_1}" | sed -E 's/.*\[VerbEntry; ([0-9]+)\].*/\1/' || printf '0')"
-  e2e_metric "entry_count" "${ENTRY_COUNT}" --unit "count"
-  e2e_metric "cluster_count" "0" --unit "count"
-  e2e_metric "largest_task_cluster" "0" --unit "count" --max "7"
+  e2e_metric "entry_count" "${ENTRY_COUNT}" "count"
+  e2e_metric "cluster_count" "0" "count"
+  e2e_metric "largest_task_cluster" "0" "count" "<=" "7"
   if [ -n "${DIGEST_HEX}" ]; then
     e2e_assert_eq "registry_digest_len" "${#DIGEST_HEX}" "64"
   fi

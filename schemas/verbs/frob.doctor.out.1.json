@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.doctor.out/1",
+  "type": "object",
+  "required": ["stack_receipt"],
+  "properties": {
+    "stack_receipt": {
+      "type": "object",
+      "required": ["receipt", "lock", "dev", "status", "findings"],
+      "properties": {
+        "receipt": {"type": "string", "pattern": "^sr:[0-9a-f]{64}$"},
+        "lock": {"type": "string", "pattern": "^sl:[0-9a-f]{64}$"},
+        "dev": {"type": "boolean"},
+        "status": {"const": "ok"},
+        "findings": {"type": "array", "maxItems": 0}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "examples": [{"stack_receipt": {"receipt": "sr:0000000000000000000000000000000000000000000000000000000000000000", "lock": "sl:0000000000000000000000000000000000000000000000000000000000000000", "dev": true, "status": "ok", "findings": []}}]
+}

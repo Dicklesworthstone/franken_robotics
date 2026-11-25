@@ -93,7 +93,12 @@ fn main() {
             if schemas.contains_key(&fname) {
                 continue;
             }
-            let full = schemas_dir.join(&fname);
+            let source = schemas_dir.join("verbs").join(&fname);
+            let full = if source.is_file() {
+                source
+            } else {
+                schemas_dir.join(&fname)
+            };
             println!("cargo:rerun-if-changed={}", full.display());
             if let Ok(bytes) = fs::read(&full) {
                 schemas.insert(fname, bytes);

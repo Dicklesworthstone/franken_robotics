@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.session.focus.out/1",
+  "type": "object",
+  "required": ["focus", "tools"],
+  "properties": {"focus": {"type": "string"}, "tools": {"type": "array", "items": {"type": "object", "required": ["name", "purpose"]}}},
+  "additionalProperties": false,
+  "examples": [{"focus": "mission", "tools": []}]
+}

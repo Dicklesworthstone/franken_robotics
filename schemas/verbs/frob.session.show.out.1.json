@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.session.show.out/1",
+  "type": "object",
+  "required": ["scopes", "budgets_left", "namespace", "focus", "tools"],
+  "properties": {
+    "scopes": {"type": "array", "items": {"type": "string"}},
+    "budgets_left": {"type": "object"},
+    "namespace": {"type": "string"},
+    "focus": {"type": "string"},
+    "tools": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false,
+  "examples": [{"scopes": [], "budgets_left": {}, "namespace": "example", "focus": "orient", "tools": []}]
+}

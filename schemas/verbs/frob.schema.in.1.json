@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.schema.in/1",
+  "type": "object",
+  "x-frob-cli": {"positional": ["id"]},
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "verb": {"type": "string", "minLength": 1},
+    "in": {"type": "boolean"},
+    "out": {"type": "boolean"},
+    "refusals": {"type": "boolean"},
+    "verbs": {"type": "boolean"},
+    "path_args": {"type": "boolean"}
+  },
+  "additionalProperties": false,
+  "examples": [{}]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.robot-docs.out/1",
+  "type": "object",
+  "required": ["verbs", "envelope", "exits", "surface_claim"],
+  "properties": {
+    "verbs": {"type": "array", "items": {"type": "object", "required": ["entry", "refusals"]}},
+    "envelope": {"type": "object"},
+    "exits": {"type": "array", "items": {"type": "object", "required": ["exit", "meaning"]}},
+    "surface_claim": {"type": "string"}
+  },
+  "additionalProperties": false,
+  "examples": [{"verbs": [], "envelope": {}, "exits": [], "surface_claim": "every verb carries a compute budget, provenance, and a typed refusal, and both CLI and MCP surfaces are generated from one registry."}]
+}

@@ -19,7 +19,7 @@ known_answer = "KA-755"
 [[row]]
 id = "malformed-arguments"
 input = "malformed"
-argv = ["design", "check", "quad-a", "--jionts", "*.knee", "--json"]
+argv = ["doctor", "--sektion", "stack", "--json"]
 ok = false
 exit = 3
 code = "FROB-REF-802"

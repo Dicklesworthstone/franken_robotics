@@ -15,7 +15,7 @@ use frob_core::refusal::{Refusal, RefusalCode, Repair, RetryPolicy};
 use frob_core::registry::refusals::RefusalRegistry;
 
 use crate::envelope::{
-    Bound, Cost, Envelope, FixtureBinding, RefusalFields, Schema, Tree, escape_ptr,
+    Bound, Cost, Envelope, FixtureBinding, NextAction, RefusalFields, Schema, Tree, escape_ptr,
 };
 use crate::registry::{Kind, MAX_MCP_WAIT_MS, ParamKind, VerbEntry, lookup_in};
 
@@ -570,8 +570,42 @@ impl Pipeline {
             Err(env) => return Ok(Err(env)),
         };
 
-        // Step 3: Authorize (check session token scopes against `entry.capabilities`).
-        for cap in entry.capabilities {
+        let selected = if entry.actions.is_empty() {
+            Ok(None)
+        } else {
+            req.args
+                .get("action")
+                .map(|value| value.as_str().ok_or(RefusalCode::FrobRef802))
+                .transpose()
+        };
+        let requested_action = selected.as_ref().ok().copied().flatten();
+        let action = match selected.and_then(|name| entry.resolve_action(name)) {
+            Ok(action) => action,
+            Err(code) => {
+                let fields = RefusalFields {
+                    message: "unknown named action".to_owned(),
+                    pointer: "/action".to_owned(),
+                    observed: sanitize_token(requested_action.unwrap_or_default()),
+                    required: "an action declared on the verb".to_owned(),
+                    unit: String::new(),
+                    detail: None,
+                    affected_claims: Vec::new(),
+                    retry: RetryPolicy::AfterChange,
+                    repairs: vec![Repair::new(format!(
+                        "frob {} --help",
+                        entry.name.replace('.', " ")
+                    ))],
+                };
+                return Ok(Err(self.refusal_envelope(
+                    entry.name,
+                    code.as_str(),
+                    fields,
+                )?));
+            }
+        };
+
+        // Step 3: Authorize against the selected action's scopes.
+        for cap in action.capabilities {
             if !req.auth.has_scope(cap.as_str()) {
                 return Ok(Err(self.refusal_envelope(
                     entry.name,
@@ -614,8 +648,16 @@ impl Pipeline {
             .expect("validate_request verified object args")
             .to_vec();
 
-        // Fill declared defaults for omitted parameters.
+        // Fill defaults only for properties admitted on the selected action.
+        let common = entry.common_properties();
         for (def_name, def_val) in &input_schema.defaults {
+            if let Some(property) = common.iter().find(|p| p.name == def_name)
+                && !action.name.map_or(property.on_default, |name| {
+                    property.actions.iter().any(|action| action == name)
+                })
+            {
+                continue;
+            }
             if !resolved_members.iter().any(|(k, _)| k == def_name) {
                 resolved_members.push((def_name.clone(), def_val.clone()));
             }
@@ -683,11 +725,11 @@ impl Pipeline {
         // including every resolved fixture file digest, and semantic common options).
         let digest = compute_request_digest(entry.name, &resolved_args, &bound, &req.common)?;
 
-        let run_tier = determine_run_tier(entry, &resolved_args, &self.run_tiers);
+        let run_tier = determine_run_tier(entry, action.kind, &resolved_args, &self.run_tiers);
 
         Ok(Ok(ResolvedRequest {
             verb: entry.name.to_owned(),
-            kind: entry.kind,
+            kind: action.kind,
             run_tier,
             args: resolved_args,
             bound,
@@ -706,8 +748,13 @@ impl Pipeline {
         code: &str,
         fields: RefusalFields,
     ) -> Result<WireEnvelope, DispatchError> {
-        let env = Envelope::from_code_in(&self.refusals, verb, code, fields, Cost::ZERO)
+        let mut env = Envelope::from_code_in(&self.refusals, verb, code, fields, Cost::ZERO)
             .map_err(DispatchError::Envelope)?;
+        if code == "FROB-REF-801" && verb.is_empty() {
+            let action = NextAction::new("frob robot-docs", "List the available commands.")
+                .map_err(DispatchError::Envelope)?;
+            env = env.with_next_action(action);
+        }
         WireEnvelope::from_envelope(&env, &self.refusals)
     }
 
@@ -758,6 +805,7 @@ pub fn compute_request_digest(
 
 fn determine_run_tier(
     entry: &VerbEntry,
+    kind: Kind,
     resolved_args: &Tree,
     overrides: &BTreeMap<String, RunTier>,
 ) -> RunTier {
@@ -772,7 +820,7 @@ fn determine_run_tier(
     if let Some(&t) = overrides.get(entry.name) {
         return t;
     }
-    if entry.kind == Kind::Run && entry.cost_model.contains("device") {
+    if kind == Kind::Run && entry.cost_model.contains("device") {
         RunTier::Device
     } else {
         RunTier::Cpu
@@ -853,7 +901,7 @@ fn value_at_pointer<'a>(root: &'a Tree, ptr: &str) -> Option<&'a Tree> {
 }
 
 /// Exact Levenshtein edit distance on Unicode scalar values (small strings, zero deps).
-fn edit_distance(a: &str, b: &str) -> usize {
+pub(crate) fn edit_distance(a: &str, b: &str) -> usize {
     let av: Vec<char> = a.chars().collect();
     let bv: Vec<char> = b.chars().collect();
     let mut prev: Vec<usize> = (0..=bv.len()).collect();

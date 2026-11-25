@@ -1,0 +1,23 @@
+[package]
+name = "frob-cli"
+version.workspace = true
+edition.workspace = true
+license-file.workspace = true
+repository.workspace = true
+authors.workspace = true
+publish = false
+description = "Registry-generated FrankenRobotics command line."
+
+[package.metadata.frob]
+layer = 7
+rank = 2
+
+[[bin]]
+name = "frob"
+path = "src/main.rs"
+
+[dependencies]
+frob-verbs = { path = "../frob-verbs" }
+
+[lints]
+workspace = true

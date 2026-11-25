@@ -5,3 +5,158 @@
 # Written strictly in the frob-core::registry::toml subset (N34p2-01).
 
 schema = "frob.verbs/1"
+
+[[verb]]
+name = "doctor"
+cluster = "operator"
+kind = "read"
+tier = "S"
+capabilities = []
+public = true
+input_schema = "frob.doctor.in/1"
+output_schema = "frob.doctor.out/1"
+refusals = []
+idempotent = true
+cost_model = "static: read compiled stack identity"
+first_milestone = "M0"
+task_clusters = ["orient"]
+examples = ["frob doctor --json"]
+purpose = "Operator verb: check toolchains, foundation pins, devices, kernel caches and probe status"
+use_when = "Inspecting the installation and its stack identity."
+owner = "frob-verbs"
+
+[[verb]]
+name = "capabilities"
+cluster = "operator"
+kind = "read"
+tier = "S"
+capabilities = []
+public = true
+input_schema = "frob.capabilities.in/1"
+output_schema = "frob.capabilities.out/1"
+refusals = []
+idempotent = true
+cost_model = "static: one pass over the verb registry"
+first_milestone = "M0"
+task_clusters = ["orient"]
+examples = ["frob capabilities --json"]
+purpose = "Operator verb: what is implemented and what is not, with resolved modes and ceilings per device"
+use_when = "Checking which verb handlers are present and what has been qualified."
+owner = "frob-verbs"
+paginated = true
+
+[[verb]]
+name = "robot-docs"
+cluster = "operator"
+kind = "read"
+tier = "S"
+capabilities = []
+public = true
+input_schema = "frob.robot-docs.in/1"
+output_schema = "frob.robot-docs.out/1"
+refusals = []
+idempotent = true
+cost_model = "static: one pass over the verb registry"
+first_milestone = "M0"
+task_clusters = ["orient"]
+examples = ["frob robot-docs --cluster author --json"]
+purpose = "Operator verb: the agent guide; --cluster prints one task cluster"
+use_when = "Looking up command forms, examples, refusal codes and exit meanings."
+owner = "frob-verbs"
+
+[[verb]]
+name = "schema"
+cluster = "operator"
+kind = "read"
+tier = "S"
+capabilities = []
+public = true
+input_schema = "frob.schema.in/1"
+output_schema = "frob.schema.out/1"
+refusals = []
+idempotent = true
+cost_model = "static: read compiled schemas and registries"
+first_milestone = "M0"
+task_clusters = ["orient"]
+examples = ["frob schema --verb doctor --json"]
+purpose = "Operator verb: a schema with a minimal valid example"
+use_when = "Preparing a verb call or validating its result."
+owner = "frob-verbs"
+
+[[verb]]
+name = "session.focus"
+cluster = "session"
+kind = "mutate"
+tier = "S"
+capabilities = []
+public = true
+key_optional = true
+input_schema = "frob.session.focus.in/1"
+output_schema = "frob.session.focus.out/1"
+refusals = []
+idempotent = false
+cost_model = "static: one ledger transaction"
+first_milestone = "M0"
+task_clusters = ["base"]
+examples = ["frob session focus mission --json"]
+purpose = "Switch the visible task cluster and list the now-visible tools."
+use_when = "Switching to a different group of tools."
+owner = "frob-verbs"
+
+[[verb]]
+name = "session.open"
+cluster = "session"
+kind = "mutate"
+tier = "S"
+capabilities = []
+public = true
+input_schema = "frob.session.open.in/1"
+output_schema = "frob.session.open.out/1"
+refusals = []
+idempotent = false
+cost_model = "static: one ledger transaction"
+first_milestone = "M0"
+task_clusters = ["housekeeping"]
+examples = ["frob session open --scopes design:write,sim:run --budget gpu_s=600,cpu_core_s=7200 --key s-1 --json"]
+purpose = "Open a session with scopes and budgets."
+use_when = "Starting a session for a new task."
+owner = "frob-verbs"
+
+[[verb]]
+name = "session.show"
+cluster = "session"
+kind = "read"
+tier = "S"
+capabilities = []
+public = true
+paginated = true
+input_schema = "frob.session.show.in/1"
+output_schema = "frob.session.show.out/1"
+refusals = []
+idempotent = true
+cost_model = "static: read the session record"
+first_milestone = "M0"
+task_clusters = ["orient"]
+examples = ["frob session show --json"]
+purpose = "Show scopes, budgets left, namespace and focus."
+use_when = "Checking what the current session can do."
+owner = "frob-verbs"
+
+[[verb]]
+name = "session.close"
+cluster = "session"
+kind = "mutate"
+tier = "S"
+capabilities = []
+public = true
+input_schema = "frob.session.close.in/1"
+output_schema = "frob.session.close.out/1"
+refusals = []
+idempotent = false
+cost_model = "static: one ledger transaction"
+first_milestone = "M0"
+task_clusters = ["housekeeping"]
+examples = ["frob session close --key sc-1 --json"]
+purpose = "Close a session and release its reservations."
+use_when = "Finishing work and returning the session's remaining reservations."
+owner = "frob-verbs"

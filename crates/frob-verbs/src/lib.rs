@@ -33,3 +33,5 @@ pub use dispatch::rpc;
 
 #[cfg(feature = "handlers")]
 pub mod handlers;
+#[cfg(feature = "handlers")]
+pub mod operator;

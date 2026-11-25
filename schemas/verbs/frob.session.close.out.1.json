@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.session.close.out/1",
+  "type": "object",
+  "required": ["released", "spend"],
+  "properties": {"released": {"type": "array", "items": {"type": "string"}}, "spend": {"type": "object"}},
+  "additionalProperties": false,
+  "examples": [{"released": [], "spend": {}}]
+}

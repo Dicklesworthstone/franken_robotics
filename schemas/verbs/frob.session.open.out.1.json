@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.session.open.out/1",
+  "type": "object",
+  "required": ["session", "namespace", "scopes", "focus"],
+  "properties": {
+    "session": {"type": "string", "pattern": "^s:.+$"},
+    "namespace": {"type": "string"},
+    "scopes": {"type": "array", "items": {"type": "string"}},
+    "focus": {"type": "string"}
+  },
+  "additionalProperties": false,
+  "examples": [{"session": "s:example", "namespace": "example", "scopes": [], "focus": "orient"}]
+}

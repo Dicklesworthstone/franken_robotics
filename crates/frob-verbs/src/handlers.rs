@@ -4,7 +4,11 @@
 //! M0 operator verb handlers (`doctor`, `capabilities`, `schema`, `robot-docs`) and the
 //! dispatch service interface land in N32a-04 and BD-022.
 
-use crate::registry::{VERBS, VerbEntry};
+use crate::{
+    dispatch::HandlerTable,
+    operator,
+    registry::{VERBS, VerbEntry},
+};
 
 /// Return the slice of verb entries present in the compiled static registry table.
 ///
@@ -13,4 +17,12 @@ use crate::registry::{VERBS, VerbEntry};
 #[must_use]
 pub fn registered_verbs() -> &'static [VerbEntry] {
     &VERBS
+}
+
+/// Bind the handlers compiled into this build for both dispatch surfaces.
+#[must_use]
+pub fn handler_table() -> HandlerTable {
+    let mut table = HandlerTable::new();
+    operator::register(&mut table);
+    table
 }

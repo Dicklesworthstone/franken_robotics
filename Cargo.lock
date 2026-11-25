@@ -748,6 +748,13 @@ name = "frob-cert"
 version = "0.0.1"
 
 [[package]]
+name = "frob-cli"
+version = "0.0.1"
+dependencies = [
+ "frob-verbs",
+]
+
+[[package]]
 name = "frob-conformance"
 version = "0.0.1"
 dependencies = [
@@ -776,6 +783,7 @@ dependencies = [
  "fs-asbuilt",
  "fs-ascent",
  "fs-assimilate",
+ "fs-blake3",
  "fs-bo",
  "fs-contact",
  "fs-control",
@@ -2321,6 +2329,7 @@ dependencies = [
  "fsqlite-types",
  "fsqlite-vfs",
  "fsqlite-wal",
+ "getrandom 0.4.3",
  "hashbrown 0.17.2",
  "parking_lot 0.13.0",
  "rand 0.10.4",

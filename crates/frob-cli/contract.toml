@@ -1,0 +1,17 @@
+[crate]
+name = "frob-cli"
+layer = 7
+rank = 2
+plane = "decision"
+determinism = "D0"
+evidence = "Tested"
+gates = []
+refusals = ["FROB-REF-801", "FROB-REF-802", "FROB-REF-990"]
+
+[budgets]
+wall_ms = 2000
+memory_mib = 128
+
+[safe_mode]
+on_budget = "reference-path"
+on_calibration = "reference-path"

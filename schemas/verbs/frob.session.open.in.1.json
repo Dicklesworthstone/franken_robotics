@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.session.open.in/1",
+  "type": "object",
+  "properties": {
+    "scopes": {"type": "array", "items": {"type": "string"}},
+    "budget": {
+      "type": "object",
+      "propertyNames": {"enum": ["gpu_s", "cpu_core_s", "disk_bytes", "wall_s", "sim_s", "device_mem_bytes", "trace_bytes", "episodes"]},
+      "additionalProperties": {"type": "integer", "minimum": 0, "maximum": 9007199254740991}
+    },
+    "namespace": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false,
+  "examples": [{}]
+}

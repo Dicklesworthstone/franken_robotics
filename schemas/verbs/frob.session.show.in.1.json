@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.session.show.in/1",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": false,
+  "examples": [{}]
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.schema.out/1",
+  "type": "object",
+  "$defs": {
+    "example": {
+      "type": "object",
+      "required": ["schema", "example"],
+      "properties": {"schema": {"type": "object"}, "example": true},
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schema": {"type": "object"},
+    "example": true,
+    "in": {"$ref": "#/$defs/example"},
+    "out": {"$ref": "#/$defs/example"},
+    "refusals": {"type": "array"},
+    "verbs": {"type": "array"},
+    "path_args": {"type": "array"}
+  },
+  "oneOf": [
+    {"required": ["schema", "example"], "maxProperties": 2},
+    {"required": ["in", "out"], "maxProperties": 2},
+    {"required": ["refusals"], "maxProperties": 1},
+    {"required": ["verbs"], "maxProperties": 1},
+    {"required": ["path_args"], "maxProperties": 1}
+  ],
+  "additionalProperties": false,
+  "examples": [{"path_args": []}]
+}

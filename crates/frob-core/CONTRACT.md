@@ -4,7 +4,7 @@
 
 ## Purpose
 
-Provide the shared, dependency-minimal vocabulary that must mean the same thing across every crate in the workspace: content-addressed identities and domain-separated hashing (`id`), canonical JSON serialization from typed terms with explicit code-point sorting (`canon`), evidence classes and the weakest-input-wins claim product (`evidence`), constant-false no-authorization flags (`auth`), raw-byte strict JSON admission (`json`), plain mission proof objects (`proof`), build-embedded stack identities and the same-stack rule (`stack`), typed refusals and the refusal-registry loader (`refusal`, `registry::refusals`), the strict TOML-subset reader (`registry::toml`), the closed SI quantity re-export surface (`qty`), and the opt-in test-support kit (`testkit` behind feature `test-support`).
+Provide the shared, dependency-minimal vocabulary that must mean the same thing across every crate in the workspace: content-addressed identities and domain-separated hashing (`id`), canonical JSON serialization from typed terms with explicit code-point sorting (`canon`), evidence classes and the weakest-input-wins claim product (`evidence`), constant-false no-authorization flags (`auth`), raw-byte strict JSON admission (`json`), plain mission proof objects (`proof`), performance workload records and typed throughput units (`perf::workload`, `perf::units`), build-embedded stack identities and the same-stack rule (`stack`), typed refusals and the refusal-registry loader (`refusal`, `registry::refusals`), the strict TOML-subset reader (`registry::toml`), the closed SI quantity re-export surface (`qty`), and the opt-in test-support kit (`testkit` behind feature `test-support`).
 
 ## Inputs
 
@@ -16,6 +16,7 @@ Provide the shared, dependency-minimal vocabulary that must mean the same thing 
 - SI scalar values for the closed set of 36 `qty` types backed by `fs-qty`.
 - Exact rationals, outward-rounded intervals, typed frame/unit quantities, ordered port sequences, quantifier prefixes, expression DAGs, assumptions, dependency supports, and per-kind payload structs for `proof::ProofObject::new`.
 - At compile time (`build.rs`), the two one-line 64-hex files `receipts/HEAD` and `receipts/LOCK_DIGEST` (maintained by `xtask check-stack --write-receipt`) plus the `FROB_STACK_DEV` environment variable.
+- Typed throughput inputs (`perf::units`, `N36-03`): positive reduced `Decimation` (`d >= 1`), positive reduced `Rational` physics step `h`, `StepScope`, `Inclusion`, `Settings` (`Matched`/`Native`), `StepCounts` (`valid`, `degraded`, `faulted`), submission-to-completion `wall_s`, `HardwareKey` groups, and raw-byte rate JSON payloads admitted via `frob_core::json`.
 
 ## Outputs
 
@@ -26,6 +27,7 @@ Provide the shared, dependency-minimal vocabulary that must mean the same thing 
 - Typed `registry::toml::Table` / `Fields` values and closed-set SI quantity wrappers (`qty`).
 - Plain mission proof objects (`proof` module: fifteen `ProofKind` variants, per-kind exact-number `ProofPayload`, `Establishes`, canonical `ExprDag`, `Support`, `ProofObject`, and deterministic D0 canonical bytes/digests) — class `"none: data only"` (`N25b-01`, `OPEN-AUGUR-6`, `ADR-WS-02`).
 - Typed stack identities (`stack` module: `StackReceiptHash` prefixed `sr:`, `StackLockDigest` prefixed `sl:`, `StackIdentity { receipt, lock, dev }`, compile-time constant `BUILT_UNDER`, `same_stack`, `require_same_stack`, and `StackKeyed`) serialized via `frob_core::canon` (`N33a-06`).
+- Typed throughput rates and pure checks (`perf::units`, `N36-03`): `Decimation`, `StepScope`, `Inclusion`, `Settings`, `RateUnit`, `StepUnit`, `StepCounts`, `Rate`, `ExactRational`, `HardwareKey`, `KeyedRate`, exact count/unit conversions (`env_steps_to_world_steps`, `world_steps_to_env_steps`, `world_steps_to_world_seconds`), `comparable`, `check_ordering` / `check_group_ordering` (`OrderingViolation`), canonical wire JSON (`to_canonical_json`, `parse_rate_at`, `parse_rates_json`), and named refusal constants (`ORDERING_DETAIL`, `ORDERING_POINTER`, `ORDERING_INTERIM_REFUSAL_CODE`).
 
 ## Invariants
 
@@ -37,6 +39,7 @@ Provide the shared, dependency-minimal vocabulary that must mean the same thing 
 - **Closed refusal registry:** `RefusalCode` is generated from `registries/refusals.toml` into `src/refusal/code_gen.rs`; unknown codes, duplicates, unknown TOML keys, overlapping or dangling exception lists, and `[exit_rule]` / family-exit mismatches are load-time errors.
 - **Closed quantity surface (N33c-03):** `qty` exports at most 64 named SI types (currently 36), separates equal-dimension kinds (`Torque` vs `Energy` vs `AngularStiffness`, etc.), and never exports generic `fs_qty::Qty`.
 - **Distinct stack identities, fail-closed embedding, and the same-stack rule (N33a-06, INV-SUITE-05):** `StackReceiptHash` (`sr:<64 lower-case hex>`, wide identity of the resolved `frob.stack-receipt/1` JSON) and `StackLockDigest` (`sl:<64 lower-case hex>`, narrow identity of canonical `franken-stack.lock` mixed into airlock memo keys via `StackKeyed`) are distinct Rust types with no cross-conversion or arbitrary-string constructor outside their parsers. `build.rs` reads `receipts/HEAD` and `receipts/LOCK_DIGEST` without hashing or reading siblings, declares `rerun-if-changed` on both files and `franken-stack.lock` plus `rerun-if-env-changed=FROB_STACK_DEV`, and fails closed when either file is absent unless `FROB_STACK_DEV=1` is set (marking `BUILT_UNDER.dev = true` and zeroing missing fields). `same_stack(a, b)` holds iff `!a.dev && !b.dev && a.receipt == b.receipt` (never equal lock digests alone, never any `dev: true` identity); `require_same_stack` raises `FROB-REF-890` with both receipt hashes, `retry: after-change`, and ranked repairs (`result.revalidate`, `rerun`, `present-separately`).
+- **Typed throughput units and INV-PERF-01 ordering (`perf::units`, ADR-PERF-02, N36-03, KA-806, CX-374):** Step-family rates (`WorldStepsPerSec`, `EnvStepsPerSec`, `WorldSecPerWallSec`) cannot be constructed without a non-optional reduced `Decimation` (`num >= den >= 1`) and `h: Rational`, whereas `RealTimeMultiple` and `EpisodesPerSec` take none. `Rate` derives `value` strictly from `counts.valid / wall_s` (`degraded` and `faulted` steps never enter the numerator) and enforces `StepScope` / `Inclusion` agreement. `check_ordering` enforces `training <= full_env_step <= physics_only` in `env-steps/s` per `HardwareKey` strictly with zero noise tolerance. `comparable(a, b)` requires a shared `StepScope` and either equal `Matched { h, d, newton_iterations }` or `EnvStepsPerSec` under `Native` settings (refusing `Native` world-steps comparisons across decimations).
 
 ## Refusals
 
@@ -44,10 +47,11 @@ Provide the shared, dependency-minimal vocabulary that must mean the same thing 
 - `FROB-REF-816` (exit 3, `after-change`): missing, duplicate, unknown, non-boolean, or `true` no-authorization flag encountered while parsing `NoAuthorization` or `PacketAuthorization`.
 - `FROB-REF-881` (exit 3, `after-change`): quantifier-prefix mismatch across parts passed to `ClaimProduct::combine`.
 - `FROB-REF-890` (exit 3, `after-change`): `stack-mismatch` — evidence recorded under another stack receipt or a `dev: true` identity is offered as same-stack evidence without revalidation (`stack::require_same_stack`).
+- Typed boundary errors in `perf::units` (`RateSchemaError`, `OrderingViolation`; no refusal object constructed in `perf::units`): mapped at disclosure and report validation boundaries (`N36-13`, `BD-216`, `N36-REF`) to `FROB-REF-862` (exit 3) — missing decimation at `rates[i].decimation` with repair `"restate the figure with its decimation"`, and INV-PERF-01 ordering violations as the interim of `rates-violate-unit-ordering` behind `ORDERING_DETAIL = "rates-violate-unit-ordering"` and `ORDERING_POINTER = "rates.ordering"` with repair `"more pairs, or a longer duration"`.
 
 ## Determinism class
 
-`D0` (Exact). Every operation in `frob-core` is a pure function of its inputs with deterministic tie-breaking (lowest content hash, then field path), sorted sets/maps (`BTreeSet`/`BTreeMap`), and bit-exact BLAKE3 hashing.
+`D0` (Exact). Every operation in `frob-core` — including `perf::units` count/unit rational conversions (`ExactRational`, `Decimation`, `Rational`), comparability, and INV-PERF-01 ordering checks — is a pure function of its inputs with deterministic tie-breaking (lowest content hash, then field path), sorted sets/maps (`BTreeSet`/`BTreeMap`), and bit-exact BLAKE3 hashing. Measured rate values ingested into `perf::units::Rate` carry evidence class `Tested` at the measurement boundary.
 
 ## Evidence class of outputs
 

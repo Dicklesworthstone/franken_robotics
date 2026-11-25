@@ -30,6 +30,8 @@ escape-all-non-ascii = []
 nc-torque-alias-first-moment = ["gauntlet-mutations"]
 nc-allow-empty-support = ["gauntlet-mutations"]
 nc-stack-compare-lock = ["gauntlet-mutations"]
+units-without-decimation = ["gauntlet-mutations"]
+nc-ordering-compare-raw = ["gauntlet-mutations"]
 
 [[test]]
 name = "testkit"

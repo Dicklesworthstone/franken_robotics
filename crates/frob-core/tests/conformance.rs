@@ -109,6 +109,8 @@ fn contract_toml_validates_against_strict_toml_and_refusal_registry() {
         "nc-torque-alias-first-moment",
         "nc-allow-empty-support",
         "nc-stack-compare-lock",
+        "units-without-decimation",
+        "nc-ordering-compare-raw",
     ] {
         let mut f = Fields::new(feats.require_table(name).unwrap(), name);
         assert_eq!(f.require_str("tier").unwrap(), "S");

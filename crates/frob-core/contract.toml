@@ -31,6 +31,8 @@ escape-all-non-ascii = { tier = "S" }
 nc-torque-alias-first-moment = { tier = "S" }
 nc-allow-empty-support = { tier = "S" }
 nc-stack-compare-lock = { tier = "S" }
+units-without-decimation = { tier = "S" }
+nc-ordering-compare-raw = { tier = "S" }
 
 [api.float_ok]
 "json::Json::as_f64_lexeme" = "dimensionless JSON binary64 accessor returning raw lexeme and rounded f64 per N34-17; physical quantities use qty or exact strings"
@@ -38,3 +40,12 @@ nc-stack-compare-lock = { tier = "S" }
 "canon::Value::f64_shortest" = "dimensionless canonical shortest round-trip binary64 encoder per N34-18 Rule 4; physical quantities use qty or exact rationals/decimals"
 "canon::Object::f64_shortest" = "dimensionless canonical shortest round-trip binary64 object-member encoder delegating to canon::Value::f64_shortest per N34-18"
 "canon::Array::push_f64_shortest" = "dimensionless canonical shortest round-trip binary64 array-element encoder delegating to canon::Value::f64_shortest per N34-18"
+"perf::units::Rate::steps" = "submission-to-completion wall-clock seconds f64 and measured rate per N36-03; count conversions are exact D0 rationals"
+"perf::units::Rate::real_time_multiple" = "submission-to-completion wall-clock seconds f64 for dimensionless real-time multiple per N36-03"
+"perf::units::Rate::episodes" = "submission-to-completion wall-clock seconds f64 for episode throughput per N36-03"
+"perf::units::Rate::value" = "measured throughput scalar paired with RateUnit and Decimation per N36-03"
+"perf::units::Rate::wall_s" = "measured submission-to-completion wall-clock interval in seconds per N36-03"
+"perf::units::Rate::as_env_steps_per_s" = "converted env-steps/s rate derived from exact D0 count conversion divided by wall_s per N36-03"
+"perf::units::Rate::as_world_steps_per_s" = "converted world-steps/s rate derived from exact D0 count conversion divided by wall_s per N36-03"
+"perf::units::Rate::as_world_sec_per_wall_s" = "converted world-seconds per wall-second derived from exact D0 count conversion divided by wall_s per N36-03"
+"perf::units::ExactRational::to_f64" = "explicit projection of exact D0 rational conversion to f64 per N36-03"

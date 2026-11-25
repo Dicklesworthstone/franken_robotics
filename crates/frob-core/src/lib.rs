@@ -5,9 +5,9 @@
 //! the weakest-input-wins claim product (`evidence`), constant-`false` no-authorization
 //! flags (`auth`), raw-byte JSON admission (`json`), plain mission proof objects (`proof`),
 //! structured refusals and the generated `RefusalCode` (`refusal`), strict registry readers
-//! (`registry`), closed SI quantities (`qty`), build-embedded stack identities and the
-//! same-stack rule (`stack`), and the opt-in test-support kit (`testkit` behind feature
-//! `test-support`).
+//! (`registry`), closed SI quantities (`qty`), reference workload records and row-capacity
+//! rule (`perf`), build-embedded stack identities and the same-stack rule (`stack`), and
+//! the opt-in test-support kit (`testkit` behind feature `test-support`).
 //! Prints nothing (rule L-7), admits no `serde` or async runtime (rule L-5), and contains
 //! zero `unsafe` code.
 
@@ -18,6 +18,7 @@ pub mod canon;
 pub mod evidence;
 pub mod id;
 pub mod json;
+pub mod perf;
 pub mod proof;
 pub mod qty;
 pub mod refusal;

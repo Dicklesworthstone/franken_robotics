@@ -1,0 +1,354 @@
+# FrankenRobotics reference workloads and comparator step settings (schema frob.workload/1).
+#
+# Owned by frob-core (`frob_core::perf::workload`, N36-02) and linted on top of that
+# single parser by frob-conformance (`frob_conformance::perf::workloads`).
+#
+# Reference workloads Q and H are DESIGN defaults (capacities frozen at M2 under
+# OPEN-SPARK-3; physics step h = 2 ms subject to OPEN-PERF-4 / N36-26).
+# Row capacity rule (KA-815): row_cap(C, actuated) = round_up(4*C + 2*actuated, 8).
+#   - Q: 4*32 + 2*12 = 152 -> rule 152, raised to 160 by explicit row_cap_override.
+#   - H: 4*64 + 2*29 = 314 -> rule 320, no override.
+#
+# Written strictly in the frob-core::registry::toml subset (N34p2-01): UTF-8, LF,
+# basic double-quoted strings only, homogeneous arrays, single-line inline tables
+# without trailing commas, and no dotted keys on the left of `=`.
+
+schema = "frob.workload/1"
+
+[workload.Q]
+robot = "ref-quadruped-12"
+actuated = 12
+dof = 18
+bodies = 13
+foot_samples = 16
+contact_cap = 32
+row_cap = 160
+row_cap_override = { rule = 152, reason = "raised to the next multiple of the execution width 32 (reference-workload decision; OPEN-SPARK-3)" }
+h_s = "1/500"
+newton_iterations = 4
+warm_start = true
+decimation = "10/1"
+worlds = 8192
+grounds = ["flat", "rough"]
+status = "default"
+
+[workload.H]
+robot = "ref-humanoid-29"
+actuated = 29
+dof = 35
+bodies = 30
+contact_cap = 64
+row_cap = 320
+h_s = "1/500"
+newton_iterations = 4
+warm_start = true
+decimation = "10/1"
+worlds = 8192
+grounds = ["flat", "heightfield"]
+status = "default"
+
+# ============================================================================
+# Comparator step settings (matched and native) for the parity baseline
+# (N36-02, BD-039, N36-25, §36.2, §36.3, Appendix H).
+#
+# Each incumbent arm carries two setting records per reference workload:
+#   - `matched`: our h = 1/500 s, decimation = 10/1, 4 solver iterations where
+#     admitted (with `difference` in writing where the incumbent solver differs).
+#   - `native`: the incumbent's own recommended step for the task, with `source`.
+# ============================================================================
+
+# --- mujoco-warp (MuJoCo Warp 4.0.1 / mjlab) ---
+
+[[setting]]
+comparator = "mujoco-warp"
+workload = "Q"
+kind = "matched"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+
+[[setting]]
+comparator = "mujoco-warp"
+workload = "Q"
+kind = "native"
+h_s = "1/200"
+decimation = "4/1"
+iterations = 4
+source = "Plan §36.2, §36.3 row 1, Appendix H.3: mjlab nightly benchmark on MuJoCo Warp 4.0.1 (https://mujocolab.github.io/mjlab/nightly/, quadruped velocity task, d = 4 at 50 Hz control, to-re-read at pinned commit)"
+
+[[setting]]
+comparator = "mujoco-warp"
+workload = "H"
+kind = "matched"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+
+[[setting]]
+comparator = "mujoco-warp"
+workload = "H"
+kind = "native"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+source = "Plan §36.3 rows 7-8, Appendix H.3: MuJoCo Warp 4.0.1 nightly humanoid (G1) benchmark at 8192 worlds (h = 2 ms, d = 10, to-re-read at pinned commit)"
+
+# --- mujoco-playground (MuJoCo Playground on MJX / MuJoCo Warp 4.0.1) ---
+
+[[setting]]
+comparator = "mujoco-playground"
+workload = "Q"
+kind = "matched"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+
+[[setting]]
+comparator = "mujoco-playground"
+workload = "Q"
+kind = "native"
+h_s = "1/250"
+decimation = "5/1"
+iterations = 4
+source = "Plan §36.2, §36.3 rows 3-5, Appendix H.3: MuJoCo Playground (https://arxiv.org/abs/2502.08844, quadruped task at 20 ms control period over h = 4 ms physics step, d = 5, to-re-read at pinned commit)"
+
+[[setting]]
+comparator = "mujoco-playground"
+workload = "H"
+kind = "matched"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+
+[[setting]]
+comparator = "mujoco-playground"
+workload = "H"
+kind = "native"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+source = "Plan §36.3 row 9, Appendix H.3: MuJoCo Playground (https://arxiv.org/abs/2502.08844, humanoid locomotion task at h = 2 ms, d = 10, 50 Hz control, to-re-read at pinned commit)"
+
+# --- mujoco-cpu (CPU MuJoCo 4.0.1) ---
+
+[[setting]]
+comparator = "mujoco-cpu"
+workload = "Q"
+kind = "matched"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+
+[[setting]]
+comparator = "mujoco-cpu"
+workload = "Q"
+kind = "native"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+source = "Plan §36.3 row 14, Appendix H.3 (https://mujoco.readthedocs.io/en/latest/mjx.html) & H.5: CPU MuJoCo 4.0.1 quadruped baseline at h = 2 ms, d = 10, double precision"
+
+[[setting]]
+comparator = "mujoco-cpu"
+workload = "H"
+kind = "matched"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+
+[[setting]]
+comparator = "mujoco-cpu"
+workload = "H"
+kind = "native"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+source = "Plan §36.3 row 13, Appendix H.3 (https://mujoco.readthedocs.io/en/latest/mjx.html): CPU MuJoCo 4.0.1 35-dof humanoid baseline at h = 2 ms, d = 10, double precision"
+
+# --- newton (Newton 1.8.0) ---
+
+[[setting]]
+comparator = "newton"
+workload = "Q"
+kind = "matched"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+
+[[setting]]
+comparator = "newton"
+workload = "Q"
+kind = "native"
+h_s = "1/200"
+decimation = "4/1"
+iterations = 4
+source = "Plan §36.3 row 10, Appendix H.3: Newton 1.8.0 solver documentation (https://newton-physics.github.io/newton/latest/concepts/determinism.html) and Kamino mixed-batch paper (https://arxiv.org/html/2603.16536v1), to-re-read at v1.8.0 pin"
+
+[[setting]]
+comparator = "newton"
+workload = "H"
+kind = "matched"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+
+[[setting]]
+comparator = "newton"
+workload = "H"
+kind = "native"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+source = "Plan §36.3 row 10, Appendix H.3: Newton 1.8.0 solver class documentation and test suite at tag v1.8.0 (https://github.com/newton-physics/newton), to-re-read at pinned commit"
+
+# --- isaac-lab (Isaac Lab 3.0.0 on Isaac Sim 6.2.0 / PhysX or Newton) ---
+
+[[setting]]
+comparator = "isaac-lab"
+workload = "Q"
+kind = "matched"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+difference = "When run on the PhysX GPU backend, Isaac Lab uses PhysX TGS position/velocity solver iterations rather than fixed lockstep convex Newton iterations; the matched run sets h = 1/500 s, d = 10, and 4 position iterations."
+
+[[setting]]
+comparator = "isaac-lab"
+workload = "Q"
+kind = "native"
+h_s = "1/200"
+decimation = "4/1"
+iterations = 4
+source = "Plan §36.3 row 3, Appendix H.3: Isaac Lab 3.0.0 release notes and benchmark configs (https://arxiv.org/abs/2511.04831, default quadruped locomotion dt = 5 ms, decimation = 4, 50 Hz control, to-re-read at tag v3.0.0)"
+
+[[setting]]
+comparator = "isaac-lab"
+workload = "H"
+kind = "matched"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+difference = "When run on the PhysX GPU backend, Isaac Lab uses PhysX TGS position/velocity solver iterations rather than fixed lockstep convex Newton iterations; the matched run sets h = 1/500 s, d = 10, and 4 position iterations."
+
+[[setting]]
+comparator = "isaac-lab"
+workload = "H"
+kind = "native"
+h_s = "1/200"
+decimation = "4/1"
+iterations = 8
+source = "Plan §36.3 rows 3 & 9, Appendix H.3: Isaac Lab 3.0.0 G1 humanoid rough-terrain configuration at tag v3.0.0 (https://arxiv.org/abs/2511.04831, dt = 5 ms, decimation = 4, 8 TGS position iterations, to-re-read at pinned commit)"
+
+# --- genesis (Genesis 1.4.7, CUDA & Metal path) ---
+
+[[setting]]
+comparator = "genesis"
+workload = "Q"
+kind = "matched"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+difference = "Genesis 1.4.7 rigid-body solver uses iterative PGS/CG constraint passes rather than our convex Newton step; the matched run sets h = 1/500 s, d = 10, and solver iterations = 4."
+
+[[setting]]
+comparator = "genesis"
+workload = "Q"
+kind = "native"
+h_s = "1/100"
+decimation = "2/1"
+iterations = 10
+source = "Plan §36.3 row 12, Appendix H.3: Genesis 1.4.7 (https://github.com/Genesis-Embodied-AI/genesis-world, Metal and CUDA locomotion benchmark at 100 Hz physics / 50 Hz control, to-re-read at tag v1.4.7)"
+
+[[setting]]
+comparator = "genesis"
+workload = "H"
+kind = "matched"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+difference = "Genesis 1.4.7 rigid-body solver uses iterative PGS/CG constraint passes rather than our convex Newton step; the matched run sets h = 1/500 s, d = 10, and solver iterations = 4."
+
+[[setting]]
+comparator = "genesis"
+workload = "H"
+kind = "native"
+h_s = "1/200"
+decimation = "4/1"
+iterations = 10
+source = "Plan §36.3 row 12, Appendix H.3: Genesis 1.4.7 (https://raw.githubusercontent.com/Genesis-Embodied-AI/Genesis/main/README.md at v1.4.7, humanoid locomotion dt = 5 ms, d = 4, 50 Hz control, to-re-read at pinned commit)"
+
+# --- drake (Drake 1.58.0) ---
+
+[[setting]]
+comparator = "drake"
+workload = "Q"
+kind = "matched"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+difference = "Drake 1.58.0 discrete SAP contact solver terminates on a relative duality tolerance rather than a fixed lockstep Newton count; the matched run sets discrete time_step = 1/500 s, d = 10, and max_iterations = 4."
+
+[[setting]]
+comparator = "drake"
+workload = "Q"
+kind = "native"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 20
+source = "Plan Appendix H.3 & BD-039: Drake 1.58.0 SAP discrete contact solver (https://drake.mit.edu/release_notes/release_notes.html, https://arxiv.org/abs/2110.10107, default discrete step 2 ms at 50 Hz control, to-re-read at tag v1.58.0)"
+
+[[setting]]
+comparator = "drake"
+workload = "H"
+kind = "matched"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+difference = "Drake 1.58.0 discrete SAP contact solver terminates on a relative duality tolerance rather than a fixed lockstep Newton count; the matched run sets discrete time_step = 1/500 s, d = 10, and max_iterations = 4."
+
+[[setting]]
+comparator = "drake"
+workload = "H"
+kind = "native"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 20
+source = "Plan Appendix H.3 & BD-039: Drake 1.58.0 SAP discrete contact solver (https://drake.mit.edu/release_notes/release_notes.html, https://arxiv.org/abs/2110.10107, humanoid discrete step 2 ms at 50 Hz control, to-re-read at tag v1.58.0)"
+
+# --- maniskill (ManiSkill 3.0.1) ---
+
+[[setting]]
+comparator = "maniskill"
+workload = "Q"
+kind = "matched"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+difference = "ManiSkill 3.0.1 runs SAPIEN/PhysX TGS solver iterations rather than convex Newton iterations; the matched run sets sim_freq = 500 Hz (h = 1/500 s), control_freq = 50 Hz (d = 10), and 4 solver position iterations."
+
+[[setting]]
+comparator = "maniskill"
+workload = "Q"
+kind = "native"
+h_s = "1/200"
+decimation = "4/1"
+iterations = 4
+source = "Plan Appendix H.3 & BD-039: ManiSkill 3.0.1 (https://arxiv.org/html/2410.00425v2 and advanced.md at v3.0.1, locomotion sim_freq = 200 Hz, control_freq = 50 Hz, d = 4, to-re-read at tag v3.0.1)"
+
+[[setting]]
+comparator = "maniskill"
+workload = "H"
+kind = "matched"
+h_s = "1/500"
+decimation = "10/1"
+iterations = 4
+difference = "ManiSkill 3.0.1 runs SAPIEN/PhysX TGS solver iterations rather than convex Newton iterations; the matched run sets sim_freq = 500 Hz (h = 1/500 s), control_freq = 50 Hz (d = 10), and 4 solver position iterations."
+
+[[setting]]
+comparator = "maniskill"
+workload = "H"
+kind = "native"
+h_s = "1/200"
+decimation = "4/1"
+iterations = 8
+source = "Plan Appendix H.3 & BD-039: ManiSkill 3.0.1 (https://arxiv.org/html/2410.00425v2 and advanced.md at v3.0.1, humanoid sim_freq = 200 Hz, control_freq = 50 Hz, d = 4, to-re-read at tag v3.0.1)"

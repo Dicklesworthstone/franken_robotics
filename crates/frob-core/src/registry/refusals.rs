@@ -97,10 +97,13 @@ impl RefusalRegistry {
     pub fn from_bytes(bytes: &[u8]) -> Result<Self, RefusalRegistryError> {
         let mut fields = Fields::new(toml::parse(bytes)?, "<root>");
         let schema = fields.require_str("schema")?;
-        if schema != "frob.refusals/1" { return Err(RefusalRegistryError::InvalidSchema { observed: schema }); }
-        let exit_rule = parse_exit_rule(fields.require_table("exit_rule")?)?;
+        if schema != "frob.refusals/1" {
+            return Err(fields.fail(RefusalRegistryError::InvalidSchema { observed: schema }));
+        }
+        let exit_rule_tbl = fields.require_table("exit_rule")?;
         let refusal_tables = fields.opt_array("refusal")?.unwrap_or_default();
         fields.finish()?;
+        let exit_rule = parse_exit_rule(exit_rule_tbl)?;
 
         let (mut rows, mut seen) = (Vec::with_capacity(refusal_tables.len()), BTreeSet::new());
         for (idx, sp) in refusal_tables.into_iter().enumerate() {
@@ -140,7 +143,12 @@ impl RefusalRegistry {
             };
             let mut vf = Fields::new(tbl, format!("verb[{idx}]"));
             let name = vf.require_str("name")?;
-            let refs = vf.opt_array("refusals")?.map(|a| extract_str_arr("refusals", a)).transpose()?.unwrap_or_default();
+            let refs = vf
+                .opt_array("refusals")?
+                .map(|a| extract_str_arr("refusals", a))
+                .transpose()
+                .map_err(|e| vf.fail(e))?
+                .unwrap_or_default();
             vf.finish()?;
             for code in refs { self.lookup(&code, &format!("verb `{name}`"))?; }
         }
@@ -186,9 +194,15 @@ fn parse_exit_rule(table: Table) -> Result<ExitRule, RefusalRegistryError> {
     let mut ranges = BTreeMap::new();
     for &(k, fixed) in FIXED_EXIT_TABLE {
         if let Some(v) = fields.opt_int(k)? {
-            let exit = checked_exit_u8(v, "exit_rule", k)?;
+            let exit = checked_exit_u8(v, "exit_rule", k).map_err(|e| fields.fail(e))?;
             if exit != fixed {
-                return Err(RefusalRegistryError::ExitMismatch { row: "[exit_rule]".into(), rule_entry: format!("exit_rule.{k}"), observed: exit, expected: Some(fixed), reason: "contradicts fixed surface exit table".into() });
+                return Err(fields.fail(RefusalRegistryError::ExitMismatch {
+                    row: "[exit_rule]".into(),
+                    rule_entry: format!("exit_rule.{k}"),
+                    observed: exit,
+                    expected: Some(fixed),
+                    reason: "contradicts fixed surface exit table".into(),
+                }));
             }
             ranges.insert(k.to_owned(), exit);
         } else {
@@ -196,9 +210,14 @@ fn parse_exit_rule(table: Table) -> Result<ExitRule, RefusalRegistryError> {
         }
     }
     for &d in OPTIONAL_7XX_DECADES {
-        if let Some(v) = fields.opt_int(d)? { ranges.insert(d.to_owned(), checked_exit_u8(v, "exit_rule", d)?); }
+        if let Some(v) = fields.opt_int(d)? {
+            let exit = checked_exit_u8(v, "exit_rule", d).map_err(|e| fields.fail(e))?;
+            ranges.insert(d.to_owned(), exit);
+        }
     }
-    let (conflict, integrity, capability) = (parse_exc_list(&mut fields, "conflict")?, parse_exc_list(&mut fields, "integrity")?, parse_exc_list(&mut fields, "capability")?);
+    let conflict = parse_exc_list(&mut fields, "conflict")?;
+    let integrity = parse_exc_list(&mut fields, "integrity")?;
+    let capability = parse_exc_list(&mut fields, "capability")?;
     fields.finish()?;
     for &(n1, s1, n2, s2) in &[("conflict", &conflict, "integrity", &integrity), ("conflict", &conflict, "capability", &capability), ("integrity", &integrity, "capability", &capability)] {
         for &c in s1 { if s2.contains(&c) { return Err(RefusalRegistryError::OverlappingExceptionList { code: format_code(c), first_list: n1, second_list: n2 }); } }
@@ -219,9 +238,34 @@ fn parse_exc_list(fields: &mut Fields, name: &'static str) -> Result<BTreeSet<u1
     for sp in items {
         let num = match sp.value {
             Value::Int(n) if (100..=999).contains(&n) => n as u16,
-            Value::Int(n) => return Err(RefusalRegistryError::InvalidRefusalCode { code: n.to_string(), line: sp.line, column: sp.column }),
-            Value::Str(s) => parse_code_number(&s).ok_or_else(|| RefusalRegistryError::InvalidRefusalCode { code: s, line: sp.line, column: sp.column })?,
-            other => return Err(TomlError::new(sp.line, sp.column, toml::TomlErrorKind::TypeMismatch { key: format!("exit_rule.{name}"), expected: "integer or code string", found: other.type_name() }).into()),
+            Value::Int(n) => {
+                return Err(fields.fail(RefusalRegistryError::InvalidRefusalCode {
+                    code: n.to_string(),
+                    line: sp.line,
+                    column: sp.column,
+                }));
+            }
+            Value::Str(s) => parse_code_number(&s).ok_or_else(|| {
+                fields.fail(RefusalRegistryError::InvalidRefusalCode {
+                    code: s,
+                    line: sp.line,
+                    column: sp.column,
+                })
+            })?,
+            other => {
+                return Err(fields.fail(
+                    TomlError::new(
+                        sp.line,
+                        sp.column,
+                        toml::TomlErrorKind::TypeMismatch {
+                            key: format!("exit_rule.{name}"),
+                            expected: "integer or code string",
+                            found: other.type_name(),
+                        },
+                    )
+                    .into(),
+                ));
+            }
         };
         set.insert(num);
     }
@@ -232,14 +276,43 @@ fn parse_refusal_row(table: Table, exit_rule: &ExitRule, idx: usize) -> Result<R
     let (line, col) = table.span();
     let mut f = Fields::new(table, format!("refusal[{idx}]"));
     let code = f.require_str("code")?;
-    let number = parse_code_number(&code).ok_or_else(|| RefusalRegistryError::InvalidRefusalCode { code: code.clone(), line, column: col })?;
+    let number = parse_code_number(&code).ok_or_else(|| {
+        f.fail(RefusalRegistryError::InvalidRefusalCode {
+            code: code.clone(),
+            line,
+            column: col,
+        })
+    })?;
     let (meaning, defined_in) = (f.require_str("meaning")?, f.require_str("defined_in")?);
-    let exit = checked_exit_u8(f.require_int("exit")?, &code, "exit")?;
+    let exit_raw = f.require_int("exit")?;
+    let exit = checked_exit_u8(exit_raw, &code, "exit").map_err(|e| f.fail(e))?;
     let retry_s = f.require_str("retry")?;
-    let retry = RetryPolicy::parse(&retry_s).ok_or_else(|| RefusalRegistryError::InvalidRetry { code: code.clone(), value: retry_s, line, column: col })?;
-    let repairs = f.opt_array("repairs")?.map(|a| extract_str_arr("repairs", a)).transpose()?.unwrap_or_default();
-    let raised_by = f.opt_array("raised_by")?.map(|a| extract_str_arr("raised_by", a)).transpose()?.unwrap_or_default();
-    let related = f.opt_array("related")?.map(|a| extract_str_arr("related", a)).transpose()?.unwrap_or_default();
+    let retry = RetryPolicy::parse(&retry_s).ok_or_else(|| {
+        f.fail(RefusalRegistryError::InvalidRetry {
+            code: code.clone(),
+            value: retry_s,
+            line,
+            column: col,
+        })
+    })?;
+    let repairs = f
+        .opt_array("repairs")?
+        .map(|a| extract_str_arr("repairs", a))
+        .transpose()
+        .map_err(|e| f.fail(e))?
+        .unwrap_or_default();
+    let raised_by = f
+        .opt_array("raised_by")?
+        .map(|a| extract_str_arr("raised_by", a))
+        .transpose()
+        .map_err(|e| f.fail(e))?
+        .unwrap_or_default();
+    let related = f
+        .opt_array("related")?
+        .map(|a| extract_str_arr("related", a))
+        .transpose()
+        .map_err(|e| f.fail(e))?
+        .unwrap_or_default();
     f.finish()?;
 
     let (expected, rule_entry) = match exit_rule.expected_exit(number) {

@@ -334,7 +334,19 @@ mod tests {
         ).with_affected_claims(vec!["clm:demo".to_owned()]);
 
         let no_detail = base.to_json();
-        assert!(!no_detail.contains("\"detail\""), "absent detail must be omitted: {no_detail}");
+        assert!(
+            matches!(
+                mini_json::parse(&no_detail),
+                Ok(mini_json::JsonVal::Object(ref top)) if !top.contains_key("detail")
+            ),
+            "absent top-level detail must be omitted: {no_detail}"
+        );
+        let no_detail_plain = Refusal::new(
+            RefusalCode::FrobRef881, "quantifier prefix mismatch", "/scope/quantifiers",
+            "∀world ∃policy", "∃policy ∀world", "", RetryPolicy::AfterChange,
+            vec![Repair::new("re-run with matching quantifier prefix")],
+        ).to_json();
+        assert!(!no_detail_plain.contains("\"detail\""), "absent detail must be omitted everywhere: {no_detail_plain}");
         assert_eq!(Refusal::from_json(&no_detail).unwrap(), base);
 
         let with_detail = base.clone().with_detail("registration-after-outcome");

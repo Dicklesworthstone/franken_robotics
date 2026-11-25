@@ -102,6 +102,10 @@ fn contract_toml_validates_against_strict_toml_and_refusal_registry() {
         "dup-first-wins",
         "dup-last-wins",
         "skip-escape-decode",
+        "writer-no-key-sort",
+        "identity-on-raw-bytes",
+        "utf16-sort",
+        "escape-all-non-ascii",
     ] {
         let mut f = Fields::new(feats.require_table(name).unwrap(), name);
         assert_eq!(f.require_str("tier").unwrap(), "S");

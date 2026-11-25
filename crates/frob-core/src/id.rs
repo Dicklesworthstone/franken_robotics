@@ -115,7 +115,11 @@ fn validate_schema_ident(name: &str) -> Result<(), IdError> {
 impl fmt::Display for SchemaName { fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result { write!(f, "frob.{}/{}", self.name, self.major) } }
 impl FromStr for SchemaName { type Err = IdError; fn from_str(s: &str) -> Result<Self, Self::Err> { Self::parse(s) } }
 
-/// Opaque canonical byte sequence with no public constructor in BD-005.
+/// Opaque canonical byte sequence.
+///
+/// Exactly two producers construct `CanonicalBytes`: [`crate::canon::CanonWriter::finish`]
+/// and [`crate::json::Admitted::into_canonical`]. No public struct literal or `From<Vec<u8>>`
+/// conversion exists.
 ///
 /// ```compile_fail,E0451
 /// use frob_core::id::CanonicalBytes;
@@ -131,8 +135,16 @@ pub struct CanonicalBytes { bytes: Vec<u8> }
 
 impl CanonicalBytes {
     #[must_use] pub fn as_bytes(&self) -> &[u8] { &self.bytes }
+    #[must_use] pub fn as_str(&self) -> &str {
+        match std::str::from_utf8(&self.bytes) {
+            Ok(s) => s,
+            Err(_) => "",
+        }
+    }
+    #[must_use] pub fn into_bytes(self) -> Vec<u8> { self.bytes }
     #[must_use] pub fn len(&self) -> usize { self.bytes.len() }
     #[must_use] pub fn is_empty(&self) -> bool { self.bytes.is_empty() }
+    pub(crate) const fn from_canonical_unchecked(bytes: Vec<u8>) -> Self { Self { bytes } }
     #[cfg(test)] pub(crate) fn from_test_bytes(bytes: Vec<u8>) -> Self { Self { bytes } }
 }
 

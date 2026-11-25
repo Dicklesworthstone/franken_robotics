@@ -1,15 +1,15 @@
 # `frob-core` Contract
 
-`frob-core` is layer 0 (rank 1, tier Solid, cap 8,000 lines with tests) of the FrankenRobotics core workspace.
+`frob-core` is layer 0 (rank 1, tier Solid, cap 16,000 lines with tests per ADR-WS-04) of the FrankenRobotics core workspace.
 
 ## Purpose
 
-Provide the shared, dependency-minimal vocabulary that must mean the same thing across every crate in the workspace: content-addressed identities and domain-separated hashing (`id`), evidence classes and the weakest-input-wins claim product (`evidence`), constant-false no-authorization flags (`auth`), raw-byte strict JSON admission (`json`), typed refusals and the refusal-registry loader (`refusal`, `registry::refusals`), the strict TOML-subset reader (`registry::toml`), the closed SI quantity re-export surface (`qty`), and the opt-in test-support kit (`testkit` behind feature `test-support`).
+Provide the shared, dependency-minimal vocabulary that must mean the same thing across every crate in the workspace: content-addressed identities and domain-separated hashing (`id`), canonical JSON serialization from typed terms with explicit code-point sorting (`canon`), evidence classes and the weakest-input-wins claim product (`evidence`), constant-false no-authorization flags (`auth`), raw-byte strict JSON admission (`json`), typed refusals and the refusal-registry loader (`refusal`, `registry::refusals`), the strict TOML-subset reader (`registry::toml`), the closed SI quantity re-export surface (`qty`), and the opt-in test-support kit (`testkit` behind feature `test-support`).
 
 ## Inputs
 
-- Raw byte slices for content-addressed blob hashing (`id::hash_blob`) and strict TOML-subset parsing (`registry::toml::parse`, capped at 16 MiB and nesting depth 64).
-- Validated `SchemaName` values and opaque `CanonicalBytes` values for domain-separated artifact identity (`id::identity`).
+- Raw byte slices for content-addressed blob hashing (`id::hash_blob`), raw-byte JSON admission (`json::admit`), and strict TOML-subset parsing (`registry::toml::parse`, capped at 16 MiB and nesting depth 64).
+- Validated `SchemaName` values, typed `canon::Canonical` terms, and opaque `CanonicalBytes` values for canonical encoding (`canon::CanonWriter`, `json::Admitted::into_canonical`) and domain-separated artifact identity (`id::identity`).
 - Leaf evidence parts, scopes, determinism classes, physics tiers, reality scopes, and condition flag sets combined through `evidence::ClaimProduct::combine`.
 - JSON objects representing serialized `NoAuthorization`, `PacketAuthorization`, and `Refusal` records.
 - `registries/refusals.toml` (embedded at compile time and also accepted as synthetic byte slices for tests) and verb refusal tables validated against the registry.
@@ -17,7 +17,7 @@ Provide the shared, dependency-minimal vocabulary that must mean the same thing 
 
 ## Outputs
 
-- 32-byte `Blake3` digests (64 lower-case hexadecimal characters) and typed identity newtypes (`DesignId`, `ModelId`, `SceneId`, `KernelId`, `PolicyId`, `EpisodeId`) prefixed `d:`, `m:`, `s:`, `k:`, `p:`, `e:`.
+- 32-byte `Blake3` digests (64 lower-case hexadecimal characters), opaque `CanonicalBytes` values (constructed solely by `canon::CanonWriter::finish` and `json::Admitted::into_canonical`), and typed identity newtypes (`DesignId`, `ModelId`, `SceneId`, `KernelId`, `PolicyId`, `EpisodeId`) prefixed `d:`, `m:`, `s:`, `k:`, `p:`, `e:`.
 - `ClaimProduct` values whose class, tier, determinism, scope, reality scope, condition set, and sorted inputs are computed solely by weakest-input-wins combination, carrying `NoAuthorization`.
 - Canonical JSON serializations of `NoAuthorization` (three `false` fields), `PacketAuthorization` (four `false` fields), and `Refusal` (omitting `detail` when absent).
 - Validated `RefusalRegistry` structures and deterministic Rust source output (`render_refusal_code_enum`) matching `src/refusal/code_gen.rs`.
@@ -29,7 +29,7 @@ Provide the shared, dependency-minimal vocabulary that must mean the same thing 
 - **Weakest input wins by type (INV-NUM-06, INV-LEMMA-02):** `EvidenceClass` is ordered `Estimated < Tested < Certified < Proved`; `ClaimProduct::combine` takes the minimum class (capped at `Tested` for any non-`Proof` claim), weakest `DetClass` (`D4 < D3 < D2 < D1 < D0`), meet of `TierMeet` (`Static > Referee > {BatchCpu, GpuCuda, GpuMetal}` with set join across incomparable fast tiers), intersection of `Scope`, `NoClaim` unless every part shares one calibrated reality family, and union of `FlagSet` conditions (no drop/remove API).
 - **No upward conversion (GATE-LEMMA-06):** No `From<ClaimProduct>` into `Evidence<K>`, no setter on `class`, and no public constructor taking an `EvidenceClass`. Doorway constructors (`tested`, `proof_certified`, `proof_proved`, `Evidence::doorway_*`) are `#[doc(hidden)]` and `#[deprecated]` so workspace `deprecated` denial plus `xtask check-unsafe` (N34-07) confine callers to `frob-conformance`, `frob-arena`, and `frob-lemma`.
 - **Single-inhabitant no-authorization flags (INV-SAFE-05, PO-SAFE-03):** `False` has one value serializing to JSON `false`; no constructor, setter, or parser produces `true`, and missing fields are refused (`FROB-REF-816`), never defaulted to `false`.
-- **Canonical-only identity hashing:** `CanonicalBytes` has no public constructor in BD-005; only the canonical writer and checked-canonical reader path (N34-18) construct it.
+- **Canonical-only identity hashing (N34-18):** `CanonicalBytes` has no public struct literal or `From<Vec<u8>>` constructor; only `canon::CanonWriter::finish` and `json::Admitted::into_canonical` construct it, enforcing explicit Unicode code-point member sorting, minimal escapes, and exact number rules.
 - **Closed refusal registry:** `RefusalCode` is generated from `registries/refusals.toml` into `src/refusal/code_gen.rs`; unknown codes, duplicates, unknown TOML keys, overlapping or dangling exception lists, and `[exit_rule]` / family-exit mismatches are load-time errors.
 - **Closed quantity surface (N33c-03):** `qty` exports at most 64 named SI types (currently 36), separates equal-dimension kinds (`Torque` vs `Energy` vs `AngularStiffness`, etc.), and never exports generic `fs_qty::Qty`.
 
@@ -64,7 +64,6 @@ Provide the shared, dependency-minimal vocabulary that must mean the same thing 
 
 ## Known gaps
 
-- `CanonicalBytes` constructors (`CanonWriter::finish` and `Admitted::into_canonical`) land in N34-18; BD-005 exposes no public constructor.
-- `frob_core::json` lands raw-byte JSON admission, duplicate-member rejection after escape decoding, typed number accessors, and printable identifier validation (N34-17); `auth` and `refusal` still include minimal std-only JSON parsing for their own closed objects until surface wiring in N34-20.
+- `frob_core::json` (N34-17) and `frob_core::canon` + `Admitted::into_canonical` (N34-18) are implemented; `auth` and `refusal` still include minimal std-only JSON parsing for their own closed objects until surface wiring in N34-20; the four-way feature build and golden corpus live in N34-21.
 - `registries/refusals.toml` is seeded with `FROB-REF-802`, `FROB-REF-816`, and `FROB-REF-881` plus the fixed surface `[exit_rule]`; N35-33 and chapter registry beads populate the full 294+ rows, `74x`/`76x`/`79x` rules, and exception lists.
 - Full `DetProvenance` and kernel-class mapping land in N35-01; artifact-graph IDs (`clm:`, `ev:`) land in N34-11; L-10 inversion traits land in N34-06; registry-generated `qty` product tables and `frob-units` escape hatch land in N33c-03 and N33c-05.

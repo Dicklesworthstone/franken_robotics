@@ -24,7 +24,14 @@ gauntlet-mutations = { tier = "S" }
 dup-first-wins = { tier = "S" }
 dup-last-wins = { tier = "S" }
 skip-escape-decode = { tier = "S" }
+writer-no-key-sort = { tier = "S" }
+identity-on-raw-bytes = { tier = "S" }
+utf16-sort = { tier = "S" }
+escape-all-non-ascii = { tier = "S" }
 
 [api.float_ok]
 "json::Json::as_f64_lexeme" = "dimensionless JSON binary64 accessor returning raw lexeme and rounded f64 per N34-17; physical quantities use qty or exact strings"
 "json::Spanned::as_f64_lexeme" = "dimensionless JSON binary64 accessor delegating to json::Json::as_f64_lexeme per N34-17"
+"canon::Value::f64_shortest" = "dimensionless canonical shortest round-trip binary64 encoder per N34-18 Rule 4; physical quantities use qty or exact rationals/decimals"
+"canon::Object::f64_shortest" = "dimensionless canonical shortest round-trip binary64 object-member encoder delegating to canon::Value::f64_shortest per N34-18"
+"canon::Array::push_f64_shortest" = "dimensionless canonical shortest round-trip binary64 array-element encoder delegating to canon::Value::f64_shortest per N34-18"

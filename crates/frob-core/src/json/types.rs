@@ -4,6 +4,9 @@
 use std::fmt;
 use std::ops::Deref;
 
+use crate::canon::CanonError;
+use crate::id::CanonicalBytes;
+
 /// Maximum exact integer magnitude in IEEE-754 binary64 (`2^53 - 1`).
 pub const INT53_MAX: i64 = 9_007_199_254_740_991;
 /// Minimum exact integer in IEEE-754 binary64 (`-(2^53 - 1)`).
@@ -510,7 +513,9 @@ fn eq_tree(a: &Json<'_>, b: &Json<'_>, unordered: bool) -> bool {
 
 /// Admitted JSON tree paired with the untouched input byte slice.
 ///
-/// The checked-canonical path `Admitted::into_canonical` is added on this type by bead N34-18.
+/// [`Admitted::into_canonical`] (N34-18) is one of exactly two constructors of
+/// [`CanonicalBytes`], accepting the admitted bytes only when they equal their own
+/// canonical re-serialization byte-for-byte.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Admitted<'a> {
     root: Spanned<'a>,
@@ -550,6 +555,41 @@ impl<'a> Admitted<'a> {
     #[must_use]
     pub fn into_parts(self) -> (Spanned<'a>, &'a [u8]) {
         (self.root, self.bytes)
+    }
+
+    /// Verify that the admitted raw bytes are already in canonical JSON form and upgrade
+    /// them into [`CanonicalBytes`].
+    ///
+    /// Re-serializes the admitted tree through [`crate::canon::CanonWriter`] and requires
+    /// byte-for-byte equality with [`Self::bytes`]. Any difference in member order,
+    /// whitespace, string escaping, or number layout returns [`CanonError::NotCanonical`].
+    pub fn into_canonical(self) -> Result<CanonicalBytes, CanonError> {
+        #[cfg(feature = "identity-on-raw-bytes")]
+        {
+            Ok(CanonicalBytes::from_canonical_unchecked(
+                self.bytes.to_vec(),
+            ))
+        }
+
+        #[cfg(not(feature = "identity-on-raw-bytes"))]
+        {
+            let canonical = crate::canon::write_json(self.value())?;
+            let canon_bytes = canonical.as_bytes();
+            if canon_bytes == self.bytes {
+                return Ok(canonical);
+            }
+            let first_diff_offset = self
+                .bytes
+                .iter()
+                .zip(canon_bytes.iter())
+                .position(|(a, b)| a != b)
+                .unwrap_or_else(|| self.bytes.len().min(canon_bytes.len()));
+            Err(CanonError::NotCanonical {
+                first_diff_offset,
+                raw_len: self.bytes.len(),
+                canonical_len: canon_bytes.len(),
+            })
+        }
     }
 }
 

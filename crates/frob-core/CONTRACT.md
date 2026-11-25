@@ -4,7 +4,7 @@
 
 ## Purpose
 
-Provide the shared, dependency-minimal vocabulary that must mean the same thing across every crate in the workspace: content-addressed identities and domain-separated hashing (`id`), canonical JSON serialization from typed terms with explicit code-point sorting (`canon`), evidence classes and the weakest-input-wins claim product (`evidence`), constant-false no-authorization flags (`auth`), raw-byte strict JSON admission (`json`), typed refusals and the refusal-registry loader (`refusal`, `registry::refusals`), the strict TOML-subset reader (`registry::toml`), the closed SI quantity re-export surface (`qty`), and the opt-in test-support kit (`testkit` behind feature `test-support`).
+Provide the shared, dependency-minimal vocabulary that must mean the same thing across every crate in the workspace: content-addressed identities and domain-separated hashing (`id`), canonical JSON serialization from typed terms with explicit code-point sorting (`canon`), evidence classes and the weakest-input-wins claim product (`evidence`), constant-false no-authorization flags (`auth`), raw-byte strict JSON admission (`json`), plain mission proof objects (`proof`), typed refusals and the refusal-registry loader (`refusal`, `registry::refusals`), the strict TOML-subset reader (`registry::toml`), the closed SI quantity re-export surface (`qty`), and the opt-in test-support kit (`testkit` behind feature `test-support`).
 
 ## Inputs
 
@@ -14,6 +14,7 @@ Provide the shared, dependency-minimal vocabulary that must mean the same thing 
 - JSON objects representing serialized `NoAuthorization`, `PacketAuthorization`, and `Refusal` records.
 - `registries/refusals.toml` (embedded at compile time and also accepted as synthetic byte slices for tests) and verb refusal tables validated against the registry.
 - SI scalar values for the closed set of 36 `qty` types backed by `fs-qty`.
+- Exact rationals, outward-rounded intervals, typed frame/unit quantities, ordered port sequences, quantifier prefixes, expression DAGs, assumptions, dependency supports, and per-kind payload structs for `proof::ProofObject::new`.
 
 ## Outputs
 
@@ -22,6 +23,7 @@ Provide the shared, dependency-minimal vocabulary that must mean the same thing 
 - Canonical JSON serializations of `NoAuthorization` (three `false` fields), `PacketAuthorization` (four `false` fields), and `Refusal` (omitting `detail` when absent).
 - Validated `RefusalRegistry` structures and deterministic Rust source output (`render_refusal_code_enum`) matching `src/refusal/code_gen.rs`.
 - Typed `registry::toml::Table` / `Fields` values and closed-set SI quantity wrappers (`qty`).
+- Plain mission proof objects (`proof` module: fifteen `ProofKind` variants, per-kind exact-number `ProofPayload`, `Establishes`, canonical `ExprDag`, `Support`, `ProofObject`, and deterministic D0 canonical bytes/digests) — class `"none: data only"` (`N25b-01`, `OPEN-AUGUR-6`, `ADR-WS-02`).
 
 ## Invariants
 

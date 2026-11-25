@@ -27,6 +27,8 @@ writer-no-key-sort = []
 identity-on-raw-bytes = []
 utf16-sort = []
 escape-all-non-ascii = []
+nc-torque-alias-first-moment = ["gauntlet-mutations"]
+nc-allow-empty-support = ["gauntlet-mutations"]
 
 [[test]]
 name = "testkit"

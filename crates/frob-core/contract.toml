@@ -28,6 +28,8 @@ writer-no-key-sort = { tier = "S" }
 identity-on-raw-bytes = { tier = "S" }
 utf16-sort = { tier = "S" }
 escape-all-non-ascii = { tier = "S" }
+nc-torque-alias-first-moment = { tier = "S" }
+nc-allow-empty-support = { tier = "S" }
 
 [api.float_ok]
 "json::Json::as_f64_lexeme" = "dimensionless JSON binary64 accessor returning raw lexeme and rounded f64 per N34-17; physical quantities use qty or exact strings"

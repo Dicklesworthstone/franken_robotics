@@ -337,6 +337,55 @@ impl CheckReport {
                 }
             }
         }
+        if let (Some(FactValue::Array(crates)), Some(FactValue::Object(ws_total))) =
+            (self.facts.get("crates"), self.facts.get("workspace_total"))
+        {
+            let _ = writeln!(out, "crates ({}):", crates.len());
+            for item in crates {
+                if let FactValue::Object(m) = item {
+                    let name = match m.get("crate") {
+                        Some(FactValue::Str(s)) => s.as_str(),
+                        _ => "?",
+                    };
+                    let lines = match m.get("lines") {
+                        Some(FactValue::Int(n)) => *n,
+                        _ => 0,
+                    };
+                    let cap = match m.get("cap_lines") {
+                        Some(FactValue::Int(n)) => n.to_string(),
+                        _ => "none".to_owned(),
+                    };
+                    let ratio = match m.get("ratio") {
+                        Some(FactValue::Str(s)) => s.as_str(),
+                        _ => "n/a",
+                    };
+                    let status = match m.get("status") {
+                        Some(FactValue::Str(s)) => s.as_str(),
+                        _ => "?",
+                    };
+                    let _ = writeln!(
+                        out,
+                        "  {name}  lines={lines}  cap={cap}  ratio={ratio}  status={status}"
+                    );
+                }
+            }
+            let total_lines = match ws_total.get("lines") {
+                Some(FactValue::Int(n)) => *n,
+                _ => 0,
+            };
+            let cap_kloc = match ws_total.get("cap_kloc") {
+                Some(FactValue::Int(n)) => *n,
+                _ => 0,
+            };
+            let trigger_kloc = match ws_total.get("trigger_kloc") {
+                Some(FactValue::Int(n)) => *n,
+                _ => 0,
+            };
+            let _ = writeln!(
+                out,
+                "workspace_total: lines={total_lines} cap_kloc={cap_kloc} trigger_kloc={trigger_kloc}"
+            );
+        }
         out
     }
 }

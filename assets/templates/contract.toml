@@ -1,0 +1,43 @@
+# Machine-readable crate contract (`crates/<crate>/contract.toml`, schema `schemas/contract.schema.json`).
+# Written strictly in the `frob_core::registry::toml` subset (N34p2-01) and checked by
+# `cargo xtask check-contracts` (N34-08). Replace every placeholder before committing.
+
+[crate]
+# Package name matching `[package].name` in Cargo.toml and `crate_map.rs`.
+name = "frob-example"
+# Core layer integer `0..=7` or `"annex"`, matching `crate_map.rs`.
+layer = 0
+# 1-based intra-layer rank matching `crate_map.rs` (0 for conditional crates).
+rank = 1
+# Execution plane: `"compute"` or `"decision"` (layers 1 to 3 must be `"compute"`).
+plane = "compute"
+# Strongest determinism class claimed for outputs: `"D0"`, `"D1"`, `"D2"`, `"D3"`, or `"D4"`.
+determinism = "D0"
+# Leaf evidence class created by this crate: `"Estimated"`, `"Tested"`, `"Certified"`, or `"Proved"`.
+evidence = "Estimated"
+# Gate identifiers from `registries/gates.toml` cited by this crate's contract.
+gates = []
+# Refusal codes (`FROB-REF-nnn`) from `registries/refusals.toml` raised by this crate.
+refusals = []
+
+[budgets]
+# Per-call wall-clock budget in milliseconds (non-negative integer).
+wall_ms = 50
+# Per-call peak memory budget in MiB (non-negative integer).
+memory_mib = 64
+
+[safe_mode]
+# Behavior on budget exhaustion: `"reference-path"` or `"refuse:FROB-REF-nnn"`.
+on_budget = "reference-path"
+# Behavior on calibration check failure: `"reference-path"` or `"refuse:FROB-REF-nnn"`.
+on_calibration = "reference-path"
+
+# Optional: one row per non-default Cargo feature in `Cargo.toml`.
+# Features of tier `"F"` must be prefixed `frontier-` and name a registered `kill` gate.
+# Features of tier `"M"` must be prefixed `moonshot-` and name a registered `kill` gate.
+# [features]
+# "frontier-example" = { tier = "F", kill = "GATE-EXAMPLE-01", pilot = "PILOT-EXAMPLE-01" }
+
+# Optional: public signatures allowed a bare float under rule L-6, each with a non-empty reason.
+# [api.float_ok]
+# "module::Type::as_f32" = "reason why bare float is required at this boundary"

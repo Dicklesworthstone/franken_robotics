@@ -1,0 +1,19 @@
+# Machine-readable crate contract for xtask (N34-08).
+
+[crate]
+name = "xtask"
+layer = 7
+rank = 5
+plane = "decision"
+determinism = "D0"
+evidence = "Estimated"
+gates = []
+refusals = []
+
+[budgets]
+wall_ms = 10000
+memory_mib = 512
+
+[safe_mode]
+on_budget = "reference-path"
+on_calibration = "reference-path"

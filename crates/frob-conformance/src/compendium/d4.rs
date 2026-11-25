@@ -14,8 +14,8 @@ use std::fmt;
 
 use frob_core::qty::{
     Acceleration, AngularAcceleration, AngularDamping, AngularMomentum, AngularVelocity, Charge,
-    Current, Energy, HeatCapacity, Inductance, Length, Mass, MomentOfInertia, Power,
-    QuantityAlias, Ratio, Resistance, Temperature, Time, Torque, TorqueConstant, Velocity, Voltage,
+    Current, Energy, HeatCapacity, Inductance, Length, Mass, MomentOfInertia, Power, QuantityAlias,
+    Ratio, Resistance, Temperature, Time, Torque, TorqueConstant, Velocity, Voltage,
 };
 
 use crate::compendium::rat::{Rat, ri};
@@ -150,25 +150,52 @@ impl Dim {
 /// Dimensional homogeneity error for D.4 expressions and oracle checks.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum DimError {
-    InhomogeneousSum { lhs: Dim, rhs: Dim },
-    OddSqrtExponent { dim: Dim },
-    NotDimensionless { observed: Dim },
-    OutputMismatch { oracle: &'static str, expected: Dim, derived: Dim },
+    InhomogeneousSum {
+        lhs: Dim,
+        rhs: Dim,
+    },
+    OddSqrtExponent {
+        dim: Dim,
+    },
+    NotDimensionless {
+        observed: Dim,
+    },
+    OutputMismatch {
+        oracle: &'static str,
+        expected: Dim,
+        derived: Dim,
+    },
 }
 
 impl fmt::Display for DimError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::InhomogeneousSum { lhs, rhs } => {
-                write!(f, "inhomogeneous sum of dimensions {:?} and {:?}", lhs.0, rhs.0)
+                write!(
+                    f,
+                    "inhomogeneous sum of dimensions {:?} and {:?}",
+                    lhs.0, rhs.0
+                )
             }
             Self::OddSqrtExponent { dim } => {
-                write!(f, "square root of odd dimension exponent vector {:?}", dim.0)
+                write!(
+                    f,
+                    "square root of odd dimension exponent vector {:?}",
+                    dim.0
+                )
             }
             Self::NotDimensionless { observed } => {
-                write!(f, "expected dimensionless quantity, observed {:?}", observed.0)
+                write!(
+                    f,
+                    "expected dimensionless quantity, observed {:?}",
+                    observed.0
+                )
             }
-            Self::OutputMismatch { oracle, expected, derived } => {
+            Self::OutputMismatch {
+                oracle,
+                expected,
+                derived,
+            } => {
                 write!(
                     f,
                     "oracle `{oracle}` output dimension mismatch: expected {:?}, derived {:?}",
@@ -267,216 +294,660 @@ pub const D4_ORACLE_SIGNATURES: &[OracleDimSignature] = &[
         row: "Port-Hamiltonian form",
         oracle: "phs_step_derivatives",
         inputs: &[
-            DimSlot { name: "H", unit: "J", dim: Dim::ENERGY },
-            DimSlot { name: "u*y", unit: "W", dim: Dim::POWER },
-            DimSlot { name: "grad_H^T*R*grad_H", unit: "W", dim: Dim::POWER },
+            DimSlot {
+                name: "H",
+                unit: "J",
+                dim: Dim::ENERGY,
+            },
+            DimSlot {
+                name: "u*y",
+                unit: "W",
+                dim: Dim::POWER,
+            },
+            DimSlot {
+                name: "grad_H^T*R*grad_H",
+                unit: "W",
+                dim: Dim::POWER,
+            },
         ],
         outputs: &[
-            DimSlot { name: "H_dot", unit: "W", dim: Dim::POWER },
-            DimSlot { name: "supply", unit: "W", dim: Dim::POWER },
-            DimSlot { name: "dissipation", unit: "W", dim: Dim::POWER },
+            DimSlot {
+                name: "H_dot",
+                unit: "W",
+                dim: Dim::POWER,
+            },
+            DimSlot {
+                name: "supply",
+                unit: "W",
+                dim: Dim::POWER,
+            },
+            DimSlot {
+                name: "dissipation",
+                unit: "W",
+                dim: Dim::POWER,
+            },
         ],
     },
     OracleDimSignature {
         row: "Motor axis",
         oracle: "motor_axis_locked_rotor_current",
         inputs: &[
-            DimSlot { name: "V", unit: "V", dim: Dim::VOLTAGE },
-            DimSlot { name: "R_w", unit: "Ω", dim: Dim::RESISTANCE },
-            DimSlot { name: "L", unit: "H", dim: Dim::INDUCTANCE },
-            DimSlot { name: "k", unit: "N·m·A^-1", dim: Dim::TORQUE_CONST },
-            DimSlot { name: "J_r", unit: "kg·m^2", dim: Dim::INERTIA },
-            DimSlot { name: "b", unit: "N·m·s·rad^-1", dim: Dim::ANGULAR_DAMPING },
-            DimSlot { name: "tau_load", unit: "N·m", dim: Dim::TORQUE },
-            DimSlot { name: "t", unit: "s", dim: Dim::TIME },
+            DimSlot {
+                name: "V",
+                unit: "V",
+                dim: Dim::VOLTAGE,
+            },
+            DimSlot {
+                name: "R_w",
+                unit: "Ω",
+                dim: Dim::RESISTANCE,
+            },
+            DimSlot {
+                name: "L",
+                unit: "H",
+                dim: Dim::INDUCTANCE,
+            },
+            DimSlot {
+                name: "k",
+                unit: "N·m·A^-1",
+                dim: Dim::TORQUE_CONST,
+            },
+            DimSlot {
+                name: "J_r",
+                unit: "kg·m^2",
+                dim: Dim::INERTIA,
+            },
+            DimSlot {
+                name: "b",
+                unit: "N·m·s·rad^-1",
+                dim: Dim::ANGULAR_DAMPING,
+            },
+            DimSlot {
+                name: "tau_load",
+                unit: "N·m",
+                dim: Dim::TORQUE,
+            },
+            DimSlot {
+                name: "t",
+                unit: "s",
+                dim: Dim::TIME,
+            },
         ],
         outputs: &[
-            DimSlot { name: "tau_e", unit: "s", dim: Dim::TIME },
-            DimSlot { name: "i_locked", unit: "A", dim: Dim::CURRENT },
-            DimSlot { name: "di_dt", unit: "A·s^-1", dim: Dim::CURRENT_RATE },
-            DimSlot { name: "domega_dt", unit: "rad·s^-2", dim: Dim::ANGULAR_ACCEL },
+            DimSlot {
+                name: "tau_e",
+                unit: "s",
+                dim: Dim::TIME,
+            },
+            DimSlot {
+                name: "i_locked",
+                unit: "A",
+                dim: Dim::CURRENT,
+            },
+            DimSlot {
+                name: "di_dt",
+                unit: "A·s^-1",
+                dim: Dim::CURRENT_RATE,
+            },
+            DimSlot {
+                name: "domega_dt",
+                unit: "rad·s^-2",
+                dim: Dim::ANGULAR_ACCEL,
+            },
         ],
     },
     OracleDimSignature {
         row: "Motor envelope",
         oracle: "motor_envelope_l1",
         inputs: &[
-            DimSlot { name: "I_max", unit: "A", dim: Dim::CURRENT },
-            DimSlot { name: "V_bus", unit: "V", dim: Dim::VOLTAGE },
-            DimSlot { name: "k_e", unit: "V·s·rad^-1", dim: Dim::TORQUE_CONST },
-            DimSlot { name: "k_t", unit: "N·m·A^-1", dim: Dim::TORQUE_CONST },
-            DimSlot { name: "N", unit: "1", dim: Dim::ONE },
-            DimSlot { name: "R", unit: "Ω", dim: Dim::RESISTANCE },
-            DimSlot { name: "eta", unit: "1", dim: Dim::ONE },
-            DimSlot { name: "tau_friction", unit: "N·m", dim: Dim::TORQUE },
-            DimSlot { name: "omega", unit: "rad·s^-1", dim: Dim::ANGULAR_VELOCITY },
+            DimSlot {
+                name: "I_max",
+                unit: "A",
+                dim: Dim::CURRENT,
+            },
+            DimSlot {
+                name: "V_bus",
+                unit: "V",
+                dim: Dim::VOLTAGE,
+            },
+            DimSlot {
+                name: "k_e",
+                unit: "V·s·rad^-1",
+                dim: Dim::TORQUE_CONST,
+            },
+            DimSlot {
+                name: "k_t",
+                unit: "N·m·A^-1",
+                dim: Dim::TORQUE_CONST,
+            },
+            DimSlot {
+                name: "N",
+                unit: "1",
+                dim: Dim::ONE,
+            },
+            DimSlot {
+                name: "R",
+                unit: "Ω",
+                dim: Dim::RESISTANCE,
+            },
+            DimSlot {
+                name: "eta",
+                unit: "1",
+                dim: Dim::ONE,
+            },
+            DimSlot {
+                name: "tau_friction",
+                unit: "N·m",
+                dim: Dim::TORQUE,
+            },
+            DimSlot {
+                name: "omega",
+                unit: "rad·s^-1",
+                dim: Dim::ANGULAR_VELOCITY,
+            },
         ],
         outputs: &[
-            DimSlot { name: "i_limit", unit: "A", dim: Dim::CURRENT },
-            DimSlot { name: "tau_out", unit: "N·m", dim: Dim::TORQUE },
-            DimSlot { name: "omega_no_load", unit: "rad·s^-1", dim: Dim::ANGULAR_VELOCITY },
+            DimSlot {
+                name: "i_limit",
+                unit: "A",
+                dim: Dim::CURRENT,
+            },
+            DimSlot {
+                name: "tau_out",
+                unit: "N·m",
+                dim: Dim::TORQUE,
+            },
+            DimSlot {
+                name: "omega_no_load",
+                unit: "rad·s^-1",
+                dim: Dim::ANGULAR_VELOCITY,
+            },
         ],
     },
     OracleDimSignature {
         row: "Voltage limit and field weakening",
         oracle: "voltage_limit_field_weakening",
         inputs: &[
-            DimSlot { name: "V_bus", unit: "V", dim: Dim::VOLTAGE },
-            DimSlot { name: "lambda", unit: "V·s", dim: Dim::FLUX_LINKAGE },
-            DimSlot { name: "L_d", unit: "H", dim: Dim::INDUCTANCE },
-            DimSlot { name: "L_q", unit: "H", dim: Dim::INDUCTANCE },
-            DimSlot { name: "I_max", unit: "A", dim: Dim::CURRENT },
-            DimSlot { name: "omega_e", unit: "rad·s^-1", dim: Dim::ANGULAR_VELOCITY },
+            DimSlot {
+                name: "V_bus",
+                unit: "V",
+                dim: Dim::VOLTAGE,
+            },
+            DimSlot {
+                name: "lambda",
+                unit: "V·s",
+                dim: Dim::FLUX_LINKAGE,
+            },
+            DimSlot {
+                name: "L_d",
+                unit: "H",
+                dim: Dim::INDUCTANCE,
+            },
+            DimSlot {
+                name: "L_q",
+                unit: "H",
+                dim: Dim::INDUCTANCE,
+            },
+            DimSlot {
+                name: "I_max",
+                unit: "A",
+                dim: Dim::CURRENT,
+            },
+            DimSlot {
+                name: "omega_e",
+                unit: "rad·s^-1",
+                dim: Dim::ANGULAR_VELOCITY,
+            },
         ],
         outputs: &[
-            DimSlot { name: "V_lim", unit: "V", dim: Dim::VOLTAGE },
-            DimSlot { name: "omega_base", unit: "rad·s^-1", dim: Dim::ANGULAR_VELOCITY },
-            DimSlot { name: "omega_top", unit: "rad·s^-1", dim: Dim::ANGULAR_VELOCITY },
+            DimSlot {
+                name: "V_lim",
+                unit: "V",
+                dim: Dim::VOLTAGE,
+            },
+            DimSlot {
+                name: "omega_base",
+                unit: "rad·s^-1",
+                dim: Dim::ANGULAR_VELOCITY,
+            },
+            DimSlot {
+                name: "omega_top",
+                unit: "rad·s^-1",
+                dim: Dim::ANGULAR_VELOCITY,
+            },
         ],
     },
     OracleDimSignature {
         row: "Thermal node",
         oracle: "thermal_node_closed_form",
         inputs: &[
-            DimSlot { name: "C", unit: "J·K^-1", dim: Dim::HEAT_CAPACITY },
-            DimSlot { name: "G_th", unit: "W·K^-1", dim: Dim::THERMAL_CONDUCTANCE },
-            DimSlot { name: "R_0", unit: "Ω", dim: Dim::RESISTANCE },
-            DimSlot { name: "alpha", unit: "K^-1", dim: Dim::TEMP_COEFF },
-            DimSlot { name: "T_0", unit: "K", dim: Dim::TEMPERATURE },
-            DimSlot { name: "T_amb", unit: "K", dim: Dim::TEMPERATURE },
-            DimSlot { name: "i", unit: "A", dim: Dim::CURRENT },
-            DimSlot { name: "t", unit: "s", dim: Dim::TIME },
+            DimSlot {
+                name: "C",
+                unit: "J·K^-1",
+                dim: Dim::HEAT_CAPACITY,
+            },
+            DimSlot {
+                name: "G_th",
+                unit: "W·K^-1",
+                dim: Dim::THERMAL_CONDUCTANCE,
+            },
+            DimSlot {
+                name: "R_0",
+                unit: "Ω",
+                dim: Dim::RESISTANCE,
+            },
+            DimSlot {
+                name: "alpha",
+                unit: "K^-1",
+                dim: Dim::TEMP_COEFF,
+            },
+            DimSlot {
+                name: "T_0",
+                unit: "K",
+                dim: Dim::TEMPERATURE,
+            },
+            DimSlot {
+                name: "T_amb",
+                unit: "K",
+                dim: Dim::TEMPERATURE,
+            },
+            DimSlot {
+                name: "i",
+                unit: "A",
+                dim: Dim::CURRENT,
+            },
+            DimSlot {
+                name: "t",
+                unit: "s",
+                dim: Dim::TIME,
+            },
         ],
         outputs: &[
-            DimSlot { name: "T_w", unit: "K", dim: Dim::TEMPERATURE },
-            DimSlot { name: "dT_dt", unit: "K·s^-1", dim: Dim::TEMP_RATE },
-            DimSlot { name: "a", unit: "s^-1", dim: Dim::FREQUENCY },
+            DimSlot {
+                name: "T_w",
+                unit: "K",
+                dim: Dim::TEMPERATURE,
+            },
+            DimSlot {
+                name: "dT_dt",
+                unit: "K·s^-1",
+                dim: Dim::TEMP_RATE,
+            },
+            DimSlot {
+                name: "a",
+                unit: "s^-1",
+                dim: Dim::FREQUENCY,
+            },
         ],
     },
     OracleDimSignature {
         row: "Thermal runaway condition",
         oracle: "thermal_runaway_analysis",
         inputs: &[
-            DimSlot { name: "R_0", unit: "Ω", dim: Dim::RESISTANCE },
-            DimSlot { name: "alpha", unit: "K^-1", dim: Dim::TEMP_COEFF },
-            DimSlot { name: "G_th", unit: "W·K^-1", dim: Dim::THERMAL_CONDUCTANCE },
-            DimSlot { name: "C", unit: "J·K^-1", dim: Dim::HEAT_CAPACITY },
-            DimSlot { name: "T_0", unit: "K", dim: Dim::TEMPERATURE },
-            DimSlot { name: "T_amb", unit: "K", dim: Dim::TEMPERATURE },
-            DimSlot { name: "i", unit: "A", dim: Dim::CURRENT },
+            DimSlot {
+                name: "R_0",
+                unit: "Ω",
+                dim: Dim::RESISTANCE,
+            },
+            DimSlot {
+                name: "alpha",
+                unit: "K^-1",
+                dim: Dim::TEMP_COEFF,
+            },
+            DimSlot {
+                name: "G_th",
+                unit: "W·K^-1",
+                dim: Dim::THERMAL_CONDUCTANCE,
+            },
+            DimSlot {
+                name: "C",
+                unit: "J·K^-1",
+                dim: Dim::HEAT_CAPACITY,
+            },
+            DimSlot {
+                name: "T_0",
+                unit: "K",
+                dim: Dim::TEMPERATURE,
+            },
+            DimSlot {
+                name: "T_amb",
+                unit: "K",
+                dim: Dim::TEMPERATURE,
+            },
+            DimSlot {
+                name: "i",
+                unit: "A",
+                dim: Dim::CURRENT,
+            },
         ],
         outputs: &[
-            DimSlot { name: "s", unit: "W·K^-1", dim: Dim::THERMAL_CONDUCTANCE },
-            DimSlot { name: "I_crit", unit: "A", dim: Dim::CURRENT },
-            DimSlot { name: "T_eq", unit: "K", dim: Dim::TEMPERATURE },
+            DimSlot {
+                name: "s",
+                unit: "W·K^-1",
+                dim: Dim::THERMAL_CONDUCTANCE,
+            },
+            DimSlot {
+                name: "I_crit",
+                unit: "A",
+                dim: Dim::CURRENT,
+            },
+            DimSlot {
+                name: "T_eq",
+                unit: "K",
+                dim: Dim::TEMPERATURE,
+            },
         ],
     },
     OracleDimSignature {
         row: "Entropy production",
         oracle: "entropy_production",
         inputs: &[
-            DimSlot { name: "P_loss", unit: "W", dim: Dim::POWER },
-            DimSlot { name: "G_th", unit: "W·K^-1", dim: Dim::THERMAL_CONDUCTANCE },
-            DimSlot { name: "T_w", unit: "K", dim: Dim::TEMPERATURE },
-            DimSlot { name: "T_amb", unit: "K", dim: Dim::TEMPERATURE },
+            DimSlot {
+                name: "P_loss",
+                unit: "W",
+                dim: Dim::POWER,
+            },
+            DimSlot {
+                name: "G_th",
+                unit: "W·K^-1",
+                dim: Dim::THERMAL_CONDUCTANCE,
+            },
+            DimSlot {
+                name: "T_w",
+                unit: "K",
+                dim: Dim::TEMPERATURE,
+            },
+            DimSlot {
+                name: "T_amb",
+                unit: "K",
+                dim: Dim::TEMPERATURE,
+            },
         ],
-        outputs: &[DimSlot { name: "sigma", unit: "W·K^-1", dim: Dim::ENTROPY_RATE }],
+        outputs: &[DimSlot {
+            name: "sigma",
+            unit: "W·K^-1",
+            dim: Dim::ENTROPY_RATE,
+        }],
     },
     OracleDimSignature {
         row: "Two-RC battery",
         oracle: "two_rc_battery_step_response",
         inputs: &[
-            DimSlot { name: "OCV", unit: "V", dim: Dim::VOLTAGE },
-            DimSlot { name: "R_0", unit: "Ω", dim: Dim::RESISTANCE },
-            DimSlot { name: "R_1", unit: "Ω", dim: Dim::RESISTANCE },
-            DimSlot { name: "C_1", unit: "F", dim: Dim::CAPACITANCE },
-            DimSlot { name: "R_2", unit: "Ω", dim: Dim::RESISTANCE },
-            DimSlot { name: "C_2", unit: "F", dim: Dim::CAPACITANCE },
-            DimSlot { name: "Q", unit: "C", dim: Dim::CHARGE },
-            DimSlot { name: "I", unit: "A", dim: Dim::CURRENT },
-            DimSlot { name: "t", unit: "s", dim: Dim::TIME },
+            DimSlot {
+                name: "OCV",
+                unit: "V",
+                dim: Dim::VOLTAGE,
+            },
+            DimSlot {
+                name: "R_0",
+                unit: "Ω",
+                dim: Dim::RESISTANCE,
+            },
+            DimSlot {
+                name: "R_1",
+                unit: "Ω",
+                dim: Dim::RESISTANCE,
+            },
+            DimSlot {
+                name: "C_1",
+                unit: "F",
+                dim: Dim::CAPACITANCE,
+            },
+            DimSlot {
+                name: "R_2",
+                unit: "Ω",
+                dim: Dim::RESISTANCE,
+            },
+            DimSlot {
+                name: "C_2",
+                unit: "F",
+                dim: Dim::CAPACITANCE,
+            },
+            DimSlot {
+                name: "Q",
+                unit: "C",
+                dim: Dim::CHARGE,
+            },
+            DimSlot {
+                name: "I",
+                unit: "A",
+                dim: Dim::CURRENT,
+            },
+            DimSlot {
+                name: "t",
+                unit: "s",
+                dim: Dim::TIME,
+            },
         ],
         outputs: &[
-            DimSlot { name: "V", unit: "V", dim: Dim::VOLTAGE },
-            DimSlot { name: "V_1", unit: "V", dim: Dim::VOLTAGE },
-            DimSlot { name: "V_2", unit: "V", dim: Dim::VOLTAGE },
-            DimSlot { name: "z", unit: "1", dim: Dim::ONE },
+            DimSlot {
+                name: "V",
+                unit: "V",
+                dim: Dim::VOLTAGE,
+            },
+            DimSlot {
+                name: "V_1",
+                unit: "V",
+                dim: Dim::VOLTAGE,
+            },
+            DimSlot {
+                name: "V_2",
+                unit: "V",
+                dim: Dim::VOLTAGE,
+            },
+            DimSlot {
+                name: "z",
+                unit: "1",
+                dim: Dim::ONE,
+            },
         ],
     },
     OracleDimSignature {
         row: "Bus power ceiling",
         oracle: "bus_operating_point",
         inputs: &[
-            DimSlot { name: "E", unit: "V", dim: Dim::VOLTAGE },
-            DimSlot { name: "R", unit: "Ω", dim: Dim::RESISTANCE },
-            DimSlot { name: "P", unit: "W", dim: Dim::POWER },
+            DimSlot {
+                name: "E",
+                unit: "V",
+                dim: Dim::VOLTAGE,
+            },
+            DimSlot {
+                name: "R",
+                unit: "Ω",
+                dim: Dim::RESISTANCE,
+            },
+            DimSlot {
+                name: "P",
+                unit: "W",
+                dim: Dim::POWER,
+            },
         ],
         outputs: &[
-            DimSlot { name: "P_max", unit: "W", dim: Dim::POWER },
-            DimSlot { name: "V", unit: "V", dim: Dim::VOLTAGE },
-            DimSlot { name: "I", unit: "A", dim: Dim::CURRENT },
+            DimSlot {
+                name: "P_max",
+                unit: "W",
+                dim: Dim::POWER,
+            },
+            DimSlot {
+                name: "V",
+                unit: "V",
+                dim: Dim::VOLTAGE,
+            },
+            DimSlot {
+                name: "I",
+                unit: "A",
+                dim: Dim::CURRENT,
+            },
         ],
     },
     OracleDimSignature {
         row: "Four-quadrant transmission",
         oracle: "screw_efficiencies",
         inputs: &[
-            DimSlot { name: "a", unit: "rad", dim: Dim::ONE },
-            DimSlot { name: "phi", unit: "rad", dim: Dim::ONE },
-            DimSlot { name: "N", unit: "1", dim: Dim::ONE },
-            DimSlot { name: "tau", unit: "N·m", dim: Dim::TORQUE },
+            DimSlot {
+                name: "a",
+                unit: "rad",
+                dim: Dim::ONE,
+            },
+            DimSlot {
+                name: "phi",
+                unit: "rad",
+                dim: Dim::ONE,
+            },
+            DimSlot {
+                name: "N",
+                unit: "1",
+                dim: Dim::ONE,
+            },
+            DimSlot {
+                name: "tau",
+                unit: "N·m",
+                dim: Dim::TORQUE,
+            },
         ],
         outputs: &[
-            DimSlot { name: "eta_f", unit: "1", dim: Dim::ONE },
-            DimSlot { name: "eta_b", unit: "1", dim: Dim::ONE },
-            DimSlot { name: "tau_out", unit: "N·m", dim: Dim::TORQUE },
+            DimSlot {
+                name: "eta_f",
+                unit: "1",
+                dim: Dim::ONE,
+            },
+            DimSlot {
+                name: "eta_b",
+                unit: "1",
+                dim: Dim::ONE,
+            },
+            DimSlot {
+                name: "tau_out",
+                unit: "N·m",
+                dim: Dim::TORQUE,
+            },
         ],
     },
     OracleDimSignature {
         row: "Rational gear law",
         oracle: "rational_gear_map",
         inputs: &[
-            DimSlot { name: "r", unit: "1", dim: Dim::ONE },
-            DimSlot { name: "f_1", unit: "rad·s^-1", dim: Dim::ANGULAR_VELOCITY },
-            DimSlot { name: "e_2", unit: "N·m", dim: Dim::TORQUE },
+            DimSlot {
+                name: "r",
+                unit: "1",
+                dim: Dim::ONE,
+            },
+            DimSlot {
+                name: "f_1",
+                unit: "rad·s^-1",
+                dim: Dim::ANGULAR_VELOCITY,
+            },
+            DimSlot {
+                name: "e_2",
+                unit: "N·m",
+                dim: Dim::TORQUE,
+            },
         ],
         outputs: &[
-            DimSlot { name: "f_2", unit: "rad·s^-1", dim: Dim::ANGULAR_VELOCITY },
-            DimSlot { name: "e_1", unit: "N·m", dim: Dim::TORQUE },
-            DimSlot { name: "net_power", unit: "W", dim: Dim::POWER },
+            DimSlot {
+                name: "f_2",
+                unit: "rad·s^-1",
+                dim: Dim::ANGULAR_VELOCITY,
+            },
+            DimSlot {
+                name: "e_1",
+                unit: "N·m",
+                dim: Dim::TORQUE,
+            },
+            DimSlot {
+                name: "net_power",
+                unit: "W",
+                dim: Dim::POWER,
+            },
         ],
     },
     OracleDimSignature {
         row: "Energy balance",
         oracle: "energy_balance_residual",
         inputs: &[
-            DimSlot { name: "supplied", unit: "J", dim: Dim::ENERGY },
-            DimSlot { name: "delta_stored", unit: "J", dim: Dim::ENERGY },
-            DimSlot { name: "dissipated", unit: "J", dim: Dim::ENERGY },
-            DimSlot { name: "exported", unit: "J", dim: Dim::ENERGY },
+            DimSlot {
+                name: "supplied",
+                unit: "J",
+                dim: Dim::ENERGY,
+            },
+            DimSlot {
+                name: "delta_stored",
+                unit: "J",
+                dim: Dim::ENERGY,
+            },
+            DimSlot {
+                name: "dissipated",
+                unit: "J",
+                dim: Dim::ENERGY,
+            },
+            DimSlot {
+                name: "exported",
+                unit: "J",
+                dim: Dim::ENERGY,
+            },
         ],
-        outputs: &[DimSlot { name: "residual", unit: "J", dim: Dim::ENERGY }],
+        outputs: &[DimSlot {
+            name: "residual",
+            unit: "J",
+            dim: Dim::ENERGY,
+        }],
     },
     OracleDimSignature {
         row: "Cost of transport",
         oracle: "cost_of_transport",
         inputs: &[
-            DimSlot { name: "E", unit: "J", dim: Dim::ENERGY },
-            DimSlot { name: "m", unit: "kg", dim: Dim::MASS },
-            DimSlot { name: "g", unit: "m·s^-2", dim: Dim::ACCELERATION },
-            DimSlot { name: "d", unit: "m", dim: Dim::LENGTH },
+            DimSlot {
+                name: "E",
+                unit: "J",
+                dim: Dim::ENERGY,
+            },
+            DimSlot {
+                name: "m",
+                unit: "kg",
+                dim: Dim::MASS,
+            },
+            DimSlot {
+                name: "g",
+                unit: "m·s^-2",
+                dim: Dim::ACCELERATION,
+            },
+            DimSlot {
+                name: "d",
+                unit: "m",
+                dim: Dim::LENGTH,
+            },
         ],
-        outputs: &[DimSlot { name: "CoT", unit: "1", dim: Dim::ONE }],
+        outputs: &[DimSlot {
+            name: "CoT",
+            unit: "1",
+            dim: Dim::ONE,
+        }],
     },
     OracleDimSignature {
         row: "Froude number",
         oracle: "froude_number",
         inputs: &[
-            DimSlot { name: "v", unit: "m·s^-1", dim: Dim::VELOCITY },
-            DimSlot { name: "g", unit: "m·s^-2", dim: Dim::ACCELERATION },
-            DimSlot { name: "L", unit: "m", dim: Dim::LENGTH },
+            DimSlot {
+                name: "v",
+                unit: "m·s^-1",
+                dim: Dim::VELOCITY,
+            },
+            DimSlot {
+                name: "g",
+                unit: "m·s^-2",
+                dim: Dim::ACCELERATION,
+            },
+            DimSlot {
+                name: "L",
+                unit: "m",
+                dim: Dim::LENGTH,
+            },
         ],
-        outputs: &[DimSlot { name: "Fr", unit: "1", dim: Dim::ONE }],
+        outputs: &[DimSlot {
+            name: "Fr",
+            unit: "1",
+            dim: Dim::ONE,
+        }],
     },
 ];
 
@@ -484,7 +955,11 @@ fn check_out_dim(oracle: &'static str, expected: Dim, derived: Dim) -> Result<()
     if expected == derived {
         Ok(())
     } else {
-        Err(DimError::OutputMismatch { oracle, expected, derived })
+        Err(DimError::OutputMismatch {
+            oracle,
+            expected,
+            derived,
+        })
     }
 }
 
@@ -506,7 +981,11 @@ pub fn verify_all_oracle_dimensions() -> Result<(), DimError> {
     let tau_visc = Dim::ANGULAR_DAMPING.mul(Dim::ANGULAR_VELOCITY);
     let tau_rhs = tau_em.try_add(tau_visc)?.try_add(Dim::TORQUE)?;
     let domega_dt = tau_rhs.div(Dim::INERTIA);
-    check_out_dim("motor_axis_locked_rotor_current", Dim::ANGULAR_ACCEL, domega_dt)?;
+    check_out_dim(
+        "motor_axis_locked_rotor_current",
+        Dim::ANGULAR_ACCEL,
+        domega_dt,
+    )?;
 
     let tau_e = Dim::INDUCTANCE.div(Dim::RESISTANCE);
     check_out_dim("motor_axis_locked_rotor_current", Dim::TIME, tau_e)?;
@@ -534,9 +1013,17 @@ pub fn verify_all_oracle_dimensions() -> Result<(), DimError> {
     let v_over_w_sq = Dim::VOLTAGE.div(Dim::ANGULAR_VELOCITY).powi(2);
     flux_sq.try_add(v_over_w_sq)?;
     let omega_base = Dim::VOLTAGE.div(flux_sq.try_sqrt()?);
-    check_out_dim("voltage_limit_field_weakening", Dim::ANGULAR_VELOCITY, omega_base)?;
+    check_out_dim(
+        "voltage_limit_field_weakening",
+        Dim::ANGULAR_VELOCITY,
+        omega_base,
+    )?;
     let omega_top = Dim::VOLTAGE.div(flux_d);
-    check_out_dim("voltage_limit_field_weakening", Dim::ANGULAR_VELOCITY, omega_top)?;
+    check_out_dim(
+        "voltage_limit_field_weakening",
+        Dim::ANGULAR_VELOCITY,
+        omega_top,
+    )?;
 
     // 5. Thermal node: C*dT/dt = i^2*R_0*(1 + alpha*(T_w - T_0)) - G_th*(T_w - T_amb)
     let dt_ref = Dim::TEMPERATURE.try_add(Dim::TEMPERATURE)?;
@@ -556,9 +1043,16 @@ pub fn verify_all_oracle_dimensions() -> Result<(), DimError> {
     a_rate.mul(Dim::TIME).require_dimensionless()?;
 
     // 6. Thermal runaway: s = i^2*R_0*alpha; I_crit = sqrt(G_th/(R_0*alpha)); T_eq = T_amb + P_amb/(G_th - s)
-    let s_dim = Dim::CURRENT.powi(2).mul(Dim::RESISTANCE).mul(Dim::TEMP_COEFF);
+    let s_dim = Dim::CURRENT
+        .powi(2)
+        .mul(Dim::RESISTANCE)
+        .mul(Dim::TEMP_COEFF);
     let g_minus_s = Dim::THERMAL_CONDUCTANCE.try_add(s_dim)?;
-    check_out_dim("thermal_runaway_analysis", Dim::THERMAL_CONDUCTANCE, g_minus_s)?;
+    check_out_dim(
+        "thermal_runaway_analysis",
+        Dim::THERMAL_CONDUCTANCE,
+        g_minus_s,
+    )?;
     let i_crit = Dim::THERMAL_CONDUCTANCE
         .div(Dim::RESISTANCE.mul(Dim::TEMP_COEFF))
         .try_sqrt()?;
@@ -582,7 +1076,9 @@ pub fn verify_all_oracle_dimensions() -> Result<(), DimError> {
     check_out_dim("two_rc_battery_step_response", Dim::VOLTAGE, v_term)?;
     let rc_tau = Dim::RESISTANCE.mul(Dim::CAPACITANCE);
     check_out_dim("two_rc_battery_step_response", Dim::TIME, rc_tau)?;
-    let dv_dt = Dim::VOLTAGE.div(rc_tau).try_add(Dim::CURRENT.div(Dim::CAPACITANCE))?;
+    let dv_dt = Dim::VOLTAGE
+        .div(rc_tau)
+        .try_add(Dim::CURRENT.div(Dim::CAPACITANCE))?;
     check_out_dim("two_rc_battery_step_response", Dim::VOLTAGE_RATE, dv_dt)?;
     let dz = Dim::CURRENT.mul(Dim::TIME).div(Dim::CHARGE);
     dz.require_dimensionless()?;
@@ -590,7 +1086,9 @@ pub fn verify_all_oracle_dimensions() -> Result<(), DimError> {
     // 9. Bus power ceiling: P_max = E^2/(4*R); V = (E + sqrt(E^2 - 4*R*P))/2
     let p_max = Dim::VOLTAGE.powi(2).div(Dim::RESISTANCE);
     check_out_dim("bus_operating_point", Dim::POWER, p_max)?;
-    let disc = Dim::VOLTAGE.powi(2).try_add(Dim::RESISTANCE.mul(Dim::POWER))?;
+    let disc = Dim::VOLTAGE
+        .powi(2)
+        .try_add(Dim::RESISTANCE.mul(Dim::POWER))?;
     let v_bus = Dim::VOLTAGE.try_add(disc.try_sqrt()?)?;
     check_out_dim("bus_operating_point", Dim::VOLTAGE, v_bus)?;
     let i_bus = Dim::POWER.div(v_bus);
@@ -620,7 +1118,9 @@ pub fn verify_all_oracle_dimensions() -> Result<(), DimError> {
     check_out_dim("cost_of_transport", Dim::ONE, cot)?;
 
     // 14. Froude number: v^2 / (g * L)
-    let fr = Dim::VELOCITY.powi(2).div(Dim::ACCELERATION.mul(Dim::LENGTH));
+    let fr = Dim::VELOCITY
+        .powi(2)
+        .div(Dim::ACCELERATION.mul(Dim::LENGTH));
     fr.require_dimensionless()?;
     check_out_dim("froude_number", Dim::ONE, fr)?;
 
@@ -730,6 +1230,8 @@ pub fn is_symmetric_psd(r_mat: &[Vec<Rat>]) -> bool {
                 let delta = &factor * &a[k][j];
                 a[i][j] = &a[i][j] - &delta;
             }
+        }
+        for i in (k + 1)..n {
             a[i][k] = Rat::zero();
             a[k][i] = Rat::zero();
         }
@@ -785,9 +1287,7 @@ pub fn phs_step_derivatives(sys: &PhsSystem, x: &[Rat], u: &[Rat]) -> PhsEval {
     let r_gh = mat_vec_n(&sys.r, &grad_h);
     let g_u = mat_vec_n(&sys.g, u);
 
-    let x_dot: Vec<Rat> = (0..n)
-        .map(|i| &(&j_gh[i] - &r_gh[i]) + &g_u[i])
-        .collect();
+    let x_dot: Vec<Rat> = (0..n).map(|i| &(&j_gh[i] - &r_gh[i]) + &g_u[i]).collect();
     let y = mat_t_vec_n(&sys.g, &grad_h);
     let h_dot_direct = dot_n(&grad_h, &x_dot);
     let supply_power = dot_n(u, &y);
@@ -844,7 +1344,11 @@ pub fn motor_axis_derivatives(
     let di_dt = &(&(v - &(&p.r_w * i)) - &(&p.k_e * omega)) / &p.l;
     let domega_dt = &(&(&(&p.k_t * i) - &(&p.b * omega)) - tau_load) / &p.j_r;
     let tau_electrical = &p.l / &p.r_w;
-    MotorAxisDerivatives { di_dt, domega_dt, tau_electrical }
+    MotorAxisDerivatives {
+        di_dt,
+        domega_dt,
+        tau_electrical,
+    }
 }
 
 /// Build the exact Port-Hamiltonian representation of a motor axis with state
@@ -868,10 +1372,7 @@ pub fn motor_axis_as_phs(p: &MotorAxisParams) -> PhsSystem {
             vec![one.clone(), zero.clone()],
             vec![zero.clone(), one.clone()],
         ],
-        q: vec![
-            vec![&one / &p.l, zero.clone()],
-            vec![zero, &one / &p.j_r],
-        ],
+        q: vec![vec![&one / &p.l, zero.clone()], vec![zero, &one / &p.j_r]],
     }
 }
 
@@ -880,7 +1381,10 @@ pub fn motor_axis_as_phs(p: &MotorAxisParams) -> PhsSystem {
 /// Returns `(current_a, tau_s)`. Tolerance: `1e-12 A`.
 #[must_use]
 pub fn motor_axis_locked_rotor_current(v: f64, r_w: f64, l: f64, t: f64) -> (f64, f64) {
-    assert!(r_w > 0.0 && l > 0.0 && t >= 0.0, "positive R_w, L and non-negative t required");
+    assert!(
+        r_w > 0.0 && l > 0.0 && t >= 0.0,
+        "positive R_w, L and non-negative t required"
+    );
     let tau = l / r_w;
     let current = (v / r_w) * (-(-t / tau).exp_m1());
     (current, tau)
@@ -920,7 +1424,11 @@ pub struct MotorEnvelopeEval {
 #[must_use]
 pub fn motor_envelope_l1(p: &MotorEnvelopeParams, omega: &Rat) -> MotorEnvelopeEval {
     assert!(
-        p.i_max.is_pos() && p.v_bus.is_pos() && p.k_e.is_pos() && p.gear_ratio_n.is_pos() && p.resistance.is_pos()
+        p.i_max.is_pos()
+            && p.v_bus.is_pos()
+            && p.k_e.is_pos()
+            && p.gear_ratio_n.is_pos()
+            && p.resistance.is_pos()
     );
     let back_emf = &(&p.k_e * &p.gear_ratio_n) * omega;
     let i_voltage_limit = &(&p.v_bus - &back_emf) / &p.resistance;
@@ -1031,7 +1539,10 @@ pub fn field_weakening_boundary_currents(
     p: &FieldWeakeningParams,
     omega_e: f64,
 ) -> Option<(f64, f64)> {
-    assert!((p.l_d - p.l_q).abs() <= 1e-15 * p.l_d.max(1.0), "non-salient closed form requires L_d == L_q");
+    assert!(
+        (p.l_d - p.l_q).abs() <= 1e-15 * p.l_d.max(1.0),
+        "non-salient closed form requires L_d == L_q"
+    );
     assert!(omega_e > 0.0);
     let eval = voltage_limit_field_weakening(p);
     if omega_e <= eval.omega_base {
@@ -1044,7 +1555,8 @@ pub fn field_weakening_boundary_currents(
     }
     let l = p.l_d;
     let vr = eval.v_lim / omega_e;
-    let i_d = (vr * vr - p.lambda * p.lambda - (l * p.i_max) * (l * p.i_max)) / (2.0 * p.lambda * l);
+    let i_d =
+        (vr * vr - p.lambda * p.lambda - (l * p.i_max) * (l * p.i_max)) / (2.0 * p.lambda * l);
     let iq_sq = p.i_max * p.i_max - i_d * i_d;
     if iq_sq < -1e-12 * p.i_max * p.i_max {
         return None;
@@ -1130,9 +1642,7 @@ pub enum ThermalRegime {
         stability_margin: f64,
     },
     /// `s >= G_th`: no stable equilibrium; temperature grows without bound.
-    Runaway {
-        growth_rate: f64,
-    },
+    Runaway { growth_rate: f64 },
 }
 
 /// Complete constant-current thermal runaway report.
@@ -1191,7 +1701,10 @@ pub fn thermal_runaway_torque_control_tangency(
     let u_star = (-qb - disc.sqrt()) / (2.0 * qa);
     let t_star = p.t_0 + u_star;
     let denom = 1.0 + alpha_b * u_star;
-    assert!(denom > 0.0 && t_star > p.t_amb, "physical tangency temperature must satisfy 1 + α_B·ΔT > 0 and T* > T_amb");
+    assert!(
+        denom > 0.0 && t_star > p.t_amb,
+        "physical tangency temperature must satisfy 1 + α_B·ΔT > 0 and T* > T_amb"
+    );
     let f_star = (1.0 + p.alpha * u_star) / (denom * denom);
     let i0_tangency = (p.g_th * (t_star - p.t_amb) / (p.r_0 * f_star)).sqrt();
     let i0_slope_est = (p.g_th / (p.r_0 * (p.alpha - 2.0 * alpha_b))).sqrt();
@@ -1206,7 +1719,10 @@ pub fn thermal_runaway_torque_control_tangency(
 /// `σ = P_loss / T_w + G_th · (T_w - T_amb)² / (T_w · T_amb)`.
 #[must_use]
 pub fn entropy_production(p_loss: &Rat, g_th: &Rat, t_w: &Rat, t_amb: &Rat) -> Rat {
-    assert!(t_w.is_pos() && t_amb.is_pos(), "absolute temperatures must be strictly positive");
+    assert!(
+        t_w.is_pos() && t_amb.is_pos(),
+        "absolute temperatures must be strictly positive"
+    );
     let dt = t_w - t_amb;
     let dt_sq = &dt * &dt;
     let loss_term = p_loss / t_w;
@@ -1269,7 +1785,14 @@ pub fn two_rc_battery_step_response(
     let v_2 = i_discharge * p.r_2 + (v2_0 - i_discharge * p.r_2) * (-t / tau_2).exp();
     let z = z_0 - i_discharge * t / p.q_coulombs;
     let v_terminal = ocv(z) - p.r_0 * i_discharge - v_1 - v_2;
-    TwoRcBatteryState { v_terminal, v_1, v_2, z, tau_1, tau_2 }
+    TwoRcBatteryState {
+        v_terminal,
+        v_1,
+        v_2,
+        z,
+        tau_1,
+        tau_2,
+    }
 }
 
 /// Exact rational charge balance `z(t) = z₀ - I·t/Q`.
@@ -1295,10 +1818,7 @@ pub enum BusOperatingPoint {
         ceiling: f64,
     },
     /// Demand exceeds `E²/(4·R)`: no real operating point exists (brownout).
-    Brownout {
-        requested: f64,
-        ceiling: f64,
-    },
+    Brownout { requested: f64, ceiling: f64 },
 }
 
 /// Exact rational bus power ceiling `P_max = E² / (4·R)` and voltage at ceiling `V_crit = E / 2`.
@@ -1317,11 +1837,18 @@ pub fn bus_operating_point(e: f64, r: f64, p_load: f64) -> BusOperatingPoint {
     let ceiling = (e * e) / (4.0 * r);
     let disc = e * e - 4.0 * r * p_load;
     if p_load > ceiling || disc < 0.0 {
-        return BusOperatingPoint::Brownout { requested: p_load, ceiling };
+        return BusOperatingPoint::Brownout {
+            requested: p_load,
+            ceiling,
+        };
     }
     let voltage = 0.5 * (e + disc.max(0.0).sqrt());
     let current = (e - voltage) / r;
-    BusOperatingPoint::Feasible { voltage, current, ceiling }
+    BusOperatingPoint::Feasible {
+        voltage,
+        current,
+        ceiling,
+    }
 }
 
 // =========================================================================
@@ -1398,7 +1925,11 @@ pub fn rational_gear_map(ratio_r: &Rat, f_1: &Rat, e_2: &Rat) -> GearLawEval {
     let f_2 = ratio_r * f_1;
     let e_1 = -(&(ratio_r * e_2));
     let net_power = &(&e_1 * f_1) + &(e_2 * &f_2);
-    GearLawEval { f_2, e_1, net_power }
+    GearLawEval {
+        f_2,
+        e_1,
+        net_power,
+    }
 }
 
 /// Compose two rational gear transformers of ratios `r` and `s` in series, returning
@@ -1470,7 +2001,10 @@ pub fn motor_thermal_exact_step(
     tau_load: &Rat,
     h: &Rat,
 ) -> (MotorThermalState, EnergyLedgerStep, Rat) {
-    assert_eq!(motor.k_t, motor.k_e, "energy-conserving gyrator requires k_t == k_e");
+    assert_eq!(
+        motor.k_t, motor.k_e,
+        "energy-conserving gyrator requires k_t == k_e"
+    );
     assert!(motor.l.is_pos() && motor.j_r.is_pos() && c_th.is_pos() && h.is_pos());
     let two = ri(2);
     let half = Rat::new(1, 2);
@@ -1568,7 +2102,10 @@ pub fn cost_of_transport_checked(
     distance: &Rat,
 ) -> Result<Rat, EnergyDomainMismatch> {
     if numerator_domain != claimed_domain {
-        return Err(EnergyDomainMismatch { numerator_domain, claimed_domain });
+        return Err(EnergyDomainMismatch {
+            numerator_domain,
+            claimed_domain,
+        });
     }
     Ok(cost_of_transport(energy, mass, gravity, distance))
 }

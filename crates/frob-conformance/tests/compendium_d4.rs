@@ -216,19 +216,27 @@ fn d4_nc_phs_symmetric_j() {
     let x = vec![ri(3), ri(2)];
     let u = vec![ri(0)];
     let ev = phs_step_derivatives(&sys_bad, &x, &u);
-    let caught = !is_skew_symmetric(&sys_bad.j) && ev.power_discrepancy == ri(9) && ev.h_dot_direct.is_pos();
+    let caught =
+        !is_skew_symmetric(&sys_bad.j) && ev.power_discrepancy == ri(9) && ev.h_dot_direct.is_pos();
 
     emit_nc(
         "d4_nc_phs_symmetric_j",
         "Port-Hamiltonian form",
         "frob_conformance::compendium::d4::phs_step_derivatives",
         caught,
-        format!("skew={}, discrepancy={} W", is_skew_symmetric(&sys_bad.j), ev.power_discrepancy),
+        format!(
+            "skew={}, discrepancy={} W",
+            is_skew_symmetric(&sys_bad.j),
+            ev.power_discrepancy
+        ),
         "non-skew J creates positive energy with u=0, R=0".to_owned(),
         None,
         Some("W"),
     );
-    assert!(caught, "symmetric part in J must create energy and fail skew check");
+    assert!(
+        caught,
+        "symmetric part in J must create energy and fail skew check"
+    );
 }
 
 // =========================================================================
@@ -269,7 +277,11 @@ fn d4_motor_locked_rotor_tau_10ms() {
         "Motor axis",
         "frob_conformance::compendium::d4::motor_axis_locked_rotor_current",
         ok,
-        format!("tau_exact={}, i(tau)={i_at_tau:.12} A, err_rk4={:.3e} A", deriv.tau_electrical, (i_at_025 - rk4_at_025).abs()),
+        format!(
+            "tau_exact={}, i(tau)={i_at_tau:.12} A, err_rk4={:.3e} A",
+            deriv.tau_electrical,
+            (i_at_025 - rk4_at_025).abs()
+        ),
         format!("tau=1/100 s (10 ms), i(tau)={expected_at_tau:.12} A"),
         Some("1e-12 A"),
         Some("A"),
@@ -316,7 +328,10 @@ fn d4_motor_is_phs_with_gyrator() {
         "Motor axis",
         "frob_conformance::compendium::d4::motor_axis_locked_rotor_current",
         ok,
-        format!("discrepancy={}, diss={} W", ev.power_discrepancy, ev.dissipation_power),
+        format!(
+            "discrepancy={}, diss={} W",
+            ev.power_discrepancy, ev.dissipation_power
+        ),
         "exact PHS match with skew gyrator and dissipation R_w*i^2 + b*omega^2".to_owned(),
         None,
         Some("W"),
@@ -338,11 +353,7 @@ fn d4_nc_motor_kt_ne_ke() {
     let i = ri(4);
     let omega = ri(30);
     let phs = motor_axis_as_phs(&bad);
-    let ev = phs_step_derivatives(
-        &phs,
-        &[&bad.l * &i, &bad.j_r * &omega],
-        &[ri(12), ri(0)],
-    );
+    let ev = phs_step_derivatives(&phs, &[&bad.l * &i, &bad.j_r * &omega], &[ri(12), ri(0)]);
     let expected_spurious = &(&(&bad.k_t - &bad.k_e) * &i) * &omega;
     let caught = !is_skew_symmetric(&phs.j)
         && ev.power_discrepancy == expected_spurious
@@ -353,7 +364,10 @@ fn d4_nc_motor_kt_ne_ke() {
         "Motor axis",
         "frob_conformance::compendium::d4::motor_axis_locked_rotor_current",
         caught,
-        format!("spurious_power={} W (expected {} W)", ev.power_discrepancy, expected_spurious),
+        format!(
+            "spurious_power={} W (expected {} W)",
+            ev.power_discrepancy, expected_spurious
+        ),
         "k_t != k_e makes gyrator create/lose power (k_t - k_e)*i*omega != 0".to_owned(),
         None,
         Some("W"),
@@ -380,7 +394,8 @@ fn d4_envelope_no_load_speed_and_stall() {
     // Stall at omega = 0: V_bus/R = 96 A > I_max = 30 A => i = 30 A.
     let stall = motor_envelope_l1(&params, &Rat::zero());
     let expected_omega_nl = ri(60); // 48 / (0.1 * 8) = 60 rad/s
-    let expected_tau_stall = &(&(&params.eta * &params.gear_ratio_n) * &(&params.k_t * &params.i_max))
+    let expected_tau_stall = &(&(&params.eta * &params.gear_ratio_n)
+        * &(&params.k_t * &params.i_max))
         - &params.tau_friction;
 
     // No-load speed omega = V_bus / (k_e * N) = 60 rad/s => voltage-limited current == 0.
@@ -401,7 +416,10 @@ fn d4_envelope_no_load_speed_and_stall() {
         "Motor envelope",
         "frob_conformance::compendium::d4::motor_envelope_l1",
         ok,
-        format!("omega_nl={} rad/s, tau_stall={} N*m, i(omega_nl)={} A", stall.omega_no_load, stall.tau_out, nl.i_limit),
+        format!(
+            "omega_nl={} rad/s, tau_stall={} N*m, i(omega_nl)={} A",
+            stall.omega_no_load, stall.tau_out, nl.i_limit
+        ),
         format!("omega_nl=60 rad/s, tau_stall={expected_tau_stall} N*m, i(omega_nl)=0 A"),
         None,
         Some("N·m"),
@@ -426,9 +444,13 @@ fn d4_nc_envelope_no_back_emf() {
 
     // Wrong model: omit back-EMF => i_bad = min(I_max, V_bus/R) = 30 A at any speed.
     let v_over_r = &params.v_bus / &params.resistance;
-    let i_bad = if v_over_r < params.i_max { v_over_r } else { params.i_max.clone() };
-    let tau_bad = &(&(&params.eta * &params.gear_ratio_n) * &(&params.k_t * &i_bad))
-        - &params.tau_friction;
+    let i_bad = if v_over_r < params.i_max {
+        v_over_r
+    } else {
+        params.i_max.clone()
+    };
+    let tau_bad =
+        &(&(&params.eta * &params.gear_ratio_n) * &(&params.k_t * &i_bad)) - &params.tau_friction;
 
     let caught = real_eval.i_limit.is_neg() && real_eval.tau_out.is_neg() && tau_bad.is_pos();
     emit_nc(
@@ -436,12 +458,18 @@ fn d4_nc_envelope_no_back_emf() {
         "Motor envelope",
         "frob_conformance::compendium::d4::motor_envelope_l1",
         caught,
-        format!("real_tau(2*w_nl)={} N*m vs no_bemf_tau={} N*m", real_eval.tau_out, tau_bad),
+        format!(
+            "real_tau(2*w_nl)={} N*m vs no_bemf_tau={} N*m",
+            real_eval.tau_out, tau_bad
+        ),
         "omitting back-EMF yields positive torque above no-load speed".to_owned(),
         None,
         Some("N·m"),
     );
-    assert!(caught, "no-back-EMF mutant must erroneously produce positive torque at overspeed");
+    assert!(
+        caught,
+        "no-back-EMF mutant must erroneously produce positive torque at overspeed"
+    );
 }
 
 // =========================================================================
@@ -470,7 +498,8 @@ fn d4_voltage_circle_base_and_top_speed() {
 
     // At 1.5 * base speed, boundary currents satisfy BOTH current circle and voltage ellipse.
     let w_mid = 1.5 * ev.omega_base;
-    let (id_mid, iq_mid) = field_weakening_boundary_currents(&p, w_mid).expect("feasible at 1.5*w_base");
+    let (id_mid, iq_mid) =
+        field_weakening_boundary_currents(&p, w_mid).expect("feasible at 1.5*w_base");
     let (mid_lhs, mid_rhs) = voltage_ellipse_lhs_rhs(&p, id_mid, iq_mid, w_mid);
     let cur_err = ((id_mid * id_mid + iq_mid * iq_mid).sqrt() - p.i_max).abs();
 
@@ -479,7 +508,7 @@ fn d4_voltage_circle_base_and_top_speed() {
         && (mid_lhs - mid_rhs).abs() <= 1e-15
         && cur_err <= 1e-12
         && (ev.v_lim - 48.0 / 2.0_f64.sqrt()).abs() <= 1e-12
-        && (ev.omega_base - 3151.351_110_639_467).abs() <= 1e-6
+        && (ev.omega_base - 3151.354_388_633_341_4).abs() <= 1e-6
         && (omega_top - 5656.854_249_492_38).abs() <= 1e-6
         && (iq_mid / p.i_max - 0.592).abs() < 0.01;
 
@@ -488,7 +517,13 @@ fn d4_voltage_circle_base_and_top_speed() {
         "Voltage limit and field weakening",
         "frob_conformance::compendium::d4::voltage_limit_field_weakening",
         ok,
-        format!("w_base={:.3} rad/s, w_top={:.3} rad/s, base_diff={:.2e}, top_diff={:.2e}", ev.omega_base, omega_top, (base_lhs - base_rhs).abs(), (top_lhs - top_rhs).abs()),
+        format!(
+            "w_base={:.3} rad/s, w_top={:.3} rad/s, base_diff={:.2e}, top_diff={:.2e}",
+            ev.omega_base,
+            omega_top,
+            (base_lhs - base_rhs).abs(),
+            (top_lhs - top_rhs).abs()
+        ),
         "equality at (0, I_max) for base speed and (-I_max, 0) for top speed".to_owned(),
         Some("1e-9 rad/s"),
         Some("rad/s"),
@@ -560,7 +595,10 @@ fn d4_nc_field_weakening_infinite_top_speed() {
         "Voltage limit and field weakening",
         "frob_conformance::compendium::d4::voltage_limit_field_weakening",
         caught,
-        format!("eq={:?}, lt={:?}, naive_lt={naive_lt:.1}", ev_eq.omega_top, ev_lt.omega_top),
+        format!(
+            "eq={:?}, lt={:?}, naive_lt={naive_lt:.1}",
+            ev_eq.omega_top, ev_lt.omega_top
+        ),
         "oracle returns Unbounded when lambda <= L*I_max".to_owned(),
         Some("1e-9 rad/s"),
         Some("rad/s"),
@@ -613,7 +651,10 @@ fn d4_thermal_node_linear_solution() {
         Some("1e-6 K"),
         Some("K"),
     );
-    assert!(ok, "thermal node closed form diverged from RK4: max_err={max_err}");
+    assert!(
+        ok,
+        "thermal node closed form diverged from RK4: max_err={max_err}"
+    );
 }
 
 #[test]
@@ -626,7 +667,10 @@ fn d4_nc_thermal_node_wrong_sign_alpha() {
         t_0: 298.15,
         t_amb: 298.15,
     };
-    let p_bad = ThermalNodeParams { alpha: -p_true.alpha, ..p_true };
+    let p_bad = ThermalNodeParams {
+        alpha: -p_true.alpha,
+        ..p_true
+    };
     let t_true = thermal_node_closed_form(&p_true, 20.0, p_true.t_amb, 500.0).t_w;
     let t_bad = thermal_node_closed_form(&p_bad, 20.0, p_true.t_amb, 500.0).t_w;
     let diff = (t_true - t_bad).abs();
@@ -642,7 +686,10 @@ fn d4_nc_thermal_node_wrong_sign_alpha() {
         Some("1e-6 K"),
         Some("K"),
     );
-    assert!(caught, "negated alpha mutant must diverge significantly from true solution");
+    assert!(
+        caught,
+        "negated alpha mutant must diverge significantly from true solution"
+    );
 }
 
 // =========================================================================
@@ -697,7 +744,8 @@ fn d4_runaway_critical_current_35_8() {
         t_amb: 298.15,
     };
     let (i0_tan, _t_tan, i0_slope) = thermal_runaway_torque_control_tangency(&card, -0.0011);
-    let torque_ok = (i0_tan - 16.508).abs() < 0.05 && (i0_slope - 25.54).abs() < 0.1 && i0_tan < i0_slope;
+    let torque_ok =
+        (i0_tan - 16.508).abs() < 0.05 && (i0_slope - 25.54).abs() < 0.1 && i0_tan < i0_slope;
 
     let ok = (below.i_crit - expected_icrit).abs() <= 1e-9
         && (below.i_crit - 35.805_743_701_971_64).abs() <= 1e-9
@@ -710,7 +758,10 @@ fn d4_runaway_critical_current_35_8() {
         "Thermal runaway condition",
         "frob_conformance::compendium::d4::thermal_runaway_analysis",
         ok,
-        format!("I_crit={:.6} A, i0_torque_tangency={i0_tan:.3} A < slope={i0_slope:.3} A", below.i_crit),
+        format!(
+            "I_crit={:.6} A, i0_torque_tangency={i0_tan:.3} A < slope={i0_slope:.3} A",
+            below.i_crit
+        ),
         format!("I_crit={expected_icrit:.6} A (~35.8 A); torque tangency ~16.5 A < 25.5 A"),
         Some("1e-9 A"),
         Some("A"),
@@ -728,7 +779,10 @@ fn d4_nc_runaway_constant_resistance() {
         t_0: 298.15,
         t_amb: 300.0,
     };
-    let p_const_r = ThermalNodeParams { alpha: 0.0, ..p_true };
+    let p_const_r = ThermalNodeParams {
+        alpha: 0.0,
+        ..p_true
+    };
     let i_over = 50.0; // well above I_crit = 35.8 A
     let true_eval = thermal_runaway_analysis(&p_true, i_over);
     // Constant-resistance model (alpha=0) always has a < 0 and settles at T_amb + i^2*R_0/G_th.
@@ -743,7 +797,10 @@ fn d4_nc_runaway_constant_resistance() {
         "Thermal runaway condition",
         "frob_conformance::compendium::d4::thermal_runaway_analysis",
         caught,
-        format!("true={:?}, const_R_t_eq={const_r_eq:.1} K (a={:.4})", true_eval.regime, const_r_late.a),
+        format!(
+            "true={:?}, const_R_t_eq={const_r_eq:.1} K (a={:.4})",
+            true_eval.regime, const_r_late.a
+        ),
         "constant-resistance model misses runaway above I_crit".to_owned(),
         Some("1e-9 A"),
         Some("A"),
@@ -825,9 +882,9 @@ fn d4_two_rc_step_response() {
     let p = TwoRcBatteryParams {
         r_0: 0.05,
         r_1: 0.02,
-        c_1: 500.0,  // tau_1 = 10 s
+        c_1: 500.0, // tau_1 = 10 s
         r_2: 0.03,
-        c_2: 4000.0, // tau_2 = 120 s
+        c_2: 4000.0,          // tau_2 = 120 s
         q_coulombs: 36_000.0, // 10 Ah
     };
     let i_dis = 20.0;
@@ -857,14 +914,20 @@ fn d4_two_rc_step_response() {
         && (at_25.v_2 - v2_rk4).abs() <= 1e-9
         && z_exact == r(7, 10)
         && (at_180.z - 0.7).abs() <= 1e-12
-        && (at_25.v_terminal - (linear_ocv(at_25.z) - p.r_0 * i_dis - at_25.v_1 - at_25.v_2)).abs() <= 1e-12;
+        && (at_25.v_terminal - (linear_ocv(at_25.z) - p.r_0 * i_dis - at_25.v_1 - at_25.v_2)).abs()
+            <= 1e-12;
 
     emit_law(
         "d4_two_rc_step_response",
         "Two-RC battery",
         "frob_conformance::compendium::d4::two_rc_battery_step_response",
         ok,
-        format!("tau1={} s, tau2={} s, z(180s)={z_exact}, err_v1={:.2e} V", at_t1.tau_1, at_t2.tau_2, (at_25.v_1 - v1_rk4).abs()),
+        format!(
+            "tau1={} s, tau2={} s, z(180s)={z_exact}, err_v1={:.2e} V",
+            at_t1.tau_1,
+            at_t2.tau_2,
+            (at_25.v_1 - v1_rk4).abs()
+        ),
         "V_k -> I*R_k with tau_k = R_k*C_k and z(t) = z_0 - I*t/Q".to_owned(),
         Some("1e-9 V"),
         Some("V"),
@@ -893,7 +956,10 @@ fn d4_nc_two_rc_reversed_current_sign() {
         None,
         Some("1"),
     );
-    assert!(caught, "reversed current sign must erroneously increase SoC on discharge");
+    assert!(
+        caught,
+        "reversed current sign must erroneously increase SoC on discharge"
+    );
 }
 
 // =========================================================================
@@ -957,7 +1023,10 @@ fn d4_bus_brownout_above_ceiling() {
         Some("1e-9 V"),
         Some("W"),
     );
-    assert!(caught, "6000 W load on 48 V / 0.1 Ω bus must return Brownout");
+    assert!(
+        caught,
+        "6000 W load on 48 V / 0.1 Ω bus must return Brownout"
+    );
 }
 
 // =========================================================================
@@ -969,7 +1038,7 @@ fn d4_screw_efficiencies_and_lock() {
     let deg = core::f64::consts::PI / 180.0;
     let ev = screw_efficiencies(10.0 * deg, 5.0 * deg);
     let exp_f = (10.0 * deg).tan() / (15.0 * deg).tan(); // ~0.65807786
-    let exp_b = (5.0 * deg).tan() / (10.0 * deg).tan();  // ~0.49617750
+    let exp_b = (5.0 * deg).tan() / (10.0 * deg).tan(); // ~0.49617750
 
     let back_ok = match ev.backdrive {
         ScrewBackdrive::Backdrivable(eb) => {
@@ -1004,12 +1073,18 @@ fn d4_screw_efficiencies_and_lock() {
         "Four-quadrant transmission",
         "frob_conformance::compendium::d4::screw_efficiencies",
         ok,
-        format!("eta_f={:.6}, backdrive={:?}, roundtrip={roundtrip_ratio}", ev.eta_f, ev.backdrive),
+        format!(
+            "eta_f={:.6}, backdrive={:?}, roundtrip={roundtrip_ratio}",
+            ev.eta_f, ev.backdrive
+        ),
         format!("eta_f={exp_f:.6} (~0.658), eta_b={exp_b:.6} (~0.496), phi>=a locks"),
         Some("1e-9"),
         Some("1"),
     );
-    assert!(ok, "four-quadrant screw efficiencies / locking check failed");
+    assert!(
+        ok,
+        "four-quadrant screw efficiencies / locking check failed"
+    );
 }
 
 #[test]
@@ -1030,10 +1105,8 @@ fn d4_single_multiplier_creates_energy() {
     let tau_m_bad = &tau_joint / &(&eta * &n);
     let p_out_bad = &tau_m_bad * &omega_motor;
 
-    let caught = p_out_good == ri(8)
-        && p_out_good < p_in
-        && p_out_bad == r(25, 2)
-        && p_out_bad > p_in;
+    let caught =
+        p_out_good == ri(8) && p_out_good < p_in && p_out_bad == r(25, 2) && p_out_bad > p_in;
 
     emit_nc(
         "d4_single_multiplier_creates_energy",
@@ -1045,7 +1118,10 @@ fn d4_single_multiplier_creates_energy() {
         None,
         Some("W"),
     );
-    assert!(caught, "single-multiplier transmission must create energy when back-driven");
+    assert!(
+        caught,
+        "single-multiplier transmission must create energy when back-driven"
+    );
 }
 
 // =========================================================================
@@ -1108,7 +1184,10 @@ fn d4_nc_gear_law_wrong_sign() {
         None,
         Some("W"),
     );
-    assert!(caught, "wrong-sign gear law must leave 2*r*e_2*f_1 power residual");
+    assert!(
+        caught,
+        "wrong-sign gear law must leave 2*r*e_2*f_1 power residual"
+    );
 }
 
 // =========================================================================
@@ -1160,7 +1239,10 @@ fn d4_energy_balance_closes() {
         None,
         Some("J"),
     );
-    assert!(all_zero, "exact rational motor-thermal energy balance failed to close");
+    assert!(
+        all_zero,
+        "exact rational motor-thermal energy balance failed to close"
+    );
 }
 
 #[test]
@@ -1206,7 +1288,10 @@ fn d4_double_counted_heat_flagged() {
         None,
         Some("J"),
     );
-    assert!(caught, "double-counting stored heat as loss must produce deficit == -q_gen");
+    assert!(
+        caught,
+        "double-counting stored heat as loss must produce deficit == -q_gen"
+    );
 }
 
 // =========================================================================
@@ -1268,12 +1353,18 @@ fn d4_cost_of_transport_dimensionless() {
         "Cost of transport",
         "frob_conformance::compendium::d4::cost_of_transport",
         ok,
-        format!("cot_base={cot_base}, cot_scaled={cot_scaled}, f64_bits_equal={}", cot_f1.to_bits() == cot_f2.to_bits()),
+        format!(
+            "cot_base={cot_base}, cot_scaled={cot_scaled}, f64_bits_equal={}",
+            cot_f1.to_bits() == cot_f2.to_bits()
+        ),
         "dimensionless and invariant under similarity & power-of-two rescaling".to_owned(),
         None,
         Some("1"),
     );
-    assert!(ok, "cost of transport dimensionless / similarity invariance failed");
+    assert!(
+        ok,
+        "cost of transport dimensionless / similarity invariance failed"
+    );
 }
 
 #[test]
@@ -1302,7 +1393,10 @@ fn d4_nc_cost_of_transport_mixed_energy() {
         None,
         Some("1"),
     );
-    assert!(caught, "mixing mechanical and electrical energy in CoT must be refused");
+    assert!(
+        caught,
+        "mixing mechanical and electrical energy in CoT must be refused"
+    );
 }
 
 // =========================================================================
@@ -1344,7 +1438,10 @@ fn d4_nc_froude_linear_v_not_dimensionless() {
     // Planted defect: v / (g * L) has dimension [m/s] / ([m/s^2]*[m]) = [s/m] = [-1, 0, 1, 0, 0, 0].
     let bad_dim = Dim::VELOCITY.div(Dim::ACCELERATION.mul(Dim::LENGTH));
     let err = bad_dim.require_dimensionless();
-    let caught = err == Err(DimError::NotDimensionless { observed: Dim([-1, 0, 1, 0, 0, 0]) });
+    let caught = err
+        == Err(DimError::NotDimensionless {
+            observed: Dim([-1, 0, 1, 0, 0, 0]),
+        });
 
     emit_nc(
         "d4_nc_froude_linear_v_not_dimensionless",
@@ -1365,12 +1462,21 @@ fn d4_nc_froude_linear_v_not_dimensionless() {
 
 #[test]
 fn d4_dimensions_homogeneous() {
-    assert_eq!(D4_ORACLE_SIGNATURES.len(), 14, "all 14 D.4 rows must declare SI signatures");
+    assert_eq!(
+        D4_ORACLE_SIGNATURES.len(),
+        14,
+        "all 14 D.4 rows must declare SI signatures"
+    );
     for sig in D4_ORACLE_SIGNATURES {
         assert!(!sig.inputs.is_empty(), "{}: inputs missing", sig.row);
         assert!(!sig.outputs.is_empty(), "{}: outputs missing", sig.row);
         for slot in sig.inputs.iter().chain(sig.outputs.iter()) {
-            assert!(!slot.unit.is_empty(), "{}.{}: empty unit", sig.row, slot.name);
+            assert!(
+                !slot.unit.is_empty(),
+                "{}.{}: empty unit",
+                sig.row,
+                slot.name
+            );
         }
     }
 
@@ -1404,7 +1510,9 @@ fn d4_dimensions_homogeneous() {
         "Dimensional homogeneity (all 14 rows)",
         "frob_conformance::compendium::d4::verify_all_oracle_dimensions",
         ok,
-        format!("all_14_homogeneous={all_ok}, V+I_refused={v_i_refused}, tau+P_refused={tau_p_refused}"),
+        format!(
+            "all_14_homogeneous={all_ok}, V+I_refused={v_i_refused}, tau+P_refused={tau_p_refused}"
+        ),
         "all 14 D.4 oracles dimensionally homogeneous; V+I, tau+P, odd sqrt refused".to_owned(),
         None,
         Some("1"),

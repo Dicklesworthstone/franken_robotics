@@ -1,0 +1,87 @@
+# Probe workspace for N33c-01 build set 2: the ten bedrock-direct FrankenSim crates.
+# Own empty [workspace] table keeps this probe independent of the core workspace.
+# No rust-toolchain.toml here: the matrix harness selects channels via `cargo +<c>`.
+# Build-identity settings are intentionally omitted; Cargo inherits repo-root .cargo/config.toml.
+
+[workspace]
+
+[package]
+name = "frob-probe-set2-bedrock"
+version = "0.0.1"
+edition = "2024"
+publish = false
+
+[dependencies]
+fs-ga = { path = "../../../../../frankensim/crates/fs-ga", default-features = false }
+fs-math = { path = "../../../../../frankensim/crates/fs-math", default-features = false }
+fs-qty = { path = "../../../../../frankensim/crates/fs-qty", default-features = false }
+fs-rand = { path = "../../../../../frankensim/crates/fs-rand", default-features = false }
+fs-blake3 = { path = "../../../../../frankensim/crates/fs-blake3", default-features = false }
+fs-ivl = { path = "../../../../../frankensim/crates/fs-ivl", default-features = false }
+fs-simd = { path = "../../../../../frankensim/crates/fs-simd", default-features = false }
+fs-exec = { path = "../../../../../frankensim/crates/fs-exec", default-features = false }
+fs-evidence = { path = "../../../../../frankensim/crates/fs-evidence", default-features = false }
+fs-ad = { path = "../../../../../frankensim/crates/fs-ad", default-features = false }
+
+[patch.crates-io]
+asupersync = { path = "../../../../../asupersync" }
+
+[profile.dev.package.fsqlite]
+opt-level = 1
+
+[profile.dev.package.fsqlite-ast]
+opt-level = 1
+
+[profile.dev.package.fsqlite-btree]
+opt-level = 1
+
+[profile.dev.package.fsqlite-core]
+opt-level = 1
+
+[profile.dev.package.fsqlite-error]
+opt-level = 1
+
+[profile.dev.package.fsqlite-ext-fts5]
+opt-level = 1
+
+[profile.dev.package.fsqlite-ext-icu]
+opt-level = 1
+
+[profile.dev.package.fsqlite-ext-json]
+opt-level = 1
+
+[profile.dev.package.fsqlite-ext-misc]
+opt-level = 1
+
+[profile.dev.package.fsqlite-ext-rtree]
+opt-level = 1
+
+[profile.dev.package.fsqlite-func]
+opt-level = 1
+
+[profile.dev.package.fsqlite-mvcc]
+opt-level = 1
+
+[profile.dev.package.fsqlite-observability]
+opt-level = 1
+
+[profile.dev.package.fsqlite-pager]
+opt-level = 1
+
+[profile.dev.package.fsqlite-parser]
+opt-level = 1
+
+[profile.dev.package.fsqlite-planner]
+opt-level = 1
+
+[profile.dev.package.fsqlite-types]
+opt-level = 1
+
+[profile.dev.package.fsqlite-vdbe]
+opt-level = 1
+
+[profile.dev.package.fsqlite-vfs]
+opt-level = 1
+
+[profile.dev.package.fsqlite-wal]
+opt-level = 1

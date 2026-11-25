@@ -7,7 +7,11 @@ repository.workspace = true
 authors.workspace = true
 publish = false
 autobins = false
-description = "Gauntlet verification harness and end-to-end log tooling for FrankenRobotics."
+description = "Gauntlet verification harness, negative-control registry, and end-to-end log tooling for FrankenRobotics."
+
+[package.metadata.frob]
+layer = 7
+rank = 4
 
 [lib]
 name = "frob_conformance"
@@ -16,6 +20,16 @@ path = "src/lib.rs"
 [[bin]]
 name = "frob-e2e"
 path = "src/bin/frob-e2e.rs"
+
+[features]
+default = []
+# Umbrella for workspace crate conformance facilities (BD-025 / ADR-GAUNT-03).
+# Forbidden in release builds (enforced by compile_error!).
+# Never lists per-control mutation features (`cx-*`, `nc-*`).
+gauntlet-mutations = []
+# Optional GPU device annexes; G0 and host G1 build with neither enabled.
+cuda = []
+metal = []
 
 [dependencies]
 frob-core = { path = "../frob-core", features = ["test-support"] }

@@ -1,0 +1,5 @@
+# FrankenRobotics known-answer registry (schema frob.gauntlet.known-answers/1).
+# Single physical file (logical alias: registries/known_answers.toml).
+# Rows arrive with N38a-12 and chapter N<ch>-KA beads.
+
+schema = "frob.gauntlet.known-answers/1"

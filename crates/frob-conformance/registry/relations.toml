@@ -1,0 +1,4 @@
+# FrankenRobotics metamorphic-relation registry (schema frob.gauntlet.relations/1).
+# Rows arrive with N38a-14 to N38a-18.
+
+schema = "frob.gauntlet.relations/1"

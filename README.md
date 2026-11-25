@@ -73,8 +73,14 @@ only say what a gate has recorded.
 <!-- status:begin -->
 | Gate             | Claim             | Milestone | Status     | Measured     | Recorded     |
 | ---------------- | ----------------- | --------- | ---------- | ------------ | ------------ |
+| GATE-ARENA-04    | known-answer      | M1        | open       | —            | —            |
+| GATE-ARENA-05    | known-answer      | M1        | open       | —            | —            |
+| GATE-GAUNT-01    | known-answer      | M0        | open       | —            | —            |
+| GATE-GAUNT-05    | known-answer      | M0        | open       | —            | —            |
+| GATE-GAUNT-08    | known-answer      | M0        | open       | —            | —            |
+| GATE-GAUNT-10    | known-answer      | M0        | open       | —            | —            |
 
-Summary: 0 gates (open: 0, pass: 0, fail: 0, killed: 0, blocked: 0, no-claim: 0, superseded: 0)
+Summary: 6 gates (open: 6, pass: 0, fail: 0, killed: 0, blocked: 0, no-claim: 0, superseded: 0)
 <!-- status:end -->
 
 ---

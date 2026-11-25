@@ -1,0 +1,90 @@
+# FrankenRobotics negative-control registry (schema frob.gauntlet.controls/1).
+#
+# Physical canonical file for negative controls (`BD-025`, `INV-GAUNT-07`).
+# Written strictly in the `frob-core::registry::toml` subset (`N34p2-01`).
+# Identifiers `NC-nnnn` are strictly increasing, append-only, never reused,
+# never removed, and never renumbered.
+
+schema = "frob.gauntlet.controls/1"
+
+[[control]]
+id = "NC-0001"
+seed = "GATE-GAUNT-01"
+gate = ["GATE-GAUNT-01"]
+kind = "planted-input"
+target = "frob-conformance::controls::check_registry"
+defect = "planted gate row with empty controls list and status pass"
+expect = "registry_check fails with no-control"
+fixture = "fixtures/gauntlet/v0_empty_controls.toml"
+due = "M0"
+state = "runnable"
+
+[[control]]
+id = "NC-0002"
+seed = "GATE-GAUNT-05"
+gate = ["GATE-GAUNT-05"]
+kind = "planted-input"
+target = "frob-conformance::controls::validate"
+defect = "planted fixture file lacking synthetic/oracle/recorded kind header on an active gate"
+expect = "controls validator fails with fixture-missing"
+fixture = "fixtures/gauntlet/v0_missing_fixture_header.toml"
+due = "M0"
+state = "runnable"
+
+[[control]]
+id = "NC-0003"
+seed = "GATE-GAUNT-08"
+gate = ["GATE-GAUNT-08"]
+kind = "planted-input"
+target = "N38a-09:pilot-missing-falsifier"
+defect = "planted pilot record omitting its falsifier or fallback before funding"
+expect = "pilot register check fails rejecting the unfunded pilot record"
+fixture = "fixtures/gauntlet/v0_pilot_missing_falsifier.toml"
+due = "M0"
+state = "obligation"
+
+[[control]]
+id = "NC-0004"
+seed = "GATE-GAUNT-10"
+gate = ["GATE-GAUNT-10"]
+kind = "planted-input"
+target = "frob-conformance::controls::check_registry"
+defect = "planted pass gate whose runnable control has last_seen.caught = false"
+expect = "registry_check fails with uncaught-control"
+fixture = "fixtures/gauntlet/v0_uncaught_control_pass.toml"
+due = "M0"
+state = "runnable"
+
+[[control]]
+id = "NC-0398"
+seed = "KA-612"
+gate = ["GATE-ARENA-05"]
+kind = "planted-input"
+target = "N24b-01:eval-preanalyze-unreachable-tie"
+defect = "request for a tie verdict at n = 64 with unreachable-verdict guard disabled"
+expect = "eval.preanalyze fails to refuse unreachable tie verdict at n = 64 (FROB-REF-532)"
+fixture = "fixtures/arena/ka_612_unreachable_tie.toml"
+due = "M1"
+removed_check = "unreachable tie verdict refusal at n = 64"
+
+[[control]]
+id = "NC-0399"
+seed = "KA-613"
+gate = ["GATE-ARENA-05"]
+kind = "mutation"
+target = "N24b-01:eval-preanalyze-power"
+defect = "off-by-one binomial tail in fixed-n power table computation"
+expect = "KA-613 power row diverges from 0.117 at n = 64 and fails"
+feature = "nc-0399"
+due = "M1"
+
+[[control]]
+id = "NC-0412"
+seed = "CX-262"
+gate = ["GATE-ARENA-04"]
+kind = "mutation"
+target = "frob-actuate::stage::integrate"
+defect = "explicit Euler, current before wheel speed, at 0.5 ms"
+expect = "wheel-loop row reports spectral radius 1.497 where 0.9207 is true; the row fails"
+feature = "cx-262"
+due = "M1"

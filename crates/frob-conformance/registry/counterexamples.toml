@@ -1,0 +1,4 @@
+# FrankenRobotics counterexample catalogue (schema frob.gauntlet.counterexamples/1).
+# Entries arrive with N38b-05 and chapter N<ch>-CX beads.
+
+schema = "frob.gauntlet.counterexamples/1"

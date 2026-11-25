@@ -1,0 +1,4 @@
+# FrankenRobotics pilot register (schema frob.gauntlet.pilot/1).
+# Records arrive with N38a-09.
+
+schema = "frob.gauntlet.pilot/1"

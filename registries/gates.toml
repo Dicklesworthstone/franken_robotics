@@ -1,9 +1,111 @@
 # FrankenRobotics gate registry (schema frob.gates/1).
 #
-# Starts schema-valid and empty at the first commit (BD-002): rows arrive with
-# the beads that own them so no row exists without an owner.
+# Starts schema-valid and empty at the first commit (BD-002); v0 M0 Gauntlet
+# gates and the two reserved M1 Arena example gates land with BD-025.
 # The README honest-status table is generated from this file and nothing else
 # (INV-GAUNT-06, GATE-GAUNT-10).
 # Written strictly in the frob-core::registry::toml subset (N34p2-01).
 
 schema = "frob.gates/1"
+
+[[gate]]
+id = "GATE-GAUNT-01"
+claim = "known-answer"
+claim_id = "INV-GAUNT-02"
+section = "38.15"
+threshold = "Every gate recorded as PASS has a registered negative control that it catches; a run over all controls shows each caught by every gate it names"
+milestone = "M0"
+tier = ["G0:host"]
+controls = ["NC-0001"]
+
+[[gate.part]]
+milestone = "M0"
+status = "not-run"
+measured = ""
+evidence = []
+recorded = { date = "", session = "", implemented_by = "" }
+
+[[gate]]
+id = "GATE-GAUNT-05"
+claim = "known-answer"
+claim_id = "INV-GAUNT-01"
+section = "38.15"
+threshold = "Oracle hygiene: every fixture has a pin, a date and a capture script; a planted fixture regenerated from the candidate fails CI; no foreign tool appears in any production dependency graph; a planted G2 result offered as Reality is refused"
+milestone = "M0"
+tier = ["G0:host"]
+controls = ["NC-0002"]
+
+[[gate.part]]
+milestone = "M0"
+status = "not-run"
+measured = ""
+evidence = []
+recorded = { date = "", session = "", implemented_by = "" }
+
+[[gate]]
+id = "GATE-GAUNT-08"
+claim = "known-answer"
+claim_id = "GATE-GAUNT-08"
+section = "38.15"
+threshold = "Pilots: no Frontier or Moonshot work package is funded without a pilot record that has a falsifier, a computed ceiling, a fallback and a result; the plan-time pilots of §38.5 re-run at M0 and reproduce every count exactly and every timing ratio inside its recorded band"
+milestone = "M0"
+tier = ["G0:host"]
+controls = ["NC-0003"]
+
+[[gate.part]]
+milestone = "M0"
+status = "not-run"
+measured = ""
+evidence = []
+recorded = { date = "", session = "", implemented_by = "" }
+
+[[gate]]
+id = "GATE-GAUNT-10"
+claim = "known-answer"
+claim_id = "INV-GAUNT-06"
+section = "38.15"
+threshold = "Status accounting: the README table equals a fresh generation from gates.toml; a planted self-certification and a planted PASS with an uncaught control are each refused"
+milestone = "M0"
+tier = ["G0:host"]
+controls = ["NC-0004"]
+
+[[gate.part]]
+milestone = "M0"
+status = "not-run"
+measured = ""
+evidence = []
+recorded = { date = "", session = "", implemented_by = "" }
+
+[[gate]]
+id = "GATE-ARENA-04"
+claim = "known-answer"
+claim_id = "GATE-ARENA-04"
+section = "24.17"
+threshold = "Fixture 1: every analytic row within tolerance on the referee and inside the fidelity envelope on the batch tiers; the creep rigs flip at the stated thresholds; both negative controls are caught"
+milestone = "M1"
+tier = ["G1:referee"]
+controls = ["NC-0412"]
+
+[[gate.part]]
+milestone = "M1"
+status = "not-run"
+measured = ""
+evidence = []
+recorded = { date = "", session = "", implemented_by = "" }
+
+[[gate]]
+id = "GATE-ARENA-05"
+claim = "known-answer"
+claim_id = "GATE-ARENA-05"
+section = "24.17"
+threshold = "eval.preanalyze reproduces the tables of §24.10 exactly and refuses the unreachable verdict"
+milestone = "M1"
+tier = ["G1:host"]
+controls = ["NC-0398", "NC-0399"]
+
+[[gate.part]]
+milestone = "M1"
+status = "not-run"
+measured = ""
+evidence = []
+recorded = { date = "", session = "", implemented_by = "" }

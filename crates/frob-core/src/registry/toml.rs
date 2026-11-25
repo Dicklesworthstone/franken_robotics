@@ -303,6 +303,10 @@ impl std::error::Error for TomlError {}
 /// Loaders consume each known key via `take` / `require_*` / `opt_*` and conclude
 /// with [`Fields::finish`]. Dropping `Fields` without calling `finish` (and without
 /// an earlier accessor error) panics in debug builds so tests catch forgotten calls.
+///
+/// A loader that rejects a value it read successfully (a status outside a closed set,
+/// a bad id grammar) returns that error through [`Fields::fail`], which marks the
+/// table as failed exactly as an accessor error does: `return Err(f.fail(err))`.
 #[must_use = "call `Fields::finish()` to refuse unknown keys"]
 #[derive(Debug)]
 pub struct Fields {
@@ -328,6 +332,15 @@ impl Fields {
 
     pub fn take(&mut self, key: &str) -> Option<Spanned<Value>> {
         self.remaining.remove(key)
+    }
+
+    /// Record that the loader is abandoning this table because of `err`, and return `err`.
+    ///
+    /// Use it for value-level rejections (`return Err(f.fail(err))`). The drop guard then
+    /// treats the table like one whose accessor failed; `finish` is not required on this path.
+    pub fn fail<E>(&mut self, err: E) -> E {
+        self.failed = true;
+        err
     }
 
     fn missing(&mut self, key: &str) -> TomlError {
@@ -2236,6 +2249,45 @@ dependencies = [
         let mut f = Fields::new(table, "demo");
         let _ = f.require_int("a").expect("int");
         // Deliberately drop `f` without calling `f.finish()`.
+    }
+
+    /// A value-level rejection returned through `fail` drops `Fields` without a panic, and
+    /// still reports the loader's own error.
+    #[test]
+    fn fields_fail_marks_value_rejection() {
+        fn load(src: &[u8]) -> Result<i64, String> {
+            let table = parse(src).map_err(|e| e.to_string())?;
+            let mut f = Fields::new(table, "demo");
+            let a = f.require_int("a").map_err(|e| e.to_string())?;
+            if a < 0 {
+                return Err(f.fail(format!("`a` must be non-negative, got {a}")));
+            }
+            f.finish().map_err(|e| e.to_string())?;
+            Ok(a)
+        }
+        assert_eq!(load(b"a = 3\n"), Ok(3));
+        assert_eq!(load(b"a = -1\n"), Err("`a` must be non-negative, got -1".to_owned()));
+        // `finish` still refuses an unknown key on the success path.
+        assert!(load(b"a = 3\nb = 1\n").is_err());
+    }
+
+    /// Negative control for `fail`: the same rejection returned WITHOUT `fail` still trips
+    /// the drop guard in debug builds, so `fail` is what makes the difference.
+    #[test]
+    #[cfg_attr(not(debug_assertions), ignore)]
+    #[should_panic(expected = "dropped without calling finish")]
+    fn fields_value_rejection_without_fail_panics() {
+        fn load(src: &[u8]) -> Result<i64, String> {
+            let table = parse(src).map_err(|e| e.to_string())?;
+            let mut f = Fields::new(table, "demo");
+            let a = f.require_int("a").map_err(|e| e.to_string())?;
+            if a < 0 {
+                return Err(format!("`a` must be non-negative, got {a}"));
+            }
+            f.finish().map_err(|e| e.to_string())?;
+            Ok(a)
+        }
+        let _ = load(b"a = -1\n");
     }
 
     // Deterministic xorshift64* PRNG for property tests (no external crates).

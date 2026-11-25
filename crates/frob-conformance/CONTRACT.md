@@ -46,6 +46,16 @@
 - **Mutation isolation:** `gauntlet-mutations` is a compile error in release builds (`not(debug_assertions)`), lists every workspace crate's `conformance` feature, and never lists any per-control mutation feature (`cx-*`, `nc-*`).
 - **Memory safety:** `#![deny(unsafe_code)]` across workspace crates.
 
+### Gate Register Base Record Contract (`N38b-18`, `frob.gates/1`)
+
+`src/register/{row,counts}.rs` owns the base record types (`Claim`, `Status`, `GateBase`, `PartBase`, `BaseDocument`, `GateCountsExpectation`), depending strictly on `std` and `frob-core`. Cross-field validation and write-time refusals are implemented by `N40-01` against the following contract:
+- **Closed claim kinds (7):** `proof`, `known-answer`, `parity`, `fidelity`, `design-comparison`, `reality`, `performance`. `"method"` and `"Performance of the method"` are rejected and mapped to `design-comparison` only by explicit row edit.
+- **Reconciled status set (7):** `not-run` (printed `"not run"`, never passed), `pass`, `fail` (requires `measured` plus register-layer `commit`, `command`, and resolving `receipt`), `killed` (names kill gate and adopted fallback in `detail`; printed `"killed: fallback adopted (<fallback>)"`), `blocked` (names `OPEN-…` in `detail`; printed `"blocked: OPEN-…"`), `no-claim` (terminal, valid only for `claim = "reality"` import-lane gates), `superseded` (names successor gate in `detail`).
+- **Status per `[[gate.part]]`:** 40 convergence gates (`GATE-MARROW-01`, `GATE-HAB-01`, `GATE-HAB-13`, `GATE-ARENA-01`, `GATE-LEMMA-03`, and 35 others per `N40-02` step 5) plus 3 admission gates carry parts at multiple milestone exits. A gate's status is derived (`not-run` when no part is recorded or due; otherwise its latest due part).
+- **Kill rows measure nothing:** `kind = "kill"` rows never carry `claim`, `claim_id`, `threshold`, `tier`, `controls`, or `[[gate.part]]`.
+- **Four `pass` refusal conditions (validator contract, `N40-01`):** (a) `controls` is empty; (b) any listed control was not caught in the same run as the passing measurement; (c) `recorded.session` is a member of `recorded.implemented_by` (sorted comma-joined implementing sessions, `N38b-19`); (d) an `evidence` item or `claim_id` does not resolve in the artifact graph (`FROB-REF-869`), or the part's `receipt` does not name a committed `receipts/gates/<hash>.json` whose bytes hash to it.
+- **`measured` and append-only identity:** `measured` carries the measured value (non-empty and never byte-equal to `threshold`); gate IDs are unique and append-only; plan-time inventory (`278 + 111 + 32 = 421`, noting 112 in register intro) and dated workspace revisions live in `registry/gate_counts.toml`.
+
 ## 5. Refusals
 
 `frob-conformance` defines no public agent-verb refusal codes (`FROB-REF-nnn`); its checks fail closed with typed Gauntlet harness reasons (`N38-REF`):
@@ -77,7 +87,7 @@ The negative-control registry check and structural lints produce evidence of cla
 
 - At v0 (`BD-025`), the six tier test targets (`g0_laws`, `g1_known_answers`, `g2_parity`, `g3_metamorphic`, `g4_chaos`, `g5_determinism`) carry empty static entry tables and self-tests; tier execution semantics, site selection, and hash-named receipts land in `N38a-02`.
 - Automated control execution and staleness detection land in `N38b-04`; deterministic seeding of all 384 counterexamples and 510 stated control cells lands in `N38b-05`.
-- Full gate register fields, cross-field validation, and the `record_gate` example land in `N38b-18`, `N38b-19`, and `N40-01`.
+- Base gate-record types, D0 TOML printer, plan-time/revision count assertions, and additive schema contract land in `N38b-18`; cross-field validation, register-layer fields, and the `record_gate` example land in `N38b-19` and `N40-01`.
 - 325 plan-time known-answer rows carry no stated negative control yet; they fail closed as obligations until their owning chapter beads (`N38b-28` onward) register controls.
 
 ## Ten-fold harness

@@ -1,0 +1,28 @@
+# FrankenRobotics gate-register count expectations (schema frob.gate_counts/1, bead N38b-18).
+#
+# Written strictly in the frob-core::registry::toml subset (N34p2-01).
+# Any change to the committed registries/gates.toml row set requires appending a new
+# dated [[revision]] block below.
+
+schema = "frob.gate_counts/1"
+
+[plan_inventory]
+convergence = 278
+kill = 111
+admission = 32
+total = 421
+kill_intro_count = 112
+kill_intro_note = "Register introduction cites 112 kill gates while the first-inventory table sums 111; tracked explicitly without choosing between them until N40-03 reconciles the kill table."
+multi_part_convergence = 40
+multi_part_admission = 3
+multi_part_note = "Per N40-02 step 5 (round-4 review note #1198): 40 convergence gates carry parts at multiple milestone exits (including GATE-MARROW-01, GATE-HAB-01, GATE-HAB-13, GATE-ARENA-01, and GATE-LEMMA-03) alongside 3 admission gates."
+
+[[revision]]
+date = "2026-11-24"
+note = "Seeded v0 M0 Gauntlet gates and reserved M1 Arena example gates (BD-025 / N38b-18 base)."
+convergence = 6
+kill = 0
+admission = 0
+program = 0
+total = 6
+ids = ["GATE-GAUNT-01", "GATE-GAUNT-05", "GATE-GAUNT-08", "GATE-GAUNT-10", "GATE-ARENA-04", "GATE-ARENA-05"]

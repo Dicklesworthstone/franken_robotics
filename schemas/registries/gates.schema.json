@@ -2,7 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://frankenrobotics.local/schemas/registries/gates.schema.json",
   "title": "FrankenRobotics Gate Registry (frob.gates/1)",
-  "description": "Base gate record schema shipped at BD-002 (owned by N38b-18 and extended additively by N40-01). Status is recorded per [[gate.part]] and derived for each gate.",
+  "description": "Single schema for registries/gates.toml: first-commit BD-002 layout extended additively by N38b-18 (base record, seven closed claims, seven reconciled statuses, kill-row exemption) and extended additively by N40-01 (register layer). Status is recorded per [[gate.part]] (40 convergence gates including GATE-MARROW-01, GATE-HAB-01, GATE-HAB-13, GATE-ARENA-01, GATE-LEMMA-03 plus 3 admission gates carry multi-milestone parts per N40-02 step 5) and derived for each gate.",
+  "$comment": "VALIDATOR CONTRACT (enforced by N40-01): (1) claim takes one of the seven closed strings; 'method' and 'Performance of the method' are rejected and map to 'design-comparison' only by explicit row edit. (2) status is the reconciled union of seven values: not-run (printed 'not run', never passed), pass, fail (requires measured + register-layer commit, command, resolving receipt), killed (names kill gate and adopted fallback in detail; printed 'killed: fallback adopted (<fallback>)'), blocked (names OPEN-id in detail; printed 'blocked: OPEN-...'), no-claim (terminal, valid only for claim='reality' import-lane gates), superseded (names successor gate in detail). (3) pass is refused in four cases: (a) controls is empty; (b) any listed control was not caught in the same run as the passing measurement; (c) recorded.session is a member of recorded.implemented_by (sorted comma-joined implementing sessions, N38b-19); (d) an evidence item or claim_id does not resolve in the artifact graph (FROB-REF-869), or the part receipt does not name a committed receipts/gates/<hash>.json whose bytes hash to it. (4) measured carries the measured value with unit/interval or count, never empty and never byte-equal to threshold. (5) Gate identifiers are unique and append-only; retired IDs are tombstoned, never reused. (6) Milestone exit requires every gate with a due part to be pass or killed with fallback adopted. (7) kind='kill' rows measure nothing and must never carry claim, claim_id, threshold, tier, controls, or [[gate.part]].",
   "type": "object",
   "required": ["schema"],
   "additionalProperties": false,
@@ -22,8 +23,14 @@
       "type": "string",
       "enum": ["M0", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8"]
     },
+    "gate_kind": {
+      "type": "string",
+      "description": "Gate row kind (optional on pre-N40-01 base rows; kill rows carry no measurement fields).",
+      "enum": ["admission", "convergence", "program", "kill"]
+    },
     "claim_kind": {
       "type": "string",
+      "description": "Closed set of seven claim kinds; 'method' and 'Performance of the method' are rejected and require explicit edit to 'design-comparison'.",
       "enum": [
         "proof",
         "known-answer",
@@ -36,6 +43,7 @@
     },
     "part_status": {
       "type": "string",
+      "description": "Reconciled union of seven per-part statuses: six base values plus register-layer 'blocked'.",
       "enum": [
         "not-run",
         "pass",
@@ -59,7 +67,7 @@
         },
         "implemented_by": {
           "type": "string",
-          "description": "Sorted, comma-joined session identifiers of all implementers."
+          "description": "Sorted, comma-joined session identifiers of all implementers; pass is refused if recorded.session is a member (condition c)."
         }
       }
     },
@@ -75,7 +83,8 @@
           "$ref": "#/$defs/part_status"
         },
         "measured": {
-          "type": "string"
+          "type": "string",
+          "description": "Measured value with unit/interval or count; never empty or byte-equal to threshold on pass."
         },
         "evidence": {
           "type": "array",
@@ -162,26 +171,32 @@
               }
             ]
           }
+        },
+        {
+          "if": {
+            "properties": { "status": { "const": "superseded" } },
+            "required": ["status"]
+          },
+          "then": {
+            "required": ["detail"],
+            "properties": {
+              "detail": { "minLength": 1 }
+            }
+          }
         }
       ]
     },
     "gate_row": {
       "type": "object",
-      "required": [
-        "id",
-        "claim",
-        "claim_id",
-        "section",
-        "threshold",
-        "milestone",
-        "tier",
-        "controls"
-      ],
+      "required": ["id", "section"],
       "additionalProperties": false,
       "properties": {
         "id": {
           "type": "string",
           "minLength": 1
+        },
+        "kind": {
+          "$ref": "#/$defs/gate_kind"
         },
         "claim": {
           "$ref": "#/$defs/claim_kind"
@@ -200,6 +215,10 @@
         },
         "milestone": {
           "$ref": "#/$defs/milestone"
+        },
+        "decided": {
+          "$ref": "#/$defs/milestone",
+          "description": "Milestone at which a kill gate is decided (kill rows only)."
         },
         "tier": {
           "type": "array",
@@ -224,6 +243,36 @@
         }
       },
       "allOf": [
+        {
+          "if": {
+            "properties": { "kind": { "const": "kill" } },
+            "required": ["kind"]
+          },
+          "then": {
+            "not": {
+              "anyOf": [
+                { "required": ["claim"] },
+                { "required": ["claim_id"] },
+                { "required": ["threshold"] },
+                { "required": ["tier"] },
+                { "required": ["controls"] },
+                { "required": ["part"] }
+              ]
+            }
+          },
+          "else": {
+            "required": [
+              "id",
+              "claim",
+              "claim_id",
+              "section",
+              "threshold",
+              "milestone",
+              "tier",
+              "controls"
+            ]
+          }
+        },
         {
           "if": {
             "properties": {

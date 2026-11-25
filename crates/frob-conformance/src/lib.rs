@@ -9,6 +9,8 @@
 //!   bytes and `DesignId` (`N14a-26`).
 //! - `oracles`: oracle register (`registry/oracles.toml`), role grammar, pin-move audit,
 //!   pinned fixtures, and disagreement findings (`N38a-04`).
+//! - `register`: base gate-register record types (`Claim`, `Status`, `GateBase`, `PartBase`),
+//!   D0 TOML printer, and plan-time/revision count assertions (`N38b-18`; `frob-core`-only).
 //! - `tenfold`: ten-fold comparative benchmark harness skeleton, five harness records,
 //!   canonical bytes, append-only store, and dependency-free scorer boundary (`N39a-01`).
 
@@ -18,4 +20,5 @@ pub mod design_golden;
 pub mod e2e;
 pub mod gates_v0;
 pub mod oracles;
+pub mod register;
 pub mod tenfold;

@@ -268,11 +268,7 @@ fn write_record_section(out: &mut String, stored: &StoredAdmission) {
         "- **Output blob:** `receipts/outputs/{}.txt`",
         rec.output_hash
     );
-    let _ = writeln!(
-        out,
-        "- **Measured:** {}",
-        format_measured_inline(rec)
-    );
+    let _ = writeln!(out, "- **Measured:** {}", format_measured_inline(rec));
     if !rec.controls.is_empty() {
         let ctrls: Vec<String> = rec
             .controls
@@ -431,7 +427,11 @@ mod tests {
             toolchain: "nightly-2026-08-31".to_owned(),
             harness_receipt: None,
             command: vec!["cargo".to_owned(), "check".to_owned()],
-            exit: if status == AdmissionStatus::Pass { 0 } else { 1 },
+            exit: if status == AdmissionStatus::Pass {
+                0
+            } else {
+                1
+            },
             output_hash: "d".repeat(64),
             output_excerpt: "sample output\n".to_owned(),
             measured: vec![MeasuredEntry {
@@ -533,7 +533,10 @@ mod tests {
         let bystander = scratch.join("BYSTANDER.txt");
         fs::write(&bystander, "untouched\n").expect("write bystander");
         let fresh = render(&scratch).expect("render empty");
-        let edited = fresh.replace("| `INT-FSIM-01` | `FD-FSIM` | not run |", "| `INT-FSIM-01` | `FD-FSIM` | pass |");
+        let edited = fresh.replace(
+            "| `INT-FSIM-01` | `FD-FSIM` | not run |",
+            "| `INT-FSIM-01` | `FD-FSIM` | pass |",
+        );
         fs::write(scratch.join("DEPENDENCY_ADMISSION.md"), &edited).expect("write edited");
 
         let err = check_or_bless(&scratch, false).expect_err("hand edit must fail");

@@ -206,7 +206,11 @@ impl RefusalCode {
     #[must_use]
     pub const fn family(self) -> u8 {
         let n = self.number();
-        if n >= 1000 { (n / 1000) as u8 } else { (n / 100) as u8 }
+        if n >= 1000 {
+            (n / 1000) as u8
+        } else {
+            (n / 100) as u8
+        }
     }
 
     /// Canonical wire spelling `FROB-REF-[1-9][0-9]{2,3}`.

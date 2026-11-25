@@ -222,9 +222,7 @@ impl DecimalValue {
             return Err(TargetError::InvalidField {
                 table: table.to_owned(),
                 field: field.to_owned(),
-                reason: format!(
-                    "expected non-negative plain decimal string, found `{s}`"
-                ),
+                reason: format!("expected non-negative plain decimal string, found `{s}`"),
             });
         }
         let value: f64 = s.parse().map_err(|_| TargetError::InvalidField {
@@ -475,14 +473,12 @@ impl fmt::Display for JudgeError {
                 f,
                 "row {row} is a ratio row and cannot be judged with a point estimate (ADR-PERF-04)"
             ),
-            Self::WrongSide { row } => write!(
-                f,
-                "figure bound is on the wrong side for target row {row}"
-            ),
-            Self::NonFiniteFigure { row } => write!(
-                f,
-                "non-finite figure offered for target row {row}"
-            ),
+            Self::WrongSide { row } => {
+                write!(f, "figure bound is on the wrong side for target row {row}")
+            }
+            Self::NonFiniteFigure { row } => {
+                write!(f, "non-finite figure offered for target row {row}")
+            }
             Self::IncompleteTargetRow { row } => write!(
                 f,
                 "target row {row} is missing a required threshold value or direction"
@@ -522,7 +518,10 @@ impl fmt::Display for TargetError {
             Self::Io { path, message } => write!(f, "failed to read `{path}`: {message}"),
             Self::Toml(err) => write!(f, "TOML parse error: {err}"),
             Self::UnsupportedSchema { expected, found } => {
-                write!(f, "unsupported targets schema `{found}` (expected `{expected}`)")
+                write!(
+                    f,
+                    "unsupported targets schema `{found}` (expected `{expected}`)"
+                )
             }
             Self::MissingDecimation { row, unit } => write!(
                 f,
@@ -924,11 +923,13 @@ fn parse_target_row(label: &str, tbl: Table) -> Result<TargetRow, TargetError> {
     })?;
 
     let decimation = match decimation_raw {
-        Some(s) => Some(Decimation::parse(&s).map_err(|e| TargetError::InvalidField {
-            table: row_label.clone(),
-            field: "decimation".to_owned(),
-            reason: e.to_string(),
-        })?),
+        Some(s) => Some(
+            Decimation::parse(&s).map_err(|e| TargetError::InvalidField {
+                table: row_label.clone(),
+                field: "decimation".to_owned(),
+                reason: e.to_string(),
+            })?,
+        ),
         None => None,
     };
 
@@ -1044,19 +1045,23 @@ fn parse_tolerance_table(label: &str, tbl: Table) -> Result<ToleranceSpec, Targe
         None => None,
     };
     let direction = match dir_raw {
-        Some(s) => Some(Direction::parse(&s).ok_or_else(|| TargetError::InvalidField {
-            table: label.to_owned(),
-            field: "direction".to_owned(),
-            reason: format!("unknown direction `{s}`"),
-        })?),
+        Some(s) => Some(
+            Direction::parse(&s).ok_or_else(|| TargetError::InvalidField {
+                table: label.to_owned(),
+                field: "direction".to_owned(),
+                reason: format!("unknown direction `{s}`"),
+            })?,
+        ),
         None => None,
     };
     let setting_kind = match setting_kind_raw {
-        Some(s) => Some(SettingKind::parse(&s).map_err(|e| TargetError::InvalidField {
-            table: label.to_owned(),
-            field: "setting_kind".to_owned(),
-            reason: e.to_string(),
-        })?),
+        Some(s) => Some(
+            SettingKind::parse(&s).map_err(|e| TargetError::InvalidField {
+                table: label.to_owned(),
+                field: "setting_kind".to_owned(),
+                reason: e.to_string(),
+            })?,
+        ),
         None => None,
     };
     let reference_row = match ref_row_i {
@@ -1130,11 +1135,13 @@ fn parse_ambition_table(label: &str, tbl: Table) -> Result<AmbitionSpec, TargetE
         reason: format!("unknown direction `{dir_raw}`"),
     })?;
     let unit = match unit_raw {
-        Some(s) => Some(TargetUnit::parse(&s).ok_or_else(|| TargetError::InvalidField {
-            table: label.to_owned(),
-            field: "unit".to_owned(),
-            reason: format!("unknown unit `{s}`"),
-        })?),
+        Some(s) => Some(
+            TargetUnit::parse(&s).ok_or_else(|| TargetError::InvalidField {
+                table: label.to_owned(),
+                field: "unit".to_owned(),
+                reason: format!("unknown unit `{s}`"),
+            })?,
+        ),
         None => None,
     };
 
@@ -1198,11 +1205,13 @@ fn parse_sub_target_table(label: &str, tbl: Table) -> Result<SubTarget, TargetEr
         None => None,
     };
     let direction = match dir_raw {
-        Some(s) => Some(Direction::parse(&s).ok_or_else(|| TargetError::InvalidField {
-            table: label.to_owned(),
-            field: "direction".to_owned(),
-            reason: format!("unknown direction `{s}`"),
-        })?),
+        Some(s) => Some(
+            Direction::parse(&s).ok_or_else(|| TargetError::InvalidField {
+                table: label.to_owned(),
+                field: "direction".to_owned(),
+                reason: format!("unknown direction `{s}`"),
+            })?,
+        ),
         None => None,
     };
     let unit = TargetUnit::parse(&unit_raw).ok_or_else(|| TargetError::InvalidField {
@@ -1454,7 +1463,10 @@ fn lint_row_statuses(row_num: u8, target: &TargetRow, findings: &mut Vec<TargetF
                 ));
             }
             if tol.kind == ToleranceKind::RatioToIncumbent
-                && (tol.comparator.as_deref().is_none_or(|s| s.trim().is_empty())
+                && (tol
+                    .comparator
+                    .as_deref()
+                    .is_none_or(|s| s.trim().is_empty())
                     || tol.setting_kind.is_none())
             {
                 findings.push(TargetFinding::new(
@@ -1554,13 +1566,25 @@ fn lint_consistency_notes(registry: &TargetRegistry, findings: &mut Vec<TargetFi
             r1.planning_value.as_ref().and_then(|p| p.ambition.as_ref()),
             r1.interim_floor.as_ref(),
         ) {
-            let env_amb = pv1_amb.to_exact_rational().ok().and_then(|r| r.checked_mul_ratio(1, d1).ok());
-            let env_fl = fl1.value.to_exact_rational().ok().and_then(|r| r.checked_mul_ratio(1, d1).ok());
+            let env_amb = pv1_amb
+                .to_exact_rational()
+                .ok()
+                .and_then(|r| r.checked_mul_ratio(1, d1).ok());
+            let env_fl = fl1
+                .value
+                .to_exact_rational()
+                .ok()
+                .and_then(|r| r.checked_mul_ratio(1, d1).ok());
 
             if let (Some(env_amb), Some(amb2), Some(pv2_amb)) = (
                 env_amb,
-                r2.ambition.as_ref().and_then(|a| a.value.to_exact_rational().ok()),
-                r2.planning_value.as_ref().and_then(|p| p.ambition.as_ref()).and_then(|v| v.to_exact_rational().ok()),
+                r2.ambition
+                    .as_ref()
+                    .and_then(|a| a.value.to_exact_rational().ok()),
+                r2.planning_value
+                    .as_ref()
+                    .and_then(|p| p.ambition.as_ref())
+                    .and_then(|v| v.to_exact_rational().ok()),
             ) && env_amb.checked_mul_ratio(amb2.num(), amb2.den()).ok() != Some(pv2_amb)
             {
                 findings.push(TargetFinding::new(
@@ -1571,8 +1595,13 @@ fn lint_consistency_notes(registry: &TargetRegistry, findings: &mut Vec<TargetFi
             }
             if let (Some(env_amb), Some(amb3), Some(pv3_amb)) = (
                 env_amb,
-                r3.ambition.as_ref().and_then(|a| a.value.to_exact_rational().ok()),
-                r3.planning_value.as_ref().and_then(|p| p.ambition.as_ref()).and_then(|v| v.to_exact_rational().ok()),
+                r3.ambition
+                    .as_ref()
+                    .and_then(|a| a.value.to_exact_rational().ok()),
+                r3.planning_value
+                    .as_ref()
+                    .and_then(|p| p.ambition.as_ref())
+                    .and_then(|v| v.to_exact_rational().ok()),
             ) && env_amb.checked_mul_ratio(amb3.num(), amb3.den()).ok() != Some(pv3_amb)
             {
                 findings.push(TargetFinding::new(
@@ -1583,8 +1612,13 @@ fn lint_consistency_notes(registry: &TargetRegistry, findings: &mut Vec<TargetFi
             }
             if let (Some(env_fl), Some(tol2), Some(fl2)) = (
                 env_fl,
-                r2.tolerance.value.as_ref().and_then(|v| v.to_exact_rational().ok()),
-                r2.interim_floor.as_ref().and_then(|f| f.value.to_exact_rational().ok()),
+                r2.tolerance
+                    .value
+                    .as_ref()
+                    .and_then(|v| v.to_exact_rational().ok()),
+                r2.interim_floor
+                    .as_ref()
+                    .and_then(|f| f.value.to_exact_rational().ok()),
             ) && env_fl.checked_mul_ratio(tol2.num(), tol2.den()).ok() != Some(fl2)
             {
                 findings.push(TargetFinding::new(
@@ -1595,8 +1629,13 @@ fn lint_consistency_notes(registry: &TargetRegistry, findings: &mut Vec<TargetFi
             }
             if let (Some(env_fl), Some(tol3), Some(fl3)) = (
                 env_fl,
-                r3.tolerance.value.as_ref().and_then(|v| v.to_exact_rational().ok()),
-                r3.interim_floor.as_ref().and_then(|f| f.value.to_exact_rational().ok()),
+                r3.tolerance
+                    .value
+                    .as_ref()
+                    .and_then(|v| v.to_exact_rational().ok()),
+                r3.interim_floor
+                    .as_ref()
+                    .and_then(|f| f.value.to_exact_rational().ok()),
             ) && env_fl.checked_mul_ratio(tol3.num(), tol3.den()).ok() != Some(fl3)
             {
                 findings.push(TargetFinding::new(
@@ -1613,7 +1652,9 @@ fn lint_consistency_notes(registry: &TargetRegistry, findings: &mut Vec<TargetFi
         && let (Some(tol4), Some(pv4_amb), Some(pv4_tol)) = (
             r4.tolerance.value.as_ref(),
             r4.planning_value.as_ref().and_then(|p| p.ambition.as_ref()),
-            r4.planning_value.as_ref().and_then(|p| p.tolerance.as_ref()),
+            r4.planning_value
+                .as_ref()
+                .and_then(|p| p.tolerance.as_ref()),
         )
     {
         let exact = tol4.as_f64() * pv4_amb.as_f64();
@@ -1636,9 +1677,18 @@ fn lint_consistency_notes(registry: &TargetRegistry, findings: &mut Vec<TargetFi
     // `loaded_host_lower_bound = true` because the incumbent rate was measured under load.
     if let Some(r13) = registry.get(13) {
         if let (Some(tol13), Some(pv13_amb), Some(pv13_tol)) = (
-            r13.tolerance.value.as_ref().and_then(|v| v.to_exact_rational().ok()),
-            r13.planning_value.as_ref().and_then(|p| p.ambition.as_ref()).and_then(|v| v.to_exact_rational().ok()),
-            r13.planning_value.as_ref().and_then(|p| p.tolerance.as_ref()).and_then(|v| v.to_exact_rational().ok()),
+            r13.tolerance
+                .value
+                .as_ref()
+                .and_then(|v| v.to_exact_rational().ok()),
+            r13.planning_value
+                .as_ref()
+                .and_then(|p| p.ambition.as_ref())
+                .and_then(|v| v.to_exact_rational().ok()),
+            r13.planning_value
+                .as_ref()
+                .and_then(|p| p.tolerance.as_ref())
+                .and_then(|v| v.to_exact_rational().ok()),
         ) && pv13_amb.checked_mul_ratio(tol13.num(), tol13.den()).ok() != Some(pv13_tol)
         {
             findings.push(TargetFinding::new(
@@ -1762,7 +1812,11 @@ mod tests {
                 assert_eq!(pv.status, Some(NumberStatus::PlanningValue));
             }
             for sub in &row.sub_targets {
-                assert!(sub.status.is_some(), "row {row_num} sub_target {} missing status", sub.id);
+                assert!(
+                    sub.status.is_some(),
+                    "row {row_num} sub_target {} missing status",
+                    sub.id
+                );
             }
         }
 
@@ -1784,11 +1838,7 @@ mod tests {
         );
 
         // Negative control 2: removing `status` from a numeric tolerance block fails lint.
-        let no_status = raw.replacen(
-            "status = \"ambition\", ",
-            "",
-            1,
-        );
+        let no_status = raw.replacen("status = \"ambition\", ", "", 1);
         let parsed_no_status = parse_str(&no_status).expect("parse missing status scratch");
         let findings = lint_registry(&parsed_no_status, Some(&wl));
         assert!(
@@ -1800,7 +1850,8 @@ mod tests {
 
         // Negative control 3: a world_steps_per_s row with no decimation fails the loader.
         let no_dec = raw.replacen("decimation = \"10/1\"\n", "", 1);
-        let err = parse_str(&no_dec).expect_err("world_steps_per_s without decimation must fail loader");
+        let err =
+            parse_str(&no_dec).expect_err("world_steps_per_s without decimation must fail loader");
         assert!(
             matches!(
                 err,
@@ -1851,68 +1902,185 @@ mod tests {
         let d1 = u128::from(r1.decimation.expect("row 1 decimation").num());
         assert_eq!(d1, 10);
 
-        let r1_amb_ws = r1.planning_value.as_ref().unwrap().ambition.as_ref().unwrap().to_exact_rational().unwrap();
+        let r1_amb_ws = r1
+            .planning_value
+            .as_ref()
+            .unwrap()
+            .ambition
+            .as_ref()
+            .unwrap()
+            .to_exact_rational()
+            .unwrap();
         let r1_amb_env = r1_amb_ws.checked_mul_ratio(1, d1).unwrap();
         assert_eq!(r1_amb_env.exact_u64(), Some(400_000));
 
-        let r1_floor_ws = r1.interim_floor.as_ref().unwrap().value.to_exact_rational().unwrap();
+        let r1_floor_ws = r1
+            .interim_floor
+            .as_ref()
+            .unwrap()
+            .value
+            .to_exact_rational()
+            .unwrap();
         let r1_floor_env = r1_floor_ws.checked_mul_ratio(1, d1).unwrap();
         assert_eq!(r1_floor_env.exact_u64(), Some(200_000));
 
         // 1. 0.85 * 400 k = 340 k
-        let r2_amb_ratio = r2.ambition.as_ref().unwrap().value.to_exact_rational().unwrap();
-        let r2_amb_plan = r2.planning_value.as_ref().unwrap().ambition.as_ref().unwrap().to_exact_rational().unwrap();
+        let r2_amb_ratio = r2
+            .ambition
+            .as_ref()
+            .unwrap()
+            .value
+            .to_exact_rational()
+            .unwrap();
+        let r2_amb_plan = r2
+            .planning_value
+            .as_ref()
+            .unwrap()
+            .ambition
+            .as_ref()
+            .unwrap()
+            .to_exact_rational()
+            .unwrap();
         assert_eq!(
-            r1_amb_env.checked_mul_ratio(r2_amb_ratio.num(), r2_amb_ratio.den()).unwrap(),
+            r1_amb_env
+                .checked_mul_ratio(r2_amb_ratio.num(), r2_amb_ratio.den())
+                .unwrap(),
             r2_amb_plan
         );
         assert_eq!(r2_amb_plan.exact_u64(), Some(340_000));
 
         // 2. 0.70 * 400 k = 280 k
-        let r3_amb_ratio = r3.ambition.as_ref().unwrap().value.to_exact_rational().unwrap();
-        let r3_amb_plan = r3.planning_value.as_ref().unwrap().ambition.as_ref().unwrap().to_exact_rational().unwrap();
+        let r3_amb_ratio = r3
+            .ambition
+            .as_ref()
+            .unwrap()
+            .value
+            .to_exact_rational()
+            .unwrap();
+        let r3_amb_plan = r3
+            .planning_value
+            .as_ref()
+            .unwrap()
+            .ambition
+            .as_ref()
+            .unwrap()
+            .to_exact_rational()
+            .unwrap();
         assert_eq!(
-            r1_amb_env.checked_mul_ratio(r3_amb_ratio.num(), r3_amb_ratio.den()).unwrap(),
+            r1_amb_env
+                .checked_mul_ratio(r3_amb_ratio.num(), r3_amb_ratio.den())
+                .unwrap(),
             r3_amb_plan
         );
         assert_eq!(r3_amb_plan.exact_u64(), Some(280_000));
 
         // 3. 0.75 * 200 k = 150 k
-        let r2_tol_ratio = r2.tolerance.value.as_ref().unwrap().to_exact_rational().unwrap();
-        let r2_floor = r2.interim_floor.as_ref().unwrap().value.to_exact_rational().unwrap();
+        let r2_tol_ratio = r2
+            .tolerance
+            .value
+            .as_ref()
+            .unwrap()
+            .to_exact_rational()
+            .unwrap();
+        let r2_floor = r2
+            .interim_floor
+            .as_ref()
+            .unwrap()
+            .value
+            .to_exact_rational()
+            .unwrap();
         assert_eq!(
-            r1_floor_env.checked_mul_ratio(r2_tol_ratio.num(), r2_tol_ratio.den()).unwrap(),
+            r1_floor_env
+                .checked_mul_ratio(r2_tol_ratio.num(), r2_tol_ratio.den())
+                .unwrap(),
             r2_floor
         );
         assert_eq!(r2_floor.exact_u64(), Some(150_000));
 
         // 4. 0.60 * 200 k = 120 k
-        let r3_tol_ratio = r3.tolerance.value.as_ref().unwrap().to_exact_rational().unwrap();
-        let r3_floor = r3.interim_floor.as_ref().unwrap().value.to_exact_rational().unwrap();
+        let r3_tol_ratio = r3
+            .tolerance
+            .value
+            .as_ref()
+            .unwrap()
+            .to_exact_rational()
+            .unwrap();
+        let r3_floor = r3
+            .interim_floor
+            .as_ref()
+            .unwrap()
+            .value
+            .to_exact_rational()
+            .unwrap();
         assert_eq!(
-            r1_floor_env.checked_mul_ratio(r3_tol_ratio.num(), r3_tol_ratio.den()).unwrap(),
+            r1_floor_env
+                .checked_mul_ratio(r3_tol_ratio.num(), r3_tol_ratio.den())
+                .unwrap(),
             r3_floor
         );
         assert_eq!(r3_floor.exact_u64(), Some(120_000));
 
         // 5. 1.25 * 410 s = 512.5 s, printed 513 s
         let r4_ratio = r4.tolerance.value.as_ref().unwrap().as_f64();
-        let r4_amb = r4.planning_value.as_ref().unwrap().ambition.as_ref().unwrap().as_f64();
-        let r4_tol_printed = r4.planning_value.as_ref().unwrap().tolerance.as_ref().unwrap().as_f64();
+        let r4_amb = r4
+            .planning_value
+            .as_ref()
+            .unwrap()
+            .ambition
+            .as_ref()
+            .unwrap()
+            .as_f64();
+        let r4_tol_printed = r4
+            .planning_value
+            .as_ref()
+            .unwrap()
+            .tolerance
+            .as_ref()
+            .unwrap()
+            .as_f64();
         assert!((r4_ratio * r4_amb - 512.5).abs() < 1e-9);
         assert_eq!((r4_ratio * r4_amb + 0.5).floor(), 513.0);
         assert_eq!(r4_tol_printed, 513.0);
 
         // 6. 0.5 * 550 k = 275 k (and loaded-host lower-bound flag present)
-        let r13_ratio = r13.tolerance.value.as_ref().unwrap().to_exact_rational().unwrap();
-        let r13_amb = r13.planning_value.as_ref().unwrap().ambition.as_ref().unwrap().to_exact_rational().unwrap();
-        let r13_tol = r13.planning_value.as_ref().unwrap().tolerance.as_ref().unwrap().to_exact_rational().unwrap();
+        let r13_ratio = r13
+            .tolerance
+            .value
+            .as_ref()
+            .unwrap()
+            .to_exact_rational()
+            .unwrap();
+        let r13_amb = r13
+            .planning_value
+            .as_ref()
+            .unwrap()
+            .ambition
+            .as_ref()
+            .unwrap()
+            .to_exact_rational()
+            .unwrap();
+        let r13_tol = r13
+            .planning_value
+            .as_ref()
+            .unwrap()
+            .tolerance
+            .as_ref()
+            .unwrap()
+            .to_exact_rational()
+            .unwrap();
         assert_eq!(
-            r13_amb.checked_mul_ratio(r13_ratio.num(), r13_ratio.den()).unwrap(),
+            r13_amb
+                .checked_mul_ratio(r13_ratio.num(), r13_ratio.den())
+                .unwrap(),
             r13_tol
         );
         assert_eq!(r13_tol.exact_u64(), Some(275_000));
-        assert!(r13.incumbent_reference.as_ref().unwrap().loaded_host_lower_bound);
+        assert!(
+            r13.incumbent_reference
+                .as_ref()
+                .unwrap()
+                .loaded_host_lower_bound
+        );
 
         // 7. 0.67 * 4.0 M = 2.68 M (printed 2.7 M)
         let r1_ratio = r1.tolerance.value.as_ref().unwrap().as_f64();
@@ -1922,14 +2090,28 @@ mod tests {
 
         // 8. 0.67 * 2.55 M = 1.7085 M (1.71 M; printed 1.7 M)
         let r7_ratio = r7.tolerance.value.as_ref().unwrap().as_f64();
-        let r7_amb = r7.planning_value.as_ref().unwrap().ambition.as_ref().unwrap().as_f64();
+        let r7_amb = r7
+            .planning_value
+            .as_ref()
+            .unwrap()
+            .ambition
+            .as_ref()
+            .unwrap()
+            .as_f64();
         let r7_exact = r7_ratio * r7_amb;
         assert!((r7_exact - 1_708_500.0).abs() < 1e-6);
         assert!(((r7_exact / 1_000_000.0) * 100.0).round() / 100.0 == 1.71);
 
         // 9. 0.67 * 1.68 M = 1.1256 M (1.13 M; printed 1.1 M)
         let r8_ratio = r8.tolerance.value.as_ref().unwrap().as_f64();
-        let r8_amb = r8.planning_value.as_ref().unwrap().ambition.as_ref().unwrap().as_f64();
+        let r8_amb = r8
+            .planning_value
+            .as_ref()
+            .unwrap()
+            .ambition
+            .as_ref()
+            .unwrap()
+            .as_f64();
         let r8_exact = r8_ratio * r8_amb;
         assert!((r8_exact - 1_125_600.0).abs() < 1e-6);
         assert!(((r8_exact / 1_000_000.0) * 100.0).round() / 100.0 == 1.13);
@@ -1952,13 +2134,28 @@ mod tests {
         assert!((derived_tol - 17.5).abs() < 1e-9);
         assert_eq!(derived_tol.floor(), 17.0);
 
-        let r1_amb = r1.planning_value.as_ref().unwrap().ambition.as_ref().unwrap().as_f64();
+        let r1_amb = r1
+            .planning_value
+            .as_ref()
+            .unwrap()
+            .ambition
+            .as_ref()
+            .unwrap()
+            .as_f64();
         let r10_amb = r10.ambition.as_ref().unwrap().value.as_f64();
         let derived_amb = (r1_amb * r10_amb) / steps_per_design;
         assert!((derived_amb - 43.0).abs() < 1e-9);
 
-        let sub_tol = r21.sub_targets.iter().find(|s| s.id == "derived_tolerance").unwrap();
-        let sub_amb = r21.sub_targets.iter().find(|s| s.id == "derived_ambition").unwrap();
+        let sub_tol = r21
+            .sub_targets
+            .iter()
+            .find(|s| s.id == "derived_tolerance")
+            .unwrap();
+        let sub_amb = r21
+            .sub_targets
+            .iter()
+            .find(|s| s.id == "derived_ambition")
+            .unwrap();
         assert_eq!(sub_tol.value.as_ref().unwrap().as_f64(), 17.0);
         assert_eq!(sub_amb.value.as_ref().unwrap().as_f64(), 43.0);
     }
@@ -2060,8 +2257,14 @@ mod tests {
     #[test]
     fn unknown_row_refused() {
         let (reg, _) = load_committed();
-        assert_eq!(reg.threshold(0, None), Err(JudgeError::UnknownRow { row: 0 }));
-        assert_eq!(reg.threshold(23, None), Err(JudgeError::UnknownRow { row: 23 }));
+        assert_eq!(
+            reg.threshold(0, None),
+            Err(JudgeError::UnknownRow { row: 0 })
+        );
+        assert_eq!(
+            reg.threshold(23, None),
+            Err(JudgeError::UnknownRow { row: 23 })
+        );
         assert_eq!(
             reg.judge(0, Figure::Point(1.0)),
             Err(JudgeError::UnknownRow { row: 0 })
@@ -2070,7 +2273,10 @@ mod tests {
             reg.judge(99, Figure::LowerBound(1.0)),
             Err(JudgeError::UnknownRow { row: 99 })
         );
-        assert_eq!(reg.planning_value(23), Err(JudgeError::UnknownRow { row: 23 }));
+        assert_eq!(
+            reg.planning_value(23),
+            Err(JudgeError::UnknownRow { row: 23 })
+        );
     }
 
     #[test]

@@ -10,6 +10,7 @@ description = "Workspace verification tooling for FrankenRobotics (skeleton; che
 
 [dependencies]
 frob-core = { path = "../frob-core" }
+fs-blake3 = { path = "../../../frankensim/crates/fs-blake3", default-features = false }
 
 [lints]
 workspace = true

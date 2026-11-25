@@ -53,6 +53,7 @@ name = "xtask"
 version = "0.0.1"
 dependencies = [
  "frob-core",
+ "fs-blake3",
 ]
 
 [[patch.unused]]

@@ -5,20 +5,40 @@
 //!   padding lanes hold `-0.0` so `-0.0 + (-0.0) = -0.0`).
 //! - `out_u[i] = x[i].wrapping_add(y[i])` in `u32` (padding lanes hold `0`).
 
+use std::collections::BTreeMap;
 use std::ops::Range;
 
 use frob_core::evidence::DetClass;
 use frob_core::id::Blake3;
 
-use crate::backend::{KernelArgs, KernelEntry, KernelSource};
+use crate::backend::{CpuKernelSymbol, KernelArgs, KernelEntry};
+use crate::harness::{HarnessInput, HarnessOutputSpec};
 use crate::manifest::{
     ArgDecl, ArgLayout, ArgView, CapExpr, ElemKind, ElemType, Footprint, FootprintEvidence,
     KernelClass, KernelId, KernelManifest, KernelRole, LaneScope, NumericalContract,
-    PrecisionProfile, ResourceBounds, StageSignature, StrideUnit,
+    PrecisionProfile, ResourceBounds, ShapeClassCaps, StageSignature, StrideUnit,
 };
 
 pub const K_SELFTEST_NAME: &str = "K-selftest";
 pub const K_SELFTEST_SYMBOL: &str = "frob_kernels::selftest::k_selftest_cpu";
+
+/// Shared-dialect source for `K-selftest` consumed by CUDA (`BD-015`) and Metal (`BD-016`).
+pub const K_SELFTEST_DIALECT_SOURCE: &str = "\
+FROB_KERNEL(k_selftest,
+    FROB_BUF_RO(f32, a, 0),
+    FROB_BUF_RO(f32, b, 1),
+    FROB_BUF_RO(u32, x, 2),
+    FROB_BUF_RO(u32, y, 3),
+    FROB_BUF(f32, out_f, 4),
+    FROB_BUF(u32, out_u, 5)
+)
+    const u32 i = frob_gid;
+    if (i < FROB_WORLDS) {
+        out_f[i] = a[i] + b[i];
+        out_u[i] = x[i] + y[i];
+    }
+FROB_KERNEL_END
+";
 
 /// Seeded inputs for `K-selftest`, including explicit padding lanes.
 #[derive(Debug, Clone, PartialEq)]
@@ -56,6 +76,38 @@ impl SelftestInputs {
     pub fn y_bytes(&self) -> Vec<u8> {
         u32_slice_to_bytes(&self.y)
     }
+
+    /// Build the four [`HarnessInput`] descriptors (`a`, `b`, `x`, `y`) for [`crate::harness::Harness::run`].
+    #[must_use]
+    pub fn harness_inputs(&self) -> [HarnessInput; 4] {
+        let total = self.total_lanes();
+        [
+            HarnessInput {
+                name: "a".into(),
+                elem: ElemType::F32,
+                len: total,
+                bytes: self.a_bytes(),
+            },
+            HarnessInput {
+                name: "b".into(),
+                elem: ElemType::F32,
+                len: total,
+                bytes: self.b_bytes(),
+            },
+            HarnessInput {
+                name: "x".into(),
+                elem: ElemType::U32,
+                len: total,
+                bytes: self.x_bytes(),
+            },
+            HarnessInput {
+                name: "y".into(),
+                elem: ElemType::U32,
+                len: total,
+                bytes: self.y_bytes(),
+            },
+        ]
+    }
 }
 
 /// Scalar reference outputs for bit-for-bit verification of `K-selftest`.
@@ -74,6 +126,39 @@ impl SelftestOutputs {
     #[must_use]
     pub fn out_u_bytes(&self) -> Vec<u8> {
         u32_slice_to_bytes(&self.out_u)
+    }
+}
+
+/// Output slab specifications (`out_f`, `out_u`) for `K-selftest`.
+#[must_use]
+pub fn k_selftest_output_specs(total_lanes: usize) -> [HarnessOutputSpec; 2] {
+    [
+        HarnessOutputSpec {
+            name: "out_f".into(),
+            elem: ElemType::F32,
+            len: total_lanes,
+        },
+        HarnessOutputSpec {
+            name: "out_u".into(),
+            elem: ElemType::U32,
+            len: total_lanes,
+        },
+    ]
+}
+
+/// Shape class matching `total_lanes` worlds for `K-selftest`.
+#[must_use]
+pub fn k_selftest_shape_class(total_lanes: usize) -> ShapeClassCaps {
+    ShapeClassCaps {
+        name: format!("selftest-w{total_lanes}"),
+        nv_cap: 12,
+        link_cap: 13,
+        contact_cap: 24,
+        row_cap: 72,
+        sample_cap: 16,
+        actuator_cap: 12,
+        worlds: total_lanes as u64,
+        extra: BTreeMap::new(),
     }
 }
 
@@ -122,19 +207,15 @@ pub fn k_selftest_seeded_inputs(
     for lane in 0..active_lanes {
         let h0 = splitmix64(seed ^ (lane as u64).wrapping_mul(0x9E37_79B9_7F4A_7C15));
         let h1 = splitmix64(h0 ^ 0xBF58_476D_1CE4_E5B9);
-        let af = ((h0 as i32) as f32) * 0.000_000_25_f32;
-        let bf = (((h0 >> 32) as i32) as f32) * 0.000_000_25_f32;
-        a.push(af);
-        b.push(bf);
+        a.push(((h0 as i32) as f32) * 0.000_000_25_f32);
+        b.push((((h0 >> 32) as i32) as f32) * 0.000_000_25_f32);
         x.push(h1 as u32);
         y.push((h1 >> 32) as u32);
     }
-    for _ in 0..pad_lanes {
-        a.push(-0.0_f32);
-        b.push(-0.0_f32);
-        x.push(0);
-        y.push(0);
-    }
+    a.resize(total, -0.0_f32);
+    b.resize(total, -0.0_f32);
+    x.resize(total, 0);
+    y.resize(total, 0);
     SelftestInputs {
         active_lanes,
         pad_lanes,
@@ -228,15 +309,17 @@ pub fn k_selftest_manifest() -> KernelManifest {
     manifest
 }
 
-/// Complete `batch-cpu` [`KernelEntry`] for `K-selftest`.
+/// Complete multi-backend [`KernelEntry`] for `K-selftest` (CPU symbol + shared dialect source).
 #[must_use]
 pub fn k_selftest_entry() -> KernelEntry {
     KernelEntry {
         manifest: k_selftest_manifest(),
-        source: KernelSource::CpuSymbol {
+        cpu_symbol: Some(CpuKernelSymbol {
             symbol_name: K_SELFTEST_SYMBOL.into(),
             func: k_selftest_cpu,
-        },
+        }),
+        dialect_source: Some(K_SELFTEST_DIALECT_SOURCE.into()),
+        program_footprint: None,
         compile_bindings: Vec::new(),
     }
 }
@@ -248,8 +331,7 @@ fn splitmix64(mut x: u64) -> u64 {
     x ^ (x >> 31)
 }
 
-#[must_use]
-pub fn f32_slice_to_bytes(vals: &[f32]) -> Vec<u8> {
+fn f32_slice_to_bytes(vals: &[f32]) -> Vec<u8> {
     let mut out = Vec::with_capacity(vals.len() * 4);
     for &v in vals {
         out.extend_from_slice(&v.to_le_bytes());
@@ -257,8 +339,7 @@ pub fn f32_slice_to_bytes(vals: &[f32]) -> Vec<u8> {
     out
 }
 
-#[must_use]
-pub fn u32_slice_to_bytes(vals: &[u32]) -> Vec<u8> {
+fn u32_slice_to_bytes(vals: &[u32]) -> Vec<u8> {
     let mut out = Vec::with_capacity(vals.len() * 4);
     for &v in vals {
         out.extend_from_slice(&v.to_le_bytes());

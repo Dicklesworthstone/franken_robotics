@@ -35,21 +35,39 @@
 //!     let _ = backend.launch(plan, b_mut, cx);
 //! }
 //! ```
+//!
+//! [`BufferSet`] is not `Clone`, preventing accidental aliasing or misaligned
+//! copies of 256-byte-aligned backing storage:
+//!
+//! ```compile_fail
+//! use frob_kernels::backend::BufferSet;
+//! fn bad_clone(bufs: &BufferSet) -> BufferSet {
+//!     bufs.clone()
+//! }
+//! ```
 
 use std::collections::BTreeMap;
 use std::ops::Range;
 use std::sync::Arc;
-use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
 
 use frob_core::refusal::{Refusal, RefusalCode, RefusalFingerprint, Repair, RetryPolicy};
 
 use crate::manifest::{
-    DeclaredOutput, ElemType, KernelId, KernelManifest, ShapeClassCaps, SlabBinding,
+    DeclaredOutput, ElemType, KernelId, KernelManifest, ProgramFootprint, ShapeClassCaps,
+    SlabBinding,
 };
 use crate::receipt::Receipt;
 
 /// Required slab base alignment in bytes (`BD-014`).
 pub const SLAB_ALIGNMENT_BYTES: usize = 256;
+
+static NEXT_ALLOCATION_ID: AtomicU64 = AtomicU64::new(1);
+static NEXT_BACKEND_TAG: AtomicU64 = AtomicU64::new(1);
+
+pub(crate) fn next_backend_tag() -> u64 {
+    NEXT_BACKEND_TAG.fetch_add(1, Ordering::Relaxed)
+}
 
 /// Cancellation capability context observed between kernel launches (`BD-014`).
 ///
@@ -129,9 +147,12 @@ pub struct BufferLayout {
 }
 
 /// One 256-byte-aligned backing slab allocated in safe Rust (zero `unsafe`).
-#[derive(Debug, Clone)]
+///
+/// Intentionally not `Clone` and with private metadata so alignment offsets and
+/// validated element types cannot be invalidated after allocation.
+#[derive(Debug)]
 pub struct AlignedSlab {
-    pub spec: SlabSpec,
+    spec: SlabSpec,
     raw: Vec<u8>,
     offset: usize,
     byte_len: usize,
@@ -139,7 +160,7 @@ pub struct AlignedSlab {
 
 impl AlignedSlab {
     #[must_use]
-    pub fn new(spec: SlabSpec) -> Self {
+    pub(crate) fn new(spec: SlabSpec) -> Self {
         let align = spec.alignment.max(SLAB_ALIGNMENT_BYTES);
         let byte_len = spec.byte_len();
         let raw = vec![0u8; byte_len.saturating_add(align)];
@@ -156,78 +177,119 @@ impl AlignedSlab {
     }
 
     #[must_use]
+    pub const fn spec(&self) -> &SlabSpec {
+        &self.spec
+    }
+
+    #[must_use]
     pub fn as_bytes(&self) -> &[u8] {
         &self.raw[self.offset..self.offset + self.byte_len]
     }
 
-    pub fn as_bytes_mut(&mut self) -> &mut [u8] {
+    pub(crate) fn as_bytes_mut(&mut self) -> &mut [u8] {
         let end = self.offset + self.byte_len;
         &mut self.raw[self.offset..end]
     }
 
     #[must_use]
-    pub fn byte_len(&self) -> usize {
+    pub const fn byte_len(&self) -> usize {
         self.byte_len
     }
 }
 
-/// Environment slab set returned by [`KernelBackend::allocate`].
-#[derive(Debug, Clone)]
+/// Environment slab handle set returned by [`KernelBackend::allocate`].
+///
+/// Intentionally not `Clone`, with immutable descriptors and per-slab written
+/// tracking so output slabs cannot be read before their producer completes and
+/// host-to-device transfers always flow through [`KernelBackend::upload`].
+///
+/// GPU annex backends (`BD-015` CUDA, `BD-016` Metal) construct a device-backed
+/// handle set with [`BufferSet::for_device`] (zero host slab allocation) and
+/// index their native device buffers by [`BufferSet::allocation_id`].
+#[derive(Debug)]
 pub struct BufferSet {
-    slabs: Vec<AlignedSlab>,
+    allocation_id: u64,
+    specs: Vec<SlabSpec>,
+    written: Vec<bool>,
+    cpu_slabs: Option<Vec<AlignedSlab>>,
 }
 
 impl BufferSet {
     #[must_use]
-    pub fn allocate_aligned(layout: &BufferLayout) -> Self {
-        let slabs = layout.slabs.iter().cloned().map(AlignedSlab::new).collect();
-        Self { slabs }
+    pub(crate) fn new_cpu(layout: &BufferLayout) -> Self {
+        let specs = layout.slabs.clone();
+        let written = vec![false; specs.len()];
+        let slabs = specs.iter().cloned().map(AlignedSlab::new).collect();
+        Self {
+            allocation_id: NEXT_ALLOCATION_ID.fetch_add(1, Ordering::Relaxed),
+            specs,
+            written,
+            cpu_slabs: Some(slabs),
+        }
+    }
+
+    /// Construct a device-backed handle set for a GPU annex (`BD-015`/`BD-016`).
+    ///
+    /// Allocates no CPU backing slabs; the annex stores native device buffers
+    /// keyed by [`BufferSet::allocation_id`].
+    #[must_use]
+    pub fn for_device(layout: &BufferLayout) -> Self {
+        let specs = layout.slabs.clone();
+        let written = vec![false; specs.len()];
+        Self {
+            allocation_id: NEXT_ALLOCATION_ID.fetch_add(1, Ordering::Relaxed),
+            specs,
+            written,
+            cpu_slabs: None,
+        }
+    }
+
+    #[must_use]
+    pub const fn allocation_id(&self) -> u64 {
+        self.allocation_id
     }
 
     #[must_use]
     pub fn len(&self) -> usize {
-        self.slabs.len()
+        self.specs.len()
     }
 
     #[must_use]
     pub fn is_empty(&self) -> bool {
-        self.slabs.is_empty()
+        self.specs.is_empty()
     }
 
     #[must_use]
-    pub fn get(&self, id: SlabId) -> Option<&AlignedSlab> {
-        self.slabs.get(id.0)
+    pub fn spec(&self, id: SlabId) -> Option<&SlabSpec> {
+        self.specs.get(id.0)
     }
 
-    pub fn get_mut(&mut self, id: SlabId) -> Option<&mut AlignedSlab> {
-        self.slabs.get_mut(id.0)
+    #[must_use]
+    pub fn is_written(&self, id: SlabId) -> bool {
+        self.written.get(id.0).copied().unwrap_or(false)
     }
 
-    /// Write initial host bytes into a slab prior to launch.
-    pub fn upload(&mut self, id: SlabId, bytes: &[u8]) -> Result<(), Refusal> {
-        let slab = self.slabs.get_mut(id.0).ok_or_else(|| {
-            refusal_601(
+    /// Mark `id` written after a backend upload or completed producer launch.
+    pub fn mark_written(&mut self, id: SlabId) -> Result<(), Refusal> {
+        let slot = self.written.get_mut(id.0).ok_or_else(|| {
+            refusal_802(
                 format!("/slab/{}", id.0),
-                format!("slab {} out of range", id.0),
+                format!("slab {} out of range (len {})", id.0, self.specs.len()),
+                "allocated slab id",
             )
         })?;
-        if bytes.len() != slab.byte_len() {
-            return Err(refusal_603(
-                &slab.spec.name,
-                format!(
-                    "upload size mismatch: got {} bytes, slab `{}` requires {}",
-                    bytes.len(),
-                    slab.spec.name,
-                    slab.byte_len()
-                ),
-            ));
-        }
-        slab.as_bytes_mut().copy_from_slice(bytes);
+        *slot = true;
         Ok(())
     }
 
-    pub(crate) fn slabs_mut(&mut self) -> &mut [AlignedSlab] {
-        &mut self.slabs
+    /// Read-only view of an aligned host slab when this set belongs to `batch-cpu`.
+    #[must_use]
+    pub fn cpu_slab(&self, id: SlabId) -> Option<&AlignedSlab> {
+        self.cpu_slabs.as_deref()?.get(id.0)
+    }
+
+    pub(crate) fn cpu_slabs_mut(&mut self) -> Option<&mut [AlignedSlab]> {
+        self.cpu_slabs.as_deref_mut()
     }
 }
 
@@ -242,7 +304,7 @@ pub struct KernelArgs<'a> {
 
 impl<'a> KernelArgs<'a> {
     #[must_use]
-    pub fn new(
+    pub(crate) fn new(
         inputs: BTreeMap<&'a str, &'a [u8]>,
         outputs: BTreeMap<&'a str, (&'a mut [u8], u32)>,
     ) -> Self {
@@ -268,16 +330,14 @@ impl<'a> KernelArgs<'a> {
     /// Write one `f32` element at global `lane` (within this worker's chunk) to output `name`.
     pub fn write_f32(&mut self, name: &str, lane: u32, val: f32) {
         let (buf, start_lane) = self.outputs.get_mut(name).expect("output arg bound");
-        let local = (lane - *start_lane) as usize;
-        let off = local * 4;
+        let off = ((lane - *start_lane) as usize) * 4;
         buf[off..off + 4].copy_from_slice(&val.to_le_bytes());
     }
 
     /// Write one `u32` element at global `lane` (within this worker's chunk) to output `name`.
     pub fn write_u32(&mut self, name: &str, lane: u32, val: u32) {
         let (buf, start_lane) = self.outputs.get_mut(name).expect("output arg bound");
-        let local = (lane - *start_lane) as usize;
-        let off = local * 4;
+        let off = ((lane - *start_lane) as usize) * 4;
         buf[off..off + 4].copy_from_slice(&val.to_le_bytes());
     }
 }
@@ -285,21 +345,26 @@ impl<'a> KernelArgs<'a> {
 /// Function pointer signature for a `batch-cpu` kernel symbol.
 pub type CpuKernelFn = fn(&mut KernelArgs<'_>, Range<u32>);
 
-/// Kernel implementation attached to a [`KernelManifest`].
+/// Rust function symbol used by `batch-cpu`.
 #[derive(Clone)]
-pub enum KernelSource {
-    CpuSymbol {
-        symbol_name: String,
-        func: CpuKernelFn,
-    },
-    DialectText(String),
+pub struct CpuKernelSymbol {
+    pub symbol_name: String,
+    pub func: CpuKernelFn,
 }
 
-/// One manifest + source + compile-time binding view inside a [`KernelLibrary`].
+/// One manifest + multi-backend sources + optional KIR footprint evidence inside a [`KernelLibrary`].
+///
+/// Carrying optional `cpu_symbol` and `dialect_source` side by side allows one
+/// [`KernelEntry`] (such as `K-selftest` or `K-cay-step`) to execute on
+/// `batch-cpu`, CUDA (`BD-015`), and Metal (`BD-016`) through the same
+/// [`crate::harness::Harness::run`] call by swapping only `&mut dyn KernelBackend`.
 #[derive(Clone)]
 pub struct KernelEntry {
     pub manifest: KernelManifest,
-    pub source: KernelSource,
+    pub cpu_symbol: Option<CpuKernelSymbol>,
+    pub dialect_source: Option<String>,
+    /// Required when `manifest.signature.footprint_evidence` is `FootprintEvidence::KirProgram`.
+    pub program_footprint: Option<ProgramFootprint>,
     /// Optional compile-time slab bindings checked against `N21b-01` alias rules during `compile`.
     pub compile_bindings: Vec<SlabBinding>,
 }
@@ -343,27 +408,152 @@ pub struct Stage {
     pub bindings: Vec<StageBinding>,
 }
 
-/// One validated launch inside a [`StepPlan`].
+/// Validated slab expectation sealed inside a [`StepPlan`].
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct PlannedLaunch {
-    pub stage_name: String,
-    pub kernel_id: KernelId,
-    pub lanes: u32,
-    pub input_bindings: Vec<(String, SlabId)>,
-    pub output_bindings: Vec<(String, SlabId)>,
+pub struct ExpectedSlab {
+    pub slab: SlabId,
+    pub elem: ElemType,
+    pub byte_len: usize,
 }
 
-/// Static ordered list of launches with fixed grid sizes for one shape class.
+/// One validated, immutable launch inside a [`StepPlan`].
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct PlannedLaunch {
+    stage_name: String,
+    kernel_id: KernelId,
+    lanes: u32,
+    input_bindings: Vec<(String, SlabId)>,
+    output_bindings: Vec<(String, SlabId)>,
+}
+
+impl PlannedLaunch {
+    #[must_use]
+    pub fn new(
+        stage_name: String,
+        kernel_id: KernelId,
+        lanes: u32,
+        input_bindings: Vec<(String, SlabId)>,
+        output_bindings: Vec<(String, SlabId)>,
+    ) -> Self {
+        Self {
+            stage_name,
+            kernel_id,
+            lanes,
+            input_bindings,
+            output_bindings,
+        }
+    }
+
+    #[must_use]
+    pub fn stage_name(&self) -> &str {
+        &self.stage_name
+    }
+
+    #[must_use]
+    pub const fn kernel_id(&self) -> KernelId {
+        self.kernel_id
+    }
+
+    #[must_use]
+    pub const fn lanes(&self) -> u32 {
+        self.lanes
+    }
+
+    #[must_use]
+    pub fn input_bindings(&self) -> &[(String, SlabId)] {
+        &self.input_bindings
+    }
+
+    #[must_use]
+    pub fn output_bindings(&self) -> &[(String, SlabId)] {
+        &self.output_bindings
+    }
+}
+
+/// Sealed, immutable list of validated launches bound to one backend allocation
+/// and shape class.
+///
+/// Fields are private so callers cannot mutate validated bindings or bypass
+/// `N21b-01` alias/type checks between [`KernelBackend::plan`] and
+/// [`KernelBackend::launch`].
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct StepPlan {
-    pub launches: Vec<PlannedLaunch>,
-    pub class: ShapeClassCaps,
+    backend_tag: Option<u64>,
+    allocation_id: u64,
+    class: ShapeClassCaps,
+    launches: Vec<PlannedLaunch>,
+    expected_slabs: Vec<ExpectedSlab>,
+}
+
+impl StepPlan {
+    #[must_use]
+    pub(crate) fn new_cpu(
+        backend_tag: u64,
+        allocation_id: u64,
+        class: ShapeClassCaps,
+        launches: Vec<PlannedLaunch>,
+        expected_slabs: Vec<ExpectedSlab>,
+    ) -> Self {
+        Self {
+            backend_tag: Some(backend_tag),
+            allocation_id,
+            class,
+            launches,
+            expected_slabs,
+        }
+    }
+
+    /// Construct a validated plan from a GPU annex backend (`BD-015`/`BD-016`).
+    ///
+    /// Never accepted by [`crate::cpu::BatchCpu`], which requires its own
+    /// private backend tag.
+    #[must_use]
+    pub fn for_device(
+        allocation_id: u64,
+        class: ShapeClassCaps,
+        launches: Vec<PlannedLaunch>,
+        expected_slabs: Vec<ExpectedSlab>,
+    ) -> Self {
+        Self {
+            backend_tag: None,
+            allocation_id,
+            class,
+            launches,
+            expected_slabs,
+        }
+    }
+
+    #[must_use]
+    pub(crate) const fn backend_tag(&self) -> Option<u64> {
+        self.backend_tag
+    }
+
+    #[must_use]
+    pub const fn allocation_id(&self) -> u64 {
+        self.allocation_id
+    }
+
+    #[must_use]
+    pub const fn class(&self) -> &ShapeClassCaps {
+        &self.class
+    }
+
+    #[must_use]
+    pub fn launches(&self) -> &[PlannedLaunch] {
+        &self.launches
+    }
+
+    #[must_use]
+    pub fn expected_slabs(&self) -> &[ExpectedSlab] {
+        &self.expected_slabs
+    }
 }
 
 /// Core seam implemented by `batch-cpu` (core), CUDA (annex), and Metal (annex) (`BD-014`).
 pub trait KernelBackend {
     fn compile(&mut self, lib: &KernelLibrary) -> Result<CompiledLibrary, Refusal>;
     fn allocate(&mut self, layout: &BufferLayout) -> Result<BufferSet, Refusal>;
+    fn upload(&mut self, bufs: &mut BufferSet, slab: SlabId, bytes: &[u8]) -> Result<(), Refusal>;
     fn plan(&mut self, stages: &[Stage], class: &ShapeClassCaps) -> Result<StepPlan, Refusal>;
     fn launch(
         &mut self,
@@ -384,7 +574,7 @@ pub fn refusal_601(pointer: impl Into<String>, message: impl Into<String>) -> Re
         msg.clone(),
         pointer,
         msg,
-        "available device and valid slab/launch state",
+        "available device",
         "device",
         RetryPolicy::Backoff,
         vec![
@@ -416,4 +606,28 @@ pub fn refusal_603(kernel: impl Into<String>, diagnostics: impl Into<String>) ->
         ],
     )
     .with_fingerprint(RefusalFingerprint::new("batch-cpu", "batch-cpu-host-m0"))
+}
+
+/// Construct a `FROB-REF-802` (invalid caller argument/contract error, exit 3)
+/// refusal for slab index, buffer mismatch, unwritten-slab readback, or
+/// re-entrant host calls (distinct from `601` device loss and `603` compiler diagnostics).
+#[must_use]
+pub fn refusal_802(
+    pointer: impl Into<String>,
+    message: impl Into<String>,
+    required: impl Into<String>,
+) -> Refusal {
+    let msg = message.into();
+    Refusal::new(
+        RefusalCode::FrobRef802,
+        msg.clone(),
+        pointer,
+        msg,
+        required,
+        "contract",
+        RetryPolicy::AfterChange,
+        vec![Repair::new(
+            "Match BufferSet, StepPlan, slab indices, and completion order to the backend contract",
+        )],
+    )
 }

@@ -3,96 +3,88 @@
 //! Unit and property tests for `KernelBackend`, `Receipt` (`AE-01`..`AE-12`),
 //! `BatchCpu`, `Harness`, and `K-selftest` (`BD-014`).
 
-use std::collections::BTreeMap;
 use std::ops::Range;
-use std::sync::Arc;
 use std::sync::atomic::{AtomicUsize, Ordering};
+use std::sync::{Arc, mpsc};
 
-use frob_core::id::hash_blob;
+use frob_core::evidence::DetClass;
+use frob_core::id::{Blake3, hash_blob};
 use frob_core::refusal::RefusalCode;
 use frob_core::registry::toml::{self, Fields};
 use frob_kernels::backend::{
-    BufferLayout, Cx, KernelArgs, KernelBackend, KernelEntry, KernelLibrary, KernelSource,
+    BufferLayout, CpuKernelSymbol, Cx, KernelArgs, KernelBackend, KernelEntry, KernelLibrary,
     SLAB_ALIGNMENT_BYTES, SlabId, SlabSpec, Stage, StageBinding,
 };
 use frob_kernels::cpu::BatchCpu;
-use frob_kernels::harness::{Harness, HarnessInput, HarnessOutputSpec};
+use frob_kernels::dialect::{BackendTarget, assemble_and_lint};
+use frob_kernels::harness::{Harness, HarnessOutput};
 use frob_kernels::manifest::{
-    CapExpr, DeclaredOutput, ElemType, ShapeClassCaps, SlabBinding, StrideUnit,
+    CapExpr, DeclaredOutput, ElemType, FootprintEvidence, ProgramFootprint, SlabBinding, StrideUnit,
 };
-use frob_kernels::receipt::{DOCTRINE_FIELDS, ReceiptError};
+use frob_kernels::receipt::{DOCTRINE_FIELDS, Receipt, ReceiptError};
 use frob_kernels::selftest::{
-    SelftestInputs, k_selftest_entry, k_selftest_manifest, k_selftest_scalar_reference,
-    k_selftest_seeded_inputs,
+    K_SELFTEST_DIALECT_SOURCE, SelftestInputs, k_selftest_entry, k_selftest_manifest,
+    k_selftest_output_specs, k_selftest_scalar_reference, k_selftest_seeded_inputs,
+    k_selftest_shape_class,
 };
+use frob_kir::dialect_lint::SourceFile;
 
 const DOCTRINE_FIXTURE: &str = include_str!("fixtures/accelerator_doctrine_fields.toml");
 
-fn shape_for(worlds: usize) -> ShapeClassCaps {
-    ShapeClassCaps {
-        name: format!("selftest-w{worlds}"),
-        nv_cap: 12,
-        link_cap: 13,
-        contact_cap: 24,
-        row_cap: 72,
-        sample_cap: 16,
-        actuator_cap: 12,
-        worlds: worlds as u64,
-        extra: BTreeMap::new(),
-    }
-}
-
-fn run_selftest(workers: usize, inputs: &SelftestInputs) -> frob_kernels::harness::HarnessOutput {
+fn run_selftest(workers: usize, inputs: &SelftestInputs) -> HarnessOutput {
     let total = inputs.total_lanes();
-    let class = shape_for(total);
     let mut cpu = BatchCpu::new(workers);
-    let h_inputs = [
-        HarnessInput {
-            name: "a".into(),
-            elem: ElemType::F32,
-            len: total,
-            bytes: inputs.a_bytes(),
-        },
-        HarnessInput {
-            name: "b".into(),
-            elem: ElemType::F32,
-            len: total,
-            bytes: inputs.b_bytes(),
-        },
-        HarnessInput {
-            name: "x".into(),
-            elem: ElemType::U32,
-            len: total,
-            bytes: inputs.x_bytes(),
-        },
-        HarnessInput {
-            name: "y".into(),
-            elem: ElemType::U32,
-            len: total,
-            bytes: inputs.y_bytes(),
-        },
-    ];
-    let h_outputs = [
-        HarnessOutputSpec {
-            name: "out_f".into(),
-            elem: ElemType::F32,
-            len: total,
-        },
-        HarnessOutputSpec {
-            name: "out_u".into(),
-            elem: ElemType::U32,
-            len: total,
-        },
-    ];
     Harness::run(
         &mut cpu,
         k_selftest_entry(),
-        &h_inputs,
-        &h_outputs,
-        &class,
+        &inputs.harness_inputs(),
+        &k_selftest_output_specs(total),
+        &k_selftest_shape_class(total),
         &Cx::new(),
     )
     .expect("K-selftest harness run succeeds")
+}
+
+fn selftest_layout(lanes: usize) -> BufferLayout {
+    BufferLayout {
+        slabs: vec![
+            SlabSpec::new("a", ElemType::F32, lanes),
+            SlabSpec::new("b", ElemType::F32, lanes),
+            SlabSpec::new("x", ElemType::U32, lanes),
+            SlabSpec::new("y", ElemType::U32, lanes),
+            SlabSpec::new("out_f", ElemType::F32, lanes),
+            SlabSpec::new("out_u", ElemType::U32, lanes),
+        ],
+    }
+}
+
+fn selftest_bindings() -> Vec<StageBinding> {
+    ["a", "b", "x", "y", "out_f", "out_u"]
+        .into_iter()
+        .enumerate()
+        .map(|(idx, arg)| StageBinding {
+            arg: arg.into(),
+            slab: SlabId(idx),
+        })
+        .collect()
+}
+
+fn clear_ae_field(receipt: &mut Receipt, index_1_based: u8) {
+    match index_1_based {
+        1 => receipt.ae01_device_identity = None,
+        2 => receipt.ae02_driver_and_runtime_version = None,
+        3 => receipt.ae03_compiler_and_backend_identity = None,
+        4 => receipt.ae04_kernel_source_identity = None,
+        5 => receipt.ae05_kernel_and_workload_identity = None,
+        6 => receipt.ae06_cpu_machine_identity_and_measured_axes = None,
+        7 => receipt.ae07_reduction_and_determinism_policy = None,
+        8 => receipt.ae08_cpu_versus_device_numerical_comparison = None,
+        9 => receipt.ae09_permanent_cpu_reference = None,
+        10 => receipt.ae10_cancellation_drain_and_finalize_outcome = None,
+        11 => receipt.ae11_phase_wall_time_and_energy_attribution = None,
+        12 => receipt.ae12_go_or_no_go_decision = None,
+        _ => unreachable!("AE field index must be in 1..=12"),
+    }
 }
 
 #[test]
@@ -108,6 +100,14 @@ fn selftest_matches_scalar_loop() {
         !res.receipt.citable,
         "M0 batch-cpu receipt without fingerprint is citable=false"
     );
+    assert_eq!(res.receipt.determinism_claimed, DetClass::D2PerBackend);
+    assert_eq!(res.receipt.determinism_attained, DetClass::D2PerBackend);
+    assert!(
+        res.receipt
+            .ae06_cpu_machine_identity_and_measured_axes
+            .as_deref()
+            .is_some_and(|s| s.contains("workers_used=4") && s.contains("workers_configured=4"))
+    );
 
     // Padding lanes: -0.0 + (-0.0) = -0.0 (exact sign bit 0x8000_0000) and 0 + 0 = 0.
     let pad_off = 4_096 * 4;
@@ -119,6 +119,25 @@ fn selftest_matches_scalar_loop() {
         &res.slabs["out_u"][pad_off..pad_off + 4],
         &0u32.to_le_bytes()
     );
+
+    // The shared dialect source carried by k_selftest_entry lints cleanly for both CUDA and Metal.
+    let entry = k_selftest_entry();
+    let dialect_src = entry.dialect_source.as_deref().expect("dialect source");
+    assert_eq!(dialect_src, K_SELFTEST_DIALECT_SOURCE);
+    let shape_defs = Some(SourceFile::new("shape.h", "#define FROB_WORLDS 4112u\n"));
+    let (_, cuda_digest, _) = assemble_and_lint(
+        BackendTarget::Cuda,
+        shape_defs.clone(),
+        vec![SourceFile::new("k_selftest_bd014.h", dialect_src)],
+    )
+    .expect("CUDA dialect lint clean");
+    let (_, metal_digest, _) = assemble_and_lint(
+        BackendTarget::Metal,
+        shape_defs,
+        vec![SourceFile::new("k_selftest_bd014.h", dialect_src)],
+    )
+    .expect("Metal dialect lint clean");
+    assert_eq!(cuda_digest, metal_digest);
 }
 
 #[test]
@@ -187,7 +206,7 @@ fn receipt_missing_field_rejected() {
     // Twelve negative controls: deleting AE-k fails and names AE-k.
     for k in 1u8..=12 {
         let mut bad = base.clone();
-        bad.clear_ae_field(k);
+        clear_ae_field(&mut bad, k);
         let err = bad.validate().expect_err("missing AE field must fail");
         let expected_id = format!("AE-{k:02}");
         assert!(
@@ -197,17 +216,40 @@ fn receipt_missing_field_rejected() {
         assert!(err.to_string().contains(&expected_id));
     }
 
-    // Agent-boundary refusal for absent fingerprint -> FROB-REF-606.
+    // Agent-boundary refusal for absent fingerprint -> FROB-REF-606 (digest: null).
     let err606 = base
         .validate_agent_boundary("batch-cpu")
         .expect_err("missing fingerprint must refuse at agent boundary");
     assert_eq!(err606.code, RefusalCode::FrobRef606);
+    assert_eq!(
+        err606
+            .fingerprint
+            .as_ref()
+            .and_then(|fp| fp.digest.as_deref()),
+        None
+    );
     assert!(err606.repairs[0].action.contains("frob spark fingerprint"));
+
+    // Fail-closed negative control: setting an arbitrary nonblank digest on an
+    // M0 non-citable/unplaced receipt must STILL be refused with FROB-REF-606.
+    let mut forged = base;
+    forged.fingerprint_digest = Some("deadbeef".into());
+    let err_stale = forged
+        .validate_agent_boundary("batch-cpu")
+        .expect_err("non-citable/unverified digest must remain fail-closed");
+    assert_eq!(err_stale.code, RefusalCode::FrobRef606);
+    assert_eq!(
+        err_stale
+            .fingerprint
+            .as_ref()
+            .and_then(|fp| fp.digest.as_deref()),
+        Some("deadbeef")
+    );
 }
 
 #[test]
 fn undeclared_alias_refused() {
-    let class = shape_for(64);
+    let class = k_selftest_shape_class(64);
     let extent = CapExpr::worlds(1);
     let mk_bind = |arg: &str, slab_id: &str, elem: ElemType| SlabBinding {
         arg: arg.into(),
@@ -223,7 +265,6 @@ fn undeclared_alias_refused() {
         from_stat_kernel: false,
     };
     let mut entry = k_selftest_entry();
-    // Plant undeclared alias: `out_f` writes to the same backing slab as input `a`.
     entry.compile_bindings = vec![
         mk_bind("a", "slab-shared", ElemType::F32),
         mk_bind("b", "slab-b", ElemType::F32),
@@ -256,21 +297,57 @@ fn undeclared_alias_refused() {
         .compile(&lib)
         .expect_err("undeclared write alias on `a` must refuse at compile");
     assert_eq!(err.code, RefusalCode::FrobRef603);
-    assert!(
-        err.message.contains("K-selftest"),
-        "error must name kernel: {}",
-        err.message
-    );
-    assert!(
-        err.message.contains("slab-shared") && err.message.contains("out_f"),
-        "error must name aliased buffer/arg: {}",
-        err.message
-    );
+    assert!(err.message.contains("K-selftest"));
+    assert!(err.message.contains("slab-shared") && err.message.contains("out_f"));
+}
+
+#[test]
+fn kir_program_footprint_evidence_admitted_and_required() {
+    let class = k_selftest_shape_class(32);
+    let prog_id = hash_blob(b"frob.kir.test-program/1");
+
+    let mut manifest = k_selftest_manifest();
+    manifest.name = "K-selftest-kir".into();
+    manifest.signature.footprint_evidence = FootprintEvidence::KirProgram(prog_id);
+    manifest.id = manifest.compute_id().unwrap();
+
+    // Negative control: KirProgram manifest without ProgramFootprint is refused.
+    let mut missing_entry = k_selftest_entry();
+    missing_entry.manifest = manifest.clone();
+    missing_entry.program_footprint = None;
+    let mut cpu = BatchCpu::new(1);
+    let err = cpu
+        .compile(&KernelLibrary {
+            entries: vec![missing_entry],
+            shape_class: class.clone(),
+            declared_outputs: Vec::new(),
+        })
+        .expect_err("KirProgram manifest without ProgramFootprint must fail compile");
+    assert_eq!(err.code, RefusalCode::FrobRef603);
+    assert!(err.message.contains("K-selftest-kir"));
+
+    // Positive control: supplying matching ProgramFootprint compiles cleanly.
+    let mut good_entry = k_selftest_entry();
+    good_entry.manifest = manifest.clone();
+    good_entry.program_footprint = Some(ProgramFootprint {
+        program_id: prog_id,
+        reads: manifest.signature.reads.clone(),
+        writes: manifest.signature.writes.clone(),
+        resources: manifest.signature.resources,
+    });
+    let compiled = cpu
+        .compile(&KernelLibrary {
+            entries: vec![good_entry],
+            shape_class: class,
+            declared_outputs: Vec::new(),
+        })
+        .expect("KirProgram manifest with matching ProgramFootprint compiles");
+    assert_eq!(compiled.id_for("K-selftest-kir"), Some(manifest.id));
 }
 
 #[test]
 fn plan_rejects_bad_binding() {
-    let class = shape_for(32);
+    let class = k_selftest_shape_class(32);
     let mut cpu = BatchCpu::new(1);
     let compiled = cpu
         .compile(&KernelLibrary {
@@ -281,7 +358,6 @@ fn plan_rejects_bad_binding() {
         .expect("compile succeeds");
     let kid = compiled.id_for("K-selftest").unwrap();
 
-    // Allocate an f32 slab for `x` (which manifest requires to be u32).
     let bufs = cpu
         .allocate(&BufferLayout {
             slabs: vec![
@@ -295,45 +371,98 @@ fn plan_rejects_bad_binding() {
         })
         .expect("allocate succeeds");
     assert_eq!(
-        (bufs.get(SlabId(0)).unwrap().as_bytes().as_ptr() as usize) % SLAB_ALIGNMENT_BYTES,
+        (bufs.cpu_slab(SlabId(0)).unwrap().as_bytes().as_ptr() as usize) % SLAB_ALIGNMENT_BYTES,
         0
     );
 
     let stage = Stage {
         name: "bad-stage".into(),
         kernel_id: kid,
-        bindings: vec![
-            StageBinding {
-                arg: "a".into(),
-                slab: SlabId(0),
-            },
-            StageBinding {
-                arg: "b".into(),
-                slab: SlabId(1),
-            },
-            StageBinding {
-                arg: "x".into(),
-                slab: SlabId(2),
-            },
-            StageBinding {
-                arg: "y".into(),
-                slab: SlabId(3),
-            },
-            StageBinding {
-                arg: "out_f".into(),
-                slab: SlabId(4),
-            },
-            StageBinding {
-                arg: "out_u".into(),
-                slab: SlabId(5),
-            },
-        ],
+        bindings: selftest_bindings(),
     };
     let err = cpu
         .plan(&[stage], &class)
         .expect_err("binding f32 slab to u32 arg must fail in plan");
     assert_eq!(err.code, RefusalCode::FrobRef603);
-    assert!(err.message.contains("x"));
+    let lower = err.message.to_ascii_lowercase();
+    assert!(
+        err.message.contains("x"),
+        "error must name arg x: {}",
+        err.message
+    );
+    assert!(
+        lower.contains("f32") && lower.contains("u32"),
+        "error must name observed and expected element types: {}",
+        err.message
+    );
+}
+
+#[test]
+fn launch_rejects_mismatched_buffer_set() {
+    let class = k_selftest_shape_class(32);
+    let mut cpu = BatchCpu::new(2);
+    let compiled = cpu
+        .compile(&KernelLibrary {
+            entries: vec![k_selftest_entry()],
+            shape_class: class.clone(),
+            declared_outputs: Vec::new(),
+        })
+        .expect("compile succeeds");
+    let kid = compiled.id_for("K-selftest").unwrap();
+
+    let _bufs_a = cpu.allocate(&selftest_layout(32)).expect("allocate A");
+    let plan_a = cpu
+        .plan(
+            &[Stage {
+                name: "stage-a".into(),
+                kernel_id: kid,
+                bindings: selftest_bindings(),
+            }],
+            &class,
+        )
+        .expect("plan A");
+
+    // Allocate a second BufferSet with identical byte lengths (all 4-byte elems)
+    // but swapped element type on `out_u` (`F32` instead of `U32`).
+    let mut bufs_b = cpu
+        .allocate(&BufferLayout {
+            slabs: vec![
+                SlabSpec::new("a", ElemType::F32, 32),
+                SlabSpec::new("b", ElemType::F32, 32),
+                SlabSpec::new("x", ElemType::U32, 32),
+                SlabSpec::new("y", ElemType::U32, 32),
+                SlabSpec::new("out_f", ElemType::F32, 32),
+                SlabSpec::new("out_u_wrong_f32", ElemType::F32, 32),
+            ],
+        })
+        .expect("allocate B");
+    let inputs = k_selftest_seeded_inputs(32, 0, 1);
+    cpu.upload(&mut bufs_b, SlabId(0), &inputs.a_bytes())
+        .unwrap();
+    cpu.upload(&mut bufs_b, SlabId(1), &inputs.b_bytes())
+        .unwrap();
+    cpu.upload(&mut bufs_b, SlabId(2), &inputs.x_bytes())
+        .unwrap();
+    cpu.upload(&mut bufs_b, SlabId(3), &inputs.y_bytes())
+        .unwrap();
+
+    let err = cpu
+        .launch(&plan_a, &mut bufs_b, &Cx::new())
+        .expect_err("launch with mismatched BufferSet must refuse before writes");
+    assert_eq!(err.code, RefusalCode::FrobRef802);
+    assert!(
+        !bufs_b.is_written(SlabId(4)) && !bufs_b.is_written(SlabId(5)),
+        "mismatched BufferSet outputs must remain unwritten"
+    );
+    assert!(
+        bufs_b
+            .cpu_slab(SlabId(4))
+            .unwrap()
+            .as_bytes()
+            .iter()
+            .all(|&b| b == 0),
+        "no bytes written to output slab on refused launch"
+    );
 }
 
 #[test]
@@ -352,17 +481,54 @@ fn worker_count_invariance() {
         );
     }
 
-    // Negative control: planted arrival-order collection of K-selftest chunks
-    // (worker 1 completes before worker 0) changes the digest vs fixed-index placement.
-    let bytes_ref = &ref_run.slabs["out_u"];
-    let half = bytes_ref.len() / 2;
-    let mut arrival_bytes = Vec::with_capacity(bytes_ref.len());
-    arrival_bytes.extend_from_slice(&bytes_ref[half..]);
-    arrival_bytes.extend_from_slice(&bytes_ref[..half]);
+    // Real multi-threaded arrival-order mutant: two worker threads compute their
+    // own chunks of K-selftest and send them through a channel; worker 0 waits
+    // until worker 1 has sent its chunk, so arrival-order assembly appends
+    // worker 1 ahead of worker 0 and breaks worker-count invariance.
+    let total = inputs.total_lanes();
+    let half = total / 2;
+    let arrival_digest = |workers: usize| -> Blake3 {
+        if workers == 1 {
+            let mut out = Vec::with_capacity(total * 4);
+            for i in 0..total {
+                out.extend_from_slice(&inputs.x[i].wrapping_add(inputs.y[i]).to_le_bytes());
+            }
+            return hash_blob(&out);
+        }
+        let (tx, rx) = mpsc::channel::<Vec<u8>>();
+        let (gate_tx, gate_rx) = mpsc::channel::<()>();
+        let x_ref = &inputs.x;
+        let y_ref = &inputs.y;
+        std::thread::scope(|s| {
+            let tx0 = tx.clone();
+            s.spawn(move || {
+                let mut chunk = Vec::with_capacity(half * 4);
+                for i in 0..half {
+                    chunk.extend_from_slice(&x_ref[i].wrapping_add(y_ref[i]).to_le_bytes());
+                }
+                let _ = gate_rx.recv();
+                tx0.send(chunk).unwrap();
+            });
+            s.spawn(move || {
+                let mut chunk = Vec::with_capacity((total - half) * 4);
+                for i in half..total {
+                    chunk.extend_from_slice(&x_ref[i].wrapping_add(y_ref[i]).to_le_bytes());
+                }
+                tx.send(chunk).unwrap();
+                gate_tx.send(()).unwrap();
+            });
+        });
+        let mut assembled = Vec::with_capacity(total * 4);
+        for chunk in rx {
+            assembled.extend_from_slice(&chunk);
+        }
+        hash_blob(&assembled)
+    };
+    assert_eq!(arrival_digest(1), ref_run.digests["out_u"]);
     assert_ne!(
-        hash_blob(&arrival_bytes),
-        ref_run.digests["out_u"],
-        "planted arrival-order dependence must break worker_count_invariance"
+        arrival_digest(2),
+        arrival_digest(1),
+        "planted arrival-order worker mutant must break worker-count invariance"
     );
 }
 
@@ -378,16 +544,18 @@ fn cancel_between_launches() {
     }
 
     SECOND_RUNS.store(0, Ordering::SeqCst);
-    let class = shape_for(64);
+    let class = k_selftest_shape_class(64);
     let mut m2 = k_selftest_manifest();
     m2.name = "K-selftest-second".into();
     m2.id = m2.compute_id().unwrap();
     let e2 = KernelEntry {
         manifest: m2,
-        source: KernelSource::CpuSymbol {
+        cpu_symbol: Some(CpuKernelSymbol {
             symbol_name: "test::sentinel_second".into(),
             func: sentinel_second,
-        },
+        }),
+        dialect_source: None,
+        program_footprint: None,
         compile_bindings: Vec::new(),
     };
 
@@ -402,64 +570,25 @@ fn cancel_between_launches() {
     let k1 = compiled.id_for("K-selftest").unwrap();
     let k2 = compiled.id_for("K-selftest-second").unwrap();
 
-    let mut bufs = cpu
-        .allocate(&BufferLayout {
-            slabs: vec![
-                SlabSpec::new("a", ElemType::F32, 64),
-                SlabSpec::new("b", ElemType::F32, 64),
-                SlabSpec::new("x", ElemType::U32, 64),
-                SlabSpec::new("y", ElemType::U32, 64),
-                SlabSpec::new("out_f", ElemType::F32, 64),
-                SlabSpec::new("out_u", ElemType::U32, 64),
-            ],
-        })
-        .expect("allocate");
+    let mut bufs = cpu.allocate(&selftest_layout(64)).expect("allocate");
     let inputs = k_selftest_seeded_inputs(64, 0, 1);
-    bufs.upload(SlabId(0), &inputs.a_bytes()).unwrap();
-    bufs.upload(SlabId(1), &inputs.b_bytes()).unwrap();
-    bufs.upload(SlabId(2), &inputs.x_bytes()).unwrap();
-    bufs.upload(SlabId(3), &inputs.y_bytes()).unwrap();
+    cpu.upload(&mut bufs, SlabId(0), &inputs.a_bytes()).unwrap();
+    cpu.upload(&mut bufs, SlabId(1), &inputs.b_bytes()).unwrap();
+    cpu.upload(&mut bufs, SlabId(2), &inputs.x_bytes()).unwrap();
+    cpu.upload(&mut bufs, SlabId(3), &inputs.y_bytes()).unwrap();
 
-    let mk_bindings = || {
-        vec![
-            StageBinding {
-                arg: "a".into(),
-                slab: SlabId(0),
-            },
-            StageBinding {
-                arg: "b".into(),
-                slab: SlabId(1),
-            },
-            StageBinding {
-                arg: "x".into(),
-                slab: SlabId(2),
-            },
-            StageBinding {
-                arg: "y".into(),
-                slab: SlabId(3),
-            },
-            StageBinding {
-                arg: "out_f".into(),
-                slab: SlabId(4),
-            },
-            StageBinding {
-                arg: "out_u".into(),
-                slab: SlabId(5),
-            },
-        ]
-    };
     let plan = cpu
         .plan(
             &[
                 Stage {
                     name: "stage-1".into(),
                     kernel_id: k1,
-                    bindings: mk_bindings(),
+                    bindings: selftest_bindings(),
                 },
                 Stage {
                     name: "stage-2".into(),
                     kernel_id: k2,
-                    bindings: mk_bindings(),
+                    bindings: selftest_bindings(),
                 },
             ],
             &class,
@@ -490,38 +619,135 @@ fn cancel_between_launches() {
     );
     assert_eq!(receipt.launch_count, 1);
     assert_eq!(cancelled_after.load(Ordering::SeqCst), 1);
-    assert_eq!(
-        SECOND_RUNS.load(Ordering::SeqCst),
-        0,
-        "second launch must not execute"
-    );
+    assert_eq!(SECOND_RUNS.load(Ordering::SeqCst), 0);
 
-    // Buffers are no longer borrowed and can be read back cleanly.
     let mut out_f = vec![0u8; 64 * 4];
     cpu.read_back(&bufs, SlabId(4), &mut out_f)
         .expect("read_back succeeds after drain");
     assert_eq!(out_f, k_selftest_scalar_reference(&inputs).out_f_bytes());
+
+    // Final-boundary cancellation: cancelling in the hook of a single-stage plan
+    // also settles AE-10 to cancelled-drained.
+    let single_plan = cpu
+        .plan(
+            &[Stage {
+                name: "stage-only".into(),
+                kernel_id: k1,
+                bindings: selftest_bindings(),
+            }],
+            &class,
+        )
+        .expect("single plan");
+    cpu.set_boundary_hook(|_, cx| cx.cancel());
+    let final_receipt = cpu
+        .launch(&single_plan, &mut bufs, &Cx::new())
+        .expect("final boundary cancel drains cleanly");
+    assert_eq!(
+        final_receipt
+            .ae10_cancellation_drain_and_finalize_outcome
+            .as_deref(),
+        Some("cancelled-drained")
+    );
+    assert_eq!(final_receipt.launch_count, 1);
+}
+
+#[test]
+fn cancelled_before_launch_withholds_output() {
+    let inputs = k_selftest_seeded_inputs(32, 0, 5);
+    let total = inputs.total_lanes();
+    let cx = Cx::new();
+    cx.cancel();
+
+    let mut cpu = BatchCpu::new(2);
+    let res = Harness::run(
+        &mut cpu,
+        k_selftest_entry(),
+        &inputs.harness_inputs(),
+        &k_selftest_output_specs(total),
+        &k_selftest_shape_class(total),
+        &cx,
+    )
+    .expect("pre-cancelled harness returns drained receipt");
+    res.receipt.validate().expect("cancelled receipt valid");
+    assert_eq!(
+        res.receipt
+            .ae10_cancellation_drain_and_finalize_outcome
+            .as_deref(),
+        Some("cancelled-drained")
+    );
+    assert_eq!(res.receipt.launch_count, 0);
+    assert!(
+        res.slabs.is_empty() && res.digests.is_empty(),
+        "cancelled-before-launch must withhold output bytes and digests"
+    );
 }
 
 #[test]
 fn read_back_only_after_completion() {
-    // Compile-time enforcement lives in the doc-test on `backend.rs`;
-    // also verify unavailable backend raises FROB-REF-601 (exit 6).
+    // Compile-time exclusive borrow enforcement lives in the doctest on `backend.rs`;
+    // at runtime, reading an allocated output slab before its producer completes is refused.
+    let mut cpu = BatchCpu::new(1);
+    let bufs = cpu.allocate(&selftest_layout(16)).expect("allocate");
+    let mut out = vec![0u8; 16 * 4];
+    let err = cpu
+        .read_back(&bufs, SlabId(4), &mut out)
+        .expect_err("read_back of unwritten output slab before launch must refuse");
+    assert_eq!(err.code, RefusalCode::FrobRef802);
+    assert!(err.message.contains("out_f"));
+}
+
+#[test]
+fn unavailable_backend_refuses_601() {
     let mut cpu = BatchCpu::new(1).with_unavailable(true);
     let err = cpu
         .allocate(&BufferLayout {
             slabs: vec![SlabSpec::new("a", ElemType::F32, 8)],
         })
-        .expect_err("unavailable backend refuses");
+        .expect_err("unavailable backend refuses with FROB-REF-601");
     assert_eq!(err.code, RefusalCode::FrobRef601);
 }
 
 #[test]
 fn inv_spark_02_every_launch_receipt_validates() {
-    for (seed, lanes, workers) in [(1u64, 17usize, 1usize), (99, 257, 4), (42, 1_024, 8)] {
+    for (seed, lanes, workers) in [
+        (1u64, 17usize, 1usize),
+        (7, 64, 2),
+        (99, 257, 4),
+        (42, 1_024, 8),
+    ] {
         let inputs = k_selftest_seeded_inputs(lanes, 3, seed);
-        let res = run_selftest(workers, &inputs);
-        res.receipt
+        let total = inputs.total_lanes();
+        let class = k_selftest_shape_class(total);
+
+        // Direct KernelBackend::launch validation (without Harness's own check).
+        let mut cpu = BatchCpu::new(workers);
+        let compiled = cpu
+            .compile(&KernelLibrary {
+                entries: vec![k_selftest_entry()],
+                shape_class: class.clone(),
+                declared_outputs: Vec::new(),
+            })
+            .expect("compile");
+        let kid = compiled.id_for("K-selftest").unwrap();
+        let mut bufs = cpu.allocate(&selftest_layout(total)).expect("allocate");
+        cpu.upload(&mut bufs, SlabId(0), &inputs.a_bytes()).unwrap();
+        cpu.upload(&mut bufs, SlabId(1), &inputs.b_bytes()).unwrap();
+        cpu.upload(&mut bufs, SlabId(2), &inputs.x_bytes()).unwrap();
+        cpu.upload(&mut bufs, SlabId(3), &inputs.y_bytes()).unwrap();
+        let plan = cpu
+            .plan(
+                &[Stage {
+                    name: "direct".into(),
+                    kernel_id: kid,
+                    bindings: selftest_bindings(),
+                }],
+                &class,
+            )
+            .expect("plan");
+        let receipt = cpu
+            .launch(&plan, &mut bufs, &Cx::new())
+            .expect("direct launch");
+        receipt
             .validate()
             .unwrap_or_else(|e| panic!("seed={seed} lanes={lanes} w={workers}: {e}"));
     }

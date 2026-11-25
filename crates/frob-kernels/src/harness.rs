@@ -48,6 +48,11 @@ pub struct Harness;
 impl Harness {
     /// Execute one kernel on `backend` with seeded `inputs`, validate the
     /// returned receipt (`INV-SPARK-02`), and return output bytes and digests.
+    ///
+    /// If cancellation drains before any launch executes (`receipt.launch_count == 0`),
+    /// outputs are withheld (`slabs` and `digests` are empty) rather than reading
+    /// or hashing unwritten memory, while the validated `cancelled-drained` receipt
+    /// is preserved.
     pub fn run(
         backend: &mut dyn KernelBackend,
         entry: KernelEntry,
@@ -96,7 +101,7 @@ impl Harness {
 
         let mut bufs = backend.allocate(&BufferLayout { slabs: specs })?;
         for (sid, bytes) in input_ids {
-            bufs.upload(sid, bytes)?;
+            backend.upload(&mut bufs, sid, bytes)?;
         }
 
         let stage = Stage {
@@ -107,17 +112,19 @@ impl Harness {
         let plan = backend.plan(&[stage], class)?;
         let mut receipt = backend.launch(&plan, &mut bufs, cx)?;
 
-        let t_rb = Instant::now();
         let mut slabs = BTreeMap::new();
         let mut digests = BTreeMap::new();
-        for (name, sid, byte_len) in output_ids {
-            let mut host = vec![0u8; byte_len];
-            backend.read_back(&bufs, sid, &mut host)?;
-            let digest = hash_blob(&host);
-            digests.insert(name.clone(), digest);
-            slabs.insert(name, host);
+        if receipt.launch_count > 0 {
+            let t_rb = Instant::now();
+            for (name, sid, byte_len) in output_ids {
+                let mut host = vec![0u8; byte_len];
+                backend.read_back(&bufs, sid, &mut host)?;
+                let digest = hash_blob(&host);
+                digests.insert(name.clone(), digest);
+                slabs.insert(name, host);
+            }
+            receipt.record_read_back_seconds(t_rb.elapsed().as_secs_f64());
         }
-        receipt.record_read_back_seconds(t_rb.elapsed().as_secs_f64());
 
         receipt.validate().map_err(|e| {
             Refusal::new(

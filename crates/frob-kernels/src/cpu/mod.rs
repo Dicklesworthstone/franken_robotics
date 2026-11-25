@@ -2,8 +2,7 @@
 //!
 //! Executes validated Rust kernel symbols over 256-byte-aligned `Vec`-backed
 //! slabs using deterministic fixed logical-index partitioning across worker
-//! threads (determinism class `D2`, or `D0` for exact-integer kernels; zero
-//! `unsafe`; zero `mul_add`; prints nothing per L-7).
+//! threads (zero `unsafe`; zero `mul_add`; prints nothing per L-7).
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::time::Instant;
@@ -12,9 +11,9 @@ use frob_core::evidence::DetClass;
 use frob_core::refusal::Refusal;
 
 use crate::backend::{
-    BackendIdentity, BufferLayout, BufferSet, CompiledLibrary, CpuKernelFn, Cx, KernelArgs,
-    KernelBackend, KernelLibrary, KernelSource, PlannedLaunch, SlabId, SlabSpec, Stage, StepPlan,
-    refusal_601, refusal_603,
+    BackendIdentity, BufferLayout, BufferSet, CompiledLibrary, CpuKernelFn, Cx, ExpectedSlab,
+    KernelArgs, KernelBackend, KernelLibrary, PlannedLaunch, SlabId, SlabSpec, Stage, StepPlan,
+    next_backend_tag, refusal_601, refusal_603, refusal_802,
 };
 use crate::manifest::{
     BackendLimits, DeclaredOutput, KernelClass, KernelId, KernelManifest, ShapeClassCaps,
@@ -32,11 +31,14 @@ struct CompiledCpuKernel {
 
 /// Deterministic CPU backend implementing [`KernelBackend`] (`BD-014`).
 pub struct BatchCpu {
+    backend_tag: u64,
     workers: usize,
     compiled: BTreeMap<KernelId, CompiledCpuKernel>,
+    last_allocation_id: Option<u64>,
     allocated_specs: Vec<SlabSpec>,
     last_compile_s: f64,
     last_allocate_s: f64,
+    last_upload_s: f64,
     in_launch: bool,
     unavailable: bool,
     boundary_hook: Option<BoundaryHook>,
@@ -47,11 +49,14 @@ impl BatchCpu {
     #[must_use]
     pub fn new(workers: usize) -> Self {
         Self {
+            backend_tag: next_backend_tag(),
             workers: workers.max(1),
             compiled: BTreeMap::new(),
+            last_allocation_id: None,
             allocated_specs: Vec::new(),
             last_compile_s: 0.0,
             last_allocate_s: 0.0,
+            last_upload_s: 0.0,
             in_launch: false,
             unavailable: false,
             boundary_hook: None,
@@ -88,59 +93,83 @@ impl BatchCpu {
         Ok(())
     }
 
+    fn validate_launch_buffers(&self, plan: &StepPlan, bufs: &BufferSet) -> Result<(), Refusal> {
+        if plan.backend_tag() != Some(self.backend_tag) {
+            return Err(refusal_802(
+                "/launch/plan",
+                "step plan was not created by this BatchCpu instance",
+                "StepPlan produced by this BatchCpu::plan",
+            ));
+        }
+        if plan.allocation_id() != bufs.allocation_id() {
+            return Err(refusal_802(
+                "/launch/buffers",
+                format!(
+                    "BufferSet allocation {} does not match StepPlan allocation {}",
+                    bufs.allocation_id(),
+                    plan.allocation_id()
+                ),
+                "BufferSet returned by the matching BatchCpu::allocate",
+            ));
+        }
+        for exp in plan.expected_slabs() {
+            let Some(slab) = bufs.cpu_slab(exp.slab) else {
+                return Err(refusal_802(
+                    format!("/slab/{}", exp.slab.0),
+                    format!("slab {} missing CPU backing in BufferSet", exp.slab.0),
+                    "CPU-backed BufferSet matching StepPlan",
+                ));
+            };
+            if slab.spec().elem != exp.elem || slab.byte_len() != exp.byte_len {
+                return Err(refusal_802(
+                    format!("/slab/{}", exp.slab.0),
+                    format!(
+                        "slab `{}` descriptor mismatch: got ({:?}, {} B), plan expects ({:?}, {} B)",
+                        slab.spec().name,
+                        slab.spec().elem,
+                        slab.byte_len(),
+                        exp.elem,
+                        exp.byte_len
+                    ),
+                    "exact ElemType and byte length validated by plan",
+                ));
+            }
+        }
+        Ok(())
+    }
+
     fn execute_stage(
         &self,
         kernel: &CompiledCpuKernel,
         launch: &PlannedLaunch,
         bufs: &mut BufferSet,
-    ) -> Result<(), Refusal> {
-        let total = launch.lanes as usize;
+    ) -> Result<usize, Refusal> {
+        let total = launch.lanes() as usize;
         let output_ids: BTreeSet<SlabId> =
-            launch.output_bindings.iter().map(|(_, id)| *id).collect();
-        let input_ids: BTreeSet<SlabId> = launch.input_bindings.iter().map(|(_, id)| *id).collect();
+            launch.output_bindings().iter().map(|(_, id)| *id).collect();
+        let input_ids: BTreeSet<SlabId> =
+            launch.input_bindings().iter().map(|(_, id)| *id).collect();
 
-        // Check bounds up front before borrowing slab storage.
-        for (arg, id) in launch
-            .input_bindings
-            .iter()
-            .chain(launch.output_bindings.iter())
-        {
-            let Some(slab) = bufs.get(*id) else {
-                return Err(refusal_601(
-                    format!("/slab/{}", id.0),
-                    format!("slab {} for arg `{arg}` out of range", id.0),
-                ));
-            };
-            let needed = total.saturating_mul(slab.spec.elem.byte_size());
-            if slab.byte_len() < needed {
-                return Err(refusal_603(
-                    &kernel.manifest.name,
-                    format!(
-                        "slab `{}` has {} bytes, launch requires {} bytes",
-                        slab.spec.name,
-                        slab.byte_len(),
-                        needed
-                    ),
-                ));
-            }
+        if !input_ids.is_disjoint(&output_ids) {
+            return Err(refusal_603(
+                &kernel.manifest.name,
+                "batch-cpu requires disjoint input and output slabs per stage",
+            ));
         }
 
-        // Snapshot any aliased read-write inputs so reads and writes never alias
-        // mutable references (safe Rust, zero unsafe).
-        let aliased_ids: BTreeSet<SlabId> = input_ids.intersection(&output_ids).copied().collect();
-        let mut aliased_snapshots: BTreeMap<SlabId, Vec<u8>> = BTreeMap::new();
-        for &id in &aliased_ids {
-            if let Some(slab) = bufs.get(id) {
-                aliased_snapshots.insert(id, slab.as_bytes().to_vec());
-            }
-        }
+        let slabs = bufs.cpu_slabs_mut().ok_or_else(|| {
+            refusal_802(
+                "/launch/buffers",
+                "BufferSet lacks CPU backing slabs",
+                "BufferSet from BatchCpu::allocate",
+            )
+        })?;
 
-        // Partition BufferSet slabs into disjoint read-only inputs and mutable outputs.
         let mut raw_inputs: BTreeMap<SlabId, &[u8]> = BTreeMap::new();
         let mut raw_outputs: BTreeMap<SlabId, (&mut [u8], usize)> = BTreeMap::new();
-        for (idx, slab) in bufs.slabs_mut().iter_mut().enumerate() {
+        for (idx, slab) in slabs.iter_mut().enumerate() {
             let sid = SlabId(idx);
-            let elem_bytes = slab.spec.elem.byte_size();
+            let elem_bytes = slab.spec().elem.byte_size();
             if output_ids.contains(&sid) {
                 raw_outputs.insert(sid, (slab.as_bytes_mut(), elem_bytes));
             } else if input_ids.contains(&sid) {
@@ -149,43 +178,22 @@ impl BatchCpu {
         }
 
         let mut input_map: BTreeMap<&str, &[u8]> = BTreeMap::new();
-        for (arg, id) in &launch.input_bindings {
-            let slice = if let Some(snap) = aliased_snapshots.get(id) {
-                snap.as_slice()
-            } else {
-                raw_inputs[id]
-            };
-            input_map.insert(arg.as_str(), slice);
+        for (arg, id) in launch.input_bindings() {
+            input_map.insert(arg.as_str(), raw_inputs[id]);
         }
 
-        let eff_workers = self.workers.min(total.max(1));
-        if eff_workers <= 1 || total == 0 {
-            let mut out_map: BTreeMap<&str, (&mut [u8], u32)> = BTreeMap::new();
-            for (arg, id) in &launch.output_bindings {
-                let (slice, _) = raw_outputs.remove(id).ok_or_else(|| {
-                    refusal_603(
-                        &kernel.manifest.name,
-                        format!("duplicate output binding on slab {}", id.0),
-                    )
-                })?;
-                out_map.insert(arg.as_str(), (slice, 0));
-            }
-            let mut args = KernelArgs::new(input_map, out_map);
-            (kernel.func)(&mut args, 0..launch.lanes);
-            return Ok(());
-        }
-
-        // Deterministic fixed logical-index partition across `eff_workers` threads.
-        let mut ranges: Vec<(usize, usize)> = Vec::with_capacity(eff_workers);
-        for w in 0..eff_workers {
-            let start = (w * total) / eff_workers;
-            let end = ((w + 1) * total) / eff_workers;
-            ranges.push((start, end));
-        }
+        let eff_workers = if total == 0 {
+            1
+        } else {
+            self.workers.min(total)
+        };
+        let ranges: Vec<(usize, usize)> = (0..eff_workers)
+            .map(|w| ((w * total) / eff_workers, ((w + 1) * total) / eff_workers))
+            .collect();
 
         let mut per_worker_outputs: Vec<BTreeMap<&str, (&mut [u8], u32)>> =
             (0..eff_workers).map(|_| BTreeMap::new()).collect();
-        for (arg, id) in &launch.output_bindings {
+        for (arg, id) in launch.output_bindings() {
             let (mut rest, elem_bytes) = raw_outputs.remove(id).ok_or_else(|| {
                 refusal_603(
                     &kernel.manifest.name,
@@ -201,17 +209,27 @@ impl BatchCpu {
         }
 
         let func = kernel.func;
-        let inputs_ref = &input_map;
-        std::thread::scope(|scope| {
-            for ((start, end), out_map) in ranges.into_iter().zip(per_worker_outputs) {
-                let inputs_clone = inputs_ref.clone();
-                scope.spawn(move || {
-                    let mut args = KernelArgs::new(inputs_clone, out_map);
-                    func(&mut args, (start as u32)..(end as u32));
-                });
-            }
-        });
-        Ok(())
+        if eff_workers == 1 {
+            let out_map = per_worker_outputs.into_iter().next().unwrap_or_default();
+            let mut args = KernelArgs::new(input_map, out_map);
+            func(&mut args, 0..launch.lanes());
+        } else {
+            let inputs_ref = &input_map;
+            std::thread::scope(|scope| {
+                for ((start, end), out_map) in ranges.into_iter().zip(per_worker_outputs) {
+                    let inputs_clone = inputs_ref.clone();
+                    scope.spawn(move || {
+                        let mut args = KernelArgs::new(inputs_clone, out_map);
+                        func(&mut args, (start as u32)..(end as u32));
+                    });
+                }
+            });
+        }
+
+        for &sid in &output_ids {
+            bufs.mark_written(sid)?;
+        }
+        Ok(eff_workers)
     }
 }
 
@@ -225,7 +243,11 @@ impl KernelBackend for BatchCpu {
         for entry in &lib.entries {
             entry
                 .manifest
-                .validate_static(std::slice::from_ref(&lib.shape_class), None, false)
+                .validate_static(
+                    std::slice::from_ref(&lib.shape_class),
+                    entry.program_footprint.as_ref(),
+                    false,
+                )
                 .map_err(|e| refusal_603(&entry.manifest.name, e.to_string()))?;
             if !entry.compile_bindings.is_empty() {
                 entry
@@ -239,14 +261,11 @@ impl KernelBackend for BatchCpu {
                     )
                     .map_err(|e| refusal_603(&entry.manifest.name, e.to_string()))?;
             }
-            let (symbol_name, func) = match &entry.source {
-                KernelSource::CpuSymbol { symbol_name, func } => (symbol_name.clone(), *func),
-                KernelSource::DialectText(_) => {
-                    return Err(refusal_603(
-                        &entry.manifest.name,
-                        "batch-cpu requires KernelSource::CpuSymbol, not DialectText",
-                    ));
-                }
+            let Some(sym) = &entry.cpu_symbol else {
+                return Err(refusal_603(
+                    &entry.manifest.name,
+                    "batch-cpu requires KernelEntry.cpu_symbol",
+                ));
             };
             let kid = entry.manifest.id;
             ids.push((entry.manifest.name.clone(), kid));
@@ -254,13 +273,12 @@ impl KernelBackend for BatchCpu {
                 kid,
                 CompiledCpuKernel {
                     manifest: entry.manifest.clone(),
-                    symbol_name,
-                    func,
+                    symbol_name: sym.symbol_name.clone(),
+                    func: sym.func,
                 },
             ));
         }
 
-        // Commit atomically only after every manifest and binding passes.
         for (kid, ck) in staged {
             self.compiled.insert(kid, ck);
         }
@@ -271,15 +289,68 @@ impl KernelBackend for BatchCpu {
     fn allocate(&mut self, layout: &BufferLayout) -> Result<BufferSet, Refusal> {
         self.check_available()?;
         let t0 = Instant::now();
-        let bufs = BufferSet::allocate_aligned(layout);
+        let bufs = BufferSet::new_cpu(layout);
+        self.last_allocation_id = Some(bufs.allocation_id());
         self.allocated_specs = layout.slabs.clone();
         self.last_allocate_s = t0.elapsed().as_secs_f64();
+        self.last_upload_s = 0.0;
         Ok(bufs)
+    }
+
+    fn upload(&mut self, bufs: &mut BufferSet, slab: SlabId, bytes: &[u8]) -> Result<(), Refusal> {
+        self.check_available()?;
+        if self.in_launch {
+            return Err(refusal_802(
+                format!("/slab/{}", slab.0),
+                "upload called while launch is active",
+                "upload only between launches",
+            ));
+        }
+        let t0 = Instant::now();
+        let slabs = bufs.cpu_slabs_mut().ok_or_else(|| {
+            refusal_802(
+                "/upload/buffers",
+                "BufferSet lacks CPU backing slabs",
+                "BufferSet from BatchCpu::allocate",
+            )
+        })?;
+        let target = slabs.get_mut(slab.0).ok_or_else(|| {
+            refusal_802(
+                format!("/slab/{}", slab.0),
+                format!("slab {} out of range", slab.0),
+                "allocated slab id",
+            )
+        })?;
+        if bytes.len() != target.byte_len() {
+            return Err(refusal_802(
+                format!("/slab/{}", target.spec().name),
+                format!(
+                    "upload size mismatch: got {} bytes, slab `{}` requires {}",
+                    bytes.len(),
+                    target.spec().name,
+                    target.byte_len()
+                ),
+                "exact slab byte length",
+            ));
+        }
+        target.as_bytes_mut().copy_from_slice(bytes);
+        bufs.mark_written(slab)?;
+        self.last_upload_s += t0.elapsed().as_secs_f64();
+        Ok(())
     }
 
     fn plan(&mut self, stages: &[Stage], class: &ShapeClassCaps) -> Result<StepPlan, Refusal> {
         self.check_available()?;
+        let alloc_id = self.last_allocation_id.ok_or_else(|| {
+            refusal_802(
+                "/plan",
+                "plan called before allocate",
+                "call allocate before plan",
+            )
+        })?;
+
         let mut launches = Vec::with_capacity(stages.len());
+        let mut expected_map: BTreeMap<SlabId, ExpectedSlab> = BTreeMap::new();
 
         for stage in stages {
             let ck = self.compiled.get(&stage.kernel_id).ok_or_else(|| {
@@ -308,15 +379,18 @@ impl KernelBackend for BatchCpu {
 
             let mut input_bindings = Vec::new();
             let mut output_bindings = Vec::new();
+            let mut seen_out_slabs = BTreeSet::new();
+            let mut seen_in_slabs = BTreeSet::new();
 
             for sb in &stage.bindings {
                 let spec = self.allocated_specs.get(sb.slab.0).ok_or_else(|| {
-                    refusal_603(
-                        &ck.manifest.name,
+                    refusal_802(
+                        format!("/stage/{}/arg/{}", stage.name, sb.arg),
                         format!(
                             "stage `{}` binds arg `{}` to unallocated slab {}",
                             stage.name, sb.arg, sb.slab.0
                         ),
+                        "allocated slab id",
                     )
                 })?;
                 let lay = ck
@@ -367,9 +441,19 @@ impl KernelBackend for BatchCpu {
                     from_stat_kernel: spec.from_stat_kernel,
                 });
                 if read_args.contains(sb.arg.as_str()) {
+                    seen_in_slabs.insert(sb.slab);
                     input_bindings.push((sb.arg.clone(), sb.slab));
                 }
                 if write_args.contains(sb.arg.as_str()) {
+                    if !seen_out_slabs.insert(sb.slab) {
+                        return Err(refusal_603(
+                            &ck.manifest.name,
+                            format!(
+                                "stage `{}` binds multiple outputs to slab {}",
+                                stage.name, sb.slab.0
+                            ),
+                        ));
+                    }
                     output_bindings.push((sb.arg.clone(), sb.slab));
                     declared_outputs.push(DeclaredOutput {
                         arg: sb.arg.clone(),
@@ -378,6 +462,21 @@ impl KernelBackend for BatchCpu {
                         hi: spec.len as u64,
                     });
                 }
+                expected_map.entry(sb.slab).or_insert(ExpectedSlab {
+                    slab: sb.slab,
+                    elem: spec.elem,
+                    byte_len: spec.byte_len(),
+                });
+            }
+
+            if !seen_in_slabs.is_disjoint(&seen_out_slabs) {
+                return Err(refusal_603(
+                    &ck.manifest.name,
+                    format!(
+                        "stage `{}` aliases an input and output slab (disjoint slabs required on batch-cpu)",
+                        stage.name
+                    ),
+                ));
             }
 
             ck.manifest
@@ -396,19 +495,22 @@ impl KernelBackend for BatchCpu {
                     format!("world count {} exceeds u32::MAX", class.worlds),
                 )
             })?;
-            launches.push(PlannedLaunch {
-                stage_name: stage.name.clone(),
-                kernel_id: stage.kernel_id,
+            launches.push(PlannedLaunch::new(
+                stage.name.clone(),
+                stage.kernel_id,
                 lanes,
                 input_bindings,
                 output_bindings,
-            });
+            ));
         }
 
-        Ok(StepPlan {
+        Ok(StepPlan::new_cpu(
+            self.backend_tag,
+            alloc_id,
+            class.clone(),
             launches,
-            class: class.clone(),
-        })
+            expected_map.into_values().collect(),
+        ))
     }
 
     fn launch(
@@ -419,48 +521,64 @@ impl KernelBackend for BatchCpu {
     ) -> Result<Receipt, Refusal> {
         self.check_available()?;
         if self.in_launch {
-            return Err(refusal_601(
+            return Err(refusal_802(
                 "/launch",
                 "re-entrant launch while previous launch is active",
+                "sequential non-re-entrant launch",
             ));
         }
+        self.validate_launch_buffers(plan, bufs)?;
+
         self.in_launch = true;
         let t0 = Instant::now();
         let mut outcome = CancelOutcome::Completed;
         let mut executed: u32 = 0;
+        let mut max_workers_used: usize = 0;
         let mut kernel_ids = Vec::new();
         let mut kernel_names = Vec::new();
         let mut symbols = Vec::new();
-        let mut all_exact = true;
+        let mut det_claimed = DetClass::D0Exact;
+        let mut det_attained = DetClass::D0Exact;
 
         let mut launch_err: Option<Refusal> = None;
-        for (idx, step) in plan.launches.iter().enumerate() {
+        for (idx, step) in plan.launches().iter().enumerate() {
             if cx.is_cancelled() {
                 outcome = CancelOutcome::CancelledDrained;
                 break;
             }
-            let Some(ck) = self.compiled.get(&step.kernel_id) else {
+            let Some(ck) = self.compiled.get(&step.kernel_id()) else {
                 launch_err = Some(refusal_603(
-                    &step.stage_name,
-                    format!("missing compiled kernel {}", step.kernel_id),
+                    step.stage_name(),
+                    format!("missing compiled kernel {}", step.kernel_id()),
                 ));
                 break;
             };
-            kernel_ids.push(step.kernel_id.to_string());
+            let used = match self.execute_stage(ck, step, bufs) {
+                Ok(w) => w,
+                Err(e) => {
+                    launch_err = Some(e);
+                    break;
+                }
+            };
+            max_workers_used = max_workers_used.max(used);
+            kernel_ids.push(step.kernel_id().to_string());
             kernel_names.push(ck.manifest.name.clone());
             symbols.push(ck.symbol_name.clone());
-            if ck.manifest.class != KernelClass::Exact {
-                all_exact = false;
-            }
-
-            if let Err(e) = self.execute_stage(ck, step, bufs) {
-                launch_err = Some(e);
-                break;
-            }
+            det_claimed = det_claimed.meet(ck.manifest.determinism);
+            let backend_cap = if ck.manifest.class == KernelClass::Exact {
+                DetClass::D0Exact
+            } else {
+                DetClass::D2PerBackend
+            };
+            det_attained = det_attained.meet(ck.manifest.determinism.meet(backend_cap));
             executed += 1;
 
             if let Some(hook) = self.boundary_hook.as_mut() {
                 hook(idx, cx);
+            }
+            if cx.is_cancelled() {
+                outcome = CancelOutcome::CancelledDrained;
+                break;
             }
         }
         self.in_launch = false;
@@ -473,16 +591,12 @@ impl KernelBackend for BatchCpu {
         let phase_times = PhaseTimes {
             compile_s: self.last_compile_s,
             allocate_s: self.last_allocate_s,
+            upload_s: self.last_upload_s,
             launch_s,
             read_back_s: 0.0,
         };
-        let wall_seconds = phase_times.compile_s + phase_times.allocate_s + phase_times.launch_s;
+        let wall_seconds = phase_times.total_s();
         let id = self.identity();
-        let det = if all_exact && executed > 0 {
-            DetClass::D0Exact
-        } else {
-            DetClass::D2PerBackend
-        };
 
         let ae04 = if kernel_ids.is_empty() {
             "none (cancelled before launch)".to_owned()
@@ -492,8 +606,8 @@ impl KernelBackend for BatchCpu {
         let ae05 = format!(
             "kernels=[{}] shape={} worlds={}",
             kernel_names.join(","),
-            plan.class.name,
-            plan.class.worlds
+            plan.class().name,
+            plan.class().worlds
         );
         let ae09 = if symbols.is_empty() {
             "none (cancelled before launch)".to_owned()
@@ -508,13 +622,16 @@ impl KernelBackend for BatchCpu {
             ae04_kernel_source_identity: Some(ae04),
             ae05_kernel_and_workload_identity: Some(ae05),
             ae06_cpu_machine_identity_and_measured_axes: Some(format!(
-                "arch={} workers={} vector_width=1",
+                "arch={} os={} workers_used={} workers_configured={} vector_width=1",
                 std::env::consts::ARCH,
+                std::env::consts::OS,
+                max_workers_used,
                 self.workers
             )),
             ae07_reduction_and_determinism_policy: Some(format!(
-                "fixed-order trees, no atomics, class {}",
-                det.as_str()
+                "logical-index disjoint lane partition, no atomics, claimed={} attained={}",
+                det_claimed.as_str(),
+                det_attained.as_str()
             )),
             ae08_cpu_versus_device_numerical_comparison: Some("self".to_owned()),
             ae09_permanent_cpu_reference: Some(ae09),
@@ -523,9 +640,9 @@ impl KernelBackend for BatchCpu {
             ae12_go_or_no_go_decision: Some("not-assessed".to_owned()),
             placements: Vec::new(),
             fingerprint_digest: None,
-            determinism_claimed: det,
-            determinism_attained: det,
-            shape_class: plan.class.clone(),
+            determinism_claimed: det_claimed,
+            determinism_attained: det_attained,
+            shape_class: plan.class().clone(),
             launch_count: executed,
             retries: 0,
             device_seconds: launch_s,
@@ -538,25 +655,38 @@ impl KernelBackend for BatchCpu {
     fn read_back(&mut self, bufs: &BufferSet, slab: SlabId, out: &mut [u8]) -> Result<(), Refusal> {
         self.check_available()?;
         if self.in_launch {
-            return Err(refusal_601(
+            return Err(refusal_802(
                 format!("/slab/{}", slab.0),
                 "read_back called while launch is active",
+                "read_back only after launch completion",
             ));
         }
-        let s = bufs.get(slab).ok_or_else(|| {
-            refusal_601(
+        let s = bufs.cpu_slab(slab).ok_or_else(|| {
+            refusal_802(
                 format!("/slab/{}", slab.0),
-                format!("slab {} out of range", slab.0),
+                format!("slab {} out of range or not CPU-backed", slab.0),
+                "allocated CPU slab id",
             )
         })?;
+        if !bufs.is_written(slab) {
+            return Err(refusal_802(
+                format!("/slab/{}", s.spec().name),
+                format!(
+                    "read_back refused for slab `{}` before its producer completed",
+                    s.spec().name
+                ),
+                "completed upload or producer launch before read_back",
+            ));
+        }
         if out.len() != s.byte_len() {
-            return Err(refusal_603(
-                &s.spec.name,
+            return Err(refusal_802(
+                format!("/slab/{}", s.spec().name),
                 format!(
                     "read_back buffer length {} != slab byte length {}",
                     out.len(),
                     s.byte_len()
                 ),
+                "exact slab byte length",
             ));
         }
         out.copy_from_slice(s.as_bytes());
@@ -569,7 +699,7 @@ impl KernelBackend for BatchCpu {
             device: format!("cpu-{}-{}", std::env::consts::ARCH, std::env::consts::OS),
             driver: format!("os-{}", std::env::consts::OS),
             runtime: format!("std-thread-scope-w{}", self.workers),
-            compiler: "rustc-batch-cpu-no-fma".to_owned(),
+            compiler: format!("batch-cpu (frob-kernels v{})", env!("CARGO_PKG_VERSION")),
         }
     }
 }

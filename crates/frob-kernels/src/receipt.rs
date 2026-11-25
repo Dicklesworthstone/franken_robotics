@@ -35,7 +35,6 @@ pub const DOCTRINE_FIELDS: [(&str, &str); 12] = [
 pub enum CancelOutcome {
     Completed,
     CancelledDrained,
-    Failed,
 }
 
 impl CancelOutcome {
@@ -44,7 +43,6 @@ impl CancelOutcome {
         match self {
             Self::Completed => "completed",
             Self::CancelledDrained => "cancelled-drained",
-            Self::Failed => "failed",
         }
     }
 }
@@ -54,21 +52,27 @@ impl CancelOutcome {
 pub struct PhaseTimes {
     pub compile_s: f64,
     pub allocate_s: f64,
+    pub upload_s: f64,
     pub launch_s: f64,
     pub read_back_s: f64,
 }
 
 impl PhaseTimes {
     #[must_use]
+    pub fn total_s(self) -> f64 {
+        self.compile_s + self.allocate_s + self.upload_s + self.launch_s + self.read_back_s
+    }
+
+    #[must_use]
     pub fn format_ae11(self) -> String {
         format!(
-            "compile={:.6}s allocate={:.6}s launch={:.6}s read_back={:.6}s energy=unmeasured-gap",
-            self.compile_s, self.allocate_s, self.launch_s, self.read_back_s
+            "compile={:.6}s allocate={:.6}s upload={:.6}s launch={:.6}s read_back={:.6}s energy=unmeasured-gap",
+            self.compile_s, self.allocate_s, self.upload_s, self.launch_s, self.read_back_s
         )
     }
 }
 
-/// Per-stage placement record (empty until `N21b-28` populates it).
+/// Per-stage placement record (populated by `N21b-28`).
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct StagePlacement {
     pub stage: String,
@@ -198,49 +202,30 @@ impl Receipt {
         ]
     }
 
-    /// Clear field `AE-k` (`k` in `1..=12`); used by negative-control tests.
-    pub fn clear_ae_field(&mut self, index_1_based: u8) {
-        match index_1_based {
-            1 => self.ae01_device_identity = None,
-            2 => self.ae02_driver_and_runtime_version = None,
-            3 => self.ae03_compiler_and_backend_identity = None,
-            4 => self.ae04_kernel_source_identity = None,
-            5 => self.ae05_kernel_and_workload_identity = None,
-            6 => self.ae06_cpu_machine_identity_and_measured_axes = None,
-            7 => self.ae07_reduction_and_determinism_policy = None,
-            8 => self.ae08_cpu_versus_device_numerical_comparison = None,
-            9 => self.ae09_permanent_cpu_reference = None,
-            10 => self.ae10_cancellation_drain_and_finalize_outcome = None,
-            11 => self.ae11_phase_wall_time_and_energy_attribution = None,
-            12 => self.ae12_go_or_no_go_decision = None,
-            _ => {}
-        }
-    }
-
     /// `INV-SPARK-02`: every one of `AE-01`..`AE-12` must be present and non-empty.
     pub fn validate(&self) -> Result<(), ReceiptError> {
         for (id, name, value) in self.ae_entries() {
-            let ok = value.is_some_and(|s| !s.trim().is_empty());
-            if !ok {
+            if !value.is_some_and(|s| !s.trim().is_empty()) {
                 return Err(ReceiptError::MissingField { id, name });
             }
         }
         Ok(())
     }
 
-    /// Update `read_back_s` and refresh `AE-11` consistently.
+    /// Update `read_back_s` and refresh `wall_seconds` and `AE-11` consistently.
     pub fn record_read_back_seconds(&mut self, read_back_s: f64) {
         self.phase_times.read_back_s = read_back_s;
-        self.wall_seconds = self.phase_times.compile_s
-            + self.phase_times.allocate_s
-            + self.phase_times.launch_s
-            + self.phase_times.read_back_s;
+        self.wall_seconds = self.phase_times.total_s();
         self.ae11_phase_wall_time_and_energy_attribution = Some(self.phase_times.format_ae11());
     }
 
-    /// Agent-boundary evidence admission (`INV-SPARK-02`): requires all twelve
-    /// doctrine fields plus a current device fingerprint digest, refusing an
-    /// absent fingerprint with `FROB-REF-606` (exit 6).
+    /// Fail-closed M0 agent-boundary guard (`INV-SPARK-02`, `FROB-REF-606`).
+    ///
+    /// Rejects missing doctrine fields with `FROB-REF-990`, missing fingerprint
+    /// digests with `FROB-REF-606` (`digest: null`), and any M0 receipt before
+    /// live fingerprint currency (`BD-029` / `N21c-05`) and placement
+    /// attestation (`N21b-28`) are wired — never silently admitting an arbitrary
+    /// non-blank digest, unplaced receipt, or `citable = false` receipt.
     pub fn validate_agent_boundary(&self, device: &str) -> Result<(), Refusal> {
         if let Err(err) = self.validate() {
             return Err(Refusal::new(
@@ -254,11 +239,12 @@ impl Receipt {
                 vec![Repair::new("frob doctor")],
             ));
         }
-        let has_fp = self
+        let fp = self
             .fingerprint_digest
             .as_deref()
-            .is_some_and(|s| !s.trim().is_empty());
-        if !has_fp {
+            .map(str::trim)
+            .filter(|s| !s.is_empty());
+        let Some(digest) = fp else {
             return Err(Refusal::new(
                 RefusalCode::FrobRef606,
                 format!("fingerprint missing for device `{device}`"),
@@ -274,7 +260,28 @@ impl Receipt {
                 ],
             )
             .with_fingerprint(RefusalFingerprint::missing(device)));
-        }
-        Ok(())
+        };
+        let reason = if !self.citable {
+            "receipt is marked citable=false and cannot be admitted at the agent boundary"
+        } else if self.placements.is_empty() {
+            "receipt lacks verified stage placements (N21b-28)"
+        } else {
+            "fingerprint currency verification (BD-029 / N21c-05) is not wired at M0"
+        };
+        Err(Refusal::new(
+            RefusalCode::FrobRef606,
+            format!("fingerprint `{digest}` for device `{device}` cannot be admitted: {reason}"),
+            format!("/device/{device}/fingerprint"),
+            digest,
+            "verified current hardware fingerprint digest with citable placements",
+            "blake3-hex",
+            RetryPolicy::AfterChange,
+            vec![
+                Repair::new("frob spark fingerprint"),
+                Repair::new("frob spark check"),
+                Repair::new("Run on batch-cpu"),
+            ],
+        )
+        .with_fingerprint(RefusalFingerprint::new(device, digest)))
     }
 }

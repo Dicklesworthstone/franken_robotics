@@ -10,6 +10,7 @@
 //! `title`, `description`, `examples`, `default`, `deprecated`, `readOnly`, `writeOnly`, any
 //! `x-` key) are ignored. Every other keyword is a compile error: a schema this validator
 //! cannot fully enforce is refused instead of being checked partially.
+//! The wire contract narrows `integer` to `int53` lexemes (no fraction or exponent).
 
 use std::collections::BTreeMap;
 use std::fmt;
@@ -108,7 +109,7 @@ impl JsonType {
             | (Self::Array, Tree::Arr(_))
             | (Self::Number, Tree::Num(_))
             | (Self::String, Tree::Str(_)) => true,
-            (Self::Integer, Tree::Num(_)) => v.as_f64().is_some_and(|x| x.fract() == 0.0),
+            (Self::Integer, Tree::Num(_)) => v.as_int53().is_some(),
             _ => false,
         }
     }
@@ -750,10 +751,6 @@ mod tests {
         )
         .expect("compiles");
         assert!(s.validate(&tree(r#"{"a":1}"#)).is_ok());
-        assert!(
-            s.validate(&tree(r#"{"a":1.0}"#)).is_ok(),
-            "1.0 is an integer in draft 2020-12"
-        );
         assert!(s.validate(&tree(r#"{"a":1.5}"#)).is_err());
         assert!(s.validate(&tree(r#"{"a":0}"#)).is_err());
         assert!(s.validate(&tree(r#"{}"#)).is_err());
@@ -772,6 +769,15 @@ mod tests {
         assert!(s.validate(&tree(r#"{"a":2}"#)).is_err(), "if/then");
         let v = s.validate(&tree(r#"{"a":1,"z":0}"#)).unwrap_err();
         assert_eq!(v[0].instance, "/z");
+    }
+
+    #[test]
+    fn validator_integer_requires_int53() {
+        let schema = Schema::compile_json(r#"{"type":"integer"}"#).expect("schema");
+        assert!(schema.validate(&tree("9007199254740991")).is_ok());
+        for number in ["100.0", "1e20", "9007199254740992", "9007199254740993"] {
+            assert!(schema.validate(&tree(number)).is_err(), "{number}");
+        }
     }
 
     #[test]

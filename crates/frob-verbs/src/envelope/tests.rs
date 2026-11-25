@@ -51,6 +51,7 @@ schema = "frob.refusals/1"
 "76x" = 4
 "79x" = 5
 "8xx" = 3
+"81xx" = 3
 "9xx" = 9
 conflict = [112, 803, 804, 809]
 integrity = [810]
@@ -1058,6 +1059,34 @@ fn codes_compare_as_whole_tokens() {
 }
 
 #[test]
+fn registered_four_digit_code_has_its_own_exit() {
+    let registry = mirror_with(
+        r#"[[refusal]]
+code = "FROB-REF-8100"
+meaning = "synthetic: refused"
+defined_in = "§32.4"
+exit = 3
+retry = "never"
+"#,
+    )
+    .expect("8100 loads under the 81xx rule");
+    let schema = base_schema().expect("schema");
+    for (code, exit) in [
+        ("FROB-REF-8100", ExitCode::Refused),
+        ("FROB-REF-810", ExitCode::Indeterminate),
+    ] {
+        assert_eq!(rule_exit_for_code(&registry, code), Ok(exit));
+        let envelope =
+            Envelope::from_code_in(&registry, "design.check", code, fields("x"), Cost::ZERO)
+                .expect("registered refusal");
+        let line = canonical_line(&envelope);
+        let read = read_envelope_with(line.trim_end().as_bytes(), schema, &registry)
+            .expect("valid wire refusal");
+        assert_eq!((read.refusal_code(), read.exit()), (Some(code), exit));
+    }
+}
+
+#[test]
 fn reader_refuses_a_wrong_exit() {
     let reg = mirror();
     let env = canonical_line(
@@ -1171,6 +1200,42 @@ fn deferred_has_denominator() {
         read_envelope(no_total.trim_end().as_bytes()),
         Err(ReadError::Schema(_))
     ));
+}
+
+#[test]
+fn readers_refuse_non_int53_progress_counts() {
+    let env = canonical_line(&build_deferred());
+    assert!(read_envelope(env.trim_end().as_bytes()).is_ok());
+    let registry = mirror();
+    let progress = r#"{"done":3,"job":"j:7f01","schema":"frob.progress/1","state":"running","total":12,"unit":"episodes"}"#;
+    assert!(check_stream_with(format!("{progress}\n{env}").as_bytes(), &registry).is_ok());
+    for (field, original) in [("done", 3), ("total", 12)] {
+        for number in ["100.0", "1e20", "9007199254740993"] {
+            let target = format!("\"{field}\":{original}");
+            let replacement = format!("\"{field}\":{number}");
+            let bad_env = env.replace(&target, &replacement);
+            let error = read_envelope(bad_env.trim_end().as_bytes()).expect_err(number);
+            assert_eq!(error.first_field(), format!("/job/progress/{field}"));
+
+            let bad_progress = progress.replace(&target, &replacement);
+            let error = check_stream_with(format!("{bad_progress}\n{env}").as_bytes(), &registry)
+                .expect_err(number);
+            assert!(
+                matches!(error, StreamError::BadLine { line: 1, reason } if reason.contains(&format!("/{field}")))
+            );
+        }
+    }
+}
+
+#[test]
+fn reader_refuses_unordered_job_eta() {
+    let env = canonical_line(&build_deferred());
+    assert!(read_envelope(env.trim_end().as_bytes()).is_ok());
+    for (original, invalid) in [("\"lo\":30", "\"lo\":43"), ("\"hi\":60", "\"hi\":42")] {
+        let planted = env.replace(original, invalid);
+        let error = read_envelope(planted.trim_end().as_bytes()).expect_err(invalid);
+        assert_eq!(error.first_field(), "/job/eta_s");
+    }
 }
 
 #[test]
@@ -1854,6 +1919,31 @@ fn control_bare_error_unknown_verb() {
         check_stream(&out).expect("one envelope").envelope.exit(),
         exit
     );
+}
+
+#[test]
+fn unknown_verb_offers_registered_robot_docs_repair() {
+    let registry = embedded_registry().expect("registry");
+    let row = registry
+        .lookup(UNKNOWN_VERB_CODE, "unknown verb repair")
+        .expect("801 row");
+    assert!(row.repairs.iter().any(|repair| repair == "frob robot-docs"));
+    let (out, exit) = served(registry, "design.chekc", |_| {
+        unreachable!("an unknown verb never reaches a handler")
+    });
+    assert_eq!(exit, ExitCode::Refused);
+    let envelope = check_stream_with(&out, registry)
+        .expect("refusal envelope")
+        .envelope;
+    let repair = envelope
+        .tree()
+        .get("refusal")
+        .and_then(|r| r.get("repairs"))
+        .and_then(Tree::as_array)
+        .and_then(|repairs| repairs.first())
+        .and_then(|repair| repair.get("action"))
+        .and_then(Tree::as_str);
+    assert_eq!(repair, Some("frob robot-docs"));
 }
 
 #[test]

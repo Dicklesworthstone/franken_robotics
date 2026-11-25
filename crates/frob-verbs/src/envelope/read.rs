@@ -4,8 +4,8 @@
 //! Typed checks, in order: the authorization flags through BD-005's parsers (a flag that is
 //! missing or not `false` is `FROB-REF-816`); the `exit` of a refusal against the `exit` of
 //! its registry row (whole-token code comparison; `FROB-REF-990` checked against the
-//! `[exit_rule]` while N32-REF has not entered its row); `job.progress.done <= total`; and
-//! `evidence.stack_receipt` parsed as a `StackReceiptHash`.
+//! `[exit_rule]` while N32-REF has not entered its row); `job.progress.done <= total`;
+//! `job.eta_s.lo <= point <= hi`; and `evidence.stack_receipt` parsed as a `StackReceiptHash`.
 
 use std::fmt;
 
@@ -81,6 +81,11 @@ pub enum ReadError {
     },
     /// The refusal code has no exit (unregistered or malformed).
     Code(ExitLookupError),
+    /// A job field failed typed decoding or an interval check.
+    InvalidJobField {
+        field: &'static str,
+        reason: &'static str,
+    },
     /// `job.progress.done` exceeds `total`.
     ProgressOverrun { done: i64, total: i64 },
     /// `evidence.stack_receipt` does not parse.
@@ -99,6 +104,7 @@ impl ReadError {
             Self::Authorization(r) => format!("/authorization{}", r.pointer),
             Self::ExitMismatch { .. } => "/exit".to_owned(),
             Self::Code(_) => "/refusal/code".to_owned(),
+            Self::InvalidJobField { field, .. } => (*field).to_owned(),
             Self::ProgressOverrun { .. } => "/job/progress/done".to_owned(),
             Self::StackReceipt(_) => "/evidence/stack_receipt".to_owned(),
             Self::Setup(_) => String::new(),
@@ -128,6 +134,7 @@ impl fmt::Display for ReadError {
                 )
             }
             Self::Code(e) => write!(f, "{e}"),
+            Self::InvalidJobField { field, reason } => write!(f, "`{field}`: {reason}"),
             Self::ProgressOverrun { done, total } => {
                 write!(f, "progress done {done} exceeds total {total}")
             }
@@ -215,11 +222,41 @@ pub fn read_envelope_with(
         None => None,
     };
 
-    if let Some(p) = tree.get("job").and_then(|j| j.get("progress")) {
-        let done = p.get("done").and_then(Tree::as_int53).unwrap_or(0);
-        let total = p.get("total").and_then(Tree::as_int53).unwrap_or(0);
-        if done > total {
-            return Err(ReadError::ProgressOverrun { done, total });
+    if let Some(job) = tree.get("job") {
+        if let Some(progress) = job.get("progress") {
+            let count = |key, field| {
+                progress
+                    .get(key)
+                    .and_then(Tree::as_int53)
+                    .ok_or(ReadError::InvalidJobField {
+                        field,
+                        reason: "requires an int53",
+                    })
+            };
+            let done = count("done", "/job/progress/done")?;
+            let total = count("total", "/job/progress/total")?;
+            if done > total {
+                return Err(ReadError::ProgressOverrun { done, total });
+            }
+        }
+        if let Some(eta) = job.get("eta_s") {
+            let seconds = |key, field| {
+                eta.get(key)
+                    .and_then(Tree::as_f64)
+                    .ok_or(ReadError::InvalidJobField {
+                        field,
+                        reason: "requires finite seconds",
+                    })
+            };
+            let lo = seconds("lo", "/job/eta_s/lo")?;
+            let point = seconds("point", "/job/eta_s/point")?;
+            let hi = seconds("hi", "/job/eta_s/hi")?;
+            if !(lo <= point && point <= hi) {
+                return Err(ReadError::InvalidJobField {
+                    field: "/job/eta_s",
+                    reason: "requires lo <= point <= hi",
+                });
+            }
         }
     }
 

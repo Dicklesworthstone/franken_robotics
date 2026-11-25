@@ -174,8 +174,8 @@ fn unknown_verb(registry: &RefusalRegistry, call: &Call<'_>, cost: Cost) -> Enve
         affected_claims: Vec::new(),
         retry: RetryPolicy::AfterChange,
         repairs: vec![Repair::with_detail(
-            "frob verbs --json",
-            "List the registered verbs and their tool names.",
+            "frob robot-docs",
+            "Find the registered verbs in the command reference.",
         )],
     };
     // Until N32-REF enters 801's row the registry cannot give it an exit: that is a fault of
@@ -334,8 +334,16 @@ pub fn check_stream_with(
                     line,
                     reason: v.first().map_or_else(String::new, ToString::to_string),
                 })?;
-                let done = tree.get("done").and_then(Tree::as_int53).unwrap_or(0);
-                let total = tree.get("total").and_then(Tree::as_int53).unwrap_or(0);
+                let count = |field| {
+                    tree.get(field)
+                        .and_then(Tree::as_int53)
+                        .ok_or_else(|| StreamError::BadLine {
+                            line,
+                            reason: format!("`/{field}` requires an int53"),
+                        })
+                };
+                let done = count("done")?;
+                let total = count("total")?;
                 if done > total {
                     return Err(StreamError::BadLine {
                         line,

@@ -575,15 +575,54 @@ fn parse_table_header(line: &str) -> Option<String> {
     None
 }
 
+fn split_unquoted(raw: &str, delim: char) -> Vec<&str> {
+    let mut parts = Vec::new();
+    let mut start = 0usize;
+    let (mut in_double, mut in_single, mut escaped) = (false, false, false);
+    for (idx, ch) in raw.char_indices() {
+        if in_double {
+            if escaped {
+                escaped = false;
+            } else if ch == '\\' {
+                escaped = true;
+            } else if ch == '"' {
+                in_double = false;
+            }
+        } else if in_single {
+            if ch == '\'' {
+                in_single = false;
+            }
+        } else if ch == '"' {
+            in_double = true;
+        } else if ch == '\'' {
+            in_single = true;
+        } else if ch == delim {
+            parts.push(&raw[start..idx]);
+            start = idx + ch.len_utf8();
+        }
+    }
+    parts.push(&raw[start..]);
+    parts
+}
+
 fn normalize_dotted_key(raw: &str) -> String {
     let mut out = String::new();
-    for (i, seg) in raw.split('.').enumerate() {
+    for (i, seg) in split_unquoted(raw, '.').into_iter().enumerate() {
         if i > 0 {
             out.push('.');
         }
         let s = seg.trim();
         match parse_toml_string(s) {
-            Some(unquoted) => out.push_str(&unquoted),
+            Some(unquoted) => {
+                if unquoted.contains('.') {
+                    // Preserve single quoted key containing '.' as distinct from dotted segments.
+                    out.push('"');
+                    out.push_str(&unquoted);
+                    out.push('"');
+                } else {
+                    out.push_str(&unquoted);
+                }
+            }
             None => out.push_str(s),
         }
     }
@@ -591,8 +630,55 @@ fn normalize_dotted_key(raw: &str) -> String {
 }
 
 fn split_kv(line: &str) -> Option<(&str, &str)> {
-    let (lhs, rhs) = line.split_once('=')?;
-    Some((lhs.trim(), rhs.trim()))
+    let (mut in_double, mut in_single, mut escaped) = (false, false, false);
+    for (idx, ch) in line.char_indices() {
+        if in_double {
+            if escaped {
+                escaped = false;
+            } else if ch == '\\' {
+                escaped = true;
+            } else if ch == '"' {
+                in_double = false;
+            }
+        } else if in_single {
+            if ch == '\'' {
+                in_single = false;
+            }
+        } else if ch == '"' {
+            in_double = true;
+        } else if ch == '\'' {
+            in_single = true;
+        } else if ch == '=' {
+            return Some((line[..idx].trim(), line[idx + 1..].trim()));
+        }
+    }
+    None
+}
+
+fn contains_unquoted_char(raw: &str, target: char) -> bool {
+    let (mut in_double, mut in_single, mut escaped) = (false, false, false);
+    for ch in raw.chars() {
+        if in_double {
+            if escaped {
+                escaped = false;
+            } else if ch == '\\' {
+                escaped = true;
+            } else if ch == '"' {
+                in_double = false;
+            }
+        } else if in_single {
+            if ch == '\'' {
+                in_single = false;
+            }
+        } else if ch == '"' {
+            in_double = true;
+        } else if ch == '\'' {
+            in_single = true;
+        } else if ch == target {
+            return true;
+        }
+    }
+    false
 }
 
 fn parse_toml_string(raw: &str) -> Option<String> {
@@ -740,6 +826,7 @@ fn split_inline_entries(body: &str) -> Vec<&str> {
     let mut parts = Vec::new();
     let mut rest = body;
     let (mut in_double, mut in_single, mut escaped) = (false, false, false);
+    let (mut bracket_depth, mut brace_depth) = (0usize, 0usize);
     let mut offset = 0usize;
     for (idx, ch) in body.char_indices() {
         if in_double {
@@ -758,7 +845,11 @@ fn split_inline_entries(body: &str) -> Vec<&str> {
             match ch {
                 '"' => in_double = true,
                 '\'' => in_single = true,
-                ',' => {
+                '[' => bracket_depth += 1,
+                ']' => bracket_depth = bracket_depth.saturating_sub(1),
+                '{' => brace_depth += 1,
+                '}' => brace_depth = brace_depth.saturating_sub(1),
+                ',' if bracket_depth == 0 && brace_depth == 0 => {
                     let (head, tail) = rest.split_at(idx - offset);
                     parts.push(head);
                     rest = tail.strip_prefix(',').unwrap_or(tail);
@@ -1057,7 +1148,7 @@ fn parse_workspace_array(toml_text: &str, key: &str) -> Vec<String> {
                 && normalize_dotted_key(k) == key
             {
                 buf.push_str(v);
-                if v.contains(']') {
+                if contains_unquoted_char(v, ']') {
                     break;
                 }
                 collecting = true;
@@ -1065,7 +1156,7 @@ fn parse_workspace_array(toml_text: &str, key: &str) -> Vec<String> {
         } else {
             buf.push(' ');
             buf.push_str(line);
-            if line.contains(']') {
+            if contains_unquoted_char(line, ']') {
                 break;
             }
         }

@@ -514,3 +514,45 @@ rank = 1
     let bad_name = "[package]\nname = \"frob\" + \"core\"\n";
     assert!(xtask::crate_map::parse_package_name(bad_name).is_err());
 }
+
+#[test]
+fn toml_nested_inline_metadata_and_quoted_keys_handled() {
+    // Regression: inline [package.metadata] frob = { ... } containing nested
+    // arrays or inline tables must not split on inner commas.
+    let nested_inline = "\
+[package]
+name = \"frob-contact\"
+[package.metadata]
+frob = { layer = 3, tags = [\"solid\", \"m0\"], extra = { a = 1, b = 2 }, rank = 2 }
+";
+    assert_eq!(
+        xtask::crate_map::parse_manifest_metadata(nested_inline),
+        Ok(xtask::crate_map::ManifestMetadata { layer: Layer::Core(3), rank: 2 })
+    );
+
+    // Regression: quoted keys containing '=' or '.' must not be split inside quotes,
+    // and quoted dotted segments like \"frob\".\"layer\" must resolve cleanly.
+    let quoted_keys = "\
+[package]
+name = \"frob-core\"
+[package.metadata]
+\"a=b\" = \"ignored\"
+\"frob.layer\" = 7
+\"frob\".\"layer\" = 0
+\"frob\".\"rank\" = 1
+";
+    assert_eq!(
+        xtask::crate_map::parse_manifest_metadata(quoted_keys),
+        Ok(xtask::crate_map::ManifestMetadata { layer: Layer::Core(0), rank: 1 })
+    );
+
+    // Regression: workspace exclude containing a quoted ']' must not truncate array parsing.
+    let root = make_scratch_dir("quoted-bracket-ws");
+    let toml = "[workspace]\nresolver = \"3\"\nmembers = [\n  \"crates/*\",\n]\nexclude = [\n  \"weird]dir\",\n  \"spark\",\n]\n";
+    fs::write(root.join("Cargo.toml"), toml).expect("write root Cargo.toml");
+    write_member(&root, "crates/frob-core", "frob-core", "[package.metadata.frob]\nlayer = 0\nrank = 1");
+    write_member(&root, "spark/frob-spark-cuda", "frob-spark-cuda", "[package.metadata.frob]\nlayer = \"annex\"\nrank = 1");
+    let members = discover_workspace_members(&root).expect("discover");
+    let names: Vec<&str> = members.iter().map(|m| m.name.as_str()).collect();
+    assert_eq!(names, vec!["frob-core"]);
+}

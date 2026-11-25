@@ -421,32 +421,6 @@ pub struct ArgLayout {
     pub alloc_extent: CapExpr,
 }
 
-impl ArgLayout {
-    /// Compute the element index at multi-index `coords` using this layout's own unit.
-    #[must_use]
-    pub fn element_offset(&self, coords: &[usize], class: &ShapeClassCaps) -> Option<usize> {
-        if coords.len() != self.strides.len() {
-            return None;
-        }
-        let mut acc = i128::from(self.origin.eval(class)?);
-        let elem_bytes = i128::from(self.elem.byte_size() as u64);
-        for (&idx, &stride) in coords.iter().zip(&self.strides) {
-            let delta = i128::from(idx as u64) * i128::from(stride);
-            let elem_delta = match self.stride_unit {
-                StrideUnit::Elements => delta,
-                StrideUnit::Bytes => {
-                    if delta % elem_bytes != 0 {
-                        return None;
-                    }
-                    delta / elem_bytes
-                }
-            };
-            acc += elem_delta;
-        }
-        usize::try_from(acc).ok()
-    }
-}
-
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct ResourceBounds {
     pub live_values: u32,
@@ -577,6 +551,8 @@ pub struct KernelManifest {
 /// Program-derived load/store sets and resource counts checked by static rule 7 (PO-SPARK-03/04).
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ProgramFootprint {
+    /// Identity of the program from which these sets and counts were extracted.
+    pub program_id: Blake3,
     pub reads: Vec<Footprint>,
     pub writes: Vec<Footprint>,
     pub resources: ResourceBounds,
@@ -596,15 +572,6 @@ impl BackendLimits {
         Self {
             name: "gpu-metal",
             max_buffer_args: METAL_MAX_ARGUMENTS as u32,
-            max_stack_bytes: 65_536,
-        }
-    }
-
-    #[must_use]
-    pub const fn cuda() -> Self {
-        Self {
-            name: "gpu-cuda",
-            max_buffer_args: 128,
             max_stack_bytes: 65_536,
         }
     }
@@ -1143,7 +1110,23 @@ impl KernelManifest {
     pub fn parse_json(bytes: &[u8]) -> Result<Self, ManifestError> {
         let adm = admit(bytes, &Limits::default())
             .map_err(|e| ManifestError::Parse(format!("JSON admission failed: {e}")))?;
-        let root = obj_map(adm.root(), "manifest")?;
+        let root = obj_map(
+            adm.root(),
+            "manifest",
+            &[
+                "schema",
+                "id",
+                "name",
+                "class",
+                "role",
+                "args",
+                "determinism",
+                "identities",
+                "derivative",
+                "cpu_reference",
+                "signature",
+            ],
+        )?;
         let schema = req_str(&root, "schema", "manifest")?;
         if schema != KERNEL_MANIFEST_SCHEMA {
             return Err(ManifestError::Parse(format!(
@@ -1168,7 +1151,7 @@ impl KernelManifest {
         };
         let mut identities = Vec::new();
         for item in req_arr(&root, "identities", "manifest")? {
-            let io = obj_map(item, "identity")?;
+            let io = obj_map(item, "identity", &["name", "statement"])?;
             identities.push(IdentityDecl {
                 name: req_str(&io, "name", "identity")?.to_owned(),
                 statement: req_str(&io, "statement", "identity")?.to_owned(),
@@ -1176,19 +1159,27 @@ impl KernelManifest {
         }
         let mut args = Vec::new();
         for item in req_arr(&root, "args", "manifest")? {
-            let ao = obj_map(item, "arg")?;
+            let ao = obj_map(
+                item,
+                "arg",
+                &[
+                    "id",
+                    "elem",
+                    "view",
+                    "shape",
+                    "dim",
+                    "kind",
+                    "components",
+                    "state",
+                ],
+            )?;
             let id = req_str(&ao, "id", "arg")?.to_owned();
             let elem = ElemType::parse(req_str(&ao, "elem", "arg")?)?;
             let view = ArgView::parse(req_str(&ao, "view", "arg")?)?;
             let kind = ElemKind::parse(req_str(&ao, "kind", "arg")?)?;
             let components = req_arr(&ao, "components", "arg")?
                 .iter()
-                .map(|c| {
-                    c.value
-                        .as_str()
-                        .map(str::to_owned)
-                        .ok_or_else(|| ManifestError::Parse("component must be string".into()))
-                })
+                .map(|c| nonempty_str(c, "arg component").map(str::to_owned))
                 .collect::<Result<Vec<_>, _>>()?;
             let state = req_bool(&ao, "state", "arg")?;
             let shape = req_arr(&ao, "shape", "arg")?
@@ -1221,7 +1212,22 @@ impl KernelManifest {
             });
         }
 
-        let so = obj_map(req_field(&root, "signature", "manifest")?, "signature")?;
+        let so = obj_map(
+            req_field(&root, "signature", "manifest")?,
+            "signature",
+            &[
+                "reads",
+                "writes",
+                "may_alias",
+                "layout",
+                "epoch_read",
+                "epoch_write",
+                "resources",
+                "numerics",
+                "feeds_state",
+                "footprint_evidence",
+            ],
+        )?;
         let reads = req_arr(&so, "reads", "signature")?
             .iter()
             .map(parse_footprint)
@@ -1241,19 +1247,26 @@ impl KernelManifest {
                     "may_alias pair must have length 2".into(),
                 ));
             }
-            let a = items[0]
-                .value
-                .as_str()
-                .ok_or_else(|| ManifestError::Parse("may_alias[0] string".into()))?;
-            let b = items[1]
-                .value
-                .as_str()
-                .ok_or_else(|| ManifestError::Parse("may_alias[1] string".into()))?;
+            let a = nonempty_str(&items[0], "may_alias[0]")?;
+            let b = nonempty_str(&items[1], "may_alias[1]")?;
             may_alias.push((a.to_owned(), b.to_owned()));
         }
         let mut layout = Vec::new();
         for item in req_arr(&so, "layout", "signature")? {
-            let lo = obj_map(item, "layout")?;
+            let lo = obj_map(
+                item,
+                "layout",
+                &[
+                    "arg",
+                    "elem",
+                    "extents",
+                    "strides",
+                    "stride_unit",
+                    "stride_signed",
+                    "origin",
+                    "alloc_extent",
+                ],
+            )?;
             layout.push(ArgLayout {
                 arg: req_str(&lo, "arg", "layout")?.to_owned(),
                 elem: ElemType::parse(req_str(&lo, "elem", "layout")?)?,
@@ -1283,6 +1296,7 @@ impl KernelManifest {
                 let fo = obj_map(
                     req_field(&so, "footprint_evidence", "signature")?,
                     "footprint_evidence",
+                    &["kir_program"],
                 )?;
                 let hex = req_str(&fo, "kir_program", "footprint_evidence")?;
                 let h = Blake3::from_hex(hex)
@@ -1291,14 +1305,34 @@ impl KernelManifest {
             }
             _ => return Err(ManifestError::Parse("invalid footprint_evidence".into())),
         };
-        let ro = obj_map(req_field(&so, "resources", "signature")?, "resources")?;
+        let ro = obj_map(
+            req_field(&so, "resources", "signature")?,
+            "resources",
+            &[
+                "live_values",
+                "stack_bytes",
+                "max_loop_bound",
+                "buffer_args",
+            ],
+        )?;
         let resources = ResourceBounds {
             live_values: req_u32(&ro, "live_values", "resources")?,
             stack_bytes: req_u32(&ro, "stack_bytes", "resources")?,
             max_loop_bound: req_u32(&ro, "max_loop_bound", "resources")?,
             buffer_args: req_u32(&ro, "buffer_args", "resources")?,
         };
-        let no = obj_map(req_field(&so, "numerics", "signature")?, "numerics")?;
+        let no = obj_map(
+            req_field(&so, "numerics", "signature")?,
+            "numerics",
+            &[
+                "precision",
+                "error_bound",
+                "deferral_threshold",
+                "exact_fallback",
+                "neutrals",
+                "padded_reduction_outputs",
+            ],
+        )?;
         let precision = PrecisionProfile::parse(req_str(&no, "precision", "numerics")?)?;
         let error_bound = opt_f64(&no, "error_bound", "numerics")?;
         let deferral_threshold = opt_f64(&no, "deferral_threshold", "numerics")?;
@@ -1313,7 +1347,11 @@ impl KernelManifest {
         };
         let mut neutrals = Vec::new();
         for item in req_arr(&no, "neutrals", "numerics")? {
-            let neo = obj_map(item, "neutral")?;
+            let neo = obj_map(
+                item,
+                "neutral",
+                &["arg", "consumer", "value_bits_hex", "identity_rows"],
+            )?;
             let value_bits = match &req_field(&neo, "value_bits_hex", "neutral")?.value {
                 Json::Null => None,
                 Json::Str(hex) => Some(
@@ -1335,7 +1373,7 @@ impl KernelManifest {
         }
         let mut padded_reduction_outputs = Vec::new();
         for item in req_arr(&no, "padded_reduction_outputs", "numerics")? {
-            let po = obj_map(item, "padded_reduction_output")?;
+            let po = obj_map(item, "padded_reduction_output", &["arg", "consumer"])?;
             padded_reduction_outputs.push((
                 req_str(&po, "arg", "padded_reduction_output")?.to_owned(),
                 ReductionConsumer::parse(req_str(&po, "consumer", "padded_reduction_output")?)?,
@@ -1407,12 +1445,7 @@ impl KernelManifest {
                 self.name
             )));
         }
-        let layout_map: BTreeMap<&str, &ArgLayout> = self
-            .signature
-            .layout
-            .iter()
-            .map(|l| (l.arg.as_str(), l))
-            .collect();
+        let layout_map = self.checked_layouts(&arg_map)?;
 
         // Rule 1: every arg appears in reads or writes; no undeclared arg named.
         let mut referenced = BTreeSet::new();
@@ -1425,16 +1458,6 @@ impl KernelManifest {
                 });
             }
             referenced.insert(fp.arg.as_str());
-        }
-        for lay in &self.signature.layout {
-            if !arg_map.contains_key(lay.arg.as_str()) {
-                return Err(ManifestError::LayoutMismatch {
-                    kernel: self.name.clone(),
-                    arg: lay.arg.clone(),
-                    expected: "declared argument".into(),
-                    observed: "undeclared argument in layout".into(),
-                });
-            }
         }
         for (a, b) in &self.signature.may_alias {
             if !arg_map.contains_key(a.as_str()) || !arg_map.contains_key(b.as_str()) {
@@ -1453,53 +1476,12 @@ impl KernelManifest {
                     detail: "buffer argument appears in neither reads nor writes".into(),
                 });
             }
-            if !layout_map.contains_key(arg.id.as_str()) {
-                return Err(ManifestError::LayoutMismatch {
-                    kernel: self.name.clone(),
-                    arg: arg.id.clone(),
-                    expected: "declared ArgLayout entry".into(),
-                    observed: "missing".into(),
-                });
-            }
         }
 
         // Rule 2: 0 <= lo <= hi <= alloc_extent for every footprint and admitted shape class.
         for class in classes {
             for fp in self.signature.reads.iter().chain(&self.signature.writes) {
-                let lay = layout_map[fp.arg.as_str()];
-                let lo = fp
-                    .lo
-                    .eval(class)
-                    .ok_or_else(|| ManifestError::FootprintOutOfRange {
-                        kernel: self.name.clone(),
-                        arg: fp.arg.clone(),
-                        detail: format!("lo overflow on class `{}`", class.name),
-                    })?;
-                let hi = fp
-                    .hi
-                    .eval(class)
-                    .ok_or_else(|| ManifestError::FootprintOutOfRange {
-                        kernel: self.name.clone(),
-                        arg: fp.arg.clone(),
-                        detail: format!("hi overflow on class `{}`", class.name),
-                    })?;
-                let alloc = lay.alloc_extent.eval(class).ok_or_else(|| {
-                    ManifestError::FootprintOutOfRange {
-                        kernel: self.name.clone(),
-                        arg: fp.arg.clone(),
-                        detail: format!("alloc_extent overflow on class `{}`", class.name),
-                    }
-                })?;
-                if lo > hi || hi > alloc {
-                    return Err(ManifestError::FootprintOutOfRange {
-                        kernel: self.name.clone(),
-                        arg: fp.arg.clone(),
-                        detail: format!(
-                            "class `{}` footprint [{lo}, {hi}) exceeds alloc_extent {alloc}",
-                            class.name
-                        ),
-                    });
-                }
+                self.footprint_range(fp, layout_map[fp.arg.as_str()].alloc_extent, class, 0)?;
             }
         }
 
@@ -1599,6 +1581,30 @@ impl KernelManifest {
                 ),
             });
         }
+        if let FootprintEvidence::KirProgram(expected) = self.signature.footprint_evidence
+            && program.is_none_or(|prog| prog.program_id != expected)
+        {
+            return Err(ManifestError::LoadStoreNotContained {
+                kernel: self.name.clone(),
+                arg: "<program>".into(),
+                detail: match program {
+                    Some(prog) => format!(
+                        "expected evidence for program {expected}, got {}",
+                        prog.program_id
+                    ),
+                    None => format!("missing footprint evidence for program {expected}"),
+                },
+            });
+        }
+        if let FootprintEvidence::KirProgram(_) = self.signature.footprint_evidence
+            && classes.is_empty()
+        {
+            return Err(ManifestError::LoadStoreNotContained {
+                kernel: self.name.clone(),
+                arg: "<program>".into(),
+                detail: "no admitted shape classes to verify".into(),
+            });
+        }
         if let Some(prog) = program
             && !resources_equal(prog.resources, self.signature.resources)
         {
@@ -1612,18 +1618,27 @@ impl KernelManifest {
         }
 
         // Rule 6: neutral elements for padded outputs consumed by reductions.
+        let mut neutrals = BTreeMap::new();
+        for spec in &self.signature.numerics.neutrals {
+            if neutrals
+                .insert((spec.arg.as_str(), spec.consumer), spec)
+                .is_some_and(|previous| previous != spec)
+            {
+                return Err(ManifestError::NeutralMissing {
+                    kernel: self.name.clone(),
+                    arg: spec.arg.clone(),
+                    detail: format!("conflicting neutral specifications for {:?}", spec.consumer),
+                });
+            }
+        }
         for (arg, consumer) in &self.signature.numerics.padded_reduction_outputs {
-            let spec = self
-                .signature
-                .numerics
-                .neutrals
-                .iter()
-                .find(|n| &n.arg == arg && n.consumer == *consumer)
-                .ok_or_else(|| ManifestError::NeutralMissing {
+            let spec = neutrals.get(&(arg.as_str(), *consumer)).ok_or_else(|| {
+                ManifestError::NeutralMissing {
                     kernel: self.name.clone(),
                     arg: arg.clone(),
                     detail: format!("missing neutral specification for {:?} consumer", consumer),
-                })?;
+                }
+            })?;
             let prec = self.signature.numerics.precision;
             if !neutral_is_valid(*consumer, prec, spec) {
                 return Err(ManifestError::NeutralMissing {
@@ -1660,6 +1675,86 @@ impl KernelManifest {
         Ok(())
     }
 
+    fn checked_layouts<'a>(
+        &'a self,
+        args: &BTreeMap<&'a str, &'a ArgDecl>,
+    ) -> Result<BTreeMap<&'a str, &'a ArgLayout>, ManifestError> {
+        let mut layouts = BTreeMap::new();
+        for layout in &self.signature.layout {
+            let arg = layout.arg.as_str();
+            let decl = args.get(arg).ok_or_else(|| ManifestError::LayoutMismatch {
+                kernel: self.name.clone(),
+                arg: arg.into(),
+                expected: "declared argument".into(),
+                observed: "undeclared argument in layout".into(),
+            })?;
+            if decl.elem != layout.elem || decl.shape != layout.extents {
+                return Err(ManifestError::LayoutMismatch {
+                    kernel: self.name.clone(),
+                    arg: arg.into(),
+                    expected: format!("elem={:?} extents={:?}", decl.elem, decl.shape),
+                    observed: format!("elem={:?} extents={:?}", layout.elem, layout.extents),
+                });
+            }
+            if layouts.insert(arg, layout).is_some() {
+                return Err(ManifestError::LayoutMismatch {
+                    kernel: self.name.clone(),
+                    arg: arg.into(),
+                    expected: "one layout".into(),
+                    observed: "duplicate layouts".into(),
+                });
+            }
+        }
+        if let Some(arg) = args.keys().find(|arg| !layouts.contains_key(*arg)) {
+            return Err(ManifestError::LayoutMismatch {
+                kernel: self.name.clone(),
+                arg: (*arg).into(),
+                expected: "declared ArgLayout entry".into(),
+                observed: "missing".into(),
+            });
+        }
+        Ok(layouts)
+    }
+
+    fn footprint_range(
+        &self,
+        fp: &Footprint,
+        alloc_extent: CapExpr,
+        class: &ShapeClassCaps,
+        offset: u64,
+    ) -> Result<std::ops::Range<u64>, ManifestError> {
+        let error = |detail| ManifestError::FootprintOutOfRange {
+            kernel: self.name.clone(),
+            arg: fp.arg.clone(),
+            detail,
+        };
+        let eval = |bound: CapExpr, name| {
+            bound.eval(class).ok_or_else(|| {
+                error(format!(
+                    "{name} {bound:?} overflows on class `{}`",
+                    class.name
+                ))
+            })
+        };
+        let lo = eval(fp.lo, "lo")?;
+        let hi = eval(fp.hi, "hi")?;
+        let alloc = eval(alloc_extent, "alloc_extent")?;
+        if lo > hi || hi > alloc {
+            return Err(error(format!(
+                "class `{}` requires 0 <= {lo} <= {hi} <= alloc_extent {alloc}",
+                class.name
+            )));
+        }
+        let map_bound = |bound, name| {
+            offset.checked_add(bound).ok_or_else(|| {
+                error(format!(
+                    "slab {name} overflows: offset {offset} + bound {bound}"
+                ))
+            })
+        };
+        Ok(map_bound(lo, "lo")?..map_bound(hi, "hi")?)
+    }
+
     // --- Binding Validation (Rules 1..=5) ---
 
     /// Validate concrete slab bindings for one launch stage under `class` and `limits`.
@@ -1691,13 +1786,23 @@ impl KernelManifest {
             });
         }
 
-        let bind_map: BTreeMap<&str, &SlabBinding> =
-            bindings.iter().map(|b| (b.arg.as_str(), b)).collect();
         let arg_map: BTreeMap<&str, &ArgDecl> =
             self.args.iter().map(|a| (a.id.as_str(), a)).collect();
+        let layouts = self.checked_layouts(&arg_map)?;
+        let mut bind_map = BTreeMap::new();
+        for bind in bindings {
+            if bind_map.insert(bind.arg.as_str(), bind).is_some() {
+                return Err(ManifestError::LayoutMismatch {
+                    kernel: self.name.clone(),
+                    arg: bind.arg.clone(),
+                    expected: "one slab binding".into(),
+                    observed: "duplicate bindings".into(),
+                });
+            }
+        }
 
         // Rule 1: layout match (including stride unit and signedness) + Stat-output isolation.
-        for lay in &self.signature.layout {
+        for (&arg, lay) in &layouts {
             let bind =
                 bind_map
                     .get(lay.arg.as_str())
@@ -1707,15 +1812,7 @@ impl KernelManifest {
                         expected: "bound slab".into(),
                         observed: "unbound".into(),
                     })?;
-            let decl =
-                arg_map
-                    .get(lay.arg.as_str())
-                    .ok_or_else(|| ManifestError::LayoutMismatch {
-                        kernel: self.name.clone(),
-                        arg: lay.arg.clone(),
-                        expected: "declared arg".into(),
-                        observed: "missing".into(),
-                    })?;
+            let decl = arg_map[arg];
             if bind.from_stat_kernel && self.class != KernelClass::Stat {
                 return Err(ManifestError::CrossWorldFootprint {
                     kernel: self.name.clone(),
@@ -1740,8 +1837,9 @@ impl KernelManifest {
                     kernel: self.name.clone(),
                     arg: lay.arg.clone(),
                     expected: format!(
-                        "elem={:?} unit={:?} signed={} strides={:?} origin={:?} alloc={:?}",
+                        "elem={:?} extents={:?} unit={:?} signed={} strides={:?} origin={:?} alloc={:?}",
                         lay.elem,
+                        lay.extents,
                         lay.stride_unit,
                         lay.stride_signed,
                         lay.strides,
@@ -1749,8 +1847,9 @@ impl KernelManifest {
                         lay.alloc_extent
                     ),
                     observed: format!(
-                        "elem={:?} unit={:?} signed={} strides={:?} origin={:?} alloc={:?}",
+                        "elem={:?} extents={:?} unit={:?} signed={} strides={:?} origin={:?} alloc={:?}",
                         bind.elem,
+                        bind.extents,
                         bind.stride_unit,
                         bind.stride_signed,
                         bind.strides,
@@ -1761,40 +1860,26 @@ impl KernelManifest {
             }
         }
 
-        // Compute concrete read/write ranges per arg on backing slabs.
-        let mut arg_ranges: BTreeMap<&str, (String, u64, u64, bool)> = BTreeMap::new();
-        for fp in &self.signature.reads {
-            let bind = bind_map[fp.arg.as_str()];
-            let lo = bind
-                .slab_offset
-                .saturating_add(fp.lo.eval(class).unwrap_or(u64::MAX));
-            let hi = bind
-                .slab_offset
-                .saturating_add(fp.hi.eval(class).unwrap_or(u64::MAX));
-            arg_ranges
-                .entry(fp.arg.as_str())
-                .and_modify(|e| {
-                    e.1 = e.1.min(lo);
-                    e.2 = e.2.max(hi);
-                })
-                .or_insert((bind.slab_id.clone(), lo, hi, false));
-        }
-        for fp in &self.signature.writes {
-            let bind = bind_map[fp.arg.as_str()];
-            let lo = bind
-                .slab_offset
-                .saturating_add(fp.lo.eval(class).unwrap_or(u64::MAX));
-            let hi = bind
-                .slab_offset
-                .saturating_add(fp.hi.eval(class).unwrap_or(u64::MAX));
-            arg_ranges
-                .entry(fp.arg.as_str())
-                .and_modify(|e| {
-                    e.1 = e.1.min(lo);
-                    e.2 = e.2.max(hi);
-                    e.3 = true;
-                })
-                .or_insert((bind.slab_id.clone(), lo, hi, true));
+        let mut accesses = Vec::new();
+        for (fp, writes) in self
+            .signature
+            .reads
+            .iter()
+            .map(|fp| (fp, false))
+            .chain(self.signature.writes.iter().map(|fp| (fp, true)))
+        {
+            let arg = fp.arg.as_str();
+            let lay = layouts
+                .get(arg)
+                .ok_or_else(|| ManifestError::LayoutMismatch {
+                    kernel: self.name.clone(),
+                    arg: fp.arg.clone(),
+                    expected: "declared layout for footprint".into(),
+                    observed: "missing".into(),
+                })?;
+            let bind = bind_map[arg];
+            let range = self.footprint_range(fp, lay.alloc_extent, class, bind.slab_offset)?;
+            accesses.push((bind, range, writes));
         }
 
         // Rule 2: overlapping ranges on same slab where at least one is written must be in may_alias.
@@ -1804,41 +1889,40 @@ impl KernelManifest {
             .iter()
             .flat_map(|(a, b)| [(a.as_str(), b.as_str()), (b.as_str(), a.as_str())])
             .collect();
-        let entries: Vec<(&str, &(String, u64, u64, bool))> =
-            arg_ranges.iter().map(|(&k, v)| (k, v)).collect();
-        for i in 0..entries.len() {
-            for j in (i + 1)..entries.len() {
-                let (arg_a, (slab_a, lo_a, hi_a, wr_a)) = entries[i];
-                let (arg_b, (slab_b, lo_b, hi_b, wr_b)) = entries[j];
-                if slab_a == slab_b && (*wr_a || *wr_b) && *lo_a < *hi_b && *lo_b < *hi_a {
-                    if !allowed_alias.contains(&(arg_a, arg_b)) {
-                        return Err(ManifestError::UndeclaredAlias {
-                            kernel: self.name.clone(),
-                            arg_a: arg_a.to_owned(),
-                            arg_b: arg_b.to_owned(),
-                            slab: slab_a.clone(),
-                        });
-                    }
+        for (i, (a, range_a, writes_a)) in accesses.iter().enumerate() {
+            for (b, range_b, writes_b) in &accesses[i + 1..] {
+                if a.arg != b.arg
+                    && a.slab_id == b.slab_id
+                    && (*writes_a || *writes_b)
+                    && !range_a.is_empty()
+                    && !range_b.is_empty()
+                    && range_a.start < range_b.end
+                    && range_b.start < range_a.end
+                    && !allowed_alias.contains(&(a.arg.as_str(), b.arg.as_str()))
+                {
+                    let (arg_a, arg_b) = if a.arg < b.arg { (a, b) } else { (b, a) };
+                    return Err(ManifestError::UndeclaredAlias {
+                        kernel: self.name.clone(),
+                        arg_a: arg_a.arg.clone(),
+                        arg_b: arg_b.arg.clone(),
+                        slab: a.slab_id.clone(),
+                    });
                 }
             }
         }
 
         // Rule 3: write footprint mapped through binding must lie inside plan's declared output range.
-        for fp in &self.signature.writes {
-            let bind = bind_map[fp.arg.as_str()];
-            let lo = bind
-                .slab_offset
-                .saturating_add(fp.lo.eval(class).unwrap_or(u64::MAX));
-            let hi = bind
-                .slab_offset
-                .saturating_add(fp.hi.eval(class).unwrap_or(u64::MAX));
+        for (bind, range, _) in accesses.iter().filter(|(_, _, writes)| *writes) {
             let covered = declared_outputs.iter().any(|out| {
-                out.arg == fp.arg && out.slab_id == bind.slab_id && out.lo <= lo && hi <= out.hi
+                out.arg == bind.arg
+                    && out.slab_id == bind.slab_id
+                    && out.lo <= range.start
+                    && range.end <= out.hi
             });
             if !covered {
                 return Err(ManifestError::UndeclaredAlias {
                     kernel: self.name.clone(),
-                    arg_a: fp.arg.clone(),
+                    arg_a: bind.arg.clone(),
                     arg_b: "<undeclared-output>".into(),
                     slab: bind.slab_id.clone(),
                 });
@@ -1846,8 +1930,7 @@ impl KernelManifest {
         }
 
         // Rule 4: epoch consistency — reading epoch e - 1 cannot bind a slab written at epoch e unordered.
-        for fp in &self.signature.reads {
-            let bind = bind_map[fp.arg.as_str()];
+        for (bind, _, _) in accesses.iter().filter(|(_, _, writes)| !*writes) {
             for w in prior_stage_writes {
                 if w.slab_id == bind.slab_id
                     && w.epoch_write > self.signature.epoch_read
@@ -2293,6 +2376,7 @@ impl DoctorKernelsReport {
 fn obj_map<'a>(
     sp: &'a Spanned<'a>,
     ctx: &str,
+    allowed: &[&str],
 ) -> Result<BTreeMap<&'a str, &'a Spanned<'a>>, ManifestError> {
     let members = sp
         .value
@@ -2300,7 +2384,13 @@ fn obj_map<'a>(
         .ok_or_else(|| ManifestError::Parse(format!("{ctx} must be a JSON object")))?;
     let mut map = BTreeMap::new();
     for m in members {
-        map.insert(m.name.as_str(), &m.value);
+        let name = m.name.as_str();
+        if !allowed.contains(&name) {
+            return Err(ManifestError::Parse(format!(
+                "{ctx} has unknown property `{name}`"
+            )));
+        }
+        map.insert(name, &m.value);
     }
     Ok(map)
 }
@@ -2320,10 +2410,16 @@ fn req_str<'a>(
     key: &str,
     ctx: &str,
 ) -> Result<&'a str, ManifestError> {
-    req_field(map, key, ctx)?
+    let field = req_field(map, key, ctx)?;
+    nonempty_str(field, &format!("{ctx}.{key}"))
+}
+
+fn nonempty_str<'a>(field: &'a Spanned<'_>, name: &str) -> Result<&'a str, ManifestError> {
+    field
         .value
         .as_str()
-        .ok_or_else(|| ManifestError::Parse(format!("{ctx}.{key} must be string")))
+        .filter(|s| !s.is_empty())
+        .ok_or_else(|| ManifestError::Parse(format!("{name} must be a nonempty string")))
 }
 
 fn req_bool(
@@ -2385,7 +2481,20 @@ fn opt_f64(
 }
 
 fn parse_cap_expr(sp: &Spanned<'_>) -> Result<CapExpr, ManifestError> {
-    let o = obj_map(sp, "cap_expr")?;
+    let o = obj_map(
+        sp,
+        "cap_expr",
+        &[
+            "constant",
+            "nv_cap",
+            "link_cap",
+            "contact_cap",
+            "row_cap",
+            "sample_cap",
+            "actuator_cap",
+            "worlds",
+        ],
+    )?;
     Ok(CapExpr {
         constant: req_u64(&o, "constant", "cap_expr")?,
         nv_cap: req_u64(&o, "nv_cap", "cap_expr")?,
@@ -2399,7 +2508,7 @@ fn parse_cap_expr(sp: &Spanned<'_>) -> Result<CapExpr, ManifestError> {
 }
 
 fn parse_footprint(sp: &Spanned<'_>) -> Result<Footprint, ManifestError> {
-    let o = obj_map(sp, "footprint")?;
+    let o = obj_map(sp, "footprint", &["arg", "lanes", "lo", "hi"])?;
     Ok(Footprint {
         arg: req_str(&o, "arg", "footprint")?.to_owned(),
         lanes: LaneScope::parse(req_str(&o, "lanes", "footprint")?)?,

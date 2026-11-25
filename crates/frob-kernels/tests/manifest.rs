@@ -118,6 +118,191 @@ fn synthetic_quat_manifest() -> KernelManifest {
     .expect("seal synthetic manifest")
 }
 
+fn bindings_on(m: &KernelManifest, slab_id: &str) -> Vec<SlabBinding> {
+    m.signature
+        .layout
+        .iter()
+        .map(|layout| SlabBinding {
+            arg: layout.arg.clone(),
+            slab_id: slab_id.into(),
+            elem: layout.elem,
+            extents: layout.extents.clone(),
+            strides: layout.strides.clone(),
+            stride_unit: layout.stride_unit,
+            stride_signed: layout.stride_signed,
+            origin: layout.origin,
+            alloc_extent: layout.alloc_extent,
+            slab_offset: 0,
+            from_stat_kernel: false,
+        })
+        .collect()
+}
+
+#[test]
+fn manifest_parser_rejects_closed_object_and_empty_name_violations() {
+    let bytes = synthetic_quat_manifest().to_canonical_json().unwrap();
+    for (before, after, diagnostic) in [
+        (
+            r#"{"args":"#,
+            r#"{"extra":true,"args":"#,
+            "manifest has unknown property",
+        ),
+        (
+            r#""constant":0"#,
+            r#""constant":0,"extra":true"#,
+            "cap_expr has unknown property",
+        ),
+        (
+            r#""name":"K-synthetic-quat""#,
+            r#""name":"""#,
+            "manifest.name must be a nonempty string",
+        ),
+        (
+            r#""components":["w""#,
+            r#""components":["""#,
+            "arg component must be a nonempty string",
+        ),
+    ] {
+        let planted = bytes.as_str().replacen(before, after, 1);
+        assert_ne!(planted, bytes.as_str());
+        assert!(matches!(
+            KernelManifest::parse_json(planted.as_bytes()),
+            Err(ManifestError::Parse(msg)) if msg.contains(diagnostic)
+        ));
+    }
+}
+
+#[test]
+fn exact_layout_must_match_declaration_once() {
+    let mut m = synthetic_quat_manifest();
+    m.class = KernelClass::Exact;
+    m.determinism = DetClass::D0Exact;
+    for (arg, layout) in m.args.iter_mut().zip(&mut m.signature.layout) {
+        arg.elem = ElemType::U32;
+        layout.elem = ElemType::U32;
+    }
+    let classes = ShapeClassCaps::default_classes();
+    m.validate_static(&classes, None, false).unwrap();
+    for (field, planted) in [
+        (
+            "elem",
+            ArgLayout {
+                elem: ElemType::F32,
+                ..m.signature.layout[0].clone()
+            },
+        ),
+        (
+            "extents",
+            ArgLayout {
+                extents: vec![CapExpr::constant(1)],
+                ..m.signature.layout[0].clone()
+            },
+        ),
+    ] {
+        let mut bad = m.clone();
+        bad.signature.layout[0] = planted;
+        assert!(matches!(bad.validate_static(&classes, None, false),
+            Err(ManifestError::LayoutMismatch { arg, expected, observed, .. })
+                if arg == "q_in" && expected.contains(field) && expected != observed
+        ));
+        assert!(matches!(
+            bad.validate_binding(
+                &bindings_on(&bad, "shared"),
+                &classes[0],
+                BackendLimits::batch_cpu(),
+                &[],
+                &[]
+            ),
+            Err(ManifestError::LayoutMismatch { .. })
+        ));
+    }
+    m.signature.layout.push(m.signature.layout[0].clone());
+    assert!(matches!(m.validate_static(&classes, None, false),
+        Err(ManifestError::LayoutMismatch { observed, .. }) if observed == "duplicate layouts"
+    ));
+}
+
+#[test]
+fn parsed_manifest_binding_reports_missing_and_duplicate_descriptors() {
+    let m = synthetic_quat_manifest();
+    let class = ShapeClassCaps::default_classes().remove(0);
+    let mut bindings = bindings_on(&m, "shared");
+    bindings.remove(0);
+    let validate = |manifest: &KernelManifest, bindings: &[SlabBinding]| {
+        manifest.validate_binding(bindings, &class, BackendLimits::batch_cpu(), &[], &[])
+    };
+    assert!(matches!(validate(&m, &bindings),
+        Err(ManifestError::LayoutMismatch { arg, observed, .. }) if arg == "q_in" && observed == "unbound"
+    ));
+    let mut bad = m.clone();
+    bad.signature.layout.remove(0);
+    let parsed = KernelManifest::parse_json(bad.to_canonical_json().unwrap().as_bytes()).unwrap();
+    assert!(matches!(validate(&parsed, &bindings),
+        Err(ManifestError::LayoutMismatch { arg, observed, .. }) if arg == "q_in" && observed == "missing"
+    ));
+    bindings = bindings_on(&m, "shared");
+    bindings.push(bindings[0].clone());
+    assert!(matches!(validate(&m, &bindings),
+        Err(ManifestError::LayoutMismatch { arg, observed, .. }) if arg == "q_in" && observed == "duplicate bindings"
+    ));
+}
+
+#[test]
+fn binding_refuses_slab_offset_overflow() {
+    let m = synthetic_quat_manifest();
+    let class = ShapeClassCaps::default_classes().remove(0);
+    let mut bindings = bindings_on(&m, "input");
+    bindings[1].slab_id = "output".into();
+    bindings[1].slab_offset = u64::MAX;
+    let outputs = [DeclaredOutput {
+        arg: "q_out".into(),
+        slab_id: "output".into(),
+        lo: 0,
+        hi: u64::MAX,
+    }];
+    let bound = m.signature.writes[0].hi.eval(&class).unwrap();
+    assert!(matches!(
+        m.validate_binding(&bindings, &class, BackendLimits::batch_cpu(), &outputs, &[]),
+        Err(ManifestError::FootprintOutOfRange { arg, detail, .. }) if arg == "q_out"
+            && detail.contains(&format!("offset {} + bound {bound}", u64::MAX))
+    ));
+}
+
+#[test]
+fn alias_checks_exact_read_and_write_ranges() {
+    let mut m = synthetic_quat_manifest();
+    m.signature.reads[0].hi = CapExpr::constant(2);
+    m.signature.reads.push(Footprint {
+        arg: "q_out".into(),
+        ..m.signature.reads[0].clone()
+    });
+    m.signature.writes[0].lo = CapExpr::constant(4);
+    m.signature.writes[0].hi = CapExpr::constant(6);
+    let class = ShapeClassCaps::default_classes().remove(0);
+    let bindings = bindings_on(&m, "shared");
+    let outputs = [DeclaredOutput {
+        arg: "q_out".into(),
+        slab_id: "shared".into(),
+        lo: 0,
+        hi: 6,
+    }];
+    let validate = |m: &KernelManifest| {
+        m.validate_binding(&bindings, &class, BackendLimits::batch_cpu(), &outputs, &[])
+    };
+    validate(&m).expect("only the two reads overlap");
+    m.signature.reads[0].lo = CapExpr::constant(2);
+    m.signature.reads[0].hi = CapExpr::constant(4);
+    validate(&m).expect("read in a footprint gap does not overlap a write");
+    m.signature.reads[0].lo = CapExpr::constant(5);
+    m.signature.reads[0].hi = CapExpr::constant(5);
+    validate(&m).expect("empty read inside write does not overlap");
+    m.signature.reads[0].hi = CapExpr::constant(6);
+    assert!(matches!(
+        validate(&m),
+        Err(ManifestError::UndeclaredAlias { .. })
+    ));
+}
+
 #[test]
 fn manifest_roundtrip_and_id() {
     let m = synthetic_quat_manifest();
@@ -678,12 +863,23 @@ fn neutral_elements_checked() {
     m.signature.numerics.neutrals[0].value_bits = Some(u64::from((-0.0_f32).to_bits()));
     m.validate_static(&classes, None, false)
         .expect("-0.0 sum neutral accepted");
+
+    let mut conflict = m.signature.numerics.neutrals[0].clone();
+    conflict.value_bits = Some(u64::from((0.0_f32).to_bits()));
+    m.signature.numerics.neutrals.push(conflict);
+    for _ in 0..2 {
+        assert!(matches!(
+            m.validate_static(&classes, None, false),
+            Err(ManifestError::NeutralMissing { arg, detail, .. })
+                if arg == "q_out" && detail.contains("conflicting neutral specifications")
+        ));
+        m.signature.numerics.neutrals.reverse();
+    }
 }
 
 #[test]
 fn stride_convention_2x2() {
     // KA-532 / CX-218: 2x2 f32 view has byte strides (8, 4) vs element strides (2, 1).
-    let buf: Vec<u32> = (0..16).collect();
     let class = ShapeClassCaps::default_classes().remove(0);
 
     let elem_layout = ArgLayout {
@@ -696,20 +892,6 @@ fn stride_convention_2x2() {
         origin: CapExpr::constant(0),
         alloc_extent: CapExpr::constant(16),
     };
-    let idx_elem = elem_layout.element_offset(&[1, 1], &class).unwrap();
-    assert_eq!(
-        idx_elem, 3,
-        "KA-532: element strides (2, 1) at [1, 1] address element 3"
-    );
-    assert_eq!(buf[idx_elem], 3);
-
-    // Planted mutant (CX-218): ignoring stride unit and copying byte strides (8, 4) verbatim as element strides.
-    let mutant_idx = (1 * 8 + 1 * 4) as usize;
-    assert_eq!(
-        buf[mutant_idx], 12,
-        "CX-218 mutant reads element 12 in bounds"
-    );
-
     let m = KernelManifest {
         id: zero_id(),
         name: "K-synthetic-2x2".into(),
@@ -908,8 +1090,11 @@ fn metal_argument_limit() {
 #[test]
 fn load_store_containment() {
     let classes = ShapeClassCaps::default_classes();
-    let m = synthetic_quat_manifest();
+    let mut m = synthetic_quat_manifest();
+    let program_id = hash_blob(b"quaternion-program");
+    m.signature.footprint_evidence = FootprintEvidence::KirProgram(program_id);
     let ok_prog = ProgramFootprint {
+        program_id,
         reads: vec![Footprint {
             arg: "q_in".into(),
             lanes: LaneScope::OwnWorld,
@@ -926,6 +1111,22 @@ fn load_store_containment() {
     };
     m.validate_static(&classes, Some(&ok_prog), false)
         .expect("contained IR passes");
+    assert!(matches!(
+        m.validate_static(&classes, None, false),
+        Err(ManifestError::LoadStoreNotContained { detail, .. }) if detail.contains("missing footprint evidence")
+    ));
+    let wrong_program = ProgramFootprint {
+        program_id: hash_blob(b"another-program"),
+        ..ok_prog.clone()
+    };
+    assert!(matches!(
+        m.validate_static(&classes, Some(&wrong_program), false),
+        Err(ManifestError::LoadStoreNotContained { detail, .. }) if detail.contains(&wrong_program.program_id.to_hex())
+    ));
+    assert!(matches!(
+        m.validate_static(&[], Some(&ok_prog), false),
+        Err(ManifestError::LoadStoreNotContained { detail, .. }) if detail.contains("no admitted shape classes")
+    ));
 
     // Store one element beyond declared write footprint is refused (PO-SPARK-04).
     let mut bad_prog = ok_prog.clone();
@@ -971,6 +1172,7 @@ fn po_spark_04_random_containment_property() {
         m.signature.writes[0].hi = CapExpr::constant(4);
 
         let prog = ProgramFootprint {
+            program_id: hash_blob(b"containment-property"),
             reads: vec![Footprint {
                 arg: "q_in".into(),
                 lanes: LaneScope::OwnWorld,

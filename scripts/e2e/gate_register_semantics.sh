@@ -563,5 +563,3 @@ if command -v frob >/dev/null 2>&1; then
 else
   e2e_skip "skipped: capability absent"
 fi
-
-e2e_finish

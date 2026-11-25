@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankenrobotics.local/schemas/contract.schema.json",
+  "title": "FrankenRobotics Crate Contract (contract.toml)",
+  "description": "Machine-readable contract for crates/<crate>/contract.toml (BD-002, N34-08). Accompanying CONTRACT.md carries the ten sections: purpose, inputs, outputs, invariants, refusals, determinism class, evidence class of outputs, validity domain, oracles, known gaps.",
+  "type": "object",
+  "required": ["crate", "budgets", "safe_mode"],
+  "additionalProperties": false,
+  "properties": {
+    "crate": {
+      "type": "object",
+      "required": [
+        "name",
+        "layer",
+        "rank",
+        "plane",
+        "determinism",
+        "evidence",
+        "gates",
+        "refusals"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "layer": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 7
+            },
+            {
+              "const": "annex"
+            }
+          ]
+        },
+        "rank": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "plane": {
+          "type": "string",
+          "enum": ["compute", "decision"]
+        },
+        "determinism": {
+          "type": "string",
+          "enum": ["D0", "D1", "D2", "D3", "D4"]
+        },
+        "evidence": {
+          "type": "string",
+          "enum": ["Estimated", "Tested", "Certified", "Proved"]
+        },
+        "gates": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "refusals": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^FROB-REF-[0-9]{3}$"
+          }
+        }
+      }
+    },
+    "budgets": {
+      "type": "object",
+      "required": ["wall_ms", "memory_mib"],
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "properties": {
+        "wall_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "memory_mib": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "safe_mode": {
+      "type": "object",
+      "required": ["on_budget", "on_calibration"],
+      "additionalProperties": false,
+      "properties": {
+        "on_budget": {
+          "type": "string",
+          "pattern": "^(reference-path|refuse:FROB-REF-[0-9]{3})$"
+        },
+        "on_calibration": {
+          "type": "string",
+          "pattern": "^(reference-path|refuse:FROB-REF-[0-9]{3})$"
+        }
+      }
+    },
+    "features": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["tier"],
+        "additionalProperties": false,
+        "properties": {
+          "tier": {
+            "type": "string",
+            "enum": ["S", "F", "M"]
+          },
+          "kill": {
+            "type": "string",
+            "minLength": 1
+          },
+          "pilot": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "api": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "float_ok": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

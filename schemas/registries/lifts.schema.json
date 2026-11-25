@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankenrobotics.local/schemas/registries/lifts.schema.json",
+  "title": "FrankenRobotics Provenance-Lift Registry (frob.lifts/1)",
+  "type": "object",
+  "required": ["schema"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "frob.lifts/1"
+    },
+    "lift": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "source_repo", "source_rev", "target_path", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_repo": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_rev": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{40}$"
+          },
+          "target_path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

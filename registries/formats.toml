@@ -1,0 +1,134 @@
+# FrankenRobotics artifact format registry (schema frob.formats/1).
+#
+# Registry rules (BD-002, ADR-WS-03):
+#   1. One owner crate per format.
+#   2. Identity is the BLAKE3 hash of canonical bytes under a domain string
+#      equal to the schema name.
+#   3. A reader refuses an unknown major version and an unknown required field.
+#   4. Integers above 2^53 travel as strings.
+#   5. Large payloads are blobs addressed by hash.
+#   6. An exported artifact carries the three no-authorization flags:
+#      execution_authorized = false, hardware_safety_signoff = false,
+#      sim_to_real_certified = false.
+#
+# Written strictly in the frob-core::registry::toml subset (N34p2-01).
+
+schema = "frob.formats/1"
+
+[[format]]
+id = "FMT-FBOT"
+extension = ".fbot"
+schema = "frob.design/1"
+owner = "frob-design"
+producers = ["frob-design"]
+consumers = ["frob-design", "frob-model", "frob-analyze", "frob-arena", "frob-cli"]
+encoding = "canonical"
+
+[[format]]
+id = "FMT-FMODULE"
+extension = ".fmodule"
+schema = "frob.module/1"
+owner = "frob-design"
+producers = ["frob-design"]
+consumers = ["frob-design", "frob-actuate", "frob-cli"]
+encoding = "canonical"
+
+[[format]]
+id = "FMT-FCARD"
+extension = ".fcard"
+schema = "frob.card/1"
+owner = "frob-actuate"
+producers = ["frob-actuate"]
+consumers = ["frob-actuate", "frob-design", "frob-analyze", "frob-terrain", "frob-sensor"]
+encoding = "canonical"
+kinds = ["actuator", "transmission", "battery", "interface", "material", "soil", "optical", "sensor", "payload"]
+
+[[format]]
+id = "FMT-FSCENE"
+extension = ".fscene"
+schema = "frob.scene/1"
+owner = "frob-scene"
+producers = ["frob-scene"]
+consumers = ["frob-scene", "frob-arena", "frob-nemesis", "frob-cli"]
+encoding = "canonical"
+
+[[format]]
+id = "FMT-FCLEAR"
+extension = ".fclear"
+schema = "frob.clearance/1"
+owner = "frob-scene"
+producers = ["frob-scene"]
+consumers = ["frob-scene", "frob-analyze", "frob-augur", "frob-cert"]
+encoding = "canonical"
+
+[[format]]
+id = "FMT-FTASK"
+extension = ".ftask"
+schema = "frob.task/1"
+owner = "frob-spec"
+producers = ["frob-spec"]
+consumers = ["frob-spec", "frob-arena", "frob-eval", "frob-augur", "frob-cli"]
+encoding = "canonical"
+
+[[format]]
+id = "FMT-FMISSION"
+extension = ".fmission"
+schema = "frob.mission/1"
+owner = "frob-spec"
+producers = ["frob-spec"]
+consumers = ["frob-spec", "frob-augur", "frob-eval", "frob-cli"]
+encoding = "canonical"
+
+[[format]]
+id = "FMT-FENERGY"
+extension = ".fenergy"
+schema = "frob.energy/1"
+owner = "frob-shield"
+producers = ["frob-shield"]
+consumers = ["frob-shield", "frob-control", "frob-cert", "frob-chronicle"]
+encoding = "canonical"
+
+[[format]]
+id = "FMT-FSKILL"
+extension = ".fskill"
+schema = "frob.skill/1"
+owner = "frob-control"
+producers = ["frob-control"]
+consumers = ["frob-control", "frob-arena", "frob-cortex", "frob-eval"]
+encoding = "canonical"
+
+[[format]]
+id = "FMT-FMCW"
+extension = ".fmcw"
+schema = "frob.mcw/1"
+owner = "frob-nemesis"
+producers = ["frob-nemesis"]
+consumers = ["frob-nemesis", "frob-autopsy", "frob-eval", "frob-chronicle"]
+encoding = "canonical"
+
+[[format]]
+id = "FMT-FRUN"
+extension = ".frun"
+schema = "frob.run/1"
+owner = "frob-chronicle"
+producers = ["frob-chronicle"]
+consumers = ["frob-chronicle", "frob-eval", "frob-autopsy", "frob-verify"]
+encoding = "canonical"
+
+[[format]]
+id = "FMT-FBUILD"
+extension = ".fbuild"
+schema = "frob.build/1"
+owner = "frob-foundry"
+producers = ["frob-foundry"]
+consumers = ["frob-foundry", "frob-verify", "frob-cli"]
+encoding = "canonical"
+
+[[format]]
+id = "FMT-FROBCERT"
+extension = ".frobcert"
+schema = "frob.cert/1"
+owner = "frob-cert"
+producers = ["frob-lemma"]
+consumers = ["frob-cert", "frob-verify", "frob-chronicle"]
+encoding = "canonical"

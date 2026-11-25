@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankenrobotics.local/schemas/registries/kernels.schema.json",
+  "title": "FrankenRobotics Kernel Registry (frob.kernels/1)",
+  "type": "object",
+  "required": ["schema"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "frob.kernels/1"
+    },
+    "kernel": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "owner", "determinism", "source_digest"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^K-[a-z0-9-]+$"
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 1
+          },
+          "determinism": {
+            "type": "string",
+            "enum": ["D0", "D1", "D2", "D3", "D4"]
+          },
+          "source_digest": {
+            "type": "string",
+            "pattern": "^b3:[0-9a-f]{64}$"
+          },
+          "targets": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["cpu", "cuda", "metal"]
+            }
+          }
+        }
+      }
+    }
+  }
+}

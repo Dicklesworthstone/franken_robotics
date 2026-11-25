@@ -1,0 +1,7 @@
+# FrankenRobotics verb registry (schema frob.verbs/1).
+#
+# Starts schema-valid and empty at the first commit (BD-002).
+# Rows arrive with the VERBS-<cluster> registry beads and frob-verbs.
+# Written strictly in the frob-core::registry::toml subset (N34p2-01).
+
+schema = "frob.verbs/1"

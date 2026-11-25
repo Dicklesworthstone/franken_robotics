@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankenrobotics.local/schemas/registries/capsules.schema.json",
+  "title": "FrankenRobotics Unsafe-Capsule Registry (frob.capsules/1)",
+  "type": "object",
+  "required": ["schema"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "frob.capsules/1"
+    },
+    "capsule": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "crate", "module", "safety_doc", "justification"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "crate": {
+            "type": "string",
+            "minLength": 1
+          },
+          "module": {
+            "type": "string",
+            "minLength": 1
+          },
+          "safety_doc": {
+            "type": "string",
+            "minLength": 1
+          },
+          "justification": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}

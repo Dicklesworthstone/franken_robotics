@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankenrobotics.local/schemas/demo.schema.json",
+  "title": "FrankenRobotics Demo Definition (demo.yaml)",
+  "description": "Schema for demos/<demo_id>/demo.yaml (BD-002). Required keys: demo_id, claim_ids, commands, checksums. Optional keys admitted for N00-29 and N34-12. Unknown keys are refused.",
+  "type": "object",
+  "required": ["demo_id", "claim_ids", "commands", "checksums"],
+  "additionalProperties": false,
+  "properties": {
+    "demo_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "claim_ids": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "commands": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "checksums": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^b3:[0-9a-f]{64}$"
+      }
+    },
+    "tier": {
+      "type": "string",
+      "enum": ["cpu", "gpu-cuda", "gpu-metal"]
+    },
+    "expect_exit": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "enum": [0, 2, 3]
+      }
+    },
+    "expect_refusal": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^FROB-REF-[0-9]{3}$"
+      }
+    },
+    "compare": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "expect": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "milestone": {
+      "type": "string",
+      "enum": ["M0", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8"]
+    },
+    "actors": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "lane": {
+      "type": "string",
+      "enum": ["cpu", "device", "long"]
+    },
+    "fresh_agent": {
+      "type": "boolean"
+    },
+    "not_evidence_for": {
+      "const": "numbers"
+    }
+  }
+}

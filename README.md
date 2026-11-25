@@ -70,6 +70,13 @@ gate names its fallback before any code exists ([Gates and kill gates](#gates-an
 workspace exists, this status table is to be generated from `registries/gates.toml` (GATE-GAUNT-10), so it can
 only say what a gate has recorded.
 
+<!-- status:begin -->
+| Gate             | Claim             | Milestone | Status     | Measured     | Recorded     |
+| ---------------- | ----------------- | --------- | ---------- | ------------ | ------------ |
+
+Summary: 0 gates (open: 0, pass: 0, fail: 0, killed: 0, blocked: 0, no-claim: 0, superseded: 0)
+<!-- status:end -->
+
 ---
 
 ## TL;DR

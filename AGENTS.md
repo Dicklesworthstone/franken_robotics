@@ -30,6 +30,24 @@ and their review continues beside it.
 - Every sibling project (frankensim, fastmcp_rust, asupersync and the rest) is the owner's: a change a Bead needs
   in a sibling is made in that sibling's repository, by the upstream Beads (`FD-…`), not worked around here.
 
+## Working rules (machine and suite)
+
+These standing rules bind every implementing agent (adopted from the machine-level rules and `frankensim/AGENTS.md`):
+
+- **Build offload only.** `cargo` runs through the build-offload shim (`rch`) and is never invoked by absolute path.
+- **Canonical project tree.** Projects stay under `~/projects`.
+- **Isolated target directories.** Use `${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/<name>` so parallel sessions and matrix cells never contend on build locks.
+- **Disk preflight.** Run a free-space preflight before heavy build or test lanes.
+- **Machine envelope and timeouts.** No run uses more than 16 GiB of memory, 8 cores, or one hour of wall time without the owner's written approval given before it starts. Any run longer than a few minutes starts under an explicit timeout.
+- **No deletions without permission.** No file or directory is deleted without explicit owner permission.
+- **No branches and no worktrees.** Work lands on `main`; exclusive file reservations through Agent Mail replace branches.
+- **Pre-commit quality bar.** Run `ubs` on changed files, and run formatting, lints, and tests before a commit.
+- **Issue tracking and triage.** Manage Beads with `br` and triage with `bv --robot-*` (never bare `bv`).
+- **Compiled source and commit evidence.** Source that was never compiled does not land, and the commit message carries the verification commands and their results.
+- **Focused patches only.** Code is changed by focused patches, never by automated rewrite scripts or broad regular-expression rewrites.
+- **Stack attribution and sibling pins.** Before a build failure is blamed on this repository, run `xtask check-stack` (or `scripts/bootstrap/first_receipt.sh` until `xtask check-stack` lands). Never move a sibling checkout back to its pin to make a check pass.
+- **Process is never the product.** Before any non-product work, an agent answers three questions: (1) which capability, defect, or blocker does this address, (2) is it the smallest direct action, and (3) is it worth its cost now.
+
 ## Swarm rules (binding on every agent)
 
 The goal is working code. A Bead is done when its code and its tests exist and pass, not when a report says so.

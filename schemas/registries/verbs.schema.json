@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankenrobotics.local/schemas/registries/verbs.schema.json",
+  "title": "FrankenRobotics Verb Registry (frob.verbs/1)",
+  "type": "object",
+  "required": ["schema"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "frob.verbs/1"
+    },
+    "verb": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "cluster", "owner", "summary"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$"
+          },
+          "cluster": {
+            "type": "string",
+            "minLength": 1
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 1
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tier": {
+            "type": "string",
+            "enum": ["S", "F", "M"]
+          },
+          "milestone": {
+            "type": "string",
+            "enum": ["M0", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8"]
+          },
+          "refusals": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^FROB-REF-[0-9]{3}$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

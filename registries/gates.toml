@@ -1,0 +1,9 @@
+# FrankenRobotics gate registry (schema frob.gates/1).
+#
+# Starts schema-valid and empty at the first commit (BD-002): rows arrive with
+# the beads that own them so no row exists without an owner.
+# The README honest-status table is generated from this file and nothing else
+# (INV-GAUNT-06, GATE-GAUNT-10).
+# Written strictly in the frob-core::registry::toml subset (N34p2-01).
+
+schema = "frob.gates/1"

@@ -1,0 +1,7 @@
+# FrankenRobotics unsafe-capsule registry (schema frob.capsules/1).
+#
+# Starts schema-valid and empty at the first commit (BD-002).
+# Annex unsafe capsules with SAFETY.md arrive with N34-07 and annex beads.
+# Written strictly in the frob-core::registry::toml subset (N34p2-01).
+
+schema = "frob.capsules/1"

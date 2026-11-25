@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankenrobotics.local/schemas/registries/card.schema.json",
+  "title": "FrankenRobotics Component Card (frob.card/1)",
+  "type": "object",
+  "required": ["schema", "id", "kind", "provenance"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "frob.card/1"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "actuator",
+        "transmission",
+        "battery",
+        "interface",
+        "material",
+        "soil",
+        "optical",
+        "sensor",
+        "payload"
+      ]
+    },
+    "provenance": {
+      "type": "string",
+      "minLength": 1
+    },
+    "parameters": {
+      "type": "object"
+    }
+  }
+}

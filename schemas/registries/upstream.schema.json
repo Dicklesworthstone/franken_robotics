@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankenrobotics.local/schemas/registries/upstream.schema.json",
+  "title": "FrankenRobotics Upstream Ask Registry (frob.upstream/1)",
+  "type": "object",
+  "required": ["schema"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "frob.upstream/1"
+    },
+    "ask": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "sibling", "status", "summary"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^FD-[A-Z0-9-]+$"
+          },
+          "sibling": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": ["open", "in-progress", "landed", "superseded"]
+          },
+          "summary": {
+            "type": "string",
+            "minLength": 1
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["P0", "P1", "P2"]
+          }
+        }
+      }
+    }
+  }
+}

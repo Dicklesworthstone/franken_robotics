@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankenrobotics.local/schemas/registries/refusals.schema.json",
+  "title": "FrankenRobotics Refusal Registry (frob.refusals/1)",
+  "type": "object",
+  "required": ["schema"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "frob.refusals/1"
+    },
+    "exit_rule": {
+      "type": "object",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 255
+          },
+          {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^FROB-REF-[0-9]{3}$"
+            }
+          }
+        ]
+      }
+    },
+    "refusal": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "meaning", "defined_in", "exit", "retry", "repairs", "raised_by"],
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "type": "string",
+            "pattern": "^FROB-REF-[0-9]{3}$"
+          },
+          "meaning": {
+            "type": "string",
+            "minLength": 1
+          },
+          "defined_in": {
+            "type": "string",
+            "minLength": 1
+          },
+          "exit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 255
+          },
+          "retry": {
+            "type": "string",
+            "enum": ["never", "after-change", "after-backoff", "same-key", "with-budget"]
+          },
+          "repairs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "raised_by": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

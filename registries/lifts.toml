@@ -1,0 +1,7 @@
+# FrankenRobotics provenance-lift registry (schema frob.lifts/1).
+#
+# Starts schema-valid and empty at the first commit (BD-002).
+# Rows arrive with N33a-01 and any lift-with-provenance adoption.
+# Written strictly in the frob-core::registry::toml subset (N34p2-01).
+
+schema = "frob.lifts/1"

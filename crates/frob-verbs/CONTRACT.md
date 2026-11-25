@@ -46,6 +46,7 @@ Later-bead entry fields remain refused as `unknown-field` until their owning bea
 - Optional `registries/scopes.toml` (warning-only for `RL-15` until M2 `N32b-01` lands it, error thereafter).
 - Cargo feature flags `registry-only`, `handlers` (default), and `conformance` (debug/test builds only); `nc-bare-unknown-verb` and `nc-second-envelope` are planted defects for `GATE-TETHER-03`'s negative controls and are never enabled in a build.
 - Envelope (N32a-03): a verb handler's outcome (a result with its `frob_core::evidence::ClaimProduct`, a `frob_core::refusal::Refusal` or a code with its fields, or a job report), the verb's output schema, and the caller's writer.
+- Dispatch (N32a-04): a `dispatch::Request` (verb name, optional action, JSON arguments, `CommonArgs`, session auth/scopes, session budget, `RunTier`), pluggable `NameResolver` and `FixtureResolver` (`N34p3-01` hook), a `HandlerTable` (under `feature = "handlers"`), and an optional mode-`0600` Unix domain socket path for `frobd`.
 
 ## Outputs
 
@@ -56,6 +57,7 @@ Later-bead entry fields remain refused as `unknown-field` until their owning bea
   - `REGISTRY_DIGEST: [u8; 32]` and `REGISTRY_DIGEST_HEX: &str`: domain-separated BLAKE3 digest over the canonical JSON serialization of sorted entries under `frob.verbs/1`.
 - Pure parser, linter, and deterministic code generator (`frob_verbs::registry::{entry, lint, names, schema_id, codegen}`) shared directly with `build.rs`.
 - `frob_verbs::envelope` (N32a-03): `frob.envelope/1` and `frob.progress/1` (hand-written schemas in `crates/frob-verbs/schemas/`), the `Envelope` builder and canonical serializer, `ExitCode`, the reader `read_envelope`, the per-verb schema `envelope_schema(entry)`, the output guard `serve`, and the stream checker `check_stream`.
+- `frob_verbs::dispatch` and `frob_verbs::rpc` (N32a-04): `Dispatch` trait (`submit`, `cancel`, `stream`), `DispatchCx`, `Request`, `CommonArgs`, `ResolvedRequest`, `JobStream`, `Pipeline` (steps 1–5), `InProcess` back end (`#[cfg(feature = "handlers")]`), `Socket` back end and `DaemonClient` (available under both `handlers` and `registry-only`), `rpc` (`frob.rpc/1` canonical NDJSON framing and `serve` / `RpcServerHandle`), `granularity::check_control_plane_granularity`, `mask_envelope_for_parity`, and the synthetic dispatch fixture (`dispatch::fixture`).
 
 ### Envelope (`frob.envelope/1`)
 
@@ -90,6 +92,14 @@ Every verb answers with exactly one envelope; a long job writes zero or more `fr
 
 Exit 1 is not representable (`ExitCode` has the nine values above and no conversion from an integer); an unhandled abort is its only source.
 
+### Dispatch Interface and `frob.rpc/1` (N32a-04)
+
+Both surfaces (`frob-cli` and `surface/frob-mcp`) submit requests through one `dispatch::Dispatch` service (ADR-TETHER-03) with two back ends:
+
+- **`InProcess`** (`#[cfg(feature = "handlers")]`): runs `read` and `mutate` verbs in-process; routes `run` verbs to an attached `DaemonClient` when available; on CPU-tier `run` without a daemon, executes in-process with `executor-in-process` and `no-job-record` warnings; on device-tier `run` without a daemon, refuses with `FROB-REF-601` (exit 6, `pointer: "daemon"`, `retry: "backoff"`, first repair naming `frobd`). Missing handlers refuse with `FROB-REF-724` (exit 5); handler panics become `FROB-REF-990` (exit 9).
+- **`Socket`** (compiled under both `handlers` and `--no-default-features --features registry-only`): connects to a Unix domain socket verified to be mode `0600` and owned by the calling UID (zero `unsafe`), speaks `frob.rpc/1` canonical NDJSON frames (`request`, `cancel`, `stream`, `progress`, `envelope`, `error`, max 4 MiB per frame), and runs the same seven-step pipeline (1 Locate → 2 Validate with `forbidden_keys` checked before schema validation → 3 Authorize scopes before budget charge → 4 Resolve mutable names and `N34p3-01` fixtures → 5 Digest canonical BLAKE3 `frob.request/1` → 6 Execute → 7 Emit progress + one envelope).
+- **Control-plane granularity lint (`dispatch::granularity`):** refuses any verb whose name/purpose/schema exposes per-step simulation stepping (`step`, `tick`, `advance_dt`, `reset_step`, `dt_step`, `step_size`) rather than a complete run/check.
+
 ## Invariants
 
 - **Zero `unsafe`, zero stdout/stderr printing in library code (L-7), zero `serde`, zero async runtime.**
@@ -101,7 +111,9 @@ Exit 1 is not representable (`ExitCode` has the nine values above and no convers
 - **One envelope (INV-TETHER-02, N32a-03):** `serve` writes the handler's progress lines and then exactly one envelope; a panic, an error that maps to no code, or an envelope for another verb becomes `FROB-REF-990` (exit 9, `retry: never`, repairs: recover by key when the call carried one, then `frob doctor`); an unknown verb becomes `FROB-REF-801`.
 - **Exit from the registry (N32a-03):** the exit of a refusal is the `exit` of its row in `registries/refusals.toml`; the envelope chooses no value and the reader refuses an envelope whose exit differs from the row.
 - **Evidence only from a claim product (N32a-03):** no envelope entry point takes a class, tier, determinism or reality as text (compile-fail doctests in `envelope::evidence` and `envelope::exit`).
-- **Registry-only boundary (ADR-TETHER-02):** `--no-default-features --features registry-only` links only `frob-core` (plus `frob-core`'s own layer-0 utilities `fs-blake3` and `fs-qty`), with zero `frob-fsim`, zero FrankenSim physics crates, and zero subsystem crates.
+- **Registry-only boundary (ADR-TETHER-02):** `--no-default-features --features registry-only` links only `frob-core` (plus `frob-core`'s own layer-0 utilities `fs-blake3` and `fs-qty`), with zero `frob-fsim`, zero FrankenSim physics crates, and zero subsystem crates. Under `registry-only`, `dispatch::Socket` and `rpc` are exposed while `dispatch::InProcess` is absent.
+- **Dispatch parity & pipeline order (ADR-TETHER-03, N32a-04):** Every step executes strictly in order 1→7; steps 1 and 2 charge zero budget; `forbidden_keys` are checked in document order at every depth before unknown-parameter validation; resolved `bound` names and fixture digests enter the `frob.request/1` digest and echo in the envelope; `InProcess` and `Socket` produce byte-identical envelopes after masking `cost.wall_ms`, `job.id`, and `job.eta_s`.
+- **Socket security & transport isolation (N32a-04):** Unix domain sockets are bound mode `0600`, refused if mode bits outside `0600` or UID mismatch; oversized (`> 4 MiB`) and malformed `frob.rpc/1` frames return structured `FROB-REF-802` envelopes; mid-call client drops never wedge or terminate the server loop.
 
 ## Refusals
 
@@ -132,6 +144,7 @@ Exit 1 is not representable (`ExitCode` has the nine values above and no convers
 - Planted negative controls for `RL-01`..`RL-24` (unit suite `cargo test -p frob-verbs registry` and `scripts/e2e/tether_registry.sh` via `FROB_VERBS_REGISTRY`).
 - Byte-identical regeneration and entry-order permutation invariance (`D0`).
 - Envelope (N32a-03, `cargo test -p frob-verbs envelope`): golden envelopes in `tests/golden/envelope/` (completed, completed with findings, refused, deferred, paginated, idempotent replay, export, internal fault, and the plan's `design.check` example) compared byte for byte and round-tripped; the eighteen Tether codes and 990 against a synthetic mirror of N32-REF (`exit_table_exact`); the `crates/frob-conformance/fixtures/tether/exit_table.toml` rows (KA-755, `exit_fixture_rows`); the property `one_envelope_always` (10⁴ random handler programs); negative controls `control_bare_error_unknown_verb`, `control_second_envelope_serve` (fail under the `nc-*` features) and `control_wrong_exit_row_*`; end to end `scripts/e2e/tether_envelope_exit.sh`.
+- Dispatch (N32a-04, `cargo test -p frob-verbs dispatch` and `--test dispatch_conformance` under both default and `--no-default-features --features registry-only`): 7-step pipeline order, `forbidden_keys`, misspelt-parameter refusal, resolution echo + fixture digest entry into `frob.request/1`, zero budget charge on steps 1–2 + scope enforcement on step 3, `FROB-REF-724` unlinked handler, `FROB-REF-601` device-tier no-daemon, mode-`0600` + wrong-UID socket refusal, `frob.rpc/1` roundtrip/oversize/malformed frames, 100 random-offset mid-call client drops, `two_backends_equal` parity across the 11-verb synthetic fixture, control-plane granularity lint, negative controls (`negative_control_process_global_handler_diverges`, `negative_control_step_granular_verb_fails_lint`), and end-to-end `scripts/e2e/tether_dispatch.sh`.
 - Unit-test conventions (`STD-TEST`): [docs/testing/CONVENTIONS.md](../../docs/testing/CONVENTIONS.md) governs test placement, registry-bound naming, the no-mocks rule, and determinism lanes.
 
 ## Known gaps
@@ -139,5 +152,6 @@ Exit 1 is not representable (`ExitCode` has the nine values above and no convers
 - `registries/verbs.toml` begins schema-valid with zero `[[verb]]` rows at N32a-02; M0 operator verb entries (`doctor`, `capabilities`, `schema`, `robot-docs`) land in BD-022 and milestone verb rows in BD-137..BD-409.
 - Kind-based derivation (`derive.rs`: `common_properties`, `short_doc`, `all_refusals`, `tags`, `annotations`) and `RL-11` (`description-too-long`) land in NJL-01.
 - Envelope (N32a-03): `112` (N14-REF) and `840` sit in N35-33's `conflict` and `capability` exception lists but are not yet rows of `registries/refusals.toml`, so the registry's lists hold only 803, 804, 809 and 810 and `Envelope::from_code` refuses 112 and 840 as unregistered until their rows land; the unit tests exercise both lists through the synthetic `MIRROR` registry. The `frob` binary and its argument parser (BD-022) do not exist, so `one_envelope_always` drives the output guard with random handler programs rather than random argument vectors, the flag-reordering metamorphic relation is not checked, and the e2e script records its CLI rows as not exercised. `GATE-TETHER-03` is not yet a row of `registries/gates.toml`. The schemas live in `crates/frob-verbs/schemas/` because `schemas/frob.*.json` is reserved for generated output.
-- Dispatch service lands in N32a-04; `RL-INT` (`integer-type`) lands in N32a-07; `xtask check-generated` verb-table rule (`N34p4-03` check) is wired in BD-022.
+- Dispatch (N32a-04): `DispatchCx` provides zero-dependency cancellation checkpoints until `asupersync::Cx` lands via `BD-008`/`N33c-35`; `FROB-REF-601` is supplied in `dispatch::fixture::synthetic_refusals` until `N21-REF` enters row `601` into `registries/refusals.toml`; the real `frobd` daemon binary lands in `N32a-14`.
+- `RL-INT` (`integer-type`) lands in N32a-07; `xtask check-generated` verb-table rule (`N34p4-03` check) is wired in BD-022.
 - `frob-core` unconditionally links layer-0 utilities `fs-blake3` and `fs-qty` from FrankenSim, so `cargo tree -p frob-verbs --no-default-features --features registry-only -e normal` carries those two non-physics utilities transitively through `frob-core` and zero physics or subsystem crates.

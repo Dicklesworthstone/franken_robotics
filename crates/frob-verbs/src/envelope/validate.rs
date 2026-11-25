@@ -2,10 +2,10 @@
 //! `frob.progress/1` and the per-verb specialization (N32a-03).
 //!
 //! Supported keywords: `type`, `enum`, `const`, `properties`, `required`,
-//! `additionalProperties`, `patternProperties`, `propertyNames`, `dependentRequired`,
+//! `additionalProperties`, `propertyNames`, `dependentRequired`,
 //! `minProperties`, `maxProperties`, `items`, `minItems`, `maxItems`, `uniqueItems`,
-//! `pattern`, `minLength`, `maxLength`, `minimum`, `maximum`, `exclusiveMinimum`,
-//! `exclusiveMaximum`, `allOf`, `anyOf`, `oneOf`, `not`, `if`/`then`/`else`, and `$ref` to
+//! `pattern`, `minLength`, `maxLength`, `minimum`, `maximum`, `allOf`, `anyOf`,
+//! `oneOf`, `not`, `if`/`then`/`else`, and `$ref` to
 //! `#` or `#/$defs/<name>` of the same document. Annotations (`$schema`, `$id`, `$comment`,
 //! `title`, `description`, `examples`, `default`, `deprecated`, `readOnly`, `writeOnly`, any
 //! `x-` key) are ignored. Every other keyword is a compile error: a schema this validator
@@ -129,7 +129,6 @@ struct Rules {
     properties: Vec<(String, Node)>,
     required: Vec<String>,
     additional: Option<Node>,
-    pattern_properties: Vec<(Pattern, Node)>,
     property_names: Option<Node>,
     dependent_required: Vec<(String, Vec<String>)>,
     min_properties: Option<usize>,
@@ -143,8 +142,6 @@ struct Rules {
     max_length: Option<usize>,
     minimum: Option<f64>,
     maximum: Option<f64>,
-    exclusive_minimum: Option<f64>,
-    exclusive_maximum: Option<f64>,
     all_of: Vec<Node>,
     any_of: Vec<Node>,
     one_of: Vec<Node>,
@@ -212,20 +209,6 @@ impl Schema {
         if out.is_empty() { Ok(()) } else { Err(out) }
     }
 
-    /// Validate `instance` against the named `$defs` entry.
-    pub fn validate_def(&self, def: &str, instance: &Tree) -> Result<(), Vec<Violation>> {
-        let node = self.defs.get(def).ok_or_else(|| {
-            vec![Violation {
-                instance: String::new(),
-                keyword: format!("$defs/{def}"),
-                message: "no such definition".into(),
-            }]
-        })?;
-        let mut out = Vec::new();
-        self.eval(node, instance, "", &format!("/$defs/{def}"), &mut out, 0);
-        if out.is_empty() { Ok(()) } else { Err(out) }
-    }
-
     fn check_refs(&self, node: &Node) -> Result<(), SchemaError> {
         let Node::Rules(r) = node else { return Ok(()) };
         if let Some(target) = &r.reference {
@@ -235,7 +218,6 @@ impl Schema {
         let mut children: Vec<&Node> = Vec::new();
         children.extend(r.properties.iter().map(|(_, n)| n));
         children.extend(r.additional.iter());
-        children.extend(r.pattern_properties.iter().map(|(_, n)| n));
         children.extend(r.property_names.iter());
         children.extend(r.items.iter());
         children.extend(r.all_of.iter().chain(&r.any_of).chain(&r.one_of));
@@ -349,9 +331,7 @@ impl Schema {
                 }
                 for (k, mv) in members {
                     let child_ip = format!("{ip}/{}", escape_ptr(k));
-                    let mut matched = false;
                     if let Some((_, sub)) = r.properties.iter().find(|(name, _)| name == k) {
-                        matched = true;
                         self.eval(
                             sub,
                             mv,
@@ -360,21 +340,7 @@ impl Schema {
                             out,
                             depth + 1,
                         );
-                    }
-                    for (pat, sub) in &r.pattern_properties {
-                        if pat.is_match(k) {
-                            matched = true;
-                            self.eval(
-                                sub,
-                                mv,
-                                &child_ip,
-                                &format!("{kp}/patternProperties/{}", escape_ptr(pat.source())),
-                                out,
-                                depth + 1,
-                            );
-                        }
-                    }
-                    if !matched && let Some(add) = &r.additional {
+                    } else if let Some(add) = &r.additional {
                         if matches!(add, Node::Bool(false)) {
                             out.push(Violation {
                                 instance: child_ip.clone(),
@@ -460,20 +426,6 @@ impl Schema {
                     }
                     if r.maximum.is_some_and(|m| x > m) {
                         fail(out, "maximum", format!("{x} is above the maximum"));
-                    }
-                    if r.exclusive_minimum.is_some_and(|m| x <= m) {
-                        fail(
-                            out,
-                            "exclusiveMinimum",
-                            format!("{x} is not above the bound"),
-                        );
-                    }
-                    if r.exclusive_maximum.is_some_and(|m| x >= m) {
-                        fail(
-                            out,
-                            "exclusiveMaximum",
-                            format!("{x} is not below the bound"),
-                        );
                     }
                 } else {
                     fail(out, "type", "number is not a finite binary64".into());
@@ -634,18 +586,6 @@ fn compile_node(v: &Tree, at: &str) -> Result<Node, SchemaError> {
             }
             "required" => r.required = as_string_list(val, &here)?,
             "additionalProperties" => r.additional = Some(compile_node(val, &here)?),
-            "patternProperties" => {
-                let props = val
-                    .as_object()
-                    .ok_or_else(|| err(&here, "`patternProperties` must be an object"))?;
-                for (pat, sub) in props {
-                    let compiled = Pattern::compile(pat).map_err(|e| err(&here, &e.to_string()))?;
-                    r.pattern_properties.push((
-                        compiled,
-                        compile_node(sub, &format!("{here}/{}", escape_ptr(pat)))?,
-                    ));
-                }
-            }
             "propertyNames" => r.property_names = Some(compile_node(val, &here)?),
             "dependentRequired" => {
                 let deps = val
@@ -676,8 +616,6 @@ fn compile_node(v: &Tree, at: &str) -> Result<Node, SchemaError> {
             "maxLength" => r.max_length = Some(as_count(val, &here)?),
             "minimum" => r.minimum = Some(as_number(val, &here)?),
             "maximum" => r.maximum = Some(as_number(val, &here)?),
-            "exclusiveMinimum" => r.exclusive_minimum = Some(as_number(val, &here)?),
-            "exclusiveMaximum" => r.exclusive_maximum = Some(as_number(val, &here)?),
             "allOf" => r.all_of = compile_list(val, &here)?,
             "anyOf" => r.any_of = compile_list(val, &here)?,
             "oneOf" => r.one_of = compile_list(val, &here)?,
@@ -728,6 +666,9 @@ mod tests {
             r#"{"format":"date-time"}"#,
             r#"{"$ref":"https://example.org/s.json"}"#,
             r#"{"properties":{"a":{"contains":{}}}}"#,
+            r#"{"patternProperties":{"^x-":false}}"#,
+            r#"{"exclusiveMinimum":0}"#,
+            r#"{"exclusiveMaximum":0}"#,
             r#"{"then":{}}"#,
             r##"{"$ref":"#/$defs/missing"}"##,
             r#"{"pattern":"(?=x)"}"#,
@@ -783,7 +724,7 @@ mod tests {
     #[test]
     fn validator_combinators_and_refs() {
         let s = Schema::compile_json(
-            r##"{"$defs":{"pos":{"type":"number","exclusiveMinimum":0}},
+            r##"{"$defs":{"pos":{"type":"number","minimum":1}},
                  "oneOf":[{"$ref":"#/$defs/pos"},{"type":"string"}],
                  "not":{"const":"forbidden"}}"##,
         )
@@ -793,7 +734,7 @@ mod tests {
         assert!(s.validate(&tree(r#""ok""#)).is_ok());
         assert!(s.validate(&tree(r#""forbidden""#)).is_err());
         assert!(s.validate(&tree("null")).is_err());
-        assert!(s.validate_def("pos", &tree("2")).is_ok());
-        assert!(s.validate_def("pos", &tree("-2")).is_err());
+        assert!(s.validate(&tree("1")).is_ok());
+        assert!(s.validate(&tree("-2")).is_err());
     }
 }

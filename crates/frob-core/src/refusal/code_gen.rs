@@ -25,6 +25,42 @@ pub enum RefusalCode {
     FrobRef561 = 561,
     /// FROB-REF-562 (§35.11): Attribution or counterfactual fork requested below class D2 (source run class D3, D4 or unrecorded, or device family batch-independence record not current) at fork or re-run admission (distinct from attribution-time fork-set failure FROB-REF-584); pointer source run; observed class and record age; required D2 with GATE-SPARK-15 current for the family
     FrobRef562 = 562,
+    /// FROB-REF-601 (§21.21): Device unavailable or lost: the requested device cannot be opened or is lost during a run (pointer: device); also when a device-tier run verb is dispatched with no frobd answering so no process owns the device (pointer: daemon; first repair: start frobd); carries fingerprint { device, digest | null } (due M0)
+    FrobRef601 = 601,
+    /// FROB-REF-602 (§21.21): The memory estimate (live-interval peak bytes) exceeds the device budget at admission before any allocation; five trigger cases: (1) request peak exceeds card budget, (2) one shard of a two-card job exceeds its own card, (3) scene variants exceed budget (pointer: scenes; never fewer worlds), (4) camera frame buffers exceed budget (pointer: frames; never lower resolution or cadence of the same task), (5) adjoint step-buffer store K*d world-steps exceeds budget (pointer: adjoint; merged from adjoint-store-over-budget); pointer slab class in {worlds, rollout, scenes, frames, adjoint}; observed bytes, required budget; carries fingerprint { device, digest | null } (due M2)
+    FrobRef602 = 602,
+    /// FROB-REF-603 (§21.21): Kernel compile failure; device compiler rejects a kernel with verbatim compiler diagnostics attached unedited; pointer: kernel; carries fingerprint { device, digest | null } (due M0)
+    FrobRef603 = 603,
+    /// FROB-REF-604 (§21.21): Strict backend: a stage has no kernel on the requested backend; raised by the planner under strict:gpu-cuda or strict:gpu-metal before any world is stepped; pointer: stage; carries fingerprint { device, digest | null } (due M2)
+    FrobRef604 = 604,
+    /// FROB-REF-605 (§21.21): The CPU-versus-device check is not current for a kernel in the step plan on this device family, driver, and compiler under --require-current-check (run-time refusal, distinct from citation refusal FROB-REF-864); pointer: kernel; carries fingerprint { device, digest | null } (due M2)
+    FrobRef605 = 605,
+    /// FROB-REF-606 (§21.21): Fingerprint missing or changed since admission: no stored fingerprint for the device or its identity differs from the live machine at admission, chunk commit, or emission; pointer: device and differing field; carries fingerprint { device, digest | null } (null digest allowed here only) (due M0)
+    FrobRef606 = 606,
+    /// FROB-REF-607 (§21.21): A launch or command buffer failed after bounded retries (at most four attempts with growing waits; every retry counted in the receipt); pointer: launch or command buffer; carries fingerprint { device, digest | null } (due M0/M2)
+    FrobRef607 = 607,
+    /// FROB-REF-608 (§21.21): Worlds marked Faulted (frozen by a non-finite sentinel) exceed the caller's threshold; observed count, required threshold; carries fingerprint { device, digest | null } (due M2)
+    FrobRef608 = 608,
+    /// FROB-REF-609 (§21.21): A double-float start-up canary failed: TwoSum(1, 2^-30) != (1, 2^-30) or split product (1 + 2^-12)^2 != (1 + 2^-11, 2^-24); device refused for double-float kernels; pointer: canary; carries fingerprint { device, digest | null } (due M0)
+    FrobRef609 = 609,
+    /// FROB-REF-610 (§21.21): Capacity overflow on a device tier under the caller's refuse policy (distinct from lockstep/batch-cpu overflow FROB-REF-722); pointer: capacity; carries fingerprint { device, digest | null } (due M2)
+    FrobRef610 = 610,
+    /// FROB-REF-611 (§21.21): A shape change (capacity, grid size, or layout) was requested inside a running resident environment; pointer: environment shape; carries fingerprint { device, digest | null } (due M2)
+    FrobRef611 = 611,
+    /// FROB-REF-612 (§21.21): Kernel cache entry corrupt (digest check failed) and recompilation unavailable (offline or no device compiler); pointer: cache entry; carries fingerprint { device, digest | null } (due M0/M2)
+    FrobRef612 = 612,
+    /// FROB-REF-613 (§21.21): A specialized kernel is not bit-identical to its generic kernel (bit-identity fence found a differing state or normal form, or no current identity row exists); pointer: specialized kernel; carries fingerprint { device, digest | null } (due M4)
+    FrobRef613 = 613,
+    /// FROB-REF-614 (§21.21): Host access to a device slab outside its epoch-fenced lease (read lease only on current committed slab, snapshot slab, and previous ring slot; write lease only between chunks); pointer: slab; carries fingerprint { device, digest | null } (due M2)
+    FrobRef614 = 614,
+    /// FROB-REF-615 (§21.21): Device stalled (watchdog): a chunk exceeded the upper end of its predicted time by the configured factor and the watchdog thread marked the device Stalled; pointer: device; carries fingerprint { device, digest | null } (due M2)
+    FrobRef615 = 615,
+    /// FROB-REF-616 (§21.21): The device lacks an arithmetic feature the kernel declares (e.g. 64-bit integers): no admissible variant of the kernel family exists for the active device families; raised by the planner before any world is stepped; pointer: kernel feature; carries fingerprint { device, digest | null } (due M2)
+    FrobRef616 = 616,
+    /// FROB-REF-617 (§21.21): A view cannot cross a stride convention (signed byte strides vs unsigned element strides) without materializing a copy under a zero-copy contract (CX-218); pointer: view stride convention; carries fingerprint { device, digest | null } (due M0)
+    FrobRef617 = 617,
+    /// FROB-REF-618 (§21.21): A transfer class that may not cross machines (compiled scene field, world state, rollout buffer, unregistered kind, or a TelemetrySummary item above 16 MiB / 16,777,216 bytes treated as a mislabelled trace with observed bytes); raised at export and at artifact.import through XferReader with nothing admitted; pointer: transfer item; carries fingerprint { device, digest | null } (due M2)
+    FrobRef618 = 618,
     /// FROB-REF-701 (§32.18): The estimate's upper end exceeds the remaining session budget at admission (pointer /budget/<unit>; observed upper estimate, required remaining budget; due M2)
     FrobRef701 = 701,
     /// FROB-REF-702 (§32.18): Budget exhausted during a run at a kernel-batch boundary; unpublished state is discarded, nothing partial is published as a result, and the acknowledgement names the last committed tick per world (pointer /budget/<unit>; due M1)
@@ -106,6 +142,24 @@ impl RefusalCode {
         Self::FrobRef252,
         Self::FrobRef561,
         Self::FrobRef562,
+        Self::FrobRef601,
+        Self::FrobRef602,
+        Self::FrobRef603,
+        Self::FrobRef604,
+        Self::FrobRef605,
+        Self::FrobRef606,
+        Self::FrobRef607,
+        Self::FrobRef608,
+        Self::FrobRef609,
+        Self::FrobRef610,
+        Self::FrobRef611,
+        Self::FrobRef612,
+        Self::FrobRef613,
+        Self::FrobRef614,
+        Self::FrobRef615,
+        Self::FrobRef616,
+        Self::FrobRef617,
+        Self::FrobRef618,
         Self::FrobRef701,
         Self::FrobRef702,
         Self::FrobRef703,
@@ -167,6 +221,24 @@ impl RefusalCode {
             Self::FrobRef252 => "FROB-REF-252",
             Self::FrobRef561 => "FROB-REF-561",
             Self::FrobRef562 => "FROB-REF-562",
+            Self::FrobRef601 => "FROB-REF-601",
+            Self::FrobRef602 => "FROB-REF-602",
+            Self::FrobRef603 => "FROB-REF-603",
+            Self::FrobRef604 => "FROB-REF-604",
+            Self::FrobRef605 => "FROB-REF-605",
+            Self::FrobRef606 => "FROB-REF-606",
+            Self::FrobRef607 => "FROB-REF-607",
+            Self::FrobRef608 => "FROB-REF-608",
+            Self::FrobRef609 => "FROB-REF-609",
+            Self::FrobRef610 => "FROB-REF-610",
+            Self::FrobRef611 => "FROB-REF-611",
+            Self::FrobRef612 => "FROB-REF-612",
+            Self::FrobRef613 => "FROB-REF-613",
+            Self::FrobRef614 => "FROB-REF-614",
+            Self::FrobRef615 => "FROB-REF-615",
+            Self::FrobRef616 => "FROB-REF-616",
+            Self::FrobRef617 => "FROB-REF-617",
+            Self::FrobRef618 => "FROB-REF-618",
             Self::FrobRef701 => "FROB-REF-701",
             Self::FrobRef702 => "FROB-REF-702",
             Self::FrobRef703 => "FROB-REF-703",
@@ -216,6 +288,24 @@ impl RefusalCode {
             "FROB-REF-252" => Some(Self::FrobRef252),
             "FROB-REF-561" => Some(Self::FrobRef561),
             "FROB-REF-562" => Some(Self::FrobRef562),
+            "FROB-REF-601" => Some(Self::FrobRef601),
+            "FROB-REF-602" => Some(Self::FrobRef602),
+            "FROB-REF-603" => Some(Self::FrobRef603),
+            "FROB-REF-604" => Some(Self::FrobRef604),
+            "FROB-REF-605" => Some(Self::FrobRef605),
+            "FROB-REF-606" => Some(Self::FrobRef606),
+            "FROB-REF-607" => Some(Self::FrobRef607),
+            "FROB-REF-608" => Some(Self::FrobRef608),
+            "FROB-REF-609" => Some(Self::FrobRef609),
+            "FROB-REF-610" => Some(Self::FrobRef610),
+            "FROB-REF-611" => Some(Self::FrobRef611),
+            "FROB-REF-612" => Some(Self::FrobRef612),
+            "FROB-REF-613" => Some(Self::FrobRef613),
+            "FROB-REF-614" => Some(Self::FrobRef614),
+            "FROB-REF-615" => Some(Self::FrobRef615),
+            "FROB-REF-616" => Some(Self::FrobRef616),
+            "FROB-REF-617" => Some(Self::FrobRef617),
+            "FROB-REF-618" => Some(Self::FrobRef618),
             "FROB-REF-701" => Some(Self::FrobRef701),
             "FROB-REF-702" => Some(Self::FrobRef702),
             "FROB-REF-703" => Some(Self::FrobRef703),

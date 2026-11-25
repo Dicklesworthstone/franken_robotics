@@ -110,6 +110,176 @@ repairs = ["Teleport the world to batch-cpu and fork there", "Re-run the episode
 raised_by = ["N35-07", "BD-269", "BD-205"]
 related = ["FROB-REF-584"]
 
+# Spark backend and device refusal family (N21-REF, §21.21, exit 6).
+# Pending allocation-ledger rows (awaiting N35-33 registries/refusal_allocations.toml):
+# - device-count-wrap (6xx, proposed 619, exit 6, retry after-change; N21c-39)
+# - device-receipt-incomplete (9xx, exit 9, retry never; N21a-02, N21c-28)
+# - xfer-item-digest-mismatch (9xx, exit 9, retry never, §21.17; N21c-08)
+
+[[refusal]]
+code = "FROB-REF-601"
+meaning = "Device unavailable or lost: the requested device cannot be opened or is lost during a run (pointer: device); also when a device-tier run verb is dispatched with no frobd answering so no process owns the device (pointer: daemon; first repair: start frobd); carries fingerprint { device, digest | null } (due M0)"
+defined_in = "§21.21"
+exit = 6
+retry = "backoff"
+repairs = ["Rerun on another device", "Rerun on batch-cpu under mixed-allowed", "Resume from the last committed epoch when the device returns", "For pointer: daemon, first start frobd (command printed), then rerun on batch-cpu under mixed-allowed"]
+raised_by = ["BD-175", "BD-172", "BD-174", "BD-014", "N21b-32", "BD-029", "N34-01", "BD-210", "N32a-04"]
+
+[[refusal]]
+code = "FROB-REF-602"
+meaning = "The memory estimate (live-interval peak bytes) exceeds the device budget at admission before any allocation; five trigger cases: (1) request peak exceeds card budget, (2) one shard of a two-card job exceeds its own card, (3) scene variants exceed budget (pointer: scenes; never fewer worlds), (4) camera frame buffers exceed budget (pointer: frames; never lower resolution or cadence of the same task), (5) adjoint step-buffer store K*d world-steps exceeds budget (pointer: adjoint; merged from adjoint-store-over-budget); pointer slab class in {worlds, rollout, scenes, frames, adjoint}; observed bytes, required budget; carries fingerprint { device, digest | null } (due M2)"
+defined_in = "§21.21"
+exit = 6
+retry = "after-change"
+repairs = ["worlds: 1. Fewer worlds (largest count that fits is named); 2. A smaller capacity; 3. The Mac (large-memory machine)", "rollout: 1. Fewer worlds (largest count that fits is named); 2. A smaller capacity; 3. The Mac (large-memory machine)", "scenes: 1. Fewer distinct scene variants; 2. A coarser scene (different scene identity); 3. The Mac (large-memory machine)", "frames: 1. Fewer worlds; 2. The Mac (large-memory machine); 3. A different task with smaller cameras", "adjoint: 1. Fewer worlds; 2. A shorter horizon K; 3. The paired stencil"]
+raised_by = ["BD-219", "BD-173", "N36-08", "N36-16", "N36-19", "N16c-26"]
+
+[[refusal]]
+code = "FROB-REF-603"
+meaning = "Kernel compile failure; device compiler rejects a kernel with verbatim compiler diagnostics attached unedited; pointer: kernel; carries fingerprint { device, digest | null } (due M0)"
+defined_in = "§21.21"
+exit = 6
+retry = "after-change"
+repairs = ["Report the verbatim compiler diagnostics and source hash", "Use the generic kernel if a specialized kernel failed"]
+raised_by = ["BD-015", "BD-016", "N21b-32", "BD-017", "BD-172", "BD-174", "BD-173", "N21b-13", "N21a-10", "N21c-19"]
+
+[[refusal]]
+code = "FROB-REF-604"
+meaning = "Strict backend: a stage has no kernel on the requested backend; raised by the planner under strict:gpu-cuda or strict:gpu-metal before any world is stepped; pointer: stage; carries fingerprint { device, digest | null } (due M2)"
+defined_in = "§21.21"
+exit = 6
+retry = "after-change"
+repairs = ["Use mixed-allowed placement", "Use the other backend"]
+raised_by = ["BD-178"]
+
+[[refusal]]
+code = "FROB-REF-605"
+meaning = "The CPU-versus-device check is not current for a kernel in the step plan on this device family, driver, and compiler under --require-current-check (run-time refusal, distinct from citation refusal FROB-REF-864); pointer: kernel; carries fingerprint { device, digest | null } (due M2)"
+defined_in = "§21.21"
+exit = 6
+retry = "after-change"
+repairs = ["frob spark check"]
+raised_by = ["BD-178", "BD-176"]
+related = ["FROB-REF-864"]
+
+[[refusal]]
+code = "FROB-REF-606"
+meaning = "Fingerprint missing or changed since admission: no stored fingerprint for the device or its identity differs from the live machine at admission, chunk commit, or emission; pointer: device and differing field; carries fingerprint { device, digest | null } (null digest allowed here only) (due M0)"
+defined_in = "§21.21"
+exit = 6
+retry = "after-change"
+repairs = ["frob spark fingerprint", "frob spark check", "Run on batch-cpu"]
+raised_by = ["N21c-05", "BD-014"]
+
+[[refusal]]
+code = "FROB-REF-607"
+meaning = "A launch or command buffer failed after bounded retries (at most four attempts with growing waits; every retry counted in the receipt); pointer: launch or command buffer; carries fingerprint { device, digest | null } (due M0/M2)"
+defined_in = "§21.21"
+exit = 6
+retry = "backoff"
+repairs = ["Resume from the last committed epoch", "Run on another device"]
+raised_by = ["N21b-07", "BD-016", "BD-174", "BD-172", "BD-175"]
+
+[[refusal]]
+code = "FROB-REF-608"
+meaning = "Worlds marked Faulted (frozen by a non-finite sentinel) exceed the caller's threshold; observed count, required threshold; carries fingerprint { device, digest | null } (due M2)"
+defined_in = "§21.21"
+exit = 6
+retry = "after-change"
+repairs = ["Teleport a faulted world to batch-cpu to locate the step and stage", "Raise --max-faulted knowingly"]
+raised_by = ["BD-175", "BD-204"]
+
+[[refusal]]
+code = "FROB-REF-609"
+meaning = "A double-float start-up canary failed: TwoSum(1, 2^-30) != (1, 2^-30) or split product (1 + 2^-12)^2 != (1 + 2^-11, 2^-24); device refused for double-float kernels; pointer: canary; carries fingerprint { device, digest | null } (due M0)"
+defined_in = "§21.21"
+exit = 6
+retry = "after-change"
+repairs = ["Run without double-float kernels, labelled", "File the compiler evidence"]
+raised_by = ["N21b-36", "BD-179"]
+
+[[refusal]]
+code = "FROB-REF-610"
+meaning = "Capacity overflow on a device tier under the caller's refuse policy (distinct from lockstep/batch-cpu overflow FROB-REF-722); pointer: capacity; carries fingerprint { device, digest | null } (due M2)"
+defined_in = "§21.21"
+exit = 6
+retry = "after-change"
+repairs = ["Supply a larger capacity", "Run with --on-overflow continue-flagged"]
+raised_by = ["N21b-23", "BD-175", "BD-183"]
+related = ["FROB-REF-722"]
+
+[[refusal]]
+code = "FROB-REF-611"
+meaning = "A shape change (capacity, grid size, or layout) was requested inside a running resident environment; pointer: environment shape; carries fingerprint { device, digest | null } (due M2)"
+defined_in = "§21.21"
+exit = 6
+retry = "after-change"
+repairs = ["Admit the request into a new bucket"]
+raised_by = ["BD-183", "BD-172", "N21b-16", "N17b-05"]
+
+[[refusal]]
+code = "FROB-REF-612"
+meaning = "Kernel cache entry corrupt (digest check failed) and recompilation unavailable (offline or no device compiler); pointer: cache entry; carries fingerprint { device, digest | null } (due M0/M2)"
+defined_in = "§21.21"
+exit = 6
+retry = "after-change"
+repairs = ["Run frob spark precompile on a build host, then copy the content-addressed cache directory"]
+raised_by = ["BD-015", "N21b-12", "BD-173"]
+
+[[refusal]]
+code = "FROB-REF-613"
+meaning = "A specialized kernel is not bit-identical to its generic kernel (bit-identity fence found a differing state or normal form, or no current identity row exists); pointer: specialized kernel; carries fingerprint { device, digest | null } (due M4)"
+defined_in = "§21.21"
+exit = 6
+retry = "after-change"
+repairs = ["Use the generic kernel", "frob spark check --specialized", "Report the specializer defect"]
+raised_by = ["N21c-19"]
+
+[[refusal]]
+code = "FROB-REF-614"
+meaning = "Host access to a device slab outside its epoch-fenced lease (read lease only on current committed slab, snapshot slab, and previous ring slot; write lease only between chunks); pointer: slab; carries fingerprint { device, digest | null } (due M2)"
+defined_in = "§21.21"
+exit = 6
+retry = "after-change"
+repairs = ["Read the committed or snapshot slab"]
+raised_by = ["N21b-11", "BD-173"]
+
+[[refusal]]
+code = "FROB-REF-615"
+meaning = "Device stalled (watchdog): a chunk exceeded the upper end of its predicted time by the configured factor and the watchdog thread marked the device Stalled; pointer: device; carries fingerprint { device, digest | null } (due M2)"
+defined_in = "§21.21"
+exit = 6
+retry = "backoff"
+repairs = ["Restart the device worker so the supervisor resumes from the last committed epoch"]
+raised_by = ["N21b-24", "BD-175", "BD-174"]
+
+[[refusal]]
+code = "FROB-REF-616"
+meaning = "The device lacks an arithmetic feature the kernel declares (e.g. 64-bit integers): no admissible variant of the kernel family exists for the active device families; raised by the planner before any world is stepped; pointer: kernel feature; carries fingerprint { device, digest | null } (due M2)"
+defined_in = "§21.21"
+exit = 6
+retry = "after-change"
+repairs = ["Use the 32-bit variant", "Use another backend", "frob spark fingerprint if the feature is unavailable"]
+raised_by = ["N21c-42"]
+
+[[refusal]]
+code = "FROB-REF-617"
+meaning = "A view cannot cross a stride convention (signed byte strides vs unsigned element strides) without materializing a copy under a zero-copy contract (CX-218); pointer: view stride convention; carries fingerprint { device, digest | null } (due M0)"
+defined_in = "§21.21"
+exit = 6
+retry = "after-change"
+repairs = ["Allow the copy (charged to the receipt)"]
+raised_by = ["BD-036"]
+
+[[refusal]]
+code = "FROB-REF-618"
+meaning = "A transfer class that may not cross machines (compiled scene field, world state, rollout buffer, unregistered kind, or a TelemetrySummary item above 16 MiB / 16,777,216 bytes treated as a mislabelled trace with observed bytes); raised at export and at artifact.import through XferReader with nothing admitted; pointer: transfer item; carries fingerprint { device, digest | null } (due M2)"
+defined_in = "§21.21"
+exit = 6
+retry = "after-change"
+repairs = ["Send the seed or recipe", "Send address, design, weights, and recipe and replay on the target host", "Keep the work on the machine that holds the data"]
+raised_by = ["N21c-08"]
+
 [[refusal]]
 code = "FROB-REF-701"
 meaning = "The estimate's upper end exceeds the remaining session budget at admission (pointer /budget/<unit>; observed upper estimate, required remaining budget; due M2)"

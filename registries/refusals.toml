@@ -59,3 +59,12 @@ exit = 3
 retry = "after-change"
 repairs = ["Supply evidence whose quantifier prefix matches the query and other combined parts", "Re-run verification under the required quantifier order rather than weakening a universal claim"]
 raised_by = ["BD-005"]
+
+[[refusal]]
+code = "FROB-REF-890"
+meaning = "Evidence recorded under another stack receipt is offered as same-stack evidence without revalidation"
+defined_in = "§33.16"
+exit = 3
+retry = "after-change"
+repairs = ["Revalidate the older evidence under the current stack (result.revalidate)", "Re-run the computation under the current stack", "Present the two as separate results, each labelled with its stack"]
+raised_by = ["N33a-06"]

@@ -4,7 +4,7 @@
 
 ## Purpose
 
-Provide the shared, dependency-minimal vocabulary that must mean the same thing across every crate in the workspace: content-addressed identities and domain-separated hashing (`id`), canonical JSON serialization from typed terms with explicit code-point sorting (`canon`), evidence classes and the weakest-input-wins claim product (`evidence`), constant-false no-authorization flags (`auth`), raw-byte strict JSON admission (`json`), plain mission proof objects (`proof`), typed refusals and the refusal-registry loader (`refusal`, `registry::refusals`), the strict TOML-subset reader (`registry::toml`), the closed SI quantity re-export surface (`qty`), and the opt-in test-support kit (`testkit` behind feature `test-support`).
+Provide the shared, dependency-minimal vocabulary that must mean the same thing across every crate in the workspace: content-addressed identities and domain-separated hashing (`id`), canonical JSON serialization from typed terms with explicit code-point sorting (`canon`), evidence classes and the weakest-input-wins claim product (`evidence`), constant-false no-authorization flags (`auth`), raw-byte strict JSON admission (`json`), plain mission proof objects (`proof`), build-embedded stack identities and the same-stack rule (`stack`), typed refusals and the refusal-registry loader (`refusal`, `registry::refusals`), the strict TOML-subset reader (`registry::toml`), the closed SI quantity re-export surface (`qty`), and the opt-in test-support kit (`testkit` behind feature `test-support`).
 
 ## Inputs
 
@@ -15,6 +15,7 @@ Provide the shared, dependency-minimal vocabulary that must mean the same thing 
 - `registries/refusals.toml` (embedded at compile time and also accepted as synthetic byte slices for tests) and verb refusal tables validated against the registry.
 - SI scalar values for the closed set of 36 `qty` types backed by `fs-qty`.
 - Exact rationals, outward-rounded intervals, typed frame/unit quantities, ordered port sequences, quantifier prefixes, expression DAGs, assumptions, dependency supports, and per-kind payload structs for `proof::ProofObject::new`.
+- At compile time (`build.rs`), the two one-line 64-hex files `receipts/HEAD` and `receipts/LOCK_DIGEST` (maintained by `xtask check-stack --write-receipt`) plus the `FROB_STACK_DEV` environment variable.
 
 ## Outputs
 
@@ -24,6 +25,7 @@ Provide the shared, dependency-minimal vocabulary that must mean the same thing 
 - Validated `RefusalRegistry` structures and deterministic Rust source output (`render_refusal_code_enum`) matching `src/refusal/code_gen.rs`.
 - Typed `registry::toml::Table` / `Fields` values and closed-set SI quantity wrappers (`qty`).
 - Plain mission proof objects (`proof` module: fifteen `ProofKind` variants, per-kind exact-number `ProofPayload`, `Establishes`, canonical `ExprDag`, `Support`, `ProofObject`, and deterministic D0 canonical bytes/digests) — class `"none: data only"` (`N25b-01`, `OPEN-AUGUR-6`, `ADR-WS-02`).
+- Typed stack identities (`stack` module: `StackReceiptHash` prefixed `sr:`, `StackLockDigest` prefixed `sl:`, `StackIdentity { receipt, lock, dev }`, compile-time constant `BUILT_UNDER`, `same_stack`, `require_same_stack`, and `StackKeyed`) serialized via `frob_core::canon` (`N33a-06`).
 
 ## Invariants
 
@@ -34,12 +36,14 @@ Provide the shared, dependency-minimal vocabulary that must mean the same thing 
 - **Canonical-only identity hashing (N34-18):** `CanonicalBytes` has no public struct literal or `From<Vec<u8>>` constructor; only `canon::CanonWriter::finish` and `json::Admitted::into_canonical` construct it, enforcing explicit Unicode code-point member sorting, minimal escapes, and exact number rules.
 - **Closed refusal registry:** `RefusalCode` is generated from `registries/refusals.toml` into `src/refusal/code_gen.rs`; unknown codes, duplicates, unknown TOML keys, overlapping or dangling exception lists, and `[exit_rule]` / family-exit mismatches are load-time errors.
 - **Closed quantity surface (N33c-03):** `qty` exports at most 64 named SI types (currently 36), separates equal-dimension kinds (`Torque` vs `Energy` vs `AngularStiffness`, etc.), and never exports generic `fs_qty::Qty`.
+- **Distinct stack identities, fail-closed embedding, and the same-stack rule (N33a-06, INV-SUITE-05):** `StackReceiptHash` (`sr:<64 lower-case hex>`, wide identity of the resolved `frob.stack-receipt/1` JSON) and `StackLockDigest` (`sl:<64 lower-case hex>`, narrow identity of canonical `franken-stack.lock` mixed into airlock memo keys via `StackKeyed`) are distinct Rust types with no cross-conversion or arbitrary-string constructor outside their parsers. `build.rs` reads `receipts/HEAD` and `receipts/LOCK_DIGEST` without hashing or reading siblings, declares `rerun-if-changed` on both files and `franken-stack.lock` plus `rerun-if-env-changed=FROB_STACK_DEV`, and fails closed when either file is absent unless `FROB_STACK_DEV=1` is set (marking `BUILT_UNDER.dev = true` and zeroing missing fields). `same_stack(a, b)` holds iff `!a.dev && !b.dev && a.receipt == b.receipt` (never equal lock digests alone, never any `dev: true` identity); `require_same_stack` raises `FROB-REF-890` with both receipt hashes, `retry: after-change`, and ranked repairs (`result.revalidate`, `rerun`, `present-separately`).
 
 ## Refusals
 
 - `FROB-REF-802` (exit 3, `after-change`): invalid caller argument, such as an empty `parts` slice passed to `ClaimProduct::combine`.
 - `FROB-REF-816` (exit 3, `after-change`): missing, duplicate, unknown, non-boolean, or `true` no-authorization flag encountered while parsing `NoAuthorization` or `PacketAuthorization`.
 - `FROB-REF-881` (exit 3, `after-change`): quantifier-prefix mismatch across parts passed to `ClaimProduct::combine`.
+- `FROB-REF-890` (exit 3, `after-change`): `stack-mismatch` — evidence recorded under another stack receipt or a `dev: true` identity is offered as same-stack evidence without revalidation (`stack::require_same_stack`).
 
 ## Determinism class
 
@@ -67,5 +71,5 @@ Provide the shared, dependency-minimal vocabulary that must mean the same thing 
 ## Known gaps
 
 - `frob_core::json` (N34-17) and `frob_core::canon` + `Admitted::into_canonical` (N34-18) are implemented; `auth` and `refusal` still include minimal std-only JSON parsing for their own closed objects until surface wiring in N34-20; the four-way feature build and golden corpus live in N34-21.
-- `registries/refusals.toml` is seeded with `FROB-REF-802`, `FROB-REF-816`, and `FROB-REF-881` plus the fixed surface `[exit_rule]`; N35-33 and chapter registry beads populate the full 294+ rows, `74x`/`76x`/`79x` rules, and exception lists.
+- `registries/refusals.toml` is seeded with `FROB-REF-802`, `FROB-REF-816`, `FROB-REF-881`, and `FROB-REF-890` plus the fixed surface `[exit_rule]`; N35-33 and chapter registry beads populate the full 294+ rows, `74x`/`76x`/`79x` rules, and exception lists.
 - Full `DetProvenance` and kernel-class mapping land in N35-01; artifact-graph IDs (`clm:`, `ev:`) land in N34-11; L-10 inversion traits land in N34-06; registry-generated `qty` product tables and `frob-units` escape hatch land in N33c-03 and N33c-05.

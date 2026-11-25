@@ -17,6 +17,8 @@ pub enum RefusalCode {
     FrobRef816 = 816,
     /// FROB-REF-881 (§25.24): Evidence or a certificate establishes a different quantifier prefix than the query's, including clairvoyant evidence offered for a robust claim
     FrobRef881 = 881,
+    /// FROB-REF-890 (§33.16): Evidence recorded under another stack receipt is offered as same-stack evidence without revalidation
+    FrobRef890 = 890,
 }
 
 impl RefusalCode {
@@ -26,6 +28,7 @@ impl RefusalCode {
         Self::FrobRef802,
         Self::FrobRef816,
         Self::FrobRef881,
+        Self::FrobRef890,
     ];
 
     /// Numeric code in `100..=999`.
@@ -48,6 +51,7 @@ impl RefusalCode {
             Self::FrobRef802 => "FROB-REF-802",
             Self::FrobRef816 => "FROB-REF-816",
             Self::FrobRef881 => "FROB-REF-881",
+            Self::FrobRef890 => "FROB-REF-890",
         }
     }
 
@@ -59,6 +63,7 @@ impl RefusalCode {
             "FROB-REF-802" => Some(Self::FrobRef802),
             "FROB-REF-816" => Some(Self::FrobRef816),
             "FROB-REF-881" => Some(Self::FrobRef881),
+            "FROB-REF-890" => Some(Self::FrobRef890),
             _ => None,
         }
     }

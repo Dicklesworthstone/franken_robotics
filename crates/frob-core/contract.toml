@@ -8,7 +8,7 @@ plane = "compute"
 determinism = "D0"
 evidence = "Estimated"
 gates = []
-refusals = ["FROB-REF-802", "FROB-REF-816", "FROB-REF-881"]
+refusals = ["FROB-REF-802", "FROB-REF-816", "FROB-REF-881", "FROB-REF-890"]
 
 [budgets]
 wall_ms = 50
@@ -30,6 +30,7 @@ utf16-sort = { tier = "S" }
 escape-all-non-ascii = { tier = "S" }
 nc-torque-alias-first-moment = { tier = "S" }
 nc-allow-empty-support = { tier = "S" }
+nc-stack-compare-lock = { tier = "S" }
 
 [api.float_ok]
 "json::Json::as_f64_lexeme" = "dimensionless JSON binary64 accessor returning raw lexeme and rounded f64 per N34-17; physical quantities use qty or exact strings"

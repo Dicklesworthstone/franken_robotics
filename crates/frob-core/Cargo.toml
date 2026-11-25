@@ -29,6 +29,7 @@ utf16-sort = []
 escape-all-non-ascii = []
 nc-torque-alias-first-moment = ["gauntlet-mutations"]
 nc-allow-empty-support = ["gauntlet-mutations"]
+nc-stack-compare-lock = ["gauntlet-mutations"]
 
 [[test]]
 name = "testkit"

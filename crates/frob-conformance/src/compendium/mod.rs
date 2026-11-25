@@ -5,5 +5,6 @@
 //! and no oracle value is regenerated from candidate production code.
 
 pub mod d1;
+pub mod d3;
 pub mod rat;
 pub mod registry;

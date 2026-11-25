@@ -37,6 +37,25 @@
 
 Rows marked `compendium-only` in D.1: Reflection parity, Planar Cayley, Shell rule.
 
+## D.3 Contact, wheels and terrain (10 rows)
+
+| Row | Statement | Used in | Validity | Oracle | Tests | Negative control | Carried by | Arithmetic |
+|---|---|---|---|---|---|---|---|---|
+| Friction cone | 𝒦_μ = {‖γₜ‖ ≤ μ·γₙ}; its dual is 𝒦_{1/μ} | C-06, T-07 | Isotropic; elliptic cones by a linear map. The box \|γₜ₁\|, \|γₜ₂\| ≤ μ·γₙ admits √2·μ·γₙ on the diagonals and is not used | `frob_conformance::compendium::d3::project_friction_cone_rational` | `d3_cone_duality`, `d3_cone_projection_example` | `d3_box_admits_sqrt2` | SPEC-C-06 | exact-rational |
+| Spin-factor Jordan product | (x₀, x̄) ∘ (y₀, ȳ) = (x₀·y₀ + x̄·ȳ, x₀·ȳ + y₀·x̄); eigenvalues x₀ ± ‖x̄‖ | C-06 | The second-order cone is its cone of squares | `frob_conformance::compendium::d3::jordan_product` | `d3_jordan_commutative_not_associative`, `d3_jordan_identity`, `d3_jordan_eigenvalues_and_membership` | `d3_nc_spin_factor_associativity` | SPEC-C-06 | exact-rational |
+| Fast-tier contact problem | v = argmin ½·(v − v*)ᵀA(v − v*) + Σ_c ℓ_c(J_c·v), with γ_c = −∇ℓ_c | C-06, §16.6, T-08 | ℓ_c convex, A positive definite; the Hessian is positive semidefinite by construction | `frob_conformance::compendium::d3::fast_tier_quadratic_minimizer` | `d3_fast_tier_one_contact_closed_form` | `d3_nc_fast_tier_nonconvex` | SPEC-C-06 | exact-rational |
+| Four-dimensional friction cone | 𝒦 = {‖(λ_t1, λ_t2, λ_s/r)‖ ≤ μ·λ_n}, with dual {μ·‖(v_t1, v_t2, r·ω_n)‖ ≤ v_n}; r = 2R/3 for uniform pressure on a disc of radius R and 3πR/16 for a Hertzian distribution | C-37, §18.6, T-07 | An ellipsoidal approximation of the sliding–spinning law of a finite patch. At v_t = r·ω_n the tangential friction is μ·λ_n/√2 | `frob_conformance::compendium::d3::cone4d_coupled_tangential_fraction` | `d3_4d_cone_coupling_value`, `d3_pure_spin_moment_two_thirds`, `d3_hertz_radius_3pi_over_16` | `d3_nc_4d_cone_uncoupled` | SPEC-C-37 | tolerance (1e-12) |
+| Joint-level rows | Stiction: a row whose multiplier lies in [−τ_s, τ_s]. Backlash: −β/2 ≤ q_out − q_motor/N ≤ β/2, two unilateral rows with non-negative multipliers. Hard stop: one unilateral row | C-37, §15.6, §18.7 | Stribeck dependence enters as a parameter update between steps | `frob_conformance::compendium::d3::stiction_breakaway_time` | `d3_stiction_breakaway_time`, `d3_backlash_amplitude_and_width` | `d3_nc_joint_backlash_bilateral` | SPEC-C-37 | exact-rational |
+| Growth vector and cost | A direction first reached at bracket depth w costs path length of order ε^(1/w) for a displacement ε; for a differential drive a lateral shift d costs about 4·√(d·b) of wheel travel with half-track b | C-07, GB-05 | Regular points of a bracket-generating distribution with reversible inputs; a finite mission needs an integrated witness | `frob_conformance::compendium::d3::diff_drive_lateral_shift_cost` | `d3_growth_vectors`, `d3_lateral_shift_cost_scaling` | `d3_nc_growth_vector_nonreversible` | SPEC-C-07 | tolerance (1e-12 m) |
+| Squeeze film | dh/dt = −2·N·h³/(3π·η·a⁴), so 1/h² − 1/h₀² = 4·N·t/(3π·η·a⁴); μ_eff = ψ·μ_b + (1 − ψ)·η·v·π·a²/(h·N) with ψ = 1 for h ≤ σ and ψ = 0 for h ≥ 3σ | §18.8 | Stefan's law on a circular patch of radius a under load N; semi-empirical, Estimated; flagged outside the calibrated range of the Hersey number η·v/(p·a) | `frob_conformance::compendium::d3::squeeze_film_thickness` | `d3_squeeze_film_closed_form`, `d3_squeeze_film_time_to_thickness` | `d3_nc_squeeze_film_euler` | compendium-only | tolerance (1e-9 m) |
+| Pressure–sinkage and shear | p = (k_c/b + k_φ)·zⁿ; τ = (c + σ·tan φ)·(1 − e^(−j/K)) | §18.10 | Semi-empirical, Estimated; parameters from soil cards; oracle checks monotonicity, limits and dimensional homogeneity only | `frob_conformance::compendium::d3::bekker_pressure` | `d3_bekker_monotone`, `d3_shear_limits` | `d3_nc_soil_dimensions_dropped` | compendium-only | tolerance (1e-9 Pa) |
+| Swept right-angle corner | A thin rod of length L turns a right-angle corner between corridors of width a exactly when L ≤ 2√2·a | C-33, §19.11 | The known answer that defeats any single clearance radius | `frob_conformance::compendium::d3::right_angle_corner_max_rod` | `d3_corner_two_root_two` | `d3_nc_corner_single_disc` | SPEC-C-33 | tolerance (1e-12 m) |
+| Clearance sandwich | 𝒞_in ⊆ 𝒞_free ⊆ 𝒞_out; a path in 𝒞_in is a feasibility witness, disconnection in 𝒞_out an impossibility certificate; widths between the two critical widths are unknown | C-33, §19.11, T-31 | Planar base in SE(2); the band follows from cell size and heading bin and is reported | `frob_conformance::compendium::d3::clearance_sandwich_doorway` | `d3_clearance_sandwich_doorway` | `d3_nc_clearance_sandwich_close_gap` | SPEC-C-33 | tolerance (1e-12 m) |
+
+Rows marked `compendium-only` in D.3: Squeeze film, Pressure–sinkage and shear.
+
+Rows marked `Estimated` in D.3: Squeeze film, Pressure–sinkage and shear.
+
 ## Pending sections
 
-Sections not yet landed: D.2, D.3, D.4, D.5, D.6, D.7, D.8, D.9, D.10.
+Sections not yet landed: D.2, D.4, D.5, D.6, D.7, D.8, D.9, D.10.

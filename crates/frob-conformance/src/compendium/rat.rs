@@ -212,6 +212,28 @@ impl BigNat {
         a
     }
 
+    /// Exact integer square root: returns `Some(r)` iff `r * r == *self`.
+    #[must_use]
+    pub fn exact_isqrt(&self) -> Option<Self> {
+        if self.is_zero() {
+            return Some(Self::zero());
+        }
+        let top_bit = (self.bit_len() - 1) / 2;
+        let mut root = Self::zero();
+        for bit in (0..=top_bit).rev() {
+            let mut cand = root.clone();
+            cand.set_bit(bit);
+            if cand.mul_nat(&cand) <= *self {
+                root = cand;
+            }
+        }
+        if root.mul_nat(&root) == *self {
+            Some(root)
+        } else {
+            None
+        }
+    }
+
     #[must_use]
     pub fn to_decimal(&self) -> String {
         if self.is_zero() {
@@ -371,6 +393,20 @@ impl Rat {
             }
         }
         acc
+    }
+
+    /// Exact rational square root: returns `Some(r)` with `r >= 0` iff `r * r == *self`.
+    #[must_use]
+    pub fn exact_sqrt(&self) -> Option<Self> {
+        if self.is_neg() {
+            return None;
+        }
+        if self.is_zero() {
+            return Some(Self::zero());
+        }
+        let sn = self.num.exact_isqrt()?;
+        let sd = self.den.exact_isqrt()?;
+        Some(Self::from_parts(false, sn, sd))
     }
 
     /// Floating-point approximation for display/tolerance rows only.

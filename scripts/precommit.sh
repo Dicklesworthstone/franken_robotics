@@ -316,10 +316,11 @@ if [ -s "$XTASK_CHECKS" ]; then
     fi
     record_result "PASS" "$STEP5" "$_chk_cmd" "0"
   done < "$XTASK_CHECKS"
-elif grep -Fq "(none)" "$XTASK_USAGE_OUT"; then
+elif awk 'tolower($0) ~ /^[[:space:]]*(checks|subcommands|commands|available checks)[[:space:]]*:[[:space:]]*\(none\)[[:space:]]*$/ { f = 1 }
+          END { exit !f }' "$XTASK_USAGE_OUT"; then
   record_result "PASS" "$STEP5" "cargo xtask (no checks registered; usage exit ${_xt_rc})" "0"
 else
-  # A usage text that names no parseable check and does not say "(none)" means the
+  # A usage text that names no parseable check and whose list line is not exactly "(none)" means the
   # format drifted: refuse rather than record a pass that ran zero checks.
   cat "$XTASK_USAGE_OUT" >&2
   fail_step "$STEP5" "cargo xtask (usage output lists no parseable check)" 1

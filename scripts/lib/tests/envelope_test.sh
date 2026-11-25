@@ -635,13 +635,6 @@ EOF
   fi
 }
 
-# Run all unit tests
-test_timeout_kills
-test_live_proof_raising_wall_s_passes
-test_memory_limit_kills
-test_process_group_is_reaped
-test_signal_to_parent_reaps_children
-
 # Runs scripts/precommit.sh in a scratch repo whose synthetic `cargo xtask` prints the
 # usage text in file $2; sets _rc, _ran (comma-joined checks run) and _out.
 run_precommit_with_usage() {
@@ -720,6 +713,32 @@ USAGE
   fi
 }
 
+# "(none)" counts only as the list itself. A garbled list plus "(none)" somewhere else in
+# the output (an error line here) must still fail step 5, not pass with zero checks.
+test_precommit_none_elsewhere_does_not_pass() {
+  _usage="${TMP_ROOT}/none_elsewhere_usage.txt"
+  cat > "$_usage" <<'USAGE'
+error: missing subcommand (none)
+usage: cargo xtask <check> [--root <dir>] [--json]
+
+Subcommands -> check-alpha | check-beta
+USAGE
+  run_precommit_with_usage pc_none_elsewhere "$_usage"
+  if [ "$_rc" -eq 1 ] && [ ! -s "$_xtrace" ] &&
+     grep -Fq "[FAIL] step 5 (xtask-checks)" "$_out"; then
+    pass "precommit_none_elsewhere_does_not_pass"
+  else
+    fail "precommit_none_elsewhere_does_not_pass" "rc=${_rc} xtask_ran='${_ran}' out=$(tail -n 10 "$_out")"
+  fi
+}
+
+# Run all unit tests
+test_timeout_kills
+test_live_proof_raising_wall_s_passes
+test_memory_limit_kills
+test_process_group_is_reaped
+test_signal_to_parent_reaps_children
+
 test_class_above_default_needs_approval
 test_approval_class_mismatch_refuses
 test_approval_row_requested_refuses
@@ -735,6 +754,7 @@ test_precommit_fails_on_failing_step
 test_precommit_parses_real_xtask_usage
 test_precommit_refuses_unparseable_xtask_usage
 test_precommit_passes_when_xtask_lists_none
+test_precommit_none_elsewhere_does_not_pass
 test_device_lane_outside_launcher_is_flagged
 
 printf '\nenvelope_test.sh: passed=%d failed=%d\n' "$PASS" "$FAIL"

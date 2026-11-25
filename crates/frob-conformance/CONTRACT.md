@@ -16,7 +16,7 @@
 
 ## 2. Inputs
 
-- The Gauntlet registries under `crates/frob-conformance/registry/`: `controls.toml`, `known_answers.toml`, `relations.toml`, `counterexamples.toml`, `pilots.toml`, `reasons.toml`, `hypotheses.toml` (`frob.hypothesis/1`, `N00-10`) (parsed exclusively through `frob_core::testkit::registry` and `frob_core::registry::toml`).
+- The Gauntlet registries under `crates/frob-conformance/registry/`: `controls.toml`, `known_answers.toml`, `relations.toml`, `counterexamples.toml`, `pilots.toml` (`frob.gauntlet.pilot/1`, `N38a-09`), `pilots_expected.toml`, `reasons.toml`, `hypotheses.toml` (`frob.hypothesis/1`, `N00-10`) (parsed exclusively through `frob_core::testkit::registry` and `frob_core::registry::toml`).
 - The workspace gate register `registries/gates.toml` (`frob.gates/1`).
 - Previous-commit snapshots of `controls.toml` for append-only and placeholder-target checks.
 - End-to-end script headers (`# e2e:`) and `frob.e2elog/1` NDJSON logs for `frob-e2e`.
@@ -55,6 +55,14 @@
 - **Kill rows measure nothing:** `kind = "kill"` rows never carry `claim`, `claim_id`, `threshold`, `tier`, `controls`, or `[[gate.part]]`.
 - **Four `pass` refusal conditions (validator contract, `N40-01`):** (a) `controls` is empty; (b) any listed control was not caught in the same run as the passing measurement; (c) `recorded.session` is a member of `recorded.implemented_by` (sorted comma-joined implementing sessions, `N38b-19`); (d) an `evidence` item or `claim_id` does not resolve in the artifact graph (`FROB-REF-869`), or the part's `receipt` does not name a committed `receipts/gates/<hash>.json` whose bytes hash to it.
 - **`measured` and append-only identity:** `measured` carries the measured value (non-empty and never byte-equal to `threshold`); gate IDs are unique and append-only; plan-time inventory (`278 + 111 + 32 = 421`, noting 112 in register intro) and dated workspace revisions live in `registry/gate_counts.toml`.
+
+### Pilot Register Contract (`N38a-09`, `frob.gauntlet.pilot/1`, `GATE-GAUNT-08`)
+
+`src/pilots/` and `examples/pilots.rs` (`cargo run -p frob-conformance --example pilots -- ...`) own the pilot register (`registry/pilots.toml`), seed list (`registry/pilots_expected.toml`), and generated printout (`docs/delivery/pilots.md`):
+- **One file, one schema, append-only IDs:** Only `frob.gauntlet.pilot/1` is accepted (`frob.pilot/1` rejected). Identifiers satisfy `^PILOT-(C-[0-9]{2}(-[a-z]+)?|PT-([0-9]{2}|S[0-9])|[A-Z]{2,14}-[0-9]{2})$`, are append-only, and are never reused or removed.
+- **Registration before run & committed receipts:** Every record states four mandatory parts (`falsifier`, `ceiling`, `fallback.ships`, `fallback.kill_gate`) and a lower-tier unconditional `fallback.ships`. Results must match `protocol.blake3`, follow registration in date and `ledger_seq`, and cite a receipt committed byte-identical at `receipts/pilots/<hash>.json`. Changing a protocol file or `protocol.sampling_episodes_per_design` after registration sets effective status to `void`.
+- **Convention 15 (pilot script exits):** A pilot's script exits `0` when its measurement was made and its record written whichever status the record carries, and non-zero only when a step could not run, a sanity assertion failed, or a negative control was not caught; the record's status, not the script's exit code, carries the verdict.
+- **Per-mechanism & per-bead funding (Round-4 Review Notes 3 & 4):** A pilot's own `bead` is never self-gated (`Fundable`, note `pilot-bead`). A bead listed in no record's `gated_beads` is answered only by the records of its work package that list no `gated_beads` at all (and never blocked by a record naming it in `fallback.beads`), preventing a held falsifier from blocking fallback work. A chapter-required `tier = "S"` record (`required_by` mandatory) may set `fallback.kill_gate = "none"` when its subsection attaches no kill gate, funding on its result alone. At most four tier-`M` pilots may be `running` in one milestone (`reason=moonshot-cap`, exit `3`). Pilots are evidence for funding only and never set or support any product gate.
 
 ## 5. Refusals
 

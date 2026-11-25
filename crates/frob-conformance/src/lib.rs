@@ -13,6 +13,9 @@
 //! - `oracles`: oracle register (`registry/oracles.toml`), role grammar, pin-move audit,
 //!   pinned fixtures, and disagreement findings (`N38a-04`).
 //! - `perf`: performance-program conformance lints and KA-815 workload checks (`N36-02`).
+//! - `pilots`: pilot register (`registry/pilots.toml`, `frob.gauntlet.pilot/1`), seed list
+//!   (`registry/pilots_expected.toml`), frozen protocols, funding rule, completeness check,
+//!   Moonshot cap, and `docs/delivery/pilots.md` printout (`N38a-09`, `GATE-GAUNT-08`).
 //! - `reasons`: closed Gauntlet harness refusal vocabulary (`registry/reasons.toml`),
 //!   existing public `FROB-REF-nnn` code references, and source/log scanners (`N38-REF`).
 //! - `register`: base gate-register record types (`Claim`, `Status`, `GateBase`, `PartBase`),
@@ -29,6 +32,7 @@ pub mod gates_v0;
 pub mod hypotheses;
 pub mod oracles;
 pub mod perf;
+pub mod pilots;
 pub mod reasons;
 pub mod register;
 pub mod tenfold;

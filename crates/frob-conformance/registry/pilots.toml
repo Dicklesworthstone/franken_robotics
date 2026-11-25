@@ -1,4 +1,17 @@
 # FrankenRobotics pilot register (schema frob.gauntlet.pilot/1).
-# Records arrive with N38a-09.
+#
+# Owned by frob-conformance (N38a-09, GATE-GAUNT-08, §38.5).
+# One file, one schema (`frob.gauntlet.pilot/1`; the superseded `frob.pilot/1`
+# name is rejected). Written strictly in the `frob-core::registry::toml` subset.
+#
+# Convention 15 (register rule): a pilot's script exits 0 when its measurement
+# was made and its record written whichever status the record carries, and
+# non-zero only when a step could not run, a sanity assertion failed, or a
+# negative control was not caught; the record's status, not the script's exit
+# code, carries the verdict.
+#
+# Plan-time ledger records arrive with N38a-10; per-mechanism pilots arrive
+# with their owning pilot beads. Identifiers are append-only, never reused or
+# deleted.
 
 schema = "frob.gauntlet.pilot/1"

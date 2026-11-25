@@ -23678,6 +23678,17 @@ dependency, device target or proof boundary (ADR-WS-01). The new caps trigger th
 18.4 and 11.5 thousand lines. The rest of §34.6 stands: `xtask` runs no physics, records no gate and holds no
 policy.
 
+**ADR-WS-05: crates past their trigger keep taking the work their Beads assign; re-sizing the caps goes to the
+owner with the measurement below, not to one ADR per crate.** [S] Recorded 2026-11-24, when `xtask` passed the
+11.5 thousand lines of ADR-WS-04 within the hour (12.7 thousand with tests). ADR-WS-04 sized the caps on the code
+present rather than on the Beads that assign work to each crate, and that was its error. Measured on the same
+day: the six crates hold 64,197 lines of Rust with their tests from 22 Beads, about 2.9 thousand lines a Bead
+(untagged bug-fix commits included). The caps sum to 576 thousand lines for 3,657 Beads, about 160 lines a Bead.
+The caps and the Bead set disagree by an order of magnitude, so a per-crate trigger fires on planned work every
+few hours and a scope conversation per crate decides nothing. The decision: a crate past 115% still takes no
+mechanism that no Bead assigns to it, and every such crate is reported with its count; the cap figures in the
+table stay as they are until the owner re-sizes them or retires them as FrankenTextiles did.
+
 ### 34.3 Layer and dependency rules
 
 - **L-1** A crate depends only on lower crates. `xtask check-layers` fails a deliberate upward edge. Lower means a

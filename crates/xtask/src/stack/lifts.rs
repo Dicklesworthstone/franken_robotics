@@ -42,6 +42,7 @@ const SKIP_SCAN_DIRS: &[&str] = &[
     ".git",
     ".beads",
     ".ntm",
+    ".rch-tmp",
     "target",
     "node_modules",
     "planning",
@@ -560,7 +561,7 @@ fn walk_sorted_files(root: &Path, dir: &Path, out: &mut Vec<String>) -> Result<(
             continue;
         }
         if ftype.is_dir() {
-            if SKIP_SCAN_DIRS.contains(&name.as_str()) {
+            if SKIP_SCAN_DIRS.contains(&name.as_str()) || name.starts_with(".rch-target-") {
                 continue;
             }
             if let Ok(rel) = path.strip_prefix(root) {
@@ -963,12 +964,19 @@ mod tests {
         fs::write(&abs, contents).expect("write fixture file");
     }
 
+    fn escape_toml_basic(s: &str) -> String {
+        s.replace('\\', "\\\\").replace('"', "\\\"")
+    }
+
     fn sample_record_toml(
         file: &str,
         source_path: &str,
         source_rev: &str,
         golden_test: &str,
     ) -> String {
+        let file = escape_toml_basic(file);
+        let source_path = escape_toml_basic(source_path);
+        let golden_test = escape_toml_basic(golden_test);
         format!(
             r#"[[lift]]
 file = "{file}"

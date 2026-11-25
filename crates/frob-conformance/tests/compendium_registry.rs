@@ -68,23 +68,59 @@ fn rows_resolve_oracle_test_and_control() {
             .join("\n")
     );
 
-    // Acceptance criterion: no production physics/algebra/dynamics crate is a dependency of
-    // frob-conformance (only layer-0 frob-core).
-    let manifest = fs::read_to_string(root.join("crates/frob-conformance/Cargo.toml"))
-        .expect("read frob-conformance/Cargo.toml");
-    let mut in_deps = false;
-    for raw in manifest.lines() {
-        let line = raw.split('#').next().unwrap_or("").trim();
-        if line.starts_with('[') && line.ends_with(']') {
-            in_deps = line == "[dependencies]";
-            continue;
-        }
-        if in_deps && let Some((dep, _)) = line.split_once('=') {
-            let name = dep.trim();
-            assert_eq!(
-                name, "frob-core",
-                "compendium oracle crate must not depend on production crate `{name}`"
-            );
+    // Acceptance criterion: no production crate is a dependency of the oracle module
+    // (`src/compendium/` only imports `std`, `core`, `alloc`, `crate`, `self`, `super`, `frob_core`,
+    // and never references any production crate path even if `frob-conformance` later depends on
+    // production crates to test them in Gauntlet tiers).
+    let comp_dir = root.join("crates/frob-conformance/src/compendium");
+    let mut comp_files: Vec<PathBuf> = fs::read_dir(&comp_dir)
+        .expect("read src/compendium")
+        .flatten()
+        .map(|e| e.path())
+        .filter(|p| p.extension().and_then(|s| s.to_str()) == Some("rs"))
+        .collect();
+    comp_files.sort();
+    assert!(!comp_files.is_empty(), "expected compendium source files");
+    let forbidden_prefixes = [
+        "frob_lie::",
+        "frob_algebra::",
+        "frob_model::",
+        "frob_dyn::",
+        "frob_contact::",
+        "frob_sim::",
+        "frob_analyze::",
+        "frob_ctrl::",
+        "frob_kir::",
+        "frob_kernels::",
+        "frob_scene::",
+    ];
+    for file in comp_files {
+        let src = fs::read_to_string(&file).expect("read compendium source");
+        for (idx, raw) in src.lines().enumerate() {
+            let line = raw.trim();
+            if line.starts_with("//") {
+                continue;
+            }
+            if let Some(rest) = line.strip_prefix("use ") {
+                let root_crate = rest.split([':', ';', ' ']).next().unwrap_or("");
+                assert!(
+                    matches!(
+                        root_crate,
+                        "std" | "core" | "alloc" | "crate" | "self" | "super" | "frob_core"
+                    ),
+                    "{}:{}: oracle module must not import production crate `{root_crate}`",
+                    file.display(),
+                    idx + 1
+                );
+            }
+            for pat in forbidden_prefixes {
+                assert!(
+                    !line.contains(pat),
+                    "{}:{}: oracle module must not reference production crate `{pat}`",
+                    file.display(),
+                    idx + 1
+                );
+            }
         }
     }
 
@@ -158,7 +194,7 @@ fn doc_matches_registry() {
         "docs/math/compendium.md drifted from registries/compendium/d*.toml; regenerate with `cargo run -p frob-conformance --example compendium_doc -- --out docs/math/compendium.md`"
     );
 
-    // Acceptance criterion: compendium-only rows in D.1 are explicitly listed as such.
+    // Acceptance criterion: compendium-only and Estimated rows are explicitly listed.
     for name in ["Reflection parity", "Planar Cayley", "Shell rule"] {
         assert!(
             committed.contains(name),
@@ -170,5 +206,17 @@ fn doc_matches_registry() {
             "Rows marked `compendium-only` in D.1: Reflection parity, Planar Cayley, Shell rule."
         ),
         "expected explicit compendium-only summary line for D.1"
+    );
+    assert!(
+        committed.contains(
+            "Rows marked `compendium-only` in D.3: Squeeze film, Pressure–sinkage and shear."
+        ),
+        "expected explicit compendium-only summary line for D.3"
+    );
+    assert!(
+        committed.contains(
+            "Rows marked `Estimated` in D.3: Squeeze film, Pressure–sinkage and shear."
+        ),
+        "expected explicit Estimated summary line for D.3"
     );
 }

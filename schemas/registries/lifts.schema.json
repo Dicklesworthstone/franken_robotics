@@ -2,6 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://frankenrobotics.local/schemas/registries/lifts.schema.json",
   "title": "FrankenRobotics Provenance-Lift Registry (frob.lifts/1)",
+  "description": "Registry of files lifted from FrankenSuite sibling repositories under the lift posture (N33a-01, KILL-FSIM fallback (b)). Ships empty and schema-valid at M0.",
   "type": "object",
   "required": ["schema"],
   "additionalProperties": false,
@@ -13,28 +14,73 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "source_repo", "source_rev", "target_path", "reason"],
+        "required": [
+          "file",
+          "foundation",
+          "source_repo",
+          "source_path",
+          "source_rev",
+          "source_hash",
+          "lifted_hash",
+          "golden_test",
+          "reason",
+          "date"
+        ],
         "additionalProperties": false,
         "properties": {
-          "id": {
+          "file": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "pattern": "^(?!/)(?!~)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!^(?:Users|home)/).+$",
+            "description": "Repository-relative path of the lifted file in FrankenRobotics."
+          },
+          "foundation": {
+            "type": "string",
+            "pattern": "^FD-[A-Z0-9-]+$",
+            "description": "Foundation identifier from franken-stack.lock (e.g. FD-FSIM)."
           },
           "source_repo": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_.-]+$",
+            "description": "Sibling repository name (e.g. frankensim)."
+          },
+          "source_path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?!~)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!^(?:Users|home)/).+$",
+            "description": "Repository-relative path inside source_repo; never an absolute or home-directory path."
           },
           "source_rev": {
             "type": "string",
-            "pattern": "^[0-9a-f]{40}$"
+            "pattern": "^[0-9a-f]{40}$",
+            "description": "40 lower-case hexadecimal git commit SHA of source_repo."
           },
-          "target_path": {
+          "source_hash": {
             "type": "string",
-            "minLength": 1
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "64 lower-case hexadecimal BLAKE3 digest of the source file bytes at source_rev."
+          },
+          "lifted_hash": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$",
+            "description": "64 lower-case hexadecimal BLAKE3 digest of the file as lifted, before any local edit."
+          },
+          "golden_test": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?!~)(?![A-Za-z]:)(?!.*\\\\)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!^(?:Users|home)/).+$",
+            "description": "Repository-relative path of the golden test pinning behaviour captured at source_rev."
           },
           "reason": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "description": "Decision or kill-gate fallback authorizing the lift (e.g. KILL-FSIM fallback (b))."
+          },
+          "date": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "description": "ISO 8601 date (YYYY-MM-DD) when the lift was recorded."
           }
         }
       }

@@ -45,6 +45,7 @@ pub struct CompendiumRow {
     pub tests: Vec<String>,
     pub negative_control: String,
     pub carried_by: Vec<String>,
+    pub evidence_class: Option<String>,
     pub arithmetic: String,
     pub tolerance: Option<String>,
 }
@@ -105,6 +106,7 @@ pub fn parse_section_bytes(bytes: &[u8]) -> Result<CompendiumSection, String> {
         let tests = str_list("tests", rf.require_array("tests").map_err(|e| e.to_string())?)?;
         let negative_control = rf.require_str("negative_control").map_err(|e| e.to_string())?;
         let carried_by = str_list("carried_by", rf.require_array("carried_by").map_err(|e| e.to_string())?)?;
+        let evidence_class = rf.opt_str("evidence_class").map_err(|e| e.to_string())?;
         let arithmetic = rf.opt_str("arithmetic").map_err(|e| e.to_string())?.unwrap_or_else(|| "exact-rational".to_owned());
         let tolerance = rf.opt_str("tolerance").map_err(|e| e.to_string())?;
         rf.finish().map_err(|e| e.to_string())?;
@@ -118,6 +120,7 @@ pub fn parse_section_bytes(bytes: &[u8]) -> Result<CompendiumSection, String> {
             tests,
             negative_control,
             carried_by,
+            evidence_class,
             arithmetic,
             tolerance,
         });
@@ -284,6 +287,16 @@ pub fn validate_workspace(root: &Path) -> Result<Vec<RegistryFinding>, String> {
                     detail: "row must list carrying specification beads or `compendium-only`".into(),
                 });
             }
+            if let Some(ec) = &row.evidence_class
+                && !matches!(ec.as_str(), "Proved" | "Certified" | "Tested" | "Estimated")
+            {
+                findings.push(RegistryFinding {
+                    section: spec.id.into(),
+                    row: row.name.clone(),
+                    rule: "compendium.invalid-evidence-class".into(),
+                    detail: format!("unknown evidence_class `{ec}`"),
+                });
+            }
             if row.arithmetic == "tolerance" && row.tolerance.as_deref().is_none_or(|t| t.trim().is_empty()) {
                 findings.push(RegistryFinding {
                     section: spec.id.into(),
@@ -319,12 +332,16 @@ pub fn render_compendium_doc(root: &Path) -> Result<String, String> {
         out.push_str("| Row | Statement | Used in | Validity | Oracle | Tests | Negative control | Carried by | Arithmetic |\n");
         out.push_str("|---|---|---|---|---|---|---|---|---|\n");
         let mut compendium_only = Vec::new();
+        let mut estimated_rows = Vec::new();
         for row in &sec.rows {
             let used = row.used_in.join(", ");
             let tests = row.tests.iter().map(|t| format!("`{t}`")).collect::<Vec<_>>().join(", ");
             let carried = row.carried_by.join(", ");
             if row.carried_by.iter().any(|c| c == "compendium-only") {
                 compendium_only.push(row.name.as_str());
+            }
+            if row.evidence_class.as_deref() == Some("Estimated") {
+                estimated_rows.push(row.name.as_str());
             }
             let arith = match &row.tolerance {
                 Some(tol) => format!("{} ({tol})", row.arithmetic),
@@ -349,6 +366,13 @@ pub fn render_compendium_doc(root: &Path) -> Result<String, String> {
                 "Rows marked `compendium-only` in {}: {}.\n\n",
                 spec.id,
                 compendium_only.join(", ")
+            ));
+        }
+        if !estimated_rows.is_empty() {
+            out.push_str(&format!(
+                "Rows marked `Estimated` in {}: {}.\n\n",
+                spec.id,
+                estimated_rows.join(", ")
             ));
         }
     }

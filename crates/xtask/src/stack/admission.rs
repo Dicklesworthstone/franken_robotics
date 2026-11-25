@@ -1660,12 +1660,15 @@ pub fn status(repo_root: &Path) -> Result<StackAdmissionStatus, String> {
     });
 
     let (records, _) = load_all_records(repo_root);
-    let mut own_by_gate: BTreeMap<String, &StoredAdmission> = BTreeMap::new();
+    let mut own_by_fd_gate: BTreeMap<(String, String), &StoredAdmission> = BTreeMap::new();
     let mut first_use_by_fd: BTreeMap<String, Vec<CoveringRecordRef>> = BTreeMap::new();
 
     for stored in &records {
         if stored.record.is_gate_own_scope() {
-            own_by_gate.insert(stored.record.gate.clone(), stored);
+            own_by_fd_gate.insert(
+                (stored.record.foundation.clone(), stored.record.gate.clone()),
+                stored,
+            );
         } else {
             first_use_by_fd
                 .entry(stored.record.foundation.clone())
@@ -1706,7 +1709,7 @@ pub fn status(repo_root: &Path) -> Result<StackAdmissionStatus, String> {
         let gate_ids = gates_for_foundation(row);
         let mut gates = Vec::with_capacity(gate_ids.len());
         for gid in gate_ids {
-            if let Some(stored) = own_by_gate.get(&gid) {
+            if let Some(stored) = own_by_fd_gate.get(&(fd.clone(), gid.clone())) {
                 let valid = validate(repo_root, stored, &stack_lock).is_empty();
                 gates.push(GateStatusEntry {
                     gate: gid,

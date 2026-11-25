@@ -391,21 +391,39 @@ mod tests {
     }
 
     fn sample_record(gate: &str, status: AdmissionStatus) -> StoredAdmission {
+        let (foundation, covers) = match crate::stack::admission::gate_spec(gate) {
+            Some(spec) => (
+                spec.foundation.to_owned(),
+                AdmissionCovers {
+                    crates: spec.own_crates.iter().map(|s| (*s).to_owned()).collect(),
+                    groups: spec.own_groups.iter().map(|s| (*s).to_owned()).collect(),
+                    tool: spec.own_tool.map(|name| crate::stack::admission::ToolSpec {
+                        name: name.to_owned(),
+                        rev: Some("c".repeat(40)),
+                        binary_hash: Some("e".repeat(64)),
+                    }),
+                },
+            ),
+            None => (
+                "FD-FSIM".to_owned(),
+                AdmissionCovers {
+                    crates: vec![
+                        "fs-contact".to_owned(),
+                        "fs-ga".to_owned(),
+                        "fs-mbd".to_owned(),
+                        "fs-query".to_owned(),
+                        "fs-time".to_owned(),
+                    ],
+                    groups: Vec::new(),
+                    tool: None,
+                },
+            ),
+        };
         let rec = AdmissionRecord {
             schema: ADMISSION_SCHEMA.to_owned(),
             gate: gate.to_owned(),
-            foundation: "FD-FSIM".to_owned(),
-            covers: AdmissionCovers {
-                crates: vec![
-                    "fs-contact".to_owned(),
-                    "fs-ga".to_owned(),
-                    "fs-mbd".to_owned(),
-                    "fs-query".to_owned(),
-                    "fs-time".to_owned(),
-                ],
-                groups: Vec::new(),
-                tool: None,
-            },
+            foundation,
+            covers,
             repo_rev: "a".repeat(40),
             workspace: "core".to_owned(),
             stack_receipt: format!("sr:{}", "b".repeat(64)),

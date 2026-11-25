@@ -40,13 +40,20 @@ _combined_output() {
   fi
 }
 
+_HASH_RESULT=""
 _hash_file() {
-  local target_file="$1"
+  local label="$1"
+  local target_file="$2"
   if [ "${E2E_DRY_RUN:-0}" = "1" ]; then
-    printf '0000000000000000000000000000000000000000000000000000000000000000'
+    _HASH_RESULT="0000000000000000000000000000000000000000000000000000000000000000"
     return 0
   fi
-  cargo run -q -p frob-conformance --example pilots -- hash "${target_file}"
+  e2e_cmd --name "hash_${label}" -- \
+    cargo run -q -p frob-conformance --example pilots -- hash "${target_file}"
+  _HASH_RESULT=""
+  if [ -n "${E2E_LAST_STDOUT:-}" ] && [ -f "${E2E_LAST_STDOUT}" ]; then
+    _HASH_RESULT="$(tr -d ' \t\r\n' < "${E2E_LAST_STDOUT}")"
+  fi
 }
 
 _write_gates_toml() {
@@ -131,15 +138,17 @@ _setup_demo_scratch() {
   _write_gates_toml "${dst}"
   _write_work_packages_toml "${dst}"
 
+  local dst_tag
+  dst_tag="$(basename "${dst}")"
   local proto_file="${dst}/docs/pilots/PILOT-DEMO-01.md"
   printf '# PILOT-DEMO-01 frozen protocol\nsampling_episodes_per_design = 16\n' > "${proto_file}"
-  local proto_hash
-  proto_hash="$(_hash_file "${proto_file}")"
+  _hash_file "${dst_tag}_proto" "${proto_file}"
+  local proto_hash="${_HASH_RESULT}"
 
   local receipt_staging="${dst}/docs/pilots/receipt_staging.json"
   printf '{"pilot":"PILOT-DEMO-01","verdict":"falsifier-rejected","ratio":"2.4"}\n' > "${receipt_staging}"
-  local receipt_hash
-  receipt_hash="$(_hash_file "${receipt_staging}")"
+  _hash_file "${dst_tag}_receipt" "${receipt_staging}"
+  local receipt_hash="${_HASH_RESULT}"
 
   if [ "${include_receipt}" = "1" ]; then
     cp "${receipt_staging}" "${dst}/receipts/pilots/${receipt_hash}.json"
@@ -271,14 +280,12 @@ _setup_demo_scratch "${WS_PROTO_RES}" "1" "0" "0"
 if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
   _other_proto="${WS_PROTO_RES}/docs/pilots/other.md"
   printf '# different protocol\n' > "${_other_proto}"
-  _other_hash="$(_hash_file "${_other_proto}")"
-  python3 - "${WS_PROTO_RES}/crates/frob-conformance/registry/pilots.toml" "${_other_hash}" <<'PY'
-import re, sys
-p, h = sys.argv[1], sys.argv[2]
-txt = open(p, "r", encoding="utf-8").read()
-txt = re.sub(r'protocol_blake3 = "[0-9a-f]{64}"', f'protocol_blake3 = "{h}"', txt, count=1)
-open(p, "w", encoding="utf-8").write(txt)
-PY
+  _hash_file "other_proto" "${_other_proto}"
+  _other_hash="${_HASH_RESULT}"
+  _pilots_file="${WS_PROTO_RES}/crates/frob-conformance/registry/pilots.toml"
+  _pilots_mut="${WS_PROTO_RES}/crates/frob-conformance/registry/pilots.mut.toml"
+  awk -v h="${_other_hash}" '!done && /^protocol_blake3 = "[0-9a-f]+"/ { print "protocol_blake3 = \"" h "\""; done = 1; next } { print }' "${_pilots_file}" > "${_pilots_mut}"
+  cp "${_pilots_mut}" "${_pilots_file}"
 fi
 e2e_expect_caught "protocol-changed" --gate "GATE-GAUNT-08" -- \
   cargo run -p frob-conformance --example pilots -- check --json --root "${WS_PROTO_RES}"
@@ -323,26 +330,41 @@ if [ "${E2E_DRY_RUN:-0}" != "1" ] && [ -n "${E2E_LAST_STDOUT:-}" ] && [ -f "${E2
   e2e_assert_eq "m0_packages_all_refused" "${_m0_refused}" "${_m0_total}" --gate "GATE-GAUNT-08"
 
   # Log one assert per upper-tier package naming its mechanisms, pilot ids, status, and refusal reason.
-  _pkg_summary_file="${E2E_WORK_DIR}/m0_packages.tsv"
-  python3 - "${E2E_LAST_STDOUT}" "${_pkg_summary_file}" <<'PY'
-import json, sys
-data = json.load(open(sys.argv[1], "r", encoding="utf-8"))
-with open(sys.argv[2], "w", encoding="utf-8") as out:
-    for pkg in data.get("packages", []):
-        wp = pkg["work_package"]
-        status = pkg["status"]
-        mechs = ",".join(m["mechanism"] for m in pkg.get("mechanisms", []))
-        pids = ",".join(pid for m in pkg.get("mechanisms", []) for pid in m.get("pilot_ids", [])) or "none"
-        reasons = ",".join((m.get("reason") or "none") for m in pkg.get("mechanisms", [])) or "none"
-        refused_named = "1" if (status == "Blocked" and reasons != "none") else "0"
-        out.write(f"{wp}\t{status}\t{reasons}\t{pids}\t{refused_named}\t{mechs}\n")
-PY
-  while IFS=$'\t' read -r _wp _st _rsn _pids _ok _mechs; do
+  _real_json="${E2E_LAST_STDOUT}"
+  _i=0
+  while [ "${_i}" -lt "${_m0_total}" ]; do
+    _wp="$("${FROB_E2E_TOOL}" get --file "${_real_json}" "/packages/${_i}/work_package" 2>/dev/null || true)"
+    _st="$("${FROB_E2E_TOOL}" get --file "${_real_json}" "/packages/${_i}/status" 2>/dev/null || true)"
+    _rsns=""
+    _pids=""
+    _j=0
+    while _mech="$("${FROB_E2E_TOOL}" get --file "${_real_json}" "/packages/${_i}/mechanisms/${_j}/mechanism" 2>/dev/null)"; do
+      [ -n "${_mech}" ] || break
+      _r="$("${FROB_E2E_TOOL}" get --file "${_real_json}" "/packages/${_i}/mechanisms/${_j}/reason" 2>/dev/null || true)"
+      if [ -z "${_r}" ] || [ "${_r}" = "null" ]; then
+        _r="none"
+      fi
+      if [ -n "${_rsns}" ]; then _rsns="${_rsns},${_r}"; else _rsns="${_r}"; fi
+      _k=0
+      while _pid="$("${FROB_E2E_TOOL}" get --file "${_real_json}" "/packages/${_i}/mechanisms/${_j}/pilot_ids/${_k}" 2>/dev/null)"; do
+        [ -n "${_pid}" ] || break
+        if [ -n "${_pids}" ]; then _pids="${_pids},${_pid}"; else _pids="${_pid}"; fi
+        _k=$((_k+1))
+      done
+      _j=$((_j+1))
+    done
+    [ -n "${_rsns}" ] || _rsns="none"
+    [ -n "${_pids}" ] || _pids="none"
+    _ok="0"
+    if [ "${_st}" = "Blocked" ] && [ "${_rsns}" != "none" ]; then
+      _ok="1"
+    fi
     e2e_assert_eq "m0_pkg_${_wp}_refused_named_reason" \
-      "${_st}:${_rsn}:pilots=${_pids}:ok=${_ok}" \
-      "Blocked:${_rsn}:pilots=${_pids}:ok=1" \
+      "${_st}:${_rsns}:pilots=${_pids}:ok=${_ok}" \
+      "Blocked:${_rsns}:pilots=${_pids}:ok=1" \
       --gate "GATE-GAUNT-08"
-  done < "${_pkg_summary_file}"
+    _i=$((_i+1))
+  done
 fi
 
 # ---------------------------------------------------------------------------
@@ -364,15 +386,19 @@ _pa_proto="${WS_PARTIAL}/docs/pilots/PILOT-PARTA-01.md"
 _pb_proto="${WS_PARTIAL}/docs/pilots/PILOT-PARTB-01.md"
 printf '# PILOT-PARTA-01 protocol\n' > "${_pa_proto}"
 printf '# PILOT-PARTB-01 protocol\n' > "${_pb_proto}"
-_pa_phash="$(_hash_file "${_pa_proto}")"
-_pb_phash="$(_hash_file "${_pb_proto}")"
+_hash_file "parta_proto" "${_pa_proto}"
+_pa_phash="${_HASH_RESULT}"
+_hash_file "partb_proto" "${_pb_proto}"
+_pb_phash="${_HASH_RESULT}"
 
 _pa_rec="${WS_PARTIAL}/docs/pilots/parta_receipt.json"
 _pb_rec="${WS_PARTIAL}/docs/pilots/partb_receipt.json"
 printf '{"pilot":"PILOT-PARTA-01","verdict":"falsifier-holds"}\n' > "${_pa_rec}"
 printf '{"pilot":"PILOT-PARTB-01","verdict":"falsifier-rejected"}\n' > "${_pb_rec}"
-_pa_rhash="$(_hash_file "${_pa_rec}")"
-_pb_rhash="$(_hash_file "${_pb_rec}")"
+_hash_file "parta_receipt" "${_pa_rec}"
+_pa_rhash="${_HASH_RESULT}"
+_hash_file "partb_receipt" "${_pb_rec}"
+_pb_rhash="${_HASH_RESULT}"
 cp "${_pa_rec}" "${WS_PARTIAL}/receipts/pilots/${_pa_rhash}.json"
 cp "${_pb_rec}" "${WS_PARTIAL}/receipts/pilots/${_pb_rhash}.json"
 

@@ -137,7 +137,12 @@ done < "${CAPTURE_CHECK_OUT}"
 e2e_assert_eq "record_count_is_1000" "${RECORD_COUNT}" "1000"
 e2e_assert_eq "capture_records_blake3_matches_committed" "${FRESH_B3}" "${COMMITTED_B3}"
 e2e_assert_eq "capture_records_section_exact_match" "${RECORDS_EXACT}" "1"
-e2e_metric "po_marrow_01_record_count" "${RECORD_COUNT}" "records" "committed=${COMMITTED_B3} bytes_sha256=${COMMITTED_SHA}"
+COMMITTED_SHA_PRESENT="no"
+if [ -n "${COMMITTED_SHA}" ]; then
+  COMMITTED_SHA_PRESENT="yes"
+fi
+e2e_assert_eq "committed_bytes_sha256_present" "${COMMITTED_SHA_PRESENT}" "yes"
+e2e_metric "po_marrow_01_record_count" "${RECORD_COUNT}" "records" --observe
 
 STEP1_PASSED="1"
 if [ "${FRESH_B3}" != "${COMMITTED_B3}" ] || [ "${RECORDS_EXACT}" != "1" ]; then
@@ -173,13 +178,21 @@ sys.exit(1)
 PYEOF
 )"
 
-e2e_assert_ne "stack_lock_fd_fsim_rev_present" "${LOCK_COMMIT}" ""
-e2e_assert_ne "fixture_frankensim_commit_present" "${FIXTURE_COMMIT}" ""
+LOCK_COMMIT_PRESENT="no"
+if [ -n "${LOCK_COMMIT}" ]; then
+  LOCK_COMMIT_PRESENT="yes"
+fi
+FIXTURE_COMMIT_PRESENT="no"
+if [ -n "${FIXTURE_COMMIT}" ]; then
+  FIXTURE_COMMIT_PRESENT="yes"
+fi
+e2e_assert_eq "stack_lock_fd_fsim_rev_present" "${LOCK_COMMIT_PRESENT}" "yes"
+e2e_assert_eq "fixture_frankensim_commit_present" "${FIXTURE_COMMIT_PRESENT}" "yes"
 
 if [ "${LOCK_COMMIT}" = "${FIXTURE_COMMIT}" ]; then
-  e2e_metric "pin_moved" "0" "flag" "lock=${LOCK_COMMIT} fixture=${FIXTURE_COMMIT}"
+  e2e_metric "pin_moved" "0" "flag" --observe
 else
-  e2e_metric "pin_moved" "1" "flag" "lock=${LOCK_COMMIT} fixture=${FIXTURE_COMMIT} step1_passed=${STEP1_PASSED}"
+  e2e_metric "pin_moved" "1" "flag" --observe
   e2e_assert_eq "pin_moved_requires_step1_bit_parity" "${STEP1_PASSED}" "1"
 fi
 
@@ -187,4 +200,4 @@ fi
 # Step 4: Summary naming PO-MARROW-01
 # ----------------------------------------------------------------------------
 e2e_step "summary_po_marrow_01" "Record PO-MARROW-01 completion summary and fixture digests"
-e2e_metric "PO-MARROW-01" "1" "pass" "records_blake3=${COMMITTED_B3} bytes_sha256=${COMMITTED_SHA}"
+e2e_metric "PO-MARROW-01" "1" "pass" --observe

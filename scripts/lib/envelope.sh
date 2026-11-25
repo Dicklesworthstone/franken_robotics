@@ -1070,12 +1070,15 @@ def kill_owned_pgrp(pgid, proc_ref=None, grace_s=0.35):
 
 def child_preexec():
     os.setsid()
-    # Apply RLIMIT_AS only on Linux where the kernel honors address-space caps
-    # without breaking Mach VM; macOS uses the resident-memory sampler below.
+    # Resident-memory sampling below is the primary enforcement on both Linux and
+    # macOS so memory kills are always logged as a breach with observed RSS.
+    # On Linux keep RLIMIT_AS only as a looser backstop (at least 2x the limit,
+    # and >= limit + 512 MiB) so virtual-address overhead cannot trigger an
+    # unlogged MemoryError while RSS is still below mem_limit_bytes.
     if sys.platform.startswith("linux") and os.environ.get("FROB_ENVELOPE_NO_RLIMIT_AS") != "1":
         try:
             _soft, hard = resource.getrlimit(resource.RLIMIT_AS)
-            cap = mem_limit_bytes
+            cap = max(mem_limit_bytes * 2, mem_limit_bytes + 512 * 1024 * 1024)
             if hard != resource.RLIM_INFINITY and cap > hard:
                 cap = hard
             resource.setrlimit(resource.RLIMIT_AS, (cap, hard))
@@ -1141,7 +1144,7 @@ if proc is not None:
         now = time.monotonic()
         elapsed = now - t0
 
-        if rc is None and (now - last_rss_sample) >= 0.12:
+        if rc is None and (now - last_rss_sample) >= 0.06:
             last_rss_sample = now
             rss_b, _alive = pgrp_rss_and_alive(child_pgid)
             if rss_b > peak_rss_bytes:

@@ -618,14 +618,20 @@ pub fn sampling_allowance_in(
 fn parse_sampling_episodes_from_protocol(text: &str) -> Option<u32> {
     for line in text.lines() {
         let trimmed = line.trim();
-        let rest = trimmed
+        let Some(rest) = trimmed
             .strip_prefix("sampling_episodes_per_design")
-            .map(str::trim_start)?;
-        let val_raw = rest
-            .strip_prefix('=')
-            .or_else(|| rest.strip_prefix(':'))?
-            .trim();
-        let digits: String = val_raw.chars().take_while(|c| c.is_ascii_digit()).collect();
+            .map(str::trim_start)
+        else {
+            continue;
+        };
+        let Some(val_raw) = rest.strip_prefix('=').or_else(|| rest.strip_prefix(':')) else {
+            continue;
+        };
+        let digits: String = val_raw
+            .trim()
+            .chars()
+            .take_while(|c| c.is_ascii_digit())
+            .collect();
         if !digits.is_empty()
             && let Ok(v) = digits.parse::<u32>()
             && v >= 1

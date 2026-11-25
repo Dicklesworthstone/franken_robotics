@@ -437,11 +437,11 @@ impl OracleRegister {
             .require_str("schema")
             .map_err(|e| OracleError::new(OracleErrorKind::Parse, file, e.to_string()))?;
         if schema != ORACLES_SCHEMA {
-            return Err(OracleError::new(
+            return Err(top.fail(OracleError::new(
                 OracleErrorKind::Parse,
                 file,
                 format!("expected schema `{ORACLES_SCHEMA}`, found `{schema}`"),
-            ));
+            )));
         }
         let raw_oracles = top
             .opt_array("oracle")
@@ -675,7 +675,8 @@ pub fn parse_pin_move_table(
     let reason = f.require_str("reason").map_err(err)?;
     let by = f.require_str("by").map_err(err)?;
     let rec_items = f.require_array("fixtures_recaptured").map_err(err)?;
-    let fixtures_recaptured = str_list(&ctx, "fixtures_recaptured", rec_items)?;
+    let fixtures_recaptured =
+        str_list(&ctx, "fixtures_recaptured", rec_items).map_err(|e| f.fail(e))?;
     f.finish().map_err(err)?;
 
     for (k, v) in [
@@ -716,19 +717,23 @@ fn parse_oracle_row(tbl: Table, idx: usize) -> Result<OracleRow, OracleError> {
 
     let id = f.require_str("id").map_err(err)?;
     if id.trim().is_empty() {
-        return Err(OracleError::new(
+        return Err(f.fail(OracleError::new(
             OracleErrorKind::Parse,
             &label,
             "oracle `id` must be non-empty",
-        ));
+        )));
     }
-    let posture = Posture::parse(&f.require_str("posture").map_err(err)?, &id)?;
-    let pin = parse_pin(f.require_table("pin").map_err(err)?, &id)?;
-    let admission = parse_admission(f.require_table("admission").map_err(err)?, &id)?;
-    let raw_roles = str_list(&id, "roles", f.require_array("roles").map_err(err)?)?;
+    let posture_raw = f.require_str("posture").map_err(err)?;
+    let posture = Posture::parse(&posture_raw, &id).map_err(|e| f.fail(e))?;
+    let pin_tbl = f.require_table("pin").map_err(err)?;
+    let pin = parse_pin(pin_tbl, &id).map_err(|e| f.fail(e))?;
+    let admission_tbl = f.require_table("admission").map_err(err)?;
+    let admission = parse_admission(admission_tbl, &id).map_err(|e| f.fail(e))?;
+    let roles_arr = f.require_array("roles").map_err(err)?;
+    let raw_roles = str_list(&id, "roles", roles_arr).map_err(|e| f.fail(e))?;
     let mut roles = Vec::with_capacity(raw_roles.len());
     for r in &raw_roles {
-        roles.push(parse_role(r, &id)?);
+        roles.push(parse_role(r, &id).map_err(|e| f.fail(e))?);
     }
 
     let family = f
@@ -864,14 +869,15 @@ fn parse_oracle_row(tbl: Table, idx: usize) -> Result<OracleRow, OracleError> {
 fn parse_pin(tbl: Table, row: &str) -> Result<Pin, OracleError> {
     let mut f = Fields::new(tbl, format!("{row}.pin"));
     let err = |e: toml::TomlError| OracleError::new(OracleErrorKind::Parse, row, e.to_string());
-    let kind = PinKind::parse(&f.require_str("kind").map_err(err)?, row)?;
+    let kind_raw = f.require_str("kind").map_err(err)?;
+    let kind = PinKind::parse(&kind_raw, row).map_err(|e| f.fail(e))?;
     let value = f.require_str("value").map_err(err)?;
     if value.trim().is_empty() {
-        return Err(OracleError::new(
+        return Err(f.fail(OracleError::new(
             OracleErrorKind::Parse,
             row,
             "pin.value must be non-empty",
-        ));
+        )));
     }
     let repo = f.opt_str("repo").map_err(err)?;
     let commit = f.opt_str("commit").map_err(err)?;
@@ -931,7 +937,8 @@ fn parse_admission(tbl: Table, row: &str) -> Result<Admission, OracleError> {
     let err = |e: toml::TomlError| OracleError::new(OracleErrorKind::Parse, row, e.to_string());
     let test = f.require_str("test").map_err(err)?;
     let control = f.require_str("control").map_err(err)?;
-    let status = AdmissionStatus::parse(&f.require_str("status").map_err(err)?, row)?;
+    let status_raw = f.require_str("status").map_err(err)?;
+    let status = AdmissionStatus::parse(&status_raw, row).map_err(|e| f.fail(e))?;
     let date = f.require_str("date").map_err(err)?;
     f.finish().map_err(err)?;
     Ok(Admission {
@@ -1052,30 +1059,33 @@ pub fn parse_and_verify_fixture(
 
     let kind = f.require_str("kind").map_err(miss)?;
     if kind != "oracle" {
-        return Err(OracleError::new(
+        return Err(f.fail(OracleError::new(
             OracleErrorKind::FixtureHeaderMissing,
             rel_path,
             format!("fixture header must set kind = \"oracle\", found `{kind}`"),
-        ));
+        )));
     }
     let oracle = f.require_str("oracle").map_err(miss)?;
     let pin = f.require_str("pin").map_err(miss)?;
     let captured = f.require_str("captured").map_err(miss)?;
-    let script = parse_fixture_ref(f.require_table("script").map_err(miss)?, rel_path, "script")?;
+    let script_tbl = f.require_table("script").map_err(miss)?;
+    let script = parse_fixture_ref(script_tbl, rel_path, "script").map_err(|e| f.fail(e))?;
     let raw_inputs = f.require_array("inputs").map_err(miss)?;
     let mut inputs = Vec::with_capacity(raw_inputs.len());
     for (idx, sp) in raw_inputs.into_iter().enumerate() {
         let t = match sp.value {
             Value::Table(t) => t,
             other => {
-                return Err(OracleError::new(
+                return Err(f.fail(OracleError::new(
                     OracleErrorKind::FixtureHeaderMissing,
                     rel_path,
                     format!("inputs[{idx}] expected table, found {}", other.type_name()),
-                ));
+                )));
             }
         };
-        inputs.push(parse_fixture_ref(t, rel_path, &format!("inputs[{idx}]"))?);
+        inputs.push(
+            parse_fixture_ref(t, rel_path, &format!("inputs[{idx}]")).map_err(|e| f.fail(e))?,
+        );
     }
     let units = f.require_str("units").map_err(miss)?;
     let tolerance_note = f.require_str("tolerance_note").map_err(miss)?;
@@ -1084,11 +1094,11 @@ pub fn parse_and_verify_fixture(
         None | Some("active") => FixtureStatus::Active,
         Some("disputed") => FixtureStatus::Disputed,
         Some(other) => {
-            return Err(OracleError::new(
+            return Err(f.fail(OracleError::new(
                 OracleErrorKind::FixtureHeaderMissing,
                 rel_path,
                 format!("unknown fixture status `{other}` (expected active | disputed)"),
-            ));
+            )));
         }
     };
     let payload = f.opt_table("payload").map_err(miss)?.unwrap_or_default();
@@ -1506,11 +1516,11 @@ pub fn parse_findings_bytes(bytes: &[u8], file: &str) -> Result<Vec<Disagreement
         .require_str("schema")
         .map_err(|e| OracleError::new(OracleErrorKind::Parse, file, e.to_string()))?;
     if schema != ORACLE_FINDINGS_SCHEMA {
-        return Err(OracleError::new(
+        return Err(top.fail(OracleError::new(
             OracleErrorKind::Parse,
             file,
             format!("expected schema `{ORACLE_FINDINGS_SCHEMA}`, found `{schema}`"),
-        ));
+        )));
     }
     let raw = top
         .opt_array("finding")

@@ -602,10 +602,10 @@ impl ReasonRegistry {
                 err,
             })?;
         if schema != REASONS_SCHEMA {
-            return Err(ReasonRegistryError::InvalidSchema {
+            return Err(top.fail(ReasonRegistryError::InvalidSchema {
                 file: file.to_owned(),
                 observed: schema,
-            });
+            }));
         }
         let items = top
             .opt_array("reason")
@@ -793,44 +793,44 @@ fn parse_reason_row(
 
     let id = f.require_str("id").map_err(toml_err)?;
     if !is_valid_reason_id(&id) {
-        return Err(ReasonRegistryError::InvalidField {
+        return Err(f.fail(ReasonRegistryError::InvalidField {
             file: file.to_owned(),
             row: id.clone(),
             detail: format!("invalid kebab-case harness reason id `{id}`"),
-        });
+        }));
     }
 
     let tool_arr = f.require_array("tool").map_err(toml_err)?;
-    let tool = parse_string_array(file, &id, "tool", tool_arr)?;
+    let tool = parse_string_array(file, &id, "tool", tool_arr).map_err(|e| f.fail(e))?;
     if tool.is_empty() {
-        return Err(ReasonRegistryError::InvalidField {
+        return Err(f.fail(ReasonRegistryError::InvalidField {
             file: file.to_owned(),
             row: id,
             detail: "`tool` must list at least one emitting tool".to_owned(),
-        });
+        }));
     }
 
     let meaning = f.require_str("meaning").map_err(toml_err)?;
     if meaning.trim().is_empty() {
-        return Err(ReasonRegistryError::InvalidField {
+        return Err(f.fail(ReasonRegistryError::InvalidField {
             file: file.to_owned(),
             row: id,
             detail: "`meaning` must be non-empty".to_owned(),
-        });
+        }));
     }
 
     let repairs_arr = f.require_array("repairs").map_err(toml_err)?;
-    let repairs = parse_string_array(file, &id, "repairs", repairs_arr)?;
+    let repairs = parse_string_array(file, &id, "repairs", repairs_arr).map_err(|e| f.fail(e))?;
     if repairs.is_empty() {
-        return Err(ReasonRegistryError::InvalidField {
+        return Err(f.fail(ReasonRegistryError::InvalidField {
             file: file.to_owned(),
             row: id,
             detail: "`repairs` must list at least one ranked repair".to_owned(),
-        });
+        }));
     }
 
     let exit_raw = f.require_int("exit").map_err(toml_err)?;
-    let exit = parse_exit_u8(file, &id, "exit", exit_raw)?;
+    let exit = parse_exit_u8(file, &id, "exit", exit_raw).map_err(|e| f.fail(e))?;
 
     let alt_exits = match f.opt_array("alt_exits").map_err(toml_err)? {
         None => Vec::new(),
@@ -838,16 +838,19 @@ fn parse_reason_row(
             let mut parsed = Vec::with_capacity(arr.len());
             for sp in arr {
                 match sp.value {
-                    Value::Int(n) => parsed.push(parse_exit_u8(file, &id, "alt_exits", n)?),
+                    Value::Int(n) => {
+                        parsed
+                            .push(parse_exit_u8(file, &id, "alt_exits", n).map_err(|e| f.fail(e))?);
+                    }
                     other => {
-                        return Err(ReasonRegistryError::InvalidField {
+                        return Err(f.fail(ReasonRegistryError::InvalidField {
                             file: file.to_owned(),
                             row: id,
                             detail: format!(
                                 "`alt_exits` expected integer, found {}",
                                 other.type_name()
                             ),
-                        });
+                        }));
                     }
                 }
             }
@@ -857,16 +860,18 @@ fn parse_reason_row(
 
     let kind = match f.opt_str("kind").map_err(toml_err)? {
         None => ReasonKind::Refusal,
-        Some(raw) => ReasonKind::parse(&raw).ok_or_else(|| ReasonRegistryError::InvalidField {
-            file: file.to_owned(),
-            row: id.clone(),
-            detail: format!("unknown `kind` `{raw}`"),
+        Some(raw) => ReasonKind::parse(&raw).ok_or_else(|| {
+            f.fail(ReasonRegistryError::InvalidField {
+                file: file.to_owned(),
+                row: id.clone(),
+                detail: format!("unknown `kind` `{raw}`"),
+            })
         })?,
     };
 
     let dispositions = match f.opt_array("dispositions").map_err(toml_err)? {
         None => Vec::new(),
-        Some(arr) => parse_string_array(file, &id, "dispositions", arr)?,
+        Some(arr) => parse_string_array(file, &id, "dispositions", arr).map_err(|e| f.fail(e))?,
     };
 
     f.finish().map_err(toml_err)?;

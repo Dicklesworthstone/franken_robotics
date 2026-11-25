@@ -805,11 +805,11 @@ pub(crate) fn parse_register_raw(
         } else {
             ""
         };
-        return Err(PilotLoadError::parse(
+        return Err(top.fail(PilotLoadError::parse(
             file,
             None,
             format!("expected schema `{PILOTS_SCHEMA}`, found `{schema}`{hint}"),
-        ));
+        )));
     }
 
     let raw_pilots = top
@@ -848,32 +848,32 @@ fn parse_pilot_row(tbl: Table, idx: usize, file: &str) -> Result<PilotRecord, Pi
 
     let id = f.require_str("id").map_err(perr)?;
     if !is_valid_pilot_id(&id) {
-        return Err(PilotLoadError::with_reason(
+        return Err(f.fail(PilotLoadError::with_reason(
             file,
             Some(id.clone()),
             HarnessReason::PilotIdForm,
             format!(
                 "pilot identifier `{id}` does not match ^PILOT-(C-[0-9]{{2}}(-[a-z]+)?|PT-([0-9]{{2}}|S[0-9])|[A-Z]{{2,14}}-[0-9]{{2}})$"
             ),
-        ));
+        )));
     }
 
     let mechanism = f.require_str("mechanism").map_err(perr)?;
     if mechanism.trim().is_empty() {
-        return Err(PilotLoadError::parse(
+        return Err(f.fail(PilotLoadError::parse(
             file,
             Some(id),
             "`mechanism` must be non-empty",
-        ));
+        )));
     }
 
     let tier_raw = f.require_str("tier").map_err(perr)?;
     let tier = PilotTier::parse_strict(&tier_raw).ok_or_else(|| {
-        PilotLoadError::parse(
+        f.fail(PilotLoadError::parse(
             file,
             Some(id.clone()),
             format!("invalid tier `{tier_raw}` (expected single letter `S`, `F`, or `M`)"),
-        )
+        ))
     })?;
 
     let required_by = f.opt_str("required_by").map_err(perr)?;
@@ -882,70 +882,72 @@ fn parse_pilot_row(tbl: Table, idx: usize, file: &str) -> Result<PilotRecord, Pi
     let work_package = f.require_str("work_package").map_err(perr)?;
     let milestone = f.opt_str("milestone").map_err(perr)?;
     let gated_beads = match f.opt_array("gated_beads").map_err(perr)? {
-        Some(items) => parse_str_list(file, &id, "gated_beads", items)?,
+        Some(items) => parse_str_list(file, &id, "gated_beads", items).map_err(|e| f.fail(e))?,
         None => Vec::new(),
     };
 
     let proto_tbl = f.require_table("protocol").map_err(perr)?;
-    let protocol = parse_protocol(proto_tbl, file, &id)?;
+    let protocol = parse_protocol(proto_tbl, file, &id).map_err(|e| f.fail(e))?;
 
     // Rule 3: four mandatory parts (`falsifier`, `ceiling`, `fallback.ships`, `fallback.kill_gate`).
     // Missing table/key maps to `pilot-part-missing` naming the part!
     let falsifier = match f.opt_str("falsifier").map_err(perr)? {
         Some(s) => s,
         None => {
-            return Err(PilotLoadError::with_reason(
+            return Err(f.fail(PilotLoadError::with_reason(
                 file,
                 Some(id),
                 HarnessReason::PilotPartMissing,
                 "missing mandatory part `falsifier`",
-            ));
+            )));
         }
     };
 
     let ceiling_tbl = match f.opt_table("ceiling").map_err(perr)? {
         Some(t) => t,
         None => {
-            return Err(PilotLoadError::with_reason(
+            return Err(f.fail(PilotLoadError::with_reason(
                 file,
                 Some(id),
                 HarnessReason::PilotPartMissing,
                 "missing mandatory part `ceiling`",
-            ));
+            )));
         }
     };
-    let ceiling = parse_ceiling(ceiling_tbl, file, &id)?;
+    let ceiling = parse_ceiling(ceiling_tbl, file, &id).map_err(|e| f.fail(e))?;
 
     let fallback_tbl = match f.opt_table("fallback").map_err(perr)? {
         Some(t) => t,
         None => {
-            return Err(PilotLoadError::with_reason(
+            return Err(f.fail(PilotLoadError::with_reason(
                 file,
                 Some(id),
                 HarnessReason::PilotPartMissing,
                 "missing mandatory part `fallback` (`fallback.ships` and `fallback.kill_gate`)",
-            ));
+            )));
         }
     };
-    let fallback = parse_fallback(fallback_tbl, file, &id)?;
+    let fallback = parse_fallback(fallback_tbl, file, &id).map_err(|e| f.fail(e))?;
 
     let cost_tbl = f.require_table("cost").map_err(perr)?;
-    let cost = parse_cost(cost_tbl, file, &id)?;
+    let cost = parse_cost(cost_tbl, file, &id).map_err(|e| f.fail(e))?;
 
     let tool_tbl = f.require_table("tool").map_err(perr)?;
-    let tool = parse_tool(tool_tbl, file, &id)?;
+    let tool = parse_tool(tool_tbl, file, &id).map_err(|e| f.fail(e))?;
 
     let status_raw = f.require_str("status").map_err(perr)?;
     let status = PilotStatus::parse(&status_raw).ok_or_else(|| {
-        PilotLoadError::parse(
+        f.fail(PilotLoadError::parse(
             file,
             Some(id.clone()),
             format!("unknown pilot status `{status_raw}`"),
-        )
+        ))
     })?;
 
     let plan_time_records = match f.opt_array("plan_time_records").map_err(perr)? {
-        Some(items) => parse_str_list(file, &id, "plan_time_records", items)?,
+        Some(items) => {
+            parse_str_list(file, &id, "plan_time_records", items).map_err(|e| f.fail(e))?
+        }
         None => Vec::new(),
     };
     let integrated_gate = f.opt_str("integrated_gate").map_err(perr)?;
@@ -956,17 +958,17 @@ fn parse_pilot_row(tbl: Table, idx: usize, file: &str) -> Result<PilotRecord, Pi
         let rtbl = match sp.value {
             Value::Table(t) => t,
             other => {
-                return Err(PilotLoadError::parse(
+                return Err(f.fail(PilotLoadError::parse(
                     file,
                     Some(id.clone()),
                     format!(
                         "`result[{ridx}]` expected table, found {}",
                         other.type_name()
                     ),
-                ));
+                )));
             }
         };
-        results.push(parse_result(rtbl, file, &id, ridx)?);
+        results.push(parse_result(rtbl, file, &id, ridx).map_err(|e| f.fail(e))?);
     }
 
     f.finish().map_err(perr)?;
@@ -1008,11 +1010,11 @@ fn parse_protocol(tbl: Table, file: &str, id: &str) -> Result<ProtocolSpec, Pilo
     {
         Some(n) if n >= 1 && n <= i64::from(u32::MAX) => Some(n as u32),
         Some(n) => {
-            return Err(PilotLoadError::parse(
+            return Err(f.fail(PilotLoadError::parse(
                 file,
                 Some(id.to_owned()),
                 format!("`protocol.sampling_episodes_per_design` must be integer >= 1, found {n}"),
-            ));
+            )));
         }
         None => None,
     };
@@ -1022,13 +1024,13 @@ fn parse_protocol(tbl: Table, file: &str, id: &str) -> Result<ProtocolSpec, Pilo
     {
         Some(n) if n >= 1 && n <= i64::from(u32::MAX) => Some(n as u32),
         Some(n) => {
-            return Err(PilotLoadError::parse(
+            return Err(f.fail(PilotLoadError::parse(
                 file,
                 Some(id.to_owned()),
                 format!(
                     "`protocol.registered_sampling_episodes_per_design` must be integer >= 1, found {n}"
                 ),
-            ));
+            )));
         }
         None => None,
     };
@@ -1075,11 +1077,11 @@ fn parse_fallback(tbl: Table, file: &str, id: &str) -> Result<FallbackSpec, Pilo
     let ships = f.opt_str("ships").map_err(perr)?.unwrap_or_default();
     let tier = match f.opt_str("tier").map_err(perr)? {
         Some(raw) => Some(PilotTier::parse_strict(&raw).ok_or_else(|| {
-            PilotLoadError::parse(
+            f.fail(PilotLoadError::parse(
                 file,
                 Some(id.to_owned()),
                 format!("invalid `fallback.tier` `{raw}` (expected `S`, `F`, or `M`)"),
-            )
+            ))
         })?),
         None => None,
     };
@@ -1093,20 +1095,20 @@ fn parse_fallback(tbl: Table, file: &str, id: &str) -> Result<FallbackSpec, Pilo
                 let atbl = match sp.value {
                     Value::Table(t) => t,
                     other => {
-                        return Err(PilotLoadError::parse(
+                        return Err(f.fail(PilotLoadError::parse(
                             file,
                             Some(id.to_owned()),
                             format!(
                                 "`fallback.also[{aidx}]` expected table, found {}",
                                 other.type_name()
                             ),
-                        ));
+                        )));
                     }
                 };
                 let mut af = Fields::new(atbl, format!("pilot[{id}].fallback.also[{aidx}]"));
-                let a_ships = af.require_str("ships").map_err(perr)?;
-                let a_pilot = af.require_str("pilot").map_err(perr)?;
-                af.finish().map_err(perr)?;
+                let a_ships = af.require_str("ships").map_err(|e| f.fail(perr(e)))?;
+                let a_pilot = af.require_str("pilot").map_err(|e| f.fail(perr(e)))?;
+                af.finish().map_err(|e| f.fail(perr(e)))?;
                 out.push(FallbackAlso {
                     ships: a_ships,
                     pilot: a_pilot,
@@ -1118,7 +1120,7 @@ fn parse_fallback(tbl: Table, file: &str, id: &str) -> Result<FallbackSpec, Pilo
     };
 
     let beads = match f.opt_array("beads").map_err(perr)? {
-        Some(items) => parse_str_list(file, id, "fallback.beads", items)?,
+        Some(items) => parse_str_list(file, id, "fallback.beads", items).map_err(|e| f.fail(e))?,
         None => Vec::new(),
     };
 
@@ -1160,13 +1162,13 @@ fn parse_tool(tbl: Table, file: &str, id: &str) -> Result<ToolSpec, PilotLoadErr
     let pin = f.require_str("pin").map_err(perr)?;
     let site_raw = f.require_str("site").map_err(perr)?;
     let site = PilotSite::parse(&site_raw).ok_or_else(|| {
-        PilotLoadError::parse(
+        f.fail(PilotLoadError::parse(
             file,
             Some(id.to_owned()),
             format!(
                 "invalid `tool.site` `{site_raw}` (expected host | development-oracle | referee | batch-cpu)"
             ),
-        )
+        ))
     })?;
     f.finish().map_err(perr)?;
 
@@ -1187,15 +1189,16 @@ fn parse_result(
     let protocol_blake3 = f.require_str("protocol_blake3").map_err(perr)?;
     let site_raw = f.require_str("site").map_err(perr)?;
     let site = PilotSite::parse(&site_raw).ok_or_else(|| {
-        PilotLoadError::parse(
+        f.fail(PilotLoadError::parse(
             file,
             Some(id.to_owned()),
             format!("invalid `result[{ridx}].site` `{site_raw}`"),
-        )
+        ))
     })?;
     let environment = f.require_str("environment").map_err(perr)?;
     let commands_raw = f.require_array("commands").map_err(perr)?;
-    let commands = parse_str_list(file, id, "result.commands", commands_raw)?;
+    let commands =
+        parse_str_list(file, id, "result.commands", commands_raw).map_err(|e| f.fail(e))?;
 
     let values_raw = f.require_array("values").map_err(perr)?;
     let mut values = Vec::with_capacity(values_raw.len());
@@ -1203,22 +1206,22 @@ fn parse_result(
         let vtbl = match sp.value {
             Value::Table(t) => t,
             other => {
-                return Err(PilotLoadError::parse(
+                return Err(f.fail(PilotLoadError::parse(
                     file,
                     Some(id.to_owned()),
                     format!(
                         "`result[{ridx}].values[{vidx}]` expected table, found {}",
                         other.type_name()
                     ),
-                ));
+                )));
             }
         };
         let mut vf = Fields::new(vtbl, format!("pilot[{id}].result[{ridx}].values[{vidx}]"));
-        let name = vf.require_str("name").map_err(perr)?;
-        let observed = vf.require_str("observed").map_err(perr)?;
-        let expected = vf.require_str("expected").map_err(perr)?;
-        let kind = vf.require_str("kind").map_err(perr)?;
-        vf.finish().map_err(perr)?;
+        let name = vf.require_str("name").map_err(|e| f.fail(perr(e)))?;
+        let observed = vf.require_str("observed").map_err(|e| f.fail(perr(e)))?;
+        let expected = vf.require_str("expected").map_err(|e| f.fail(perr(e)))?;
+        let kind = vf.require_str("kind").map_err(|e| f.fail(perr(e)))?;
+        vf.finish().map_err(|e| f.fail(perr(e)))?;
         values.push(ResultValue {
             name,
             observed,
@@ -1231,16 +1234,16 @@ fn parse_result(
     let verdict = PilotStatus::parse(&verdict_raw)
         .filter(|s| s.is_result_verdict())
         .ok_or_else(|| {
-            PilotLoadError::parse(
+            f.fail(PilotLoadError::parse(
                 file,
                 Some(id.to_owned()),
                 format!(
                     "invalid `result[{ridx}].verdict` `{verdict_raw}` (expected falsifier-rejected | falsifier-holds | inconclusive | reproduced | differs)"
                 ),
-            )
+            ))
         })?;
     let limits_raw = f.require_array("limits").map_err(perr)?;
-    let limits = parse_str_list(file, id, "result.limits", limits_raw)?;
+    let limits = parse_str_list(file, id, "result.limits", limits_raw).map_err(|e| f.fail(e))?;
     let receipt = f.require_str("receipt").map_err(perr)?;
     let synthetic = f.require_bool("synthetic").map_err(perr)?;
     let decisive_note = f.opt_str("decisive_note").map_err(perr)?;
@@ -1284,11 +1287,11 @@ pub fn parse_pilots_expected(bytes: &[u8], file: &str) -> Result<PilotsExpected,
         .require_str("schema")
         .map_err(|e| PilotLoadError::parse(file, None, e.to_string()))?;
     if schema != PILOTS_EXPECTED_SCHEMA {
-        return Err(PilotLoadError::parse(
+        return Err(top.fail(PilotLoadError::parse(
             file,
             None,
             format!("expected schema `{PILOTS_EXPECTED_SCHEMA}`, found `{schema}`"),
-        ));
+        )));
     }
     let raw_rows = top
         .opt_array("expected")

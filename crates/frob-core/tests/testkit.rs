@@ -964,24 +964,35 @@ fn gate_line_has_no_constructor() {
     dep_dirs.sort();
     dep_dirs.dedup();
 
-    let mut candidates: Vec<PathBuf> = Vec::new();
+    // Prefer `.rmeta` first (nightly Cargo pipelined builds emit full metadata in
+    // `.rmeta` and only a metadata stub in `.rlib`), falling back to `.rlib`.
+    let mut rmeta_candidates: Vec<PathBuf> = Vec::new();
+    let mut rlib_candidates: Vec<PathBuf> = Vec::new();
     for dir in &dep_dirs {
         if let Ok(rd) = fs::read_dir(dir) {
             for entry in rd.flatten() {
                 let p = entry.path();
                 let fname = p.file_name().and_then(|s| s.to_str()).unwrap_or("");
-                if (fname.starts_with("libfrob_core-") || fname == "libfrob_core.rlib")
+                if (fname.starts_with("libfrob_core-") || fname == "libfrob_core.rmeta")
+                    && fname.ends_with(".rmeta")
+                {
+                    rmeta_candidates.push(p);
+                } else if (fname.starts_with("libfrob_core-") || fname == "libfrob_core.rlib")
                     && fname.ends_with(".rlib")
                 {
-                    candidates.push(p);
+                    rlib_candidates.push(p);
                 }
             }
         }
     }
-    candidates.sort();
-    candidates.dedup();
+    rmeta_candidates.sort();
+    rmeta_candidates.dedup();
+    rlib_candidates.sort();
+    rlib_candidates.dedup();
+    let mut candidates = rmeta_candidates;
+    candidates.extend(rlib_candidates);
 
-    // 1. Positive control probe: locate the exact libfrob_core-*.rlib compiled with test-support.
+    // 1. Positive control probe: locate the exact libfrob_core artifact compiled with test-support.
     let probe_rs = scratch.join("probe.rs");
     fs::write(
         &probe_rs,
@@ -990,13 +1001,20 @@ fn gate_line_has_no_constructor() {
     .expect("write probe");
 
     let rustc = env::var("RUSTC").unwrap_or_else(|_| "rustc".to_owned());
-    let mut matched_rlib: Option<PathBuf> = None;
+    let mut matched_lib: Option<PathBuf> = None;
     let mut probe_diags = Vec::new();
     for p in &candidates {
-        let probe_out = scratch.join("libprobe.rlib");
+        let probe_out = scratch.join("libprobe.rmeta");
         let mut cmd = Command::new(&rustc);
-        cmd.args(["--crate-type", "lib", "--edition", "2024", "--extern"])
-            .arg(format!("frob_core={}", p.display()));
+        cmd.args([
+            "--crate-type",
+            "lib",
+            "--edition",
+            "2024",
+            "--emit=metadata",
+            "--extern",
+        ])
+        .arg(format!("frob_core={}", p.display()));
         for d in &dep_dirs {
             cmd.arg("-L").arg(format!("dependency={}", d.display()));
         }
@@ -1007,7 +1025,7 @@ fn gate_line_has_no_constructor() {
             .output()
             .expect("run rustc probe");
         if status.status.success() {
-            matched_rlib = Some(p.clone());
+            matched_lib = Some(p.clone());
             break;
         }
         probe_diags.push(format!(
@@ -1017,9 +1035,9 @@ fn gate_line_has_no_constructor() {
             String::from_utf8_lossy(&status.stderr).trim()
         ));
     }
-    let rlib = matched_rlib.unwrap_or_else(|| {
+    let frob_core_lib = matched_lib.unwrap_or_else(|| {
         panic!(
-            "must find compiled libfrob_core-*.rlib with test-support under {} (rustc={rustc}; dep_dirs={}; tried={probe_diags:?})",
+            "must find compiled libfrob_core-*.rmeta/.rlib with test-support under {} (rustc={rustc}; dep_dirs={}; tried={probe_diags:?})",
             profile_dir.display(),
             dep_dirs.len()
         )
@@ -1035,11 +1053,18 @@ fn gate_line_has_no_constructor() {
          }\n",
     )
     .expect("write bad_gate_line.rs");
-    let bad_out = scratch.join("libbad.rlib");
+    let bad_out = scratch.join("libbad.rmeta");
     let mut bad_cmd = Command::new(&rustc);
     bad_cmd
-        .args(["--crate-type", "lib", "--edition", "2024", "--extern"])
-        .arg(format!("frob_core={}", rlib.display()));
+        .args([
+            "--crate-type",
+            "lib",
+            "--edition",
+            "2024",
+            "--emit=metadata",
+            "--extern",
+        ])
+        .arg(format!("frob_core={}", frob_core_lib.display()));
     for d in &dep_dirs {
         bad_cmd.arg("-L").arg(format!("dependency={}", d.display()));
     }

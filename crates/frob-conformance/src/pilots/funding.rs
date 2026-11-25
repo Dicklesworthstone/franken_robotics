@@ -312,6 +312,8 @@ impl WorkspacePackages {
     /// Discover work-package tier tags, milestones, and bead-to-package parents
     /// under `root` from whichever of these files exist:
     /// - `.beads/issues.jsonl` (tracker export with `WP-nn` labels and `parent-child` edges)
+    /// - `planning/fable/beads/defs/U44/WP-*.md` (tracked staging files; used when
+    ///   `.beads/` is excluded from remote build sync)
     /// - `docs/delivery/work-packages.plan.tsv` (package milestones)
     /// - `crates/frob-conformance/registry/work_packages.toml` (optional scratch manifest)
     /// - `registries/capabilities.toml`, `registries/kernels.toml`, `registries/verbs.toml`
@@ -320,6 +322,7 @@ impl WorkspacePackages {
         let mut ws = Self::default();
         ws.load_plan_tsv(root);
         ws.load_beads_jsonl(root);
+        ws.load_staging_wp_defs(root);
         ws.load_scratch_manifest(root);
         ws.load_upper_tier_registry_mechanisms(root);
         ws
@@ -469,6 +472,91 @@ impl WorkspacePackages {
         for (bead_ref, parent_id) in bead_parent_ids {
             if let Some(wp_ref) = wp_id_to_ref.get(&parent_id) {
                 self.bead_to_package.insert(bead_ref, wp_ref.clone());
+            }
+        }
+    }
+
+    fn load_staging_wp_defs(&mut self, root: &Path) {
+        let dir = root.join("planning/fable/beads/defs/U44");
+        let Ok(rd) = fs::read_dir(&dir) else {
+            return;
+        };
+        let mut entries: Vec<_> = rd
+            .flatten()
+            .map(|e| e.path())
+            .filter(|p| {
+                p.is_file()
+                    && p.file_name()
+                        .and_then(|n| n.to_str())
+                        .is_some_and(|n| n.starts_with("WP-") && n.ends_with(".md"))
+            })
+            .collect();
+        entries.sort();
+
+        for path in entries {
+            let Ok(text) = fs::read_to_string(&path) else {
+                continue;
+            };
+            let mut lines = text.lines();
+            if lines.next().map(str::trim) != Some("---") {
+                continue;
+            }
+            let mut key = String::new();
+            let mut title = String::new();
+            let mut milestone: Option<String> = None;
+            let mut labels: Vec<String> = Vec::new();
+            for line in lines {
+                let trimmed = line.trim();
+                if trimmed == "---" {
+                    break;
+                }
+                if let Some(rest) = trimmed.strip_prefix("key:") {
+                    key = rest.trim().trim_matches('"').to_owned();
+                } else if let Some(rest) = trimmed.strip_prefix("title:") {
+                    title = rest.trim().trim_matches('"').to_owned();
+                } else if let Some(rest) = trimmed.strip_prefix("milestone:") {
+                    let ms = rest.trim().trim_matches('"');
+                    if !ms.is_empty() {
+                        milestone = Some(ms.to_owned());
+                    }
+                } else if let Some(rest) = trimmed.strip_prefix("labels:") {
+                    let inner = rest.trim().trim_start_matches('[').trim_end_matches(']');
+                    for tok in inner.split(',') {
+                        let lbl = tok.trim().trim_matches('"').trim_matches('\'');
+                        if !lbl.is_empty() {
+                            labels.push(lbl.to_owned());
+                        }
+                    }
+                }
+            }
+            if !key.starts_with("WP-") {
+                continue;
+            }
+            let resolved_ms = milestone
+                .or_else(|| labels.iter().find_map(|l| parse_milestone_label(l)))
+                .or_else(|| self.package_milestones.get(&key).cloned())
+                .unwrap_or_else(|| "M0".to_owned());
+            self.package_milestones
+                .entry(key.clone())
+                .or_insert_with(|| resolved_ms.clone());
+
+            let mut tiers = Vec::new();
+            if labels.iter().any(|l| l.eq_ignore_ascii_case("frontier")) {
+                tiers.push(PilotTier::F);
+            }
+            if labels.iter().any(|l| l.eq_ignore_ascii_case("moonshot")) {
+                tiers.push(PilotTier::M);
+            }
+            if !tiers.is_empty() {
+                self.upper_tier_packages
+                    .entry(key.clone())
+                    .or_insert_with(|| PackageMeta {
+                        work_package: key,
+                        title,
+                        tiers,
+                        milestone: resolved_ms,
+                        mechanisms: Vec::new(),
+                    });
             }
         }
     }

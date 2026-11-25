@@ -80,7 +80,14 @@ default = []
 # Umbrella for workspace crate conformance facilities (BD-025 / ADR-GAUNT-03).
 # Forbidden in release builds (enforced by compile_error!).
 # Never lists per-control mutation features (`cx-*`, `nc-*`).
-gauntlet-mutations = []
+gauntlet-mutations = [
+    "dep:frob-fsim",
+    "frob-fsim/conformance",
+    "dep:frob-lie",
+    "frob-lie/conformance",
+    "dep:frob-verbs",
+    "frob-verbs/conformance",
+]
 # Conformance-only mutation guard (N38b-04): implies `gauntlet-mutations` and is
 # refused in release builds (`not(debug_assertions)`).
 conformance = ["gauntlet-mutations"]
@@ -98,6 +105,9 @@ metal = []
 [dependencies]
 frob-cert = { path = "../frob-cert" }
 frob-core = { path = "../frob-core", features = ["test-support"] }
+frob-fsim = { path = "../frob-fsim", default-features = false, optional = true }
+frob-lie = { path = "../frob-lie", optional = true }
+frob-verbs = { path = "../frob-verbs", optional = true }
 
 [lints]
 workspace = true

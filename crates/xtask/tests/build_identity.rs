@@ -50,6 +50,48 @@ fn make_scratch_dir(label: &str) -> PathBuf {
     fs::canonicalize(&dir).unwrap_or(dir)
 }
 
+/// Create a scratch directory guaranteed to lie outside `repo_root()` so Cargo's
+/// upward `.cargo/config.toml` walk cannot inherit the repository's `[env]` table
+/// when `TMPDIR` points inside `<repo>/.rch-tmp/` on remote build workers.
+fn make_scratch_dir_outside_repo(label: &str) -> PathBuf {
+    static COUNTER: AtomicU64 = AtomicU64::new(0);
+    let repo = repo_root();
+    let repo_canon = fs::canonicalize(&repo).unwrap_or(repo);
+    let mut candidates: Vec<PathBuf> = Vec::new();
+    for var in ["BIG_SCRATCH", "TMPDIR"] {
+        if let Some(v) = env::var_os(var)
+            && !v.is_empty()
+        {
+            candidates.push(PathBuf::from(v));
+        }
+    }
+    candidates.push(env::temp_dir());
+    let fallback_tmp = PathBuf::from("/tmp");
+    if fallback_tmp.is_dir() {
+        candidates.push(fallback_tmp);
+    }
+
+    let base = candidates
+        .into_iter()
+        .find(|cand| {
+            if !cand.is_dir() {
+                return false;
+            }
+            let canon = fs::canonicalize(cand).unwrap_or_else(|_| cand.clone());
+            !canon.starts_with(&repo_canon)
+        })
+        .unwrap_or_else(|| PathBuf::from("/tmp"));
+
+    let nanos = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map_or(0, |d| d.as_nanos());
+    let n = COUNTER.fetch_add(1, Ordering::Relaxed);
+    let pid = std::process::id();
+    let dir = base.join(format!("frob-bi-{label}-{pid}-{nanos}-{n}"));
+    fs::create_dir_all(&dir).expect("create outside-repo scratch dir");
+    fs::canonicalize(&dir).unwrap_or(dir)
+}
+
 fn write_file(path: &Path, content: &str) {
     if let Some(parent) = path.parent() {
         fs::create_dir_all(parent).expect("create parent dirs");
@@ -637,7 +679,7 @@ fn fail_closed_without_salt() {
     let asup_dir =
         fs::canonicalize(parent.join("asupersync")).expect("sibling ../asupersync must exist");
 
-    let scratch = make_scratch_dir("fail-closed-fs-la");
+    let scratch = make_scratch_dir_outside_repo("fail-closed-fs-la");
     let target_dir = scratch.join("target");
 
     write_file(
@@ -709,7 +751,7 @@ asupersync = {{ path = \"{}\" }}\n",
 
 #[test]
 fn nested_workspaces_see_salt() {
-    let scratch = make_scratch_dir("nested-workspaces");
+    let scratch = make_scratch_dir_outside_repo("nested-workspaces");
     let target_dir = scratch.join("target");
 
     write_file(

@@ -753,6 +753,9 @@ version = "0.0.1"
 dependencies = [
  "frob-cert",
  "frob-core",
+ "frob-fsim",
+ "frob-lie",
+ "frob-verbs",
 ]
 
 [[package]]

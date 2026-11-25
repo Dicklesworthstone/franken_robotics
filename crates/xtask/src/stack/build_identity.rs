@@ -31,6 +31,7 @@ const SKIP_DIRS: &[&str] = &[
     ".beads",
     ".git",
     ".ntm",
+    ".rch-tmp",
     "node_modules",
     "planning",
     "receipts",
@@ -187,7 +188,7 @@ fn collect_lint_targets(
         let name = entry.file_name();
         let name_str = name.to_string_lossy();
         if ty.is_dir() {
-            if SKIP_DIRS.contains(&name_str.as_ref()) {
+            if SKIP_DIRS.contains(&name_str.as_ref()) || name_str.starts_with(".rch-target-") {
                 continue;
             }
             collect_lint_targets(repo_root, &path, out)?;

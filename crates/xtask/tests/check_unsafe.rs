@@ -9,7 +9,7 @@ use std::collections::BTreeMap;
 use std::env;
 use std::fs;
 use std::path::{Path, PathBuf};
-use std::process::ExitCode;
+use std::process::{Command, ExitCode};
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::time::{Instant, SystemTime, UNIX_EPOCH};
 
@@ -74,7 +74,8 @@ fn create_clean_synthetic_tree(label: &str) -> PathBuf {
          exclude = [\"spark\"]\n\
          \n\
          [workspace.lints.rust]\n\
-         unsafe_code = \"deny\"\n",
+         unsafe_code = \"deny\"\n\
+         deprecated = \"deny\"\n",
     );
     write_file(
         &root.join("crates/core-alpha/Cargo.toml"),
@@ -178,7 +179,7 @@ fn core_deny_lint_required() {
     let root_missing = create_clean_synthetic_tree("core-deny-missing");
     write_file(
         &root_missing.join("Cargo.toml"),
-        "[workspace]\nresolver = \"3\"\nmembers = [\"crates/*\"]\nexclude = [\"spark\"]\n",
+        "[workspace]\nresolver = \"3\"\nmembers = [\"crates/*\"]\nexclude = [\"spark\"]\n\n[workspace.lints.rust]\ndeprecated = \"deny\"\n",
     );
     let findings = run_check(&root_missing);
     assert_eq!(findings.len(), 1, "expected 1 finding, got: {findings:?}");
@@ -190,7 +191,7 @@ fn core_deny_lint_required() {
     write_file(
         &root_warn.join("Cargo.toml"),
         "[workspace]\nresolver = \"3\"\nmembers = [\"crates/*\"]\nexclude = [\"spark\"]\n\
-         \n[workspace.lints.rust]\nunsafe_code = \"warn\"\n",
+         \n[workspace.lints.rust]\nunsafe_code = \"warn\"\ndeprecated = \"deny\"\n",
     );
     let findings_warn = run_check(&root_warn);
     assert_eq!(findings_warn.len(), 1, "expected 1 finding, got: {findings_warn:?}");
@@ -821,55 +822,122 @@ fn library_print_override_fails() {
 // ============================================================================
 
 #[test]
+fn doorway_lint_must_be_denied() {
+    let root = create_clean_synthetic_tree("doorway-lint-level");
+    let path = root.join("Cargo.toml");
+    let manifest = fs::read_to_string(&path).expect("read scratch manifest");
+    for replacement in ["", "deprecated = \"warn\"", "deprecated = \"forbid\""] {
+        write_file(
+            &path,
+            &manifest.replace("deprecated = \"deny\"", replacement),
+        );
+        let findings = run_check(&root);
+        assert_eq!(findings.len(), 1, "{findings:?}");
+        assert_eq!(findings[0].rule, RULE_LINTS_NOT_INHERITED);
+        assert_eq!(findings[0].path, "Cargo.toml");
+    }
+}
+
+#[test]
 fn doorway_listed_site_passes() {
-    let root = create_clean_synthetic_tree("doorway-listed-passes");
-    // Listed site 1: `frob-lemma` issuing module.
+    const TESTED: &str = r#"
+        let _ = Evidence::<ProofClaim>::doorway_tested(scope.clone(), AssumptionSet::default(), Vec::new());
+        let _ = ClaimProduct::tested(ClaimKind::KnownAnswer, input.clone(), scope.clone(), TierMeet::Static, DetClass::D0Exact, RealityScope::NoClaim, FlagSet::new());
+    "#;
+    const PROOF: &str = r#"
+        let _ = Evidence::<ProofClaim>::doorway_certified(scope.clone(), AssumptionSet::default(), Vec::new());
+        let _ = Evidence::<ProofClaim>::r#doorway_proved(scope.clone(), AssumptionSet::default(), Vec::new());
+        let _ = ClaimProduct::proof_certified(input.clone(), scope.clone(), TierMeet::Static, DetClass::D0Exact, RealityScope::NoClaim, FlagSet::new());
+        let _ = ClaimProduct::proof_proved(input.clone(), scope.clone(), TierMeet::Static, DetClass::D0Exact, RealityScope::NoClaim, FlagSet::new());
+    "#;
+    let root = create_clean_synthetic_tree("doorway-build");
+    let repo = repo_root();
+    let manifest =
+        fs::read_to_string(repo.join("Cargo.toml")).expect("read live workspace lint table");
+    let (_, lint_table) = manifest
+        .split_once("[workspace.lints.rust]\n")
+        .expect("workspace rust lint table");
+    let rust_lints: Vec<_> = lint_table
+        .lines()
+        .take_while(|line| !line.starts_with('['))
+        .collect();
+    let scratch_manifest = root.join("Cargo.toml");
     write_file(
-        &root.join("crates/frob-lemma/Cargo.toml"),
-        "[package]\nname = \"frob-lemma\"\nversion = \"0.0.1\"\nedition = \"2024\"\n\n[lints]\nworkspace = true\n",
-    );
-    write_file(
-        &root.join("crates/frob-lemma/src/lib.rs"),
-        "pub mod issue;\n",
-    );
-    write_file(
-        &root.join("crates/frob-lemma/src/issue.rs"),
-        "#[allow(deprecated)]\npub fn proof_evidence() {}\n",
-    );
-
-    // Listed site 2: `frob-conformance` harness module.
-    write_file(
-        &root.join("crates/frob-conformance/Cargo.toml"),
-        "[package]\nname = \"frob-conformance\"\nversion = \"0.0.1\"\nedition = \"2024\"\n\n[lints]\nworkspace = true\n",
-    );
-    write_file(
-        &root.join("crates/frob-conformance/src/lib.rs"),
-        "pub mod harness;\n",
-    );
-    write_file(
-        &root.join("crates/frob-conformance/src/harness.rs"),
-        "#[allow(deprecated)]\npub fn tested_evidence() {}\n",
-    );
-
-    // Listed site 3: `frob-arena` study runner.
-    write_file(
-        &root.join("crates/frob-arena/Cargo.toml"),
-        "[package]\nname = \"frob-arena\"\nversion = \"0.0.1\"\nedition = \"2024\"\n\n[lints]\nworkspace = true\n",
-    );
-    write_file(
-        &root.join("crates/frob-arena/src/lib.rs"),
-        "pub mod runner;\n",
-    );
-    write_file(
-        &root.join("crates/frob-arena/src/runner.rs"),
-        "#[allow(deprecated)]\npub fn study_tested_evidence() {}\n",
+        &scratch_manifest,
+        &format!(
+            "[workspace]\nresolver = \"3\"\nmembers = [\"crates/*\"]\n\n[workspace.lints.rust]\n{}\n",
+            rust_lints.join("\n")
+        ),
     );
 
-    let findings = run_check(&root);
+    let write_issuer = |name: &str, module: &str, allowance: &str, calls: &str| {
+        let package = root.join("crates").join(name);
+        write_file(
+            &package.join("Cargo.toml"),
+            &format!(
+                "[package]\nname = {name:?}\nversion = \"0.0.1\"\nedition = \"2024\"\n\n[lints]\nworkspace = true\n\n[dependencies]\nfrob-core = {{ path = {:?} }}\n",
+                repo.join("crates/frob-core").to_string_lossy()
+            ),
+        );
+        if module != "lib" {
+            write_file(&package.join("src/lib.rs"), &format!("pub mod {module};\n"));
+        }
+        write_file(
+            &package.join(format!("src/{module}.rs")),
+            &format!(
+                "use frob_core::evidence::*;\n{allowance}\npub fn issue(scope: Scope, input: InputRef) {{ {calls} }}\n"
+            ),
+        );
+    };
+    let allow = "#[allow(deprecated)]";
+    write_issuer("frob-conformance", "harness", allow, TESTED);
+    write_issuer("frob-arena", "runner", allow, TESTED);
+    write_issuer("frob-lemma", "issue", allow, PROOF);
     assert!(
-        findings.is_empty(),
-        "listed doorway sites must pass: {findings:?}"
+        run_check(&root).is_empty(),
+        "listed issuer locations must pass the scan"
     );
+
+    let check = |packages: &[&str]| {
+        let mut cargo = Command::new("cargo");
+        cargo
+            .current_dir(&repo)
+            .args(["check", "--offline", "-j", "1", "--manifest-path"])
+            .arg(&scratch_manifest)
+            .arg("--target-dir")
+            .arg(root.join("target"));
+        for package in packages {
+            cargo.args(["-p", package]);
+        }
+        cargo
+            .output()
+            .expect("compile with inherited workspace lints")
+    };
+    let allowed = check(&["frob-conformance", "frob-arena", "frob-lemma"]);
+    assert!(
+        allowed.status.success(),
+        "{}",
+        String::from_utf8_lossy(&allowed.stderr)
+    );
+
+    write_issuer("core-alpha", "lib", "", &format!("{TESTED}{PROOF}"));
+    let refused = check(&["core-alpha"]);
+    let stderr = String::from_utf8_lossy(&refused.stderr);
+    assert!(!refused.status.success(), "non-doorway issuers compiled");
+    assert_eq!(
+        stderr
+            .matches("error: use of deprecated associated function")
+            .count(),
+        6,
+        "all six constructor calls must fail under the inherited lint:\n{stderr}"
+    );
+
+    let wrong_class = "let _ = Evidence::<ProofClaim>::r#doorway_proved(scope, AssumptionSet::default(), Vec::new());";
+    write_issuer("frob-conformance", "harness", allow, wrong_class);
+    let findings = run_check(&root);
+    assert_eq!(findings.len(), 1, "{findings:?}");
+    assert_eq!(findings[0].rule, RULE_DOORWAY_UNLISTED_ALLOW);
+    assert_eq!(findings[0].path, "crates/frob-conformance/src/harness.rs");
 }
 
 #[test]

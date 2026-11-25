@@ -20,7 +20,8 @@
 //! 8. `capsule.unsafe-in-api`: no item named in `safe_api` is `unsafe fn` or returns
 //!    a raw pointer (`*const` / `*mut`).
 //! 9. `capsule.stale-row`: every capsule row's `path` exists on disk.
-//! 10. `lints.not-inherited`: every core crate (except standalone `frob-cert`, ADR-WS-02)
+//! 10. `lints.not-inherited`: the workspace denies `deprecated`, and every core crate
+//!     (except standalone `frob-cert`, ADR-WS-02)
 //!     inherits `[lints] workspace = true`, and no core library target overrides
 //!     `deprecated`, `clippy::print_stdout`, `clippy::print_stderr`, or `clippy::dbg_macro`
 //!     at crate level.
@@ -59,7 +60,7 @@ pub const RULE_CAPSULE_NO_SAFETY_DOC: &str = "capsule.no-safety-doc";
 pub const RULE_CAPSULE_UNSAFE_IN_API: &str = "capsule.unsafe-in-api";
 /// Rule 9: a capsule registry row points to a file that does not exist.
 pub const RULE_CAPSULE_STALE_ROW: &str = "capsule.stale-row";
-/// Rule 10: a core crate lacks `[lints] workspace = true` or overrides guarded lints at library crate level.
+/// Rule 10: the workspace lacks the deprecation denial or a core library fails to inherit guarded lints.
 pub const RULE_LINTS_NOT_INHERITED: &str = "lints.not-inherited";
 /// Rule 11: an `allow(deprecated)` attribute appears in core sources outside [`DOORWAY_SITES`].
 pub const RULE_DOORWAY_UNLISTED_ALLOW: &str = "doorway.unlisted-allow";
@@ -245,6 +246,17 @@ pub fn check_unsafe_with_doorways(
 
     // Rule 1 (manifest half): root `[workspace.lints.rust]` must set `unsafe_code = "deny"` (or `"forbid"`).
     check_root_unsafe_lint(&root_manifest, &mut findings);
+    let deprecation = root_manifest.workspace_rust_deprecated.as_ref();
+    if deprecation.map(|(level, _)| level.as_str()) != Some("deny") {
+        findings.push(Finding {
+            rule: RULE_LINTS_NOT_INHERITED,
+            subject: "workspace".to_owned(),
+            path: "Cargo.toml".to_owned(),
+            line: deprecation.map(|(_, line)| *line),
+            message: "[workspace.lints.rust] must deny deprecated evidence constructors".to_owned(),
+            repair: "set `deprecated = \"deny\"` under `[workspace.lints.rust]`".to_owned(),
+        });
+    }
 
     // Discover core crates from root `[workspace] members` (without calling `cargo`).
     let core_crates = discover_core_crates(repo_root, &core_root, &root_manifest)?;
@@ -1114,9 +1126,13 @@ fn check_core_crate(
 
             // Rule 11: `allow(deprecated)` anywhere in core outside `DOORWAY_SITES`.
             if is_deprecated_lint(&d.lint) && is_weakening_level(&d.level) {
-                let permitted = doorways
-                    .iter()
-                    .any(|site| site.matches_path(&file.rel_path));
+                let permitted = !d.is_inner
+                    && d.level == "allow"
+                    && doorways.iter().any(|site| {
+                        site.crate_name == crate_info.name
+                            && site.matches_path(&file.rel_path)
+                            && uses_only_listed_constructors(site, doorways, &tokens)
+                    });
                 if !permitted {
                     findings.push(Finding {
                         rule: RULE_DOORWAY_UNLISTED_ALLOW,
@@ -1124,7 +1140,7 @@ fn check_core_crate(
                         path: file.rel_path.clone(),
                         line: Some(d.line),
                         message: format!(
-                            "unlisted `{}` for `deprecated` in core file `{}` (not in xtask doorway table)",
+                            "unlisted `{}` for `deprecated` in core file `{}` (outside its authorized doorway)",
                             d.level, file.rel_path
                         ),
                         repair: format!(
@@ -1160,6 +1176,32 @@ fn is_unsafe_code_lint(lint: &str) -> bool {
 
 fn is_deprecated_lint(lint: &str) -> bool {
     lint == "deprecated" || lint == "rust::deprecated"
+}
+
+fn uses_only_listed_constructors(
+    site: &DoorwaySite,
+    doorways: &[DoorwaySite],
+    tokens: &[Token],
+) -> bool {
+    let allows = |constructors: &[&str], name: &str| {
+        constructors
+            .iter()
+            .any(|constructor| constructor.rsplit("::").next() == Some(name))
+    };
+    tokens.windows(3).all(|window| {
+        let [
+            TokenKind::Punct(':'),
+            TokenKind::Punct(':'),
+            TokenKind::Ident(name) | TokenKind::RawIdent(name),
+        ] = [&window[0].kind, &window[1].kind, &window[2].kind]
+        else {
+            return true;
+        };
+        allows(site.constructors, name)
+            || !doorways
+                .iter()
+                .any(|other| allows(other.constructors, name))
+    })
 }
 
 fn is_guarded_library_lint(lint: &str) -> bool {
@@ -1789,7 +1831,7 @@ fn skip_balanced(tokens: &[Token], start: usize, open: char, close: char) -> usi
 #[derive(Debug, Clone, PartialEq, Eq)]
 enum TokenKind {
     Ident(String),
-    RawIdent,
+    RawIdent(String),
     StringLit,
     Punct(char),
 }
@@ -1994,7 +2036,11 @@ fn try_prefixed_literal_or_raw_ident(
                     break;
                 }
             }
-            return Some((Some(TokenKind::RawIdent), j, start_line));
+            return Some((
+                Some(TokenKind::RawIdent(src[i + 2..j].to_owned())),
+                j,
+                start_line,
+            ));
         }
     }
 
@@ -2284,6 +2330,7 @@ struct ParsedCargoManifest {
     workspace_members: Vec<String>,
     workspace_exclude: Vec<String>,
     workspace_rust_unsafe_code: Option<(String, u32)>,
+    workspace_rust_deprecated: Option<(String, u32)>,
     lints_workspace: Option<(bool, u32)>,
     crate_lint_overrides: Vec<ManifestLintOverride>,
     lib_path: Option<String>,
@@ -2364,11 +2411,21 @@ fn parse_cargo_manifest(text: &str) -> ParsedCargoManifest {
                     out.workspace_rust_unsafe_code = Some((level, line_no));
                 }
             }
+            "workspace.lints.rust.deprecated" => {
+                if let Some(level) = parse_lint_level_value(val) {
+                    out.workspace_rust_deprecated = Some((level, line_no));
+                }
+            }
             "workspace.lints.rust" => {
                 if let Some(inner) = parse_inline_table_field(val, "unsafe_code")
                     && let Some(level) = parse_lint_level_value(&inner)
                 {
                     out.workspace_rust_unsafe_code = Some((level, line_no));
+                }
+                if let Some(inner) = parse_inline_table_field(val, "deprecated")
+                    && let Some(level) = parse_lint_level_value(&inner)
+                {
+                    out.workspace_rust_deprecated = Some((level, line_no));
                 }
             }
             "lints.workspace" => {

@@ -32,6 +32,7 @@ asupersync = { path = "../asupersync" }
 # Core workspace default policy: unsafe code is denied across all core crates.
 [workspace.lints.rust]
 unsafe_code = "deny"
+deprecated = "deny"
 
 # Repeated verbatim from `../frankensim/Cargo.toml` at HEAD
 # d02ad9c170d5932667d15359cd362d3198ac4806: Cargo ignores profile overrides

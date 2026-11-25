@@ -52,15 +52,18 @@ e2e_assert_eq "tether_refusal_registry_test_exit" "${E2E_LAST_EXIT}" "0"
 # ---------------------------------------------------------------------------
 e2e_step "row_table_audit" "Assert all 20 Tether rows (code, exit, retry, due), 3 held 8xx entries, and registry digest"
 
+e2e_assert_file "refusals_toml_file" "${REGISTRY}"
 if command -v b3sum >/dev/null 2>&1; then
   REG_DIGEST="$(b3sum "${REGISTRY}" | awk '{print $1}')"
 elif command -v shasum >/dev/null 2>&1; then
   REG_DIGEST="$(shasum -a 256 "${REGISTRY}" | awk '{print $1}')"
+elif command -v sha256sum >/dev/null 2>&1; then
+  REG_DIGEST="$(sha256sum "${REGISTRY}" | awk '{print $1}')"
 else
   REG_DIGEST="unavailable"
 fi
 if [ "${REG_DIGEST}" != "unavailable" ]; then
-  e2e_assert_eq "refusals_toml_digest" "${REG_DIGEST}" "${REG_DIGEST}"
+  e2e_metric "refusals_toml_digest" "1" "${REG_DIGEST}"
 else
   e2e_assert_eq "refusals_toml_digest_tool" "unavailable" "b3sum_or_shasum"
 fi
@@ -81,11 +84,13 @@ awk '
   END { flush() }
 ' "${REGISTRY}" > "${PARSED_TSV}"
 
+TETHER_ROWS_PRESENT=0
 check_row() {
   local want_code="$1" want_exit="$2" want_retry="$3" want_due="$4"
   local line="" got_exit="" got_retry="" got_meaning="" got_due="missing"
   line="$(awk -F '\t' -v c="${want_code}" '$1 == c { print; exit }' "${PARSED_TSV}")"
   if [ -n "${line}" ]; then
+    TETHER_ROWS_PRESENT=$((TETHER_ROWS_PRESENT + 1))
     got_exit="$(printf '%s' "${line}" | awk -F '\t' '{print $2}')"
     got_retry="$(printf '%s' "${line}" | awk -F '\t' '{print $3}')"
     got_meaning="$(printf '%s' "${line}" | awk -F '\t' '{print $4}')"
@@ -128,6 +133,6 @@ for held_code in FROB-REF-836 FROB-REF-837 FROB-REF-838; do
   fi
 done
 
-e2e_metric "tether_rows_present" "20" "rows" ">=" "20"
+e2e_metric "tether_rows_present" "${TETHER_ROWS_PRESENT}" "rows" ">=" "20"
 e2e_metric "held_8xx_entries_absent_from_rows" "${HELD_ABSENT}" "rows" ">=" "3"
 e2e_skip "allocation_ledger_and_retired_history: registries/refusal_allocations.toml (N35-33/N35x-02) and retired-code history file have not landed yet (Review Note 1)"

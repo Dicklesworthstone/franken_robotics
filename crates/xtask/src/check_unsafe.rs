@@ -1284,18 +1284,18 @@ fn parse_markdown_sections(text: &str) -> BTreeMap<String, MarkdownSection> {
 
         if let Some((level, title)) = parse_atx_heading(trimmed_start) {
             if let Some((key, active_level, heading_line, body)) = active.take() {
-                if level <= active_level {
-                    sections
-                        .entry(key)
-                        .or_insert(MarkdownSection { heading_line, body });
-                } else {
-                    // Subheading inside active section stays part of the section body.
+                if active_level >= 2 && level > active_level {
+                    // Subheading (e.g. `###` under `##`) stays part of the active section body.
+                    // A level-1 document title (`# ...`) never swallows `##` sections.
                     let mut extended = body;
                     extended.push_str(raw_line);
                     extended.push('\n');
                     active = Some((key, active_level, heading_line, extended));
                     continue;
                 }
+                sections
+                    .entry(key)
+                    .or_insert(MarkdownSection { heading_line, body });
             }
             let norm = normalize_heading(title);
             active = Some((norm, level, line_no, String::new()));

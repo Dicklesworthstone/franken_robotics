@@ -2333,7 +2333,8 @@ fn ungated_multi_mechanism_warned() {
 #[test]
 fn load_reasons_registered() {
     let real_root = workspace_root();
-    let reason_reg = ReasonRegistry::load(&real_root).expect("load registry/reasons.toml");
+    let reason_reg =
+        ReasonRegistry::load_from_root(&real_root).expect("load registry/reasons.toml");
     assert_eq!(PILOT_LOAD_REASONS.len(), 12);
     assert_eq!(PILOT_FUNDING_REASONS.len(), 11);
 

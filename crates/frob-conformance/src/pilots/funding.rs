@@ -402,7 +402,7 @@ impl WorkspacePackages {
             if trimmed.is_empty() {
                 continue;
             }
-            let Ok(val) = json::parse(trimmed) else {
+            let Ok(val) = json::parse_strict(trimmed) else {
                 continue;
             };
             let ext_ref = val.get("external_ref").and_then(JsonValue::as_str);

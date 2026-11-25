@@ -6,6 +6,7 @@
 
 pub mod check_contracts;
 pub mod check_deps;
+pub mod check_deps_airlock;
 pub mod check_generated;
 pub mod check_layers;
 pub mod check_unsafe;

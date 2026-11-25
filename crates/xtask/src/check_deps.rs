@@ -25,13 +25,30 @@ use std::path::{Path, PathBuf};
 
 use frob_core::registry::toml::{self, Fields, Table, Value};
 
+use crate::check_deps_airlock::{
+    self, BinaryAsupFact, RULE_ASUP_DUPLICATE as AIRLOCK_RULE_ASUP_DUPLICATE,
+    RULE_FSIM_DEFAULT_SET as AIRLOCK_RULE_FSIM_DEFAULT_SET,
+    RULE_FSIM_GROUP_NOT_ALLOWED as AIRLOCK_RULE_FSIM_GROUP_NOT_ALLOWED,
+    RULE_FSIM_OPTIONAL_DEFAULT_ON as AIRLOCK_RULE_FSIM_OPTIONAL_DEFAULT_ON,
+    RULE_RESOLVE_ALL_FEATURES as AIRLOCK_RULE_RESOLVE_ALL_FEATURES,
+    RULE_TIER_DEFAULT_ON as AIRLOCK_RULE_TIER_DEFAULT_ON,
+    RULE_TIER_UNNAMED as AIRLOCK_RULE_TIER_UNNAMED,
+};
 use crate::check_layers::{GraphEdge, check_edges};
 use crate::cli::{CheckContext, CheckError, CheckOutcome};
 use crate::crate_map::{CRATE_MAP, CrateRow, Finding, Layer, lookup_in};
 use crate::metadata::{
-    DeclaredDep, DepKind, PackageMeta, ResolvedPackage, ResolvedWorkspace, WorkspaceKind,
-    WorkspaceRoot, load_declared_metadata, load_resolved_metadata,
+    DeclaredDep, DepKind, MetadataLoadError, PackageMeta, ResolvedPackage, ResolvedWorkspace,
+    WorkspaceKind, WorkspaceRoot, load_declared_metadata, load_resolved_metadata,
     load_resolved_metadata_all_features, normalize_rel_path,
+};
+
+pub use crate::check_deps_airlock::{
+    AirlockGroupRecord, AsupInstance, BinaryAsupFact as BinaryAsupersyncFact,
+    RULE_ASUP_DUPLICATE, RULE_FSIM_DEFAULT_SET, RULE_FSIM_GROUP_NOT_ALLOWED,
+    RULE_FSIM_OPTIONAL_DEFAULT_ON, RULE_RESOLVE_ALL_FEATURES, RULE_TIER_DEFAULT_ON,
+    RULE_TIER_UNNAMED, check_airlock_manifest_file, load_airlock_groups,
+    parse_airlock_groups_bytes,
 };
 use crate::report::FactValue;
 use crate::stack::lock::{self, Foundation, RelPath, StackLock};
@@ -79,7 +96,7 @@ pub const RULE_SUITE_EGG: &str = "suite.egg";
 /// appearing in the core `Cargo.lock` or resolved dependency graph (`N34p4-02`).
 pub const RULE_CORE_FORBIDDEN_PACKAGE: &str = "core.forbidden-package";
 
-/// Complete list of finding rule identifiers owned by `check-deps` (BD-003 + N33c-09 + N34p4-02).
+/// Complete list of finding rule identifiers owned by `check-deps` (BD-003 + N33c-09 + N34p4-02 + N34-03).
 pub const OWNED_RULES: &[&str] = &[
     RULE_FSIM_VOLATILE_EDGE,
     RULE_L2_FS_QTY_DIRECT,
@@ -99,6 +116,13 @@ pub const OWNED_RULES: &[&str] = &[
     RULE_SUITE_FORBIDDEN_PACKAGE,
     RULE_SUITE_EGG,
     RULE_CORE_FORBIDDEN_PACKAGE,
+    AIRLOCK_RULE_ASUP_DUPLICATE,
+    AIRLOCK_RULE_FSIM_GROUP_NOT_ALLOWED,
+    AIRLOCK_RULE_FSIM_DEFAULT_SET,
+    AIRLOCK_RULE_FSIM_OPTIONAL_DEFAULT_ON,
+    AIRLOCK_RULE_TIER_DEFAULT_ON,
+    AIRLOCK_RULE_TIER_UNNAMED,
+    AIRLOCK_RULE_RESOLVE_ALL_FEATURES,
 ];
 
 /// Schema identifier for the shared sibling register (`N33c-07` / `N33c-09`).
@@ -766,6 +790,8 @@ pub fn check_deps_with_config(
     let mut checked_workspaces = Vec::new();
     let mut absent_workspaces = Vec::new();
     let mut ws_facts_map: BTreeMap<String, FactValue> = BTreeMap::new();
+    let mut all_binary_facts: Vec<BinaryAsupFact> = Vec::new();
+    let mut all_airlock_facts: BTreeMap<String, FactValue> = BTreeMap::new();
     let mut reported_lock_asup: BTreeSet<(String, String)> = BTreeSet::new();
 
     for ws in roots {
@@ -783,6 +809,15 @@ pub fn check_deps_with_config(
         let declared = load_declared_metadata(repo_root, ws).map_err(metadata_err_to_check_err)?;
         let resolved = match load_resolved_metadata(repo_root, ws) {
             Ok(r) => r,
+            Err(MetadataLoadError::ResolutionConflict { detail }) => {
+                // Conflicting exact pins (including behind optional features, which Cargo
+                // resolves eagerly) surface as `resolve.all-features` rather than a tool fault.
+                findings.push(check_deps_airlock::build_resolve_all_features_finding(
+                    ws, &detail,
+                ));
+                checked_workspaces.push(ws.name.clone());
+                continue;
+            }
             Err(err) => {
                 // If an orphaned `asupersync 0.5.*` or core forbidden-package entry in this
                 // workspace's Cargo.lock caused `--locked` to reject the lockfile, still report
@@ -814,8 +849,18 @@ pub fn check_deps_with_config(
                 return Err(metadata_err_to_check_err(err));
             }
         };
-        let resolved_all = load_resolved_metadata_all_features(repo_root, ws)
-            .map_err(metadata_err_to_check_err)?;
+        let resolved_all = match load_resolved_metadata_all_features(repo_root, ws) {
+            Ok(ra) => Some(ra),
+            Err(err) => {
+                // Default resolution succeeded, so an `--all-features` resolution/lockfile
+                // failure is a `resolve.all-features` finding (N34-03 rule 5).
+                findings.push(check_deps_airlock::build_resolve_all_features_finding(
+                    ws,
+                    &err.to_string(),
+                ));
+                None
+            }
+        };
         checked_workspaces.push(ws.name.clone());
 
         evaluate_workspace(
@@ -838,15 +883,17 @@ pub fn check_deps_with_config(
             &mut reported_lock_asup,
             &mut findings,
         );
-        evaluate_suite_resolved_rules(
-            ws,
-            &declared.members,
-            &resolved_all,
-            stack_lock,
-            siblings.as_ref(),
-            &mut reported_lock_asup,
-            &mut findings,
-        );
+        if let Some(ref ra) = resolved_all {
+            evaluate_suite_resolved_rules(
+                ws,
+                &declared.members,
+                ra,
+                stack_lock,
+                siblings.as_ref(),
+                &mut reported_lock_asup,
+                &mut findings,
+            );
+        }
 
         if ws.kind == WorkspaceKind::Core {
             evaluate_core_forbidden_packages(
@@ -854,12 +901,52 @@ pub fn check_deps_with_config(
                 ws,
                 &declared.members,
                 &resolved,
-                &resolved_all,
+                resolved_all.as_ref().unwrap_or(&resolved),
                 &mut findings,
             );
         }
 
-        ws_facts_map.insert(ws.name.clone(), build_workspace_closure_facts(&resolved));
+        // N34-03 Step 9: One `asupersync` per binary (INV-SUITE-02).
+        let bin_facts = check_deps_airlock::evaluate_binary_asupersync(
+            ws,
+            &declared.members,
+            &resolved,
+            resolved_all.as_ref(),
+            &mut findings,
+        );
+        all_binary_facts.extend(bin_facts);
+
+        // N34-03 Step 10: Airlock feature groups read dynamically from `crates/frob-fsim/contract.toml` (INV-SUITE-01).
+        let airlock_map = check_deps_airlock::evaluate_airlock_groups(
+            repo_root,
+            &declared.members,
+            &resolved,
+            &mut findings,
+        )
+        .map_err(CheckError::Fault)?;
+        let airlock_fact_obj: BTreeMap<String, FactValue> = airlock_map
+            .into_iter()
+            .map(|(crate_name, grps)| (crate_name, FactValue::str_array(grps)))
+            .collect();
+        all_airlock_facts.insert(ws.name.clone(), FactValue::Object(airlock_fact_obj.clone()));
+
+        // N34-03 Step 11: Tier features off by default (L-12, INV-WS-04).
+        check_deps_airlock::evaluate_tier_features(
+            ws,
+            &declared.members,
+            &resolved,
+            crate_map,
+            &mut findings,
+        );
+
+        let mut ws_fact = build_workspace_closure_facts(&resolved);
+        if let FactValue::Object(ref mut obj) = ws_fact {
+            obj.insert(
+                "airlock_groups".to_owned(),
+                FactValue::Object(airlock_fact_obj),
+            );
+        }
+        ws_facts_map.insert(ws.name.clone(), ws_fact);
     }
 
     scan_lockfiles_for_asup_0_5(repo_root, roots, &reported_lock_asup, &mut findings);
@@ -868,8 +955,29 @@ pub fn check_deps_with_config(
     findings.dedup();
     checked_workspaces.sort();
     absent_workspaces.sort();
+    all_binary_facts.sort_by(|a, b| {
+        a.workspace
+            .cmp(&b.workspace)
+            .then_with(|| a.binary.cmp(&b.binary))
+            .then_with(|| a.package.cmp(&b.package))
+    });
+
+    let mut binaries_map: BTreeMap<String, FactValue> = BTreeMap::new();
+    for bf in &all_binary_facts {
+        let key = if bf.workspace == "core" {
+            bf.binary.clone()
+        } else {
+            format!("{}/{}", bf.workspace, bf.binary)
+        };
+        binaries_map.insert(key, bf.to_fact_value());
+    }
 
     let mut facts = BTreeMap::new();
+    facts.insert(
+        "airlock_groups".to_owned(),
+        FactValue::Object(all_airlock_facts),
+    );
+    facts.insert("binaries".to_owned(), FactValue::Object(binaries_map));
     facts.insert(
         "direct_only_policy".to_owned(),
         FactValue::str(

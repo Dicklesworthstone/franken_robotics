@@ -180,6 +180,10 @@ pub struct PackageMeta {
     pub rel_manifest: String,
     pub frob_metadata: Option<Result<ManifestMetadata, String>>,
     pub dependencies: Vec<DeclaredDep>,
+    /// Declared Cargo `[features]` table (`feature_name -> activated items`).
+    pub features: BTreeMap<String, Vec<String>>,
+    /// Sorted names of `[[bin]]` targets declared by this package.
+    pub bin_targets: Vec<String>,
 }
 
 impl PackageMeta {
@@ -217,6 +221,10 @@ pub struct ResolvedPackage {
     pub rel_dir: Option<String>,
     pub sibling_rel_path: Option<String>,
     pub dependencies: Vec<DeclaredDep>,
+    /// Declared Cargo `[features]` table (`feature_name -> activated items`).
+    pub features: BTreeMap<String, Vec<String>>,
+    /// Sorted names of `[[bin]]` targets declared by this package.
+    pub bin_targets: Vec<String>,
 }
 
 impl ResolvedPackage {
@@ -259,6 +267,7 @@ pub struct ResolvedWorkspace {
 pub enum MetadataLoadError {
     MissingManifest(PathBuf),
     OfflineNeedsFetch { detail: String },
+    ResolutionConflict { detail: String },
     CargoFailed { detail: String },
     SpawnFailed(String),
     JsonAdmission(String),
@@ -287,6 +296,9 @@ impl fmt::Display for MetadataLoadError {
             Self::MissingManifest(p) => write!(f, "workspace manifest not found: {}", p.display()),
             Self::OfflineNeedsFetch { detail } => {
                 write!(f, "cargo metadata requires network/cache ({OFFLINE_FETCH_REPAIR}): {detail}")
+            }
+            Self::ResolutionConflict { detail } => {
+                write!(f, "cargo metadata resolution conflict: {detail}")
             }
             Self::CargoFailed { detail } => write!(f, "cargo metadata failed: {detail}"),
             Self::SpawnFailed(msg) => write!(f, "failed to invoke `cargo metadata`: {msg}"),
@@ -357,6 +369,9 @@ fn run_cargo_metadata(
 
     if !output.status.success() {
         let stderr = String::from_utf8_lossy(&output.stderr).trim().to_owned();
+        if looks_like_resolution_conflict(&stderr) {
+            return Err(MetadataLoadError::ResolutionConflict { detail: stderr });
+        }
         if looks_like_offline_or_network_error(&stderr) {
             return Err(MetadataLoadError::OfflineNeedsFetch { detail: stderr });
         }
@@ -364,6 +379,72 @@ fn run_cargo_metadata(
     }
 
     Ok(output.stdout)
+}
+
+/// Run `cargo tree -p <pkg> -e normal,build --prefix depth --locked --offline`
+/// (with optional `--all-features`) to confirm per-binary dependency closures
+/// free of workspace-wide feature unification (`N34-03`).
+pub fn run_cargo_tree_package_depth(
+    ws: &WorkspaceRoot,
+    pkg_name: &str,
+    all_features: bool,
+) -> Result<String, String> {
+    let manifest_path = ws.manifest_path();
+    if !manifest_path.is_file() {
+        return Err(format!("workspace manifest not found: {}", manifest_path.display()));
+    }
+    let mut cmd = Command::new("cargo");
+    cmd.current_dir(&ws.root_dir);
+    cmd.args(["tree", "-p", pkg_name, "-e", "normal,build", "--prefix", "depth"]);
+    if all_features {
+        cmd.arg("--all-features");
+    }
+    cmd.args(["--locked", "--offline", "--manifest-path"])
+        .arg(&manifest_path);
+
+    let output = cmd
+        .output()
+        .map_err(|e| format!("failed to invoke `cargo tree`: {e}"))?;
+    if !output.status.success() {
+        let stderr = String::from_utf8_lossy(&output.stderr).trim().to_owned();
+        return Err(if stderr.is_empty() {
+            format!("`cargo tree` exited with status {}", output.status)
+        } else {
+            stderr
+        });
+    }
+    Ok(String::from_utf8_lossy(&output.stdout).into_owned())
+}
+
+/// Detect Cargo stderr diagnostics indicating a real dependency/feature resolution conflict
+/// (distinct from an offline cache/network miss).
+#[must_use]
+pub fn looks_like_resolution_conflict(stderr: &str) -> bool {
+    let lower = stderr.to_ascii_lowercase();
+    let network_needles = [
+        "without network",
+        "not found in cache",
+        "attempting to make an http",
+        "failed to download",
+        "could not resolve host",
+        "no matching package named",
+    ];
+    if network_needles.iter().any(|n| lower.contains(n)) {
+        return false;
+    }
+    let conflict_needles = [
+        "all possible versions conflict",
+        "conflicts with previously selected",
+        "previously selected package",
+        "which could resolve this conflict",
+        "link to the same native library",
+        "links to the native library",
+        "does not have feature",
+        "does not have that feature",
+        "does not have these features",
+        "conflicting requirements",
+    ];
+    conflict_needles.iter().any(|n| lower.contains(n))
 }
 
 /// Detect Cargo stderr diagnostics indicating an offline/network cache miss or missing lockfile.
@@ -443,6 +524,8 @@ pub fn parse_declared_metadata_json(
 
         let frob_metadata = parse_frob_metadata_json(pkg_node.get("metadata").map(|s| &s.value));
         let dependencies = parse_deps_array(&canon_repo, pkg_node)?;
+        let features = parse_features_map(pkg_node);
+        let bin_targets = parse_bin_targets(pkg_node);
 
         members.push(PackageMeta {
             id: id.to_owned(),
@@ -452,6 +535,8 @@ pub fn parse_declared_metadata_json(
             rel_manifest,
             frob_metadata,
             dependencies,
+            features,
+            bin_targets,
         });
     }
 
@@ -522,6 +607,8 @@ pub fn parse_resolved_metadata_json(
             None
         };
         let dependencies = parse_deps_array(&canon_repo, pkg_node)?;
+        let features = parse_features_map(pkg_node);
+        let bin_targets = parse_bin_targets(pkg_node);
 
         packages.insert(
             id.clone(),
@@ -535,6 +622,8 @@ pub fn parse_resolved_metadata_json(
                 rel_dir,
                 sibling_rel_path,
                 dependencies,
+                features,
+                bin_targets,
             },
         );
     }
@@ -633,6 +722,43 @@ fn parse_workspace_member_ids(root_obj: &Json<'_>) -> Result<BTreeSet<String>, M
         member_ids.insert(id.to_owned());
     }
     Ok(member_ids)
+}
+
+fn parse_features_map(pkg_node: &Json<'_>) -> BTreeMap<String, Vec<String>> {
+    let mut map = BTreeMap::new();
+    if let Some(obj) = pkg_node.get("features").and_then(|v| v.as_object()) {
+        for member in obj {
+            let mut items = Vec::new();
+            if let Some(arr) = member.value.as_array() {
+                for item in arr {
+                    if let Some(s) = item.as_str() {
+                        items.push(s.to_owned());
+                    }
+                }
+            }
+            map.insert(member.name.to_string(), items);
+        }
+    }
+    map
+}
+
+fn parse_bin_targets(pkg_node: &Json<'_>) -> Vec<String> {
+    let mut bins = BTreeSet::new();
+    if let Some(targets) = pkg_node.get("targets").and_then(|v| v.as_array()) {
+        for t in targets {
+            let is_bin = t
+                .get("kind")
+                .and_then(|v| v.as_array())
+                .is_some_and(|kinds| kinds.iter().any(|k| k.as_str() == Some("bin")));
+            if is_bin
+                && let Some(name) = t.get("name").and_then(|v| v.as_str())
+                && !name.is_empty()
+            {
+                bins.insert(name.to_owned());
+            }
+        }
+    }
+    bins.into_iter().collect()
 }
 
 fn parse_deps_array(

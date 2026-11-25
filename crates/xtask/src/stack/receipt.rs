@@ -816,6 +816,39 @@ pub fn parse_build_env(root_dir: &Path) -> Result<BTreeMap<String, String>, Rece
     Ok(out)
 }
 
+/// Merge `.cargo/config.toml` `[env]` with an optional Mode 2
+/// `FRANKENSIM_DEPGRAPH_RECEIPT` override under the precedence rule of `N33a-08`.
+///
+/// When `depgraph_receipt` is `None`, returns the `.cargo/config.toml` `[env]`
+/// entries unchanged (Mode 1). When `Some(receipt_val)` is supplied, resolves
+/// the mode fail-closed using [`frob_core::stack::build_identity::resolve_mode`]
+/// and records `FRANKENSIM_DEPGRAPH_RECEIPT` in the returned map so the stack
+/// receipt hash differs from a development build's.
+pub fn parse_build_env_with_receipt(
+    root_dir: &Path,
+    depgraph_receipt: Option<&str>,
+    receipt_wins_when_both: Option<bool>,
+) -> Result<BTreeMap<String, String>, ReceiptError> {
+    let mut out = parse_build_env(root_dir)?;
+    let Some(receipt_val) = depgraph_receipt else {
+        return Ok(out);
+    };
+    let salt = out
+        .get(frob_core::stack::build_identity::ENV_SALT)
+        .map(String::as_str);
+    frob_core::stack::build_identity::resolve_mode(
+        salt,
+        Some(receipt_val),
+        receipt_wins_when_both,
+    )
+    .map_err(|e| ReceiptError::InvalidReceipt(e.to_string()))?;
+    out.insert(
+        frob_core::stack::build_identity::ENV_RECEIPT.to_owned(),
+        receipt_val.to_owned(),
+    );
+    Ok(out)
+}
+
 /// Parse `cargo tree -d` stdout into deduplicated `"<pkg> <ver>"` entries with
 /// `asupersync` duplicates listed first, then remaining entries sorted bytewise.
 #[must_use]
@@ -897,7 +930,21 @@ pub fn build_receipt(
 
     let (patches, patch_paths_by_crate) = parse_patches(&cargo_toml)?;
     let profile_overrides = parse_profile_overrides(&cargo_toml);
-    let build_env = parse_build_env(root_dir)?;
+    let env_receipt = match std::env::var(frob_core::stack::build_identity::ENV_RECEIPT) {
+        Ok(v) => Some(v),
+        Err(std::env::VarError::NotPresent) => None,
+        Err(std::env::VarError::NotUnicode(_)) => {
+            return Err(ReceiptError::InvalidReceipt(format!(
+                "{} must be valid UTF-8",
+                frob_core::stack::build_identity::ENV_RECEIPT
+            )));
+        }
+    };
+    let build_env = parse_build_env_with_receipt(
+        root_dir,
+        env_receipt.as_deref(),
+        frob_core::stack::build_identity::RECEIPT_WINS_WHEN_BOTH,
+    )?;
 
     let repo_rev = head_rev(root_dir)?;
     let repo_dirty = is_dirty_tracked(root_dir)?;

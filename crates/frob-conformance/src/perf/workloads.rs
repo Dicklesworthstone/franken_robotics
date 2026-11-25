@@ -143,11 +143,7 @@ impl Ka815Report {
     /// rule values `152` and `320`, registered capacities `160` and `320`, and identities.
     #[must_use]
     pub fn format_summary(&self) -> String {
-        let q_ov = self
-            .q
-            .override_reason
-            .as_deref()
-            .unwrap_or("none");
+        let q_ov = self.q.override_reason.as_deref().unwrap_or("none");
         format!(
             "KA-815 Q ({id_q}): 4*{c_q} + 2*{a_q} = {raw_q} -> rule {rule_q} -> registered {reg_q} (override: {q_ov})\n\
              KA-815 H ({id_h}): 4*{c_h} + 2*{a_h} = {raw_h} -> rule {rule_h} -> registered {reg_h}",
@@ -294,10 +290,7 @@ pub fn lint_workload(workload: &Workload) -> Vec<WorkloadFinding> {
 
     // 5. status = "frozen" requires a non-empty ADR reference.
     if workload.status == WorkloadStatus::Frozen {
-        let missing_adr = workload
-            .adr
-            .as_deref()
-            .is_none_or(|s| s.trim().is_empty());
+        let missing_adr = workload.adr.as_deref().is_none_or(|s| s.trim().is_empty());
         if missing_adr {
             findings.push(WorkloadFinding::new(
                 WorkloadFindingKind::FrozenMissingAdr,
@@ -660,8 +653,14 @@ status = "default"
         // KA-815 acceptance criterion: print intermediate sums 152 and 314.
         let summary = report.format_summary();
         println!("{summary}");
-        assert!(summary.contains("152"), "summary must include Q raw sum 152");
-        assert!(summary.contains("314"), "summary must include H raw sum 314");
+        assert!(
+            summary.contains("152"),
+            "summary must include Q raw sum 152"
+        );
+        assert!(
+            summary.contains("314"),
+            "summary must include H raw sum 314"
+        );
 
         // Exact Q and H values.
         assert_eq!(row_cap_raw(32, 12), 152);
@@ -700,8 +699,7 @@ status = "default"
             lint_registry(&q_unraised).is_empty(),
             "Q with row_cap = 152 and no override must satisfy the general rule"
         );
-        let ka_err = check_ka815(&q_unraised)
-            .expect_err("Q with row_cap = 152 must fail KA-815");
+        let ka_err = check_ka815(&q_unraised).expect_err("Q with row_cap = 152 must fail KA-815");
         assert!(
             has_kind(&ka_err, WorkloadFindingKind::Ka815Mismatch),
             "expected Ka815Mismatch, got: {ka_err:?}"
@@ -783,7 +781,8 @@ status = "default"
         }
 
         // Negative control 1: wrong period (1/250 * 10 = 1/25 s = 40 ms).
-        let bad_period_toml = minimal_valid_toml().replacen("h_s = \"1/500\"", "h_s = \"1/250\"", 1);
+        let bad_period_toml =
+            minimal_valid_toml().replacen("h_s = \"1/500\"", "h_s = \"1/250\"", 1);
         let bad_period = parse_str(&bad_period_toml).expect("parse bad period");
         let findings = lint_registry(&bad_period);
         assert!(
@@ -852,7 +851,8 @@ status = "default"
     #[test]
     fn frozen_requires_adr() {
         // Frozen without adr -> rejected.
-        let frozen_no_adr = minimal_valid_toml().replacen("status = \"default\"", "status = \"frozen\"", 1);
+        let frozen_no_adr =
+            minimal_valid_toml().replacen("status = \"default\"", "status = \"frozen\"", 1);
         let findings = lint_registry(&parse_str(&frozen_no_adr).unwrap());
         assert!(
             has_kind(&findings, WorkloadFindingKind::FrozenMissingAdr),
@@ -930,10 +930,7 @@ status = "default"
         );
 
         // Negative control 2: native setting with empty source -> rejected.
-        let empty_src = missing_src.replace(
-            "source = \"Appendix H\"",
-            "source = \"\"",
-        );
+        let empty_src = missing_src.replace("source = \"Appendix H\"", "source = \"\"");
         let findings = lint_registry(&parse_str(&empty_src).unwrap());
         assert!(
             has_kind(&findings, WorkloadFindingKind::NativeSettingMissingSource),
@@ -947,7 +944,10 @@ status = "default"
         );
         let findings = lint_registry(&parse_str(&bad_matched).unwrap());
         assert!(
-            has_kind(&findings, WorkloadFindingKind::MatchedSettingMissingDifference),
+            has_kind(
+                &findings,
+                WorkloadFindingKind::MatchedSettingMissingDifference
+            ),
             "expected MatchedSettingMissingDifference, got: {findings:?}"
         );
     }

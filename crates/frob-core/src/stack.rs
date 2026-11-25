@@ -1,6 +1,8 @@
 //! Stack identities on results: resolution receipt hash (`sr:`), stack-lock digest (`sl:`),
-//! build-time embedded [`BUILT_UNDER`], same-stack predicate, `FROB-REF-890` refusal
-//! constructor, and the airlock [`StackKeyed`] trait (`N33a-06`, §33.5, §33.3, §33.16).
+//! build-time embedded [`BUILT_UNDER`], FrankenSim build-identity mode
+//! ([`BUILD_IDENTITY_MODE`] and [`build_identity`]), same-stack predicate,
+//! `FROB-REF-890` refusal constructor, and the airlock [`StackKeyed`] trait
+//! (`N33a-06`, `N33a-08`, §33.2, §33.3, §33.5, §33.16).
 //!
 //! Determinism class D0; prints nothing (L-7); zero `unsafe`; canonical JSON via
 //! [`crate::canon`].
@@ -12,6 +14,11 @@
 compile_error!(
     "`nc-stack-compare-lock` requires a debug build with `--features gauntlet-mutations`"
 );
+
+#[path = "stack_build_identity.rs"]
+pub mod build_identity;
+
+pub use build_identity::BUILD_IDENTITY_MODE;
 
 use std::fmt;
 use std::str::FromStr;

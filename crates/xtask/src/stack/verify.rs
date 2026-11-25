@@ -755,6 +755,88 @@ pub fn verify_repo(repo_root: &Path, opts: &VerifyOptions) -> Result<CheckOutcom
         }
     }
 
+    // N33a-08 build-identity checks under `stack.env`:
+    // (a) FD-FSIM lock row must not have an empty `build_env` (or omit both
+    //     `FRANKENSIM_DEPGRAPH_SALT` and `FRANKENSIM_DEPGRAPH_RECEIPT`);
+    // (b) neither `.cargo/config.toml` nor `franken-stack.lock` may claim a
+    //     sibling's own in-tree `FRANKENSIM_DEPGRAPH_SALT` equivalence class
+    //     (`foreign-build-class`).
+    for row in &stack_lock.foundations {
+        let fd = row.id.as_str();
+        if fd == "FD-FSIM" {
+            let has_salt = row
+                .build_env
+                .get(frob_core::stack::build_identity::ENV_SALT)
+                .is_some_and(|v| !v.is_empty());
+            let has_receipt = row
+                .build_env
+                .get(frob_core::stack::build_identity::ENV_RECEIPT)
+                .is_some_and(|v| !v.is_empty());
+            if row.build_env.is_empty() || (!has_salt && !has_receipt) {
+                failing.push((
+                    Finding {
+                        rule: RULE_ENV,
+                        subject: fd.to_owned(),
+                        path: "franken-stack.lock".to_owned(),
+                        line: None,
+                        message: "build-env-missing: `FD-FSIM` row in `franken-stack.lock` has an empty `build_env` or lacks a build-identity setting".to_owned(),
+                        repair: "set `build_env = { FRANKENSIM_DEPGRAPH_SALT = \"franken-robotics-dev-v1\" }` on `FD-FSIM` in `franken-stack.lock`".to_owned(),
+                    },
+                    KindRecord {
+                        rule: RULE_ENV,
+                        kind: "build-env-missing".to_owned(),
+                        fd: Some(fd.to_owned()),
+                        class: None,
+                        fails: true,
+                    },
+                ));
+            }
+        }
+
+        if let Some(sib_dir) = resolve_sibling_dir(repo_root, row, &patch_paths_by_crate)
+            && sib_dir.is_dir()
+            && let Ok(sib_env) = receipt::parse_build_env(&sib_dir)
+            && let Some(sib_salt) = sib_env
+                .get(frob_core::stack::build_identity::ENV_SALT)
+                .filter(|s| !s.is_empty())
+        {
+            let salt_key = frob_core::stack::build_identity::ENV_SALT;
+            let cfg_claims = cur_build_env
+                .get(salt_key)
+                .is_some_and(|v| v == sib_salt);
+            let lock_claims = row
+                .build_env
+                .get(salt_key)
+                .is_some_and(|v| v == sib_salt);
+            if cfg_claims || lock_claims {
+                let path = if cfg_claims {
+                    ".cargo/config.toml"
+                } else {
+                    "franken-stack.lock"
+                };
+                failing.push((
+                    Finding {
+                        rule: RULE_ENV,
+                        subject: salt_key.to_owned(),
+                        path: path.to_owned(),
+                        line: None,
+                        message: format!(
+                            "foreign-build-class: `{salt_key}` (`{sib_salt}`) equals `{fd}`'s own in-tree salt and claims another graph's equivalence class"
+                        ),
+                        repair: "set a project-owned equivalence-class salt (for example `franken-robotics-dev-v1`) in `.cargo/config.toml` and `franken-stack.lock`".to_owned(),
+                    },
+                    KindRecord {
+                        rule: RULE_ENV,
+                        kind: "foreign-build-class".to_owned(),
+                        fd: Some(fd.to_owned()),
+                        class: None,
+                        fails: true,
+                    },
+                ));
+            }
+        }
+    }
+
     // 5. Compute current resolution via the receipt writer (same code path, no writes).
     let (current_hash, current_siblings, computed_duplicates) = if !tc_mismatch_lock && lockfiles_present {
         match receipt::build_receipt(repo_root, &lock_path) {

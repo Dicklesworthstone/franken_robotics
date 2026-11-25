@@ -17,6 +17,7 @@
 //! `unsafe` code, and never write or delete sibling files.
 
 pub mod admission;
+pub mod build_identity;
 pub mod guard;
 pub mod ledger;
 pub mod lifts;

@@ -8,6 +8,7 @@
 //! cross-file receipt/control/artifact-graph validation, and atomic write-time refusal checks.
 
 pub mod counts;
+pub mod kill;
 pub mod row;
 pub mod validate;
 pub mod write;
@@ -15,6 +16,16 @@ pub mod write;
 pub use counts::{
     CountMismatch, CountReport, CountRevision, GATE_COUNTS_PATH, GATE_COUNTS_SCHEMA,
     GateCountsExpectation, PlanInventory,
+};
+pub use kill::{
+    Amendment, AmendmentField, DECISION_ADR_DIR, DecisionReading, KillDecision, KillDueContext,
+    KillDueItem, KillDueStatus, KillMode, KillOutcome, KillValidationContext, LiveIdExpectation,
+    STANDING_OR_ROLLING_GATES, ScopeKind, SeededKillRow, adr_exists, apply_decisions,
+    canonical_decision_adr_path, decisions_in_force, decisions_in_force_at, due_kill_gates,
+    effective_decided_milestone, effective_fallback_text, format_introduce_inline_table,
+    kill_row_derived_state, kill_row_seed_hash, parse_introduce_inline_table,
+    parse_iso_timestamp_key, parse_live_ids_file, render_readme_status_table,
+    render_register_printout, verify_live_kill_ids,
 };
 pub use row::{
     BaseDocument, BaseKind, BaseRowError, Claim, GATES_SCHEMA, GateBase, KILL_FORBIDDEN_FIELDS,

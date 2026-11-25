@@ -3,7 +3,7 @@
   "$id": "https://frankenrobotics.local/schemas/registries/gates.schema.json",
   "title": "FrankenRobotics Gate Registry (frob.gates/1)",
   "description": "Single schema for registries/gates.toml: first-commit BD-002 layout extended additively by N38b-18 (base record, seven closed claims, seven reconciled statuses, kill-row exemption) and N40-01 (register layer, nine rules, ten write-time refusals, receipt path receipts/gates/<hash>.json, optional sources per NAB-10, pilot scope grammar per N38a-09). Status reconciliation is recorded in docs/adr/ADR-GAUNT-04.md.",
-  "$comment": "ADR: docs/adr/ADR-GAUNT-04.md. VALIDATOR CONTRACT (enforced by N40-01 in frob_conformance::register::{validate,write}): (1) claim takes one of the seven closed strings on admission/convergence/program rows; 'method' and 'Performance of the method' are rejected (claim-not-one-of-seven). (2) status is the reconciled union of seven values per ADR-GAUNT-04: not-run (printed 'not run', never passed), pass, fail (requires measured + commit + command + resolving receipt under receipts/gates/<hash>.json), killed (names kill gate or program bet, adopted fallback, and ADR in detail -> killed-without-decision), blocked (names OPEN-... or 'claim-reading: <bead>' in detail -> blocked-without-question), no-claim (terminal, valid only for claim='reality' with non-empty detail -> no-claim-on-non-reality), superseded (names existing successor gate in detail). (3) pass is refused in four cases: (a) controls is empty (pass-without-control); (b) any listed due control was not caught in the same run (control-not-caught); (c) recorded.session is a member of recorded.implemented_by (self-certified); (d) an evidence item or claim_id (parsed via frob_core::graph_id::ClaimId) does not resolve, or part.receipt does not name a committed receipts/gates/<hash>.json hashing to <hash> (evidence-unresolved). (4) measured is never empty or byte-equal to threshold (target-as-measurement). (5) Gate identifiers are unique and append-only (duplicate-id, reused-id). (6) needs='import-lane' requires claim='reality' and excludes the gate from every exit due set; blocks_exit=false is valid only on kind='admission'. (7) kind='kill' rows measure nothing and must never carry claim, claim_id, threshold, tier, controls, or [[gate.part]]. (8) Additive top-level tables [[amendment]] (N40-03), [[shared_fixture]]/[[related_threshold]] (N40-08), [[fallback_exit]] (N40-32), [[variant]] (N40-33) are admitted additively; unknown top-level tables fail load.",
+  "$comment": "ADR: docs/adr/ADR-GAUNT-04.md. VALIDATOR CONTRACT (enforced by N40-01/N40-03 in frob_conformance::register::{validate,write,kill}): (1) claim takes one of the seven closed strings on admission/convergence/program rows (including all 40 convergence gates that carry multi-part records across milestones); 'method' and 'Performance of the method' are rejected (claim-not-one-of-seven). (2) status is the reconciled union of seven values per ADR-GAUNT-04: not-run (printed 'not run', never passed), pass, fail (requires measured + commit + command + resolving receipt under receipts/gates/<hash>.json), killed (names kill gate or program bet, adopted fallback, and ADR in detail -> killed-without-decision), blocked (names OPEN-... or 'claim-reading: <bead>' in detail -> blocked-without-question), no-claim (terminal, valid only for claim='reality' with non-empty detail -> no-claim-on-non-reality), superseded (names existing successor gate in detail). (3) pass is refused in four cases: (a) controls is empty (pass-without-control); (b) any listed due control was not caught in the same run (control-not-caught); (c) recorded.session is a member of recorded.implemented_by (self-certified); (d) an evidence item or claim_id (parsed via frob_core::graph_id::ClaimId) does not resolve, or part.receipt does not name a committed receipts/gates/<hash>.json hashing to <hash> (evidence-unresolved / FROB-REF-869). (4) measured is never empty or byte-equal to threshold (target-as-measurement). (5) Gate identifiers are unique and append-only (duplicate-id, reused-id). (6) needs='import-lane' requires claim='reality' and excludes the gate from every exit due set; blocks_exit=false is valid only on kind='admission'. (7) kind='kill' rows measure nothing and must never carry claim, claim_id, threshold, tier, controls, or [[gate.part]]; kill modes, outcomes, twelve closed scope kinds (including morphology and cell:<stratum>:<regime>), append-only [[amendment]] ordering/replay, canonical docs/adr/ decision ADRs, and apply_decisions propagation are enforced by N40-03. (8) Additive top-level tables [[amendment]] (N40-03), [[shared_fixture]]/[[related_threshold]] (N40-08), [[fallback_exit]] (N40-32), [[variant]] (N40-33) are admitted additively; unknown top-level tables fail load.",
   "type": "object",
   "required": ["schema"],
   "additionalProperties": false,
@@ -27,8 +27,10 @@
     },
     "amendment": {
       "type": "array",
-      "description": "Dated kill-gate amendments (additive top-level table owned by N40-03).",
-      "items": { "type": "object" }
+      "description": "Append-only dated kill-gate and threshold amendments (owned by N40-03).",
+      "items": {
+        "$ref": "#/$defs/amendment_row"
+      }
     },
     "shared_fixture": {
       "type": "array",
@@ -60,6 +62,98 @@
       "type": "string",
       "description": "Gate row kind (admission, convergence, program, kill; kill rows carry no measurement fields).",
       "enum": ["admission", "convergence", "program", "kill"]
+    },
+    "kill_mode": {
+      "type": "string",
+      "description": "Closed kill-gate evaluation modes (N40-03 step 2, N40-KA R-10).",
+      "enum": ["exit", "pilot-before-funding", "standing", "rolling"]
+    },
+    "kill_outcome": {
+      "type": "string",
+      "description": "Closed kill-gate decision outcomes (N40-03 step 3, N40-KA R-10).",
+      "enum": ["not-fired", "fired", "not-reached", "deferred"]
+    },
+    "scope_kind": {
+      "type": "string",
+      "description": "Closed table of twelve per-scope kill-gate kinds (N40-03 step 3 + Review Note #3 morphology, N40-KA R-32).",
+      "enum": [
+        "cell",
+        "algorithm",
+        "half",
+        "clause",
+        "backend",
+        "item",
+        "resolution",
+        "kind",
+        "family",
+        "mechanism",
+        "proofkind",
+        "morphology"
+      ]
+    },
+    "decision_reading": {
+      "type": "string",
+      "description": "Closed readings distinguishing a second entry for one scope at one exit (N40-03 step 3/6).",
+      "enum": ["final", "reopened"]
+    },
+    "kill_decision": {
+      "oneOf": [
+        {
+          "type": "object",
+          "description": "Empty pre-decision placeholder normalized to not-run.",
+          "required": ["outcome"],
+          "additionalProperties": false,
+          "properties": {
+            "outcome": { "const": "" },
+            "adr": { "const": "" },
+            "date": { "const": "" },
+            "session": { "const": "" },
+            "receipts": { "type": "array", "maxItems": 0 }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["outcome", "adr", "date", "session"],
+          "additionalProperties": false,
+          "properties": {
+            "outcome": { "$ref": "#/$defs/kill_outcome" },
+            "adr": {
+              "type": "string",
+              "pattern": "^docs/adr/ADR-.+\\.md$"
+            },
+            "date": { "type": "string", "minLength": 10 },
+            "session": { "type": "string", "minLength": 1 },
+            "receipts": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 }
+            },
+            "exit": { "$ref": "#/$defs/milestone" },
+            "scope": { "type": "string", "minLength": 1 },
+            "reading": { "$ref": "#/$defs/decision_reading" },
+            "deferred_to": { "$ref": "#/$defs/milestone" },
+            "reason": { "type": "string", "minLength": 1 },
+            "fallback_form": { "type": "string", "minLength": 1 }
+          }
+        }
+      ]
+    },
+    "amendment_row": {
+      "type": "object",
+      "required": ["id", "gate", "field", "old", "new", "reason", "date", "commit"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "gate": { "type": "string", "minLength": 1 },
+        "field": {
+          "type": "string",
+          "enum": ["trigger", "threshold", "fallback", "decided", "reads", "claim", "introduce"]
+        },
+        "old": { "type": "string" },
+        "new": { "type": "string" },
+        "reason": { "type": "string", "minLength": 1 },
+        "date": { "type": "string", "minLength": 10 },
+        "commit": { "type": "string", "minLength": 1 }
+      }
     },
     "needs_kind": {
       "type": "string",
@@ -234,14 +328,25 @@
         "trigger": { "type": "string", "minLength": 1 },
         "fallback": { "type": "string", "minLength": 1 },
         "decided": { "$ref": "#/$defs/milestone" },
-        "mode": { "type": "string", "minLength": 1 },
+        "mode": { "$ref": "#/$defs/kill_mode" },
         "reads": {
           "type": "array",
           "items": { "type": "string", "minLength": 1 }
         },
-        "decision": { "type": "string" },
-        "reread": { "type": "string" },
-        "scope_kind": { "type": "string" },
+        "decision": {
+          "oneOf": [
+            { "$ref": "#/$defs/kill_decision" },
+            {
+              "type": "array",
+              "items": { "$ref": "#/$defs/kill_decision" }
+            }
+          ]
+        },
+        "reread": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/milestone" }
+        },
+        "scope_kind": { "$ref": "#/$defs/scope_kind" },
         "tier": {
           "type": "array",
           "minItems": 1,

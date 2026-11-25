@@ -15,6 +15,9 @@ use frob_core::registry::toml::{self, Fields, Spanned, Table, Value};
 use frob_core::testkit::registry::Controls;
 
 use crate::reasons::HarnessReason;
+use crate::register::kill::{
+    self, Amendment, KillDecision, KillMode, KillValidationContext, ScopeKind,
+};
 use crate::register::row::{
     BaseKind, Claim, GATES_SCHEMA, KILL_FORBIDDEN_FIELDS, Recorded, Status, parse_milestone_ord,
 };
@@ -128,11 +131,15 @@ pub struct KillFields {
     pub trigger: Option<String>,
     pub fallback: Option<String>,
     pub decided: Option<String>,
-    pub mode: Option<String>,
+    pub mode: KillMode,
+    /// True iff `mode` was explicitly set in TOML (used by `--live --ids` completeness checks).
+    pub mode_explicit: bool,
     pub reads: Vec<String>,
-    pub decision: Option<String>,
-    pub reread: Option<String>,
-    pub scope_kind: Option<String>,
+    pub decisions: Vec<KillDecision>,
+    /// True iff `decision` was encoded as an array of tables rather than a single table.
+    pub decision_as_array: bool,
+    pub reread: Vec<String>,
+    pub scope_kind: Option<ScopeKind>,
     pub milestone: Option<String>,
 }
 
@@ -252,12 +259,14 @@ impl GateRow {
     }
 }
 
-/// Complete loaded `registries/gates.toml` register (`frob.gates/1`, `N40-01`).
+/// Complete loaded `registries/gates.toml` register (`frob.gates/1`, `N40-01`, `N40-03`).
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Register {
     pub schema: String,
     pub retired_ids: Vec<String>,
     pub gates: Vec<GateRow>,
+    /// Append-only dated amendments (`[[amendment]]`, `N40-03` step 4).
+    pub amendments: Vec<Amendment>,
     /// True if any row explicitly carried register-layer fields (`kind` / `recurring`).
     pub has_register_layer_fields: bool,
 }
@@ -366,25 +375,39 @@ impl Register {
                 if let Some(ref d) = g.kill.decided {
                     push_kv_str(&mut out, "decided", d);
                 }
-                if let Some(ref m) = g.kill.mode {
-                    push_kv_str(&mut out, "mode", m);
+                if g.kill.mode_explicit || g.kill.mode != KillMode::Exit {
+                    push_kv_str(&mut out, "mode", g.kill.mode.as_str());
                 }
                 if !g.kill.reads.is_empty() {
                     out.push_str("reads = ");
                     push_str_array(&mut out, &g.kill.reads);
                     out.push('\n');
                 }
-                if let Some(ref dec) = g.kill.decision {
-                    push_kv_str(&mut out, "decision", dec);
+                if !g.kill.reread.is_empty() {
+                    out.push_str("reread = ");
+                    push_str_array(&mut out, &g.kill.reread);
+                    out.push('\n');
                 }
-                if let Some(ref rr) = g.kill.reread {
-                    push_kv_str(&mut out, "reread", rr);
-                }
-                if let Some(ref sk) = g.kill.scope_kind {
-                    push_kv_str(&mut out, "scope_kind", sk);
+                if let Some(sk) = g.kill.scope_kind {
+                    push_kv_str(&mut out, "scope_kind", sk.as_str());
                 }
                 if let Some(ref ms) = g.kill.milestone {
                     push_kv_str(&mut out, "milestone", ms);
+                }
+                if !g.kill.decisions.is_empty() {
+                    if !g.kill.decision_as_array && g.kill.decisions.len() == 1 {
+                        out.push_str("decision = ");
+                        kill::push_decision_inline(&mut out, &g.kill.decisions[0]);
+                        out.push('\n');
+                    } else {
+                        out.push_str("decision = [\n");
+                        for d in &g.kill.decisions {
+                            out.push_str("  ");
+                            kill::push_decision_inline(&mut out, d);
+                            out.push_str(",\n");
+                        }
+                        out.push_str("]\n");
+                    }
                 }
             } else {
                 out.push_str("tier = ");
@@ -442,6 +465,9 @@ impl Register {
                 }
             }
         }
+        for a in &self.amendments {
+            kill::push_amendment_toml(&mut out, a);
+        }
         out
     }
 }
@@ -458,7 +484,7 @@ pub struct Violation {
 }
 
 impl Violation {
-    fn from_harness(
+    pub(crate) fn from_harness(
         hr: HarnessReason,
         gate_id: Option<String>,
         field: Option<&str>,
@@ -475,7 +501,7 @@ impl Violation {
         }
     }
 
-    fn schema(
+    pub(crate) fn schema(
         reason: &'static str,
         gate_id: Option<String>,
         field: Option<&str>,
@@ -523,7 +549,7 @@ impl fmt::Display for Violation {
 impl std::error::Error for Violation {}
 
 /// Context for cross-file resolution checks (`receipts/gates/`, `controls.toml`, live
-/// artifact-graph IDs, and retired/previous gate IDs).
+/// artifact-graph IDs, retired/previous gate IDs, and kill-gate amendment/decision checks).
 #[derive(Debug, Clone, Default)]
 pub struct ValidationContext {
     pub repo_root: Option<PathBuf>,
@@ -535,6 +561,9 @@ pub struct ValidationContext {
     /// When `true` (or when register rows carry register-layer fields), enforce missing
     /// `recurring = true` on all nine recurring gate IDs (rule 8).
     pub enforce_recurring_flags: bool,
+    /// Kill-gate validation context (`N40-03`: amendment seeds, receipt timestamps,
+    /// implementer sessions, prior decisions for RC-57, and ADR file existence check).
+    pub kill: KillValidationContext,
 }
 
 /// Parse and validate `registries/gates.toml` from disk (`N40-01` step 5).
@@ -599,17 +628,17 @@ pub fn parse_register_bytes(bytes: &[u8], file: &str) -> Result<Register, Vec<Vi
         )]
     })?;
     if schema != GATES_SCHEMA {
-        return Err(vec![Violation::schema(
+        return Err(top.fail(vec![Violation::schema(
             "schema-invalid",
             None,
             Some("schema"),
             format!("expected `{GATES_SCHEMA}`, got `{schema}`"),
             "set schema = \"frob.gates/1\"",
-        )]);
+        )]));
     }
 
     let retired_ids = match top.opt_array("retired_ids") {
-        Ok(Some(arr)) => parse_str_vec(arr, None, "retired_ids")?,
+        Ok(Some(arr)) => parse_str_vec(arr, None, "retired_ids").map_err(|e| top.fail(e))?,
         Ok(None) => Vec::new(),
         Err(e) => {
             return Err(vec![Violation::schema(
@@ -636,19 +665,36 @@ pub fn parse_register_bytes(bytes: &[u8], file: &str) -> Result<Register, Vec<Vi
         }
     };
 
-    // Admit additive top-level table arrays defined by sibling N40 beads; any other
+    let raw_amendments = match top.opt_array("amendment") {
+        Ok(Some(arr)) => arr,
+        Ok(None) => Vec::new(),
+        Err(e) => {
+            return Err(vec![Violation::schema(
+                "schema-invalid",
+                None,
+                Some("amendment"),
+                e.to_string(),
+                "encode [[amendment]] entries as an array of tables",
+            )]);
+        }
+    };
+
+    // Admit remaining additive top-level table arrays defined by sibling N40 beads; any other
     // unknown top-level table or field fails `top.finish()`.
     for &table_name in ADDITIVE_TOP_TABLES {
+        if table_name == "amendment" {
+            continue;
+        }
         if let Some(sp) = top.take(table_name)
             && !matches!(sp.value, Value::Array(_))
         {
-            return Err(vec![Violation::schema(
+            return Err(top.fail(vec![Violation::schema(
                 "schema-invalid",
                 None,
                 Some(table_name),
                 format!("top-level `{table_name}` must be an array of tables"),
                 "use [[table]] array-of-tables syntax",
-            )]);
+            )]));
         }
     }
 
@@ -701,6 +747,27 @@ pub fn parse_register_bytes(bytes: &[u8], file: &str) -> Result<Register, Vec<Vi
         }
     }
 
+    let mut amendments = Vec::with_capacity(raw_amendments.len());
+    for (idx, sp) in raw_amendments.into_iter().enumerate() {
+        let tbl = match sp.value {
+            Value::Table(t) => t,
+            other => {
+                violations.push(Violation::schema(
+                    "schema-invalid",
+                    Some(format!("amendment[{idx}]")),
+                    None,
+                    format!("expected table, got {}", other.type_name()),
+                    "encode each [[amendment]] entry as a TOML table",
+                ));
+                continue;
+            }
+        };
+        match kill::parse_amendment_table(tbl, idx) {
+            Ok(amd) => amendments.push(amd),
+            Err(mut errs) => violations.append(&mut errs),
+        }
+    }
+
     if !violations.is_empty() {
         return Err(violations);
     }
@@ -709,11 +776,13 @@ pub fn parse_register_bytes(bytes: &[u8], file: &str) -> Result<Register, Vec<Vi
         schema,
         retired_ids,
         gates,
+        amendments,
         has_register_layer_fields,
     })
 }
 
-/// Run all nine register rules and write-time refusal checks on `register` under `ctx` (`N40-01`).
+/// Run all nine register rules, write-time refusal checks, and kill-gate amendment/decision
+/// checks on `register` under `ctx` (`N40-01`, `N40-03`).
 #[must_use]
 pub fn validate(register: &Register, ctx: &ValidationContext) -> Vec<Violation> {
     let mut violations = Vec::new();
@@ -767,6 +836,8 @@ pub fn validate(register: &Register, ctx: &ValidationContext) -> Vec<Violation> 
     for g in &register.gates {
         validate_gate_row(g, &all_gate_ids, ctx, check_missing_recurring, &mut violations);
     }
+
+    kill::validate_kill_register(register, ctx, &mut violations);
 
     violations
 }
@@ -1513,13 +1584,13 @@ fn parse_gate_row(
 
     let id = f.require_str("id").map_err(|e| toml_err("id", e))?;
     if id.trim().is_empty() {
-        return Err(vec![Violation::schema(
+        return Err(f.fail(vec![Violation::schema(
             "schema-invalid",
             Some(label),
             Some("id"),
             "`id` must be non-empty",
             "supply a unique non-empty gate identifier",
-        )]);
+        )]));
     }
 
     let mut has_reg = false;
@@ -1529,13 +1600,13 @@ fn parse_gate_row(
             match Kind::parse(&raw, file, &id) {
                 Ok(k) => Some(k),
                 Err(e) => {
-                    return Err(vec![Violation::schema(
+                    return Err(f.fail(vec![Violation::schema(
                         "invalid-kind",
                         Some(id),
                         Some("kind"),
                         e.message,
                         "use admission, convergence, program, or kill",
-                    )]);
+                    )]));
                 }
             }
         }
@@ -1546,24 +1617,24 @@ fn parse_gate_row(
         .require_str("section")
         .map_err(|e| toml_err("section", e))?;
     if section.trim().is_empty() {
-        return Err(vec![Violation::schema(
+        return Err(f.fail(vec![Violation::schema(
             "schema-invalid",
             Some(id),
             Some("section"),
             "`section` must be non-empty",
             "supply the defining plan subsection",
-        )]);
+        )]));
     }
 
     let consumers = match f
         .opt_array("consumers")
         .map_err(|e| toml_err("consumers", e))?
     {
-        Some(arr) => parse_str_vec(arr, Some(&id), "consumers")?,
+        Some(arr) => parse_str_vec(arr, Some(&id), "consumers").map_err(|e| f.fail(e))?,
         None => Vec::new(),
     };
     let sources = match f.opt_array("sources").map_err(|e| toml_err("sources", e))? {
-        Some(arr) => parse_str_vec(arr, Some(&id), "sources")?,
+        Some(arr) => parse_str_vec(arr, Some(&id), "sources").map_err(|e| f.fail(e))?,
         None => Vec::new(),
     };
     let recurring = match f
@@ -1577,15 +1648,18 @@ fn parse_gate_row(
         None => false,
     };
     let needs = match f.opt_str("needs").map_err(|e| toml_err("needs", e))? {
-        Some(raw) => Needs::parse(&raw).ok_or_else(|| {
-            vec![Violation::schema(
-                "invalid-needs",
-                Some(id.clone()),
-                Some("needs"),
-                format!("unknown `needs` value `{raw}` (expected `simulator` or `import-lane`)"),
-                "use `simulator` or `import-lane`",
-            )]
-        })?,
+        Some(raw) => match Needs::parse(&raw) {
+            Some(n) => n,
+            None => {
+                return Err(f.fail(vec![Violation::schema(
+                    "invalid-needs",
+                    Some(id),
+                    Some("needs"),
+                    format!("unknown `needs` value `{raw}` (expected `simulator` or `import-lane`)"),
+                    "use `simulator` or `import-lane`",
+                )]));
+            }
+        },
         None => Needs::Simulator,
     };
     let blocks_exit = f
@@ -1596,13 +1670,13 @@ fn parse_gate_row(
     if kind == Some(Kind::Kill) {
         for &forbidden in KILL_FORBIDDEN_FIELDS {
             if f.take(forbidden).is_some() {
-                return Err(vec![Violation::schema(
+                return Err(f.fail(vec![Violation::schema(
                     "kill-row-measurement-field",
                     Some(id),
                     Some(forbidden),
                     format!("kill row must not carry measurement field `{forbidden}`"),
                     "remove measurement fields from kill rows",
-                )]);
+                )]));
             }
         }
         let trigger = f.opt_str("trigger").map_err(|e| toml_err("trigger", e))?;
@@ -1611,24 +1685,80 @@ fn parse_gate_row(
         if let Some(ref d) = decided
             && parse_milestone_ord(d).is_none()
         {
-            return Err(vec![Violation::schema(
+            return Err(f.fail(vec![Violation::schema(
                 "invalid-milestone",
                 Some(id),
                 Some("decided"),
                 format!("invalid `decided` milestone `{d}`"),
                 "use M0..M8",
-            )]);
+            )]));
         }
-        let mode = f.opt_str("mode").map_err(|e| toml_err("mode", e))?;
+        let (mode, mode_explicit) = match f.opt_str("mode").map_err(|e| toml_err("mode", e))? {
+            Some(raw) => match KillMode::parse(&raw) {
+                Some(m) => (m, true),
+                None => {
+                    return Err(f.fail(vec![Violation::schema(
+                        "invalid-kill-mode",
+                        Some(id),
+                        Some("mode"),
+                        format!(
+                            "unknown kill mode `{raw}` (expected: exit, pilot-before-funding, standing, rolling)"
+                        ),
+                        "use one of the four closed modes: exit, pilot-before-funding, standing, rolling",
+                    )]));
+                }
+            },
+            None => (KillMode::Exit, false),
+        };
         let reads = match f.opt_array("reads").map_err(|e| toml_err("reads", e))? {
-            Some(arr) => parse_str_vec(arr, Some(&id), "reads")?,
+            Some(arr) => parse_str_vec(arr, Some(&id), "reads").map_err(|e| f.fail(e))?,
             None => Vec::new(),
         };
-        let decision = f.opt_str("decision").map_err(|e| toml_err("decision", e))?;
-        let reread = f.opt_str("reread").map_err(|e| toml_err("reread", e))?;
-        let scope_kind = f
+        let (decisions, decision_as_array) = match f.take("decision") {
+            Some(sp) => kill::parse_decision_value(sp, &id).map_err(|e| f.fail(e))?,
+            None => (Vec::new(), false),
+        };
+        let reread = match f.take("reread") {
+            Some(sp) => match sp.value {
+                Value::Array(arr) => {
+                    parse_str_vec(arr, Some(&id), "reread").map_err(|e| f.fail(e))?
+                }
+                Value::Str(s) => vec![s],
+                other => {
+                    return Err(f.fail(vec![Violation::schema(
+                        "schema-invalid",
+                        Some(id),
+                        Some("reread"),
+                        format!(
+                            "`reread` must be an array of milestone strings, got {}",
+                            other.type_name()
+                        ),
+                        "encode `reread` as an array of M0..M8 strings (e.g. `[\"M6\"]`)",
+                    )]));
+                }
+            },
+            None => Vec::new(),
+        };
+        let scope_kind = match f
             .opt_str("scope_kind")
-            .map_err(|e| toml_err("scope_kind", e))?;
+            .map_err(|e| toml_err("scope_kind", e))?
+        {
+            Some(raw) => match ScopeKind::parse(&raw) {
+                Some(sk) => Some(sk),
+                None => {
+                    return Err(f.fail(vec![Violation::schema(
+                        "decision-scope-invalid",
+                        Some(id),
+                        Some("scope_kind"),
+                        format!(
+                            "unknown `scope_kind` `{raw}` (not in the closed scope-kind table)"
+                        ),
+                        "use a closed scope kind: cell, algorithm, half, clause, backend, item, resolution, kind, family, mechanism, proofkind, or morphology",
+                    )]));
+                }
+            },
+            None => None,
+        };
         let milestone = f
             .opt_str("milestone")
             .map_err(|e| toml_err("milestone", e))?;
@@ -1664,8 +1794,10 @@ fn parse_gate_row(
                     fallback,
                     decided,
                     mode,
+                    mode_explicit,
                     reads,
-                    decision,
+                    decisions,
+                    decision_as_array,
                     reread,
                     scope_kind,
                     milestone,
@@ -1676,101 +1808,104 @@ fn parse_gate_row(
     }
 
     // Measured row (`admission` / `convergence` / `program` / untyped base row).
-    let claim_sp = f.take("claim").ok_or_else(|| {
-        vec![Violation::from_harness(
+    let Some(claim_sp) = f.take("claim") else {
+        return Err(f.fail(vec![Violation::from_harness(
             HarnessReason::ClaimNotOneOfSeven,
-            Some(id.clone()),
+            Some(id),
             Some("claim"),
             "missing required field `claim`",
             "Apply rule 3 of the gate register",
-        )]
-    })?;
+        )]));
+    };
     let claim_raw = match claim_sp.value {
         Value::Str(s) => s,
         Value::Array(_) => {
-            return Err(vec![Violation::from_harness(
+            return Err(f.fail(vec![Violation::from_harness(
                 HarnessReason::ClaimNotOneOfSeven,
                 Some(id),
                 Some("claim"),
                 "`claim` must be a single string from the seven closed kinds, not an array",
                 "Apply rule 3 of the gate register (the claim of the governing part)",
-            )]);
+            )]));
         }
         other => {
-            return Err(vec![Violation::from_harness(
+            return Err(f.fail(vec![Violation::from_harness(
                 HarnessReason::ClaimNotOneOfSeven,
                 Some(id),
                 Some("claim"),
                 format!("`claim` must be a string, got {}", other.type_name()),
                 "Apply rule 3 of the gate register",
-            )]);
+            )]));
         }
     };
-    let claim = Claim::parse(&claim_raw, file, &id).map_err(|e| {
-        vec![Violation::from_harness(
-            HarnessReason::ClaimNotOneOfSeven,
-            Some(id.clone()),
-            Some("claim"),
-            e.message,
-            "Apply rule 3 of the gate register",
-        )]
-    })?;
+    let claim = match Claim::parse(&claim_raw, file, &id) {
+        Ok(c) => c,
+        Err(e) => {
+            return Err(f.fail(vec![Violation::from_harness(
+                HarnessReason::ClaimNotOneOfSeven,
+                Some(id),
+                Some("claim"),
+                e.message,
+                "Apply rule 3 of the gate register",
+            )]));
+        }
+    };
 
     let claim_id = f
         .require_str("claim_id")
         .map_err(|e| toml_err("claim_id", e))?;
     if claim_id.trim().is_empty() {
-        return Err(vec![Violation::from_harness(
+        return Err(f.fail(vec![Violation::from_harness(
             HarnessReason::EvidenceUnresolved,
             Some(id),
             Some("claim_id"),
             "`claim_id` must be non-empty",
             "Cite a valid claim identifier",
-        )]);
+        )]));
     }
 
     let threshold = f
         .require_str("threshold")
         .map_err(|e| toml_err("threshold", e))?;
     if threshold.trim().is_empty() {
-        return Err(vec![Violation::schema(
+        return Err(f.fail(vec![Violation::schema(
             "schema-invalid",
             Some(id),
             Some("threshold"),
             "`threshold` must be non-empty",
             "state the gate threshold brief",
-        )]);
+        )]));
     }
 
     let milestone = f
         .require_str("milestone")
         .map_err(|e| toml_err("milestone", e))?;
     if parse_milestone_ord(&milestone).is_none() {
-        return Err(vec![Violation::schema(
+        return Err(f.fail(vec![Violation::schema(
             "invalid-milestone",
             Some(id),
             Some("milestone"),
             format!("invalid `milestone` `{milestone}` (expected M0..M8)"),
             "use M0..M8",
-        )]);
+        )]));
     }
 
     let tier_raw = f.require_array("tier").map_err(|e| toml_err("tier", e))?;
-    let tier = parse_str_vec(tier_raw, Some(&id), "tier")?;
+    let tier = parse_str_vec(tier_raw, Some(&id), "tier").map_err(|e| f.fail(e))?;
     if tier.is_empty() {
-        return Err(vec![Violation::schema(
+        return Err(f.fail(vec![Violation::schema(
             "schema-invalid",
             Some(id),
             Some("tier"),
             "`tier` must contain at least one entry",
             "list at least one execution tier (e.g. G0:host)",
-        )]);
+        )]));
     }
 
     let controls_raw = f
         .require_array("controls")
         .map_err(|e| toml_err("controls", e))?;
-    let controls = parse_str_vec(controls_raw, Some(&id), "controls")?;
+    let controls = parse_str_vec(controls_raw, Some(&id), "controls").map_err(|e| f.fail(e))?;
 
     let foundation = f
         .opt_str("foundation")
@@ -1781,13 +1916,13 @@ fn parse_gate_row(
     if let Some(ref fn_m) = first_needed
         && parse_milestone_ord(fn_m).is_none()
     {
-        return Err(vec![Violation::schema(
+        return Err(f.fail(vec![Violation::schema(
             "invalid-milestone",
             Some(id),
             Some("first_needed"),
             format!("invalid `first_needed` `{fn_m}` (expected M0..M8)"),
             "use M0..M8",
-        )]);
+        )]));
     }
 
     let raw_parts = f
@@ -1799,16 +1934,16 @@ fn parse_gate_row(
         let ptbl = match sp.value {
             Value::Table(t) => t,
             other => {
-                return Err(vec![Violation::schema(
+                return Err(f.fail(vec![Violation::schema(
                     "schema-invalid",
                     Some(id),
                     Some("part"),
                     format!("part[{pidx}] expected table, got {}", other.type_name()),
                     "use [[gate.part]] tables",
-                )]);
+                )]));
             }
         };
-        parts.push(parse_part(ptbl, file, &id, pidx)?);
+        parts.push(parse_part(ptbl, file, &id, pidx).map_err(|e| f.fail(e))?);
     }
 
     if let Err(e) = f.finish() {
@@ -1870,25 +2005,28 @@ fn parse_part(
         .require_str("milestone")
         .map_err(|e| toml_err("milestone", e))?;
     if parse_milestone_ord(&milestone).is_none() {
-        return Err(vec![Violation::schema(
+        return Err(f.fail(vec![Violation::schema(
             "invalid-milestone",
             Some(gate_id.to_owned()),
             Some("milestone"),
             format!("part[{pidx}] invalid milestone `{milestone}`"),
             "use M0..M8",
-        )]);
+        )]));
     }
     let scope = f.opt_str("scope").map_err(|e| toml_err("scope", e))?;
     let status_raw = f.require_str("status").map_err(|e| toml_err("status", e))?;
-    let status = Status::parse(&status_raw, file, gate_id).map_err(|e| {
-        vec![Violation::schema(
-            "invalid-status",
-            Some(gate_id.to_owned()),
-            Some("status"),
-            e.message,
-            "use one of: not-run, pass, fail, killed, blocked, no-claim, superseded",
-        )]
-    })?;
+    let status = match Status::parse(&status_raw, file, gate_id) {
+        Ok(s) => s,
+        Err(e) => {
+            return Err(f.fail(vec![Violation::schema(
+                "invalid-status",
+                Some(gate_id.to_owned()),
+                Some("status"),
+                e.message,
+                "use one of: not-run, pass, fail, killed, blocked, no-claim, superseded",
+            )]));
+        }
+    };
     let measured = f
         .require_str("measured")
         .map_err(|e| toml_err("measured", e))?;
@@ -1916,7 +2054,7 @@ fn parse_part(
     let ev_raw = f
         .require_array("evidence")
         .map_err(|e| toml_err("evidence", e))?;
-    let evidence = parse_str_vec(ev_raw, Some(gate_id), "evidence")?;
+    let evidence = parse_str_vec(ev_raw, Some(gate_id), "evidence").map_err(|e| f.fail(e))?;
 
     let rec_tbl = f
         .require_table("recorded")
@@ -1925,22 +2063,22 @@ fn parse_part(
     let recorded = Recorded {
         date: rf
             .require_str("date")
-            .map_err(|e| toml_err("recorded.date", e))?,
+            .map_err(|e| f.fail(toml_err("recorded.date", e)))?,
         session: rf
             .require_str("session")
-            .map_err(|e| toml_err("recorded.session", e))?,
+            .map_err(|e| f.fail(toml_err("recorded.session", e)))?,
         implemented_by: rf
             .require_str("implemented_by")
-            .map_err(|e| toml_err("recorded.implemented_by", e))?,
+            .map_err(|e| f.fail(toml_err("recorded.implemented_by", e)))?,
     };
     if let Err(e) = rf.finish() {
-        return Err(vec![Violation::schema(
+        return Err(f.fail(vec![Violation::schema(
             "unknown-field",
             Some(gate_id.to_owned()),
             Some("recorded"),
             e.to_string(),
             "remove unknown fields from `recorded` table",
-        )]);
+        )]));
     }
 
     let detail = f.opt_str("detail").map_err(|e| toml_err("detail", e))?;

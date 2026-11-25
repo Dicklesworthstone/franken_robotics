@@ -152,6 +152,7 @@ fn valid_pass_fixture(root: &Path, controls: Controls) -> (String, String, Valid
         retired_ids: BTreeSet::new(),
         previous_ids: None,
         enforce_recurring_flags: false,
+        ..ValidationContext::default()
     };
     (toml, receipt_hex, ctx)
 }
@@ -1285,6 +1286,7 @@ fn write_path_refuses_self_certified_and_uncaught_leaving_file_unchanged() {
         retired_ids: BTreeSet::new(),
         previous_ids: None,
         enforce_recurring_flags: false,
+        ..ValidationContext::default()
     };
     let errs_self = record(&gates_path, "GATE-KIN-01", make_part("s1", "s1,s3"), &ctx_caught)
         .expect_err("self-certified write must be refused");
@@ -1304,6 +1306,7 @@ fn write_path_refuses_self_certified_and_uncaught_leaving_file_unchanged() {
         retired_ids: BTreeSet::new(),
         previous_ids: None,
         enforce_recurring_flags: false,
+        ..ValidationContext::default()
     };
     let errs_uncaught = record(
         &gates_path,

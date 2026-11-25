@@ -959,6 +959,34 @@ pub fn relative_dir_inside(canon_repo: &Path, target: &Path) -> Option<String> {
 /// when `target` lies outside `canon_repo`. Returns `None` if `target` lies inside `canon_repo`.
 #[must_use]
 pub fn sibling_relative_path(canon_repo: &Path, target: &Path) -> Option<String> {
+    // Preserve symlinked sibling directories placed beside a scratch copy of the repo
+    // (e.g. `<scratch>/repo` beside `<scratch>/frankensim -> <projects>/frankensim`)
+    // when Cargo emits the lexical sibling path without dereferencing the symlink.
+    if let Some(canon_parent) = canon_repo.parent() {
+        let cleaned_target = lexical_clean(target);
+        let lexical_stripped = cleaned_target
+            .strip_prefix(canon_parent)
+            .ok()
+            .or_else(|| {
+                let stripped_priv = canon_parent.strip_prefix("/private").ok()?;
+                cleaned_target.strip_prefix(stripped_priv).ok()
+            });
+        if let Some(rel_under_parent) = lexical_stripped {
+            let repo_name = canon_repo.file_name();
+            let first_comp = rel_under_parent.components().next();
+            let is_inside_repo = matches!(
+                (repo_name, first_comp),
+                (Some(rn), Some(Component::Normal(fc))) if rn == fc
+            );
+            if !is_inside_repo {
+                let tail = normalize_rel_path(rel_under_parent);
+                if !tail.is_empty() {
+                    return Some(format!("../{tail}"));
+                }
+            }
+        }
+    }
+
     let canon_target = canonical_or_clean(target);
     if canon_target.strip_prefix(canon_repo).is_ok() {
         return None;

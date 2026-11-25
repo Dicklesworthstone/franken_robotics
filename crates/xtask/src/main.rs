@@ -1,26 +1,8 @@
 use std::io;
 use std::process::ExitCode;
 
-use xtask::check_contracts;
-use xtask::check_deps;
-use xtask::check_generated;
-use xtask::check_layers;
-use xtask::check_unsafe;
-use xtask::cli::{self, CheckFn};
-use xtask::stack;
-
-/// Closed six-check command table for `cargo xtask` (N34p4-01 `check-layers`,
-/// BD-003 `check-deps`, N34-07 `check-unsafe`, N34p4-03 `check-generated`,
-/// N34-08 `check-contracts`, N33a-05 `check-stack`; BD-004 enforces the count
-/// and finding-identifier ownership matrix).
-const COMMANDS: &[(&str, CheckFn)] = &[
-    ("check-layers", check_layers::run_command),
-    ("check-deps", check_deps::run_command),
-    ("check-unsafe", check_unsafe::run_command),
-    ("check-generated", check_generated::run_command),
-    ("check-contracts", check_contracts::run_command),
-    ("check-stack", stack::verify::run_command),
-];
+use xtask::assembly::COMMANDS;
+use xtask::cli;
 
 fn main() -> ExitCode {
     let args: Vec<String> = std::env::args().skip(1).collect();
@@ -33,8 +15,13 @@ fn main() -> ExitCode {
 mod tests {
     use std::process::ExitCode;
 
-    use super::COMMANDS;
+    use xtask::assembly::{COMMANDS, verify_command_table};
     use xtask::cli::{self, EXIT_USAGE};
+
+    #[test]
+    fn main_command_table_is_strictly_six_checks() {
+        verify_command_table(COMMANDS).expect("main COMMANDS table must be exactly the six checks");
+    }
 
     #[test]
     fn no_argument_prints_subcommands_and_exits_3() {

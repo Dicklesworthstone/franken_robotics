@@ -1,0 +1,242 @@
+{
+  "$id": "frob.kernel/1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "frob.kernel/1",
+  "description": "Spark kernel manifest and stage signature (N21b-01).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "name",
+    "class",
+    "role",
+    "args",
+    "determinism",
+    "identities",
+    "derivative",
+    "cpu_reference",
+    "signature"
+  ],
+  "properties": {
+    "schema": { "const": "frob.kernel/1" },
+    "id": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "name": { "type": "string", "minLength": 1 },
+    "class": { "enum": ["Float", "Exact", "Guarded", "Stat"] },
+    "role": { "enum": ["Ordinary", "StrictPredicate", "Digest", "NegativeControl"] },
+    "determinism": { "enum": ["D0", "D1", "D2", "D3", "D4"] },
+    "cpu_reference": { "type": "string", "minLength": 1 },
+    "derivative": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+    "identities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "statement"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "statement": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "args": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "elem", "view", "shape", "dim", "kind", "components", "state"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "elem": { "enum": ["f32", "f64", "u32", "i32", "bool"] },
+          "view": { "enum": ["Value", "Bits"] },
+          "shape": { "type": "array", "items": { "$ref": "#/$defs/cap_expr" } },
+          "dim": {
+            "type": "array",
+            "minItems": 6,
+            "maxItems": 6,
+            "items": { "type": "integer", "minimum": -128, "maximum": 127 }
+          },
+          "kind": {
+            "enum": [
+              "quaternion",
+              "unit-complex",
+              "turn-count",
+              "vector",
+              "twist",
+              "wrench",
+              "scalar",
+              "integer",
+              "angle",
+              "euler-triple",
+              "roll-pitch-yaw",
+              "axis-angle"
+            ]
+          },
+          "components": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+          "state": { "type": "boolean" }
+        }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reads",
+        "writes",
+        "may_alias",
+        "layout",
+        "epoch_read",
+        "epoch_write",
+        "resources",
+        "numerics",
+        "feeds_state",
+        "footprint_evidence"
+      ],
+      "properties": {
+        "reads": { "type": "array", "items": { "$ref": "#/$defs/footprint" } },
+        "writes": { "type": "array", "items": { "$ref": "#/$defs/footprint" } },
+        "may_alias": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": { "type": "string", "minLength": 1 }
+          }
+        },
+        "layout": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "arg",
+              "elem",
+              "extents",
+              "strides",
+              "stride_unit",
+              "stride_signed",
+              "origin",
+              "alloc_extent"
+            ],
+            "properties": {
+              "arg": { "type": "string", "minLength": 1 },
+              "elem": { "enum": ["f32", "f64", "u32", "i32", "bool"] },
+              "extents": { "type": "array", "items": { "$ref": "#/$defs/cap_expr" } },
+              "strides": { "type": "array", "items": { "type": "integer" } },
+              "stride_unit": { "enum": ["Bytes", "Elements"] },
+              "stride_signed": { "type": "boolean" },
+              "origin": { "$ref": "#/$defs/cap_expr" },
+              "alloc_extent": { "$ref": "#/$defs/cap_expr" }
+            }
+          }
+        },
+        "epoch_read": { "type": "integer" },
+        "epoch_write": { "type": "integer" },
+        "feeds_state": { "type": "boolean" },
+        "footprint_evidence": {
+          "oneOf": [
+            { "const": "lint" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["kir_program"],
+              "properties": { "kir_program": { "type": "string", "pattern": "^[0-9a-f]{64}$" } }
+            }
+          ]
+        },
+        "resources": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["live_values", "stack_bytes", "max_loop_bound", "buffer_args"],
+          "properties": {
+            "live_values": { "type": "integer", "minimum": 0 },
+            "stack_bytes": { "type": "integer", "minimum": 0 },
+            "max_loop_bound": { "type": "integer", "minimum": 0 },
+            "buffer_args": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "numerics": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "precision",
+            "error_bound",
+            "deferral_threshold",
+            "exact_fallback",
+            "neutrals",
+            "padded_reduction_outputs"
+          ],
+          "properties": {
+            "precision": { "enum": ["f32", "f64", "exact-u32"] },
+            "error_bound": { "type": ["number", "null"] },
+            "deferral_threshold": { "type": ["number", "null"] },
+            "exact_fallback": { "type": ["string", "null"] },
+            "neutrals": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["arg", "consumer", "value_bits_hex", "identity_rows"],
+                "properties": {
+                  "arg": { "type": "string", "minLength": 1 },
+                  "consumer": { "enum": ["sum", "product", "min", "max", "factorization"] },
+                  "value_bits_hex": { "type": ["string", "null"] },
+                  "identity_rows": { "type": "boolean" }
+                }
+              }
+            },
+            "padded_reduction_outputs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["arg", "consumer"],
+                "properties": {
+                  "arg": { "type": "string", "minLength": 1 },
+                  "consumer": { "enum": ["sum", "product", "min", "max", "factorization"] }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "cap_expr": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "constant",
+        "nv_cap",
+        "link_cap",
+        "contact_cap",
+        "row_cap",
+        "sample_cap",
+        "actuator_cap",
+        "worlds"
+      ],
+      "properties": {
+        "constant": { "type": "integer", "minimum": 0 },
+        "nv_cap": { "type": "integer", "minimum": 0 },
+        "link_cap": { "type": "integer", "minimum": 0 },
+        "contact_cap": { "type": "integer", "minimum": 0 },
+        "row_cap": { "type": "integer", "minimum": 0 },
+        "sample_cap": { "type": "integer", "minimum": 0 },
+        "actuator_cap": { "type": "integer", "minimum": 0 },
+        "worlds": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "footprint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["arg", "lanes", "lo", "hi"],
+      "properties": {
+        "arg": { "type": "string", "minLength": 1 },
+        "lanes": { "enum": ["OwnWorld", "AllWorlds"] },
+        "lo": { "$ref": "#/$defs/cap_expr" },
+        "hi": { "$ref": "#/$defs/cap_expr" }
+      }
+    }
+  }
+}

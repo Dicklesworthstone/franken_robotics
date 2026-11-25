@@ -1,0 +1,420 @@
+#![deny(unsafe_code)]
+
+//! Prelude v0, dialect-cleanliness, and planted negative-control tests
+//! (`cargo test -p frob-kernels prelude`, `cargo test -p frob-kernels dialect_sources_are_clean`).
+
+use std::collections::BTreeSet;
+use std::fs;
+use std::path::{Path, PathBuf};
+
+use frob_core::id::hash_blob;
+use frob_core::refusal::{RefusalCode, RetryPolicy};
+use frob_core::registry::toml::{self, Fields, Value};
+use frob_kernels::dialect::{
+    BackendTarget, METAL_MAX_ARGUMENTS, PRELUDE_CUDA, PRELUDE_METAL, PRELUDE_VERSION,
+    SKELETON_K_PROBE_CONTRACT, SKELETON_K_SELFTEST, assemble_and_lint, assemble_unit,
+    body_after_prelude, expand_f32_bits_macro, frob_f32_bits, parse_c_u32_literal,
+    planted_contraction_options,
+};
+use frob_kir::dialect_lint::{
+    CompileOptions, DialectUnit, MetalMathMode, SourceFile, collect_findings, lint,
+};
+
+fn dialect_root() -> PathBuf {
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("dialect")
+}
+
+fn bad_fixtures_root() -> PathBuf {
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/bad_dialect")
+}
+
+fn collect_headers(dir: &Path, out: &mut Vec<PathBuf>) {
+    let Ok(rd) = fs::read_dir(dir) else { return };
+    let mut entries: Vec<PathBuf> = rd.flatten().map(|e| e.path()).collect();
+    entries.sort();
+    for p in entries {
+        if p.is_dir() {
+            collect_headers(&p, out);
+        } else if p.extension().and_then(|s| s.to_str()) == Some("h") {
+            out.push(p);
+        }
+    }
+}
+
+#[test]
+fn dialect_sources_are_clean() {
+    let root = dialect_root();
+    let mut headers = Vec::new();
+    collect_headers(&root, &mut headers);
+    assert!(
+        headers.len() >= 4,
+        "expected at least prelude_cuda.h, prelude_metal.h, k_selftest.h, k_probe_contract.h"
+    );
+
+    let shape = SourceFile::new("shape.h", "#define NV_CAP 64u\n");
+    let mut preludes_checked = 0usize;
+    let mut sources_checked = 0usize;
+
+    for path in &headers {
+        let rel = path
+            .strip_prefix(&root)
+            .unwrap_or(path)
+            .to_string_lossy()
+            .replace('\\', "/");
+        let text = fs::read_to_string(path)
+            .unwrap_or_else(|e| panic!("failed to read {}: {e}", path.display()));
+
+        if rel == "prelude_cuda.h" {
+            let unit = DialectUnit::default()
+                .with_shape_constants(shape.clone())
+                .with_prelude(SourceFile::new(&rel, text));
+            let report = lint(&unit, &BackendTarget::Cuda.production_options())
+                .unwrap_or_else(|r| panic!("{rel} failed lint: {r}"));
+            assert!(report.findings.is_empty());
+            preludes_checked += 1;
+        } else if rel == "prelude_metal.h" {
+            let unit = DialectUnit::default()
+                .with_shape_constants(shape.clone())
+                .with_prelude(SourceFile::new(&rel, text));
+            let report = lint(&unit, &BackendTarget::Metal.production_options())
+                .unwrap_or_else(|r| panic!("{rel} failed lint: {r}"));
+            assert!(report.findings.is_empty());
+            preludes_checked += 1;
+        } else {
+            for target in [BackendTarget::Cuda, BackendTarget::Metal] {
+                let (_, _, report) = assemble_and_lint(
+                    target,
+                    Some(shape.clone()),
+                    vec![SourceFile::new(&rel, text.clone())],
+                )
+                .unwrap_or_else(|r| panic!("{rel} under {target:?} failed lint: {r}"));
+                assert!(report.findings.is_empty());
+            }
+            sources_checked += 1;
+        }
+    }
+
+    assert_eq!(preludes_checked, 2, "must lint both CUDA and Metal preludes");
+    assert!(sources_checked >= 2, "must lint checked-in skeletons");
+}
+
+#[test]
+fn prelude_expansions_differ_only_in_prelude() {
+    for (name, src) in [
+        ("skeletons/k_selftest.h", SKELETON_K_SELFTEST),
+        ("skeletons/k_probe_contract.h", SKELETON_K_PROBE_CONTRACT),
+    ] {
+        let (cuda_src, cuda_digest, cuda_rep) = assemble_and_lint(
+            BackendTarget::Cuda,
+            None,
+            vec![SourceFile::new(name, src)],
+        )
+        .unwrap_or_else(|r| panic!("{name} CUDA failed lint: {r}"));
+        let (metal_src, metal_digest, metal_rep) = assemble_and_lint(
+            BackendTarget::Metal,
+            None,
+            vec![SourceFile::new(name, src)],
+        )
+        .unwrap_or_else(|r| panic!("{name} Metal failed lint: {r}"));
+
+        assert!(cuda_rep.findings.is_empty());
+        assert!(metal_rep.findings.is_empty());
+        assert_ne!(cuda_src, metal_src, "CUDA and Metal preludes must differ");
+
+        let cuda_body = body_after_prelude(&cuda_src).expect("boundary marker present in CUDA");
+        let metal_body = body_after_prelude(&metal_src).expect("boundary marker present in Metal");
+        assert_eq!(
+            cuda_body, metal_body,
+            "{name}: kernel text after prelude must be byte-identical"
+        );
+        assert_eq!(
+            cuda_digest, metal_digest,
+            "{name}: post-prelude BLAKE3 digests must match"
+        );
+        assert_eq!(hash_blob(cuda_body.as_bytes()), cuda_digest);
+    }
+}
+
+#[test]
+fn prelude_f32_bits_evaluates_0_25_and_neg_zero() {
+    assert_eq!(PRELUDE_VERSION, 0);
+    assert!(PRELUDE_CUDA.contains("#define FROB_PRELUDE_VERSION 0"));
+    assert!(PRELUDE_METAL.contains("#define FROB_PRELUDE_VERSION 0"));
+
+    // Verify both preludes define FROB_F32_BITS as exact bit reinterpretation (no arithmetic).
+    for (lit, expected_bits, expected_val, neg_sign) in [
+        ("0x3e800000u", 0x3e80_0000u32, 0.25_f32, false),
+        ("0x80000000u", 0x8000_0000u32, -0.0_f32, true),
+    ] {
+        let cuda_exp = expand_f32_bits_macro(PRELUDE_CUDA, lit)
+            .expect("prelude_cuda.h must define FROB_F32_BITS(b)");
+        let metal_exp = expand_f32_bits_macro(PRELUDE_METAL, lit)
+            .expect("prelude_metal.h must define FROB_F32_BITS(b)");
+
+        assert_eq!(cuda_exp, format!("__uint_as_float((u32)({lit}))"));
+        assert_eq!(metal_exp, format!("as_type<f32>((u32)({lit}))"));
+
+        let parsed = parse_c_u32_literal(lit).expect("literal parses");
+        assert_eq!(parsed, expected_bits);
+        let val = frob_f32_bits(parsed);
+        assert_eq!(val.to_bits(), expected_bits);
+        assert_eq!(val, expected_val);
+        assert_eq!(val.is_sign_negative(), neg_sign);
+    }
+
+    // Signed zero is bit-distinct from +0.0.
+    assert_ne!(frob_f32_bits(0x8000_0000).to_bits(), 0.0_f32.to_bits());
+}
+
+#[test]
+fn prelude_contraction_detector_and_planted_options() {
+    // Static half: K-probe-contract is lint-clean under production CUDA and Metal options.
+    for target in [BackendTarget::Cuda, BackendTarget::Metal] {
+        let (_, _, report) = assemble_and_lint(
+            target,
+            None,
+            vec![SourceFile::new(
+                "skeletons/k_probe_contract.h",
+                SKELETON_K_PROBE_CONTRACT,
+            )],
+        )
+        .unwrap_or_else(|r| panic!("K-probe-contract failed lint on {target:?}: {r}"));
+        assert!(report.findings.is_empty());
+    }
+
+    // Reference arithmetic for KA-526 detector and GB-25 regrouping pair.
+    let a = frob_f32_bits(0x3f80_0800); // 1 + 2^-12
+    let c = frob_f32_bits(0x3f80_1000); // 1 + 2^-11
+    assert_eq!(a, 1.0_f32 + 2.0_f32.powi(-12));
+    assert_eq!(c, 1.0_f32 + 2.0_f32.powi(-11));
+    let unfused = (a * a) - c;
+    let fused = a.mul_add(a, -c);
+    assert_eq!(unfused.to_bits(), 0x0000_0000);
+    assert_eq!(fused.to_bits(), 0x3380_0000); // 2^-24
+
+    let ra = frob_f32_bits(0x4cbe_bc20); // 10^8
+    let rb = frob_f32_bits(0xccbe_bc20); // -10^8
+    let rc = frob_f32_bits(0x3f80_0000); // 1.0
+    assert_eq!(ra, 100_000_000.0_f32);
+    assert_eq!(rb, -100_000_000.0_f32);
+    assert_eq!(((ra + rb) + rc).to_bits(), 0x3f80_0000);
+    assert_eq!((ra + (rb + rc)).to_bits(), 0x0000_0000);
+
+    // Planted contraction-permitting compile-option sets (in-memory + checked-in TOML fixture).
+    for (label, opts) in planted_contraction_options() {
+        let target = match opts {
+            CompileOptions::Cuda { .. } => BackendTarget::Cuda,
+            CompileOptions::Metal { .. } => BackendTarget::Metal,
+        };
+        let u = assemble_unit(
+            target,
+            None,
+            vec![SourceFile::new(
+                "skeletons/k_probe_contract.h",
+                SKELETON_K_PROBE_CONTRACT,
+            )],
+        );
+        let findings = collect_findings(&u, &opts);
+        assert!(
+            !findings.is_empty() && findings.iter().all(|f| f.rule == 4),
+            "planted option fixture `{label}` must fail rule 4, got {findings:?}"
+        );
+        let err = lint(&u, &opts).unwrap_err();
+        assert_eq!(err.code, RefusalCode::FrobRef251);
+        assert_eq!(err.retry, RetryPolicy::AfterChange);
+    }
+
+    // Also parse and test the checked-in `contraction_options.toml` fixture.
+    let toml_path = bad_fixtures_root().join("contraction_options.toml");
+    let toml_bytes = fs::read(&toml_path)
+        .unwrap_or_else(|e| panic!("failed to read {}: {e}", toml_path.display()));
+    let root = toml::parse(&toml_bytes).expect("contraction_options.toml parses");
+    let mut f = Fields::new(root, "contraction_options.toml");
+    assert_eq!(
+        f.require_str("schema").unwrap(),
+        "frob.dialect.planted_options/1"
+    );
+    let fixtures = f.require_array("fixture").unwrap();
+    f.finish().unwrap();
+    assert!(fixtures.len() >= 4);
+
+    for sp in fixtures {
+        let Value::Table(tbl) = sp.value else {
+            panic!("fixture entry must be a table");
+        };
+        let mut row = Fields::new(tbl, "fixture");
+        let name = row.require_str("name").unwrap();
+        let backend = row.require_str("backend").unwrap();
+        let expect_refusal = row.require_str("expect_refusal").unwrap();
+        let expect_rule = u8::try_from(row.require_int("expect_rule").unwrap()).unwrap();
+        let opts = match backend.as_str() {
+            "cuda" => {
+                let raw = row.require_array("options").unwrap();
+                let options = raw
+                    .into_iter()
+                    .map(|x| x.value.as_str().expect("option string").to_owned())
+                    .collect();
+                CompileOptions::Cuda { options }
+            }
+            "metal" => {
+                let mode = row.require_str("math_mode").unwrap();
+                let math_mode = match mode.as_str() {
+                    "safe" => MetalMathMode::Safe,
+                    "fast" => MetalMathMode::Fast,
+                    other => panic!("unexpected math_mode `{other}`"),
+                };
+                CompileOptions::Metal { math_mode }
+            }
+            other => panic!("unexpected backend `{other}`"),
+        };
+        row.finish().unwrap();
+
+        let target = match opts {
+            CompileOptions::Cuda { .. } => BackendTarget::Cuda,
+            CompileOptions::Metal { .. } => BackendTarget::Metal,
+        };
+        let fixture_unit = assemble_unit(
+            target,
+            None,
+            vec![SourceFile::new(
+                "skeletons/k_probe_contract.h",
+                SKELETON_K_PROBE_CONTRACT,
+            )],
+        );
+        let err = lint(&fixture_unit, &opts)
+            .expect_err(&format!("fixture `{name}` must be refused under rule 4"));
+        assert_eq!(err.code.as_str(), expect_refusal, "fixture `{name}`");
+        let findings = collect_findings(&fixture_unit, &opts);
+        assert!(
+            findings.iter().any(|x| x.rule == expect_rule),
+            "fixture `{name}` expected rule {expect_rule}, got {findings:?}"
+        );
+    }
+}
+
+#[test]
+fn prelude_metal_msl_3_1_and_buffer_limit() {
+    // Contraction-off pragmas are present inside prelude_metal.h.
+    assert!(PRELUDE_METAL.contains("#pragma clang fp contract(off)"));
+    assert!(PRELUDE_METAL.contains("#pragma STDC FP_CONTRACT OFF"));
+    assert!(PRELUDE_METAL.contains("#include <metal_stdlib>"));
+    assert!(PRELUDE_METAL.contains("using namespace metal;"));
+
+    // No construct newer than MSL 3.1 appears in prelude_metal.h or expanded skeletons.
+    const POST_MSL_3_1_TOKENS: &[&str] = &[
+        "bfloat",
+        "bfloat16_t",
+        "cooperative_tensor",
+        "mesh_grid_properties",
+        "atomic_ulong",
+        "metal4",
+    ];
+    for (name, src) in [
+        ("k_selftest.h", SKELETON_K_SELFTEST),
+        ("k_probe_contract.h", SKELETON_K_PROBE_CONTRACT),
+    ] {
+        let (expanded, _, _) = assemble_and_lint(
+            BackendTarget::Metal,
+            None,
+            vec![SourceFile::new(name, src)],
+        )
+        .unwrap();
+        for banned in POST_MSL_3_1_TOKENS {
+            assert!(
+                !expanded.contains(banned),
+                "Metal expansion of {name} must not contain post-MSL-3.1 construct `{banned}`"
+            );
+        }
+
+        // Verify every FROB_BUF / FROB_BUF_RO index stays strictly below METAL_MAX_ARGUMENTS (31).
+        for line in src.lines() {
+            let trimmed = line.trim();
+            if trimmed.starts_with("FROB_BUF(") || trimmed.starts_with("FROB_BUF_RO(") {
+                let inner = trimmed
+                    .split_once('(')
+                    .and_then(|(_, rest)| rest.split_once(')'))
+                    .map(|(a, _)| a)
+                    .expect("well-formed FROB_BUF macro");
+                let idx_str = inner.split(',').nth(2).expect("buffer index arg").trim();
+                let idx: usize = idx_str
+                    .parse()
+                    .unwrap_or_else(|e| panic!("non-integer buffer index `{idx_str}`: {e}"));
+                assert!(
+                    idx < METAL_MAX_ARGUMENTS,
+                    "{name}: buffer index {idx} must be < {METAL_MAX_ARGUMENTS}"
+                );
+            }
+        }
+    }
+}
+
+#[test]
+fn prelude_bad_dialect_fixtures_all_rejected() {
+    let dir = bad_fixtures_root();
+    let mut files = Vec::new();
+    collect_headers(&dir, &mut files);
+    assert!(
+        files.len() >= 9,
+        "expected planted bad dialect fixtures for rules 1, 2, 3, 4, 6"
+    );
+
+    let mut covered_rules = BTreeSet::new();
+
+    for path in files {
+        let name = path
+            .file_name()
+            .and_then(|s| s.to_str())
+            .unwrap_or("fixture.h");
+        let text = fs::read_to_string(&path)
+            .unwrap_or_else(|e| panic!("failed to read {}: {e}", path.display()));
+
+        assert!(
+            text.lines().next().unwrap_or("").contains("synthetic"),
+            "{name} must declare synthetic kind header on line 1 (STD-TEST)"
+        );
+
+        let expect_line = text
+            .lines()
+            .find(|l| l.trim_start().starts_with("// expect:"))
+            .unwrap_or_else(|| panic!("{name} missing `// expect: FROB-REF-251 rules=...` line"));
+        assert!(expect_line.contains("FROB-REF-251"));
+        let rules_part = expect_line
+            .split("rules=")
+            .nth(1)
+            .unwrap_or_else(|| panic!("{name} missing `rules=` in expect header"))
+            .trim();
+        let expected_rules: BTreeSet<u8> = rules_part
+            .split(',')
+            .map(|r| {
+                r.trim()
+                    .parse::<u8>()
+                    .unwrap_or_else(|e| panic!("{name}: bad rule `{r}`: {e}"))
+            })
+            .collect();
+
+        for target in [BackendTarget::Cuda, BackendTarget::Metal] {
+            let unit = assemble_unit(target, None, vec![SourceFile::new(name, text.clone())]);
+            let opts = target.production_options();
+            let err = lint(&unit, &opts)
+                .expect_err(&format!("fixture `{name}` must be refused under {target:?}"));
+            assert_eq!(err.code, RefusalCode::FrobRef251, "fixture `{name}`");
+            assert_eq!(err.retry, RetryPolicy::AfterChange, "fixture `{name}`");
+
+            let findings = collect_findings(&unit, &opts);
+            let observed_rules: BTreeSet<u8> = findings.iter().map(|f| f.rule).collect();
+            assert_eq!(
+                observed_rules, expected_rules,
+                "fixture `{name}` ({target:?}) rule mismatch: findings={findings:?}"
+            );
+        }
+
+        covered_rules.extend(expected_rules);
+    }
+
+    for required_rule in [1u8, 2, 3, 4, 6] {
+        assert!(
+            covered_rules.contains(&required_rule),
+            "bad_dialect fixtures must cover rule {required_rule}"
+        );
+    }
+}

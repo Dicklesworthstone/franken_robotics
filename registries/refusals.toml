@@ -25,6 +25,15 @@ integrity = []
 capability = []
 
 [[refusal]]
+code = "FROB-REF-251"
+meaning = "A banned operation appears in kernel source (build time): a fast-math relaxation, a fused multiply-add (contracted or explicit), a built-in transcendental or reciprocal square root, a floating-point atomic"
+defined_in = "§35.11"
+exit = 3
+retry = "after-change"
+repairs = ["Replace by the admitted form: a det_* function, the split product, count then exclusive scan then write, a select, or two launches instead of a grid barrier", "Move the computation to the host if it does not belong in a batched kernel"]
+raised_by = ["BD-013"]
+
+[[refusal]]
 code = "FROB-REF-802"
 meaning = "Arguments fail the schema, including an unknown parameter or an out-of-range sync_wait_ms"
 defined_in = "§32.18"

@@ -9,6 +9,8 @@ use std::fmt;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(u16)]
 pub enum RefusalCode {
+    /// FROB-REF-251 (§35.11): A banned operation appears in kernel source (build time): a fast-math relaxation, a fused multiply-add (contracted or explicit), a built-in transcendental or reciprocal square root, a floating-point atomic
+    FrobRef251 = 251,
     /// FROB-REF-802 (§32.18): Arguments fail the schema, including an unknown parameter or an out-of-range sync_wait_ms
     FrobRef802 = 802,
     /// FROB-REF-816 (§37.12): An artifact whose authorization flags are missing or not false
@@ -20,6 +22,7 @@ pub enum RefusalCode {
 impl RefusalCode {
     /// All registered refusal codes in ascending numeric order.
     pub const ALL: &'static [Self] = &[
+        Self::FrobRef251,
         Self::FrobRef802,
         Self::FrobRef816,
         Self::FrobRef881,
@@ -41,6 +44,7 @@ impl RefusalCode {
     #[must_use]
     pub const fn as_str(self) -> &'static str {
         match self {
+            Self::FrobRef251 => "FROB-REF-251",
             Self::FrobRef802 => "FROB-REF-802",
             Self::FrobRef816 => "FROB-REF-816",
             Self::FrobRef881 => "FROB-REF-881",
@@ -51,6 +55,7 @@ impl RefusalCode {
     #[must_use]
     pub fn parse(code: &str) -> Option<Self> {
         match code {
+            "FROB-REF-251" => Some(Self::FrobRef251),
             "FROB-REF-802" => Some(Self::FrobRef802),
             "FROB-REF-816" => Some(Self::FrobRef816),
             "FROB-REF-881" => Some(Self::FrobRef881),

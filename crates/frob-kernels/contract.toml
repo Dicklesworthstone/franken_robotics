@@ -1,0 +1,19 @@
+# Machine-readable crate contract for frob-kernels (BD-013, N34-08).
+
+[crate]
+name = "frob-kernels"
+layer = 3
+rank = 1
+plane = "compute"
+determinism = "D0"
+evidence = "Tested"
+gates = []
+refusals = ["FROB-REF-251"]
+
+[budgets]
+wall_ms = 50
+memory_mib = 64
+
+[safe_mode]
+on_budget = "reference-path"
+on_calibration = "reference-path"

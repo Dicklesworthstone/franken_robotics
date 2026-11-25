@@ -22,6 +22,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "frob-kernels"
+version = "0.0.1"
+dependencies = [
+ "frob-core",
+ "frob-kir",
+]
+
+[[package]]
+name = "frob-kir"
+version = "0.0.1"
+dependencies = [
+ "frob-core",
+]
+
+[[package]]
 name = "fs-blake3"
 version = "0.0.1"
 

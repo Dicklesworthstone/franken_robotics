@@ -1,0 +1,33 @@
+# synthetic
+# Planted contraction-permitting compile-option fixtures (BD-013, KA-526 / KA-525).
+# Every entry must be rejected by frob_kir::dialect_lint::lint with FROB-REF-251 under rule 4.
+
+schema = "frob.dialect.planted_options/1"
+
+[[fixture]]
+name = "cuda-fmad-true"
+backend = "cuda"
+options = ["-arch=sm_89", "--fmad=true"]
+expect_refusal = "FROB-REF-251"
+expect_rule = 4
+
+[[fixture]]
+name = "cuda-fmad-absent"
+backend = "cuda"
+options = ["-arch=sm_89"]
+expect_refusal = "FROB-REF-251"
+expect_rule = 4
+
+[[fixture]]
+name = "cuda-use-fast-math"
+backend = "cuda"
+options = ["-arch=sm_89", "--fmad=false", "--use_fast_math"]
+expect_refusal = "FROB-REF-251"
+expect_rule = 4
+
+[[fixture]]
+name = "metal-math-fast"
+backend = "metal"
+math_mode = "fast"
+expect_refusal = "FROB-REF-251"
+expect_rule = 4

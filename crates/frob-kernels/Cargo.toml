@@ -1,0 +1,20 @@
+[package]
+name = "frob-kernels"
+version = { workspace = true }
+edition = { workspace = true }
+license-file = { workspace = true }
+repository = { workspace = true }
+authors = { workspace = true }
+publish = false
+description = "Spark shared-dialect preludes v0, kernel skeletons, and CPU/device kernel library home."
+
+[package.metadata.frob]
+layer = 3
+rank = 1
+
+[dependencies]
+frob-core = { path = "../frob-core" }
+frob-kir = { path = "../frob-kir" }
+
+[lints]
+workspace = true

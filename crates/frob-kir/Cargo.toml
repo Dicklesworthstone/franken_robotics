@@ -1,0 +1,19 @@
+[package]
+name = "frob-kir"
+version = { workspace = true }
+edition = { workspace = true }
+license-file = { workspace = true }
+repository = { workspace = true }
+authors = { workspace = true }
+publish = false
+description = "Spark kernel IR home and shared-dialect static lint enforcing determinism bans (FROB-REF-251)."
+
+[package.metadata.frob]
+layer = 1
+rank = 3
+
+[dependencies]
+frob-core = { path = "../frob-core" }
+
+[lints]
+workspace = true

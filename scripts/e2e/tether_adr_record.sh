@@ -46,10 +46,14 @@ for num in 01 02 03 04 05 06 07 08 09 10 11; do
   fi
 done
 
-e2e_metric "adr_count" "${ADR_COUNT}" --unit "count" --min "11" --max "11"
-e2e_metric "principle_count" "6" --unit "count" --min "6" --max "6"
-e2e_metric "ownership_rows" "7" --unit "count" --min "7" --max "7"
-e2e_metric "principle_lints" "4" --unit "count" --min "4" --max "4"
+PRINCIPLE_COUNT="$(awk '/^## [0-9]+\./{c++} END{print c+0}' "${E2E_REPO_ROOT}/docs/adr/TETHER-PRINCIPLES.md")"
+OWNERSHIP_ROWS="$(awk '/^## Ownership Table/{in_tbl=1; next} /^## /{in_tbl=0} in_tbl && /^\|/ && !/^\| Artifact / && !/^\|---/{c++} END{print c+0}' "${E2E_REPO_ROOT}/docs/adr/TETHER-OWNERSHIP.md")"
+PRINCIPLE_LINTS="$(awk '/^\[\[principle_lint\]\]$/{c++} END{print c+0}' "${INDEX_FILE}")"
+
+e2e_metric "adr_count" "${ADR_COUNT}" "count" "==" "11"
+e2e_metric "principle_count" "${PRINCIPLE_COUNT}" "count" "==" "6"
+e2e_metric "ownership_rows" "${OWNERSHIP_ROWS}" "count" "==" "7"
+e2e_metric "principle_lints" "${PRINCIPLE_LINTS}" "count" "==" "4"
 
 # ---------------------------------------------------------------------------
 # Step 2: Run frob-conformance --test adr_tether on clean tree

@@ -51,6 +51,7 @@ Layer 1, Rank 1 — Compute plane — Tier Solid (`BD-010`, ADR-MARROW-01, ADR-M
 
 - **`frankensim-referee` (`fs-ga`):** Standalone capture binary `tools/oracle/marrow_fsga_capture` (linking `fs-ga`, `fs-rand`, and `fs-blake3`, never `frob-lie`) generates `tests/fixtures/oracle/marrow/po_marrow_01.frobfix` (1,000 records: 64 boundary cases + 936 Philox-seeded transforms with seed `0x4D41_5252_4F57_0001`). `tests/po_marrow_01.rs` asserts 0-ULP bit equality across all 1,000 records (`KA-256`).
 - **Analytic known answers:** `KA-193` (wrench push-forward moment arm) and `KA-229` (infinitesimal coadjoint components), plus exact integer-valued adjoint/coadjoint transpose identities.
+- **Unit-test conventions (`STD-TEST`):** [docs/testing/CONVENTIONS.md](../../docs/testing/CONVENTIONS.md) governs test placement, registry-bound naming, the no-mocks rule, and determinism lanes.
 
 ## Known gaps
 

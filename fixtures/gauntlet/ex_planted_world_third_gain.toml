@@ -1,0 +1,8 @@
+# synthetic
+# Planted-world fixture for N38b-04 (CX-282, Plan §20.19 / §28.13):
+# enlarges docking hypothesis support {1, 2} with gain 33/32 at U = 3/4, eps = 1/64,
+# making exact docking unsatisfiable with minimax worst-case error 1/65 m.
+
+u = "3/4"
+eps = "1/64"
+third_gain = "33/32"

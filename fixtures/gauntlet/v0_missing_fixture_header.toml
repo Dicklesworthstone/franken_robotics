@@ -1,0 +1,17 @@
+# synthetic
+# Planted negative-control fixture for NC-0002 (GATE-GAUNT-05):
+# a control record referencing a missing/unheadered fixture on an active gate.
+
+schema = "frob.gauntlet.controls/1"
+
+[[control]]
+id = "NC-0002"
+seed = "GATE-GAUNT-05"
+gate = ["GATE-GAUNT-05"]
+kind = "planted-input"
+target = "frob-conformance::controls::validate"
+defect = "planted fixture path with missing file / header on an active gate"
+expect = "controls validator fails with fixture-missing"
+fixture = "fixtures/gauntlet/does_not_exist_missing_header.toml"
+due = "M0"
+state = "runnable"

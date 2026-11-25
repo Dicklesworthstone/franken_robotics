@@ -1,0 +1,7 @@
+# synthetic
+# A/A control fixture for N38b-04 (GATE-GAUNT-09 / PO-GAUNT-01, Plan §38.12):
+# ten pairs of equal arms yielding exact paired lower bound 1.0 (does not clear 1.02).
+
+arm_a = ["10.0", "12.0", "11.5", "9.8", "10.4", "13.1", "11.0", "10.2", "12.5", "10.7"]
+arm_b = ["10.0", "12.0", "11.5", "9.8", "10.4", "13.1", "11.0", "10.2", "12.5", "10.7"]
+threshold = "1.02"

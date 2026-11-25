@@ -1,0 +1,7 @@
+# FrankenRobotics milestone-exit suspect-control dispositions (schema frob.gauntlet.control_reviews/1).
+#
+# Owned by N38b-04 (Rule 4). Written strictly in the `frob-core::registry::toml` subset.
+# Each `[[review]]` entry records a typed disposition (`replanted`, `gate-strengthened`,
+# or `withdrawn` with a non-empty `reason`) for a suspect control listed at a milestone exit.
+
+schema = "frob.gauntlet.control_reviews/1"

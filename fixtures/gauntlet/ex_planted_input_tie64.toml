@@ -1,0 +1,9 @@
+# synthetic
+# Planted-input fixture for N38b-04 (KA-002 / KA-612, Plan §24.10):
+# requests the unreachable `practical-tie` verdict at n = 64 (first reachable at n = 86).
+
+study_type = "fixed-n"
+n = 64
+margin = "0.05"
+level = "0.05"
+requested_verdicts = ["prefer-b", "b-inferior", "practical-tie", "inconclusive"]

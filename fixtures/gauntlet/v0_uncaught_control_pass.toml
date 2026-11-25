@@ -1,0 +1,22 @@
+# synthetic
+# Planted negative-control fixture for NC-0004 (GATE-GAUNT-10):
+# a pass gate row whose runnable control NC-0004 has no caught last_seen record.
+
+schema = "frob.gates/1"
+
+[[gate]]
+id = "GATE-GAUNT-10"
+claim = "known-answer"
+claim_id = "INV-GAUNT-06"
+section = "38.15"
+threshold = "Status accounting: planted PASS with an uncaught control is refused"
+milestone = "M0"
+tier = ["G0:host"]
+controls = ["NC-0004"]
+
+[[gate.part]]
+milestone = "M0"
+status = "pass"
+measured = "ok"
+evidence = []
+recorded = { date = "2026-11-24", session = "planted-nc-0004", implemented_by = "" }

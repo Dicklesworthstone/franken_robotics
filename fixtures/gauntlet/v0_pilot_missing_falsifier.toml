@@ -1,0 +1,13 @@
+# synthetic
+# Planted negative-control fixture for NC-0003 (GATE-GAUNT-08, obligation):
+# a pilot record omitting its falsifier before funding.
+
+schema = "frob.gauntlet.pilot/1"
+
+[[pilot]]
+id = "PILOT-999"
+title = "planted pilot omitting falsifier"
+tier = "F"
+status = "registered"
+falsifier = ""
+fallback = ""

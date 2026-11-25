@@ -1,0 +1,22 @@
+# synthetic
+# Planted negative-control fixture for NC-0001 (GATE-GAUNT-01):
+# a gate row claiming status = "pass" with an empty controls list.
+
+schema = "frob.gates/1"
+
+[[gate]]
+id = "GATE-GAUNT-01"
+claim = "known-answer"
+claim_id = "INV-GAUNT-02"
+section = "38.15"
+threshold = "Every gate recorded as PASS has a registered negative control that it catches"
+milestone = "M0"
+tier = ["G0:host"]
+controls = []
+
+[[gate.part]]
+milestone = "M0"
+status = "pass"
+measured = "ok"
+evidence = []
+recorded = { date = "2026-11-24", session = "planted-nc-0001", implemented_by = "" }

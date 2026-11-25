@@ -1,0 +1,11 @@
+# synthetic
+# Planted-design fixture for N38b-04 (§24.9/§24.10):
+# an undersized front-drive motor (current_limit_a = 1.0 A => 0.400 N·m available
+# against 1.270 N·m required for 12 mm lip lift-off) that a naive mass-only screen accepts.
+
+total_mass_kg = "8.0"
+wheel_radius_m = "0.060"
+lip_height_m = "0.012"
+wheelbase_m = "0.32"
+motor_kt_nm_per_a = "0.2"
+current_limit_a = "1.0"

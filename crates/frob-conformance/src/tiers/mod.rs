@@ -342,6 +342,22 @@ impl Milestone {
         }
     }
 
+    /// Numeric milestone index (`0`..=`8`).
+    #[must_use]
+    pub const fn number(self) -> u8 {
+        match self {
+            Self::M0 => 0,
+            Self::M1 => 1,
+            Self::M2 => 2,
+            Self::M3 => 3,
+            Self::M4 => 4,
+            Self::M5 => 5,
+            Self::M6 => 6,
+            Self::M7 => 7,
+            Self::M8 => 8,
+        }
+    }
+
     /// Parse `"M0"`..`"M8"`.
     #[must_use]
     pub fn parse(raw: &str) -> Option<Self> {

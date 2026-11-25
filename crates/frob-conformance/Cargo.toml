@@ -81,6 +81,12 @@ default = []
 # Forbidden in release builds (enforced by compile_error!).
 # Never lists per-control mutation features (`cx-*`, `nc-*`).
 gauntlet-mutations = []
+# Conformance-only mutation guard (N38b-04): implies `gauntlet-mutations` and is
+# refused in release builds (`not(debug_assertions)`).
+conformance = ["gauntlet-mutations"]
+# M0 host stand-in mutation for NC-0412 (CX-262: explicit Euler, current before
+# wheel speed, at 0.5 ms). Never a default and never listed in `gauntlet-mutations`.
+cx-262 = ["conformance"]
 # Test-only mutant for N12-41: substitutes -ad_xi^T for ad*_xi in compendium::d1::ad_star.
 # Never a default and never listed inside `gauntlet-mutations`; implies `gauntlet-mutations`
 # so release builds refuse it.

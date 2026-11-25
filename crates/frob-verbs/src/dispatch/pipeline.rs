@@ -17,7 +17,9 @@ use frob_core::registry::refusals::RefusalRegistry;
 use crate::envelope::{
     Bound, Cost, Envelope, FixtureBinding, NextAction, RefusalFields, Schema, Tree, escape_ptr,
 };
-use crate::registry::{Kind, MAX_MCP_WAIT_MS, ParamKind, VerbEntry, lookup_in};
+use crate::registry::{
+    Kind, MAX_MCP_WAIT_MS, ParamKind, VerbEntry, lookup_in, lookup_retired_verb,
+};
 
 use super::{
     DispatchError, FnCanonical, Request, ResolvedRequest, RunTier, SessionBudget, WireEnvelope,
@@ -834,25 +836,42 @@ fn sanitize_token(raw: &str) -> String {
 }
 
 fn unknown_verb_repairs(verbs: &[VerbEntry], input: &str) -> Vec<Repair> {
+    if let Some(retired) = lookup_retired_verb(input) {
+        let suffix = match retired.name {
+            "autopsy.fork" => {
+                " <run> --world <world> --before <event> --dt <duration> --classify-only --key <key>"
+            }
+            "fidelity.rank" => " --designs <set> --pair tier:<tier-a>,<tier-b> --key <key>",
+            "nemesis.show" => " --class <class>",
+            _ => " ...",
+        };
+        return retired
+            .use_instead
+            .iter()
+            .map(|target| {
+                Repair::with_detail(
+                    format!("frob {}{suffix} --json", target.replace('.', " ")),
+                    retired.reason,
+                )
+            })
+            .collect();
+    }
     let mut scored: Vec<(usize, &str)> = verbs
         .iter()
         .map(|v| (edit_distance(input, v.name), v.name))
+        .filter(|&(distance, _)| distance <= 3)
         .collect();
     scored.sort_by_key(|&(d, name)| (d, name));
-    let mut repairs = Vec::new();
-    for (dist, name) in scored.into_iter().take(3) {
-        if dist <= input.len().max(name.len()) {
-            repairs.push(Repair::with_detail(
+    scored
+        .into_iter()
+        .take(3)
+        .map(|(dist, name)| {
+            Repair::with_detail(
                 format!("frob {}", name.replace('.', " ")),
                 format!("Nearest registered verb (edit distance {dist})."),
-            ));
-        }
-    }
-    repairs.push(Repair::with_detail(
-        "frob robot-docs",
-        "List every registered verb and its command form.",
-    ));
-    repairs
+            )
+        })
+        .collect()
 }
 
 fn schema_violation_repairs(schema: &InputSchema, pointer: &str) -> Vec<Repair> {

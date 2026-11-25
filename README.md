@@ -185,7 +185,7 @@ text.) `tools/assemble.py` rebuilds the plan from them byte for byte.
 The assembler adds two sections that no part holds: §40.9 (33 gates missing from the register's tables) and §45.12 (66
 subsections to place in the bead graph).
 
-**What it fixes.** 43 Rust crates (38 core, 5 annex) with a 561 kLoC cap and a closed list ("a new crate is created only
+**What it fixes.** 43 Rust crates (38 core, 5 annex) with a 576 kLoC cap and a closed list ("a new crate is created only
 for a distinct dependency, a distinct device target, or a proof boundary"); five binaries, adding `frob-verify` (an
 offline certificate auditor that depends only on the standard library) and `frob-tui`; thirteen versioned artifact
 formats (`.fbot`, `.fmodule`, `.fcard`, `.fscene`, `.fclear`, `.ftask`, `.fmission`, `.fenergy`, `.fskill`, `.fmcw`,
@@ -516,7 +516,7 @@ and `sim_to_real_certified: false`, and no verb produces any other value.
 | Airlock | `frob-fsim` | The only crate that names FrankenSim's fast-changing types |
 
 `frob-core` (identities, hashing, evidence classes, the claim product, refusals, units glue) sits under all of them.
-Crate caps sum to 561 kLoC; reaching 115% of a cap triggers a scope conversation. Eight core crates hold only Frontier
+Crate caps sum to 576 kLoC; reaching 115% of a cap triggers a scope conversation. Eight core crates hold only Frontier
 or Moonshot content.
 
 Layers depend only downward. The core crates set `unsafe_code = "deny"` and never depend on a GPU crate; CUDA

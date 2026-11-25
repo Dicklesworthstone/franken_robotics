@@ -23594,7 +23594,7 @@ order (rule L-1). Each crate is specified by the chapter named in its row; this 
 
 | Crate | Layer | Tier | Responsibility | Chapter | Cap |
 |---|---|---|---|---|---|
-| `frob-core` | 0 | S | Identities and hashing; evidence classes and the claim-product type; refusals; schema versions and format-registry types; artifact-graph identifiers; the `qty` re-export; the no-authorization flags | §8, §12, §35 | 8 |
+| `frob-core` | 0 | S | Identities and hashing; evidence classes and the claim-product type; refusals; schema versions and format-registry types; artifact-graph identifiers; the `qty` re-export; the no-authorization flags | §8, §12, §35 | 16 |
 | `frob-fsim` | 0 | S | The airlock: adapters to FrankenSim's volatile crates in feature groups; the `remote` mode and the worker binary | §33 | 20 |
 | `frob-lie` | 1 | S | Lie groups and algebras, subgroups, retractions, frame typing, conventions | §13 | 12 |
 | `frob-algebra` | 1 | S | Finite groups and representations, cones and the cone solver, posets, the inertia cone | §13 | 14 |
@@ -23632,29 +23632,29 @@ order (rule L-1). Each crate is specified by the chapter named in its row; this 
 | `frob-cli` | 7 | S | The `frob` and `frobd` binaries | §32 | 8 |
 | `frob-tui` | 7 | F | The `frob-tui` dashboard on frankentui | §32 | 6 |
 | `frob-conformance` | 7 | S | The Gauntlet harness, oracle fixtures, known answers, the counterexample catalogue, the ten-fold harness | §38, §39 | 24 |
-| `xtask` | 7 | S | Six checks (§34.6) | §34 | 3 |
+| `xtask` | 7 | S | Six checks (§34.6) | §34 | 10 |
 | `spark/frob-spark-cuda` | annex | S | CUDA backend, arena lease, binary kernel cache | §21 | 8 |
 | `spark/frob-spark-metal` | annex | S | Metal backend | §21 | 7 |
 | `derive/frob-derive` | annex | F | Symbolic derivations, certificate production, the exact-synthesis subprocess | §21, §12 | 14 |
 | `bindings/frob-gymnasium` | annex | S | A thin adapter that lets a Gymnasium-compatible learner drive the Rust `VecEnv`; the only place a Python interpreter may appear, and never in a production graph | §23 | 3 |
-| **Total** | | | 39 core crates (38 under `crates/` and `surface/frob-mcp`) and 4 annex crates | | **561** |
+| **Total** | | | 39 core crates (38 under `crates/` and `surface/frob-mcp`) and 4 annex crates | | **576** |
 
 | Layer | Crates | Cap |
 |---|---|---|
-| 0 | 2 | 28 |
+| 0 | 2 | 36 |
 | 1 | 3 | 40 |
 | 2 | 5 | 84 |
 | 3 | 5 | 92 |
 | 4 | 7 | 98 |
 | 5 | 8 | 78 |
 | 6 | 4 | 62 |
-| 7 | 5 | 47 |
+| 7 | 5 | 54 |
 | Annexes | 4 | 32 |
-| **Total** | **43** | **561** |
+| **Total** | **43** | **576** |
 
 Reading the total. Eight core crates hold only Frontier or Moonshot content (`frob-gait`, `frob-shield`,
 `frob-ground`, `frob-synth`, `frob-foundry`, `frob-lifecycle`, `frob-mission`, `frob-tui`); their caps sum to
-74. The remaining 487 is the spine and the mixed crates. The total at the 115% trigger is 645. Additional and
+74. The remaining 502 is the spine and the mixed crates. The total at the 115% trigger is 662. Additional and
 not Rust: kernel sources in the shared dialect (cap 20 thousand lines), the viewer (cap 12 thousand lines of
 JavaScript), the Lean project, and the Python half of the Gymnasium adapter (cap 1 thousand lines). Conditional
 and not counted: `frob-units` (layer 0, cap 3), which exists only if INT-TOOLCHAIN-01 forces it (§33.12). The
@@ -23664,6 +23664,19 @@ crate.
 A cap is a claim about scope that can be wrong in both directions. A crate that reaches 115% stops taking new
 mechanisms until an ADR either raises the cap with a reason or moves a mechanism out. A crate that ships its
 chapter in half its cap is not a problem to be fixed.
+
+**ADR-WS-04: the caps of `frob-core` and `xtask` are raised, `frob-core` from 8 to 16 and `xtask` from 3 to 10
+thousand lines.** [S] Recorded 2026-11-24 at the 115% trigger of the rule above, from measured counts (physical
+lines of every `.rs` file in the crate, tests included). Reason: the caps were sized before the Beads that place
+their code in these crates were written. At the trigger, `frob-core` held 9.1 thousand lines from four Beads
+(the strict TOML reader with its vendored corpus test, the test kit of STD-TEST, identities and refusals, the JSON
+admission reader), with more than fifteen Beads of the same chapters still to land there, among them the plain
+proof objects that the layer-5 and layer-6 crates must share without linking `frob-cert`. `xtask` held 4.9
+thousand lines from the closed crate map and the status-table generator, before the six checks themselves and the
+stack-lock parser. Moving a mechanism out was considered and refused: neither crate's surplus is a distinct
+dependency, device target or proof boundary (ADR-WS-01). The new caps trigger the next scope conversation at
+18.4 and 11.5 thousand lines. The rest of §34.6 stands: `xtask` runs no physics, records no gate and holds no
+policy.
 
 ### 34.3 Layer and dependency rules
 
@@ -23745,7 +23758,7 @@ enforce is assigned to one of the six:
 | `check-contracts` | `CONTRACT.md` sections; `contract.toml`; every format row has an owner, a round-trip test and a refusal test; every release path has a demo file whose claims exist in `gates.toml`; every crate's line count against its cap, reported, with 115% as a failure that an ADR clears |
 | `check-stack` | The stack lock, with T, against lockfiles, toolchain files and sibling heads; the resolution receipt; drift classification; the check itself writes nothing to a sibling checkout |
 
-`xtask` runs no physics, records no gate and holds no policy. Its own cap is 3 thousand lines, and its test suite
+`xtask` runs no physics, records no gate and holds no policy. Its own cap is 10 thousand lines (ADR-WS-04), and its test suite
 asserts that the subcommand count is six.
 
 ### 34.7 Working rules inherited from the machine and the suite

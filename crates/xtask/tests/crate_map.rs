@@ -55,7 +55,7 @@ fn write_workspace_root(root: &Path, members: &[&str]) {
 }
 
 #[test]
-fn table_has_43_rows_and_561_kloc() {
+fn table_has_43_rows_and_576_kloc() {
     assert_eq!(validate_table(CRATE_MAP, TOMBSTONES), Ok(()));
     let counted: Vec<&CrateRow> = counted_rows().collect();
     assert_eq!(counted.len(), 43);
@@ -66,20 +66,20 @@ fn table_has_43_rows_and_561_kloc() {
         38
     );
     assert_eq!(lookup("frob-mcp").expect("frob-mcp row").dir, "surface/frob-mcp");
-    assert_eq!(total_cap_kloc(), 561);
+    assert_eq!(total_cap_kloc(), 576);
 }
 
 #[test]
 fn layer_sums_match() {
     let expected = [
-        (Layer::Core(0), 28),
+        (Layer::Core(0), 36),
         (Layer::Core(1), 40),
         (Layer::Core(2), 84),
         (Layer::Core(3), 92),
         (Layer::Core(4), 98),
         (Layer::Core(5), 78),
         (Layer::Core(6), 62),
-        (Layer::Core(7), 47),
+        (Layer::Core(7), 54),
         (Layer::Annex, 32),
     ];
     let mut grand_total = 0u32;
@@ -88,7 +88,7 @@ fn layer_sums_match() {
         assert_eq!(actual, expected_sum, "cap sum mismatch for layer {layer}");
         grand_total += actual;
     }
-    assert_eq!(grand_total, 561);
+    assert_eq!(grand_total, 576);
 }
 
 #[test]
@@ -112,12 +112,12 @@ fn frontier_only_sum_is_74() {
     );
     let fm_sum = frontier_or_moonshot_only_core_cap_kloc();
     assert_eq!(fm_sum, 74);
-    assert_eq!(total_cap_kloc() - fm_sum, 487);
+    assert_eq!(total_cap_kloc() - fm_sum, 502);
 }
 
 #[test]
-fn trigger_is_645() {
-    assert_eq!(trigger_cap_kloc(total_cap_kloc()), 645);
+fn trigger_is_662() {
+    assert_eq!(trigger_cap_kloc(total_cap_kloc()), 662);
 }
 
 #[test]
@@ -323,8 +323,8 @@ fn conditional_row_not_counted() {
     assert_eq!(units.cap_kloc, 3);
     assert!(!units.is_counted());
     assert_eq!(counted_rows().count(), 43);
-    assert_eq!(layer_cap_kloc(Layer::Core(0)), 28);
-    assert_eq!(total_cap_kloc(), 561);
+    assert_eq!(layer_cap_kloc(Layer::Core(0)), 36);
+    assert_eq!(total_cap_kloc(), 576);
 
     // Case 1: frob-units absent -> no finding.
     let root_absent = make_scratch_dir("units-absent");

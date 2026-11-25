@@ -129,7 +129,7 @@ macro_rules! orig {
 /// Authoritative closed crate map: 43 original counted rows followed by conditional rows.
 pub const CRATE_MAP: &[CrateRow] = &[
     // Layer 0 (2 crates, 28 kLOC)
-    orig!("frob-core", "crates/frob-core", Layer::Core(0), 1, S, &["§8", "§12", "§35"], 8),
+    orig!("frob-core", "crates/frob-core", Layer::Core(0), 1, S, &["§8", "§12", "§35"], 16),
     orig!("frob-fsim", "crates/frob-fsim", Layer::Core(0), 2, S, &["§33"], 20),
     // Layer 1 (3 crates, 40 kLOC)
     orig!("frob-lie", "crates/frob-lie", Layer::Core(1), 1, S, &["§13"], 12),
@@ -174,13 +174,13 @@ pub const CRATE_MAP: &[CrateRow] = &[
     orig!("frob-cli", "crates/frob-cli", Layer::Core(7), 2, S, &["§32"], 8),
     orig!("frob-tui", "crates/frob-tui", Layer::Core(7), 3, F, &["§32"], 6),
     orig!("frob-conformance", "crates/frob-conformance", Layer::Core(7), 4, S, &["§38", "§39"], 24),
-    orig!("xtask", "crates/xtask", Layer::Core(7), 5, S, &["§34"], 3),
+    orig!("xtask", "crates/xtask", Layer::Core(7), 5, S, &["§34"], 10),
     // Annexes (4 crates, 32 kLOC)
     orig!("frob-spark-cuda", "spark/frob-spark-cuda", Layer::Annex, 1, S, &["§21"], 8),
     orig!("frob-spark-metal", "spark/frob-spark-metal", Layer::Annex, 2, S, &["§21"], 7),
     orig!("frob-derive", "derive/frob-derive", Layer::Annex, 3, F, &["§21", "§12"], 14),
     orig!("frob-gymnasium", "bindings/frob-gymnasium", Layer::Annex, 4, S, &["§23"], 3),
-    // Conditional row (not counted in the 43-crate / 561 kLOC totals; Rule 5)
+    // Conditional row (not counted in the 43-crate / 576 kLOC totals; Rule 5)
     CrateRow {
         name: "frob-units",
         dir: "crates/frob-units",

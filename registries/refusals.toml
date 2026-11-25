@@ -26,6 +26,7 @@ schema = "frob.refusals/1"
 "70x" = 4
 "72x" = 5
 "73x" = 5
+"76x" = 4
 "79x" = 5
 "8xx" = 3
 "9xx" = 9
@@ -34,13 +35,80 @@ integrity = ["FROB-REF-810"]
 capability = []
 
 [[refusal]]
+code = "FROB-REF-247"
+meaning = "Determinism class not attainable on requested placement (e.g. bit-equality replay on a D3 device family, or fork on a family without a current batch-independence record); admission-time check (distinct from snapshot restore across profiles FROB-REF-894); pointer verb and placement; observed attained class and record; required class and use"
+defined_in = "§35.11"
+exit = 3
+retry = "after-change"
+repairs = ["Run on a placement where the class is attained (the refusal lists them, batch-cpu first)", "If the record is stale and not absent, run frob spark check --sweeps all to make it current", "Ask for the weaker use the licence table offers (tolerance replay, paired-by-address, or unpaired comparison) by naming it in the request"]
+raised_by = ["N35-04", "N35-07"]
+related = ["FROB-REF-894"]
+
+[[refusal]]
+code = "FROB-REF-248"
+meaning = "Solve ill-conditioned beyond precision profile (kappa_hat * u above frozen OPEN-NUM-4 limit, default 0.1) under refuse policy; run-time measurement (distinct from admission-time interface-card estimate FROB-REF-244); pointer world address and step; observed kappa_hat, lower bound kappa_hat * u, and precision profile; required kappa_hat * u <= limit"
+defined_in = "§35.11"
+exit = 3
+retry = "after-change"
+repairs = ["--precision stiff (one refinement step with a double-float residual)", "Run the world on batch-cpu in double precision or on the referee", "Soften the contact impedance or replace the near-rigid interface card", "--on-degraded continue-flagged, which keeps the world and marks it Degraded: ill-conditioned"]
+raised_by = ["N21b-38", "BD-179", "N35-04", "N35-29"]
+related = ["FROB-REF-244"]
+
+[[refusal]]
+code = "FROB-REF-249"
+meaning = "Anchored offset left its range in one step (magnitude >= 16 m after integration) or a cell index left scene bounds; pointer world address, body and axis; observed offset or cell index; required magnitude below 16 m and index inside declared bounds"
+defined_in = "§35.11"
+exit = 3
+retry = "after-change"
+repairs = ["frob sim replay <episode> --tier batch-cpu to locate the first divergence of the blown-up world", "Reduce the step or check actuator and contact parameters (a body moving 12 m in one step is not physical)", "Enlarge the scene's declared bounds if the body legitimately left them"]
+raised_by = ["N21b-37", "BD-157", "BD-179"]
+
+[[refusal]]
+code = "FROB-REF-250"
+meaning = "Kernel is not dimensionally homogeneous (build time): sum of terms with different base-dimension exponent vectors or square root of an odd exponent vector (theorem card T-09); pointer kernel, statement and both exponent vectors; required equal exponent vectors"
+defined_in = "§35.11"
+exit = 3
+retry = "after-change"
+repairs = ["Fix the derivation (the diagnostic names the sum)", "Declare the missing conversion constant with its dimension", "None: the check is never suppressed"]
+raised_by = ["BD-018"]
+
+[[refusal]]
 code = "FROB-REF-251"
-meaning = "A banned operation appears in kernel source (build time): a fast-math relaxation, a fused multiply-add (contracted or explicit), a built-in transcendental or reciprocal square root, a floating-point atomic"
+meaning = "A banned operation appears in kernel source (build time): a fast-math relaxation, a fused multiply-add (contracted or explicit), a built-in transcendental or reciprocal square root, a floating-point atomic; pointer file, line and token; observed ban category"
 defined_in = "§35.11"
 exit = 3
 retry = "after-change"
 repairs = ["Replace by the admitted form: a det_* function, the split product, count then exclusive scan then write, a select, or two launches instead of a grid barrier", "Move the computation to the host if it does not belong in a batched kernel"]
-raised_by = ["BD-013"]
+raised_by = ["BD-013", "N35-18"]
+
+[[refusal]]
+code = "FROB-REF-252"
+meaning = "Strict predicate in floating point without an exact form or certified guard (build time); pointer kernel and comparison; observed predicate class; required exact or guarded"
+defined_in = "§35.11"
+exit = 3
+retry = "after-change"
+repairs = ["Express the predicate in the exact-integer kernel class on quantized inputs", "Use a guarded kernel: an f32 residual with a derived error bound and an exact fallback", "If the requirement allows it, declare the comparison non-strict in the requirement (recorded as a requirement change)"]
+raised_by = ["BD-053"]
+
+[[refusal]]
+code = "FROB-REF-561"
+meaning = "Paired statistic requested with a D4 or unrecorded arm, or paired across device families without D1, at the numerics licence check (licence::check, N35-07). On eval.compare, pairing::admit first raises FROB-REF-542 for a D4 arm, different classes, or a D3 pair lacking decision equivalence; 561 covers an unrecorded class or an exact pairing the placement cannot license. On eval.detect, 561 covers a D4 or unrecorded arm. On eval.promote, 561 covers a fast-tier result and its re-evaluation paired across device families without D1, or arms that cannot be paired. On study.compare and eval.promote the stored-result evidence boundary raises FROB-REF-825 for D4 or unrecorded evidence; Arena study::admit raises FROB-REF-533. Pointer arm; observed class/profile or both device families; required both arms D2 on one family with current batch-independence record, D1 across families, or D3 with decision-equivalence record"
+defined_in = "§35.11"
+exit = 3
+retry = "after-change"
+repairs = ["Re-evaluate the offending arm under device-replay or stricter", "Run both arms on one device family, or on batch-cpu", "Request the comparison as unpaired, with the larger sample that needs", "Under class D3 with a recorded decision-level equivalence, request paired-by-address"]
+raised_by = ["N35-07", "BD-269", "BD-262"]
+related = ["FROB-REF-533", "FROB-REF-542", "FROB-REF-825"]
+
+[[refusal]]
+code = "FROB-REF-562"
+meaning = "Attribution or counterfactual fork requested below class D2 (source run class D3, D4 or unrecorded, or device family batch-independence record not current) at fork or re-run admission (distinct from attribution-time fork-set failure FROB-REF-584); pointer source run; observed class and record age; required D2 with GATE-SPARK-15 current for the family"
+defined_in = "§35.11"
+exit = 3
+retry = "after-change"
+repairs = ["Teleport the world to batch-cpu and fork there", "Re-run the episode under device-replay on a family with a current record", "frob spark check --sweeps all to renew the record"]
+raised_by = ["N35-07", "BD-269", "BD-205"]
+related = ["FROB-REF-584"]
 
 [[refusal]]
 code = "FROB-REF-701"
@@ -125,6 +193,16 @@ retry = "after-change"
 repairs = ["For island-in-training or tier-not-eligible: drop --require-living-tier to accept the recorded Solid alternative, or run under --purpose oracle-check or counterexample-verification on the CPU referee", "For purpose-not-eligible: drop --require-living-tier to accept the recorded Solid alternative, or run under --purpose evaluation", "For card-provenance: use a card revision whose required field has provenance measured or a cited datasheet, or run without the option and accept the model flag"]
 raised_by = ["N19b-03", "N19b-19", "N15b-18", "sim.run", "sim.estimate", "train.start", "eval.run", "study.submit", "task.fixture"]
 related = ["FROB-REF-724"]
+
+[[refusal]]
+code = "FROB-REF-761"
+meaning = "Job exceeds compute envelope in force for its scope (scope order: frob-launch launcher token, cited --envelope-scope, verb-derived scope e.g. train.family, else adhoc at default E0: 16 GiB, 8 cores, 1 hour, 1 device). Triggers: demand exceeds class or approved per-run/cumulative limit across (1) memory, (2) cores, (3) devices, (4) wall-time interval upper end, (5) cumulative device-hours, or (6) approved scope limit; approved pretraining E3 without written ceiling and kill rule; child run verb exceeding launcher token declaration; cited envelope_scope contradicting launcher token (pointer /envelope_scope; observed cited scope; required token scope; repairs in order: drop the citation so the token scope applies, or run under a launcher of the cited scope). Raised before allocation after FROB-REF-602 and FROB-REF-704 (daemon campaign without approved envelope), before FROB-REF-701 (session budget); pointer limit crossed; observed demand vector and sim.estimate class; required class in force and limits"
+defined_in = "§35.11"
+exit = 4
+retry = "after-change"
+repairs = ["Use a smaller job that fits (fewer worlds, threads, or steps): the refusal names the largest world count, thread count, or duration that fits", "Split the work into runs that each fit under the per-run limit", "Request owner approval of the printed class with its ceiling and kill rule written first, then resubmit citing the approved scope with --envelope-scope <scope> (over MCP, envelope_scope)", "Take the registered not-approved fallback of the work package"]
+raised_by = ["BD-219", "N36-20", "N36-REF"]
+related = ["FROB-REF-704"]
 
 [[refusal]]
 code = "FROB-REF-790"
@@ -237,6 +315,62 @@ exit = 3
 retry = "after-change"
 repairs = ["Include all required no-authorization flags set to false in the artifact", "Regenerate the artifact through a FrankenRobotics exporter instead of hand-editing authorization fields"]
 raised_by = ["BD-005"]
+
+[[refusal]]
+code = "FROB-REF-861"
+meaning = "Number observed during a fast-training run (learning curve or training return) cited as evidence, or a policy trained under fast-training offered for a claim without re-evaluation under device-replay or stricter (distinct from frob-learn consumer code FROB-REF-867); pointer cited value and run or policy; observed trained_under: D4; required re-evaluation record for the same PolicyId"
+defined_in = "§35.11"
+exit = 3
+retry = "after-change"
+repairs = ["frob eval run --policy <id> --determinism device-replay and cite that evaluation", "Retrain under device-replay if the training curve itself is what must be cited"]
+raised_by = ["N35-06", "BD-269"]
+related = ["FROB-REF-867"]
+
+[[refusal]]
+code = "FROB-REF-862"
+meaning = "Performance figure without a complete disclosure block. Triggers: (1) required field absent; (2) na used where applicability table forbids it; (3) energy is zero instead of a value or named gap; (4) step rate without its decimation; (5) stale fingerprint digest; (6) ratio block without comparator revision or fewer than ten pairs; (7) parity-defect field missing while a defect is open. Interim trigger: rates violate unit ordering raised with detail = \"rates-violate-unit-ordering\" and pointer rates.ordering (N36-REF ledger request rates-violate-unit-ordering). Pointer first missing or inadmissible field inside the figure's block; observed missing/inadmissible fields by name; required complete block"
+defined_in = "§35.11"
+exit = 3
+retry = "after-change"
+repairs = ["Re-run through the performance harness, which fills the block from the run's receipts", "Supply the named fields from the run's receipt", "Present the figure as context without the Performance claim"]
+raised_by = ["BD-216", "N36-13", "N36-REF"]
+
+[[refusal]]
+code = "FROB-REF-863"
+meaning = "Performance ratio without a paired lower bound. Triggers: (1) ratio stated with no campaign; (2) campaign of fewer than ten pairs; (3) arms whose units or decimations are not comparable; (4) void campaign where an arm failed; (5) threshold judged on mean instead of bound. Pointer ratio field; observed pair count and whether a bound was computed; required at least ten pairs and the one-sided 95% bound exp(l_bar - t * s / sqrt(n))"
+defined_in = "§35.11"
+exit = 3
+retry = "after-change"
+repairs = ["Run a paired campaign of at least ten pairs, the two arms of each pair back to back in randomized order on one host state, and report the bound", "State the two rates separately, without a ratio", "Cite the figures as context with no claim"]
+raised_by = ["BD-216", "N36-06", "N36-REF"]
+
+[[refusal]]
+code = "FROB-REF-864"
+meaning = "Device result cited without a current CPU-versus-device check for its kernels on that device family, driver and compiler (distinct from run-time refusal FROB-REF-605 which refuses to run on the device); pointer result; observed stale or missing check rows with fingerprint digests; required current check for every kernel in the step plan"
+defined_in = "§35.11"
+exit = 3
+retry = "after-change"
+repairs = ["frob spark check on that family", "frob spark fingerprint first if the fingerprint changed", "Cite the batch-cpu result"]
+raised_by = ["N35-07", "BD-176"]
+related = ["FROB-REF-605"]
+
+[[refusal]]
+code = "FROB-REF-865"
+meaning = "Summary statistic that omits what it excluded (worlds marked Degraded or Faulted, unscored pairs, masked samples); pointer statistic; observed inputs counted against denominator; required excluded table with counts by reason"
+defined_in = "§35.11"
+exit = 3
+retry = "after-change"
+repairs = ["Regenerate through frob telemetry summary, which states exclusions", "Add the counts by reason and the denominator"]
+raised_by = ["N35-28"]
+
+[[refusal]]
+code = "FROB-REF-866"
+meaning = "Speed experiment requested without its computed ceiling, or with a ceiling below its goal. Triggers: (1) campaign of kind optimization or speed-experiment with no ceiling record; (2) ceiling filed after first measurement; (3) ceiling computed on cold or uncached baseline; (4) ceiling below goal; (5) pilot whose falsifier is a speed ratio with no ceiling. Pointer experiment's ceiling field, or goal field when ceiling is below it; observed ceiling (absent or value, when, baseline) and goal; required ceiling present, filed before first measurement, computed on warm cached baseline, and at least the goal"
+defined_in = "§35.11"
+exit = 3
+retry = "after-change"
+repairs = ["Compute the ceiling from the current phase profile and attach it (removing a phase of share f gives at most 1/(1 - f))", "Lower the goal to at most the ceiling", "Choose another lever: a target holding a larger share of the baseline", "Fund the work for a reason other than speed, in writing, with no speed figure; failing that, do not run the experiment"]
+raised_by = ["BD-354", "N35-05", "N36-05", "N36-REF"]
 
 [[refusal]]
 code = "FROB-REF-881"

@@ -1115,3 +1115,118 @@ fn golden_mutants_manifest_all_match() {
         }
     }
 }
+
+#[test]
+fn unresolved_mass_rejects_arbitrary_object_and_out_of_range_interval() {
+    // Arbitrary non-interval object in unresolved_mass.value must be rejected.
+    let mut doc = load_stance_json();
+    obj_set(
+        obj_get_mut(&mut doc, "claim"),
+        "unresolved_mass",
+        JsonValue::Obj(vec![
+            ("value".into(), JsonValue::Obj(vec![("foo".into(), JsonValue::Str("bar".into()))])),
+            ("weighting".into(), JsonValue::Str("uniform".into())),
+        ]),
+    );
+    let bytes = recompute_single_merkle_and_serialize(&mut doc);
+    let err = validate_bundle_bytes(&bytes, None, &COMPILED_LIMITS).unwrap_err();
+    assert_eq!(err.rule, RuleId::SchemaFieldType);
+    assert_eq!(err.path, "claim.unresolved_mass.value");
+
+    // Declared R5 interval outside [0, 1] must be rejected.
+    let mut doc2 = load_stance_json();
+    obj_set(
+        obj_get_mut(&mut doc2, "claim"),
+        "unresolved_mass",
+        JsonValue::Obj(vec![
+            (
+                "value".into(),
+                JsonValue::Obj(vec![
+                    ("hi".into(), JsonValue::Arr(vec![JsonValue::Str("3".into()), JsonValue::Str("2".into())])),
+                    ("impl".into(), JsonValue::Str("frob-cert/dyadic-1".into())),
+                    ("kind".into(), JsonValue::Str("interval".into())),
+                    ("lo".into(), JsonValue::Arr(vec![JsonValue::Str("0".into()), JsonValue::Str("1".into())])),
+                    ("precision".into(), JsonValue::Int(64)),
+                ]),
+            ),
+            ("weighting".into(), JsonValue::Str("uniform".into())),
+        ]),
+    );
+    let bytes2 = recompute_single_merkle_and_serialize(&mut doc2);
+    let err2 = validate_bundle_bytes(&bytes2, None, &COMPILED_LIMITS).unwrap_err();
+    assert_eq!(err2.rule, RuleId::SchemaFieldType);
+    assert_eq!(err2.path, "claim.unresolved_mass.value");
+
+    // Valid declared R5 interval inside [0, 1] passes R4 & R5.
+    let mut doc3 = load_stance_json();
+    obj_set(
+        obj_get_mut(&mut doc3, "claim"),
+        "unresolved_mass",
+        JsonValue::Obj(vec![
+            (
+                "value".into(),
+                JsonValue::Obj(vec![
+                    ("hi".into(), JsonValue::Arr(vec![JsonValue::Str("1".into()), JsonValue::Str("4".into())])),
+                    ("impl".into(), JsonValue::Str("frob-cert/dyadic-1".into())),
+                    ("kind".into(), JsonValue::Str("interval".into())),
+                    ("lo".into(), JsonValue::Arr(vec![JsonValue::Str("0".into()), JsonValue::Str("1".into())])),
+                    ("precision".into(), JsonValue::Int(64)),
+                ]),
+            ),
+            ("weighting".into(), JsonValue::Str("uniform".into())),
+        ]),
+    );
+    let bytes3 = recompute_single_merkle_and_serialize(&mut doc3);
+    assert!(validate_bundle_bytes(&bytes3, None, &COMPILED_LIMITS).is_ok());
+}
+
+#[test]
+fn plant_inputs_rejects_unknown_field_and_non_object() {
+    let mut doc = load_stance_json();
+    obj_set(
+        obj_get_mut(&mut doc, "plant"),
+        "inputs",
+        JsonValue::Arr(vec![JsonValue::Obj(vec![
+            ("class".into(), JsonValue::Str("Certified".into())),
+            ("extra".into(), JsonValue::Bool(true)),
+            ("id".into(), JsonValue::Str("mat-1".into())),
+        ])]),
+    );
+    let bytes = recompute_single_merkle_and_serialize(&mut doc);
+    let err = validate_bundle_bytes(&bytes, None, &COMPILED_LIMITS).unwrap_err();
+    assert_eq!(err.rule, RuleId::SchemaUnknownField);
+    assert_eq!(err.path, "plant.inputs[0].extra");
+
+    let mut doc2 = load_stance_json();
+    obj_set(
+        obj_get_mut(&mut doc2, "plant"),
+        "inputs",
+        JsonValue::Arr(vec![JsonValue::Int(42)]),
+    );
+    let bytes2 = recompute_single_merkle_and_serialize(&mut doc2);
+    let err2 = validate_bundle_bytes(&bytes2, None, &COMPILED_LIMITS).unwrap_err();
+    assert_eq!(err2.rule, RuleId::SchemaFieldType);
+    assert_eq!(err2.path, "plant.inputs[0]");
+}
+
+#[test]
+fn nested_rationals_supports_slash_form_and_rejects_unreduced_slash() {
+    let mut doc = load_stance_json();
+    obj_set(
+        obj_get_mut(obj_get_mut(&mut doc, "proof"), "payload"),
+        "multipliers",
+        JsonValue::Arr(vec![JsonValue::Str("1/2".into()), JsonValue::Str("3/4".into())]),
+    );
+    let bytes = recompute_single_merkle_and_serialize(&mut doc);
+    assert!(validate_bundle_bytes(&bytes, None, &COMPILED_LIMITS).is_ok());
+
+    let mut bad = load_stance_json();
+    obj_set(
+        obj_get_mut(obj_get_mut(&mut bad, "proof"), "payload"),
+        "multipliers",
+        JsonValue::Arr(vec![JsonValue::Str("1/2".into()), JsonValue::Str("2/4".into())]),
+    );
+    let bad_bytes = recompute_single_merkle_and_serialize(&mut bad);
+    let err = validate_bundle_bytes(&bad_bytes, None, &COMPILED_LIMITS).unwrap_err();
+    assert_eq!(err.rule, RuleId::NumRationalForm);
+}

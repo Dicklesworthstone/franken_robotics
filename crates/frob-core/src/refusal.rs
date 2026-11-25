@@ -202,7 +202,7 @@ pub(crate) mod mini_json {
     }
 
     pub(crate) fn parse(input: &str) -> Result<JsonVal, String> {
-        let mut p = Parser { bytes: input.as_bytes(), pos: 0, depth: 0 };
+        let mut p = Parser { src: input, bytes: input.as_bytes(), pos: 0, depth: 0 };
         p.skip_ws();
         let val = p.parse_val()?;
         p.skip_ws();
@@ -210,7 +210,7 @@ pub(crate) mod mini_json {
         Ok(val)
     }
 
-    struct Parser<'a> { bytes: &'a [u8], pos: usize, depth: usize }
+    struct Parser<'a> { src: &'a str, bytes: &'a [u8], pos: usize, depth: usize }
 
     impl<'a> Parser<'a> {
         fn skip_ws(&mut self) { while self.bytes.get(self.pos).is_some_and(|b| matches!(b, b' ' | b'\t' | b'\r' | b'\n')) { self.pos += 1; } }
@@ -297,16 +297,22 @@ pub(crate) mod mini_json {
                         _ => return Err(format!("invalid escape `\\{}`", esc as char)),
                     }
                 } else {
-                    let rest = std::str::from_utf8(&self.bytes[self.pos..]).map_err(|_| "invalid UTF-8")?;
-                    let ch = rest.chars().next().ok_or("EOF")?;
-                    out.push(ch);
-                    self.pos += ch.len_utf8();
+                    let run_start = self.pos;
+                    while let Some(&rb) = self.bytes.get(self.pos) {
+                        if rb == b'"' || rb == b'\\' || rb < 0x20 { break; }
+                        self.pos += 1;
+                    }
+                    out.push_str(&self.src[run_start..self.pos]);
                 }
             }
             Err("unterminated JSON string".into())
         }
         fn parse_u16(&mut self) -> Result<u16, String> {
             let sl = self.bytes.get(self.pos..self.pos + 4).ok_or("truncated \\uXXXX")?;
+            if !sl.iter().all(u8::is_ascii_hexdigit) {
+                let raw = std::str::from_utf8(sl).unwrap_or("<non-utf8>");
+                return Err(format!("bad hex `{raw}`"));
+            }
             let hex = std::str::from_utf8(sl).map_err(|_| "invalid \\uXXXX")?;
             let v = u16::from_str_radix(hex, 16).map_err(|_| format!("bad hex `{hex}`"))?;
             self.pos += 4;
@@ -341,5 +347,20 @@ mod tests {
 
         let unknown_json = no_detail.replace("FROB-REF-881", "FROB-REF-999");
         assert!(matches!(Refusal::from_json(&unknown_json), Err(RefusalParseError::UnknownRefusalCode(ref c)) if c == "FROB-REF-999"));
+    }
+
+    #[test]
+    fn mini_json_rejects_signed_unicode_escape_and_preserves_utf8() {
+        let bad_auth = r#"{"execution_author\u+069zed":false,"hardware_safety_signoff":false,"sim_to_real_certified":false}"#;
+        assert_eq!(crate::auth::NoAuthorization::parse_json(bad_auth).unwrap_err().code, RefusalCode::FrobRef816);
+
+        let base = Refusal::new(
+            RefusalCode::FrobRef802, "alpha ∀β😀", "/p", "obs", "req", "",
+            RetryPolicy::AfterChange, vec![Repair::new("fix")],
+        );
+        let j = base.to_json();
+        assert_eq!(Refusal::from_json(&j).unwrap(), base);
+        let bad_esc = j.replace("obs", r#"\u+041"#);
+        assert!(matches!(Refusal::from_json(&bad_esc), Err(RefusalParseError::Json(_))));
     }
 }

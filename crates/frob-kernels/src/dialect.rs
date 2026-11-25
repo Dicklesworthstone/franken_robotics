@@ -161,14 +161,20 @@ pub fn expand_f32_bits_macro(prelude: &str, u32_literal: &str) -> Option<String>
 /// Parse an unsigned 32-bit hex/decimal literal with optional `u`/`U` suffix.
 #[must_use]
 pub fn parse_c_u32_literal(lit: &str) -> Option<u32> {
-    let core = lit
-        .trim()
+    let trimmed = lit.trim();
+    let core = trimmed
         .strip_suffix('u')
-        .or_else(|| lit.trim().strip_suffix('U'))
-        .unwrap_or(lit.trim());
+        .or_else(|| trimmed.strip_suffix('U'))
+        .unwrap_or(trimmed);
     if let Some(hex) = core.strip_prefix("0x").or_else(|| core.strip_prefix("0X")) {
+        if hex.is_empty() || !hex.bytes().all(|b| b.is_ascii_hexdigit()) {
+            return None;
+        }
         u32::from_str_radix(hex, 16).ok()
     } else {
+        if core.is_empty() || !core.bytes().all(|b| b.is_ascii_digit()) {
+            return None;
+        }
         core.parse::<u32>().ok()
     }
 }

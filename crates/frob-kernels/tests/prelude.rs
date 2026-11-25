@@ -437,3 +437,12 @@ fn prelude_bad_dialect_fixtures_all_rejected() {
         );
     }
 }
+
+#[test]
+fn parse_c_u32_literal_rejects_signed_hex_and_decimal() {
+    assert_eq!(frob_kernels::dialect::parse_c_u32_literal("0x3f800000u"), Some(0x3f80_0000));
+    assert_eq!(frob_kernels::dialect::parse_c_u32_literal("42U"), Some(42));
+    assert_eq!(frob_kernels::dialect::parse_c_u32_literal("0x+1"), None);
+    assert_eq!(frob_kernels::dialect::parse_c_u32_literal("+1"), None);
+    assert_eq!(frob_kernels::dialect::parse_c_u32_literal("0x"), None);
+}

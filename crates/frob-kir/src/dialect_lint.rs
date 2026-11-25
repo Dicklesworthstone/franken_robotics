@@ -373,8 +373,11 @@ fn check_compile_options(options: &CompileOptions, findings: &mut Vec<LintFindin
             let mut saw_fmad_false = false;
             let mut saw_fmad_true = false;
 
-            for raw in flags {
-                let flag = raw.trim();
+            let mut idx = 0usize;
+            while idx < flags.len() {
+                let flag = flags[idx].trim();
+                let next_val = flags.get(idx + 1).map(|s| s.trim());
+
                 if flag == "--use_fast_math"
                     || flag == "-use_fast_math"
                     || flag.starts_with("--use_fast_math=")
@@ -388,11 +391,10 @@ fn check_compile_options(options: &CompileOptions, findings: &mut Vec<LintFindin
                         flag,
                         "CUDA fast-math option is forbidden by dialect rule 4",
                     ));
-                } else if flag == "--fmad=true"
-                    || flag == "-fmad=true"
-                    || flag == "--fmad=1"
-                    || flag == "-fmad=1"
-                {
+                } else if matches!(
+                    flag,
+                    "--fmad=true" | "-fmad=true" | "--fmad=1" | "-fmad=1"
+                ) {
                     saw_fmad_true = true;
                     findings.push(LintFinding::new(
                         4,
@@ -402,16 +404,52 @@ fn check_compile_options(options: &CompileOptions, findings: &mut Vec<LintFindin
                         flag,
                         "CUDA FMA contraction enabled; dialect rule 4 requires --fmad=false",
                     ));
-                } else if flag == "--fmad=false" || flag == "-fmad=false" {
+                } else if matches!(
+                    flag,
+                    "--fmad=false" | "-fmad=false" | "--fmad=0" | "-fmad=0"
+                ) {
                     saw_fmad_false = true;
+                } else if matches!(flag, "--fmad" | "-fmad") {
+                    if let Some(val) = next_val {
+                        if matches!(val, "false" | "0") {
+                            saw_fmad_false = true;
+                        } else {
+                            saw_fmad_true = true;
+                            findings.push(LintFinding::new(
+                                4,
+                                "<options>",
+                                1,
+                                1,
+                                format!("{flag} {val}"),
+                                "CUDA FMA contraction enabled; dialect rule 4 requires --fmad=false",
+                            ));
+                        }
+                        idx += 2;
+                        continue;
+                    }
+                    saw_fmad_true = true;
+                    findings.push(LintFinding::new(
+                        4,
+                        "<options>",
+                        1,
+                        1,
+                        flag,
+                        "CUDA --fmad flag missing `false` argument under dialect rule 4",
+                    ));
                 } else if matches!(
                     flag,
                     "--ftz=true"
                         | "-ftz=true"
+                        | "--ftz=1"
+                        | "-ftz=1"
                         | "--prec-div=false"
                         | "-prec-div=false"
+                        | "--prec-div=0"
+                        | "-prec-div=0"
                         | "--prec-sqrt=false"
                         | "-prec-sqrt=false"
+                        | "--prec-sqrt=0"
+                        | "-prec-sqrt=0"
                 ) {
                     findings.push(LintFinding::new(
                         4,
@@ -421,7 +459,36 @@ fn check_compile_options(options: &CompileOptions, findings: &mut Vec<LintFindin
                         flag,
                         "CUDA floating-point relaxation flag is forbidden by dialect rule 4",
                     ));
+                } else if matches!(flag, "--ftz" | "-ftz")
+                    && let Some(val) = next_val
+                    && matches!(val, "true" | "1")
+                {
+                    findings.push(LintFinding::new(
+                        4,
+                        "<options>",
+                        1,
+                        1,
+                        format!("{flag} {val}"),
+                        "CUDA floating-point relaxation flag is forbidden by dialect rule 4",
+                    ));
+                    idx += 2;
+                    continue;
+                } else if matches!(flag, "--prec-div" | "-prec-div" | "--prec-sqrt" | "-prec-sqrt")
+                    && let Some(val) = next_val
+                    && matches!(val, "false" | "0")
+                {
+                    findings.push(LintFinding::new(
+                        4,
+                        "<options>",
+                        1,
+                        1,
+                        format!("{flag} {val}"),
+                        "CUDA floating-point relaxation flag is forbidden by dialect rule 4",
+                    ));
+                    idx += 2;
+                    continue;
                 }
+                idx += 1;
             }
 
             if !saw_fmad_false && !saw_fmad_true {
@@ -1183,7 +1250,12 @@ fn lint_kernel_source(file: &SourceFile, findings: &mut Vec<LintFinding>) {
                         member,
                         findings,
                     ) {
-                        i += if member.is_some() { 3 } else { 2 };
+                        // Preserve nested namespace heads like `metal::fast::divide` so
+                        // `fast::` / `precise::` is also inspected on the next iteration.
+                        let nested_ns = matches!(member, Some("fast" | "precise"))
+                            && i + 3 < len
+                            && tokens[i + 3].kind == TokenKind::DoubleColon;
+                        i += if member.is_some() && !nested_ns { 3 } else { 2 };
                         continue;
                     }
                 }
@@ -1306,6 +1378,13 @@ fn is_prelude_include(body: &str) -> bool {
     else {
         return false;
     };
+    if path.contains('"')
+        || path.contains('\\')
+        || path.starts_with('/')
+        || path.split('/').any(|seg| seg == "..")
+    {
+        return false;
+    }
     path == "prelude_cuda.h"
         || path == "prelude_metal.h"
         || path.ends_with("/prelude_cuda.h")
@@ -2227,5 +2306,52 @@ mod tests {
         assert_eq!(f3.len(), 1, "expected single attribute finding, got {f3:?}");
         assert_eq!(f3[0].rule, 1);
         assert_eq!(f3[0].token, "[[threadgroup(0)]]");
+    }
+
+    #[test]
+    fn lint_catches_nested_metal_fast_numeric_cuda_flags_and_include_injection() {
+        let safe_cuda = CompileOptions::cuda_safe("sm_89");
+
+        // Nested MSL namespace `metal::fast::divide` must trigger BOTH rule 1 (`metal::`)
+        // and rule 4 (`fast::divide`).
+        let nested_fast = DialectUnit::single_source("m.h", "f32 y = metal::fast::divide(a, b);\n");
+        let nf = collect_findings(&nested_fast, &CompileOptions::metal_safe());
+        let nrules: BTreeSet<u8> = nf.iter().map(|f| f.rule).collect();
+        assert_eq!(nrules, BTreeSet::from([1, 4]), "got {nf:?}");
+        assert!(nf.iter().any(|f| f.rule == 4 && f.token == "fast::divide"));
+
+        // Numeric and two-arg CUDA relaxation flags must trigger rule 4.
+        let clean = DialectUnit::single_source("ok.h", "f32 y = a * b;\n");
+        for bad_opts in [
+            vec!["--fmad=false", "--ftz=1"],
+            vec!["--fmad=false", "--prec-div=0"],
+            vec!["--fmad=false", "--prec-sqrt=0"],
+            vec!["--fmad=false", "--fmad", "true"],
+            vec!["--fmad=false", "--ftz", "1"],
+            vec!["--fmad=false", "--prec-div", "0"],
+        ] {
+            let opts = CompileOptions::Cuda {
+                options: bad_opts.into_iter().map(str::to_owned).collect(),
+            };
+            let fs = collect_findings(&clean, &opts);
+            assert!(
+                fs.iter().any(|f| f.rule == 4),
+                "expected rule 4 for {opts:?}, got {fs:?}"
+            );
+        }
+
+        // Quote-injected and parent-traversal `#include` must fail rule 1.
+        for bad_inc in [
+            "#include \"evil.h\" \"/prelude_cuda.h\"\n",
+            "#include \"../outside/prelude_cuda.h\"\n",
+            "#include \"/etc/prelude_metal.h\"\n",
+        ] {
+            let unit = DialectUnit::single_source("inc.h", bad_inc);
+            let fs = collect_findings(&unit, &safe_cuda);
+            assert!(
+                fs.iter().any(|f| f.rule == 1),
+                "expected rule 1 for {bad_inc:?}, got {fs:?}"
+            );
+        }
     }
 }

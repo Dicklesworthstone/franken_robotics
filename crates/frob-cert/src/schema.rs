@@ -1389,6 +1389,14 @@ fn parse_plant(val: &JsonValue) -> Result<PlantRef, RuleRejection> {
         })?;
         for (i, item) in arr.iter().enumerate() {
             let pfx = format!("plant.inputs[{i}]");
+            let inp_entries = item.as_obj().ok_or_else(|| {
+                RuleRejection::new(
+                    RuleId::SchemaFieldType,
+                    &pfx,
+                    "plant input entry must be an object",
+                )
+            })?;
+            check_closed_keys(inp_entries, &["class", "id"], &pfx)?;
             let id = req_non_empty_str(item, "id", &format!("{pfx}.id"))?.to_string();
             let cs = req_str(item, "class", &format!("{pfx}.class"))?;
             let c = Class::parse(cs).ok_or_else(|| {
@@ -1890,10 +1898,24 @@ fn validate_r5_intervals_in_value(val: &JsonValue, path: &str) -> Result<(), Rul
 }
 
 fn validate_nested_rationals(val: &JsonValue, path: &str) -> Result<(), RuleRejection> {
+    if matches!(val, JsonValue::Str(_)) {
+        let _ = parse_rational_value(val, path)?;
+        return Ok(());
+    }
     let arr = val.as_arr().ok_or_else(|| {
         RuleRejection::new(RuleId::NumRationalForm, path, "expected array of rationals")
     })?;
-    if arr.len() == 2 && arr[0].as_str().is_some() && arr[1].as_str().is_some() {
+    if arr.is_empty() {
+        return Err(RuleRejection::new(
+            RuleId::NumRationalForm,
+            path,
+            "rational array cannot be empty",
+        ));
+    }
+    if arr.len() == 2
+        && arr[0].as_str().is_some_and(|s| !s.contains('/'))
+        && arr[1].as_str().is_some_and(|s| !s.contains('/'))
+    {
         let _ = parse_rational_value(val, path)?;
         return Ok(());
     }
@@ -2497,7 +2519,35 @@ fn validate_unresolved_mass_opt(
             "unresolved_mass requires 'value'",
         )
     })?;
-    if value.as_obj().is_none() {
+    if value.as_obj().is_some() {
+        // Object values must be outward-rounded R5 intervals enclosed in [0, 1].
+        let is_interval = value.get("lo").is_some()
+            && value.get("hi").is_some()
+            && value
+                .get("impl")
+                .and_then(JsonValue::as_str)
+                .is_some_and(|s| !s.trim().is_empty())
+            && value
+                .get("precision")
+                .and_then(JsonValue::as_i64)
+                .is_some_and(|p| p >= 1);
+        if !is_interval {
+            return Err(RuleRejection::new(
+                RuleId::SchemaFieldType,
+                format!("{path}.value"),
+                "unresolved_mass object value must be a declared R5 interval in [0, 1]",
+            ));
+        }
+        let lo = parse_rational_value(value.get("lo").unwrap(), &format!("{path}.value.lo"))?;
+        let hi = parse_rational_value(value.get("hi").unwrap(), &format!("{path}.value.hi"))?;
+        if lo > hi || lo.is_negative() || hi > Rational::one() {
+            return Err(RuleRejection::new(
+                RuleId::SchemaFieldType,
+                format!("{path}.value"),
+                "unresolved_mass interval bounds must satisfy 0 <= lo <= hi <= 1",
+            ));
+        }
+    } else {
         let r = parse_rational_value(value, &format!("{path}.value"))?;
         if r.is_negative() || r > Rational::one() {
             return Err(RuleRejection::new(

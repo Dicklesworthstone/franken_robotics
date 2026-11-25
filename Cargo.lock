@@ -38,6 +38,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "frob-verbs"
+version = "0.0.1"
+dependencies = [
+ "frob-core",
+]
+
+[[package]]
 name = "fs-blake3"
 version = "0.0.1"
 

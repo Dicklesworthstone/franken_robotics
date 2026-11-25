@@ -1,0 +1,24 @@
+# Machine-readable crate contract for frob-verbs (N32a-02, N34-08).
+
+[crate]
+name = "frob-verbs"
+layer = 6
+rank = 4
+plane = "decision"
+determinism = "D0"
+evidence = "Tested"
+gates = ["GATE-TETHER-02"]
+refusals = ["FROB-REF-802"]
+
+[budgets]
+wall_ms = 1000
+memory_mib = 128
+
+[safe_mode]
+on_budget = "reference-path"
+on_calibration = "reference-path"
+
+[features]
+registry-only = { tier = "S" }
+handlers = { tier = "S" }
+conformance = { tier = "S" }

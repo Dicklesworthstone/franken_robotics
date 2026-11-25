@@ -1,0 +1,28 @@
+[package]
+name = "frob-verbs"
+version = { workspace = true }
+edition = { workspace = true }
+license-file = { workspace = true }
+repository = { workspace = true }
+authors = { workspace = true }
+publish = false
+description = "Verb registry (registries/verbs.toml), build-time static table, registry lints, and surface-shared definitions."
+
+[package.metadata.frob]
+layer = 6
+rank = 4
+
+[dependencies]
+frob-core = { path = "../frob-core" }
+
+[build-dependencies]
+frob-core = { path = "../frob-core" }
+
+[features]
+default = ["handlers"]
+registry-only = []
+handlers = []
+conformance = []
+
+[lints]
+workspace = true

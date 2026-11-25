@@ -13,41 +13,139 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name", "cluster", "owner", "summary"],
+        "required": [
+          "name",
+          "cluster",
+          "kind",
+          "tier",
+          "capabilities",
+          "input_schema",
+          "output_schema",
+          "refusals",
+          "idempotent",
+          "cost_model",
+          "first_milestone",
+          "task_clusters",
+          "examples",
+          "purpose",
+          "use_when",
+          "owner"
+        ],
         "additionalProperties": false,
         "properties": {
           "name": {
             "type": "string",
-            "pattern": "^[a-z][a-z0-9_]*(\\.[a-z][a-z0-9_]*)*$"
+            "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*(\\.[a-z][a-z0-9]*(-[a-z0-9]+)*)?$"
           },
-          "cluster": {
-            "type": "string",
-            "minLength": 1
+          "cluster": { "type": "string", "minLength": 1 },
+          "kind": { "type": "string", "enum": ["read", "run", "mutate", "admin"] },
+          "tier": { "type": "string", "enum": ["S", "F", "M"] },
+          "capabilities": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+          "input_schema": { "type": "string", "pattern": "^frob(\\.[a-z0-9-]+)+/[1-9][0-9]*$" },
+          "output_schema": { "type": "string", "pattern": "^frob(\\.[a-z0-9-]+)+/[1-9][0-9]*$" },
+          "refusals": { "type": "array", "items": { "type": "string", "pattern": "^FROB-REF-[0-9]{3}$" } },
+          "idempotent": { "type": "boolean" },
+          "cost_model": { "type": "string", "minLength": 1 },
+          "first_milestone": { "type": "string", "enum": ["M0", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8"] },
+          "task_clusters": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+          "examples": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+          "purpose": { "type": "string", "minLength": 1, "maxLength": 200 },
+          "use_when": { "type": "string", "minLength": 1 },
+          "owner": { "type": "string", "minLength": 1 },
+          "wait": {
+            "type": "object",
+            "required": ["cli", "mcp_ms", "mcp_max_ms"],
+            "additionalProperties": false,
+            "properties": {
+              "cli": { "const": "to-completion" },
+              "mcp_ms": { "type": "integer", "minimum": 0, "maximum": 30000 },
+              "mcp_max_ms": { "type": "integer", "minimum": 0, "maximum": 30000 }
+            }
           },
-          "owner": {
-            "type": "string",
-            "minLength": 1
-          },
-          "summary": {
-            "type": "string",
-            "minLength": 1
-          },
-          "tier": {
-            "type": "string",
-            "enum": ["S", "F", "M"]
-          },
-          "milestone": {
-            "type": "string",
-            "enum": ["M0", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8"]
-          },
-          "refusals": {
+          "actions": {
             "type": "array",
             "items": {
-              "type": "string",
-              "pattern": "^FROB-REF-[0-9]{3}$"
+              "type": "object",
+              "required": ["name", "kind", "capabilities"],
+              "additionalProperties": false,
+              "properties": {
+                "name": { "type": "string", "minLength": 1 },
+                "kind": { "type": "string", "enum": ["read", "run", "mutate", "admin"] },
+                "capabilities": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+                "paginated": { "type": "boolean" },
+                "destructive": { "type": "boolean" }
+              }
             }
-          }
+          },
+          "schema_version": { "type": "integer", "minimum": 1 },
+          "paginated": { "type": "boolean" },
+          "exports": { "type": "boolean" },
+          "estimable": { "type": "boolean" },
+          "destructive": { "type": "boolean" },
+          "public": { "type": "boolean" },
+          "key_optional": { "type": "boolean" },
+          "option_capabilities": {
+            "type": "object",
+            "additionalProperties": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+          },
+          "spends_physics": { "type": "boolean" },
+          "released": { "type": "boolean" },
+          "params": {
+            "type": "object",
+            "additionalProperties": { "type": "string", "minLength": 1 }
+          },
+          "conformance_only": { "type": "array", "items": { "type": "string", "minLength": 1 } }
         }
+      }
+    },
+    "task_cluster": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "activity"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "activity": { "type": "string", "minLength": 1 },
+          "default": { "type": "boolean" },
+          "tools": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+        }
+      }
+    },
+    "retired_name": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "use", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "use": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "addition": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "added_by", "defined_in"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "added_by": { "type": "string", "minLength": 1 },
+          "defined_in": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "counts": {
+      "type": "object",
+      "required": ["total", "clusters"],
+      "additionalProperties": false,
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "clusters": { "type": "integer", "minimum": 0 },
+        "by_kind": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } }
       }
     }
   }

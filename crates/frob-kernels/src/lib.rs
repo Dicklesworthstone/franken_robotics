@@ -7,5 +7,10 @@
 //! Determinism class `D0` for dialect assembly, lint validation, and manifest
 //! identity/validation; zero `unsafe`; prints nothing to stdout/stderr (L-7).
 
+pub mod backend;
+pub mod cpu;
 pub mod dialect;
+pub mod harness;
 pub mod manifest;
+pub mod receipt;
+pub mod selftest;

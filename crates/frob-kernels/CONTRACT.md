@@ -56,6 +56,9 @@ Hold the shared C-dialect kernel data (`dialect/prelude_cuda.h`, `dialect/prelud
 ## Refusals
 
 - `FROB-REF-251` (exit 3, `after-change`): raised by `frob_kir::dialect_lint::lint` whenever any dialect source or compile-option set violates rules 1, 2, 3, 4, or 6.
+- `FROB-REF-601` (exit 6, `backoff`): raised by `KernelBackend` (`BatchCpu`) when a backend/device is unavailable, a slab is out of range, or `read_back` / `launch` is re-entered during an active launch.
+- `FROB-REF-603` (exit 6, `after-change`): raised by `KernelBackend::compile` / `plan` with verbatim diagnostics when a manifest fails `N21b-01` static/alias/binding validation or backend source resolution.
+- `FROB-REF-606` (exit 6, `after-change`): raised by `Receipt::validate_agent_boundary` when a device result lacks a current hardware fingerprint digest (first repair: `frob spark fingerprint`).
 
 ## Determinism class
 
@@ -80,6 +83,7 @@ Hold the shared C-dialect kernel data (`dialect/prelude_cuda.h`, `dialect/prelud
 
 ## Known gaps
 
-- `KernelBackend` trait and `batch-cpu` reference backend land in `BD-014`; wiring `frob_kernels::manifest::DoctorKernelsReport` into `frob doctor --section kernels` completes once `BD-022` lands on `main`.
+- Wiring `frob_kernels::manifest::DoctorKernelsReport` into `frob doctor --section kernels` (`BD-022` doctor plugin hookup).
+- Replacing the local `Receipt` struct (`BD-014`, verbatim FrankenSim `AE-01`..`AE-12` field names) once upstream `FD-FSIM-09` lands a shared device receipt type in FrankenSim, and wiring `asupersync::Cx` once `BD-008` (`INT-ASUP-01`) lands.
 - GPU compilation and execution of expanded units (and `frob --json` structured lint reports on refused compiles) belong to `BD-015` (CUDA), `BD-016` (Metal), `BD-017` (IEEE probe), `BD-020` (GATE-SPARK-00), and `N21a-10` (per BD-013 polishing-round-4 review notes 1 and 2).
-- Derived kernel bodies under `dialect/generated/` (`k_cay_step_body.h`) arrive with `BD-018` / `BD-019`; `det_*` elementary functions arrive with `N21a-11`.
+- Derived kernel bodies under `dialect/generated/` (`k_cay_step_body.h`) arrive with `BD-019`; `det_*` elementary functions arrive with `N21a-11`.

@@ -1,0 +1,55 @@
+# Pinned verbatim copy of the twelve accelerator evidence field names (AE-01..AE-12)
+# from frankensim/docs/ACCELERATOR_DOCTRINE.md (BD-014, INV-SPARK-02).
+# FrankenRobotics copies these field names verbatim and never renames or drops one.
+
+schema = "frob.accelerator_doctrine_fields/1"
+frankensim_commit = "83c260121532a6a16d5b014326f9a3f937e14e94"
+source_path = "docs/ACCELERATOR_DOCTRINE.md"
+
+[[field]]
+id = "AE-01"
+name = "device identity"
+
+[[field]]
+id = "AE-02"
+name = "driver and runtime version"
+
+[[field]]
+id = "AE-03"
+name = "compiler and backend identity"
+
+[[field]]
+id = "AE-04"
+name = "kernel source identity"
+
+[[field]]
+id = "AE-05"
+name = "kernel and workload identity"
+
+[[field]]
+id = "AE-06"
+name = "CPU machine identity and measured axes"
+
+[[field]]
+id = "AE-07"
+name = "reduction and determinism policy"
+
+[[field]]
+id = "AE-08"
+name = "CPU-versus-device numerical comparison"
+
+[[field]]
+id = "AE-09"
+name = "permanent CPU reference"
+
+[[field]]
+id = "AE-10"
+name = "cancellation, drain, and finalize outcome"
+
+[[field]]
+id = "AE-11"
+name = "phase wall-time and energy attribution"
+
+[[field]]
+id = "AE-12"
+name = "go or no-go decision"

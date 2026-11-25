@@ -7,7 +7,7 @@ use frob_core::auth::{NoAuthorization, PacketAuthorization};
 use frob_core::canon::{CanonError, Object};
 use frob_core::id::Blake3;
 use frob_core::json::INT53_MAX;
-use frob_core::refusal::{Refusal, Repair, RetryPolicy};
+use frob_core::refusal::{Refusal, RefusalFingerprint, Repair, RetryPolicy};
 
 use super::EnvelopeError;
 use super::exit::{ExitCode, parse_refusal_code};
@@ -152,22 +152,25 @@ impl RefusalFields {
     }
 }
 
-/// The `refusal` block: the code, the exit its registry row carries, and the fields.
+/// The `refusal` block: the code, the exit its registry row carries, the fields, and
+/// (for every `6xx` Spark refusal) the required device fingerprint block (`N21-REF`).
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct RefusalBlock {
     pub(crate) code: String,
     pub(crate) exit: ExitCode,
     pub(crate) fields: RefusalFields,
+    pub(crate) fingerprint: Option<RefusalFingerprint>,
 }
 
 impl RefusalBlock {
-    /// Assemble a block whose exit was read from the registry by the caller.
-    pub(crate) fn from_parts(
+    /// Assemble a block with an explicit optional `6xx` fingerprint payload (`N21-REF`).
+    pub(crate) fn from_parts_with_fingerprint(
         code: &str,
         exit: ExitCode,
         f: RefusalFields,
+        fingerprint: Option<RefusalFingerprint>,
     ) -> Result<Self, EnvelopeError> {
-        parse_refusal_code(code).ok_or_else(|| EnvelopeError::InvalidField {
+        let num = parse_refusal_code(code).ok_or_else(|| EnvelopeError::InvalidField {
             field: "refusal.code",
             reason: format!("`{code}` is not FROB-REF-[1-9][0-9]{{2,3}}"),
         })?;
@@ -184,6 +187,31 @@ impl RefusalBlock {
                 reason: "set but empty".into(),
             });
         }
+        let is_6xx = (600..=699).contains(&num) || (6000..=6999).contains(&num);
+        if is_6xx {
+            let Some(fp) = &fingerprint else {
+                return Err(EnvelopeError::InvalidField {
+                    field: "refusal.fingerprint",
+                    reason: "6xx refusals require a fingerprint block".into(),
+                });
+            };
+            non_empty("refusal.fingerprint.device", &fp.device)?;
+            match &fp.digest {
+                Some(d) => non_empty("refusal.fingerprint.digest", d)?,
+                None if code == "FROB-REF-606" => {}
+                None => {
+                    return Err(EnvelopeError::InvalidField {
+                        field: "refusal.fingerprint.digest",
+                        reason: "null digest is allowed only for FROB-REF-606".into(),
+                    });
+                }
+            }
+        } else if fingerprint.is_some() {
+            return Err(EnvelopeError::InvalidField {
+                field: "refusal.fingerprint",
+                reason: "fingerprint block is only valid on 6xx refusals".into(),
+            });
+        }
         for c in &f.affected_claims {
             non_empty("refusal.affected_claims", c)?;
         }
@@ -194,6 +222,7 @@ impl RefusalBlock {
             code: code.to_owned(),
             exit,
             fields: f,
+            fingerprint,
         })
     }
 
@@ -212,6 +241,11 @@ impl RefusalBlock {
         &self.fields
     }
 
+    #[must_use]
+    pub const fn fingerprint(&self) -> Option<&RefusalFingerprint> {
+        self.fingerprint.as_ref()
+    }
+
     pub(crate) fn write(&self, o: &mut Object<'_>) -> Result<(), CanonError> {
         let f = &self.fields;
         o.array("affected_claims", |a| {
@@ -223,6 +257,15 @@ impl RefusalBlock {
         o.str("code", &self.code)?;
         if let Some(d) = &f.detail {
             o.str("detail", d)?;
+        }
+        if let Some(fp) = &self.fingerprint {
+            o.object("fingerprint", |fo| {
+                fo.str("device", &fp.device)?;
+                match &fp.digest {
+                    Some(d) => fo.str("digest", d),
+                    None => fo.null("digest"),
+                }
+            })?;
         }
         o.str("message", &f.message)?;
         o.str("observed", &f.observed)?;

@@ -10,7 +10,7 @@
 use std::sync::OnceLock;
 
 use frob_core::canon::{self, CanonError, Canonical, CanonicalBytes, Object, Value};
-use frob_core::refusal::{Refusal, Repair, RetryPolicy};
+use frob_core::refusal::{Refusal, RefusalFingerprint, Repair, RetryPolicy};
 use frob_core::registry::refusals::{RefusalRegistry, RefusalRegistryError};
 use frob_core::stack::{BUILT_UNDER, StackIdentity};
 
@@ -140,11 +140,12 @@ impl Envelope {
 
     /// A refusal; the exit is the `exit` field of the code's row in the embedded registry.
     pub fn from_refusal(verb: &str, refusal: &Refusal, cost: Cost) -> Result<Self, EnvelopeError> {
-        Self::from_code_in(
+        Self::from_code_in_with_fingerprint(
             embedded_registry()?,
             verb,
             refusal.code.as_str(),
             RefusalFields::of(refusal),
+            refusal.fingerprint.clone(),
             cost,
         )
     }
@@ -160,6 +161,24 @@ impl Envelope {
         Self::from_code_in(embedded_registry()?, verb, code, fields, cost)
     }
 
+    /// A Spark (`6xx`) refusal carrying its required `fingerprint: { device, digest | null }`.
+    pub fn from_code_with_fingerprint(
+        verb: &str,
+        code: &str,
+        fields: RefusalFields,
+        fingerprint: RefusalFingerprint,
+        cost: Cost,
+    ) -> Result<Self, EnvelopeError> {
+        Self::from_code_in_with_fingerprint(
+            embedded_registry()?,
+            verb,
+            code,
+            fields,
+            Some(fingerprint),
+            cost,
+        )
+    }
+
     /// As [`Self::from_code`] against a given registry (tests and synthetic registries).
     pub(crate) fn from_code_in(
         registry: &RefusalRegistry,
@@ -168,8 +187,20 @@ impl Envelope {
         fields: RefusalFields,
         cost: Cost,
     ) -> Result<Self, EnvelopeError> {
+        Self::from_code_in_with_fingerprint(registry, verb, code, fields, None, cost)
+    }
+
+    /// As [`Self::from_code_in`] carrying an optional `6xx` fingerprint block.
+    pub(crate) fn from_code_in_with_fingerprint(
+        registry: &RefusalRegistry,
+        verb: &str,
+        code: &str,
+        fields: RefusalFields,
+        fingerprint: Option<RefusalFingerprint>,
+        cost: Cost,
+    ) -> Result<Self, EnvelopeError> {
         let exit = exit_for_code(registry, code).map_err(EnvelopeError::ExitLookup)?;
-        let block = RefusalBlock::from_parts(code, exit, fields)?;
+        let block = RefusalBlock::from_parts_with_fingerprint(code, exit, fields, fingerprint)?;
         Self::base(verb, Outcome::Refused(block), None, cost)
     }
 
@@ -236,6 +267,7 @@ impl Envelope {
                 code: INTERNAL_FAULT_CODE.to_owned(),
                 exit: ExitCode::Indeterminate,
                 fields,
+                fingerprint: None,
             }),
             evidence: None,
             cost,

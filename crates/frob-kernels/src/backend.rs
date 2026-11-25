@@ -41,7 +41,7 @@ use std::ops::Range;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, Ordering};
 
-use frob_core::refusal::{Refusal, RefusalCode, Repair, RetryPolicy};
+use frob_core::refusal::{Refusal, RefusalCode, RefusalFingerprint, Repair, RetryPolicy};
 
 use crate::manifest::{
     DeclaredOutput, ElemType, KernelId, KernelManifest, ShapeClassCaps, SlabBinding,
@@ -393,6 +393,7 @@ pub fn refusal_601(pointer: impl Into<String>, message: impl Into<String>) -> Re
             Repair::new("Resume from the last committed epoch when the device returns"),
         ],
     )
+    .with_fingerprint(RefusalFingerprint::new("batch-cpu", "batch-cpu-host-m0"))
 }
 
 /// Construct a `FROB-REF-603` (kernel compile/validation failure, exit 6) refusal
@@ -414,4 +415,5 @@ pub fn refusal_603(kernel: impl Into<String>, diagnostics: impl Into<String>) ->
             Repair::new("Use the generic kernel if a specialized kernel failed"),
         ],
     )
+    .with_fingerprint(RefusalFingerprint::new("batch-cpu", "batch-cpu-host-m0"))
 }

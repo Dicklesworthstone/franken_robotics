@@ -79,10 +79,12 @@ impl StackReceiptHash {
 
     /// Parse `sr:<64 lower-case hex digits>`. Rejects `sl:` and bare or malformed hex.
     pub fn parse(s: &str) -> Result<Self, IdError> {
-        let hex = s.strip_prefix(Self::PREFIX).ok_or_else(|| IdError::InvalidPrefix {
-            expected: Self::PREFIX,
-            input: s.to_owned(),
-        })?;
+        let hex = s
+            .strip_prefix(Self::PREFIX)
+            .ok_or_else(|| IdError::InvalidPrefix {
+                expected: Self::PREFIX,
+                input: s.to_owned(),
+            })?;
         Ok(Self::from_digest(Blake3::from_hex(hex)?))
     }
 
@@ -170,10 +172,12 @@ impl StackLockDigest {
 
     /// Parse `sl:<64 lower-case hex digits>`. Rejects `sr:` and bare or malformed hex.
     pub fn parse(s: &str) -> Result<Self, IdError> {
-        let hex = s.strip_prefix(Self::PREFIX).ok_or_else(|| IdError::InvalidPrefix {
-            expected: Self::PREFIX,
-            input: s.to_owned(),
-        })?;
+        let hex = s
+            .strip_prefix(Self::PREFIX)
+            .ok_or_else(|| IdError::InvalidPrefix {
+                expected: Self::PREFIX,
+                input: s.to_owned(),
+            })?;
         Ok(Self::from_digest(Blake3::from_hex(hex)?))
     }
 
@@ -280,11 +284,7 @@ pub const fn same_stack(a: &StackIdentity, b: &StackIdentity) -> bool {
 
 /// Enforce the same-stack rule (`FROB-REF-890`, exit 3, `retry: after-change`) whenever
 /// two results are compared, pooled, substituted, promoted, or served from a cache.
-pub fn require_same_stack(
-    a: &StackIdentity,
-    b: &StackIdentity,
-    what: &str,
-) -> Result<(), Refusal> {
+pub fn require_same_stack(a: &StackIdentity, b: &StackIdentity, what: &str) -> Result<(), Refusal> {
     if same_stack(a, b) {
         return Ok(());
     }
@@ -304,10 +304,7 @@ pub fn require_same_stack(
             "result.revalidate",
             "Revalidate the older evidence under the current stack",
         ),
-        Repair::with_detail(
-            "rerun",
-            "Re-run the computation under the current stack",
-        ),
+        Repair::with_detail("rerun", "Re-run the computation under the current stack"),
         Repair::with_detail(
             "present-separately",
             "Present the two as separate results, each labelled with its stack",
@@ -352,6 +349,15 @@ impl Canonical for CanonicalRefusal<'_> {
             o.str("code", r.code.as_str())?;
             if let Some(ref d) = r.detail {
                 o.str("detail", d)?;
+            }
+            if let Some(ref fp) = r.fingerprint {
+                o.object("fingerprint", |fo| {
+                    fo.str("device", &fp.device)?;
+                    match &fp.digest {
+                        Some(d) => fo.str("digest", d),
+                        None => fo.null("digest"),
+                    }
+                })?;
             }
             o.str("message", &r.message)?;
             o.str("observed", &r.observed)?;
@@ -427,11 +433,7 @@ const fn const_hex_nibble(b: u8) -> u8 {
         matches!(b, b'0'..=b'9' | b'a'..=b'f'),
         "build.rs must emit 64 lower-case hex digits"
     );
-    if b <= b'9' {
-        b - b'0'
-    } else {
-        b - b'a' + 10
-    }
+    if b <= b'9' { b - b'0' } else { b - b'a' + 10 }
 }
 
 const fn parse_const_hex_32(s: &str) -> [u8; 32] {
@@ -567,7 +569,10 @@ mod tests {
         assert_eq!(a.lock.stack_key_component(), a.lock);
 
         let env_clean = canon::to_canonical(&EnvHelper(a)).expect("env clean");
-        assert_eq!(env_clean.as_str(), format!("{{\"stack_receipt\":\"sr:{HEX_A}\"}}"));
+        assert_eq!(
+            env_clean.as_str(),
+            format!("{{\"stack_receipt\":\"sr:{HEX_A}\"}}")
+        );
         let env_dev = canon::to_canonical(&EnvHelper(id(HEX_A, LOCK_A, true))).expect("env dev");
         assert_eq!(
             env_dev.as_str(),

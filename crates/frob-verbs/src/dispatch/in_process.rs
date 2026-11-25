@@ -18,7 +18,7 @@ use std::fmt;
 use std::panic::{self, AssertUnwindSafe};
 use std::sync::Arc;
 
-use frob_core::refusal::{Repair, RetryPolicy};
+use frob_core::refusal::{RefusalFingerprint, Repair, RetryPolicy};
 use frob_core::registry::refusals::RefusalRegistry;
 
 use crate::envelope::{Bound, Cost, Envelope, FaultContext, HandlerFault, RefusalFields, Warning};
@@ -301,17 +301,24 @@ impl InProcess {
                 ),
             ],
         };
-        let env = Envelope::from_code_in(refusals, verb, "FROB-REF-601", fields, Cost::ZERO)
-            .unwrap_or_else(|_| {
-                Envelope::internal_fault(
-                    &FaultContext {
-                        verb: verb.to_owned(),
-                        idempotency_key: None,
-                        diagnostic_path: self.diagnostic_path.clone(),
-                    },
-                    Cost::ZERO,
-                )
-            });
+        let env = Envelope::from_code_in_with_fingerprint(
+            refusals,
+            verb,
+            "FROB-REF-601",
+            fields,
+            Some(RefusalFingerprint::new("daemon", "daemon-unavailable")),
+            Cost::ZERO,
+        )
+        .unwrap_or_else(|_| {
+            Envelope::internal_fault(
+                &FaultContext {
+                    verb: verb.to_owned(),
+                    idempotency_key: None,
+                    diagnostic_path: self.diagnostic_path.clone(),
+                },
+                Cost::ZERO,
+            )
+        });
         Ok(JobStream::single_envelope(WireEnvelope::from_envelope(
             &env, refusals,
         )?))
@@ -544,6 +551,16 @@ mod tests {
         let r = env.tree().get("refusal").expect("refusal block");
         assert_eq!(r.get("pointer").and_then(Tree::as_str), Some("daemon"));
         assert_eq!(r.get("retry").and_then(Tree::as_str), Some("backoff"));
+        let fp = r.get("fingerprint").expect("6xx fingerprint block");
+        assert_eq!(fp.get("device").and_then(Tree::as_str), Some("daemon"));
+        assert_eq!(
+            fp.get("digest").and_then(Tree::as_str),
+            Some("daemon-unavailable")
+        );
+        assert_eq!(
+            env.read().refusal_fingerprint(),
+            Some(&RefusalFingerprint::new("daemon", "daemon-unavailable"))
+        );
         let first_repair = r
             .get("repairs")
             .and_then(Tree::as_array)
@@ -576,5 +593,91 @@ mod tests {
             .filter_map(|w| w.get("code").and_then(Tree::as_str))
             .collect();
         assert!(warnings.contains(&"executor-in-process"));
+    }
+
+    #[test]
+    fn refusal_6xx_envelope_fingerprint_contract() {
+        use crate::envelope::{base_schema, read_envelope_with};
+        use frob_core::refusal::{Refusal, RefusalCode};
+
+        let refusals = fixture::synthetic_refusals();
+        let schema = base_schema().expect("frob.envelope/1 schema compiles");
+
+        let mk_fields = |msg: &str| RefusalFields {
+            message: msg.to_owned(),
+            pointer: "/device/cuda:0".to_owned(),
+            observed: "obs".to_owned(),
+            required: "req".to_owned(),
+            unit: "device".to_owned(),
+            detail: None,
+            affected_claims: Vec::new(),
+            retry: RetryPolicy::AfterChange,
+            repairs: vec![Repair::new("frob spark check")],
+        };
+
+        // 1. 601 without fingerprint fails at Envelope construction.
+        assert!(
+            Envelope::from_code_in(
+                &refusals,
+                "sim.gpu",
+                "FROB-REF-601",
+                mk_fields("lost"),
+                Cost::ZERO
+            )
+            .is_err()
+        );
+        // 2. 601 with null digest fails at Envelope construction.
+        assert!(
+            Envelope::from_code_in_with_fingerprint(
+                &refusals,
+                "sim.gpu",
+                "FROB-REF-601",
+                mk_fields("lost"),
+                Some(RefusalFingerprint::missing("cuda:0")),
+                Cost::ZERO,
+            )
+            .is_err()
+        );
+        // 3. 606 with null digest passes construction, canonical JSON, and schema reader.
+        let r606 = Refusal::new(
+            RefusalCode::FrobRef606,
+            "fingerprint missing",
+            "/device/cuda:0/fingerprint",
+            "null",
+            "current digest",
+            "blake3-hex",
+            RetryPolicy::AfterChange,
+            vec![Repair::new("frob spark fingerprint")],
+        )
+        .with_fingerprint(RefusalFingerprint::missing("cuda:0"));
+        let env606 = Envelope::from_refusal("sim.gpu", &r606, Cost::ZERO).expect("606 envelope");
+        let wire606 = env606.to_canonical().expect("canonical 606");
+        let parsed606 =
+            read_envelope_with(wire606.as_bytes(), schema, &refusals).expect("read 606");
+        assert_eq!(parsed606.exit().code(), 6);
+        assert_eq!(
+            parsed606.refusal_fingerprint(),
+            Some(&RefusalFingerprint::missing("cuda:0"))
+        );
+
+        // 4. Negative schema control: rewriting code 606 -> 601 while keeping digest:null MUST fail schema validation.
+        let mutated_null_601 = wire606.as_str().replace("FROB-REF-606", "FROB-REF-601");
+        assert!(
+            read_envelope_with(mutated_null_601.as_bytes(), schema, &refusals).is_err(),
+            "schema must reject 601 with digest:null"
+        );
+
+        // 5. Negative schema control: non-6xx with fingerprint fails at construction.
+        assert!(
+            Envelope::from_code_in_with_fingerprint(
+                &refusals,
+                "design.check",
+                "FROB-REF-802",
+                mk_fields("bad arg"),
+                Some(RefusalFingerprint::new("cuda:0", "deadbeef")),
+                Cost::ZERO,
+            )
+            .is_err()
+        );
     }
 }

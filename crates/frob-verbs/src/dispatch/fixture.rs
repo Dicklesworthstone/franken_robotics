@@ -17,7 +17,7 @@ use frob_core::evidence::{
     ClaimKind, ClaimProduct, DetClass, FlagSet, InputRef, RealityScope, Scope as EvScope, TierMeet,
 };
 use frob_core::id::hash_blob;
-use frob_core::refusal::{Refusal, RefusalCode, Repair, RetryPolicy};
+use frob_core::refusal::{Refusal, RefusalCode, RefusalFingerprint, Repair, RetryPolicy};
 use frob_core::registry::refusals::{EMBEDDED_REFUSALS_TOML, RefusalRegistry};
 
 use crate::envelope::{
@@ -494,7 +494,7 @@ fn eval_fixture_verb(
             Cost::ZERO,
         )
         .map_err(DispatchError::Envelope)?,
-        "refuse.exit6" => Envelope::from_code_in(
+        "refuse.exit6" => Envelope::from_code_in_with_fingerprint(
             refusals,
             "refuse.exit6",
             "FROB-REF-601",
@@ -509,6 +509,10 @@ fn eval_fixture_verb(
                 retry: RetryPolicy::Backoff,
                 repairs: vec![Repair::new("frobd --state-root ~/.frob")],
             },
+            Some(RefusalFingerprint::new(
+                "daemon",
+                "synthetic-daemon-offline",
+            )),
             Cost::ZERO,
         )
         .map_err(DispatchError::Envelope)?,

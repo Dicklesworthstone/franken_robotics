@@ -9,7 +9,7 @@
 use std::fmt;
 
 use frob_core::evidence::DetClass;
-use frob_core::refusal::{Refusal, RefusalCode, Repair, RetryPolicy};
+use frob_core::refusal::{Refusal, RefusalCode, RefusalFingerprint, Repair, RetryPolicy};
 
 use crate::manifest::ShapeClassCaps;
 
@@ -272,7 +272,8 @@ impl Receipt {
                     Repair::new("frob spark check"),
                     Repair::new("Run on batch-cpu"),
                 ],
-            ));
+            )
+            .with_fingerprint(RefusalFingerprint::missing(device)));
         }
         Ok(())
     }

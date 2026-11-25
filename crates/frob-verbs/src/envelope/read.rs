@@ -10,7 +10,7 @@
 use std::fmt;
 
 use frob_core::auth::{NoAuthorization, PacketAuthorization};
-use frob_core::refusal::Refusal;
+use frob_core::refusal::{Refusal, RefusalFingerprint};
 use frob_core::registry::refusals::RefusalRegistry;
 use frob_core::stack::StackReceiptHash;
 
@@ -28,6 +28,7 @@ pub struct ReadEnvelope {
     verb: String,
     exit: ExitCode,
     refusal_code: Option<String>,
+    refusal_fingerprint: Option<RefusalFingerprint>,
     stack_receipt: StackReceiptHash,
     stack_dev: bool,
 }
@@ -51,6 +52,11 @@ impl ReadEnvelope {
     #[must_use]
     pub fn refusal_code(&self) -> Option<&str> {
         self.refusal_code.as_deref()
+    }
+
+    #[must_use]
+    pub const fn refusal_fingerprint(&self) -> Option<&RefusalFingerprint> {
+        self.refusal_fingerprint.as_ref()
     }
 
     #[must_use]
@@ -272,11 +278,25 @@ pub fn read_envelope_with(
         .and_then(Tree::as_bool)
         .unwrap_or(false);
 
+    let refusal_fingerprint = tree
+        .get("refusal")
+        .and_then(|r| r.get("fingerprint"))
+        .and_then(|fp| {
+            let device = fp.get("device").and_then(Tree::as_str)?.to_owned();
+            let digest = match fp.get("digest")? {
+                Tree::Str(s) => Some(s.clone()),
+                Tree::Null => None,
+                _ => return None,
+            };
+            Some(RefusalFingerprint { device, digest })
+        });
+
     Ok(ReadEnvelope {
         tree,
         verb,
         exit,
         refusal_code,
+        refusal_fingerprint,
         stack_receipt,
         stack_dev,
     })

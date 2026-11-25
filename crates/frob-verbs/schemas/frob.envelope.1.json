@@ -149,7 +149,51 @@
         "affected_claims": { "type": "array", "items": { "type": "string", "minLength": 1 } },
         "retry": { "enum": ["never", "after-change", "backoff"] },
         "repairs": { "type": "array", "items": { "$ref": "#/$defs/repair" } },
-        "detail": { "type": "string", "minLength": 1 }
+        "detail": { "type": "string", "minLength": 1 },
+        "fingerprint": { "$ref": "#/$defs/refusal_fingerprint" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "code": { "pattern": "^FROB-REF-6[0-9]{2,3}$" } },
+            "required": ["code"]
+          },
+          "then": { "required": ["fingerprint"] },
+          "else": { "not": { "required": ["fingerprint"] } }
+        },
+        {
+          "if": {
+            "properties": { "code": { "pattern": "^FROB-REF-6[0-9]{2,3}$" } },
+            "required": ["code"],
+            "not": {
+              "properties": { "code": { "const": "FROB-REF-606" } },
+              "required": ["code"]
+            }
+          },
+          "then": {
+            "properties": {
+              "fingerprint": {
+                "properties": {
+                  "digest": { "type": "string", "minLength": 1 }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "refusal_fingerprint": {
+      "type": "object",
+      "required": ["device", "digest"],
+      "additionalProperties": false,
+      "properties": {
+        "device": { "type": "string", "minLength": 1 },
+        "digest": {
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "null" }
+          ]
+        }
       }
     },
     "repair": {

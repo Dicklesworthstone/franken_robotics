@@ -20,7 +20,11 @@ use frob_cert::limits::{
 use frob_cert::rational::Rational;
 
 use crate::tenfold::ids::{GateId, Hash32, Millis};
-use crate::tenfold::records::{freeze, ledger, mission, receipt, report};
+use crate::tenfold::records::freeze;
+use crate::tenfold::records::ledger;
+use crate::tenfold::records::mission;
+use crate::tenfold::records::receipt;
+use crate::tenfold::records::report;
 use crate::tenfold::refusal::TenfoldRefusal;
 
 /// The five closed harness record schema names (`N39a-01`).

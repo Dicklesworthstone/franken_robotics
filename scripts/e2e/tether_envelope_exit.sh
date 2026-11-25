@@ -29,6 +29,7 @@ source "${SCRIPT_DIR}/lib.sh"
 
 e2e_init "tether_envelope_exit" "N32a-03"
 
+export CARGO_TARGET_DIR="${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/frob-tether-envelope-${E2E_RUN_ID}"
 MANIFEST="${E2E_REPO_ROOT}/Cargo.toml"
 FIXTURE="${E2E_REPO_ROOT}/crates/frob-conformance/fixtures/tether/exit_table.toml"
 
@@ -52,10 +53,10 @@ if [ -n "${PLANT_FEATURE}" ]; then
   FEATURE_ARGS=(--features "${PLANT_FEATURE}")
 fi
 e2e_cmd --name "envelope_unit_tests${PLANT_FEATURE:+_planted_${PLANT_FEATURE}}" -- \
-  cargo test --manifest-path "${MANIFEST}" -p frob-verbs ${FEATURE_ARGS[@]+"${FEATURE_ARGS[@]}"} --lib -- envelope
+  cargo test --offline -j 1 --manifest-path "${MANIFEST}" -p frob-verbs ${FEATURE_ARGS[@]+"${FEATURE_ARGS[@]}"} --lib -- envelope
 e2e_assert_eq "envelope_unit_tests_exit" "${E2E_LAST_EXIT}" "0"
 e2e_cmd --name "envelope_doctests${PLANT_FEATURE:+_planted_${PLANT_FEATURE}}" -- \
-  cargo test --manifest-path "${MANIFEST}" -p frob-verbs ${FEATURE_ARGS[@]+"${FEATURE_ARGS[@]}"} --doc -- envelope
+  cargo test --offline -j 1 --manifest-path "${MANIFEST}" -p frob-verbs ${FEATURE_ARGS[@]+"${FEATURE_ARGS[@]}"} --doc -- envelope
 e2e_assert_eq "envelope_doctests_exit" "${E2E_LAST_EXIT}" "0"
 
 # ---------------------------------------------------------------------------
@@ -66,7 +67,7 @@ e2e_step "negative_controls" "Planted bare error and second envelope must fail t
 run_control() {
   local feature="$1" test_name="$2" observed="not-observed"
   e2e_expect_caught "${feature}" --gate GATE-TETHER-03 --nc "${feature}" -- \
-    cargo test --manifest-path "${MANIFEST}" -p frob-verbs --features "${feature}" --lib -- \
+    cargo test --offline -j 1 --manifest-path "${MANIFEST}" -p frob-verbs --features "${feature}" --lib -- \
     --exact "${test_name}"
   if [ "${E2E_DRY_RUN:-0}" = "1" ]; then
     return 0
@@ -142,7 +143,7 @@ while IFS="$(printf '\t')" read -r id want_ok want_exit want_code exercised mech
   ROW_STDOUT="${E2E_LAST_STDOUT}"
 
   e2e_cmd --name "row_${id}_envelope_check" -- \
-    cargo run --manifest-path "${MANIFEST}" -p frob-verbs --example envelope_check -- "${ROW_STDOUT}"
+    cargo run --offline -j 1 --manifest-path "${MANIFEST}" -p frob-verbs --example envelope_check -- "${ROW_STDOUT}"
   if [ "${E2E_LAST_EXIT}" = "0" ]; then
     e2e_assert_eq "row_${id}_envelope_check_exit" "${E2E_LAST_EXIT}" "0" --gate GATE-TETHER-03
   else

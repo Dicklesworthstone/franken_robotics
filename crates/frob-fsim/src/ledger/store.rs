@@ -171,7 +171,7 @@ fn acquire_writer_lock(
 fn ext_table(table: TableId) -> ExtensionTable {
     match table {
         TableId::Meta => ExtensionTable::Requirements,
-        TableId::Run => ExtensionTable::Scenarios,
+        TableId::Run | TableId::Execution => ExtensionTable::Scenarios,
         TableId::Episode => ExtensionTable::Constraints,
     }
 }

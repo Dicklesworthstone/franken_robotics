@@ -122,7 +122,7 @@ impl Canonical for CommitSeq {
     }
 }
 
-/// Closed set of M0 ledger tables (`meta`, `run`, `episode`).
+/// Closed set of M0 ledger tables.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum TableId {
     /// Ledger metadata: schema version, creation receipt hash, and probe chain state.
@@ -131,11 +131,13 @@ pub enum TableId {
     Run,
     /// Episode rows belonging to a run (final state digest, telemetry summaries).
     Episode,
+    /// Individual invocations of a run, keyed by their execution trace.
+    Execution,
 }
 
 impl TableId {
     /// All M0 tables in canonical declaration order.
-    pub const ALL: &'static [Self] = &[Self::Meta, Self::Run, Self::Episode];
+    pub const ALL: &'static [Self] = &[Self::Meta, Self::Run, Self::Episode, Self::Execution];
 
     /// Stable canonical table name.
     #[must_use]
@@ -144,16 +146,18 @@ impl TableId {
             Self::Meta => "meta",
             Self::Run => "run",
             Self::Episode => "episode",
+            Self::Execution => "execution",
         }
     }
 
-    /// Parse a table name (`meta`, `run`, `episode`).
+    /// Parse a stable table name.
     #[must_use]
     pub fn parse(s: &str) -> Option<Self> {
         match s {
             "meta" => Some(Self::Meta),
             "run" => Some(Self::Run),
             "episode" => Some(Self::Episode),
+            "execution" => Some(Self::Execution),
             _ => None,
         }
     }

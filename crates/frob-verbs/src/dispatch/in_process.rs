@@ -22,7 +22,7 @@ use frob_core::refusal::{Repair, RetryPolicy};
 use frob_core::registry::refusals::RefusalRegistry;
 
 use crate::envelope::{Bound, Cost, Envelope, FaultContext, HandlerFault, RefusalFields, Warning};
-use crate::registry::Kind;
+use crate::registry::{Kind, LintError};
 
 use super::pipeline::Pipeline;
 use super::socket::{DaemonClient, SocketError};
@@ -142,6 +142,23 @@ impl HandlerTable {
     #[must_use]
     pub fn contains(&self, verb: &str) -> bool {
         self.handlers.contains_key(verb)
+    }
+
+    /// Reject two registry names bound to the same handler object.
+    pub fn check_one_name_per_handler(&self) -> Result<(), LintError> {
+        let mut names = BTreeMap::new();
+        for (name, handler) in &self.handlers {
+            if let Some(prior) = names.insert(Arc::as_ptr(handler).cast::<()>(), name) {
+                return Err(LintError::new(
+                    name,
+                    "NJL-04",
+                    "same-handler",
+                    name,
+                    format!("shares the handler bound to `{prior}`"),
+                ));
+            }
+        }
+        Ok(())
     }
 
     #[must_use]

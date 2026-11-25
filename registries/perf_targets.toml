@@ -1,0 +1,335 @@
+# FrankenRobotics performance target register (schema frob.perf.targets/1, bead N36-01).
+#
+# All 22 rows are TARGETs, not measurements. Every threshold carries an explicit
+# status (`tolerance`, `interim-floor`, `ambition`, `planning-value`, or `reported-only`,
+# ADR-PERF-03). Every step-family rate row carries an explicit decimation (ADR-PERF-02).
+# Incumbent references are FACTs from Appendix H marked `to-re-read` until the parity
+# baseline (GATE-SPARK-21, N36-29) replaces them with measured figures and disclosure IDs.
+#
+# Written strictly in the frob-core::registry::toml subset (N34p2-01): UTF-8, LF,
+# basic double-quoted strings only, decimal values encoded as exact decimal strings
+# (no TOML floats), homogeneous arrays, single-line inline tables without trailing commas,
+# and no dotted keys on the left of `=`.
+
+schema = "frob.perf.targets/1"
+
+# ----------------------------------------------------------------------------
+# Rows 1 to 19: Engine, hardware tier, referee, sensor, and CPU tool targets
+# ----------------------------------------------------------------------------
+
+[[target]]
+row = 1
+workload = "Q"
+scope = "Q, physics only, gpu-cuda, 8192 worlds"
+hardware = "gpu-cuda, one RTX 4090 (trj), 8192 worlds"
+unit = "world_steps_per_s"
+decimation = "10/1"
+tolerance = { kind = "ratio_to_incumbent", status = "tolerance", value = "0.67", direction = "at_least", comparator = "mujoco-warp", setting_kind = "matched", note = "at least 0.67 of incumbent at matched settings on trj; env-steps/s is one tenth" }
+interim_floor = { status = "interim-floor", value = "2000000", unit = "world_steps_per_s", direction = "at_least", note = "half of 4.0 M planning value (200 k env-steps/s); not the 0.67 tolerance (2.68 M / 2.7 M)" }
+ambition = { status = "ambition", kind = "ratio_to_incumbent", value = "1.0", direction = "at_least", note = "at least 1.0 of incumbent; planning 4.0 M world-steps/s (400 k env-steps/s)" }
+planning_value = { status = "planning-value", tolerance = "2700000", ambition = "4000000", unit = "world_steps_per_s", note = "0.67 * 4.0 M = 2.68 M (printed 2.7 M)" }
+incumbent_reference = { text = "mjlab nightly benchmark on MuJoCo Warp: quadruped velocity task, RTX 5090, 4096 worlds, 4.8 M world-steps/s of physics at d = 4", source_mark = "P", status = "to-re-read", published_value = "4800000" }
+gated_in = ["GATE-SPARK-03", "GATE-SPARK-21"]
+carrier = "BD-217"
+
+[[target]]
+row = 2
+workload = "Q"
+scope = "Q, full environment step without policy"
+hardware = "gpu-cuda, one RTX 4090 (trj), 8192 worlds"
+unit = "env_steps_per_s"
+decimation = "10/1"
+tolerance = { kind = "ratio_to_row", status = "tolerance", value = "0.75", direction = "at_least", reference_row = 1, note = "at least 0.75 of row 1 as measured (non-physics overhead at most 25%)" }
+interim_floor = { status = "interim-floor", value = "150000", unit = "env_steps_per_s", direction = "at_least", note = "0.75 * 200 k env-steps/s interim floor of row 1" }
+ambition = { status = "ambition", kind = "ratio_to_row", value = "0.85", direction = "at_least", note = "0.85 of row 1; planning 340 k env-steps/s" }
+planning_value = { status = "planning-value", tolerance = "300000", ambition = "340000", unit = "env_steps_per_s", note = "0.85 * 400 k = 340 k env-steps/s" }
+incumbent_reference = { text = "mjlab nightly benchmark on MuJoCo Warp: 347 k env-steps/s for full step against 1.20 M env-steps/s for physics (71.1% overhead)", source_mark = "P", status = "to-re-read", published_value = "347000", published_secondary_value = "1200000" }
+gated_in = ["GATE-SPARK-03", "GATE-SPARK-21"]
+carrier = "BD-217"
+
+[[target]]
+row = 3
+workload = "Q"
+scope = "Q, PPO training with policy forward, backward, and optimizer"
+hardware = "gpu-cuda, one RTX 4090 (trj), 8192 worlds"
+unit = "env_steps_per_s"
+decimation = "10/1"
+tolerance = { kind = "ratio_to_row", status = "tolerance", value = "0.60", direction = "at_least", reference_row = 1, note = "at least 0.60 of row 1 as measured" }
+interim_floor = { status = "interim-floor", value = "120000", unit = "env_steps_per_s", direction = "at_least", note = "0.60 * 200 k env-steps/s interim floor of row 1" }
+ambition = { status = "ambition", kind = "ratio_to_row", value = "0.70", direction = "at_least", note = "0.70 of row 1; planning 280 k env-steps/s" }
+planning_value = { status = "planning-value", tolerance = "240000", ambition = "280000", unit = "env_steps_per_s", note = "0.70 * 400 k = 280 k env-steps/s" }
+incumbent_reference = { text = "Isaac Lab on one RTX 4090 humanoid rough task (4096 worlds): 94 k, 88 k, 82 k env-steps/s; MuJoCo Playground reports 417 k env-steps/s of quadruped training on an A100 with MJX at d = 5", source_mark = "P", status = "to-re-read", published_value = "417000" }
+gated_in = ["GATE-SPARK-03", "GATE-SPARK-21"]
+carrier = "BD-217"
+
+[[target]]
+row = 4
+workload = "Q"
+scope = "Q, time to return threshold of reference flat velocity task, cold start"
+hardware = "gpu-cuda, one RTX 4090 (trj), 8192 worlds"
+unit = "seconds"
+decimation = "10/1"
+tolerance = { kind = "ratio_to_incumbent", status = "tolerance", value = "1.25", direction = "at_most", comparator = "mujoco-playground", setting_kind = "native", note = "at most 1.25x incumbent reproduced on trj; compilation and admission included; oriented ratio lower bound >= 0.80" }
+ambition = { status = "ambition", kind = "ratio_to_incumbent", value = "1.0", direction = "at_most", note = "at most incumbent time; planning 410 s" }
+planning_value = { status = "planning-value", tolerance = "513", ambition = "410", unit = "seconds", note = "1.25 * 410 s = 512.5 s, printed 513 s (REC-03)" }
+incumbent_reference = { text = "MuJoCo Playground: about 410 s on one RTX 4090, read by eye from published Fig. 13 (+/- 20 s), of which about 45 s is compilation", source_mark = "P", status = "to-re-read", published_value = "410" }
+gated_in = ["GATE-CORTEX-05", "GATE-SPARK-21"]
+carrier = "BD-218"
+
+[[target]]
+row = 5
+workload = "Q"
+scope = "Row 4 on two RTX 4090: strong scaling (ratio of row 4 time to two-card time)"
+hardware = "gpu-cuda, two RTX 4090 (trj)"
+unit = "ratio"
+decimation = "10/1"
+tolerance = { kind = "ratio_to_row", status = "tolerance", value = "1.25", direction = "at_least", reference_row = 4, note = "ratio of row 4 single-card time to two-card time at equal task quality" }
+ambition = { status = "ambition", kind = "ratio_to_row", value = "1.6", direction = "at_least", note = "funding threshold of KILL-SHARD (§36.6)" }
+planning_value = { status = "planning-value", tolerance = "1.25", ambition = "1.6", unit = "ratio" }
+incumbent_reference = { text = "MuJoCo Playground: about 325 s on two RTX 4090 against about 410 s on one (ratio 410 / 325 = 1.26)", source_mark = "P", status = "to-re-read", published_value = "410", published_secondary_value = "325" }
+gated_in = ["GATE-SPARK-20", "GATE-SPARK-21"]
+carrier = "BD-199"
+
+[[target]]
+row = 6
+workload = "Q"
+scope = "Q, physics only, two RTX 4090, 8192 worlds on each: weak scaling"
+hardware = "gpu-cuda, two RTX 4090 (trj), 8192 worlds per card"
+unit = "ratio"
+decimation = "10/1"
+tolerance = { kind = "ratio_to_row", status = "tolerance", value = "1.8", direction = "at_least", reference_row = 1, note = "ratio to row 1 as measured on independent shards" }
+ambition = { status = "ambition", kind = "ratio_to_row", value = "1.95", direction = "at_least", note = "independent shards weak scaling ambition" }
+planning_value = { status = "planning-value", tolerance = "1.8", ambition = "1.95", unit = "ratio" }
+incumbent_reference = { text = "Independent shards; no published incumbent figure", source_mark = "none", status = "to-re-read" }
+gated_in = ["GATE-SPARK-20"]
+carrier = "BD-199"
+
+[[target]]
+row = 7
+workload = "H"
+scope = "H, physics only, gpu-cuda, flat ground"
+hardware = "gpu-cuda, one RTX 4090 (trj), 8192 worlds"
+unit = "world_steps_per_s"
+decimation = "10/1"
+tolerance = { kind = "ratio_to_incumbent", status = "tolerance", value = "0.67", direction = "at_least", comparator = "mujoco-warp", setting_kind = "matched", note = "at least 0.67 of incumbent at matched settings on trj; planning 1.7 M" }
+ambition = { status = "ambition", kind = "ratio_to_incumbent", value = "1.0", direction = "at_least", note = "at least 1.0 of incumbent; planning 2.55 M" }
+planning_value = { status = "planning-value", tolerance = "1700000", ambition = "2550000", unit = "world_steps_per_s", note = "0.67 * 2.55 M = 1.7085 M (1.71 M, printed 1.7 M)" }
+incumbent_reference = { text = "MuJoCo Warp nightly benchmark: 2.55 M humanoid (G1) world-steps/s at 8192 worlds on an RTX 6000 Ada", source_mark = "P", status = "to-re-read", published_value = "2550000" }
+gated_in = ["GATE-SPARK-03", "GATE-SPARK-21"]
+carrier = "BD-217"
+
+[[target]]
+row = 8
+workload = "H"
+scope = "H, physics only, gpu-cuda, heightfield"
+hardware = "gpu-cuda, one RTX 4090 (trj), 8192 worlds"
+unit = "world_steps_per_s"
+decimation = "10/1"
+tolerance = { kind = "ratio_to_incumbent", status = "tolerance", value = "0.67", direction = "at_least", comparator = "mujoco-warp", setting_kind = "matched", note = "at least 0.67 of incumbent at matched settings on trj; planning 1.1 M" }
+ambition = { status = "ambition", kind = "ratio_to_incumbent", value = "1.0", direction = "at_least", note = "at least 1.0 of incumbent; planning 1.68 M" }
+planning_value = { status = "planning-value", tolerance = "1100000", ambition = "1680000", unit = "world_steps_per_s", note = "0.67 * 1.68 M = 1.1256 M (1.13 M, printed 1.1 M)" }
+incumbent_reference = { text = "MuJoCo Warp nightly benchmark: 1.68 M humanoid (G1) world-steps/s on a heightfield at 8192 worlds on an RTX 6000 Ada", source_mark = "P", status = "to-re-read", published_value = "1680000" }
+gated_in = ["GATE-SPARK-03", "GATE-SPARK-21"]
+carrier = "BD-217"
+
+[[target]]
+row = 9
+workload = "H"
+scope = "H, time to return threshold of first-stage flat-ground task, two RTX 4090"
+hardware = "gpu-cuda, two RTX 4090 (trj)"
+unit = "minutes"
+decimation = "10/1"
+tolerance = { kind = "ratio_to_incumbent", status = "tolerance", value = "1.5", direction = "at_most", comparator = "mujoco-playground", setting_kind = "native", note = "at most 1.5x incumbent reproduced on trj; oriented lower bound >= 0.667; planning 45 min" }
+ambition = { status = "ambition", kind = "absolute", value = "30", direction = "at_most", note = "at most 30 min on two RTX 4090" }
+planning_value = { status = "planning-value", tolerance = "45", ambition = "30", unit = "minutes", note = "1.5 * 30 min = 45 min" }
+incumbent_reference = { text = "MuJoCo Playground: under 30 min on two RTX 4090 for two humanoids; Isaac Lab default rough-terrain humanoid run about 1 h on one RTX 4090", source_mark = "P", status = "to-re-read", published_value = "30" }
+gated_in = []
+carrier = "N36-22"
+
+[[target]]
+row = 10
+workload = "mixed-3"
+scope = "Mixed batch of three body plans in one bucket (mixed rate over harmonic mean of homogeneous rates)"
+hardware = "gpu-cuda, one RTX 4090 (trj), 8192 worlds"
+unit = "ratio"
+decimation = "10/1"
+tolerance = { kind = "absolute", status = "tolerance", value = "0.70", direction = "at_least", note = "mixed rate divided by harmonic mean of homogeneous rates" }
+ambition = { status = "ambition", kind = "absolute", value = "0.86", direction = "at_least", note = "matches Newton Kamino mixed-batch efficiency" }
+planning_value = { status = "planning-value", tolerance = "0.70", ambition = "0.86", unit = "ratio" }
+incumbent_reference = { text = "Newton Kamino solver, mixed batch of three-, four-, and five-legged bodies: 0.86 (86 k samples/s at 2048 environments)", source_mark = "P", status = "to-re-read", published_value = "0.86" }
+gated_in = ["GATE-SPARK-10"]
+carrier = "BD-183"
+
+[[target]]
+row = 11
+workload = "Q"
+scope = "Q with per-world parameter variants (ratio to identical worlds)"
+hardware = "gpu-cuda, one RTX 4090 (trj), 8192 worlds"
+unit = "ratio"
+decimation = "10/1"
+tolerance = { kind = "ratio_to_row", status = "tolerance", value = "0.95", direction = "at_least", reference_row = 1, note = "ratio of per-world parameter-variant rate to identical-world rate" }
+ambition = { status = "ambition", kind = "ratio_to_row", value = "0.98", direction = "at_least" }
+planning_value = { status = "planning-value", tolerance = "0.95", ambition = "0.98", unit = "ratio" }
+incumbent_reference = { text = "Incumbent capability (MuJoCo Warp batched model fields); no published overhead cost", source_mark = "P", status = "to-re-read" }
+gated_in = ["GATE-SPARK-10"]
+carrier = "BD-183"
+
+[[target]]
+row = 12
+workload = "Q"
+scope = "Q, physics only, gpu-metal on the Mac (ratio to row 1 on one RTX 4090)"
+hardware = "gpu-metal, Apple M5 Ultra (80-core GPU, 256 GB unified)"
+unit = "ratio"
+decimation = "10/1"
+tolerance = { kind = "ratio_to_row", status = "tolerance", value = "0.25", direction = "at_least", reference_row = 1, note = "BET-09 falsifier: Metal is a real rollout tier" }
+ambition = { status = "ambition", kind = "ratio_to_row", value = "0.60", direction = "at_least" }
+planning_value = { status = "planning-value", tolerance = "0.25", ambition = "0.60", unit = "ratio" }
+incumbent_reference = { text = "No published physics benchmark on Apple M5 Ultra found; Genesis Metal path is measured on this machine and reported beside ours", source_mark = "none", status = "to-re-read" }
+gated_in = ["GATE-SPARK-04", "GATE-SPARK-21"]
+carrier = "BD-217"
+
+[[target]]
+row = 13
+workload = "H"
+scope = "H, physics only, batch-cpu in f32, 24 threads"
+hardware = "batch-cpu f32, Apple M5 Ultra, 24 threads"
+unit = "world_steps_per_s"
+decimation = "10/1"
+tolerance = { kind = "ratio_to_incumbent", status = "tolerance", value = "0.5", direction = "at_least", comparator = "mujoco-cpu", setting_kind = "matched", note = "at least 0.5 of CPU MuJoCo on same machine and threads; planning 275 k" }
+ambition = { status = "ambition", kind = "ratio_to_incumbent", value = "1.0", direction = "at_least", note = "at least 1.0 of CPU MuJoCo; planning 550 k" }
+planning_value = { status = "planning-value", tolerance = "275000", ambition = "550000", unit = "world_steps_per_s", note = "0.5 * 550 k = 275 k; incumbent CPU rate was measured on a loaded machine and is therefore a lower bound on the incumbent" }
+incumbent_reference = { text = "CPU MuJoCo in f64 on this Mac under load (35-dof humanoid at h = 2 ms): 24 k on 1 thread, 550 k on 24, 576 k on 36; published 650 k and 1.8 M for a lighter humanoid", source_mark = "local", status = "to-re-read", published_value = "550000", loaded_host_lower_bound = true }
+gated_in = ["GATE-SPARK-04", "GATE-SPARK-21"]
+carrier = "BD-217"
+
+[[target]]
+row = 14
+workload = "Q"
+scope = "Q, physics only, batch-cpu in f32, 24 threads"
+hardware = "batch-cpu f32, Apple M5 Ultra, 24 threads"
+unit = "world_steps_per_s"
+decimation = "10/1"
+tolerance = { kind = "ratio_to_incumbent", status = "tolerance", value = "0.5", direction = "at_least", comparator = "mujoco-cpu", setting_kind = "matched", note = "at least 0.5 of CPU MuJoCo measured on same machine" }
+interim_floor = { status = "interim-floor", value = "275000", unit = "world_steps_per_s", direction = "at_least", note = "until measured, row 13 floor (275 k) applies since a quadruped step is cheaper" }
+ambition = { status = "ambition", kind = "ratio_to_incumbent", value = "1.0", direction = "at_least" }
+planning_value = { status = "planning-value", tolerance = "275000", unit = "world_steps_per_s", note = "interim floor inherited from row 13 until CPU MuJoCo Q is measured on Mac" }
+incumbent_reference = { text = "No published quadruped CPU figure found; local Appendix H.5 measurement on this Mac under load was ~410 k on 36 threads", source_mark = "local", status = "to-re-read", published_value = "410000" }
+gated_in = ["GATE-SPARK-04", "GATE-SPARK-21"]
+carrier = "BD-217"
+
+[[target]]
+row = 15
+workload = "Q"
+scope = "Strict batch-cpu profile (transactional, event-located)"
+hardware = "batch-cpu strict profile, CPU"
+unit = "world_steps_per_s"
+decimation = "10/1"
+tolerance = { kind = "reported_only", status = "reported-only", note = "no threshold; rate is reported with every strict result" }
+gated_in = []
+carrier = "BD-217"
+
+[[target]]
+row = 16
+workload = "H"
+scope = "Referee, humanoid, one world, one CPU core"
+hardware = "CPU referee, one core"
+unit = "real_time_multiple"
+tolerance = { kind = "absolute", status = "tolerance", value = "0.2", direction = "at_least", note = "multiple of real time; no decimation applies" }
+ambition = { status = "ambition", kind = "absolute", value = "1.0", direction = "at_least" }
+planning_value = { status = "planning-value", tolerance = "0.2", ambition = "1.0", unit = "real_time_multiple" }
+gated_in = []
+carrier = "N36-22"
+
+[[target]]
+row = 17
+workload = "H"
+scope = "Referee sampler on a device run (share of device world-seconds shadowed; throughput lost)"
+hardware = "GPU device run with CPU background referee sampler"
+unit = "percent"
+decimation = "10/1"
+tolerance = { kind = "absolute", status = "tolerance", value = "5", direction = "at_most", note = "shadowed share is reported; device throughput loss at most 5%" }
+ambition = { status = "ambition", kind = "absolute", value = "1", direction = "at_least", unit = "percent", note = "shadowed share at least 1% on H, needing row 16 ambition across all 36 cores" }
+planning_value = { status = "planning-value", tolerance = "5", ambition = "1", unit = "percent" }
+incumbent_reference = { text = "Arithmetic of §36.9: about 0.1 to 2.4% of GPU world-seconds at referee speed 0.2 to 1.0x real time per core on 24 cores (HYPOTHESIS; measured at M2; NEG-07 refines H share to 0.14 to 0.71% at 1.7 M)", source_mark = "local", status = "to-re-read" }
+gated_in = ["GATE-FID-07"]
+carrier = "BD-214"
+
+[[target]]
+row = 18
+workload = "Q"
+scope = "Height scan, 187 rays per world at 50 Hz, any device"
+hardware = "any device (gpu-cuda, gpu-metal, batch-cpu)"
+unit = "percent"
+decimation = "10/1"
+tolerance = { kind = "absolute", status = "tolerance", value = "15", direction = "at_most", note = "added cost per env-step at most 15%" }
+ambition = { status = "ambition", kind = "absolute", value = "8", direction = "at_most", note = "added cost per env-step at most 8%" }
+planning_value = { status = "planning-value", tolerance = "15", ambition = "8", unit = "percent" }
+gated_in = []
+carrier = "N36-22"
+
+[[target]]
+row = 19
+workload = "none"
+scope = "CPU tool latencies: design check, control synth, interior scene generate and compile"
+hardware = "CPU (single host)"
+unit = "seconds"
+tolerance = { kind = "absolute", status = "tolerance", value = "2", direction = "at_most", note = "design check < 2 s p95; control synth < 5 s p95; interior scene generate and compile < 60 s p95; no decimation applies" }
+ambition = { status = "ambition", kind = "absolute", value = "0.5", direction = "at_most", note = "design check after one-parameter edit with memo graph: 0.2 s p50, 0.5 s p95, 1.0 s p99" }
+sub_targets = [
+  { id = "design_check_tol", label = "design check p95", status = "tolerance", value = "2", direction = "at_most", percentile = "p95", unit = "seconds" },
+  { id = "control_synth_tol", label = "control synth p95", status = "tolerance", value = "5", direction = "at_most", percentile = "p95", unit = "seconds" },
+  { id = "interior_scene_tol", label = "interior scene generate and compile p95", status = "tolerance", value = "60", direction = "at_most", percentile = "p95", unit = "seconds" },
+  { id = "design_check_edit_p50_amb", label = "design check one-param edit memo graph p50", status = "ambition", value = "0.2", direction = "at_most", percentile = "p50", unit = "seconds" },
+  { id = "design_check_edit_p95_amb", label = "design check one-param edit memo graph p95", status = "ambition", value = "0.5", direction = "at_most", percentile = "p95", unit = "seconds" },
+  { id = "design_check_edit_p99_amb", label = "design check one-param edit memo graph p99", status = "ambition", value = "1.0", direction = "at_most", percentile = "p99", unit = "seconds" }
+]
+gated_in = []
+carrier = "N36-23"
+
+# ----------------------------------------------------------------------------
+# Rows 20 to 22: End-to-end rows (§36.15; defined and gated in §39)
+# ----------------------------------------------------------------------------
+
+[[target]]
+row = 20
+workload = "none"
+scope = "Edit to first step: wall-clock from typed design edit acceptance to first device world-step (p50 and p95)"
+hardware = "gpu-cuda / gpu-metal device pipeline"
+unit = "seconds"
+tolerance = { kind = "absolute", status = "tolerance", value = "0.5", direction = "at_most", note = "p95 tolerances: (a) param edit inside shape class 0.5 s (no compile/capture); (b) topology edit inside existing bucket 2 s; (c) new shape class warm cache 5 s; cold reported only" }
+ambition = { status = "ambition", kind = "absolute", value = "0.1", direction = "at_most", note = "p95 ambitions: (a) 0.1 s, (b) 0.5 s" }
+sub_targets = [
+  { id = "param_edit_tol", label = "(a) parameter edit inside shape class p95", status = "tolerance", value = "0.5", direction = "at_most", percentile = "p95", unit = "seconds" },
+  { id = "param_edit_amb", label = "(a) parameter edit inside shape class p95", status = "ambition", value = "0.1", direction = "at_most", percentile = "p95", unit = "seconds" },
+  { id = "topology_edit_tol", label = "(b) topology edit inside existing bucket p95", status = "tolerance", value = "2", direction = "at_most", percentile = "p95", unit = "seconds" },
+  { id = "topology_edit_amb", label = "(b) topology edit inside existing bucket p95", status = "ambition", value = "0.5", direction = "at_most", percentile = "p95", unit = "seconds" },
+  { id = "new_shape_warm_tol", label = "(c) new shape class warm cache p95", status = "tolerance", value = "5", direction = "at_most", percentile = "p95", unit = "seconds" },
+  { id = "new_shape_cold_rep", label = "(c) new shape class cold cache", status = "reported-only", percentile = "p95", unit = "seconds" }
+]
+incumbent_reference = { text = "No incumbent publishes edit-to-first-step latency; MuJoCo Warp cold kernel compile ~96 s on RTX 6000 Ada; measured at GATE-SPARK-21", source_mark = "P", status = "to-re-read", published_value = "96" }
+gated_in = ["GATE-SPARK-10", "GATE-TENFOLD-01"]
+carrier = "N36-21"
+
+[[target]]
+row = 21
+workload = "none"
+scope = "Designs decided per hour (distinct designs screened per device-second, derived from rows 1 and 10 at 16 worlds and 10 s = 80000 world-steps per design)"
+hardware = "gpu-cuda, one RTX 4090 (trj)"
+unit = "designs_per_device_s"
+tolerance = { kind = "reported_only", status = "reported-only", note = "no independent threshold; derived from rows 1 and 10 (17 at tolerances, 43 at ambitions)" }
+sub_targets = [
+  { id = "derived_tolerance", label = "derived from row 1 interim floor 2.0 M * row 10 tolerance 0.70 / 80000 = 17.5 (printed 17)", status = "tolerance", value = "17", direction = "at_least", unit = "designs_per_device_s" },
+  { id = "derived_ambition", label = "derived from row 1 ambition 4.0 M * row 10 ambition 0.86 / 80000 = 43", status = "ambition", value = "43", direction = "at_least", unit = "designs_per_device_s" }
+]
+gated_in = ["GATE-TENFOLD-01"]
+carrier = "N36-21"
+
+[[target]]
+row = 22
+workload = "none"
+scope = "Time to a qualified design (restricted mean time to an independently accepted answer; phase ledger supplied)"
+hardware = "full host + device workflow"
+unit = "phase_ledger"
+tolerance = { kind = "reported_only", status = "reported-only", note = "no independent threshold in §36; phase ledger supplied to §39 ten-fold test" }
+gated_in = ["GATE-TENFOLD-01"]
+carrier = "N36-21"

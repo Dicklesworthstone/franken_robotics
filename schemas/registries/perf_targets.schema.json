@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://frankenrobotics.local/schemas/registries/perf_targets.schema.json",
+  "title": "FrankenRobotics Performance Target Registry (frob.perf.targets/1)",
+  "type": "object",
+  "required": ["schema", "target"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "frob.perf.targets/1"
+    },
+    "target": {
+      "type": "array",
+      "minItems": 22,
+      "maxItems": 22,
+      "items": {
+        "type": "object",
+        "required": [
+          "row",
+          "workload",
+          "scope",
+          "hardware",
+          "unit",
+          "tolerance",
+          "gated_in",
+          "carrier"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "row": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 22
+          },
+          "workload": {
+            "type": "string",
+            "enum": ["Q", "H", "mixed-3", "none"]
+          },
+          "scope": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hardware": {
+            "type": "string",
+            "minLength": 1
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "world_steps_per_s",
+              "env_steps_per_s",
+              "world_s_per_wall_s",
+              "episodes_per_s",
+              "real_time_multiple",
+              "seconds",
+              "minutes",
+              "ratio",
+              "percent",
+              "designs_per_device_s",
+              "phase_ledger"
+            ]
+          },
+          "decimation": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*(/[1-9][0-9]*)?$"
+          },
+          "tolerance": {
+            "type": "object",
+            "required": ["kind", "status"],
+            "additionalProperties": false,
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "ratio_to_incumbent",
+                  "ratio_to_row",
+                  "absolute",
+                  "reported_only"
+                ]
+              },
+              "status": {
+                "type": "string",
+                "enum": ["tolerance", "reported-only"]
+              },
+              "value": {
+                "$ref": "#/$defs/decimalString"
+              },
+              "direction": {
+                "type": "string",
+                "enum": ["at_least", "at_most"]
+              },
+              "comparator": {
+                "type": "string",
+                "minLength": 1
+              },
+              "setting_kind": {
+                "type": "string",
+                "enum": ["matched", "native"]
+              },
+              "reference_row": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 22
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "interim_floor": {
+            "type": "object",
+            "required": ["status", "value", "unit", "direction"],
+            "additionalProperties": false,
+            "properties": {
+              "status": {
+                "const": "interim-floor"
+              },
+              "value": {
+                "$ref": "#/$defs/decimalString"
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              },
+              "direction": {
+                "type": "string",
+                "enum": ["at_least", "at_most"]
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "ambition": {
+            "type": "object",
+            "required": ["status", "kind", "value", "direction"],
+            "additionalProperties": false,
+            "properties": {
+              "status": {
+                "const": "ambition"
+              },
+              "kind": {
+                "type": "string",
+                "enum": ["ratio_to_incumbent", "ratio_to_row", "absolute"]
+              },
+              "value": {
+                "$ref": "#/$defs/decimalString"
+              },
+              "direction": {
+                "type": "string",
+                "enum": ["at_least", "at_most"]
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "planning_value": {
+            "type": "object",
+            "required": ["status", "unit"],
+            "additionalProperties": false,
+            "properties": {
+              "status": {
+                "const": "planning-value"
+              },
+              "tolerance": {
+                "$ref": "#/$defs/decimalString"
+              },
+              "ambition": {
+                "$ref": "#/$defs/decimalString"
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "sub_targets": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["id", "label", "status", "unit"],
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "status": {
+                  "type": "string",
+                  "enum": ["tolerance", "ambition", "reported-only"]
+                },
+                "value": {
+                  "$ref": "#/$defs/decimalString"
+                },
+                "direction": {
+                  "type": "string",
+                  "enum": ["at_least", "at_most"]
+                },
+                "percentile": {
+                  "type": "string",
+                  "enum": ["p50", "p95", "p99"]
+                },
+                "unit": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          "incumbent_reference": {
+            "type": "object",
+            "required": ["text", "source_mark", "status"],
+            "additionalProperties": false,
+            "properties": {
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "source_mark": {
+                "type": "string",
+                "enum": ["P", "S", "F", "R", "M", "U", "local", "none"]
+              },
+              "status": {
+                "type": "string",
+                "enum": ["to-re-read", "measured"]
+              },
+              "published_value": {
+                "$ref": "#/$defs/decimalString"
+              },
+              "published_secondary_value": {
+                "$ref": "#/$defs/decimalString"
+              },
+              "disclosure_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "loaded_host_lower_bound": {
+                "type": "boolean"
+              }
+            }
+          },
+          "gated_in": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^GATE-[A-Z0-9-]+$"
+            }
+          },
+          "carrier": {
+            "type": "string",
+            "pattern": "^(BD|N[0-9]+[a-z0-9]*)-[0-9A-Za-z-]+$"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "decimalString": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.sim.estimate.out/1",
+  "$comment": "The example illustrates the record layout with synthetic estimates.",
+  "type": "object",
+  "required": ["memory", "time", "device_seconds", "envelope", "fingerprint"],
+  "properties": {
+    "memory": {
+      "type": "object",
+      "required": ["total_bytes", "per_world_bytes", "fits", "largest_worlds_that_fit"],
+      "properties": {
+        "total_bytes": {"type": "integer", "minimum": 0},
+        "per_world_bytes": {"type": "integer", "minimum": 0},
+        "fits": {"type": "boolean"},
+        "largest_worlds_that_fit": {"type": "integer", "minimum": 0}
+      }
+    },
+    "time": {"type": "object", "required": ["lo_s", "hi_s", "level", "calibrated", "stratum"]},
+    "device_seconds": {"type": "object", "required": ["lo", "hi"]},
+    "envelope": {"type": "object", "required": ["needed", "in_force"]},
+    "fingerprint": {"type": "string", "minLength": 1}
+  },
+  "examples": [{
+    "memory": {"total_bytes": 32768, "per_world_bytes": 32768, "fits": true, "largest_worlds_that_fit": 1},
+    "time": {"lo_s": 1, "hi_s": 4, "level": 0.9, "calibrated": false, "stratum": "example"},
+    "device_seconds": {"lo": 0, "hi": 0},
+    "envelope": {"needed": "E0", "in_force": "E0"},
+    "fingerprint": "example"
+  }]
+}

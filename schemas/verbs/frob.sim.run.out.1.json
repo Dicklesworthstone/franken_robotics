@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.sim.run.out/1",
+  "$comment": "The example is synthetic and makes no oracle or rollout claim.",
+  "type": "object",
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "match": {"enum": ["equal", "different", "no-fixture"]}
+  },
+  "required": ["run", "final_state_digest", "chunks", "steps", "sim_seconds", "oracle_match", "rollout_match", "reproduced", "recorded_command", "execution_authorized", "hardware_safety_signoff", "sim_to_real_certified"],
+  "properties": {
+    "run": {"type": "string", "pattern": "^r:[0-9a-f]{64}$"},
+    "final_state_digest": {"$ref": "#/$defs/digest"},
+    "chunks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["index", "tick_range", "state_digest"],
+        "properties": {
+          "index": {"type": "integer", "minimum": 0},
+          "tick_range": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "integer", "minimum": 0}},
+          "state_digest": {"$ref": "#/$defs/digest"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "steps": {"type": "integer", "minimum": 1},
+    "sim_seconds": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "integer", "minimum": 1}},
+    "oracle_match": {"$ref": "#/$defs/match"},
+    "rollout_match": {"$ref": "#/$defs/match"},
+    "reproduced": {"type": "boolean"},
+    "recorded_command": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "execution_authorized": {"const": false},
+    "hardware_safety_signoff": {"const": false},
+    "sim_to_real_certified": {"const": false}
+  },
+  "additionalProperties": false,
+  "examples": [{
+    "run": "r:0000000000000000000000000000000000000000000000000000000000000000",
+    "final_state_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+    "chunks": [{"index": 0, "tick_range": [0, 1], "state_digest": "0000000000000000000000000000000000000000000000000000000000000000"}],
+    "steps": 1,
+    "sim_seconds": [1, 480],
+    "oracle_match": "no-fixture",
+    "rollout_match": "no-fixture",
+    "reproduced": false,
+    "recorded_command": ["frob", "sim", "run", "g1", "--tier", "referee", "--seconds", "1/480", "--seed", "0", "--worlds", "1", "--json"],
+    "execution_authorized": false,
+    "hardware_safety_signoff": false,
+    "sim_to_real_certified": false
+  }]
+}

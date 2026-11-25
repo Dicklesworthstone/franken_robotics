@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.sim.replay.in/1",
+  "type": "object",
+  "x-frob-cli": {"positional": ["episode"]},
+  "properties": {
+    "episode": {"type": "string", "minLength": 1},
+    "run": {"type": "string", "minLength": 1},
+    "world": {"type": "integer", "x-frob-int-type": "int53", "minimum": 0}
+  },
+  "dependentRequired": {"run": ["world"], "world": ["run"]},
+  "anyOf": [{"required": ["episode"]}, {"required": ["run", "world"]}],
+  "additionalProperties": false,
+  "examples": [{"run": "r:19e2", "world": 311}]
+}

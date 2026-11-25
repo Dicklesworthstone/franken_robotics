@@ -220,3 +220,61 @@ examples = ["frob session close --key sc-1 --json"]
 purpose = "Close a session and release its reservations."
 use_when = "Finishing work and returning the session's remaining reservations."
 owner = "frob-verbs"
+
+# VERBS-sim. Chapter refusals and optional fields enter with their owning mechanisms.
+[[verb]]
+name = "sim.estimate"
+cluster = "sim"
+kind = "read"
+tier = "S"
+capabilities = ["sim:read"]
+input_schema = "frob.sim.estimate.in/1"
+output_schema = "frob.sim.estimate.out/1"
+refusals = []
+idempotent = true
+cost_model = "static: estimate the simulation request without stepping physics"
+first_milestone = "M2"
+task_clusters = ["simulate", "learn", "fleet"]
+examples = ["frob sim estimate quad-a --scene terrain:stairs@0.4 --worlds 2048 --seconds 20 --tier gpu-cuda --json"]
+owner = "frob-dyn"
+purpose = "Estimate run cost, memory, capacities, degraded rate and referee coverage without running physics."
+use_when = "Sizing a simulation request before admission."
+
+[[verb]]
+name = "sim.replay"
+cluster = "sim"
+kind = "run"
+tier = "S"
+capabilities = ["sim:run"]
+input_schema = "frob.sim.replay.in/1"
+output_schema = "frob.sim.replay.out/1"
+refusals = []
+idempotent = false
+cost_model = "estimated: CPU core-seconds, GPU seconds, memory and disk with a conformal interval"
+first_milestone = "M2"
+task_clusters = ["simulate", "runs"]
+examples = ["frob sim replay --run r:19e2 --world 311 --key rp-1 --json"]
+owner = "frob-chronicle"
+purpose = "Reproduce a world from its address and compare its recorded digests."
+use_when = "Checking whether a recorded episode reproduces."
+wait = { cli = "to-completion", mcp_ms = 5000, mcp_max_ms = 30000 }
+
+[[verb]]
+name = "sim.run"
+cluster = "sim"
+kind = "run"
+tier = "S"
+capabilities = ["sim:run"]
+input_schema = "frob.sim.run.in/1"
+output_schema = "frob.sim.run.out/1"
+refusals = []
+idempotent = false
+cost_model = "estimated: CPU core-seconds, GPU seconds, memory and disk with a conformal interval"
+first_milestone = "M0"
+task_clusters = ["simulate"]
+examples = ["frob sim run g1 --tier referee --seconds 2 --key run-m0 --json"]
+owner = "frob-dyn"
+purpose = "Run worlds under a selected tier, recording the outcome and state digests."
+use_when = "Stepping the built-in G1 on the M0 referee tier."
+wait = { cli = "to-completion", mcp_ms = 5000, mcp_max_ms = 30000 }
+conformance_only = ["perturb_ulp"]

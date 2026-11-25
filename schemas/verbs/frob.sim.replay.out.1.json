@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.sim.replay.out/1",
+  "$comment": "The example is synthetic and illustrates the report layout.",
+  "type": "object",
+  "required": ["class", "from", "to", "start", "compared_points", "result", "captured"],
+  "properties": {
+    "class": {"type": "string", "minLength": 1},
+    "from": {"type": "integer", "minimum": 0},
+    "to": {"type": "integer", "minimum": 0},
+    "start": {"type": "string", "minLength": 1},
+    "compared_points": {"type": "integer", "minimum": 0},
+    "result": {"type": ["string", "object"]},
+    "captured": {"type": "array"}
+  },
+  "examples": [{"class": "D2", "from": 0, "to": 256, "start": "tick-zero", "compared_points": 1, "result": "Bitwise", "captured": []}]
+}

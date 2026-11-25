@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.sim.estimate.in/1",
+  "type": "object",
+  "x-frob-cli": {"positional": ["design"]},
+  "required": ["design"],
+  "properties": {
+    "design": {"type": "string", "minLength": 1},
+    "scene": {"type": "string", "minLength": 1},
+    "worlds": {"type": "integer", "x-frob-int-type": "int53", "minimum": 1},
+    "seconds": {"type": "string", "minLength": 1},
+    "tier": {"enum": ["referee", "batch-cpu", "gpu-cuda", "gpu-metal"]}
+  },
+  "additionalProperties": false,
+  "examples": [{"design": "quad-a"}]
+}

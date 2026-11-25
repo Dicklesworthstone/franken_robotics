@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.sim.run.in/1",
+  "type": "object",
+  "x-frob-cli": {"positional": ["design"]},
+  "required": ["design", "tier"],
+  "properties": {
+    "design": {"type": "string", "minLength": 1, "description": "Catalog design. The M0 referee implements g1."},
+    "tier": {"enum": ["referee", "batch-cpu", "gpu-cuda", "gpu-metal"]},
+    "seconds": {
+      "type": "string",
+      "pattern": "^([1-9][0-9]*([.][0-9]+|/[1-9][0-9]*)?|0[.][0-9]*[1-9][0-9]*)$",
+      "default": "2",
+      "description": "Exact positive decimal or fraction in seconds. Admission requires 480 times seconds to be a whole number."
+    },
+    "seed": {"type": "string", "pattern": "^(0|[1-9][0-9]{0,19})$", "x-frob-int-type": "u64str", "default": "0"},
+    "worlds": {"type": "integer", "x-frob-int-type": "int53", "minimum": 1, "default": 1},
+    "perturb_ulp": {"const": "q0"}
+  },
+  "additionalProperties": false,
+  "examples": [{"design": "g1", "tier": "referee"}]
+}

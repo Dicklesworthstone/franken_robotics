@@ -1,0 +1,13 @@
+[package]
+name = "marrow_fsga_capture"
+version = "0.0.1"
+edition = "2024"
+publish = false
+description = "Standalone PO-MARROW-01 oracle capture binary linking fs-ga directly (never frob-lie)."
+
+[dependencies]
+fs-ga = { path = "../../../../frankensim/crates/fs-ga", default-features = false }
+fs-rand = { path = "../../../../frankensim/crates/fs-rand", default-features = false }
+fs-blake3 = { path = "../../../../frankensim/crates/fs-blake3", default-features = false }
+
+[workspace]

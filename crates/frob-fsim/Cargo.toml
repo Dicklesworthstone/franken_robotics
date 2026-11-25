@@ -6,24 +6,207 @@ license-file = { workspace = true }
 repository = { workspace = true }
 authors = { workspace = true }
 publish = false
-description = "Airlock crate isolating FrankenSim path dependencies (ADR-SUITE-01, INT-FSIM-01)."
+description = "Airlock crate isolating FrankenSim path dependencies behind ten feature groups (ADR-SUITE-01, INT-FSIM-01, N33a-11)."
 
 [package.metadata.frob]
 layer = 0
 rank = 2
 
 [dependencies]
-fs-contact = { path = "../../../frankensim/crates/fs-contact", default-features = false }
-fs-ga = { path = "../../../frankensim/crates/fs-ga", default-features = false }
-fs-mbd = { path = "../../../frankensim/crates/fs-mbd", default-features = false }
-fs-query = { path = "../../../frankensim/crates/fs-query", default-features = false }
-fs-time = { path = "../../../frankensim/crates/fs-time", default-features = false }
-
-[dev-dependencies]
 frob-core = { path = "../frob-core" }
 
+# Bedrock-direct FrankenSim crate (unaffected by airlock groups and modes; N33a-12).
+fs-ga = { path = "../../../frankensim/crates/fs-ga", default-features = false }
+
+# Optional volatile/oracle FrankenSim path dependencies behind the ten feature groups.
+# Group: referee
+fs-contact = { path = "../../../frankensim/crates/fs-contact", default-features = false, optional = true }
+fs-mbd = { path = "../../../frankensim/crates/fs-mbd", default-features = false, optional = true }
+fs-mbd-material = { path = "../../../frankensim/crates/fs-mbd-material", default-features = false, optional = true }
+fs-motion = { path = "../../../frankensim/crates/fs-motion", default-features = false, optional = true }
+fs-ports = { path = "../../../frankensim/crates/fs-ports", default-features = false, optional = true }
+fs-system = { path = "../../../frankensim/crates/fs-system", default-features = false, optional = true }
+fs-time = { path = "../../../frankensim/crates/fs-time", default-features = false, optional = true }
+fs-tribo = { path = "../../../frankensim/crates/fs-tribo", default-features = false, optional = true }
+
+# Group: geometry
+fs-geom = { path = "../../../frankensim/crates/fs-geom", default-features = false, optional = true }
+fs-io = { path = "../../../frankensim/crates/fs-io", default-features = false, optional = true }
+fs-query = { path = "../../../frankensim/crates/fs-query", default-features = false, optional = true }
+fs-rep-frep = { path = "../../../frankensim/crates/fs-rep-frep", default-features = false, optional = true }
+fs-rep-mesh = { path = "../../../frankensim/crates/fs-rep-mesh", default-features = false, optional = true }
+fs-rep-sdf = { path = "../../../frankensim/crates/fs-rep-sdf", default-features = false, optional = true }
+fs-scene = { path = "../../../frankensim/crates/fs-scene", default-features = false, optional = true }
+fs-topo = { path = "../../../frankensim/crates/fs-topo", default-features = false, optional = true }
+
+# Group: ledger
+fs-ledger = { path = "../../../frankensim/crates/fs-ledger", default-features = false, optional = true }
+fs-package = { path = "../../../frankensim/crates/fs-package", default-features = false, optional = true }
+fs-recompute = { path = "../../../frankensim/crates/fs-recompute", default-features = false, optional = true }
+fs-session = { path = "../../../frankensim/crates/fs-session", default-features = false, optional = true }
+
+# Group: optimize (and M1 sub-feature optimize-race: fs-race, fs-eproc)
+fs-archive = { path = "../../../frankensim/crates/fs-archive", default-features = false, optional = true }
+fs-ascent = { path = "../../../frankensim/crates/fs-ascent", default-features = false, optional = true }
+fs-bo = { path = "../../../frankensim/crates/fs-bo", default-features = false, optional = true }
+fs-dfo = { path = "../../../frankensim/crates/fs-dfo", default-features = false, optional = true }
+fs-eproc = { path = "../../../frankensim/crates/fs-eproc", default-features = false, optional = true }
+fs-opt = { path = "../../../frankensim/crates/fs-opt", default-features = false, optional = true }
+fs-race = { path = "../../../frankensim/crates/fs-race", default-features = false, optional = true }
+fs-sos = { path = "../../../frankensim/crates/fs-sos", default-features = false, optional = true }
+fs-symmetry = { path = "../../../frankensim/crates/fs-symmetry", default-features = false, optional = true }
+fs-tropical = { path = "../../../frankensim/crates/fs-tropical", default-features = false, optional = true }
+
+# Group: stats
+fs-assimilate = { path = "../../../frankensim/crates/fs-assimilate", default-features = false, optional = true }
+fs-regime = { path = "../../../frankensim/crates/fs-regime", default-features = false, optional = true }
+fs-robust = { path = "../../../frankensim/crates/fs-robust", default-features = false, optional = true }
+fs-surrogate = { path = "../../../frankensim/crates/fs-surrogate", default-features = false, optional = true }
+fs-uq = { path = "../../../frankensim/crates/fs-uq", default-features = false, optional = true }
+fs-voi = { path = "../../../frankensim/crates/fs-voi", default-features = false, optional = true }
+
+# Group: spectral
+fs-spectral = { path = "../../../frankensim/crates/fs-spectral", default-features = false, optional = true }
+
+# Group: actuation
+fs-control = { path = "../../../frankensim/crates/fs-control", default-features = false, optional = true }
+fs-em = { path = "../../../frankensim/crates/fs-em", default-features = false, optional = true }
+fs-matdb = { path = "../../../frankensim/crates/fs-matdb", default-features = false, optional = true }
+fs-phs = { path = "../../../frankensim/crates/fs-phs", default-features = false, optional = true }
+fs-thermal = { path = "../../../frankensim/crates/fs-thermal", default-features = false, optional = true }
+
+# Group: structure
+fs-adjoint = { path = "../../../frankensim/crates/fs-adjoint", default-features = false, optional = true }
+fs-asbuilt = { path = "../../../frankensim/crates/fs-asbuilt", default-features = false, optional = true }
+fs-fab = { path = "../../../frankensim/crates/fs-fab", default-features = false, optional = true }
+fs-geocon = { path = "../../../frankensim/crates/fs-geocon", default-features = false, optional = true }
+fs-solid = { path = "../../../frankensim/crates/fs-solid", default-features = false, optional = true }
+fs-toleralloc = { path = "../../../frankensim/crates/fs-toleralloc", default-features = false, optional = true }
+fs-topols = { path = "../../../frankensim/crates/fs-topols", default-features = false, optional = true }
+fs-topopt = { path = "../../../frankensim/crates/fs-topopt", default-features = false, optional = true }
+
+# Group: multiphysics
+fs-couple = { path = "../../../frankensim/crates/fs-couple", default-features = false, optional = true }
+fs-lbm = { path = "../../../frankensim/crates/fs-lbm", default-features = false, optional = true }
+
+# Group: harness (dev-only test/oracle support; includes fs-ir per N33a-11 Review Note 2)
+fs-detaudit = { path = "../../../frankensim/crates/fs-detaudit", default-features = false, optional = true }
+fs-ir = { path = "../../../frankensim/crates/fs-ir", default-features = false, optional = true }
+fs-la = { path = "../../../frankensim/crates/fs-la", default-features = false, optional = true }
+fs-propcheck = { path = "../../../frankensim/crates/fs-propcheck", default-features = false, optional = true }
+fs-render = { path = "../../../frankensim/crates/fs-render", default-features = false, optional = true }
+fs-roofline = { path = "../../../frankensim/crates/fs-roofline", default-features = false, optional = true }
+
 [features]
-default = []
+default = ["referee", "geometry", "ledger", "mode-inproc"]
+
+# Build-mode pair (not airlock groups; N33c-11 supplies remote client + mutually-exclusive check).
+mode-inproc = []
+mode-remote = []
+
+# Non-group admission-probe feature (frob-conformance only; off by default).
+conformance = ["mode-inproc"]
+
+# Ten airlock feature groups plus the M1 `optimize-race` sub-feature (Review Note 1).
+referee = [
+    "dep:fs-mbd",
+    "dep:fs-mbd-material",
+    "dep:fs-contact",
+    "dep:fs-tribo",
+    "dep:fs-time",
+    "dep:fs-motion",
+    "dep:fs-ports",
+    "dep:fs-system",
+    "mode-inproc",
+]
+geometry = [
+    "dep:fs-query",
+    "dep:fs-geom",
+    "dep:fs-rep-sdf",
+    "dep:fs-rep-mesh",
+    "dep:fs-rep-frep",
+    "dep:fs-scene",
+    "dep:fs-topo",
+    "dep:fs-io",
+    "mode-inproc",
+]
+ledger = [
+    "dep:fs-ledger",
+    "dep:fs-session",
+    "dep:fs-package",
+    "dep:fs-recompute",
+    "mode-inproc",
+]
+optimize = [
+    "dep:fs-dfo",
+    "dep:fs-bo",
+    "dep:fs-ascent",
+    "dep:fs-archive",
+    "dep:fs-opt",
+    "dep:fs-sos",
+    "dep:fs-race",
+    "dep:fs-eproc",
+    "dep:fs-tropical",
+    "dep:fs-symmetry",
+    "optimize-race",
+    "mode-inproc",
+]
+optimize-race = [
+    "dep:fs-race",
+    "dep:fs-eproc",
+    "mode-inproc",
+]
+stats = [
+    "dep:fs-uq",
+    "dep:fs-voi",
+    "dep:fs-surrogate",
+    "dep:fs-assimilate",
+    "dep:fs-robust",
+    "dep:fs-regime",
+    "mode-inproc",
+]
+spectral = [
+    "dep:fs-spectral",
+    "mode-inproc",
+]
+actuation = [
+    "dep:fs-em",
+    "dep:fs-thermal",
+    "dep:fs-control",
+    "dep:fs-phs",
+    "dep:fs-matdb",
+    "mode-inproc",
+]
+structure = [
+    "dep:fs-solid",
+    "dep:fs-topopt",
+    "dep:fs-topols",
+    "dep:fs-toleralloc",
+    "dep:fs-asbuilt",
+    "dep:fs-geocon",
+    "dep:fs-fab",
+    "dep:fs-adjoint",
+    "mode-inproc",
+]
+multiphysics = [
+    "dep:fs-lbm",
+    "dep:fs-couple",
+    "mode-inproc",
+]
+harness = [
+    "dep:fs-roofline",
+    "dep:fs-detaudit",
+    "dep:fs-propcheck",
+    "dep:fs-render",
+    "dep:fs-la",
+    "dep:fs-ir",
+    "mode-inproc",
+]
+
+[[test]]
+name = "admission_int_fsim_01"
+path = "tests/admission_int_fsim_01.rs"
+required-features = ["referee", "geometry"]
 
 [lints]
 workspace = true

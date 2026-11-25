@@ -1669,6 +1669,32 @@ pub fn validate_contract_toml(bytes: &[u8]) -> Result<(), StatusTableError> {
             let _ = ff
                 .opt_str("pilot")
                 .map_err(|e| StatusTableError::new(&fctx, e.to_string()))?;
+            let _ = ff
+                .opt_bool("default")
+                .map_err(|e| StatusTableError::new(&fctx, e.to_string()))?;
+            let _ = ff
+                .opt_bool("dev_only")
+                .map_err(|e| StatusTableError::new(&fctx, e.to_string()))?;
+            for list_key in ["traits", "crates", "consumers", "test_consumers"] {
+                if let Some(arr) = ff
+                    .opt_array(list_key)
+                    .map_err(|e| StatusTableError::new(&fctx, e.to_string()))?
+                {
+                    let _ = extract_str_list(&arr, list_key, &fctx, true)?;
+                }
+            }
+            for str_key in ["first_milestone", "gate", "parent_group"] {
+                if let Some(s) = ff
+                    .opt_str(str_key)
+                    .map_err(|e| StatusTableError::new(&fctx, e.to_string()))?
+                    && s.trim().is_empty()
+                {
+                    return Err(StatusTableError::new(
+                        &fctx,
+                        format!("`{str_key}` must not be empty"),
+                    ));
+                }
+            }
             ff.finish()
                 .map_err(|e| StatusTableError::new(&fctx, e.to_string()))?;
             if !matches!(tier.as_str(), "S" | "F" | "M") {

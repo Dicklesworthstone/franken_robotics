@@ -51,7 +51,11 @@ fn count_fsim_crates_in_closure(meta: &Json<'_>) -> (usize, BTreeSet<String>) {
         .expect("cargo metadata must include `packages` array");
 
     let mut id_to_pkg: BTreeMap<&str, (&str, &str)> = BTreeMap::new();
-    let mut frob_fsim_id: Option<&str> = None;
+    let mut seed_ids: Vec<&str> = Vec::new();
+    let admitted_set: BTreeSet<&str> = frob_fsim::ADMITTED_FRANKENSIM_CRATES
+        .iter()
+        .copied()
+        .collect();
     for pkg in packages {
         let id = pkg
             .get("id")
@@ -66,11 +70,15 @@ fn count_fsim_crates_in_closure(meta: &Json<'_>) -> (usize, BTreeSet<String>) {
             .and_then(|v| v.as_str())
             .expect("package missing string `manifest_path`");
         id_to_pkg.insert(id, (name, manifest_path));
-        if name == "frob-fsim" {
-            frob_fsim_id = Some(id);
+        if admitted_set.contains(name) && is_frankensim_manifest(manifest_path) {
+            seed_ids.push(id);
         }
     }
-    let root_id = frob_fsim_id.expect("workspace metadata must contain `frob-fsim`");
+    assert_eq!(
+        seed_ids.len(),
+        frob_fsim::ADMITTED_FRANKENSIM_CRATES.len(),
+        "workspace metadata must contain all five INT-FSIM-01 FrankenSim crates"
+    );
 
     let nodes = meta
         .get("resolve")
@@ -83,14 +91,23 @@ fn count_fsim_crates_in_closure(meta: &Json<'_>) -> (usize, BTreeSet<String>) {
             .get("id")
             .and_then(|v| v.as_str())
             .expect("resolve node missing `id`");
-        let deps = node
-            .get("dependencies")
-            .and_then(|v| v.as_array())
-            .expect("resolve node missing `dependencies`");
-        let mut children = Vec::with_capacity(deps.len());
-        for dep in deps {
-            if let Some(dep_id) = dep.as_str() {
-                children.push(dep_id);
+        let mut children = Vec::new();
+        if let Some(deps) = node.get("deps").and_then(|v| v.as_array()) {
+            for dep in deps {
+                let is_normal_or_build = dep
+                    .get("dep_kinds")
+                    .and_then(|v| v.as_array())
+                    .is_none_or(|kinds| {
+                        kinds.iter().any(|k| {
+                            let kind = k.get("kind");
+                            kind.is_none_or(|v| v.is_null() || v.as_str() == Some("build"))
+                        })
+                    });
+                if is_normal_or_build
+                    && let Some(pkg_id) = dep.get("pkg").and_then(|v| v.as_str())
+                {
+                    children.push(pkg_id);
+                }
             }
         }
         adj.insert(id, children);
@@ -98,8 +115,11 @@ fn count_fsim_crates_in_closure(meta: &Json<'_>) -> (usize, BTreeSet<String>) {
 
     let mut seen: BTreeSet<&str> = BTreeSet::new();
     let mut queue: VecDeque<&str> = VecDeque::new();
-    seen.insert(root_id);
-    queue.push_back(root_id);
+    for root_id in seed_ids {
+        if seen.insert(root_id) {
+            queue.push_back(root_id);
+        }
+    }
 
     while let Some(cur) = queue.pop_front() {
         if let Some(children) = adj.get(cur) {

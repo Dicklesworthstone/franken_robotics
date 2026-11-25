@@ -120,6 +120,52 @@
           "pilot": {
             "type": "string",
             "minLength": 1
+          },
+          "default": {
+            "type": "boolean"
+          },
+          "dev_only": {
+            "type": "boolean"
+          },
+          "traits": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "crates": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "consumers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "test_consumers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "first_milestone": {
+            "type": "string",
+            "minLength": 1
+          },
+          "gate": {
+            "type": "string",
+            "minLength": 1
+          },
+          "parent_group": {
+            "type": "string",
+            "minLength": 1
           }
         }
       }

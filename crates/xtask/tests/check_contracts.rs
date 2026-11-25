@@ -1104,3 +1104,63 @@ fn clean_tree_has_no_finding() {
         .expect("canon 2");
     assert_eq!(json1, json2, "check-contracts output must be D0 deterministic");
 }
+
+#[test]
+fn airlock_feature_group_records_accepted_and_non_group_features_omitted() {
+    let root = make_scratch_dir("airlock-feature-records");
+    write_file(
+        &root.join("Cargo.toml"),
+        "[workspace]\nresolver = \"3\"\nmembers = [\"crates/*\"]\n",
+    );
+    write_file(
+        &root.join("registries/refusals.toml"),
+        "schema = \"frob.refusals/1\"\n[[refusal]]\ncode = \"FROB-REF-790\"\n",
+    );
+    write_file(
+        &root.join("registries/gates.toml"),
+        "schema = \"frob.gates/1\"\n",
+    );
+    write_file(
+        &root.join("crates/frob-fsim/Cargo.toml"),
+        "[package]\nname = \"frob-fsim\"\nversion = \"0.0.1\"\nedition = \"2024\"\n\n\
+         [features]\ndefault = [\"referee\", \"mode-inproc\"]\n\
+         mode-inproc = []\nmode-remote = []\nconformance = [\"mode-inproc\"]\n\
+         referee = [\"mode-inproc\"]\n",
+    );
+    write_file(&root.join("crates/frob-fsim/src/lib.rs"), "pub fn ok() {}\n");
+    write_file(&root.join("crates/frob-fsim/tests/conformance.rs"), "#[test] fn ok() {}\n");
+    write_file(&root.join("crates/frob-fsim/CONTRACT.md"), &full_contract_md("frob-fsim"));
+    write_file(
+        &root.join("crates/frob-fsim/contract.toml"),
+        "[crate]\nname = \"frob-fsim\"\nlayer = 0\nrank = 2\nplane = \"compute\"\n\
+         determinism = \"D0\"\nevidence = \"Tested\"\ngates = []\nrefusals = [\"FROB-REF-790\"]\n\n\
+         [budgets]\nwall_ms = 50\nmemory_mib = 64\n\n\
+         [safe_mode]\non_budget = \"reference-path\"\non_calibration = \"reference-path\"\n\n\
+         [features.referee]\ntier = \"S\"\ndefault = true\ndev_only = false\n\
+         traits = [\"RefereeDynamics\"]\ncrates = [\"fs-mbd\"]\n\
+         consumers = [\"frob-dyn\"]\ntest_consumers = [\"frob-conformance\"]\n\
+         first_milestone = \"M0\"\ngate = \"INT-FSIM-01\"\n",
+    );
+
+    let findings = run_check(&root);
+    assert!(
+        findings.is_empty(),
+        "valid frob-fsim airlock feature record must pass check-contracts, got: {findings:?}"
+    );
+
+    // Listing non-group `conformance` in contract.toml must fail RULE_CONTRACT_FEATURES_MISMATCH.
+    write_file(
+        &root.join("crates/frob-fsim/contract.toml"),
+        "[crate]\nname = \"frob-fsim\"\nlayer = 0\nrank = 2\nplane = \"compute\"\n\
+         determinism = \"D0\"\nevidence = \"Tested\"\ngates = []\nrefusals = [\"FROB-REF-790\"]\n\n\
+         [budgets]\nwall_ms = 50\nmemory_mib = 64\n\n\
+         [safe_mode]\non_budget = \"reference-path\"\non_calibration = \"reference-path\"\n\n\
+         [features.referee]\ntier = \"S\"\n\
+         [features.conformance]\ntier = \"S\"\n",
+    );
+    let bad = run_check(&root);
+    assert!(
+        bad.iter().any(|f| f.rule == RULE_CONTRACT_FEATURES_MISMATCH),
+        "non-group feature `conformance` in frob-fsim contract.toml must fail features-mismatch: {bad:?}"
+    );
+}

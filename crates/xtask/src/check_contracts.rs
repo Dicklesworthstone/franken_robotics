@@ -111,8 +111,24 @@ pub const SCHEMA_CRATE_KEYS: &[&str] = &[
 ];
 pub const SCHEMA_BUDGETS_REQUIRED_KEYS: &[&str] = &["wall_ms", "memory_mib"];
 pub const SCHEMA_SAFE_MODE_KEYS: &[&str] = &["on_budget", "on_calibration"];
-pub const SCHEMA_FEATURE_KEYS: &[&str] = &["tier", "kill", "pilot"];
+pub const SCHEMA_FEATURE_KEYS: &[&str] = &[
+    "tier",
+    "kill",
+    "pilot",
+    "default",
+    "dev_only",
+    "traits",
+    "crates",
+    "consumers",
+    "test_consumers",
+    "first_milestone",
+    "gate",
+    "parent_group",
+];
 pub const SCHEMA_API_KEYS: &[&str] = &["float_ok"];
+
+/// Non-group `frob-fsim` features omitted from `contract.toml` feature-group records (N33a-11).
+const FROB_FSIM_NON_GROUP_FEATURES: &[&str] = &["mode-inproc", "mode-remote", "conformance"];
 
 const VALID_DETERMINISM: &[&str] = &["D0", "D1", "D2", "D3", "D4"];
 const VALID_EVIDENCE: &[&str] = &["Estimated", "Tested", "Certified", "Proved"];
@@ -1352,6 +1368,84 @@ fn check_features_section(
             let tier_opt = take_required_str(&mut ff, "tier", crate_name, rel_path, findings);
             let kill_opt = take_optional_str(&mut ff, "kill", crate_name, rel_path, findings);
             let pilot_opt = take_optional_str(&mut ff, "pilot", crate_name, rel_path, findings);
+            for bool_key in ["default", "dev_only"] {
+                if let Some(sp) = ff.take(bool_key)
+                    && sp.value.as_bool().is_none()
+                {
+                    push_schema_err(
+                        crate_name,
+                        rel_path,
+                        Some(sp.line),
+                        format!(
+                            "`[features].{fname}.{bool_key}` expected bool, found {}",
+                            sp.value.type_name()
+                        ),
+                        findings,
+                    );
+                }
+            }
+            for list_key in ["traits", "crates", "consumers", "test_consumers"] {
+                if let Some(sp) = ff.take(list_key) {
+                    match sp.value {
+                        Value::Array(items) => {
+                            for (idx, item) in items.into_iter().enumerate() {
+                                match item.value {
+                                    Value::Str(s) if !s.trim().is_empty() => {}
+                                    Value::Str(_) => {
+                                        push_schema_err(
+                                            crate_name,
+                                            rel_path,
+                                            Some(item.line),
+                                            format!(
+                                                "`[features].{fname}.{list_key}[{idx}]` must not be empty"
+                                            ),
+                                            findings,
+                                        );
+                                    }
+                                    other => {
+                                        push_schema_err(
+                                            crate_name,
+                                            rel_path,
+                                            Some(item.line),
+                                            format!(
+                                                "`[features].{fname}.{list_key}[{idx}]` expected string, found {}",
+                                                other.type_name()
+                                            ),
+                                            findings,
+                                        );
+                                    }
+                                }
+                            }
+                        }
+                        other => {
+                            push_schema_err(
+                                crate_name,
+                                rel_path,
+                                Some(sp.line),
+                                format!(
+                                    "`[features].{fname}.{list_key}` expected array, found {}",
+                                    other.type_name()
+                                ),
+                                findings,
+                            );
+                        }
+                    }
+                }
+            }
+            for str_key in ["first_milestone", "gate", "parent_group"] {
+                if let Some((val, sline)) =
+                    take_optional_str(&mut ff, str_key, crate_name, rel_path, findings)
+                    && val.trim().is_empty()
+                {
+                    push_schema_err(
+                        crate_name,
+                        rel_path,
+                        Some(sline),
+                        format!("`[features].{fname}.{str_key}` must not be empty"),
+                        findings,
+                    );
+                }
+            }
             if let Err(err) = ff.finish() {
                 push_schema_err(crate_name, rel_path, Some(err.line), err.to_string(), findings);
             }
@@ -1459,8 +1553,17 @@ fn check_features_section(
         }
     }
 
-    // Rule 6: manifest `[features]` (excluding `default`) must equal contract `[features]`.
-    for feat in manifest_features.difference(&contract_features) {
+    // Rule 6: manifest `[features]` (excluding `default`, plus `frob-fsim`'s non-group
+    // mode/conformance features per N33a-11) must equal contract `[features]`.
+    let expected_manifest_features: BTreeSet<String> = manifest_features
+        .iter()
+        .filter(|feat| {
+            !(crate_name == "frob-fsim"
+                && FROB_FSIM_NON_GROUP_FEATURES.contains(&feat.as_str()))
+        })
+        .cloned()
+        .collect();
+    for feat in expected_manifest_features.difference(&contract_features) {
         findings.push(Finding {
             rule: RULE_CONTRACT_FEATURES_MISMATCH,
             subject: crate_name.to_owned(),
@@ -1474,7 +1577,7 @@ fn check_features_section(
             ),
         });
     }
-    for feat in contract_features.difference(manifest_features) {
+    for feat in contract_features.difference(&expected_manifest_features) {
         findings.push(Finding {
             rule: RULE_CONTRACT_FEATURES_MISMATCH,
             subject: crate_name.to_owned(),

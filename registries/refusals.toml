@@ -18,6 +18,7 @@ schema = "frob.refusals/1"
 "70x" = 4
 "72x" = 5
 "73x" = 5
+"79x" = 5
 "8xx" = 3
 "9xx" = 9
 conflict = []
@@ -32,6 +33,15 @@ exit = 3
 retry = "after-change"
 repairs = ["Replace by the admitted form: a det_* function, the split product, count then exclusive scan then write, a select, or two launches instead of a grid barrier", "Move the computation to the host if it does not belong in a batched kernel"]
 raised_by = ["BD-013"]
+
+[[refusal]]
+code = "FROB-REF-790"
+meaning = "This binary was built without the airlock feature group the verb needs"
+defined_in = "§33.16"
+exit = 5
+retry = "after-change"
+repairs = ["Use a build that has the group (frob capabilities --json lists this binary's groups)", "Rebuild with --features frob-fsim/<group> (state the closure cost for structure and multiphysics)", "For an unadmitted group, run its admission gate", "Use the documented fallback where one exists"]
+raised_by = ["N33a-11", "N33c-32"]
 
 [[refusal]]
 code = "FROB-REF-802"

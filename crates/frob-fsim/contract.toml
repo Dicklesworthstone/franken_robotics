@@ -1,4 +1,9 @@
-# Machine-readable crate contract for frob-fsim (BD-006, INT-FSIM-01, N34-08).
+# Machine-readable crate contract for frob-fsim (BD-006, N33a-11, N34-08).
+# The `[features.*]` records are the single data authority for airlock group
+# allow-lists, default membership, crates, traits, milestones, and admission gates
+# (read by `xtask check-deps` in N34-03/N33b-09 and `frob capabilities` in N33c-32).
+# Non-group features (`mode-inproc`, `mode-remote`, `conformance`) are intentionally
+# absent from `[features]` (N33a-11).
 
 [crate]
 name = "frob-fsim"
@@ -8,7 +13,7 @@ plane = "compute"
 determinism = "D0"
 evidence = "Tested"
 gates = []
-refusals = []
+refusals = ["FROB-REF-790"]
 
 [budgets]
 wall_ms = 50
@@ -17,3 +22,125 @@ memory_mib = 64
 [safe_mode]
 on_budget = "reference-path"
 on_calibration = "reference-path"
+
+[features.referee]
+tier = "S"
+default = true
+dev_only = false
+traits = ["RefereeDynamics", "RefereeContact", "Integrator", "PortSystem"]
+crates = ["fs-mbd", "fs-mbd-material", "fs-contact", "fs-tribo", "fs-time", "fs-motion", "fs-ports", "fs-system"]
+consumers = ["frob-model", "frob-dyn", "frob-contact", "frob-analyze", "frob-verbs", "frob-conformance"]
+test_consumers = ["frob-conformance"]
+first_milestone = "M0"
+gate = "INT-FSIM-01"
+
+[features.geometry]
+tier = "S"
+default = true
+dev_only = false
+traits = ["GeometryKernel", "SceneQuery", "MeshExchange"]
+crates = ["fs-query", "fs-geom", "fs-rep-sdf", "fs-rep-mesh", "fs-rep-frep", "fs-scene", "fs-topo", "fs-io"]
+consumers = ["frob-contact", "frob-scene", "frob-foundry", "frob-conformance"]
+test_consumers = ["frob-conformance"]
+first_milestone = "M0"
+gate = "INT-FSIM-01"
+
+[features.ledger]
+tier = "S"
+default = true
+dev_only = false
+traits = ["Ledger", "Session", "Recompute"]
+crates = ["fs-ledger", "fs-session", "fs-package", "fs-recompute"]
+consumers = ["frob-chronicle", "frob-verbs"]
+test_consumers = ["frob-conformance"]
+first_milestone = "M0"
+gate = "INT-FSQL-01"
+
+[features.optimize]
+tier = "S"
+default = false
+dev_only = false
+traits = ["Optimizer", "Archive", "Racing"]
+crates = ["fs-dfo", "fs-bo", "fs-ascent", "fs-archive", "fs-opt", "fs-sos", "fs-race", "fs-eproc", "fs-tropical", "fs-symmetry"]
+consumers = ["frob-opt", "frob-arena", "frob-dyn", "frob-mission", "frob-analyze", "frob-nemesis"]
+test_consumers = ["frob-conformance"]
+first_milestone = "M3"
+gate = "INT-FSIM-14"
+
+[features.optimize-race]
+tier = "S"
+default = false
+dev_only = false
+parent_group = "optimize"
+traits = ["Racing"]
+crates = ["fs-race", "fs-eproc"]
+consumers = ["frob-opt", "frob-arena", "frob-dyn", "frob-mission", "frob-analyze", "frob-nemesis"]
+test_consumers = ["frob-conformance"]
+first_milestone = "M1"
+gate = "INT-FSIM-14"
+
+[features.stats]
+tier = "S"
+default = false
+dev_only = false
+traits = ["Uncertainty", "ValueOfInformation", "Surrogate", "Assimilation"]
+crates = ["fs-uq", "fs-voi", "fs-surrogate", "fs-assimilate", "fs-robust", "fs-regime"]
+consumers = ["frob-nemesis", "frob-arena", "frob-ground", "frob-opt", "frob-mission", "frob-dyn"]
+test_consumers = ["frob-conformance"]
+first_milestone = "M4"
+gate = "INT-FSIM-14"
+
+[features.spectral]
+tier = "S"
+default = false
+dev_only = false
+traits = ["Spectral"]
+crates = ["fs-spectral"]
+consumers = ["frob-gait", "frob-lifecycle"]
+test_consumers = ["frob-conformance"]
+first_milestone = "M3"
+gate = "INT-FSIM-13"
+
+[features.actuation]
+tier = "S"
+default = false
+dev_only = false
+traits = ["Magnetics", "ThermalNetwork", "CurrentLoop", "PortHamiltonian"]
+crates = ["fs-em", "fs-thermal", "fs-control", "fs-phs", "fs-matdb"]
+consumers = ["frob-actuate"]
+test_consumers = ["frob-conformance"]
+first_milestone = "M1"
+gate = "INT-FSIM-09"
+
+[features.structure]
+tier = "S"
+default = false
+dev_only = false
+traits = ["StructuralOpt", "ToleranceAllocation", "AsBuilt", "FabricationRules"]
+crates = ["fs-solid", "fs-topopt", "fs-topols", "fs-toleralloc", "fs-asbuilt", "fs-geocon", "fs-fab", "fs-adjoint"]
+consumers = ["frob-foundry", "frob-ground"]
+test_consumers = ["frob-conformance"]
+first_milestone = "M5"
+gate = "INT-FSIM-15"
+
+[features.multiphysics]
+tier = "S"
+default = false
+dev_only = false
+traits = ["FluidIsland", "CoupledIsland"]
+crates = ["fs-lbm", "fs-couple"]
+consumers = ["frob-scene"]
+test_consumers = ["frob-conformance"]
+first_milestone = "M6"
+gate = "INT-FSIM-17"
+
+[features.harness]
+tier = "S"
+default = false
+dev_only = true
+traits = []
+crates = ["fs-roofline", "fs-detaudit", "fs-propcheck", "fs-render", "fs-la", "fs-ir"]
+consumers = []
+test_consumers = ["frob-fsim", "frob-conformance"]
+first_milestone = "M0"
+gate = "INT-FSIM-01"

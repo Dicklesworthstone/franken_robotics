@@ -550,9 +550,9 @@ mod tests {
         assert!(StackReceiptHash::parse(HEX_A).is_err());
         assert!(StackLockDigest::parse(LOCK_A).is_err());
 
-        // Uppercase hex refused.
+        // Uppercase hex refused (use HEX_A which carries hex letters a-f; LOCK_A is all digits).
         assert!(StackReceiptHash::parse(&format!("sr:{}", HEX_A.to_ascii_uppercase())).is_err());
-        assert!(StackLockDigest::parse(&format!("sl:{}", LOCK_A.to_ascii_uppercase())).is_err());
+        assert!(StackLockDigest::parse(&format!("sl:{}", HEX_A.to_ascii_uppercase())).is_err());
     }
 
     #[test]

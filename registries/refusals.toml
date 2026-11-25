@@ -1,0 +1,52 @@
+# FrankenRobotics refusal code registry (schema frob.refusals/1).
+#
+# Seeded by BD-005 with the fixed surface [exit_rule] table and the rows raised
+# or named by frob-core itself (FROB-REF-802, FROB-REF-816, FROB-REF-881), with
+# exact Appendix O meanings and exits. N35-33 and the chapter registry beads
+# complete the remaining rows, 7xx sub-family rules, and exception lists.
+# Codes are sorted numerically and never reused.
+
+schema = "frob.refusals/1"
+
+[exit_rule]
+"1xx" = 3
+"2xx" = 3
+"3xx" = 3
+"4xx" = 3
+"5xx" = 3
+"6xx" = 6
+"70x" = 4
+"72x" = 5
+"73x" = 5
+"8xx" = 3
+"9xx" = 9
+conflict = []
+integrity = []
+capability = []
+
+[[refusal]]
+code = "FROB-REF-802"
+meaning = "Arguments fail the schema, including an unknown parameter or an out-of-range sync_wait_ms"
+defined_in = "§32.18"
+exit = 3
+retry = "after-change"
+repairs = ["Check the reported pointer and supply arguments matching the required schema", "Remove any unknown or empty required parameters before retrying"]
+raised_by = ["BD-005"]
+
+[[refusal]]
+code = "FROB-REF-816"
+meaning = "An artifact whose authorization flags are missing or not false"
+defined_in = "§37.12"
+exit = 3
+retry = "after-change"
+repairs = ["Include all required no-authorization flags set to false in the artifact", "Regenerate the artifact through a FrankenRobotics exporter instead of hand-editing authorization fields"]
+raised_by = ["BD-005"]
+
+[[refusal]]
+code = "FROB-REF-881"
+meaning = "Evidence or a certificate establishes a different quantifier prefix than the query's, including clairvoyant evidence offered for a robust claim"
+defined_in = "§25.24"
+exit = 3
+retry = "after-change"
+repairs = ["Supply evidence whose quantifier prefix matches the query and other combined parts", "Re-run verification under the required quantifier order rather than weakening a universal claim"]
+raised_by = ["BD-005"]

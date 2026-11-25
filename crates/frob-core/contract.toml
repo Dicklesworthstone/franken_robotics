@@ -1,0 +1,22 @@
+# Machine-readable crate contract for frob-core (BD-005, N34-08).
+
+[crate]
+name = "frob-core"
+layer = 0
+rank = 1
+plane = "compute"
+determinism = "D0"
+evidence = "Estimated"
+gates = []
+refusals = ["FROB-REF-802", "FROB-REF-816", "FROB-REF-881"]
+
+[budgets]
+wall_ms = 50
+memory_mib = 64
+
+[safe_mode]
+on_budget = "reference-path"
+on_calibration = "reference-path"
+
+[features]
+test-support = { tier = "S" }

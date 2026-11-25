@@ -1,0 +1,351 @@
+//! Refusal-registry loader (`registries/refusals.toml`) on `registry::toml` (BD-005).
+//! Determinism D0; prints nothing (L-7); zero `unsafe`.
+
+use std::collections::{BTreeMap, BTreeSet};
+use std::fmt;
+
+use crate::refusal::{RefusalCode, RetryPolicy};
+use crate::registry::toml::{self, Fields, Spanned, Table, TomlError, Value};
+
+pub const EMBEDDED_REFUSALS_TOML: &str = include_str!("../../../../registries/refusals.toml");
+pub const CODE_GEN_MARKER: &str = "// @generated from registries/refusals.toml by frob_core::registry::refusals::render_refusal_code_enum (N34p4-03 check-generated); do not edit by hand.";
+
+const FIXED_EXIT_TABLE: &[(&str, u8)] = &[
+    ("1xx", 3), ("2xx", 3), ("3xx", 3), ("4xx", 3), ("5xx", 3),
+    ("6xx", 6), ("70x", 4), ("72x", 5), ("73x", 5), ("8xx", 3), ("9xx", 9),
+];
+const OPTIONAL_7XX_DECADES: &[&str] = &["71x", "74x", "75x", "76x", "77x", "78x", "79x"];
+const VALID_REFUSAL_EXITS: &[u8] = &[3, 4, 5, 6, 7, 9];
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub enum RefusalRegistryError {
+    Toml(TomlError),
+    InvalidSchema { observed: String },
+    InvalidRefusalCode { code: String, line: u32, column: u32 },
+    DuplicateRefusalCode { code: String, line: u32, column: u32 },
+    UnknownRefusalCode { code: String, context: String },
+    InvalidRetry { code: String, value: String, line: u32, column: u32 },
+    ExitMismatch { row: String, rule_entry: String, observed: u8, expected: Option<u8>, reason: String },
+    OverlappingExceptionList { code: String, first_list: &'static str, second_list: &'static str },
+    ExceptionCodeMissing { list: &'static str, code: String },
+}
+
+impl From<TomlError> for RefusalRegistryError { fn from(e: TomlError) -> Self { Self::Toml(e) } }
+
+impl fmt::Display for RefusalRegistryError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::Toml(e) => fmt::Display::fmt(e, f),
+            Self::InvalidSchema { observed } => write!(f, "invalid refusal registry schema `{observed}`"),
+            Self::InvalidRefusalCode { code, line, column } => write!(f, "{line}:{column}: invalid refusal code `{code}`"),
+            Self::DuplicateRefusalCode { code, line, column } => write!(f, "{line}:{column}: duplicate refusal code `{code}`"),
+            Self::UnknownRefusalCode { code, context } => write!(f, "unknown refusal code `{code}` in {context}"),
+            Self::InvalidRetry { code, value, line, column } => write!(f, "{line}:{column}: invalid retry `{value}` for `{code}`"),
+            Self::ExitMismatch { row, rule_entry, observed, expected, reason } => write!(f, "exit mismatch for `{row}` under `{rule_entry}`: observed {observed}, expected {expected:?} ({reason})"),
+            Self::OverlappingExceptionList { code, first_list, second_list } => write!(f, "code `{code}` in both `{first_list}` and `{second_list}`"),
+            Self::ExceptionCodeMissing { list, code } => write!(f, "exception list `{list}` names missing code `{code}`"),
+        }
+    }
+}
+impl std::error::Error for RefusalRegistryError {}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ExitRule {
+    pub ranges: BTreeMap<String, u8>,
+    pub conflict: BTreeSet<u16>,
+    pub integrity: BTreeSet<u16>,
+    pub capability: BTreeSet<u16>,
+}
+
+impl ExitRule {
+    pub fn expected_exit(&self, num: u16) -> Result<(u8, String), RefusalRegistryError> {
+        if self.conflict.contains(&num) { return Ok((7, "exit_rule.conflict".into())); }
+        if self.integrity.contains(&num) { return Ok((9, "exit_rule.integrity".into())); }
+        if self.capability.contains(&num) { return Ok((5, "exit_rule.capability".into())); }
+        let key = if (700..=799).contains(&num) { format!("7{}x", (num - 700) / 10) } else { format!("{}xx", num / 100) };
+        self.ranges.get(&key).copied().map(|e| (e, format!("exit_rule.{key}"))).ok_or_else(|| RefusalRegistryError::ExitMismatch {
+            row: format_code(num), rule_entry: format!("exit_rule.{key}"), observed: 0, expected: None,
+            reason: format!("no `[exit_rule]` entry covers `{key}`"),
+        })
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct RefusalRow {
+    pub code: String,
+    pub number: u16,
+    pub meaning: String,
+    pub defined_in: String,
+    pub exit: u8,
+    pub retry: RetryPolicy,
+    pub repairs: Vec<String>,
+    pub raised_by: Vec<String>,
+    pub related: Vec<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct RefusalRegistry {
+    schema: String,
+    exit_rule: ExitRule,
+    rows: Vec<RefusalRow>,
+    by_number: BTreeMap<u16, usize>,
+}
+
+impl RefusalRegistry {
+    pub fn load() -> Result<Self, RefusalRegistryError> { Self::from_bytes(EMBEDDED_REFUSALS_TOML.as_bytes()) }
+
+    pub fn from_bytes(bytes: &[u8]) -> Result<Self, RefusalRegistryError> {
+        let mut fields = Fields::new(toml::parse(bytes)?, "<root>");
+        let schema = fields.require_str("schema")?;
+        if schema != "frob.refusals/1" { return Err(RefusalRegistryError::InvalidSchema { observed: schema }); }
+        let exit_rule = parse_exit_rule(fields.require_table("exit_rule")?)?;
+        let refusal_tables = fields.opt_array("refusal")?.unwrap_or_default();
+        fields.finish()?;
+
+        let (mut rows, mut seen) = (Vec::with_capacity(refusal_tables.len()), BTreeSet::new());
+        for (idx, sp) in refusal_tables.into_iter().enumerate() {
+            let Value::Table(tbl) = sp.value else {
+                return Err(TomlError::new(sp.line, sp.column, toml::TomlErrorKind::TypeMismatch { key: format!("refusal[{idx}]"), expected: "table", found: sp.value.type_name() }).into());
+            };
+            let row = parse_refusal_row(tbl, &exit_rule, idx)?;
+            if !seen.insert(row.number) {
+                return Err(RefusalRegistryError::DuplicateRefusalCode { code: row.code, line: sp.line, column: sp.column });
+            }
+            rows.push(row);
+        }
+        for (list, set) in [("conflict", &exit_rule.conflict), ("integrity", &exit_rule.integrity), ("capability", &exit_rule.capability)] {
+            for &n in set {
+                if !seen.contains(&n) { return Err(RefusalRegistryError::ExceptionCodeMissing { list, code: format_code(n) }); }
+            }
+        }
+        rows.sort_by_key(|r| r.number);
+        let by_number = rows.iter().enumerate().map(|(i, r)| (r.number, i)).collect();
+        Ok(Self { schema, exit_rule, rows, by_number })
+    }
+
+    pub fn load_with_verbs(refusals_bytes: &[u8], verbs_bytes: &[u8]) -> Result<Self, RefusalRegistryError> {
+        let reg = Self::from_bytes(refusals_bytes)?;
+        reg.validate_verb_refusals(verbs_bytes)?;
+        Ok(reg)
+    }
+
+    pub fn validate_verb_refusals(&self, verbs_bytes: &[u8]) -> Result<(), RefusalRegistryError> {
+        let mut fields = Fields::new(toml::parse(verbs_bytes)?, "<verbs>");
+        let _schema = fields.opt_str("schema")?;
+        let verbs = fields.opt_array("verb")?.unwrap_or_default();
+        fields.finish()?;
+        for (idx, sp) in verbs.into_iter().enumerate() {
+            let Value::Table(tbl) = sp.value else {
+                return Err(TomlError::new(sp.line, sp.column, toml::TomlErrorKind::TypeMismatch { key: format!("verb[{idx}]"), expected: "table", found: sp.value.type_name() }).into());
+            };
+            let mut vf = Fields::new(tbl, format!("verb[{idx}]"));
+            let name = vf.require_str("name")?;
+            let refs = vf.opt_array("refusals")?.map(|a| extract_str_arr("refusals", a)).transpose()?.unwrap_or_default();
+            vf.finish()?;
+            for code in refs { self.lookup(&code, &format!("verb `{name}`"))?; }
+        }
+        Ok(())
+    }
+
+    #[must_use] pub fn schema(&self) -> &str { &self.schema }
+    #[must_use] pub const fn exit_rule(&self) -> &ExitRule { &self.exit_rule }
+    #[must_use] pub fn rows(&self) -> &[RefusalRow] { &self.rows }
+    #[must_use] pub fn row(&self, code: RefusalCode) -> Option<&RefusalRow> { self.by_number.get(&code.number()).map(|&i| &self.rows[i]) }
+
+    pub fn lookup(&self, code: &str, context: &str) -> Result<&RefusalRow, RefusalRegistryError> {
+        parse_code_number(code).and_then(|n| self.by_number.get(&n)).map(|&i| &self.rows[i])
+            .ok_or_else(|| RefusalRegistryError::UnknownRefusalCode { code: code.to_owned(), context: context.to_owned() })
+    }
+
+    pub fn exit_for(&self, code: RefusalCode) -> Result<u8, RefusalRegistryError> {
+        self.row(code).map(|r| r.exit).ok_or_else(|| RefusalRegistryError::UnknownRefusalCode { code: code.as_str().to_owned(), context: "exit_for".into() })
+    }
+}
+
+/// Pure deterministic generator for `crates/frob-core/src/refusal/code_gen.rs` (N34p4-03).
+#[must_use]
+pub fn render_refusal_code_enum(reg: &RefusalRegistry) -> String {
+    let mut out = format!("{CODE_GEN_MARKER}\n\nuse std::fmt;\n\n");
+    out.push_str("/// Closed refusal code enum generated from `registries/refusals.toml`.\n///\n/// Every variant corresponds to one registered `[[refusal]]` row; an unregistered\n/// code cannot compile.\n");
+    out.push_str("#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]\n#[repr(u16)]\npub enum RefusalCode {\n");
+    for r in reg.rows() { out.push_str(&format!("    /// {} ({}): {}\n    FrobRef{} = {},\n", r.code, r.defined_in, r.meaning, r.number, r.number)); }
+    out.push_str("}\n\nimpl RefusalCode {\n    /// All registered refusal codes in ascending numeric order.\n    pub const ALL: &'static [Self] = &[\n");
+    for r in reg.rows() { out.push_str(&format!("        Self::FrobRef{},\n", r.number)); }
+    out.push_str("    ];\n\n    /// Numeric code in `100..=999`.\n    #[must_use]\n    pub const fn number(self) -> u16 {\n        self as u16\n    }\n\n");
+    out.push_str("    /// Family digit (`1..=9`).\n    #[must_use]\n    pub const fn family(self) -> u8 {\n        (self.number() / 100) as u8\n    }\n\n");
+    out.push_str("    /// Canonical wire spelling `FROB-REF-nnn`.\n    #[must_use]\n    pub const fn as_str(self) -> &'static str {\n        match self {\n");
+    for r in reg.rows() { out.push_str(&format!("            Self::FrobRef{} => \"{}\",\n", r.number, r.code)); }
+    out.push_str("        }\n    }\n\n    /// Parse a canonical wire code `FROB-REF-nnn`.\n    #[must_use]\n    pub fn parse(code: &str) -> Option<Self> {\n        match code {\n");
+    for r in reg.rows() { out.push_str(&format!("            \"{}\" => Some(Self::FrobRef{}),\n", r.code, r.number)); }
+    out.push_str("            _ => None,\n        }\n    }\n}\n\nimpl fmt::Display for RefusalCode {\n    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {\n        f.write_str(self.as_str())\n    }\n}\n");
+    out
+}
+
+fn parse_exit_rule(table: Table) -> Result<ExitRule, RefusalRegistryError> {
+    let mut fields = Fields::new(table, "exit_rule");
+    let mut ranges = BTreeMap::new();
+    for &(k, fixed) in FIXED_EXIT_TABLE {
+        if let Some(v) = fields.opt_int(k)? {
+            let exit = checked_exit_u8(v, "exit_rule", k)?;
+            if exit != fixed {
+                return Err(RefusalRegistryError::ExitMismatch { row: "[exit_rule]".into(), rule_entry: format!("exit_rule.{k}"), observed: exit, expected: Some(fixed), reason: "contradicts fixed surface exit table".into() });
+            }
+            ranges.insert(k.to_owned(), exit);
+        } else {
+            ranges.insert(k.to_owned(), fixed);
+        }
+    }
+    for &d in OPTIONAL_7XX_DECADES {
+        if let Some(v) = fields.opt_int(d)? { ranges.insert(d.to_owned(), checked_exit_u8(v, "exit_rule", d)?); }
+    }
+    let (conflict, integrity, capability) = (parse_exc_list(&mut fields, "conflict")?, parse_exc_list(&mut fields, "integrity")?, parse_exc_list(&mut fields, "capability")?);
+    fields.finish()?;
+    for &(n1, s1, n2, s2) in &[("conflict", &conflict, "integrity", &integrity), ("conflict", &conflict, "capability", &capability), ("integrity", &integrity, "capability", &capability)] {
+        for &c in s1 { if s2.contains(&c) { return Err(RefusalRegistryError::OverlappingExceptionList { code: format_code(c), first_list: n1, second_list: n2 }); } }
+    }
+    for (name, set, obs) in [("conflict", &conflict, 7u8), ("capability", &capability, 5u8)] {
+        for &c in set {
+            if (900..=999).contains(&c) {
+                return Err(RefusalRegistryError::ExitMismatch { row: format_code(c), rule_entry: format!("exit_rule.{name}"), observed: obs, expected: Some(9), reason: "9xx is fixed to exit 9".into() });
+            }
+        }
+    }
+    Ok(ExitRule { ranges, conflict, integrity, capability })
+}
+
+fn parse_exc_list(fields: &mut Fields, name: &'static str) -> Result<BTreeSet<u16>, RefusalRegistryError> {
+    let mut set = BTreeSet::new();
+    let Some(items) = fields.opt_array(name)? else { return Ok(set); };
+    for sp in items {
+        let num = match sp.value {
+            Value::Int(n) if (100..=999).contains(&n) => n as u16,
+            Value::Int(n) => return Err(RefusalRegistryError::InvalidRefusalCode { code: n.to_string(), line: sp.line, column: sp.column }),
+            Value::Str(s) => parse_code_number(&s).ok_or_else(|| RefusalRegistryError::InvalidRefusalCode { code: s, line: sp.line, column: sp.column })?,
+            other => return Err(TomlError::new(sp.line, sp.column, toml::TomlErrorKind::TypeMismatch { key: format!("exit_rule.{name}"), expected: "integer or code string", found: other.type_name() }).into()),
+        };
+        set.insert(num);
+    }
+    Ok(set)
+}
+
+fn parse_refusal_row(table: Table, exit_rule: &ExitRule, idx: usize) -> Result<RefusalRow, RefusalRegistryError> {
+    let (line, col) = table.span();
+    let mut f = Fields::new(table, format!("refusal[{idx}]"));
+    let code = f.require_str("code")?;
+    let number = parse_code_number(&code).ok_or_else(|| RefusalRegistryError::InvalidRefusalCode { code: code.clone(), line, column: col })?;
+    let (meaning, defined_in) = (f.require_str("meaning")?, f.require_str("defined_in")?);
+    let exit = checked_exit_u8(f.require_int("exit")?, &code, "exit")?;
+    let retry_s = f.require_str("retry")?;
+    let retry = RetryPolicy::parse(&retry_s).ok_or_else(|| RefusalRegistryError::InvalidRetry { code: code.clone(), value: retry_s, line, column: col })?;
+    let repairs = f.opt_array("repairs")?.map(|a| extract_str_arr("repairs", a)).transpose()?.unwrap_or_default();
+    let raised_by = f.opt_array("raised_by")?.map(|a| extract_str_arr("raised_by", a)).transpose()?.unwrap_or_default();
+    let related = f.opt_array("related")?.map(|a| extract_str_arr("related", a)).transpose()?.unwrap_or_default();
+    f.finish()?;
+
+    let (expected, rule_entry) = match exit_rule.expected_exit(number) {
+        Ok(p) => p,
+        Err(RefusalRegistryError::ExitMismatch { row, rule_entry, expected, reason, .. }) => {
+            return Err(RefusalRegistryError::ExitMismatch { row, rule_entry, observed: exit, expected, reason });
+        }
+        Err(e) => return Err(e),
+    };
+    if exit != expected {
+        return Err(RefusalRegistryError::ExitMismatch { row: code, rule_entry, observed: exit, expected: Some(expected), reason: "row exit differs from rule".into() });
+    }
+    if (900..=999).contains(&number) && retry != RetryPolicy::Never {
+        return Err(RefusalRegistryError::ExitMismatch { row: code, rule_entry: "exit_rule.9xx".into(), observed: exit, expected: Some(9), reason: "9xx requires retry = \"never\"".into() });
+    }
+    Ok(RefusalRow { code, number, meaning, defined_in, exit, retry, repairs, raised_by, related })
+}
+
+fn checked_exit_u8(val: i64, row: &str, rule_entry: &str) -> Result<u8, RefusalRegistryError> {
+    if let Ok(u) = u8::try_from(val) && VALID_REFUSAL_EXITS.contains(&u) { return Ok(u); }
+    Err(RefusalRegistryError::ExitMismatch { row: row.to_owned(), rule_entry: rule_entry.to_owned(), observed: u8::try_from(val).unwrap_or(u8::MAX), expected: None, reason: format!("exit `{val}` outside {{3,4,5,6,7,9}}") })
+}
+
+fn extract_str_arr(key: &str, items: Vec<Spanned<Value>>) -> Result<Vec<String>, RefusalRegistryError> {
+    items.into_iter().map(|sp| match sp.value {
+        Value::Str(s) => Ok(s),
+        other => Err(TomlError::new(sp.line, sp.column, toml::TomlErrorKind::TypeMismatch { key: key.to_owned(), expected: "string", found: other.type_name() }).into()),
+    }).collect()
+}
+
+fn parse_code_number(code: &str) -> Option<u16> {
+    let d = code.strip_prefix("FROB-REF-")?;
+    if d.len() != 3 || !d.bytes().all(|b| b.is_ascii_digit()) { return None; }
+    let n: u16 = d.parse().ok()?;
+    (100..=999).contains(&n).then_some(n)
+}
+
+fn format_code(num: u16) -> String { format!("FROB-REF-{num:03}") }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn row(code: &str, exit: u8, retry: &str) -> String {
+        format!("[[refusal]]\ncode = \"{code}\"\nmeaning = \"s {code}\"\ndefined_in = \"§0\"\nexit = {exit}\nretry = \"{retry}\"\nrepairs = [\"r1\", \"r2\"]\nraised_by = [\"BD-005\"]\n\n")
+    }
+    fn hdr(extra: &str, conflict: &str, integrity: &str, cap: &str) -> String {
+        format!("schema = \"frob.refusals/1\"\n\n[exit_rule]\n\"1xx\" = 3\n\"2xx\" = 3\n\"3xx\" = 3\n\"4xx\" = 3\n\"5xx\" = 3\n\"6xx\" = 6\n\"70x\" = 4\n\"72x\" = 5\n\"73x\" = 5\n\"8xx\" = 3\n\"9xx\" = 9\n{extra}conflict = [{conflict}]\nintegrity = [{integrity}]\ncapability = [{cap}]\n\n")
+    }
+
+    #[test]
+    fn embedded_registry_loads_and_matches_generated_enum() {
+        let reg = RefusalRegistry::load().expect("embedded registry loads");
+        assert_eq!(reg.exit_for(RefusalCode::FrobRef802).unwrap(), 3);
+        assert_eq!(reg.exit_for(RefusalCode::FrobRef816).unwrap(), 3);
+        assert_eq!(reg.exit_for(RefusalCode::FrobRef881).unwrap(), 3);
+        assert_eq!(include_str!("../refusal/code_gen.rs"), render_refusal_code_enum(&reg));
+    }
+
+    #[test]
+    fn unknown_refusal_code_in_verb_row_fails() {
+        let verbs = b"schema = \"frob.verbs/1\"\n[[verb]]\nname = \"design.check\"\nrefusals = [\"FROB-REF-816\", \"FROB-REF-999\"]\n";
+        let err = RefusalRegistry::load_with_verbs(EMBEDDED_REFUSALS_TOML.as_bytes(), verbs).unwrap_err();
+        assert!(matches!(err, RefusalRegistryError::UnknownRefusalCode { ref code, .. } if code == "FROB-REF-999"));
+    }
+
+    #[test]
+    fn registry_duplicate_code_fails() {
+        let doc = format!("{}{}{}", hdr("", "", "", ""), row("FROB-REF-816", 3, "after-change"), row("FROB-REF-816", 3, "after-change"));
+        assert!(matches!(RefusalRegistry::from_bytes(doc.as_bytes()), Err(RefusalRegistryError::DuplicateRefusalCode { ref code, .. }) if code == "FROB-REF-816"));
+    }
+
+    #[test]
+    fn registry_exit_family_rule() {
+        let r74 = "\"74x\" = 4\n";
+        assert!(matches!(RefusalRegistry::from_bytes(format!("{}{}", hdr(r74, "", "", ""), row("FROB-REF-701", 3, "after-change")).as_bytes()), Err(RefusalRegistryError::ExitMismatch { observed: 3, expected: Some(4), .. })));
+        assert!(matches!(RefusalRegistry::from_bytes(format!("{}{}", hdr(r74, "", "", ""), row("FROB-REF-990", 3, "never")).as_bytes()), Err(RefusalRegistryError::ExitMismatch { observed: 3, expected: Some(9), .. })));
+        assert!(matches!(RefusalRegistry::from_bytes(format!("{}{}", hdr(r74, "", "", ""), row("FROB-REF-990", 9, "after-change")).as_bytes()), Err(RefusalRegistryError::ExitMismatch { .. })));
+        assert!(RefusalRegistry::from_bytes(format!("{}{}", hdr(r74, "", "", ""), row("FROB-REF-990", 9, "never")).as_bytes()).is_ok());
+        assert!(RefusalRegistry::from_bytes(format!("{}{}", hdr(r74, "", "", ""), row("FROB-REF-740", 4, "after-change")).as_bytes()).is_ok());
+        assert!(matches!(RefusalRegistry::from_bytes(format!("{}{}", hdr(r74, "", "", ""), row("FROB-REF-740", 5, "after-change")).as_bytes()), Err(RefusalRegistryError::ExitMismatch { observed: 5, expected: Some(4), .. })));
+        assert!(matches!(RefusalRegistry::from_bytes(format!("{}{}", hdr(r74, "", "", ""), row("FROB-REF-771", 4, "after-change")).as_bytes()), Err(RefusalRegistryError::ExitMismatch { ref rule_entry, expected: None, .. }) if rule_entry == "exit_rule.77x"));
+        assert!(matches!(RefusalRegistry::from_bytes(hdr("", "", "", "").replace("\"9xx\" = 9", "\"9xx\" = 3").as_bytes()), Err(RefusalRegistryError::ExitMismatch { observed: 3, expected: Some(9), .. })));
+        assert!(matches!(RefusalRegistry::from_bytes(hdr("", "", "", "").replace("\"6xx\" = 6", "\"6xx\" = 4").as_bytes()), Err(RefusalRegistryError::ExitMismatch { observed: 4, expected: Some(6), .. })));
+
+        let exc = format!("{}{}{}{}{}", hdr(r74, "112, 803", "810", "840"), row("FROB-REF-112", 7, "after-change"), row("FROB-REF-803", 7, "after-change"), row("FROB-REF-810", 9, "never"), row("FROB-REF-840", 5, "after-change"));
+        let reg = RefusalRegistry::from_bytes(exc.as_bytes()).expect("exception lists load");
+        assert_eq!((reg.lookup("FROB-REF-112", "t").unwrap().exit, reg.lookup("FROB-REF-803", "t").unwrap().exit, reg.lookup("FROB-REF-810", "t").unwrap().exit, reg.lookup("FROB-REF-840", "t").unwrap().exit), (7, 7, 9, 5));
+
+        assert!(matches!(RefusalRegistry::from_bytes(format!("{}{}", hdr("", "", "", ""), row("FROB-REF-820", 7, "after-change")).as_bytes()), Err(RefusalRegistryError::ExitMismatch { observed: 7, expected: Some(3), .. })));
+        assert!(matches!(RefusalRegistry::from_bytes(format!("{}{}", hdr("", "112", "", ""), row("FROB-REF-112", 3, "after-change")).as_bytes()), Err(RefusalRegistryError::ExitMismatch { observed: 3, expected: Some(7), .. })));
+        assert!(matches!(RefusalRegistry::from_bytes(format!("{}{}", hdr("", "", "", "840"), row("FROB-REF-840", 3, "after-change")).as_bytes()), Err(RefusalRegistryError::ExitMismatch { observed: 3, expected: Some(5), .. })));
+        assert!(matches!(RefusalRegistry::from_bytes(format!("{}{}", hdr("", "", "", ""), row("FROB-REF-820", 5, "after-change")).as_bytes()), Err(RefusalRegistryError::ExitMismatch { observed: 5, expected: Some(3), .. })));
+        assert!(matches!(RefusalRegistry::from_bytes(format!("{}{}", hdr("", "840", "", "840"), row("FROB-REF-840", 5, "after-change")).as_bytes()), Err(RefusalRegistryError::OverlappingExceptionList { ref code, .. }) if code == "FROB-REF-840"));
+        assert!(matches!(RefusalRegistry::from_bytes(hdr("", "803", "", "").as_bytes()), Err(RefusalRegistryError::ExceptionCodeMissing { list: "conflict", ref code }) if code == "FROB-REF-803"));
+    }
+
+    #[test]
+    fn registry_unknown_row_key_is_error() {
+        let doc = format!("{}[[refusal]]\ncode = \"FROB-REF-816\"\nmeaning = \"m\"\ndefined_in = \"§37.12\"\nexit = 3\nexti = 3\nretry = \"after-change\"\n", hdr("", "", "", ""));
+        match RefusalRegistry::from_bytes(doc.as_bytes()).unwrap_err() {
+            RefusalRegistryError::Toml(te) => {
+                assert!(te.line > 1 && te.column >= 1);
+                assert!(matches!(te.kind, toml::TomlErrorKind::UnknownKey { ref key, .. } if key == "exti"));
+            }
+            other => panic!("expected Toml UnknownKey for `exti`, got {other:?}"),
+        }
+    }
+}

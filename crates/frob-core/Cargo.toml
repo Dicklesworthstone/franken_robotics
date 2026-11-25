@@ -6,11 +6,15 @@ license-file = { workspace = true }
 repository = { workspace = true }
 authors = { workspace = true }
 publish = false
-description = "Core foundational types, strict TOML-subset reader (N34p2-01), and test-support kit (STD-TEST)."
+description = "Core foundational types, identities, evidence/claim product, no-authorization flags, refusals, strict TOML-subset reader, closed SI qty surface, and test-support kit."
 
 [package.metadata.frob]
 layer = 0
 rank = 1
+
+[dependencies]
+fs-blake3 = { path = "../../../frankensim/crates/fs-blake3" }
+fs-qty = { path = "../../../frankensim/crates/fs-qty" }
 
 [features]
 default = []

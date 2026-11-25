@@ -16,6 +16,21 @@ dependencies = [
 [[package]]
 name = "frob-core"
 version = "0.0.1"
+dependencies = [
+ "fs-blake3",
+ "fs-qty",
+]
+
+[[package]]
+name = "fs-blake3"
+version = "0.0.1"
+
+[[package]]
+name = "fs-qty"
+version = "0.0.1"
+dependencies = [
+ "fs-blake3",
+]
 
 [[package]]
 name = "xtask"

@@ -1,11 +1,20 @@
-//! Core foundational library for FrankenRobotics.
+//! Core foundational library for FrankenRobotics (layer 0, rank 1, determinism D0).
 //!
-//! Exposes `registry` (bead N34p2-01) and, behind feature `test-support`,
-//! `testkit` (bead STD-TEST); additional core modules land in BD-005.
-//! Prints nothing (rule L-7) and contains no `unsafe` code.
+//! Owns the workspace-wide vocabulary: content-addressed identities and BLAKE3 hashing
+//! (`id`), evidence classes and the weakest-input-wins claim product (`evidence`),
+//! constant-`false` no-authorization flags (`auth`), structured refusals and the
+//! generated `RefusalCode` (`refusal`), strict registry readers (`registry`), closed
+//! SI quantities (`qty`), and the opt-in test-support kit (`testkit` behind feature
+//! `test-support`). Prints nothing (rule L-7), admits no `serde` or async runtime
+//! (rule L-5), and contains zero `unsafe` code.
 
 #![deny(unsafe_code)]
 
+pub mod auth;
+pub mod evidence;
+pub mod id;
+pub mod qty;
+pub mod refusal;
 pub mod registry;
 
 #[cfg(feature = "test-support")]

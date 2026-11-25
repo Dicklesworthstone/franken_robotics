@@ -9,6 +9,7 @@ publish = false
 description = "Workspace verification tooling for FrankenRobotics (skeleton; checks arrive in BD-003/BD-004)."
 
 [dependencies]
+frob-core = { path = "../frob-core" }
 
 [lints]
 workspace = true

@@ -1,0 +1,42 @@
+<!-- @generated from registries/compendium/d*.toml by frob-conformance example compendium_doc (N12-41); do not edit by hand. -->
+# FrankenRobotics Mathematics Compendium
+
+## Conventions (§11)
+
+- `g = (R, p) = a_from_b` is a rigid transform acting as `x_a = R·x_b + p`.
+- `ξ = (ω, v)` is a twist (angular part first, body-frame by default).
+- `w = (τ, f)` is a wrench (torque first); `μ = (π, ℓ)` is a momentum.
+- Algebra coadjoint is the dual map `ad*_ξ = ad_ξᵀ` (no minus sign); group coadjoint is `Ad_g⁻ᵀ`; Euler–Poincaré reads `μ̇ = ad*_ξ μ + w`.
+- Exact statements use arbitrary-precision rational arithmetic over `ℚ`; non-rational rows declare explicit dimensioned tolerances.
+
+## D.1 Groups, frames and inertia (21 rows)
+
+| Row | Statement | Used in | Validity | Oracle | Tests | Negative control | Carried by | Arithmetic |
+|---|---|---|---|---|---|---|---|---|
+| Bracket on 𝔰𝔢(3) | [ξ₁, ξ₂] = (ω₁ × ω₂, ω₁ × v₂ − ω₂ × v₁) | C-01, C-07, T-11 | Angular part first | `frob_conformance::compendium::d1::bracket` | `d1_bracket_jacobi` | `d1_nc_bracket` | SPEC-C-01, SPEC-C-07 | exact-rational |
+| Adjoint | Ad_g(ω, v) = (R·ω, R·v + p × R·ω); Ad(g·h) = Ad(g)·Ad(h) | C-02, C-04, T-04 | g maps the source frame b to the target frame a | `frob_conformance::compendium::d1::adjoint_matrix` | `d1_adjoint_homomorphism` | `d1_nc_adjoint` | SPEC-C-02, SPEC-C-04 | exact-rational |
+| Group coadjoint | Wrenches move by Ad_g⁻ᵀ: (τ, f) ↦ (R·τ + p × R·f, R·f) | C-02, §11.2, T-04 | Same g; this is the wrench pushforward | `frob_conformance::compendium::d1::coadjoint_matrix` | `d1_coadjoint_inverse_transpose` | `d1_nc_group_coadjoint` | SPEC-C-02 | exact-rational |
+| Algebra adjoint and coadjoint | ad_ξ η = [ξ, η] = (ω × η_ω, ω × η_v + v × η_ω); ad*_ξ μ = ad_ξᵀ μ = (π × ω + ℓ × v, ℓ × ω), defined by ⟨ad*_ξ μ, η⟩ = ⟨μ, [ξ, η]⟩ | C-04, §11.2, §13.3, T-16 | The transpose, with no minus sign; −ad_ξᵀ is written out where needed | `frob_conformance::compendium::d1::ad_star` | `d1_ad_star_pairing` | `d1_nc_algebra_adjoint_coadjoint` | SPEC-C-04 | exact-rational |
+| Three typed frame maps | Twist map Ad_g; wrench pushforward Ad_g⁻ᵀ; wrench pullback Ad_gᵀ, the inverse of the pushforward; ⟨Ad_g⁻ᵀ w, Ad_g ξ⟩ = ⟨w, ξ⟩ | §11.3, C-02 | A Jacobian transpose is a pullback; moving a wrench with the twist map loses the moment arm | `frob_conformance::compendium::d1::wrench_pullback_matrix` | `d1_frame_maps_inverse` | `d1_nc_three_typed_frame_maps` | SPEC-C-02 | exact-rational |
+| Power pairing | ⟨w, ξ⟩ = τ·ω + f·v, invariant under a change of frame | C-02, §29.9, T-05 | Twist and wrench expressed in the same frame | `frob_conformance::compendium::d1::power_pairing` | `d1_pairing_invariant` | `d1_nc_power_pairing` | SPEC-C-02 | exact-rational |
+| Reflection parity | Under x ↦ P·x + t with det P = −1: polar vectors map by P, axial vectors by det(P)·P; twists and wrenches by T(P) = diag(det(P)·P, P) | §11.4, C-09, T-16 | T(P) preserves the pairing and the bracket because det(P)² = 1 | `frob_conformance::compendium::d1::parity_transform_twist` | `d1_parity_preserves_bracket` | `d1_nc_reflection_parity` | compendium-only | exact-rational |
+| Euler–Poincaré, free body | μ̇ = ad*_ξ μ + w. With μ = (π, ℓ): π̇ = π × ω + ℓ × v + τ, ℓ̇ = ℓ × ω + f | C-04, §11.2 | Body frame, left-invariant kinetic energy. Check: a force-free body keeps R·v constant | `frob_conformance::compendium::d1::euler_poincare_free_body` | `d1_free_body_velocity_constant` | `d1_nc_euler_poincare_free_body` | SPEC-C-04 | exact-rational |
+| Momentum map | μ = 𝕀(s)·(ξ + 𝔸(s)·ṡ) | C-04, C-08 | 𝕀 is the locked (composite rigid-body) inertia at the base; 𝔸 = 𝕀⁻¹·𝕀_BS | `frob_conformance::compendium::d1::momentum_map` | `d1_momentum_map_two_body` | `d1_nc_momentum_map` | SPEC-C-04, SPEC-C-08 | exact-rational |
+| Reconstruction | ξ = −𝔸(s)·ṡ + 𝕀(s)⁻¹·p; at zero momentum ξ = −𝔸(s)·ṡ | C-07, C-08 | p is the group momentum; the second term is absent for principally kinematic systems and zero-momentum free flight; a connection belongs to one contact stratum | `frob_conformance::compendium::d1::reconstruct_body_velocity` | `d1_beanie_reconstruction` | `d1_nc_reconstruction` | SPEC-C-07, SPEC-C-08 | exact-rational |
+| Curvature of the connection | (D𝔸)ᵢⱼ = ∂ᵢ𝔸ⱼ − ∂ⱼ𝔸ᵢ − [𝔸ᵢ, 𝔸ⱼ]; a small loop of area da in the (i, j) plane gives g ≈ exp(−(D𝔸)ᵢⱼ·da) | §11.6, C-08, T-20 | Leading order in loop size; large loops keep the ordered product. A formula with +[𝔸ᵢ, 𝔸ⱼ] is wrong by twice the answer on the SO(3) fixture | `frob_conformance::compendium::d1::connection_curvature_so3` | `d1_curvature_so3_fixture` | `d1_nc_curvature` | SPEC-C-08 | exact-rational |
+| Cayley map | cay(x) = (I − x/2)⁻¹·(I + x/2). On SO(3): R = I + 4/(4 + ‖ω‖²)·(ω̂ + ω̂²/2). On SE(3) the translation is (I − ω̂/2)⁻¹·v | C-05, T-01, T-02 | Rational; lands on the group exactly; agrees with exp to second order | `frob_conformance::compendium::d1::cayley_se3` | `d1_cayley_on_group` | `d1_nc_cayley_map` | SPEC-C-05 | exact-rational |
+| Cayley angle | A Cayley step rotates by 2·atan(‖ω‖·h/2); the relative error is about (‖ω‖·h)²/12 | GB-01, C-05 | Use bounded by ‖ω‖·h ≤ 0.2 per substep (DESIGN), refused beyond | `frob_conformance::compendium::d1::cayley_angle` | `d1_cayley_angle_bound` | `d1_nc_cayley_angle` | SPEC-C-05 | tolerance (1e-6 rad) |
+| Planar Cayley | z₊ = z·((1 − a²/4) + i·a)/(1 + a²/4), a = ω·h | ADR-MARROW-03 | Unit complex z; the revolute coordinate is (c, s) plus a turn count | `frob_conformance::compendium::d1::planar_cayley_step` | `d1_planar_cayley_modulus` | `d1_nc_planar_cayley` | compendium-only | exact-rational |
+| Inverse Cayley differential | (Dcay_x)⁻¹ = [[I + ½·ω̂ + ¼·ω·ωᵀ, 0], [½·v̂ + ¼·ω̂·v̂, I + ½·ω̂]] for x = (ω, v); its rotation block inverts to 2/(4 + ‖ω‖²)·(2I − ω̂) | C-36 | Left-trivialized: cay(x)⁻¹·δcay(x) = Dcay_x(δx). Using the right-trivialized form keeps momentum and destroys the energy bound | `frob_conformance::compendium::d1::dcay_inv_se3` | `d1_inverse_cayley_differential` | `d1_nc_inverse_cayley_differential` | SPEC-C-36 | exact-rational |
+| Pseudo-inertia | 𝖯 = [[Σ, h], [hᵀ, m]] with Σ = ∫ x·xᵀ dm = ½·tr(Ī)·I − Ī and h = m·c; consistent exactly when 𝖯 ≻ 0 | C-03, §11.5, T-19 | Ī is the rotational inertia about the frame origin | `frob_conformance::compendium::d1::pseudo_inertia_from_rotational` | `d1_pseudo_inertia_round_trip` | `d1_nc_pseudo_inertia` | SPEC-C-03 | exact-rational |
+| Shell rule | 𝖯_shell = 𝖯(Ω, ρ) − 𝖯(Ω_t, ρ) for outer region Ω and inward offset Ω_t; a thin spherical shell tends to I = (2/3)·m·r² | §11.5, §14.5 | Same frame and density; computed in exact rationals so the subtraction loses nothing | `frob_conformance::compendium::d1::spherical_shell_inertia_ratio` | `d1_shell_limit_two_thirds` | `d1_nc_shell_rule` | compendium-only | exact-rational |
+| Mass-support bound | ‖c − o‖² + tr(I_C)/(2m) ≤ ρ² for mass inside a ball of centre o and radius ρ | §11.5, C-03, T-19 | Applied to a declared mass envelope, never to a collision proxy | `frob_conformance::compendium::d1::mass_support_lhs` | `d1_mass_support_fixture` | `d1_nc_mass_support_bound` | SPEC-C-03 | exact-rational |
+| Mobility count | M = 6·(n − 1 − j) + Σ fᵢ | C-01, A-01 | Wrong for over-constrained linkages (Sarrus: count 0, mobility 1; Bennett: count −2, mobility 1); returns a count, not a mobility | `frob_conformance::compendium::d1::mobility_count` | `d1_mobility_count_sarrus_bennett` | `d1_nc_mobility_count` | SPEC-C-01 | exact-integer |
+| Product of exponentials | g(θ) = exp(θ₁·Ŝ₁)·…·exp(θₙ·Ŝₙ)·g₀ | C-11 | Screws in the base frame; polynomial in (cᵢ, sᵢ) with cᵢ² + sᵢ² = 1 | `frob_conformance::compendium::d1::poe_forward_kinematics` | `d1_poe_planar_2r` | `d1_nc_product_of_exponentials` | SPEC-C-11, SPEC-C-04 | exact-rational |
+| Constant-twist chord | Δp = v·Δt·sinc(δ/2)·(cos(θ + δ/2), sin(θ + δ/2)) with δ = ω·Δt and sinc(0) = 1 | C-07 | Planar motion at constant twist; exact for straight travel | `frob_conformance::compendium::d1::constant_twist_chord` | `d1_chord_half_turn`, `d1_chord_near_straight` | `d1_nc_constant_twist_chord` | SPEC-C-07 | tolerance (1e-12 m) |
+
+Rows marked `compendium-only` in D.1: Reflection parity, Planar Cayley, Shell rule.
+
+## Pending sections
+
+Sections not yet landed: D.2, D.3, D.4, D.5, D.6, D.7, D.8, D.9, D.10.

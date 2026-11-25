@@ -1,0 +1,244 @@
+# Mathematics compendium section D.1: Groups, frames and inertia (bead N12-41).
+#
+# Exact mathematical formulas, validity domains, oracle entry points, law tests,
+# and negative controls for Appendix D.1 and §11.1-§11.6.
+# Validated by crates/frob-conformance/tests/compendium_registry.rs and rendered
+# into docs/math/compendium.md by examples/compendium_doc.rs.
+
+schema = "frob.compendium.section/1"
+section = "D.1"
+title = "Groups, frames and inertia"
+expected_rows = 21
+
+[[row]]
+name = "Bracket on 𝔰𝔢(3)"
+statement = "[ξ₁, ξ₂] = (ω₁ × ω₂, ω₁ × v₂ − ω₂ × v₁)"
+validity = "Angular part first"
+used_in = ["C-01", "C-07", "T-11"]
+oracle = "frob_conformance::compendium::d1::bracket"
+tests = ["d1_bracket_jacobi"]
+negative_control = "d1_nc_bracket"
+carried_by = ["SPEC-C-01", "SPEC-C-07"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Adjoint"
+statement = "Ad_g(ω, v) = (R·ω, R·v + p × R·ω); Ad(g·h) = Ad(g)·Ad(h)"
+validity = "g maps the source frame b to the target frame a"
+used_in = ["C-02", "C-04", "T-04"]
+oracle = "frob_conformance::compendium::d1::adjoint_matrix"
+tests = ["d1_adjoint_homomorphism"]
+negative_control = "d1_nc_adjoint"
+carried_by = ["SPEC-C-02", "SPEC-C-04"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Group coadjoint"
+statement = "Wrenches move by Ad_g⁻ᵀ: (τ, f) ↦ (R·τ + p × R·f, R·f)"
+validity = "Same g; this is the wrench pushforward"
+used_in = ["C-02", "§11.2", "T-04"]
+oracle = "frob_conformance::compendium::d1::coadjoint_matrix"
+tests = ["d1_coadjoint_inverse_transpose"]
+negative_control = "d1_nc_group_coadjoint"
+carried_by = ["SPEC-C-02"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Algebra adjoint and coadjoint"
+statement = "ad_ξ η = [ξ, η] = (ω × η_ω, ω × η_v + v × η_ω); ad*_ξ μ = ad_ξᵀ μ = (π × ω + ℓ × v, ℓ × ω), defined by ⟨ad*_ξ μ, η⟩ = ⟨μ, [ξ, η]⟩"
+validity = "The transpose, with no minus sign; −ad_ξᵀ is written out where needed"
+used_in = ["C-04", "§11.2", "§13.3", "T-16"]
+oracle = "frob_conformance::compendium::d1::ad_star"
+tests = ["d1_ad_star_pairing"]
+negative_control = "d1_nc_algebra_adjoint_coadjoint"
+carried_by = ["SPEC-C-04"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Three typed frame maps"
+statement = "Twist map Ad_g; wrench pushforward Ad_g⁻ᵀ; wrench pullback Ad_gᵀ, the inverse of the pushforward; ⟨Ad_g⁻ᵀ w, Ad_g ξ⟩ = ⟨w, ξ⟩"
+validity = "A Jacobian transpose is a pullback; moving a wrench with the twist map loses the moment arm"
+used_in = ["§11.3", "C-02"]
+oracle = "frob_conformance::compendium::d1::wrench_pullback_matrix"
+tests = ["d1_frame_maps_inverse"]
+negative_control = "d1_nc_three_typed_frame_maps"
+carried_by = ["SPEC-C-02"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Power pairing"
+statement = "⟨w, ξ⟩ = τ·ω + f·v, invariant under a change of frame"
+validity = "Twist and wrench expressed in the same frame"
+used_in = ["C-02", "§29.9", "T-05"]
+oracle = "frob_conformance::compendium::d1::power_pairing"
+tests = ["d1_pairing_invariant"]
+negative_control = "d1_nc_power_pairing"
+carried_by = ["SPEC-C-02"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Reflection parity"
+statement = "Under x ↦ P·x + t with det P = −1: polar vectors map by P, axial vectors by det(P)·P; twists and wrenches by T(P) = diag(det(P)·P, P)"
+validity = "T(P) preserves the pairing and the bracket because det(P)² = 1"
+used_in = ["§11.4", "C-09", "T-16"]
+oracle = "frob_conformance::compendium::d1::parity_transform_twist"
+tests = ["d1_parity_preserves_bracket"]
+negative_control = "d1_nc_reflection_parity"
+carried_by = ["compendium-only"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Euler–Poincaré, free body"
+statement = "μ̇ = ad*_ξ μ + w. With μ = (π, ℓ): π̇ = π × ω + ℓ × v + τ, ℓ̇ = ℓ × ω + f"
+validity = "Body frame, left-invariant kinetic energy. Check: a force-free body keeps R·v constant"
+used_in = ["C-04", "§11.2"]
+oracle = "frob_conformance::compendium::d1::euler_poincare_free_body"
+tests = ["d1_free_body_velocity_constant"]
+negative_control = "d1_nc_euler_poincare_free_body"
+carried_by = ["SPEC-C-04"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Momentum map"
+statement = "μ = 𝕀(s)·(ξ + 𝔸(s)·ṡ)"
+validity = "𝕀 is the locked (composite rigid-body) inertia at the base; 𝔸 = 𝕀⁻¹·𝕀_BS"
+used_in = ["C-04", "C-08"]
+oracle = "frob_conformance::compendium::d1::momentum_map"
+tests = ["d1_momentum_map_two_body"]
+negative_control = "d1_nc_momentum_map"
+carried_by = ["SPEC-C-04", "SPEC-C-08"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Reconstruction"
+statement = "ξ = −𝔸(s)·ṡ + 𝕀(s)⁻¹·p; at zero momentum ξ = −𝔸(s)·ṡ"
+validity = "p is the group momentum; the second term is absent for principally kinematic systems and zero-momentum free flight; a connection belongs to one contact stratum"
+used_in = ["C-07", "C-08"]
+oracle = "frob_conformance::compendium::d1::reconstruct_body_velocity"
+tests = ["d1_beanie_reconstruction"]
+negative_control = "d1_nc_reconstruction"
+carried_by = ["SPEC-C-07", "SPEC-C-08"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Curvature of the connection"
+statement = "(D𝔸)ᵢⱼ = ∂ᵢ𝔸ⱼ − ∂ⱼ𝔸ᵢ − [𝔸ᵢ, 𝔸ⱼ]; a small loop of area da in the (i, j) plane gives g ≈ exp(−(D𝔸)ᵢⱼ·da)"
+validity = "Leading order in loop size; large loops keep the ordered product. A formula with +[𝔸ᵢ, 𝔸ⱼ] is wrong by twice the answer on the SO(3) fixture"
+used_in = ["§11.6", "C-08", "T-20"]
+oracle = "frob_conformance::compendium::d1::connection_curvature_so3"
+tests = ["d1_curvature_so3_fixture"]
+negative_control = "d1_nc_curvature"
+carried_by = ["SPEC-C-08"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Cayley map"
+statement = "cay(x) = (I − x/2)⁻¹·(I + x/2). On SO(3): R = I + 4/(4 + ‖ω‖²)·(ω̂ + ω̂²/2). On SE(3) the translation is (I − ω̂/2)⁻¹·v"
+validity = "Rational; lands on the group exactly; agrees with exp to second order"
+used_in = ["C-05", "T-01", "T-02"]
+oracle = "frob_conformance::compendium::d1::cayley_se3"
+tests = ["d1_cayley_on_group"]
+negative_control = "d1_nc_cayley_map"
+carried_by = ["SPEC-C-05"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Cayley angle"
+statement = "A Cayley step rotates by 2·atan(‖ω‖·h/2); the relative error is about (‖ω‖·h)²/12"
+validity = "Use bounded by ‖ω‖·h ≤ 0.2 per substep (DESIGN), refused beyond"
+used_in = ["GB-01", "C-05"]
+oracle = "frob_conformance::compendium::d1::cayley_angle"
+tests = ["d1_cayley_angle_bound"]
+negative_control = "d1_nc_cayley_angle"
+carried_by = ["SPEC-C-05"]
+arithmetic = "tolerance"
+tolerance = "1e-6 rad"
+
+[[row]]
+name = "Planar Cayley"
+statement = "z₊ = z·((1 − a²/4) + i·a)/(1 + a²/4), a = ω·h"
+validity = "Unit complex z; the revolute coordinate is (c, s) plus a turn count"
+used_in = ["ADR-MARROW-03"]
+oracle = "frob_conformance::compendium::d1::planar_cayley_step"
+tests = ["d1_planar_cayley_modulus"]
+negative_control = "d1_nc_planar_cayley"
+carried_by = ["compendium-only"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Inverse Cayley differential"
+statement = "(Dcay_x)⁻¹ = [[I + ½·ω̂ + ¼·ω·ωᵀ, 0], [½·v̂ + ¼·ω̂·v̂, I + ½·ω̂]] for x = (ω, v); its rotation block inverts to 2/(4 + ‖ω‖²)·(2I − ω̂)"
+validity = "Left-trivialized: cay(x)⁻¹·δcay(x) = Dcay_x(δx). Using the right-trivialized form keeps momentum and destroys the energy bound"
+used_in = ["C-36"]
+oracle = "frob_conformance::compendium::d1::dcay_inv_se3"
+tests = ["d1_inverse_cayley_differential"]
+negative_control = "d1_nc_inverse_cayley_differential"
+carried_by = ["SPEC-C-36"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Pseudo-inertia"
+statement = "𝖯 = [[Σ, h], [hᵀ, m]] with Σ = ∫ x·xᵀ dm = ½·tr(Ī)·I − Ī and h = m·c; consistent exactly when 𝖯 ≻ 0"
+validity = "Ī is the rotational inertia about the frame origin"
+used_in = ["C-03", "§11.5", "T-19"]
+oracle = "frob_conformance::compendium::d1::pseudo_inertia_from_rotational"
+tests = ["d1_pseudo_inertia_round_trip"]
+negative_control = "d1_nc_pseudo_inertia"
+carried_by = ["SPEC-C-03"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Shell rule"
+statement = "𝖯_shell = 𝖯(Ω, ρ) − 𝖯(Ω_t, ρ) for outer region Ω and inward offset Ω_t; a thin spherical shell tends to I = (2/3)·m·r²"
+validity = "Same frame and density; computed in exact rationals so the subtraction loses nothing"
+used_in = ["§11.5", "§14.5"]
+oracle = "frob_conformance::compendium::d1::spherical_shell_inertia_ratio"
+tests = ["d1_shell_limit_two_thirds"]
+negative_control = "d1_nc_shell_rule"
+carried_by = ["compendium-only"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Mass-support bound"
+statement = "‖c − o‖² + tr(I_C)/(2m) ≤ ρ² for mass inside a ball of centre o and radius ρ"
+validity = "Applied to a declared mass envelope, never to a collision proxy"
+used_in = ["§11.5", "C-03", "T-19"]
+oracle = "frob_conformance::compendium::d1::mass_support_lhs"
+tests = ["d1_mass_support_fixture"]
+negative_control = "d1_nc_mass_support_bound"
+carried_by = ["SPEC-C-03"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Mobility count"
+statement = "M = 6·(n − 1 − j) + Σ fᵢ"
+validity = "Wrong for over-constrained linkages (Sarrus: count 0, mobility 1; Bennett: count −2, mobility 1); returns a count, not a mobility"
+used_in = ["C-01", "A-01"]
+oracle = "frob_conformance::compendium::d1::mobility_count"
+tests = ["d1_mobility_count_sarrus_bennett"]
+negative_control = "d1_nc_mobility_count"
+carried_by = ["SPEC-C-01"]
+arithmetic = "exact-integer"
+
+[[row]]
+name = "Product of exponentials"
+statement = "g(θ) = exp(θ₁·Ŝ₁)·…·exp(θₙ·Ŝₙ)·g₀"
+validity = "Screws in the base frame; polynomial in (cᵢ, sᵢ) with cᵢ² + sᵢ² = 1"
+used_in = ["C-11"]
+oracle = "frob_conformance::compendium::d1::poe_forward_kinematics"
+tests = ["d1_poe_planar_2r"]
+negative_control = "d1_nc_product_of_exponentials"
+carried_by = ["SPEC-C-11", "SPEC-C-04"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Constant-twist chord"
+statement = "Δp = v·Δt·sinc(δ/2)·(cos(θ + δ/2), sin(θ + δ/2)) with δ = ω·Δt and sinc(0) = 1"
+validity = "Planar motion at constant twist; exact for straight travel"
+used_in = ["C-07"]
+oracle = "frob_conformance::compendium::d1::constant_twist_chord"
+tests = ["d1_chord_half_turn", "d1_chord_near_straight"]
+negative_control = "d1_nc_constant_twist_chord"
+carried_by = ["SPEC-C-07"]
+arithmetic = "tolerance"
+tolerance = "1e-12 m"

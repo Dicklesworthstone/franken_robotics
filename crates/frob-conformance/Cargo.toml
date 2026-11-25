@@ -27,6 +27,10 @@ default = []
 # Forbidden in release builds (enforced by compile_error!).
 # Never lists per-control mutation features (`cx-*`, `nc-*`).
 gauntlet-mutations = []
+# Test-only mutant for N12-41: substitutes -ad_xi^T for ad*_xi in compendium::d1::ad_star.
+# Never a default and never listed inside `gauntlet-mutations`; implies `gauntlet-mutations`
+# so release builds refuse it.
+plant-coadjoint-minus = ["gauntlet-mutations"]
 # Optional GPU device annexes; G0 and host G1 build with neither enabled.
 cuda = []
 metal = []

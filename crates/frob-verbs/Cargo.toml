@@ -15,6 +15,9 @@ rank = 4
 [dependencies]
 frob-core = { path = "../frob-core" }
 
+[dev-dependencies]
+frob-core = { path = "../frob-core", features = ["test-support"] }
+
 [build-dependencies]
 frob-core = { path = "../frob-core" }
 
@@ -23,6 +26,9 @@ default = ["handlers"]
 registry-only = []
 handlers = []
 conformance = []
+# Planted defects for GATE-TETHER-03's negative controls (N32a-03); never enabled in a build.
+nc-bare-unknown-verb = []
+nc-second-envelope = []
 
 [lints]
 workspace = true

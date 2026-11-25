@@ -22,3 +22,11 @@ on_calibration = "reference-path"
 registry-only = { tier = "S" }
 handlers = { tier = "S" }
 conformance = { tier = "S" }
+nc-bare-unknown-verb = { tier = "S" }
+nc-second-envelope = { tier = "S" }
+
+[api.float_ok]
+"envelope::Cost" = "frob.envelope/1 cost block: cpu_core_s and gpu_s are named resource-accounting seconds written as shortest binary64 per N34-18; never a physical quantity, never a digest or evidence input (INV-TETHER-09)"
+"envelope::Budget::with" = "frob.envelope/1 budget block: remaining amount per named unit (<unit>_left) written as shortest binary64 per N34-18; accounting, not physics"
+"envelope::Eta" = "frob.envelope/1 job.eta_s point and interval in wall-clock seconds written as shortest binary64; informational, never a digest input"
+"envelope::Tree::as_f64" = "JSON binary64 view of a number lexeme for schema numeric keywords (minimum, maximum, integer test) per N34-17; the lexeme itself is written back exactly"

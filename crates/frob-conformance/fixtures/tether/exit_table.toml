@@ -1,0 +1,67 @@
+# synthetic
+#
+# Exit-code fixture of GATE-TETHER-03 and KA-755 (bead N32a-03): one row per input class
+# (malformed, unknown, over-budget, unscoped, conflicting) with the argument vector, the
+# expected `ok`, `exit` and `refusal.code`. Values derive from the exit table of §32.4 and
+# N35-33's [exit_rule]; nothing here is measured.
+#
+# Read by frob-verbs `exit_fixture_rows` (expected codes through the envelope builder and the
+# schema validator, against the registry) and by scripts/e2e/tether_envelope_exit.sh (the real
+# `frob` binary, assembled by BD-022). `exercised = false` marks a row whose mechanism has not
+# landed: the script records it as not exercised, never as a pass.
+#
+# Layout rule for the script's reader: one `key = value` per line, `argv` on one line.
+
+schema = "frob.tether.exit-table/1"
+gate = "GATE-TETHER-03"
+known_answer = "KA-755"
+
+[[row]]
+id = "malformed-arguments"
+input = "malformed"
+argv = ["design", "check", "quad-a", "--jionts", "*.knee", "--json"]
+ok = false
+exit = 3
+code = "FROB-REF-802"
+exercised = true
+mechanism = "BD-022 CLI parser: unknown parameter (M0)"
+
+[[row]]
+id = "unknown-verb"
+input = "unknown"
+argv = ["desgin", "check", "quad-a", "--json"]
+ok = false
+exit = 3
+code = "FROB-REF-801"
+exercised = true
+mechanism = "BD-022 CLI parser: unknown verb (M0)"
+
+[[row]]
+id = "over-budget"
+input = "over-budget"
+argv = ["run", "start", "quad-a", "--budget", "gpu_s=0", "--json"]
+ok = false
+exit = 4
+code = "FROB-REF-701"
+exercised = false
+mechanism = "budget admission against the session budget (N32a-15, M2)"
+
+[[row]]
+id = "unscoped"
+input = "unscoped"
+argv = ["design", "edit", "quad-a", "regear", "--ratio", "1.9", "--json"]
+ok = false
+exit = 5
+code = "FROB-REF-720"
+exercised = false
+mechanism = "session token scopes (N32b-01, M2)"
+
+[[row]]
+id = "conflicting"
+input = "conflicting"
+argv = ["design", "edit", "quad-a", "regear", "--ratio", "2.1", "--key", "k-0001", "--json"]
+ok = false
+exit = 7
+code = "FROB-REF-803"
+exercised = false
+mechanism = "idempotency store, key reused with different content (N32a-09, M1)"

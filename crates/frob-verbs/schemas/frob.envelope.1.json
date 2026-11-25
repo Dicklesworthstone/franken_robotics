@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.envelope/1",
+  "title": "frob.envelope/1",
+  "description": "The one answer shape of every FrankenRobotics verb (N32a-03). Hand-written; frob_verbs::envelope::envelope_schema specializes `verb` and `result` per registry entry.",
+  "type": "object",
+  "required": ["schema", "verb", "ok", "exit", "evidence", "cost", "warnings", "next_actions"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "frob.envelope/1" },
+    "verb": { "type": "string" },
+    "ok": { "type": "boolean" },
+    "exit": { "enum": [0, 2, 3, 4, 5, 6, 7, 8, 9] },
+    "result": true,
+    "evidence": { "$ref": "#/$defs/evidence" },
+    "bound": { "$ref": "#/$defs/bound" },
+    "refusal": { "$ref": "#/$defs/refusal" },
+    "job": { "$ref": "#/$defs/job" },
+    "cursor": { "type": "string", "minLength": 1 },
+    "frontier": { "type": "string", "minLength": 1 },
+    "idempotent_replay": { "const": true },
+    "authorization": { "$ref": "#/$defs/authorization" },
+    "cost": { "$ref": "#/$defs/cost" },
+    "budget": { "$ref": "#/$defs/budget" },
+    "warnings": { "type": "array", "items": { "$ref": "#/$defs/warning" } },
+    "next_actions": { "type": "array", "items": { "$ref": "#/$defs/next_action" } },
+    "delta": { "type": "object" }
+  },
+  "dependentRequired": { "cursor": ["frontier"] },
+  "allOf": [
+    {
+      "if": { "properties": { "ok": { "const": true } } },
+      "then": {
+        "properties": { "exit": { "enum": [0, 2, 8] } },
+        "not": { "required": ["refusal"] }
+      },
+      "else": {
+        "properties": {
+          "exit": { "enum": [3, 4, 5, 6, 7, 9] },
+          "evidence": { "$ref": "#/$defs/evidence_stamp_only" }
+        },
+        "required": ["refusal"],
+        "not": { "required": ["result"] }
+      }
+    },
+    {
+      "if": { "properties": { "exit": { "enum": [0, 2] } } },
+      "then": {
+        "required": ["result"],
+        "properties": { "evidence": { "$ref": "#/$defs/evidence_of_result" } }
+      }
+    },
+    {
+      "if": { "properties": { "exit": { "const": 8 } } },
+      "then": {
+        "required": ["job"],
+        "properties": { "evidence": { "$ref": "#/$defs/evidence_stamp_only" } },
+        "not": { "required": ["result"] }
+      }
+    }
+  ],
+  "$defs": {
+    "blake3_hex": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "evidence": {
+      "type": "object",
+      "required": ["stack_receipt"],
+      "additionalProperties": false,
+      "properties": {
+        "class": { "enum": ["Proved", "Certified", "Tested", "Estimated"] },
+        "tier": {
+          "type": "string",
+          "pattern": "^(static|referee|(batch-cpu|gpu-cuda|gpu-metal)(\\+(batch-cpu|gpu-cuda|gpu-metal))*)$"
+        },
+        "model_id": { "type": "string", "minLength": 1 },
+        "determinism": { "enum": ["D0", "D1", "D2", "D3", "D4"] },
+        "claims": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": ["proof", "known-answer", "parity", "fidelity", "design-comparison", "reality", "performance"]
+          }
+        },
+        "reality": { "type": "string", "pattern": "^(no-claim|calibrated:.+)$" },
+        "seed": { "type": "string", "pattern": "^(0|[1-9][0-9]*)$" },
+        "weakest": {
+          "type": "object",
+          "required": ["digest", "field_path"],
+          "additionalProperties": false,
+          "properties": {
+            "digest": { "$ref": "#/$defs/blake3_hex" },
+            "field_path": { "type": "string" }
+          }
+        },
+        "conditions": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": { "enum": ["tier-sensitive", "controller-sensitive", "model-conditional"] }
+        },
+        "stack_receipt": { "type": "string", "pattern": "^sr:[0-9a-f]{64}$" },
+        "stack_dev": { "const": true }
+      }
+    },
+    "evidence_of_result": {
+      "required": ["class", "tier", "model_id", "determinism", "claims", "reality", "stack_receipt"]
+    },
+    "evidence_stamp_only": {
+      "properties": {
+        "class": false,
+        "tier": false,
+        "model_id": false,
+        "determinism": false,
+        "claims": false,
+        "reality": false,
+        "seed": false,
+        "weakest": false,
+        "conditions": false
+      }
+    },
+    "bound": {
+      "type": "object",
+      "properties": {
+        "fixtures": { "type": "array", "items": { "$ref": "#/$defs/fixture_binding" } }
+      },
+      "additionalProperties": { "type": "string", "minLength": 1 }
+    },
+    "fixture_binding": {
+      "type": "object",
+      "required": ["param", "reference", "path", "digest"],
+      "additionalProperties": false,
+      "properties": {
+        "param": { "type": "string", "minLength": 1 },
+        "reference": { "type": "string", "pattern": "^@fixture:.+$" },
+        "path": { "type": "string", "pattern": "^[^/].*$" },
+        "digest": { "$ref": "#/$defs/blake3_hex" }
+      }
+    },
+    "refusal": {
+      "type": "object",
+      "required": ["code", "message", "pointer", "observed", "required", "unit", "affected_claims", "retry", "repairs"],
+      "additionalProperties": false,
+      "properties": {
+        "code": { "type": "string", "pattern": "^FROB-REF-[1-9][0-9]{2,3}$" },
+        "message": { "type": "string", "minLength": 1 },
+        "pointer": { "type": "string" },
+        "observed": { "type": "string" },
+        "required": { "type": "string" },
+        "unit": { "type": "string" },
+        "affected_claims": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+        "retry": { "enum": ["never", "after-change", "backoff"] },
+        "repairs": { "type": "array", "items": { "$ref": "#/$defs/repair" } },
+        "detail": { "type": "string", "minLength": 1 }
+      }
+    },
+    "repair": {
+      "type": "object",
+      "required": ["action"],
+      "additionalProperties": false,
+      "properties": {
+        "action": { "type": "string", "minLength": 1 },
+        "detail": { "type": "string" }
+      }
+    },
+    "job": {
+      "type": "object",
+      "required": ["id", "state", "progress", "poll_after_ms"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "state": { "type": "string", "pattern": "^[a-z][a-z-]*$" },
+        "progress": { "$ref": "#/$defs/progress" },
+        "eta_s": {
+          "type": "object",
+          "required": ["point", "lo", "hi"],
+          "additionalProperties": false,
+          "properties": {
+            "point": { "type": "number", "minimum": 0 },
+            "lo": { "type": "number", "minimum": 0 },
+            "hi": { "type": "number", "minimum": 0 }
+          }
+        },
+        "poll_after_ms": { "type": "integer", "minimum": 0 },
+        "last_committed": { "type": "string", "minLength": 1 }
+      }
+    },
+    "progress": {
+      "type": "object",
+      "required": ["done", "total", "unit"],
+      "additionalProperties": false,
+      "properties": {
+        "done": { "type": "integer", "minimum": 0 },
+        "total": { "type": "integer", "minimum": 1 },
+        "unit": { "type": "string", "minLength": 1 }
+      }
+    },
+    "authorization": {
+      "type": "object",
+      "required": ["execution_authorized", "hardware_safety_signoff", "sim_to_real_certified"],
+      "additionalProperties": false,
+      "properties": {
+        "execution_authorized": { "const": false },
+        "hardware_safety_signoff": { "const": false },
+        "sim_to_real_certified": { "const": false },
+        "fabrication_released": { "const": false }
+      }
+    },
+    "cost": {
+      "type": "object",
+      "required": ["wall_ms", "cpu_core_s", "gpu_s"],
+      "additionalProperties": false,
+      "properties": {
+        "wall_ms": { "type": "integer", "minimum": 0 },
+        "cpu_core_s": { "type": "number", "minimum": 0 },
+        "gpu_s": { "type": "number", "minimum": 0 }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "pattern": "^[a-z][a-z0-9_]*_left$" },
+      "additionalProperties": { "type": "number", "minimum": 0 }
+    },
+    "warning": {
+      "type": "object",
+      "required": ["code", "message"],
+      "additionalProperties": false,
+      "properties": {
+        "code": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+        "message": { "type": "string", "minLength": 1 }
+      }
+    },
+    "next_action": {
+      "type": "object",
+      "required": ["command", "why"],
+      "additionalProperties": false,
+      "properties": {
+        "command": { "type": "string", "minLength": 1 },
+        "why": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

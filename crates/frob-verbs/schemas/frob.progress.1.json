@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frob.progress/1",
+  "title": "frob.progress/1",
+  "description": "One newline-delimited progress event written before a long job's envelope (N32a-03). Progress always has a denominator.",
+  "type": "object",
+  "required": ["schema", "job", "done", "total", "unit", "state"],
+  "additionalProperties": false,
+  "properties": {
+    "schema": { "const": "frob.progress/1" },
+    "job": { "type": "string", "minLength": 1 },
+    "done": { "type": "integer", "minimum": 0 },
+    "total": { "type": "integer", "minimum": 1 },
+    "unit": { "type": "string", "minLength": 1 },
+    "state": { "type": "string", "pattern": "^[a-z][a-z-]*$" }
+  }
+}

@@ -99,12 +99,33 @@ fn contract_toml_validates_against_strict_toml_and_refusal_registry() {
     safe.finish().unwrap();
 
     let mut feats = Fields::new(top.require_table("features").unwrap(), "features");
-    for name in ["registry-only", "handlers", "conformance"] {
+    for name in [
+        "registry-only",
+        "handlers",
+        "conformance",
+        "nc-bare-unknown-verb",
+        "nc-second-envelope",
+    ] {
         let mut f = Fields::new(feats.require_table(name).unwrap(), name);
         assert_eq!(f.require_str("tier").unwrap(), "S");
         f.finish().unwrap();
     }
     feats.finish().unwrap();
+
+    // `[api.float_ok]`: every envelope item that carries a binary64 states why (N32a-03).
+    let mut api = Fields::new(top.require_table("api").unwrap(), "api");
+    let mut float_ok = Fields::new(api.require_table("float_ok").unwrap(), "api.float_ok");
+    for sig in [
+        "envelope::Cost",
+        "envelope::Budget::with",
+        "envelope::Eta",
+        "envelope::Tree::as_f64",
+    ] {
+        let reason = float_ok.require_str(sig).unwrap();
+        assert!(!reason.trim().is_empty(), "`[api.float_ok].\"{sig}\"` needs a reason");
+    }
+    float_ok.finish().unwrap();
+    api.finish().unwrap();
     top.finish().unwrap();
 
     // Verify generated static table symbols are live and consistent.

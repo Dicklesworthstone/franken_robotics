@@ -1,0 +1,8 @@
+# FrankenRobotics Oracle Disagreement Findings (schema frob.gauntlet.oracle-findings/1, N38a-04).
+#
+# Written strictly in the `frob-core::registry::toml` subset (N34p2-01).
+# Appended automatically under Rule 6 whenever two admitted oracles disagree on a
+# fixture beyond the tighter of their tolerances. A disputed fixture supports no
+# gate until a derivation file explains the difference.
+
+schema = "frob.gauntlet.oracle-findings/1"

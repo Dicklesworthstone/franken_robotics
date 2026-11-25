@@ -1,0 +1,135 @@
+# FrankenRobotics Oracle Register (schema frob.gauntlet.oracles/1, N38a-04).
+#
+# Written strictly in the `frob-core::registry::toml` subset (N34p2-01).
+# Holds the twelve seed rows of §38.3 (every row except `development-oracle`,
+# which N38b-35 writes upon closing OPEN-GAUNT-4; default is absent) plus the
+# two standing held-out sibling rows (`fs-g1-train-ppo-update` and
+# `fs-mbd-planar-drive`). Append-only; every pin move appends a `[[pin_move]]`.
+
+schema = "frob.gauntlet.oracles/1"
+
+[[oracle]]
+id = "frankensim-referee"
+posture = "consume"
+pin = { kind = "commit", repo = "frankensim", value = "d02ad9c170d5932667d15359cd362d3198ac4806" }
+admission = { test = "g2:frankensim-referee", control = "NC-0002", status = "not-admitted", date = "" }
+roles = ["parity:batched-kinematics-dynamics", "parity:primitive-distances", "referee"]
+family = ""
+held_out = ""
+
+[[oracle]]
+id = "mujoco-c-f64"
+posture = "out-of-process"
+pin = { kind = "release", value = "3.2.7", sha256 = "", licence = "Apache-2.0" }
+admission = { test = "g2:mujoco-pendulum-period", control = "NC-0002", status = "not-admitted", date = "" }
+roles = ["parity:contact-free-dynamics", "import-fixtures"]
+family = ""
+held_out = ""
+
+[[oracle]]
+id = "reference-rbd-autodiff"
+posture = "out-of-process"
+pin = { kind = "release", value = "unpinned-optional", sha256 = "" }
+admission = { test = "g2:rbd-analytical-derivatives", control = "NC-0002", status = "not-admitted", date = "" }
+roles = ["parity:derivative-kernels"]
+family = ""
+held_out = ""
+
+[[oracle]]
+id = "frankentorch-autograd"
+posture = "oracle"
+pin = { kind = "commit", repo = "frankentorch", value = "d138a752cf7fe4abd5ba4baae3f6597c2202461e" }
+admission = { test = "g2:frankentorch-autograd", control = "NC-0002", status = "not-admitted", date = "" }
+roles = ["reference:on-device-gradients"]
+family = ""
+held_out = ""
+
+[[oracle]]
+id = "frankenscipy-solve-ivp"
+posture = "oracle"
+pin = { kind = "release", value = "unpinned-pending-n33a-02", sha256 = "" }
+admission = { test = "g2:frankenscipy-dop853", control = "NC-0002", status = "not-admitted", date = "" }
+roles = ["reference:smooth-trajectories"]
+family = ""
+held_out = ""
+
+[[oracle]]
+id = "frankensympy-eval"
+posture = "oracle"
+pin = { kind = "commit", repo = "frankensympy", value = "1b4cfab25b55aaeba2be4a62ed97048eca6bf4d5" }
+admission = { test = "g2:frankensympy-eval", control = "NC-0002", status = "not-admitted", date = "" }
+roles = ["reference:derived-arithmetic", "second-checker:rational-interval-certificates"]
+family = ""
+held_out = ""
+
+[[oracle]]
+id = "frankennumpy-linalg"
+posture = "oracle"
+pin = { kind = "commit", repo = "franken_numpy", value = "d548147b049a3d2fe76c20d677cb87d7423b89eb" }
+admission = { test = "g2:frankennumpy-linalg", control = "NC-0002", status = "not-admitted", date = "" }
+roles = ["reference:small-matrix-kernels"]
+family = ""
+held_out = ""
+
+[[oracle]]
+id = "analytic-derivations"
+posture = "derivation"
+pin = { kind = "path", value = "docs/derivations/" }
+admission = { test = "g1:analytic-derivations", control = "NC-0002", status = "not-admitted", date = "" }
+roles = ["reference:known-answers"]
+family = ""
+held_out = ""
+
+[[oracle]]
+id = "incumbent-batched-simulators"
+posture = "out-of-process"
+pin = { kind = "registry", value = "crates/frob-conformance/registry/comparators.toml" }
+admission = { test = "g2:incumbent-batched-simulators", control = "NC-0002", status = "not-admitted", date = "" }
+roles = ["comparator:throughput-parity", "comparator:training-time-parity", "comparator:mixed-batches", "comparator:proxy-adequacy"]
+family = ""
+held_out = ""
+
+[[oracle]]
+id = "incumbent-tenfold-harness"
+posture = "out-of-process"
+pin = { kind = "registry", value = "crates/frob-conformance/registry/comparators.toml" }
+admission = { test = "g2:incumbent-tenfold-harness", control = "NC-0002", status = "not-admitted", date = "" }
+roles = ["comparator:ten-fold-sealed-suite"]
+family = ""
+held_out = ""
+
+[[oracle]]
+id = "conventional-solvers"
+posture = "out-of-process"
+pin = { kind = "release", value = "family-specialized", sha256 = "" }
+admission = { test = "g2:conventional-solvers", control = "NC-0002", status = "not-admitted", date = "" }
+roles = ["comparator:family-answers"]
+family = ""
+held_out = ""
+
+[[oracle]]
+id = "frankensim-solid-topopt"
+posture = "consume"
+pin = { kind = "commit", repo = "frankensim", value = "d02ad9c170d5932667d15359cd362d3198ac4806" }
+admission = { test = "g2:frankensim-solid-topopt", control = "NC-0002", status = "not-admitted", date = "" }
+roles = ["parity:structural-fixtures"]
+family = ""
+held_out = ""
+
+[[oracle]]
+id = "fs-g1-train-ppo-update"
+posture = "out-of-process"
+pin = { kind = "commit", repo = "frankensim", value = "d02ad9c170d5932667d15359cd362d3198ac4806" }
+admission = { test = "g2:int-fsim-06-ppo-update", control = "NC-0002", status = "not-admitted", date = "" }
+roles = []
+family = ""
+held_out = "INT-FSIM-06 (BD-034, FD-FSIM-10): fs_g1_train::ppo_update fails clip-branch, critic gradient, and sequence reset probes; refused in every role until cleared"
+
+[[oracle]]
+id = "fs-mbd-planar-drive"
+posture = "oracle"
+pin = { kind = "commit", repo = "frankensim", value = "d02ad9c170d5932667d15359cd362d3198ac4806" }
+admission = { test = "g2:int-fsim-05-planar-drive", control = "NC-0002", status = "not-admitted", date = "" }
+roles = []
+family = ""
+held_out = "INT-FSIM-05 (BD-033, FD-FSIM-11): planar_drive returns zero translation at heading 32 rad; refused in every role until cleared"

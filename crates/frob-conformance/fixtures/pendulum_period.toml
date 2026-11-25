@@ -1,0 +1,18 @@
+# oracle
+kind = "oracle"
+oracle = "analytic-derivations"
+pin = "docs/derivations/"
+captured = "2026-11-24"
+script = { path = "tools/oracle/analytic/pendulum_period.sh", sha256 = "bbb6d985bc7af184fdf1bc81c3253947731e07ff6ee3e1bcdcff0b43173cfc36" }
+inputs = []
+units = "s"
+tolerance_note = "analytic elliptic-integral expansion through O(theta0^4); abs <= 1e-4 s"
+bytes_sha256 = "673e62b4138d6bcf37ae75b1bdd7deafe7eba9073dbfd804b278403608ba6cf8"
+status = "active"
+
+[payload]
+length_m = "1.0"
+gravity_mps2 = "9.80665"
+theta0_rad = "0.1"
+period_small_angle_s = "2.006409"
+period_elliptic_s = "2.007664"

@@ -1,0 +1,25 @@
+# Machine-readable crate contract for frob-conformance (BD-025, N34-08).
+
+[crate]
+name = "frob-conformance"
+layer = 7
+rank = 4
+plane = "decision"
+determinism = "D0"
+evidence = "Tested"
+gates = ["GATE-GAUNT-01", "GATE-GAUNT-05", "GATE-GAUNT-08", "GATE-GAUNT-10"]
+refusals = []
+
+[budgets]
+wall_ms = 60000
+memory_mib = 1024
+
+[safe_mode]
+on_budget = "reference-path"
+on_calibration = "reference-path"
+
+[features]
+gauntlet-mutations = { tier = "S" }
+plant-coadjoint-minus = { tier = "S" }
+cuda = { tier = "S" }
+metal = { tier = "S" }

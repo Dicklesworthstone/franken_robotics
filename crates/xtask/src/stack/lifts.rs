@@ -11,9 +11,16 @@
 use std::collections::{BTreeMap, BTreeSet};
 use std::fmt;
 use std::fs;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use frob_core::registry::toml::{self, Fields, Table, Value};
+
+use crate::crate_map::{MultilineState, parse_package_name, strip_toml_line};
+use crate::metadata::{canonical_or_clean, normalize_rel_path, sibling_relative_path};
+
+use super::ledger::foundation_allows_edge;
+use super::lock::{self, Foundation};
+use super::posture::{DepSpec, EdgeKind, GraphPermission, Posture, rule_for};
 
 /// Schema identifier declared at the top of `registries/lifts.toml`.
 pub const LIFTS_SCHEMA_ID: &str = "frob.lifts/1";
@@ -123,8 +130,7 @@ pub struct LiftRegistry {
     pub lifts: Vec<LiftRecord>,
 }
 
-/// A foundation whose posture is `lift`, checked under validator rule 4 to
-/// ensure no workspace manifest still names a crate of that sibling.
+/// Identifies a sibling whose lift use triggers dependency validation under rule 4.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct LiftFoundation {
     pub id: String,
@@ -485,61 +491,28 @@ fn default_sibling_crate_prefixes(sibling_name: &str) -> Vec<String> {
     prefixes
 }
 
-/// Read `franken-stack.lock` (if present under `repo_root`) through
-/// `frob_core::registry::toml` and return every foundation row whose posture
-/// is `lift` (either directly or inside `uses`).
-fn load_lift_foundations_from_lock(repo_root: &Path) -> Result<Vec<LiftFoundation>, LiftError> {
+fn load_lift_foundations_from_lock(
+    repo_root: &Path,
+) -> Result<Vec<(LiftFoundation, Option<Foundation>)>, LiftError> {
     let lock_path = repo_root.join("franken-stack.lock");
     if !lock_path.is_file() {
         return Ok(Vec::new());
     }
-    let bytes = fs::read(&lock_path)
-        .map_err(|e| LiftError::new("franken-stack.lock", e.to_string()))?;
-    let root = toml::parse(&bytes)
-        .map_err(|e| LiftError::new("franken-stack.lock", e.to_string()))?;
-
-    let mut out = Vec::new();
-    let Some(Value::Array(foundations)) = root.get("foundation") else {
-        return Ok(out);
-    };
-
-    for sp in foundations {
-        let Some(tbl) = sp.value.as_table() else {
-            continue;
-        };
-        let has_direct_lift = tbl
-            .get("posture")
-            .and_then(Value::as_str)
-            .is_some_and(|p| p == "lift");
-        let has_use_lift = tbl
-            .get("uses")
-            .and_then(Value::as_array)
-            .is_some_and(|arr| {
-                arr.iter().any(|u| {
-                    u.value
-                        .as_table()
-                        .and_then(|ut| ut.get("posture"))
-                        .and_then(Value::as_str)
-                        .is_some_and(|p| p == "lift")
-                })
-            });
-        if !(has_direct_lift || has_use_lift) {
-            continue;
-        }
-        let id = tbl
-            .get("id")
-            .and_then(Value::as_str)
-            .unwrap_or("<unknown>")
-            .to_owned();
-        let name = tbl
-            .get("name")
-            .and_then(Value::as_str)
-            .unwrap_or("<unknown>")
-            .to_owned();
-        let path = tbl.get("path").and_then(Value::as_str).map(str::to_owned);
-        out.push(LiftFoundation::from_sibling(id, name, path));
-    }
-    Ok(out)
+    let lock =
+        lock::load(&lock_path).map_err(|e| LiftError::new("franken-stack.lock", e.to_string()))?;
+    Ok(lock
+        .foundations
+        .into_iter()
+        .filter(|row| row.uses.iter().any(|use_| use_.posture == Posture::Lift))
+        .map(|row| {
+            let matcher = LiftFoundation::from_sibling(
+                row.id.as_str(),
+                &row.name,
+                row.path.as_ref().map(|p| p.as_str().to_owned()),
+            );
+            (matcher, Some(row))
+        })
+        .collect())
 }
 
 fn walk_sorted_files(root: &Path, dir: &Path, out: &mut Vec<String>) -> Result<(), LiftError> {
@@ -632,90 +605,101 @@ fn normalize_manifest_dep_line(line: &str) -> String {
 fn normalize_manifest_header(line: &str) -> String {
     // Convert single-quoted target cfg strings `[target.'cfg(...)'.dependencies]`
     // into basic double-quoted strings for `frob_core::registry::toml`.
-    if line.contains('\'') {
-        line.replace('\'', "\"")
+    if let Some((prefix, rest)) = line.split_once('\'')
+        && let Some((key, suffix)) = rest.rsplit_once('\'')
+    {
+        let key = key.replace('\\', "\\\\").replace('"', "\\\"");
+        format!("{prefix}\"{key}\"{suffix}")
     } else {
         line.to_owned()
     }
 }
 
-/// Extract dependency sections of a Cargo manifest and parse them with
-/// `frob_core::registry::toml::parse`.
-fn extract_manifest_deps(manifest_text: &str) -> Result<Vec<(String, Option<String>, Option<String>)>, LiftError> {
+/// Parse the dependency tables with the strict registry TOML reader, leaving
+/// unrelated manifest fields to Cargo.
+fn parse_manifest_dependencies(manifest_text: &str) -> Result<Table, LiftError> {
     let mut filtered = String::new();
     let mut in_dep_section = false;
+    let mut multiline = MultilineState::None;
     for raw_line in manifest_text.lines() {
-        let trimmed = raw_line.trim();
-        if trimmed.is_empty() || trimmed.starts_with('#') {
+        let Some(line) = strip_toml_line(raw_line, &mut multiline) else {
+            continue;
+        };
+        let trimmed = line.trim();
+        if trimmed.is_empty() {
             continue;
         }
         if trimmed.starts_with('[') {
             in_dep_section = is_dependency_section_header(trimmed);
-            if in_dep_section {
+            if in_dep_section || trimmed == "[workspace]" {
                 filtered.push_str(&normalize_manifest_header(trimmed));
                 filtered.push('\n');
             }
             continue;
         }
         if in_dep_section {
-            filtered.push_str(&normalize_manifest_dep_line(raw_line));
+            filtered.push_str(&normalize_manifest_dep_line(line));
             filtered.push('\n');
         }
     }
-
-    if filtered.trim().is_empty() {
-        return Ok(Vec::new());
-    }
-
-    let root = toml::parse(filtered.as_bytes())
-        .map_err(|e| LiftError::new("Cargo.toml", e.to_string()))?;
-
-    let mut deps = Vec::new();
-    collect_dep_tables(&root, &mut deps);
-    Ok(deps)
+    toml::parse(filtered.as_bytes()).map_err(|e| LiftError::new("Cargo.toml", e.to_string()))
 }
 
-fn collect_dep_tables(
-    root: &Table,
-    out: &mut Vec<(String, Option<String>, Option<String>)>,
-) {
-    for section in ["dependencies", "dev-dependencies", "build-dependencies"] {
-        if let Some(tbl) = root.get(section).and_then(Value::as_table) {
-            push_deps_from_table(tbl, out);
-        }
+const DEP_SECTIONS: [(&str, EdgeKind); 3] = [
+    ("dependencies", EdgeKind::Normal),
+    ("dev-dependencies", EdgeKind::Dev),
+    ("build-dependencies", EdgeKind::Build),
+];
+
+fn workspace_deps(root: &Table) -> Option<&Table> {
+    root.get("workspace")?
+        .as_table()?
+        .get("dependencies")?
+        .as_table()
+}
+
+fn manifest_dep_tables(root: &Table) -> Vec<(Option<EdgeKind>, &Table)> {
+    let mut out = Vec::new();
+    if let Some(table) = workspace_deps(root) {
+        out.push((None, table));
     }
-    if let Some(ws) = root.get("workspace").and_then(Value::as_table)
-        && let Some(tbl) = ws.get("dependencies").and_then(Value::as_table)
-    {
-        push_deps_from_table(tbl, out);
-    }
-    if let Some(targets) = root.get("target").and_then(Value::as_table) {
-        for (_, sp) in targets.iter() {
-            if let Some(target_tbl) = sp.value.as_table() {
-                for section in ["dependencies", "dev-dependencies", "build-dependencies"] {
-                    if let Some(tbl) = target_tbl.get(section).and_then(Value::as_table) {
-                        push_deps_from_table(tbl, out);
-                    }
-                }
+    let targets = root.get("target").and_then(Value::as_table);
+    for table in std::iter::once(root).chain(
+        targets
+            .into_iter()
+            .flat_map(|t| t.iter().filter_map(|(_, sp)| sp.value.as_table())),
+    ) {
+        for (section, kind) in DEP_SECTIONS {
+            if let Some(deps) = table.get(section).and_then(Value::as_table) {
+                out.push((Some(kind), deps));
             }
         }
     }
+    out
 }
 
-fn push_deps_from_table(
-    tbl: &Table,
-    out: &mut Vec<(String, Option<String>, Option<String>)>,
-) {
-    for (dep_key, sp) in tbl.iter() {
-        let (pkg, path) = match &sp.value {
-            Value::Table(spec) => (
-                spec.get("package").and_then(Value::as_str).map(str::to_owned),
-                spec.get("path").and_then(Value::as_str).map(str::to_owned),
-            ),
-            _ => (None, None),
-        };
-        out.push((dep_key.clone(), pkg, path));
+fn inherited_dep(
+    repo_root: &Path,
+    manifest_dir: &Path,
+    key: &str,
+) -> Result<Option<(Value, PathBuf)>, LiftError> {
+    for dir in manifest_dir
+        .ancestors()
+        .take_while(|dir| dir.starts_with(repo_root))
+    {
+        let path = dir.join("Cargo.toml");
+        if path.is_file() {
+            let text = fs::read_to_string(&path)
+                .map_err(|e| LiftError::new(path.display().to_string(), e.to_string()))?;
+            let manifest = parse_manifest_dependencies(&text)?;
+            if manifest.get("workspace").is_some() {
+                return Ok(workspace_deps(&manifest)
+                    .and_then(|deps| deps.get(key))
+                    .map(|value| (value.clone(), dir.to_path_buf())));
+            }
+        }
     }
+    Ok(None)
 }
 
 fn dep_matches_lift_foundation(
@@ -760,6 +744,100 @@ fn dep_matches_lift_foundation(
         }
     }
     false
+}
+
+fn check_manifest_edges(
+    repo_root: &Path,
+    rel: &str,
+    text: &str,
+    foundations: &[(LiftFoundation, Option<Foundation>)],
+    findings: &mut Vec<LiftFinding>,
+) -> Result<(), LiftError> {
+    let manifest = parse_manifest_dependencies(text)?;
+    let rel_dir = Path::new(rel).parent().unwrap_or_else(|| Path::new(""));
+    let manifest_dir = repo_root.join(rel_dir);
+    let package = parse_package_name(text).ok();
+    let from = if ["spark", "derive", "bindings", "surface", "apps"]
+        .iter()
+        .any(|prefix| rel_dir.starts_with(prefix))
+    {
+        rel_dir.to_str()
+    } else {
+        package.as_deref()
+    };
+    for (kind, deps) in manifest_dep_tables(&manifest) {
+        for (key, entry) in deps.iter() {
+            let local = entry.value.as_table();
+            let inherited = if local
+                .and_then(|table| table.get("workspace"))
+                .and_then(Value::as_bool)
+                == Some(true)
+            {
+                inherited_dep(repo_root, &manifest_dir, key)?
+            } else {
+                None
+            };
+            let (value, base_dir) = inherited
+                .as_ref()
+                .map_or((&entry.value, manifest_dir.as_path()), |(value, dir)| {
+                    (value, dir.as_path())
+                });
+            let table = value.as_table();
+            let string = |field| {
+                table
+                    .and_then(|table| table.get(field))
+                    .and_then(Value::as_str)
+            };
+            let package = string("package");
+            let path = string("path");
+            for (matcher, row) in foundations {
+                if !dep_matches_lift_foundation(key, package, path, matcher) {
+                    continue;
+                }
+                if let Some(row) = row {
+                    if let (Some(kind), Some(from)) = (kind, from) {
+                        let defaults = |table: Option<&Table>| {
+                            table
+                                .and_then(|table| table.get("default-features"))
+                                .and_then(Value::as_bool)
+                        };
+                        let spec = DepSpec {
+                            version: value
+                                .as_str()
+                                .or_else(|| string("version"))
+                                .map(str::to_owned),
+                            path: path.map(|path| {
+                                let absolute = base_dir.join(path);
+                                sibling_relative_path(repo_root, &absolute)
+                                    .unwrap_or_else(|| normalize_rel_path(&absolute))
+                            }),
+                            git: string("git").map(str::to_owned),
+                            default_features: defaults(table).unwrap_or(true)
+                                || defaults(local) == Some(true),
+                            ..DepSpec::default()
+                        };
+                        if foundation_allows_edge(row, from, package.unwrap_or(key), kind, &spec) {
+                            continue;
+                        }
+                    } else if kind.is_none()
+                        && row.uses.iter().any(|use_| {
+                            rule_for(use_.posture).permission != GraphPermission::Forbidden
+                        })
+                    {
+                        // A workspace definition becomes an edge only in an inheriting member.
+                        continue;
+                    }
+                }
+                findings.push(LiftFinding::new(
+                    4,
+                    "lifts.forbidden-edge",
+                    rel,
+                    format!("manifest `{rel}` depends on `{key}` from lift-posture foundation `{}` (`{}`)", matcher.id, matcher.name),
+                ));
+            }
+        }
+    }
+    Ok(())
 }
 
 /// Validate `registries/lifts.toml` and workspace provenance invariants on
@@ -853,7 +931,13 @@ pub fn validate_with_lift_foundations(
 
     // Collect lift-posture foundations for Step 4.
     let mut lift_foundations = load_lift_foundations_from_lock(repo_root)?;
-    lift_foundations.extend(extra_lift_foundations.iter().cloned());
+    lift_foundations.extend(
+        extra_lift_foundations
+            .iter()
+            .cloned()
+            .map(|row| (row, None)),
+    );
+    let canonical_repo = canonical_or_clean(repo_root);
 
     // Step 3 & Step 4: Walk the workspace deterministically to check for
     // unregistered `// LIFTED from` files and forbidden Cargo edges to
@@ -891,28 +975,14 @@ pub fn validate_with_lift_foundations(
                 && (rel == "Cargo.toml" || rel.ends_with("/Cargo.toml"))
                 && let Ok(text) = std::str::from_utf8(&bytes)
             {
-                let deps = extract_manifest_deps(text)
-                    .map_err(|e| LiftError::new(&rel, e.message))?;
-                for (dep_key, pkg_override, dep_path) in deps {
-                    for lf in &lift_foundations {
-                        if dep_matches_lift_foundation(
-                            &dep_key,
-                            pkg_override.as_deref(),
-                            dep_path.as_deref(),
-                            lf,
-                        ) {
-                            findings.push(LiftFinding::new(
-                                4,
-                                "lifts.forbidden-edge",
-                                &rel,
-                                format!(
-                                    "manifest `{rel}` depends on `{dep_key}` from lift-posture foundation `{}` (`{}`)",
-                                    lf.id, lf.name
-                                ),
-                            ));
-                        }
-                    }
-                }
+                check_manifest_edges(
+                    &canonical_repo,
+                    &rel,
+                    text,
+                    &lift_foundations,
+                    &mut findings,
+                )
+                .map_err(|e| LiftError::new(&rel, e.message))?;
             }
         }
     }
@@ -1396,6 +1466,8 @@ id = "FD-FSIM"
 name = "frankensim"
 posture = "lift"
 path = "../frankensim"
+admission_gate = "none"
+fallback = "no edge"
 "#,
         );
         write_fixture_file(
@@ -1406,8 +1478,8 @@ name = "frob-fsim"
 version.workspace = true
 edition.workspace = true
 
-[dependencies]
-fs-ga = { path = "../../frankensim/crates/fs-ga", default-features = false }
+[dependencies] # The section still declares a Cargo edge.
+fs-ga = { path = "../../../frankensim/crates/fs-ga", default-features = false }
 "#,
         );
 
@@ -1417,6 +1489,61 @@ fs-ga = { path = "../../frankensim/crates/fs-ga", default-features = false }
         assert_eq!(findings[0].file, "crates/frob-fsim/Cargo.toml");
         assert!(findings[0].message.contains("fs-ga"));
         assert!(findings[0].message.contains("FD-FSIM"));
+    }
+
+    #[test]
+    fn lifts_mixed_uses_check_each_cargo_edge() {
+        let dir = fresh_fixture_dir("mixed_edges");
+        write_fixture_file(&dir, "registries/lifts.toml", "schema = \"frob.lifts/1\"\n");
+        write_fixture_file(
+            &dir,
+            "franken-stack.lock",
+            r#"toolchain = "nightly-2026-08-31"
+[[foundation]]
+id = "FD-FSQL"
+name = "frankensqlite"
+version = "=0.5.1"
+admission_gate = "none"
+fallback = "no edge"
+[[foundation.uses]]
+posture = "lift"
+[[foundation.uses]]
+posture = "consume"
+confined_to = ["frob-chronicle"]
+"#,
+        );
+        write_fixture_file(
+            &dir,
+            "crates/frob-chronicle/Cargo.toml",
+            "[package]\nname = \"frob-chronicle\"\n[dependencies]\n\
+             fsqlite = { version = \"=0.5.1\", default-features = false }\n",
+        );
+        assert!(validate(&dir).expect("confined edge").is_empty());
+
+        write_fixture_file(
+            &dir,
+            "Cargo.toml",
+            "[workspace]\n[workspace.dependencies] # Inherited alias\n\
+             sql = { package = \"fsqlite\", version = \"=0.5.1\", default-features = false }\n",
+        );
+        write_fixture_file(
+            &dir,
+            "crates/frob-chronicle/Cargo.toml",
+            "[package]\nname = \"frob-chronicle\"\n[dependencies]\nsql.workspace = true\n",
+        );
+        assert!(validate(&dir).expect("confined inherited edge").is_empty());
+
+        let outside = "crates/frob-dyn/Cargo.toml";
+        write_fixture_file(
+            &dir,
+            outside,
+            "[package]\nname = \"frob-dyn\"\n[dependencies]\nsql.workspace = true\n",
+        );
+        let findings = validate(&dir).expect("unconfined inherited edge");
+        assert_eq!(findings.len(), 1, "{findings:?}");
+        assert_eq!(findings[0].rule, "lifts.forbidden-edge");
+        assert_eq!(findings[0].file, outside);
+        assert!(findings[0].message.contains("FD-FSQL"));
     }
 
     #[test]

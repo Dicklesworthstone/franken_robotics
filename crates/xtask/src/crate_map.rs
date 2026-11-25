@@ -467,13 +467,13 @@ pub fn parse_package_name(toml_text: &str) -> Result<String, MetadataError> {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum MultilineState {
+pub(crate) enum MultilineState {
     None,
     Basic,
     Literal,
 }
 
-fn strip_toml_line<'a>(line: &'a str, state: &mut MultilineState) -> Option<&'a str> {
+pub(crate) fn strip_toml_line<'a>(line: &'a str, state: &mut MultilineState) -> Option<&'a str> {
     let bytes = line.as_bytes();
     let mut i = 0usize;
     if *state != MultilineState::None {

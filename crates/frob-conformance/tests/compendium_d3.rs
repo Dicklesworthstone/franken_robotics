@@ -772,10 +772,12 @@ fn d3_squeeze_film_closed_form() {
     let f_bdry = squeeze_film_mu_eff(sigma, sigma, 0.15, 0.80, eta, 0.5, load_n, a, (1e-8, 1e-4));
     let f_hydro = squeeze_film_mu_eff(3.0 * sigma, sigma, 0.15, 0.80, eta, 0.5, load_n, a, (1e-8, 1e-4));
     let f_dry = squeeze_film_mu_eff(0.0, sigma, 0.15, 0.80, eta, 0.5, load_n, a, (1e-8, 1e-4));
-    let f_extrap = squeeze_film_mu_eff(2.0 * sigma, sigma, 0.15, 0.80, eta, 100.0, load_n, a, (1e-8, 1e-4));
+    let f_extrap = squeeze_film_mu_eff(2.0 * sigma, sigma, 0.15, 0.80, eta, 500.0, load_n, a, (1e-8, 1e-4));
     let blend_ok = f_bdry.psi == 1.0
         && (f_bdry.mu_eff - 0.15).abs() < 1e-12
+        && !f_bdry.extrapolated
         && f_hydro.psi == 0.0
+        && !f_hydro.extrapolated
         && (f_dry.mu_eff - 0.80).abs() < 1e-12
         && f_extrap.extrapolated
         && f_bdry.evidence_class == "Estimated"

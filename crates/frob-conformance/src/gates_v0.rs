@@ -206,11 +206,11 @@ impl GateRegistry {
             .require_str("schema")
             .map_err(|e| GateLoadError::new(file, None, e.to_string()))?;
         if schema != GATES_SCHEMA {
-            return Err(GateLoadError::new(
+            return Err(top.fail(GateLoadError::new(
                 file,
                 None,
                 format!("expected schema `{GATES_SCHEMA}`, found `{schema}`"),
-            ));
+            )));
         }
         let raw_gates = top
             .opt_array("gate")
@@ -317,7 +317,7 @@ fn parse_gate_row(tbl: Table, idx: usize, file: &str) -> Result<GateRow, GateLoa
 
     let id = f.require_str("id").map_err(err)?;
     if id.trim().is_empty() {
-        return Err(GateLoadError::new(file, Some(&label), "`id` must be non-empty"));
+        return Err(f.fail(GateLoadError::new(file, Some(&label), "`id` must be non-empty")));
     }
     let claim = f.require_str("claim").map_err(err)?;
     if !matches!(
@@ -330,29 +330,29 @@ fn parse_gate_row(tbl: Table, idx: usize, file: &str) -> Result<GateRow, GateLoa
             | "reality"
             | "performance"
     ) {
-        return Err(GateLoadError::new(
+        return Err(f.fail(GateLoadError::new(
             file,
             Some(&id),
             format!("unknown claim kind `{claim}`"),
-        ));
+        )));
     }
     let claim_id = f.require_str("claim_id").map_err(err)?;
     let section = f.require_str("section").map_err(err)?;
     let threshold = f.require_str("threshold").map_err(err)?;
     let milestone = f.require_str("milestone").map_err(err)?;
-    validate_milestone(&milestone, file, &id)?;
+    validate_milestone(&milestone, file, &id).map_err(|e| f.fail(e))?;
 
     let tier_items = f.require_array("tier").map_err(err)?;
-    let tier = str_list(file, &id, "tier", tier_items)?;
+    let tier = str_list(file, &id, "tier", tier_items).map_err(|e| f.fail(e))?;
     if tier.is_empty() {
-        return Err(GateLoadError::new(
+        return Err(f.fail(GateLoadError::new(
             file,
             Some(&id),
             "`tier` must contain at least one entry",
-        ));
+        )));
     }
     let ctrl_items = f.require_array("controls").map_err(err)?;
-    let controls = str_list(file, &id, "controls", ctrl_items)?;
+    let controls = str_list(file, &id, "controls", ctrl_items).map_err(|e| f.fail(e))?;
 
     let raw_parts = f.opt_array("part").map_err(err)?.unwrap_or_default();
     let mut parts = Vec::with_capacity(raw_parts.len());
@@ -360,14 +360,14 @@ fn parse_gate_row(tbl: Table, idx: usize, file: &str) -> Result<GateRow, GateLoa
         let ptbl = match sp.value {
             Value::Table(t) => t,
             other => {
-                return Err(GateLoadError::new(
+                return Err(f.fail(GateLoadError::new(
                     file,
                     Some(&id),
                     format!("`part[{pidx}]` expected table, found {}", other.type_name()),
-                ));
+                )));
             }
         };
-        parts.push(parse_gate_part(ptbl, file, &id, pidx)?);
+        parts.push(parse_gate_part(ptbl, file, &id, pidx).map_err(|e| f.fail(e))?);
     }
 
     // Tolerate additive register fields owned by N38b-18 / N40-01.
@@ -400,20 +400,15 @@ fn parse_gate_part(
     let err = |e: toml::TomlError| GateLoadError::new(file, Some(&label), e.to_string());
 
     let milestone = f.require_str("milestone").map_err(err)?;
-    validate_milestone(&milestone, file, &label)?;
-    let status = GatePartStatus::parse(&f.require_str("status").map_err(err)?, file, &label)?;
+    validate_milestone(&milestone, file, &label).map_err(|e| f.fail(e))?;
+    let status_raw = f.require_str("status").map_err(err)?;
+    let status = GatePartStatus::parse(&status_raw, file, &label).map_err(|e| f.fail(e))?;
     let measured = f.require_str("measured").map_err(err)?;
     let ev_items = f.require_array("evidence").map_err(err)?;
-    let evidence = str_list(file, &label, "evidence", ev_items)?;
+    let evidence = str_list(file, &label, "evidence", ev_items).map_err(|e| f.fail(e))?;
 
     let rec_tbl = f.require_table("recorded").map_err(err)?;
-    let mut rf = Fields::new(rec_tbl, format!("{label}.recorded"));
-    let recorded = Recorded {
-        date: rf.require_str("date").map_err(err)?,
-        session: rf.require_str("session").map_err(err)?,
-        implemented_by: rf.require_str("implemented_by").map_err(err)?,
-    };
-    rf.finish().map_err(err)?;
+    let recorded = parse_recorded(rec_tbl, file, &label).map_err(|e| f.fail(e))?;
 
     let kill_gate = f.opt_str("kill_gate").map_err(err)?;
     let fallback = f.opt_str("fallback").map_err(err)?;
@@ -439,4 +434,16 @@ fn parse_gate_part(
         detail,
         receipt,
     })
+}
+
+fn parse_recorded(tbl: Table, file: &str, label: &str) -> Result<Recorded, GateLoadError> {
+    let mut rf = Fields::new(tbl, format!("{label}.recorded"));
+    let err = |e: toml::TomlError| GateLoadError::new(file, Some(label), e.to_string());
+    let recorded = Recorded {
+        date: rf.require_str("date").map_err(err)?,
+        session: rf.require_str("session").map_err(err)?,
+        implemented_by: rf.require_str("implemented_by").map_err(err)?,
+    };
+    rf.finish().map_err(err)?;
+    Ok(recorded)
 }

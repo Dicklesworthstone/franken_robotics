@@ -189,7 +189,11 @@ fn walk_files(dir: &Path, out: &mut Vec<PathBuf>) {
     for p in entries {
         let name = p.file_name().and_then(|s| s.to_str()).unwrap_or("");
         if p.is_dir() {
-            if name != ".git" && name != "target" {
+            if name != ".git"
+                && name != "target"
+                && name != ".rch-tmp"
+                && !name.starts_with(".rch-target-")
+            {
                 walk_files(&p, out);
             }
         } else if p.is_file() {
@@ -370,7 +374,10 @@ fn check_line(
     findings: &mut Vec<CommandFinding>,
 ) {
     let trimmed = raw_line.trim();
-    if trimmed.is_empty() || trimmed.starts_with('#') {
+    if trimmed.is_empty()
+        || trimmed.starts_with('#')
+        || (rel_path.ends_with(".rs") && trimmed.starts_with("//"))
+    {
         return;
     }
 
@@ -722,6 +729,15 @@ cargo test -p frob-conformance tenfold::baseline
 cat crates/frob-conformance/registry/controls.toml
 "#;
     fs::write(scripts_dir.join("accepted.sh"), accepted).expect("write accepted.sh");
+    let xtask_src = ws.join("crates/xtask/src");
+    fs::create_dir_all(&xtask_src).expect("mkdir crates/xtask/src");
+    fs::write(
+        xtask_src.join("doc_comment.rs"),
+        "/// - `frob-conformance` harness module and `frob-arena` study runner.\n\
+         // Also ignore `frob conformance` in plain Rust line comments.\n\
+         pub const OK: bool = true;\n",
+    )
+    .expect("write doc_comment.rs");
     let (_, ok_findings) = scan_workspace(&ws);
     assert!(
         ok_findings.is_empty(),

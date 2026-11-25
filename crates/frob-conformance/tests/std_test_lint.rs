@@ -49,7 +49,10 @@ fn walk_files(dir: &Path, skip_dirs: &[&str], out: &mut Vec<PathBuf>) {
     for p in entries {
         let name = p.file_name().and_then(|s| s.to_str()).unwrap_or("");
         if p.is_dir() {
-            if !skip_dirs.contains(&name) {
+            if !skip_dirs.contains(&name)
+                && name != ".rch-tmp"
+                && !name.starts_with(".rch-target-")
+            {
                 walk_files(&p, skip_dirs, out);
             }
         } else if p.is_file() {
@@ -170,9 +173,15 @@ fn strip_rust(src: &str, blank_strings: bool) -> String {
                     i = j + 1;
                     continue;
                 }
-            } else if i + 2 < n && b[i + 2] == b'\'' && b[i + 1] != b'\n' {
-                out.push_str(if blank_strings { "'x'" } else { &src[i..i + 3] });
-                i += 3;
+            } else if let Some(ch) = src[i + 1..].chars().next()
+                && ch != '\n'
+                && ch != '\''
+                && i + 1 + ch.len_utf8() < n
+                && b[i + 1 + ch.len_utf8()] == b'\''
+            {
+                let end = i + 1 + ch.len_utf8() + 1;
+                out.push_str(if blank_strings { "'x'" } else { &src[i..end] });
+                i = end;
                 continue;
             }
         }
@@ -184,7 +193,11 @@ fn strip_rust(src: &str, blank_strings: bool) -> String {
 }
 
 fn line_of_offset(s: &str, offset: usize) -> usize {
-    s[..offset.min(s.len())].bytes().filter(|&b| b == b'\n').count() + 1
+    s.as_bytes()[..offset.min(s.len())]
+        .iter()
+        .filter(|&&b| b == b'\n')
+        .count()
+        + 1
 }
 
 // ============================================================================
@@ -283,7 +296,8 @@ fn check_bare_ignores(root: &Path, rs_files: &[PathBuf], findings: &mut Vec<Find
                     if bytes[j] == b'[' { depth += 1; } else if bytes[j] == b']' { depth -= 1; }
                     j += 1;
                 }
-                let inner = stripped[start + 2..j.saturating_sub(1)].trim();
+                let end = if depth == 0 { j.saturating_sub(1) } else { bytes.len() };
+                let inner = stripped[start + 2..end].trim();
                 if inner == "ignore" {
                     findings.push(Finding {
                         rule: "ignore-without-reason",
@@ -635,7 +649,7 @@ fn check_gate_pass_prints(root: &Path, rs_files: &[PathBuf], findings: &mut Vec<
             let prev_ok = i == 0 || !(bytes[i - 1].is_ascii_alphanumeric() || bytes[i - 1] == b'_');
             if prev_ok {
                 for &mac in MACROS {
-                    if clean[i..].starts_with(mac) {
+                    if bytes[i..].starts_with(mac.as_bytes()) {
                         matched_len = Some(mac.len());
                         break;
                     }
@@ -659,7 +673,8 @@ fn check_gate_pass_prints(root: &Path, rs_files: &[PathBuf], findings: &mut Vec<
                     }
                     j += 1;
                 }
-                let call_body = &clean[open + 1..j.saturating_sub(1)];
+                let body_end = if depth == 0 { j.saturating_sub(1) } else { bytes.len() };
+                let call_body = &clean[open + 1..body_end];
                 if contains_gate_id(call_body) && contains_word_pass(call_body) {
                     findings.push(Finding {
                         rule: "gate-pass-outside-gate-report",
@@ -933,4 +948,17 @@ fn lint_catches_gate_pass_evidence_without_caught_control() {
     fs::write(good_ws.join("target/test-evidence/demo.ndjson"), format!("{caught_line}{bad_line}")).expect("write");
     let good_findings = run_lint(&good_ws, "M0");
     assert!(good_findings.is_empty(), "evidence with caught control must pass: {good_findings:?}");
+}
+
+#[test]
+fn lint_handles_multibyte_utf8_chars() {
+    let ws = scratch_ws("utf8");
+    fs::create_dir_all(ws.join("crates/demo/tests")).expect("mkdir");
+    fs::write(
+        ws.join("crates/demo/tests/utf8.rs"),
+        "#[test]\nfn utf8_probe() {\n    let pm: char = '±';\n    let raw = r#\"±1e-6 §13 ×2\"#;\n    println!(\"{pm} {raw}\");\n}\n",
+    )
+    .expect("write");
+    let findings = run_lint(&ws, "M0");
+    assert!(findings.is_empty(), "multi-byte UTF-8 must not panic or false-positive: {findings:?}");
 }

@@ -317,13 +317,19 @@ impl HypothesisRegister {
             .map_err(|e| RegisterError::Toml(e.to_string()))?
             .to_owned();
         if schema != HYPOTHESES_SCHEMA {
-            return Err(RegisterError::WrongSchema { observed: schema });
+            return Err(top.fail(RegisterError::WrongSchema { observed: schema }));
         }
 
         let hyp_arr = top
             .opt_array("hypothesis")
             .map_err(|e| RegisterError::Toml(e.to_string()))?
             .unwrap_or_default();
+        let dis_arr = top
+            .opt_array("disagreement")
+            .map_err(|e| RegisterError::Toml(e.to_string()))?
+            .unwrap_or_default();
+        top.finish().map_err(|e| RegisterError::Toml(e.to_string()))?;
+
         let mut hypotheses = Vec::with_capacity(hyp_arr.len());
         let mut seen_hyp = BTreeSet::new();
         for (idx, sp) in hyp_arr.iter().enumerate() {
@@ -342,10 +348,6 @@ impl HypothesisRegister {
             hypotheses.push(row);
         }
 
-        let dis_arr = top
-            .opt_array("disagreement")
-            .map_err(|e| RegisterError::Toml(e.to_string()))?
-            .unwrap_or_default();
         let mut disagreements = Vec::with_capacity(dis_arr.len());
         let mut seen_dis = BTreeSet::new();
         for (idx, sp) in dis_arr.iter().enumerate() {
@@ -363,8 +365,6 @@ impl HypothesisRegister {
             }
             disagreements.push(row);
         }
-
-        top.finish().map_err(|e| RegisterError::Toml(e.to_string()))?;
 
         Ok(Self {
             schema,
@@ -533,37 +533,41 @@ fn parse_history_entry(
         .require_str("date")
         .map_err(|e| RegisterError::Toml(e.to_string()))?;
     if !is_valid_iso_date(&date) {
-        return Err(RegisterError::InvalidField {
+        return Err(f.fail(RegisterError::InvalidField {
             row_id: row_id.to_owned(),
             field: format!("history[{idx}].date"),
             reason: format!("expected YYYY-MM-DD date, got `{date}`"),
-        });
+        }));
     }
     let state_s = f
         .require_str("state")
         .map_err(|e| RegisterError::Toml(e.to_string()))?;
-    let state = VerdictState::parse(&state_s).ok_or_else(|| RegisterError::InvalidField {
-        row_id: row_id.to_owned(),
-        field: format!("history[{idx}].state"),
-        reason: format!("unknown verdict state `{state_s}`"),
+    let state = VerdictState::parse(&state_s).ok_or_else(|| {
+        f.fail(RegisterError::InvalidField {
+            row_id: row_id.to_owned(),
+            field: format!("history[{idx}].state"),
+            reason: format!("unknown verdict state `{state_s}`"),
+        })
     })?;
     let evidence = f
         .require_str("evidence")
         .map_err(|e| RegisterError::Toml(e.to_string()))?;
     if evidence.trim().is_empty() {
-        return Err(RegisterError::InvalidField {
+        return Err(f.fail(RegisterError::InvalidField {
             row_id: row_id.to_owned(),
             field: format!("history[{idx}].evidence"),
             reason: "evidence must be non-empty".to_owned(),
-        });
+        }));
     }
     let kind_s = f
         .require_str("kind")
         .map_err(|e| RegisterError::Toml(e.to_string()))?;
-    let kind = EvidenceKind::parse(&kind_s).ok_or_else(|| RegisterError::InvalidField {
-        row_id: row_id.to_owned(),
-        field: format!("history[{idx}].kind"),
-        reason: format!("unknown evidence kind `{kind_s}`"),
+    let kind = EvidenceKind::parse(&kind_s).ok_or_else(|| {
+        f.fail(RegisterError::InvalidField {
+            row_id: row_id.to_owned(),
+            field: format!("history[{idx}].kind"),
+            reason: format!("unknown evidence kind `{kind_s}`"),
+        })
     })?;
     let record = opt_non_empty_str(&mut f, "record")?;
     let reversal_met = f
@@ -591,45 +595,47 @@ fn parse_hypothesis_row(tbl: Table, idx: usize) -> Result<HypothesisRow, Registe
         .require_str("id")
         .map_err(|e| RegisterError::Toml(e.to_string()))?;
     if id.trim().is_empty() {
-        return Err(RegisterError::InvalidField {
+        return Err(f.fail(RegisterError::InvalidField {
             row_id: ctx,
             field: "id".to_owned(),
             reason: "id must be non-empty".to_owned(),
-        });
+        }));
     }
     let statement = f
         .require_str("statement")
         .map_err(|e| RegisterError::Toml(e.to_string()))?;
     if statement.trim().is_empty() {
-        return Err(RegisterError::InvalidField {
+        return Err(f.fail(RegisterError::InvalidField {
             row_id: id,
             field: "statement".to_owned(),
             reason: "statement must be non-empty".to_owned(),
-        });
+        }));
     }
     let state_s = f
         .require_str("state")
         .map_err(|e| RegisterError::Toml(e.to_string()))?;
-    let state = VerdictState::parse(&state_s).ok_or_else(|| RegisterError::InvalidField {
-        row_id: id.clone(),
-        field: "state".to_owned(),
-        reason: format!("unknown verdict state `{state_s}`"),
+    let state = VerdictState::parse(&state_s).ok_or_else(|| {
+        f.fail(RegisterError::InvalidField {
+            row_id: id.clone(),
+            field: "state".to_owned(),
+            reason: format!("unknown verdict state `{state_s}`"),
+        })
     })?;
     let scope = opt_non_empty_str(&mut f, "scope")?;
     let survives = f
         .require_str("survives")
         .map_err(|e| RegisterError::Toml(e.to_string()))?;
     if survives.trim().is_empty() {
-        return Err(RegisterError::InvalidField {
+        return Err(f.fail(RegisterError::InvalidField {
             row_id: id,
             field: "survives".to_owned(),
             reason: "survives must be non-empty".to_owned(),
-        });
+        }));
     }
     let binds_arr = f
         .require_array("binds")
         .map_err(|e| RegisterError::Toml(e.to_string()))?;
-    let binds = parse_str_array(&binds_arr, &id, "binds", false)?;
+    let binds = parse_str_array(&binds_arr, &id, "binds", false).map_err(|e| f.fail(e))?;
     let reversal = opt_non_empty_str(&mut f, "reversal")?;
     let reversal_proposed = opt_non_empty_str(&mut f, "reversal_proposed")?;
     let reversal_decision = opt_non_empty_str(&mut f, "reversal_decision")?;
@@ -637,35 +643,38 @@ fn parse_hypothesis_row(tbl: Table, idx: usize) -> Result<HypothesisRow, Registe
         .opt_array("banned")
         .map_err(|e| RegisterError::Toml(e.to_string()))?
         .unwrap_or_default();
-    let banned = parse_str_array(&banned_arr, &id, "banned", true)?;
+    let banned = parse_str_array(&banned_arr, &id, "banned", true).map_err(|e| f.fail(e))?;
     for (pidx, pat) in banned.iter().enumerate() {
         if let Err(reason) = Pattern::compile(pat) {
-            return Err(RegisterError::InvalidPattern {
+            return Err(f.fail(RegisterError::InvalidPattern {
                 row_id: id,
                 index: pidx,
                 pattern: pat.clone(),
                 reason,
-            });
+            }));
         }
     }
     let settled_arr = f
         .require_array("settled_by")
         .map_err(|e| RegisterError::Toml(e.to_string()))?;
-    let settled_by = parse_str_array(&settled_arr, &id, "settled_by", false)?;
+    let settled_by =
+        parse_str_array(&settled_arr, &id, "settled_by", false).map_err(|e| f.fail(e))?;
     let hist_arr = f
         .require_array("history")
         .map_err(|e| RegisterError::Toml(e.to_string()))?;
     if hist_arr.is_empty() {
-        return Err(RegisterError::EmptyHistory { row_id: id });
+        return Err(f.fail(RegisterError::EmptyHistory { row_id: id }));
     }
     let mut history = Vec::with_capacity(hist_arr.len());
     for (hidx, sp) in hist_arr.iter().enumerate() {
-        let htbl = sp.value.as_table().ok_or_else(|| RegisterError::InvalidField {
-            row_id: id.clone(),
-            field: format!("history[{hidx}]"),
-            reason: "expected inline table".to_owned(),
+        let htbl = sp.value.as_table().ok_or_else(|| {
+            f.fail(RegisterError::InvalidField {
+                row_id: id.clone(),
+                field: format!("history[{hidx}]"),
+                reason: "expected inline table".to_owned(),
+            })
         })?;
-        history.push(parse_history_entry(htbl.clone(), &id, hidx)?);
+        history.push(parse_history_entry(htbl.clone(), &id, hidx).map_err(|e| f.fail(e))?);
     }
     f.finish().map_err(|e| RegisterError::Toml(e.to_string()))?;
 
@@ -708,23 +717,26 @@ fn parse_disagreement_row(tbl: Table, idx: usize) -> Result<DisagreementRow, Reg
         .require_str("question")
         .map_err(|e| RegisterError::Toml(e.to_string()))?;
     if question.trim().is_empty() {
-        return Err(RegisterError::InvalidField {
+        return Err(f.fail(RegisterError::InvalidField {
             row_id: id,
             field: "question".to_owned(),
             reason: "question must be non-empty".to_owned(),
-        });
+        }));
     }
     let settled_arr = f
         .require_array("settled_by")
         .map_err(|e| RegisterError::Toml(e.to_string()))?;
-    let settled_by = parse_str_array(&settled_arr, &id, "settled_by", false)?;
+    let settled_by =
+        parse_str_array(&settled_arr, &id, "settled_by", false).map_err(|e| f.fail(e))?;
     let status_s = f
         .require_str("status")
         .map_err(|e| RegisterError::Toml(e.to_string()))?;
-    let status = DisagreementStatus::parse(&status_s).ok_or_else(|| RegisterError::InvalidField {
-        row_id: id.clone(),
-        field: "status".to_owned(),
-        reason: format!("expected `open` or `settled`, got `{status_s}`"),
+    let status = DisagreementStatus::parse(&status_s).ok_or_else(|| {
+        f.fail(RegisterError::InvalidField {
+            row_id: id.clone(),
+            field: "status".to_owned(),
+            reason: format!("expected `open` or `settled`, got `{status_s}`"),
+        })
     })?;
     let record = opt_non_empty_str(&mut f, "record")?;
     f.finish().map_err(|e| RegisterError::Toml(e.to_string()))?;

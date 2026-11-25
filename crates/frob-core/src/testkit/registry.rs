@@ -207,6 +207,13 @@ struct Rf<'a> { f: Fields, file: &'a str, row: Option<&'a str> }
 impl<'a> Rf<'a> {
     fn new(tbl: Table, name: impl Into<String>, file: &'a str, row: Option<&'a str>) -> Self { Self { f: Fields::new(tbl, name), file, row } }
     fn e(&self, err: toml::TomlError) -> RegistryError { RegistryError::new(self.file, self.row, err.to_string()) }
+    fn err(&mut self, msg: impl Into<String>) -> RegistryError {
+        let e = RegistryError::new(self.file, self.row, msg);
+        self.f.fail(e)
+    }
+    fn check<T>(&mut self, res: Result<T, RegistryError>) -> Result<T, RegistryError> {
+        res.map_err(|e| self.f.fail(e))
+    }
     fn req_str(&mut self, k: &str) -> Result<String, RegistryError> { self.f.require_str(k).map_err(|e| self.e(e)) }
     fn opt_str(&mut self, k: &str) -> Result<Option<String>, RegistryError> { self.f.opt_str(k).map_err(|e| self.e(e)) }
     fn req_bool(&mut self, k: &str) -> Result<bool, RegistryError> { self.f.require_bool(k).map_err(|e| self.e(e)) }
@@ -217,10 +224,10 @@ impl<'a> Rf<'a> {
     fn opt_arr(&mut self, k: &str) -> Result<Option<Vec<Spanned<Value>>>, RegistryError> { self.f.opt_array(k).map_err(|e| self.e(e)) }
     fn req_strs(&mut self, k: &str) -> Result<Vec<String>, RegistryError> {
         let items = self.f.require_array(k).map_err(|e| self.e(e))?;
-        str_list(self.file, self.row, k, items)
+        str_list(self.file, self.row, k, items).map_err(|e| self.f.fail(e))
     }
     fn opt_strs(&mut self, k: &str) -> Result<Option<Vec<String>>, RegistryError> {
-        match self.opt_arr(k)? { Some(v) => Ok(Some(str_list(self.file, self.row, k, v)?)), None => Ok(None) }
+        match self.opt_arr(k)? { Some(v) => Ok(Some(str_list(self.file, self.row, k, v).map_err(|e| self.f.fail(e))?)), None => Ok(None) }
     }
     fn finish(self) -> Result<(), RegistryError> { let (f, file, row) = (self.f, self.file, self.row); f.finish().map_err(|e| RegistryError::new(file, row, e.to_string())) }
 }
@@ -312,26 +319,29 @@ impl KnownAnswers {
             let mut rf = Rf::new(tbl, format!("ka[{rl}]"), file, Some(&rl));
             let id = rf.req_str("id")?;
             let slug = rf.opt_str("slug")?.unwrap_or_default();
-            if id.is_empty() && slug.is_empty() { return Err(RegistryError::new(file, Some(&rl), "empty `id` and empty `slug`")); }
-            if !id.is_empty() { check_append_only(file, &id, "KA-", &mut seen_ids, &mut last)?; }
-            if !slug.is_empty() && !seen_slugs.insert(slug.clone()) { return Err(RegistryError::new(file, Some(&rl), format!("duplicate slug `{slug}`"))); }
+            if id.is_empty() && slug.is_empty() { return Err(rf.err("empty `id` and empty `slug`")); }
+            if !id.is_empty() { rf.check(check_append_only(file, &id, "KA-", &mut seen_ids, &mut last))?; }
+            if !slug.is_empty() && !seen_slugs.insert(slug.clone()) { return Err(rf.err(format!("duplicate slug `{slug}`"))); }
             let section = rf.req_str("section")?;
             let owner = rf.opt_str("owner")?.unwrap_or_default();
             let fixture = rf.req_str("fixture")?;
             let same_as = rf.opt_str("same_as")?.unwrap_or_default();
             let case = rf.req_str("case")?;
-            let truth = parse_truth(file, &rl, rf.req_tbl("truth")?)?;
-            let tolerance = parse_tol(file, &rl, rf.req_tbl("tolerance")?)?;
+            let truth_tbl = rf.req_tbl("truth")?;
+            let truth = rf.check(parse_truth(file, &rl, truth_tbl))?;
+            let tol_tbl = rf.req_tbl("tolerance")?;
+            let tolerance = rf.check(parse_tol(file, &rl, tol_tbl))?;
             let tier = rf.req_str("tier")?;
             let sites = rf.req_strs("sites")?;
-            let control = parse_ctrl_cell(file, &rl, rf.req_tbl("control")?)?;
+            let ctrl_tbl = rf.req_tbl("control")?;
+            let control = rf.check(parse_ctrl_cell(file, &rl, ctrl_tbl))?;
             let derivation = rf.req_str("derivation")?;
             let label = rf.req_str("label")?;
             let due = rf.opt_str("due")?.unwrap_or_default();
             let printed = rf.opt_str("printed")?.unwrap_or_default();
             let safe = match rf.opt_str("safe")?.as_deref() {
                 None => None, Some("higher") => Some(Safe::Higher), Some("lower") => Some(Safe::Lower),
-                Some(b) => return Err(RegistryError::new(file, Some(&rl), format!("invalid `safe` `{b}`"))),
+                Some(b) => return Err(rf.err(format!("invalid `safe` `{b}`"))),
             };
             rf.finish()?;
             rows.push(Row { id, section, owner, fixture, same_as, case, truth, tolerance, tier, sites, control, derivation, label, due, printed, slug, safe });
@@ -343,7 +353,8 @@ impl KnownAnswers {
 fn parse_truth(file: &str, row: &str, tbl: Table) -> Result<Truth, RegistryError> {
     let mut rf = Rf::new(tbl, format!("{row}.truth"), file, Some(row));
     let kind = rf.req_str("kind")?;
-    let value = rf.f.take("value").ok_or_else(|| RegistryError::new(file, Some(row), "missing `truth.value`"))?.value;
+    let Some(sp) = rf.f.take("value") else { return Err(rf.err("missing `truth.value`")); };
+    let value = sp.value;
     rf.finish()?;
     Ok(Truth { kind, value })
 }
@@ -352,9 +363,9 @@ fn parse_tol(file: &str, row: &str, tbl: Table) -> Result<Tolerance, RegistryErr
     let mut rf = Rf::new(tbl, format!("{row}.tolerance"), file, Some(row));
     let kind = rf.req_str("kind")?;
     let num_str = |rf: &mut Rf<'_>, k: &str| -> Result<String, RegistryError> {
-        let sp = rf.f.take(k).ok_or_else(|| RegistryError::new(file, Some(row), format!("missing `{k}`")))?;
-        let s = match sp.value { Value::Str(s) => s, Value::Int(i) => i.to_string(), o => return Err(RegistryError::new(file, Some(row), format!("`{k}` expected string/int, found {}", o.type_name()))) };
-        BigRat::from_str_exact(&s).map_err(|e| RegistryError::new(file, Some(row), e))?;
+        let Some(sp) = rf.f.take(k) else { return Err(rf.err(format!("missing `{k}`"))); };
+        let s = match sp.value { Value::Str(s) => s, Value::Int(i) => i.to_string(), o => return Err(rf.err(format!("`{k}` expected string/int, found {}", o.type_name()))) };
+        if let Err(e) = BigRat::from_str_exact(&s) { return Err(rf.err(e)); }
         Ok(s)
     };
     let tol = match kind.as_str() {
@@ -363,13 +374,27 @@ fn parse_tol(file: &str, row: &str, tbl: Table) -> Result<Tolerance, RegistryErr
         "abs" => Tolerance::Abs(num_str(&mut rf, "value")?),
         "rel" => Tolerance::Rel(num_str(&mut rf, "value")?),
         "printed-digits" => {
-            let n = rf.opt_int("digits")?.or(rf.opt_int("value")?)
-                .ok_or_else(|| RegistryError::new(file, Some(row), "printed-digits requires integer `digits`/`value`"))?;
-            Tolerance::PrintedDigits(u32::try_from(n).map_err(|_| RegistryError::new(file, Some(row), "negative printed-digits"))?)
+            let n = match rf.opt_int("digits")? {
+                Some(v) => v,
+                None => match rf.opt_int("value")? {
+                    Some(v) => v,
+                    None => return Err(rf.err("printed-digits requires integer `digits`/`value`")),
+                },
+            };
+            let d = match u32::try_from(n) { Ok(v) => v, Err(_) => return Err(rf.err("negative printed-digits")) };
+            Tolerance::PrintedDigits(d)
         }
-        "gate" => Tolerance::Gate(rf.opt_str("id")?.or(rf.opt_str("value")?)
-            .ok_or_else(|| RegistryError::new(file, Some(row), "gate tolerance requires `id`/`value`"))?),
-        other => return Err(RegistryError::new(file, Some(row), format!("unknown tolerance kind `{other}`"))),
+        "gate" => {
+            let gid = match rf.opt_str("id")? {
+                Some(v) => v,
+                None => match rf.opt_str("value")? {
+                    Some(v) => v,
+                    None => return Err(rf.err("gate tolerance requires `id`/`value`")),
+                },
+            };
+            Tolerance::Gate(gid)
+        }
+        other => return Err(rf.err(format!("unknown tolerance kind `{other}`"))),
     };
     rf.finish()?;
     Ok(tol)
@@ -494,24 +519,21 @@ impl Controls {
             let rl = tbl.get("id").and_then(Value::as_str).map_or_else(|| format!("control[{i}]"), str::to_owned);
             let mut rf = Rf::new(tbl, format!("control[{rl}]"), file, Some(&rl));
             let id = rf.req_str("id")?;
-            check_append_only(file, &id, "NC-", &mut seen, &mut last)?;
+            rf.check(check_append_only(file, &id, "NC-", &mut seen, &mut last))?;
             let seed = rf.req_str("seed")?;
             let gate = rf.req_strs("gate")?;
-            let kind = ControlKind::parse(&rf.req_str("kind")?, file, &rl)?;
+            let kind_s = rf.req_str("kind")?;
+            let kind = rf.check(ControlKind::parse(&kind_s, file, &rl))?;
             let (target, defect, expect) = (rf.req_str("target")?, rf.req_str("defect")?, rf.req_str("expect")?);
             let last_seen = match rf.opt_tbl("last_seen")? {
                 None => None,
-                Some(t) => {
-                    let mut lf = Rf::new(t, format!("{rl}.last_seen"), file, Some(&rl));
-                    let ls = LastSeen { caught: lf.req_bool("caught")?, session: lf.req_str("session")?, date: lf.req_str("date")? };
-                    lf.finish()?; Some(ls)
-                }
+                Some(t) => Some(rf.check(parse_last_seen(file, &rl, t))?),
             };
             let (feature, fixture, due) = (rf.opt_str("feature")?, rf.opt_str("fixture")?, rf.opt_str("due")?);
             let permanent = rf.opt_bool("permanent")?.unwrap_or(false);
             let state = match rf.opt_str("state")?.as_deref() {
                 None | Some("runnable") => ControlState::Runnable, Some("obligation") => ControlState::Obligation,
-                Some(b) => return Err(RegistryError::new(file, Some(&rl), format!("invalid state `{b}`"))),
+                Some(b) => return Err(rf.err(format!("invalid state `{b}`"))),
             };
             let removed_check = rf.opt_str("removed_check")?;
             rf.finish()?;
@@ -519,6 +541,13 @@ impl Controls {
         }
         Ok(Self { rows })
     }
+}
+
+fn parse_last_seen(file: &str, row: &str, tbl: Table) -> Result<LastSeen, RegistryError> {
+    let mut lf = Rf::new(tbl, format!("{row}.last_seen"), file, Some(row));
+    let ls = LastSeen { caught: lf.req_bool("caught")?, session: lf.req_str("session")?, date: lf.req_str("date")? };
+    lf.finish()?;
+    Ok(ls)
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)] pub enum ControlOutcome { Caught, Missed, Stale, Obligation }
@@ -587,24 +616,27 @@ impl Relations {
             let rl = tbl.get("id").and_then(Value::as_str).map_or_else(|| format!("relation[{i}]"), str::to_owned);
             let mut rf = Rf::new(tbl, format!("relation[{rl}]"), file, Some(&rl));
             let id = rf.req_str("id")?;
-            if id.starts_with("MR-C") { check_append_only(file, &id, "MR-C", &mut seen, &mut last_c)?; }
-            else { check_append_only(file, &id, "MR-", &mut seen, &mut last_a)?; }
+            if id.starts_with("MR-C") { rf.check(check_append_only(file, &id, "MR-C", &mut seen, &mut last_c))?; }
+            else { rf.check(check_append_only(file, &id, "MR-", &mut seen, &mut last_a))?; }
             let statement = rf.req_str("statement")?;
             let (source, sites) = (rf.req_strs("source")?, rf.req_strs("sites")?);
             let compare = match rf.req_str("compare")?.as_str() {
                 "bits" => CompareKind::Bits, "exact" => CompareKind::Exact, "digest" => CompareKind::Digest,
                 "bound" => CompareKind::Bound, "order" => CompareKind::Order, "leading-order" => CompareKind::LeadingOrder,
-                b => return Err(RegistryError::new(file, Some(&rl), format!("unknown compare `{b}`"))),
+                b => return Err(rf.err(format!("unknown compare `{b}`"))),
             };
             let bound = rf.opt_str("bound")?.unwrap_or_default();
             let mutations = match rf.f.take("mutation") {
-                Some(Spanned { value: Value::Table(t), .. }) => vec![parse_rel_mut(file, &rl, t)?],
-                Some(Spanned { value: Value::Array(arr), .. }) => arr.into_iter().map(|s| match s.value {
-                    Value::Table(t) => parse_rel_mut(file, &rl, t),
-                    o => Err(RegistryError::new(file, Some(&rl), format!("mutation element expected table, found {}", o.type_name()))),
-                }).collect::<Result<Vec<_>, _>>()?,
-                Some(o) => return Err(RegistryError::new(file, Some(&rl), format!("`mutation` expected table/array, found {}", o.value.type_name()))),
-                None => return Err(RegistryError::new(file, Some(&rl), "missing required key `mutation`")),
+                Some(Spanned { value: Value::Table(t), .. }) => vec![rf.check(parse_rel_mut(file, &rl, t))?],
+                Some(Spanned { value: Value::Array(arr), .. }) => {
+                    let parsed = arr.into_iter().map(|s| match s.value {
+                        Value::Table(t) => parse_rel_mut(file, &rl, t),
+                        o => Err(RegistryError::new(file, Some(&rl), format!("mutation element expected table, found {}", o.type_name()))),
+                    }).collect::<Result<Vec<_>, _>>();
+                    rf.check(parsed)?
+                }
+                Some(o) => return Err(rf.err(format!("`mutation` expected table/array, found {}", o.value.type_name()))),
+                None => return Err(rf.err("missing required key `mutation`")),
             };
             let entry = rf.req_str("entry")?;
             let owner = rf.opt_str("owner")?.unwrap_or_default();
@@ -662,11 +694,11 @@ impl Counterexamples {
             let rl = tbl.get("id").and_then(Value::as_str).map_or_else(|| format!("cx[{i}]"), str::to_owned);
             let mut rf = Rf::new(tbl, format!("cx[{rl}]"), file, Some(&rl));
             let id = rf.req_str("id")?;
-            check_append_only(file, &id, "CX-", &mut seen, &mut last)?;
+            rf.check(check_append_only(file, &id, "CX-", &mut seen, &mut last))?;
             let (shortcut, case, numeric) = (rf.req_str("shortcut")?, rf.req_str("case")?, rf.req_bool("numeric")?);
             let plan_case = match rf.req_str("plan_case")?.as_str() {
                 "words" => PlanCase::Words, "numbers" => PlanCase::Numbers,
-                b => return Err(RegistryError::new(file, Some(&rl), format!("invalid plan_case `{b}`"))),
+                b => return Err(rf.err(format!("invalid plan_case `{b}`"))),
             };
             let case_supplied_by = rf.opt_str("case_supplied_by")?.unwrap_or_default();
             let (rule, rule_ids, defined_in) = (rf.req_str("rule")?, rf.req_strs("rule_ids")?, rf.req_str("defined_in")?);
@@ -674,18 +706,22 @@ impl Counterexamples {
             let label = rf.req_str("label")?;
             let rerun = rf.opt_bool("rerun")?;
             if rerun.is_some() && label.starts_with("DESIGN") {
-                return Err(RegistryError::new(file, Some(&rl), "`rerun` is permitted on FACT entries only"));
+                return Err(rf.err("`rerun` is permitted on FACT entries only"));
             }
             let rerun_receipt = rf.opt_str("rerun_receipt")?.unwrap_or_default();
-            let control_kind = ControlKind::parse(&rf.req_str("control_kind")?, file, &rl)?;
+            let ck_s = rf.req_str("control_kind")?;
+            let control_kind = rf.check(ControlKind::parse(&ck_s, file, &rl))?;
             let plant = match rf.f.take("plant") {
                 None => Vec::new(),
                 Some(Spanned { value: Value::Str(s), .. }) => if s.is_empty() { Vec::new() } else { vec![Plant { id: s, ..Plant::default() }] },
-                Some(Spanned { value: Value::Array(arr), .. }) => arr.into_iter().map(|s| match s.value {
-                    Value::Table(t) => parse_plant(file, &rl, t),
-                    o => Err(RegistryError::new(file, Some(&rl), format!("plant element expected table, found {}", o.type_name()))),
-                }).collect::<Result<Vec<_>, _>>()?,
-                Some(o) => return Err(RegistryError::new(file, Some(&rl), format!("`plant` expected string/array, found {}", o.value.type_name()))),
+                Some(Spanned { value: Value::Array(arr), .. }) => {
+                    let parsed = arr.into_iter().map(|s| match s.value {
+                        Value::Table(t) => parse_plant(file, &rl, t),
+                        o => Err(RegistryError::new(file, Some(&rl), format!("plant element expected table, found {}", o.type_name()))),
+                    }).collect::<Result<Vec<_>, _>>();
+                    rf.check(parsed)?
+                }
+                Some(o) => return Err(rf.err(format!("`plant` expected string/array, found {}", o.value.type_name()))),
             };
             let (due, slug) = (rf.opt_str("due")?, rf.opt_str("slug")?);
             rf.finish()?;
@@ -698,8 +734,8 @@ impl Counterexamples {
 fn parse_plant(file: &str, row: &str, tbl: Table) -> Result<Plant, RegistryError> {
     let mut rf = Rf::new(tbl, format!("{row}.plant"), file, Some(row));
     let id = rf.req_str("id")?;
-    if id.is_empty() { return Err(RegistryError::new(file, Some(row), "plant `id` must be non-empty")); }
-    let kind = match rf.opt_str("kind")? { Some(s) => Some(ControlKind::parse(&s, file, row)?), None => None };
+    if id.is_empty() { return Err(rf.err("plant `id` must be non-empty")); }
+    let kind = match rf.opt_str("kind")? { Some(s) => Some(rf.check(ControlKind::parse(&s, file, row))?), None => None };
     let p = Plant {
         id, kind, target: rf.opt_str("target")?, defect: rf.opt_str("defect")?, expect: rf.opt_str("expect")?,
         gates: rf.opt_strs("gates")?, feature: rf.opt_str("feature")?, fixture: rf.opt_str("fixture")?,

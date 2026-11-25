@@ -214,8 +214,9 @@ fn collect_lint_targets(root: &Path, dir: &Path, out: &mut Vec<PathBuf>) -> Resu
             let name = path.file_name().and_then(|s| s.to_str()).unwrap_or("");
             if matches!(
                 name,
-                ".git" | "target" | ".beads" | "planning" | "node_modules" | ".ntm"
-            ) {
+                ".git" | "target" | ".beads" | "planning" | "node_modules" | ".ntm" | ".rch-tmp"
+            ) || name.starts_with(".rch-target")
+            {
                 continue;
             }
             if rel == "docs"
@@ -236,7 +237,8 @@ fn collect_lint_targets(root: &Path, dir: &Path, out: &mut Vec<PathBuf>) -> Resu
                 && name.ends_with(".md")
                 && name != "COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md"
                 && name != "AGENTS.md"
-                && name != "CLAUDE.md";
+                && name != "CLAUDE.md"
+                && name != "CHANGELOG.md";
             if is_doc || is_contract || is_scratch_doc {
                 out.push(path);
             }

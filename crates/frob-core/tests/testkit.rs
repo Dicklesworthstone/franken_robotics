@@ -679,17 +679,7 @@ rule_ids = ["GATE-TRAC-04"]
 defined_in = "§18"
 label = "DESIGN"
 control_kind = "planted-input"
-plant = [{
-  id = "N18-CX:cx-176",
-  kind = "planted-input",
-  target = "frob-contact::film",
-  defect = "disable thickness limit",
-  expect = "FROB-REF-301",
-  gates = ["GATE-TRAC-04"],
-  feature = "cx-176",
-  fixture = "fixtures/film_4mm.toml",
-  removed_check = "film thickness limit"
-}]
+plant = [{ id = "N18-CX:cx-176", kind = "planted-input", target = "frob-contact::film", defect = "disable thickness limit", expect = "FROB-REF-301", gates = ["GATE-TRAC-04"], feature = "cx-176", fixture = "fixtures/film_4mm.toml", removed_check = "film thickness limit" }]
 slug = "trac-film-limit"
 "#;
     let cxs = Counterexamples::parse_str(src, "synthetic-cx.toml").expect("parse counterexamples");
@@ -916,10 +906,80 @@ fn gate_report_no_claim() {
 
 #[test]
 fn gate_line_has_no_constructor() {
-    // Compile-fail proof using the live rustc + already-built frob_core rlib in deps/.
+    // Compile-fail proof using the live rustc + already-built frob_core rlib.
+    // Supports both classic Cargo layout (`<profile>/deps/`) and nightly
+    // build-dir layout (`<profile>/build/<crate>/<unit>/out/`).
     let exe = env::current_exe().expect("current_exe");
-    let deps_dir = exe.parent().expect("deps dir");
+    let exe_dir = exe.parent().expect("exe parent dir");
     let scratch = scratch_dir("gate-line-compile-fail");
+
+    // Locate `<target>/<profile>` from either `.../deps/<exe>` or `.../build/<crate>/<unit>/out/<exe>`.
+    let mut profile_dir = exe_dir.to_path_buf();
+    for anc in exe_dir.ancestors() {
+        let name = anc.file_name().and_then(|s| s.to_str()).unwrap_or("");
+        if name == "deps" || name == "build" {
+            if let Some(parent) = anc.parent() {
+                profile_dir = parent.to_path_buf();
+            }
+            break;
+        }
+    }
+
+    let mut dep_dirs: Vec<PathBuf> = Vec::new();
+    let mut push_if_has_artifacts = |dir: PathBuf| {
+        if let Ok(rd) = fs::read_dir(&dir) {
+            let has_lib = rd.flatten().any(|e| {
+                let p = e.path();
+                matches!(
+                    p.extension().and_then(|s| s.to_str()),
+                    Some("rlib" | "rmeta" | "so" | "dylib")
+                )
+            });
+            if has_lib {
+                dep_dirs.push(dir);
+            }
+        }
+    };
+    push_if_has_artifacts(exe_dir.to_path_buf());
+    push_if_has_artifacts(profile_dir.join("deps"));
+    let build_root = profile_dir.join("build");
+    if build_root.is_dir()
+        && let Ok(crates_rd) = fs::read_dir(&build_root)
+    {
+        for crate_ent in crates_rd.flatten() {
+            let crate_path = crate_ent.path();
+            if !crate_path.is_dir() {
+                continue;
+            }
+            if let Ok(units_rd) = fs::read_dir(&crate_path) {
+                for unit_ent in units_rd.flatten() {
+                    let out_dir = unit_ent.path().join("out");
+                    if out_dir.is_dir() {
+                        push_if_has_artifacts(out_dir);
+                    }
+                }
+            }
+        }
+    }
+    dep_dirs.sort();
+    dep_dirs.dedup();
+
+    let mut candidates: Vec<PathBuf> = Vec::new();
+    for dir in &dep_dirs {
+        if let Ok(rd) = fs::read_dir(dir) {
+            for entry in rd.flatten() {
+                let p = entry.path();
+                let fname = p.file_name().and_then(|s| s.to_str()).unwrap_or("");
+                if (fname.starts_with("libfrob_core-") || fname == "libfrob_core.rlib")
+                    && fname.ends_with(".rlib")
+                {
+                    candidates.push(p);
+                }
+            }
+        }
+    }
+    candidates.sort();
+    candidates.dedup();
 
     // 1. Positive control probe: locate the exact libfrob_core-*.rlib compiled with test-support.
     let probe_rs = scratch.join("probe.rs");
@@ -931,28 +991,39 @@ fn gate_line_has_no_constructor() {
 
     let rustc = env::var("RUSTC").unwrap_or_else(|_| "rustc".to_owned());
     let mut matched_rlib: Option<PathBuf> = None;
-    for entry in fs::read_dir(deps_dir).expect("read deps dir").flatten() {
-        let p = entry.path();
-        let fname = p.file_name().and_then(|s| s.to_str()).unwrap_or("");
-        if fname.starts_with("libfrob_core-") && fname.ends_with(".rlib") {
-            let probe_out = scratch.join("libprobe.rlib");
-            let status = Command::new(&rustc)
-                .args(["--crate-type", "lib", "--edition", "2024", "--extern"])
-                .arg(format!("frob_core={}", p.display()))
-                .arg("-L")
-                .arg(format!("dependency={}", deps_dir.display()))
-                .arg(&probe_rs)
-                .arg("-o")
-                .arg(&probe_out)
-                .output()
-                .expect("run rustc probe");
-            if status.status.success() {
-                matched_rlib = Some(p);
-                break;
-            }
+    let mut probe_diags = Vec::new();
+    for p in &candidates {
+        let probe_out = scratch.join("libprobe.rlib");
+        let mut cmd = Command::new(&rustc);
+        cmd.args(["--crate-type", "lib", "--edition", "2024", "--extern"])
+            .arg(format!("frob_core={}", p.display()));
+        for d in &dep_dirs {
+            cmd.arg("-L").arg(format!("dependency={}", d.display()));
         }
+        let status = cmd
+            .arg(&probe_rs)
+            .arg("-o")
+            .arg(&probe_out)
+            .output()
+            .expect("run rustc probe");
+        if status.status.success() {
+            matched_rlib = Some(p.clone());
+            break;
+        }
+        probe_diags.push(format!(
+            "{} (exit {:?}): {}",
+            p.display(),
+            status.status.code(),
+            String::from_utf8_lossy(&status.stderr).trim()
+        ));
     }
-    let rlib = matched_rlib.expect("must find compiled libfrob_core-*.rlib with test-support");
+    let rlib = matched_rlib.unwrap_or_else(|| {
+        panic!(
+            "must find compiled libfrob_core-*.rlib with test-support under {} (rustc={rustc}; dep_dirs={}; tried={probe_diags:?})",
+            profile_dir.display(),
+            dep_dirs.len()
+        )
+    });
 
     // 2. Negative compile-fail check: constructing GateLine by hand MUST fail to compile.
     let bad_rs = scratch.join("bad_gate_line.rs");
@@ -965,11 +1036,14 @@ fn gate_line_has_no_constructor() {
     )
     .expect("write bad_gate_line.rs");
     let bad_out = scratch.join("libbad.rlib");
-    let res = Command::new(&rustc)
+    let mut bad_cmd = Command::new(&rustc);
+    bad_cmd
         .args(["--crate-type", "lib", "--edition", "2024", "--extern"])
-        .arg(format!("frob_core={}", rlib.display()))
-        .arg("-L")
-        .arg(format!("dependency={}", deps_dir.display()))
+        .arg(format!("frob_core={}", rlib.display()));
+    for d in &dep_dirs {
+        bad_cmd.arg("-L").arg(format!("dependency={}", d.display()));
+    }
+    let res = bad_cmd
         .arg(&bad_rs)
         .arg("-o")
         .arg(&bad_out)

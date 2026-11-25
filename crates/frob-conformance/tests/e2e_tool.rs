@@ -896,7 +896,12 @@ fn lint_catches_transcript_priv_escaped_json_recursive_artifacts_dup_summary_and
     emit_pass_assert(&log3, "STD-E2E", "a1", Some("GATE-MISSING-CC"));
     emit_summary(&log3, "STD-E2E", "of-record");
     let text3 = fs::read_to_string(&log3).unwrap();
-    let tampered3 = text3.replacen(r#","controls_caught":0"#, "", 1);
+    let tampered3 = text3.replacen(
+        r#"{"id":"GATE-MISSING-CC","measured_ok":true,"controls_caught":0}"#,
+        r#"{"id":"GATE-MISSING-CC","measured_ok":true}"#,
+        1,
+    );
+    assert_ne!(tampered3, text3, "tamper must remove per-gate controls_caught");
     fs::write(&log3, tampered3).unwrap();
     let f3 = lint_log_file(&log3, &[], None).unwrap();
     assert!(

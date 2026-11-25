@@ -338,6 +338,9 @@ impl Fields {
     ///
     /// Use it for value-level rejections (`return Err(f.fail(err))`). The drop guard then
     /// treats the table like one whose accessor failed; `finish` is not required on this path.
+    /// Discarding the returned error would disarm the guard and lose the rejection, so the
+    /// result must be used.
+    #[must_use = "return the error: `return Err(f.fail(err))`"]
     pub fn fail<E>(&mut self, err: E) -> E {
         self.failed = true;
         err
@@ -2267,8 +2270,9 @@ dependencies = [
         }
         assert_eq!(load(b"a = 3\n"), Ok(3));
         assert_eq!(load(b"a = -1\n"), Err("`a` must be non-negative, got -1".to_owned()));
-        // `finish` still refuses an unknown key on the success path.
-        assert!(load(b"a = 3\nb = 1\n").is_err());
+        // `finish` still refuses an unknown key on the success path, and names it.
+        let unknown = load(b"a = 3\nb = 1\n").expect_err("an unknown key must be refused");
+        assert!(unknown.contains("unknown key `b` in table `demo`"), "{unknown}");
     }
 
     /// Negative control for `fail`: the same rejection returned WITHOUT `fail` still trips

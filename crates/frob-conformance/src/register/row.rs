@@ -508,11 +508,11 @@ impl BaseDocument {
             .require_str("schema")
             .map_err(|e| BaseRowError::new(file, None, e.to_string()))?;
         if schema != GATES_SCHEMA {
-            return Err(BaseRowError::new(
+            return Err(top.fail(BaseRowError::new(
                 file,
                 None,
                 format!("unexpected schema `{schema}` (expected `{GATES_SCHEMA}`)"),
-            ));
+            )));
         }
         let raw_gates = top
             .opt_array("gate")
@@ -764,42 +764,40 @@ fn parse_gate_row(tbl: Table, idx: usize, file: &str) -> Result<GateBase, BaseRo
 
     let id = f.require_str("id").map_err(err)?;
     if id.trim().is_empty() {
-        return Err(BaseRowError::new(
+        return Err(f.fail(BaseRowError::new(
             file,
             Some(&label),
             "`id` must be non-empty",
-        ));
+        )));
     }
 
     let kind = match f.opt_str("kind").map_err(err)? {
-        Some(raw) => Some(BaseKind::parse(&raw, file, &id)?),
+        Some(raw) => Some(BaseKind::parse(&raw, file, &id).map_err(|e| f.fail(e))?),
         None => None,
     };
 
     let section = f.require_str("section").map_err(err)?;
     if section.trim().is_empty() {
-        return Err(BaseRowError::new(
+        return Err(f.fail(BaseRowError::new(
             file,
             Some(&id),
             "`section` must be non-empty",
-        ));
+        )));
     }
 
     if kind == Some(BaseKind::Kill) {
         for &forbidden in KILL_FORBIDDEN_FIELDS {
             if f.take(forbidden).is_some() {
-                return Err(BaseRowError::new(
+                return Err(f.fail(BaseRowError::new(
                     file,
                     Some(&id),
-                    format!(
-                        "kill row must not carry measurement field `{forbidden}`"
-                    ),
-                ));
+                    format!("kill row must not carry measurement field `{forbidden}`"),
+                )));
             }
         }
         let decided = f.opt_str("decided").map_err(err)?;
         if let Some(ref d) = decided {
-            validate_milestone(d, file, &id, "decided")?;
+            validate_milestone(d, file, &id, "decided").map_err(|e| f.fail(e))?;
         }
         // Tolerate register-layer kill fields owned by N40-01 / N40-03 / NAB-10.
         for additive in [
@@ -831,57 +829,61 @@ fn parse_gate_row(tbl: Table, idx: usize, file: &str) -> Result<GateBase, BaseRo
 
     // Measured row (`admission` / `convergence` / `program` / untyped): all base fields required.
     let claim_sp = f.take("claim").ok_or_else(|| {
-        BaseRowError::new(file, Some(&id), "missing required base field `claim`")
+        f.fail(BaseRowError::new(
+            file,
+            Some(&id),
+            "missing required base field `claim`",
+        ))
     })?;
     let claim_raw = match claim_sp.value {
         Value::Str(s) => s,
         Value::Array(_) => {
-            return Err(BaseRowError::new(
+            return Err(f.fail(BaseRowError::new(
                 file,
                 Some(&id),
                 "`claim` must be a single string from the seven closed kinds, not an array",
-            ));
+            )));
         }
         other => {
-            return Err(BaseRowError::new(
+            return Err(f.fail(BaseRowError::new(
                 file,
                 Some(&id),
                 format!("`claim` must be a string, found {}", other.type_name()),
-            ));
+            )));
         }
     };
-    let claim = Claim::parse(&claim_raw, file, &id)?;
+    let claim = Claim::parse(&claim_raw, file, &id).map_err(|e| f.fail(e))?;
 
     let claim_id = f.require_str("claim_id").map_err(err)?;
     if claim_id.trim().is_empty() {
-        return Err(BaseRowError::new(
+        return Err(f.fail(BaseRowError::new(
             file,
             Some(&id),
             "`claim_id` must be non-empty",
-        ));
+        )));
     }
     let threshold = f.require_str("threshold").map_err(err)?;
     if threshold.trim().is_empty() {
-        return Err(BaseRowError::new(
+        return Err(f.fail(BaseRowError::new(
             file,
             Some(&id),
             "`threshold` must be non-empty",
-        ));
+        )));
     }
     let milestone = f.require_str("milestone").map_err(err)?;
-    validate_milestone(&milestone, file, &id, "milestone")?;
+    validate_milestone(&milestone, file, &id, "milestone").map_err(|e| f.fail(e))?;
 
     let tier_raw = f.require_array("tier").map_err(err)?;
-    let tier = str_list(file, &id, "tier", tier_raw)?;
+    let tier = str_list(file, &id, "tier", tier_raw).map_err(|e| f.fail(e))?;
     if tier.is_empty() {
-        return Err(BaseRowError::new(
+        return Err(f.fail(BaseRowError::new(
             file,
             Some(&id),
             "`tier` must contain at least one entry",
-        ));
+        )));
     }
     let controls_raw = f.require_array("controls").map_err(err)?;
-    let controls = str_list(file, &id, "controls", controls_raw)?;
+    let controls = str_list(file, &id, "controls", controls_raw).map_err(|e| f.fail(e))?;
 
     let raw_parts = f.opt_array("part").map_err(err)?.unwrap_or_default();
     let mut parts = Vec::with_capacity(raw_parts.len());
@@ -889,14 +891,14 @@ fn parse_gate_row(tbl: Table, idx: usize, file: &str) -> Result<GateBase, BaseRo
         let ptbl = match sp.value {
             Value::Table(t) => t,
             other => {
-                return Err(BaseRowError::new(
+                return Err(f.fail(BaseRowError::new(
                     file,
                     Some(&id),
                     format!("`part[{pidx}]` expected table, found {}", other.type_name()),
-                ));
+                )));
             }
         };
-        parts.push(parse_part_base(ptbl, file, &id, pidx)?);
+        parts.push(parse_part_base(ptbl, file, &id, pidx).map_err(|e| f.fail(e))?);
     }
 
     // Tolerate additive register-layer gate fields owned by N40-01 / NAB-10.
@@ -941,23 +943,25 @@ fn parse_part_base(
     let err = |e: toml::TomlError| BaseRowError::new(file, Some(&label), e.to_string());
 
     let milestone = f.require_str("milestone").map_err(err)?;
-    validate_milestone(&milestone, file, &label, "milestone")?;
+    validate_milestone(&milestone, file, &label, "milestone").map_err(|e| f.fail(e))?;
 
     let status_raw = f.require_str("status").map_err(err)?;
-    let status = Status::parse(&status_raw, file, &label)?;
+    let status = Status::parse(&status_raw, file, &label).map_err(|e| f.fail(e))?;
 
     let measured = f.require_str("measured").map_err(err)?;
     let ev_raw = f.require_array("evidence").map_err(err)?;
-    let evidence = str_list(file, &label, "evidence", ev_raw)?;
+    let evidence = str_list(file, &label, "evidence", ev_raw).map_err(|e| f.fail(e))?;
 
     let rec_tbl = f.require_table("recorded").map_err(err)?;
     let mut rf = Fields::new(rec_tbl, format!("{label}.recorded"));
     let recorded = Recorded {
-        date: rf.require_str("date").map_err(err)?,
-        session: rf.require_str("session").map_err(err)?,
-        implemented_by: rf.require_str("implemented_by").map_err(err)?,
+        date: rf.require_str("date").map_err(|e| f.fail(err(e)))?,
+        session: rf.require_str("session").map_err(|e| f.fail(err(e)))?,
+        implemented_by: rf
+            .require_str("implemented_by")
+            .map_err(|e| f.fail(err(e)))?,
     };
-    rf.finish().map_err(err)?;
+    rf.finish().map_err(|e| f.fail(err(e)))?;
 
     let detail = f.opt_str("detail").map_err(err)?;
     let kill_gate = f.opt_str("kill_gate").map_err(err)?;

@@ -1,24 +1,19 @@
 #![deny(unsafe_code)]
 
-//! Gauntlet Tier G3: metamorphic relations (`BD-025` v0 target).
+//! Gauntlet Tier G3: metamorphic relations (`BD-025`, `N38a-02`).
 //!
-//! Run as: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g3_metamorphic -- <gate|row>`.
+//! Run as: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g3_metamorphic -- <filter>`.
 
-/// Static entry descriptor for Tier G3 (empty at v0; populated as `N38a-14`..`N38a-18` land).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct TierEntry {
-    pub id: &'static str,
-    pub gate: &'static str,
-    pub site: &'static str,
-}
+use std::process::ExitCode;
 
-pub const TIER_NAME: &str = "g3_metamorphic";
-pub const TIER_CODE: &str = "G3";
-pub static ENTRIES: &[TierEntry] = &[];
+use frob_conformance::tiers::{builtins, tier_main};
 
-#[test]
-fn g3_metamorphic_self_test() {
-    assert_eq!(TIER_NAME, "g3_metamorphic");
-    assert_eq!(TIER_CODE, "G3");
-    assert!(ENTRIES.is_empty(), "v0 tier table starts empty");
+fn main() -> ExitCode {
+    match builtins::g3_table() {
+        Ok(table) => tier_main(&table),
+        Err(err) => {
+            eprintln!("g3_metamorphic table error: {err}");
+            ExitCode::from(101)
+        }
+    }
 }

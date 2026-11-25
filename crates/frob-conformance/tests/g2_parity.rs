@@ -1,24 +1,19 @@
 #![deny(unsafe_code)]
 
-//! Gauntlet Tier G2: parity with pinned oracles (`BD-025` v0 target).
+//! Gauntlet Tier G2: parity with pinned oracles (`BD-025`, `N38a-02`).
 //!
-//! Run as: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g2_parity -- <gate|row>`.
+//! Run as: `FROB_TEST_SEED=<seed> cargo test -p frob-conformance --test g2_parity -- <filter>`.
 
-/// Static entry descriptor for Tier G2 (empty at v0).
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct TierEntry {
-    pub id: &'static str,
-    pub gate: &'static str,
-    pub site: &'static str,
-}
+use std::process::ExitCode;
 
-pub const TIER_NAME: &str = "g2_parity";
-pub const TIER_CODE: &str = "G2";
-pub static ENTRIES: &[TierEntry] = &[];
+use frob_conformance::tiers::{builtins, tier_main};
 
-#[test]
-fn g2_parity_self_test() {
-    assert_eq!(TIER_NAME, "g2_parity");
-    assert_eq!(TIER_CODE, "G2");
-    assert!(ENTRIES.is_empty(), "v0 tier table starts empty");
+fn main() -> ExitCode {
+    match builtins::g2_table() {
+        Ok(table) => tier_main(&table),
+        Err(err) => {
+            eprintln!("g2_parity table error: {err}");
+            ExitCode::from(101)
+        }
+    }
 }

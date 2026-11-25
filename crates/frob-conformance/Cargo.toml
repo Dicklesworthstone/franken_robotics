@@ -45,6 +45,36 @@ path = "examples/pilots.rs"
 name = "validate_register"
 path = "examples/validate_register.rs"
 
+[[test]]
+name = "g0_laws"
+path = "tests/g0_laws.rs"
+harness = false
+
+[[test]]
+name = "g1_known_answers"
+path = "tests/g1_known_answers.rs"
+harness = false
+
+[[test]]
+name = "g2_parity"
+path = "tests/g2_parity.rs"
+harness = false
+
+[[test]]
+name = "g3_metamorphic"
+path = "tests/g3_metamorphic.rs"
+harness = false
+
+[[test]]
+name = "g4_chaos"
+path = "tests/g4_chaos.rs"
+harness = false
+
+[[test]]
+name = "g5_determinism"
+path = "tests/g5_determinism.rs"
+harness = false
+
 [features]
 default = []
 # Umbrella for workspace crate conformance facilities (BD-025 / ADR-GAUNT-03).

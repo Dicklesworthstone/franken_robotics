@@ -22,6 +22,9 @@
 //!   D0 TOML printer, and plan-time/revision count assertions (`N38b-18`; `frob-core`-only).
 //! - `tenfold`: ten-fold comparative benchmark harness skeleton, five harness records,
 //!   canonical bytes, append-only store, and dependency-free scorer boundary (`N39a-01`).
+//! - `tiers`: Gauntlet conformance tiers `G0`–`G5`, execution sites, deterministic selection
+//!   with tier filter extensions, same-run control execution, and hash-named canonical receipts
+//!   (`frob.gauntlet.receipt/1`, `N38a-02`).
 
 pub mod admission;
 pub mod compendium;
@@ -36,3 +39,4 @@ pub mod pilots;
 pub mod reasons;
 pub mod register;
 pub mod tenfold;
+pub mod tiers;

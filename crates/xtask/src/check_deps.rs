@@ -1,35 +1,43 @@
-//! `xtask check-deps`: rules L-2, L-4, L-5, L-9, and proof-boundary edges (bead BD-003).
+//! `xtask check-deps`: rules L-2, L-4, L-5, L-9, proof-boundary edges (bead BD-003),
+//! and suite deny rules + posture register validation (bead N33c-09).
 //!
-//! Enforces seven ordered steps over declared (`--no-deps`) and resolved `cargo metadata`
-//! reads plus `franken-stack.lock` (`stack::lock::load`, N33a-03) and posture-to-graph
-//! rules (`stack::posture::edge_allowed`, N33a-01):
+//! Enforces ordered steps over declared (`--no-deps`), resolved, and `--all-features`
+//! resolved `cargo metadata` reads, committed `Cargo.lock` files, `franken-stack.lock`
+//! (`stack::lock::load`, N33a-03), `registries/siblings.toml` (`frob.siblings/1`, N33c-09),
+//! and posture-to-graph rules (`stack::posture::edge_allowed`, N33a-01):
 //! 1. L-2 (`fsim.volatile-edge`, `L-2.fs-qty-direct`, `L-2.airlock-reexport`)
 //! 2. L-4 (`L-4.foundation-confined`, `L-4.edge-spec`) via `stack::posture::edge_allowed`
 //! 3. L-5 (`L-5.third-party`, `L-5.serde-outside-boundary`, `L-5.serde-not-exact`)
 //! 4. L-5 (`L-5.forbidden`, `L-5.python-outside-bindings`, core `links`/`cc`/`cmake`/`bindgen`)
 //! 5. L-9 (`L-9.cert-has-deps`, `L-9.cert-dependent`)
 //! 6. `edge.forbidden` proof-boundary table (only when layers permit the edge)
-//! 7. Closure `facts` (total/registry package counts and transitive forbidden hits with one path)
+//! 7. Suite deny rules (`asup.v0_5_0`, `ftui.executor-feature`, `suite.forbidden-package`,
+//!    `suite.egg`) across default + `--all-features` resolved graphs and `Cargo.lock` files
+//! 8. Closure `facts` (total/registry package counts and transitive forbidden hits with one path)
 //!
 //! Determinism class D0: findings and facts are sorted deterministically. Compiles nothing
 //! and touches no network.
 
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
+use std::fmt;
 use std::fs;
 use std::path::{Path, PathBuf};
+
+use frob_core::registry::toml::{self, Fields, Table, Value};
 
 use crate::check_layers::{GraphEdge, check_edges};
 use crate::cli::{CheckContext, CheckError, CheckOutcome};
 use crate::crate_map::{CRATE_MAP, CrateRow, Finding, Layer, lookup_in};
 use crate::metadata::{
     DeclaredDep, DepKind, PackageMeta, ResolvedPackage, ResolvedWorkspace, WorkspaceKind,
-    WorkspaceRoot, load_declared_metadata, load_resolved_metadata, normalize_rel_path,
+    WorkspaceRoot, load_declared_metadata, load_resolved_metadata,
+    load_resolved_metadata_all_features, normalize_rel_path,
 };
 use crate::report::FactValue;
-use crate::stack::lock::{self, Foundation, StackLock};
+use crate::stack::lock::{self, Foundation, RelPath, StackLock};
 use crate::stack::posture::{
-    BEDROCK_DIRECT_CRATES, DepSpec, EdgeDecision, EdgeDenial, EdgeKind, check_edge, edge_allowed,
-    is_exact_semver,
+    BEDROCK_DIRECT_CRATES, DepSpec, EdgeDecision, EdgeDenial, EdgeKind, Posture, check_edge,
+    edge_allowed, is_exact_semver,
 };
 
 /// Rule identifier for a FrankenSim volatile dependency outside `frob-fsim` (INV-SUITE-01).
@@ -58,8 +66,16 @@ pub const RULE_L9_CERT_HAS_DEPS: &str = "L-9.cert-has-deps";
 pub const RULE_L9_CERT_DEPENDENT: &str = "L-9.cert-dependent";
 /// Rule identifier for a proof-boundary forbidden edge that layers alone would admit.
 pub const RULE_EDGE_FORBIDDEN: &str = "edge.forbidden";
+/// Rule identifier for any `asupersync` package on the `0.5.*` line in a resolved graph or lockfile (N33c-09).
+pub const RULE_ASUP_V0_5_0: &str = "asup.v0_5_0";
+/// Rule identifier for `frankentui` resolving `asupersync-executor` or used outside `frob-tui` (N33c-09).
+pub const RULE_FTUI_EXECUTOR_FEATURE: &str = "ftui.executor-feature";
+/// Rule identifier for any package from the eight never-dependency siblings in a resolved graph (N33c-09).
+pub const RULE_SUITE_FORBIDDEN_PACKAGE: &str = "suite.forbidden-package";
+/// Rule identifier for the third-party `egg` crate in any resolved graph (arrives via frankenjax, N33c-09).
+pub const RULE_SUITE_EGG: &str = "suite.egg";
 
-/// Complete list of finding rule identifiers owned by `check-deps` (BD-003 core rules).
+/// Complete list of finding rule identifiers owned by `check-deps` (BD-003 + N33c-09).
 pub const OWNED_RULES: &[&str] = &[
     RULE_FSIM_VOLATILE_EDGE,
     RULE_L2_FS_QTY_DIRECT,
@@ -74,7 +90,573 @@ pub const OWNED_RULES: &[&str] = &[
     RULE_L9_CERT_HAS_DEPS,
     RULE_L9_CERT_DEPENDENT,
     RULE_EDGE_FORBIDDEN,
+    RULE_ASUP_V0_5_0,
+    RULE_FTUI_EXECUTOR_FEATURE,
+    RULE_SUITE_FORBIDDEN_PACKAGE,
+    RULE_SUITE_EGG,
 ];
+
+/// Schema identifier for the shared sibling register (`N33c-07` / `N33c-09`).
+pub const SIBLINGS_SCHEMA: &str = "frob.siblings/1";
+/// Repository-relative path of the sibling register.
+pub const SIBLINGS_REL_PATH: &str = "registries/siblings.toml";
+/// Forbidden optional feature on `ftui-runtime` / `frankentui` crates (pulls `asupersync =0.5.0`).
+pub const FTUI_FORBIDDEN_FEATURE: &str = "asupersync-executor";
+
+/// Specification of one never-dependency sibling enforced by `suite.forbidden-package` (N33c-09).
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct ForbiddenSiblingSpec {
+    pub name: &'static str,
+    pub rel_path: &'static str,
+    /// Package-name patterns matching registry-consumed crates of this sibling.
+    pub pkg_patterns: &'static [&'static str],
+}
+
+/// Authoritative table of the eight never-dependency siblings (`N33c-09`).
+pub const NEVER_DEPENDENCY_SIBLINGS: &[ForbiddenSiblingSpec] = &[
+    ForbiddenSiblingSpec {
+        name: "frankenjax",
+        rel_path: "../frankenjax",
+        pkg_patterns: &["frankenjax", "frankenjax-*", "fj-*"],
+    },
+    ForbiddenSiblingSpec {
+        name: "franken_threed",
+        rel_path: "../franken_threed",
+        pkg_patterns: &["franken_threed", "franken-threed", "f3d-*"],
+    },
+    ForbiddenSiblingSpec {
+        name: "franken_textiles",
+        rel_path: "../franken_textiles",
+        pkg_patterns: &["franken_textiles", "franken-textiles", "ftx-*"],
+    },
+    ForbiddenSiblingSpec {
+        name: "franken_firmware",
+        rel_path: "../franken_firmware",
+        pkg_patterns: &[
+            "franken_firmware",
+            "franken-firmware",
+            "franken-alloc-probe",
+            "franken-atomic",
+            "franken-baseline",
+            "franken-board-profile",
+            "franken-clock",
+            "franken-codec",
+            "franken-control",
+            "franken-dsp",
+            "franken-hal",
+            "franken-hal-linux",
+            "franken-journal",
+            "franken-platform",
+            "franken-platform-linux",
+            "franken-session",
+            "franken-speaker",
+            "franken-stream",
+            "franken-test-support",
+            "franken-update",
+        ],
+    },
+    ForbiddenSiblingSpec {
+        name: "franken_networkx",
+        rel_path: "../franken_networkx",
+        pkg_patterns: &["franken_networkx", "franken-networkx", "fnx-*"],
+    },
+    ForbiddenSiblingSpec {
+        name: "franken_markdown",
+        rel_path: "../franken_markdown",
+        pkg_patterns: &["franken_markdown", "franken-markdown", "fmd", "fmd-*"],
+    },
+    ForbiddenSiblingSpec {
+        name: "frankenmermaid",
+        rel_path: "../frankenmermaid",
+        pkg_patterns: &[
+            "frankenmermaid",
+            "frankenmermaid-*",
+            "fm-cli",
+            "fm-core",
+            "fm-layout",
+            "fm-parser",
+            "fm-regression-harness",
+            "fm-render-canvas",
+            "fm-render-svg",
+            "fm-render-term",
+            "fm-wasm",
+        ],
+    },
+    ForbiddenSiblingSpec {
+        name: "franken_surveillance_system",
+        rel_path: "../franken_surveillance_system",
+        pkg_patterns: &[
+            "franken_surveillance_system",
+            "franken-surveillance-system",
+            "fss-*",
+        ],
+    },
+];
+
+/// Cargo dependency policy recorded for a sibling row in `registries/siblings.toml` (`N33c-09`).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub enum CargoPolicy {
+    /// Policy columns intentionally empty (foundation posture lives in `franken-stack.lock`).
+    Empty,
+    Allowed,
+    DevOnly,
+    Never,
+}
+
+impl CargoPolicy {
+    #[must_use]
+    pub const fn as_str(self) -> &'static str {
+        match self {
+            Self::Empty => "",
+            Self::Allowed => "allowed",
+            Self::DevOnly => "dev-only",
+            Self::Never => "never",
+        }
+    }
+
+    pub fn parse(raw: &str, row: &str) -> Result<Self, SiblingsLoadError> {
+        match raw {
+            "" => Ok(Self::Empty),
+            "allowed" => Ok(Self::Allowed),
+            "dev-only" => Ok(Self::DevOnly),
+            "never" => Ok(Self::Never),
+            other => Err(SiblingsLoadError::new(format!(
+                "registries/siblings.toml row `{row}`: invalid `cargo` policy `{other}` (expected \"\", \"allowed\", \"dev-only\", or \"never\")"
+            ))),
+        }
+    }
+}
+
+/// One validated `[[sibling]]` row from `registries/siblings.toml` (`frob.siblings/1`).
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SiblingPolicyRow {
+    pub name: String,
+    pub path: String,
+    pub survey: bool,
+    pub posture: Vec<Posture>,
+    pub cargo: CargoPolicy,
+    pub allowed_in: Vec<String>,
+    pub forbidden_features: Vec<String>,
+    pub reason: String,
+    pub fallback: String,
+}
+
+impl SiblingPolicyRow {
+    #[must_use]
+    pub fn has_policy(&self) -> bool {
+        !self.posture.is_empty()
+            || self.cargo != CargoPolicy::Empty
+            || !self.allowed_in.is_empty()
+            || !self.forbidden_features.is_empty()
+            || !self.reason.is_empty()
+            || !self.fallback.is_empty()
+    }
+}
+
+/// Parsed and schema-validated `registries/siblings.toml` register (`frob.siblings/1`).
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SiblingsRegister {
+    pub schema: String,
+    pub siblings: Vec<SiblingPolicyRow>,
+}
+
+impl SiblingsRegister {
+    #[must_use]
+    pub fn find(&self, name: &str) -> Option<&SiblingPolicyRow> {
+        self.siblings.iter().find(|r| r.name == name)
+    }
+}
+
+/// Load or cross-validation error for `registries/siblings.toml`.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct SiblingsLoadError {
+    pub message: String,
+}
+
+impl SiblingsLoadError {
+    #[must_use]
+    pub fn new(message: impl Into<String>) -> Self {
+        Self {
+            message: message.into(),
+        }
+    }
+}
+
+impl fmt::Display for SiblingsLoadError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.write_str(&self.message)
+    }
+}
+
+impl std::error::Error for SiblingsLoadError {}
+
+/// Load and strictly validate `registries/siblings.toml` from `path`.
+pub fn load_siblings_register(path: &Path) -> Result<SiblingsRegister, SiblingsLoadError> {
+    let bytes = fs::read(path).map_err(|e| {
+        SiblingsLoadError::new(format!("failed to read `{}`: {e}", path.display()))
+    })?;
+    parse_siblings_register_bytes(&bytes, &path.display().to_string())
+}
+
+/// Strictly parse and validate `registries/siblings.toml` (`frob.siblings/1`) bytes using
+/// `frob_core::registry::toml` (D0; zero I/O).
+pub fn parse_siblings_register_bytes(
+    bytes: &[u8],
+    source_label: &str,
+) -> Result<SiblingsRegister, SiblingsLoadError> {
+    let root = toml::parse(bytes).map_err(|e| {
+        SiblingsLoadError::new(format!("{source_label}: TOML parse error: {e}"))
+    })?;
+    let mut top = Fields::new(root, source_label);
+    let raw_schema = top
+        .opt_str("schema")
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label}: {e}")))?;
+    let raw_siblings = top
+        .opt_array("sibling")
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label}: {e}")))?;
+    top.finish()
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label}: {e}")))?;
+
+    let schema = raw_schema.ok_or_else(|| {
+        SiblingsLoadError::new(format!(
+            "{source_label}: missing required top-level `schema = \"{SIBLINGS_SCHEMA}\"`"
+        ))
+    })?;
+    if schema != SIBLINGS_SCHEMA {
+        return Err(SiblingsLoadError::new(format!(
+            "{source_label}: expected schema `{SIBLINGS_SCHEMA}`, got `{schema}`"
+        )));
+    }
+
+    let items = raw_siblings.ok_or_else(|| {
+        SiblingsLoadError::new(format!(
+            "{source_label}: missing required `[[sibling]]` array of tables"
+        ))
+    })?;
+
+    let mut siblings = Vec::with_capacity(items.len());
+    let mut seen_names = BTreeSet::new();
+    for (idx, sp) in items.into_iter().enumerate() {
+        let fallback_row = format!("sibling[{idx}]");
+        let Value::Table(tbl) = sp.value else {
+            return Err(SiblingsLoadError::new(format!(
+                "{source_label}: {fallback_row} must be a table, found {}",
+                sp.value.type_name()
+            )));
+        };
+        let row = parse_sibling_row(tbl, source_label, &fallback_row)?;
+        if !seen_names.insert(row.name.clone()) {
+            return Err(SiblingsLoadError::new(format!(
+                "{source_label}: duplicate sibling name `{}`",
+                row.name
+            )));
+        }
+        siblings.push(row);
+    }
+
+    Ok(SiblingsRegister { schema, siblings })
+}
+
+fn parse_sibling_row(
+    table: Table,
+    source_label: &str,
+    fallback_row: &str,
+) -> Result<SiblingPolicyRow, SiblingsLoadError> {
+    let mut f = Fields::new(table, fallback_row);
+    let raw_name = f
+        .opt_str("name")
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label}: {e}")))?;
+    let row_label = raw_name.as_deref().unwrap_or(fallback_row).to_owned();
+
+    let raw_path = f
+        .opt_str("path")
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label} ({row_label}): {e}")))?;
+    let raw_survey = f
+        .opt_bool("survey")
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label} ({row_label}): {e}")))?;
+    let _raw_tc = f
+        .opt_str("toolchain_file")
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label} ({row_label}): {e}")))?;
+    let _raw_asup_manifest = f
+        .opt_str("asupersync_manifest")
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label} ({row_label}): {e}")))?;
+    let _raw_asup_key = f
+        .opt_str("asupersync_key")
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label} ({row_label}): {e}")))?;
+    let raw_watched = f
+        .opt_table("watched")
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label} ({row_label}): {e}")))?;
+    let raw_posture = f
+        .opt_array("posture")
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label} ({row_label}): {e}")))?;
+    let raw_cargo = f
+        .opt_str("cargo")
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label} ({row_label}): {e}")))?;
+    let raw_allowed_in = f
+        .opt_array("allowed_in")
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label} ({row_label}): {e}")))?;
+    let raw_forbidden_features = f
+        .opt_array("forbidden_features")
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label} ({row_label}): {e}")))?;
+    let raw_reason = f
+        .opt_str("reason")
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label} ({row_label}): {e}")))?;
+    let raw_fallback = f
+        .opt_str("fallback")
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label} ({row_label}): {e}")))?;
+
+    // Finish Fields BEFORE domain validation so unknown keys fail cleanly and drop never trips.
+    f.finish()
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label} ({row_label}): {e}")))?;
+
+    let name = raw_name
+        .filter(|s| !s.trim().is_empty())
+        .ok_or_else(|| {
+            SiblingsLoadError::new(format!(
+                "{source_label}: {fallback_row} missing non-empty `name`"
+            ))
+        })?;
+    let path_str = raw_path
+        .filter(|s| !s.trim().is_empty())
+        .ok_or_else(|| {
+            SiblingsLoadError::new(format!(
+                "{source_label}: row `{name}` missing non-empty `path`"
+            ))
+        })?;
+    RelPath::parse(&path_str, &name).map_err(|e| {
+        SiblingsLoadError::new(format!("{source_label}: row `{name}` invalid `path`: {e}"))
+    })?;
+    let survey = raw_survey.ok_or_else(|| {
+        SiblingsLoadError::new(format!(
+            "{source_label}: row `{name}` missing required boolean `survey`"
+        ))
+    })?;
+
+    if let Some(watched_tbl) = raw_watched {
+        for (wk, wsp) in watched_tbl.into_inner() {
+            if !matches!(wsp.value, Value::Str(_)) {
+                return Err(SiblingsLoadError::new(format!(
+                    "{source_label}: row `{name}` `watched.{wk}` must be a string, found {}",
+                    wsp.value.type_name()
+                )));
+            }
+        }
+    }
+
+    let mut posture = Vec::new();
+    if let Some(items) = raw_posture {
+        for sp in items {
+            let Value::Str(s) = sp.value else {
+                return Err(SiblingsLoadError::new(format!(
+                    "{source_label}: row `{name}` `posture` elements must be strings, found {}",
+                    sp.value.type_name()
+                )));
+            };
+            let parsed = Posture::parse(&s, &name).map_err(|e| {
+                SiblingsLoadError::new(format!("{source_label}: {e}"))
+            })?;
+            posture.push(parsed);
+        }
+    }
+
+    let cargo = CargoPolicy::parse(raw_cargo.as_deref().unwrap_or(""), &name)?;
+    let allowed_in = parse_sibling_str_vec(raw_allowed_in, source_label, &name, "allowed_in")?;
+    let forbidden_features = parse_sibling_str_vec(
+        raw_forbidden_features,
+        source_label,
+        &name,
+        "forbidden_features",
+    )?;
+    let reason = raw_reason.unwrap_or_default();
+    let fallback = raw_fallback.unwrap_or_default();
+
+    let policy_active = !posture.is_empty()
+        || cargo != CargoPolicy::Empty
+        || !allowed_in.is_empty()
+        || !forbidden_features.is_empty()
+        || !fallback.is_empty()
+        || !survey;
+
+    if policy_active {
+        if cargo == CargoPolicy::Empty {
+            return Err(SiblingsLoadError::new(format!(
+                "{source_label}: row `{name}` sets policy fields or `survey = false` but leaves `cargo` empty"
+            )));
+        }
+        if reason.trim().is_empty() {
+            return Err(SiblingsLoadError::new(format!(
+                "{source_label}: row `{name}` is missing a non-empty `reason`"
+            )));
+        }
+    }
+
+    Ok(SiblingPolicyRow {
+        name,
+        path: path_str,
+        survey,
+        posture,
+        cargo,
+        allowed_in,
+        forbidden_features,
+        reason,
+        fallback,
+    })
+}
+
+fn parse_sibling_str_vec(
+    items: Option<Vec<frob_core::registry::toml::Spanned<Value>>>,
+    source_label: &str,
+    row_name: &str,
+    field: &str,
+) -> Result<Vec<String>, SiblingsLoadError> {
+    let Some(items) = items else {
+        return Ok(Vec::new());
+    };
+    let mut out = Vec::with_capacity(items.len());
+    for sp in items {
+        let Value::Str(s) = sp.value else {
+            return Err(SiblingsLoadError::new(format!(
+                "{source_label}: row `{row_name}` `{field}` elements must be strings, found {}",
+                sp.value.type_name()
+            )));
+        };
+        if s.trim().is_empty() {
+            return Err(SiblingsLoadError::new(format!(
+                "{source_label}: row `{row_name}` `{field}` must not contain empty strings"
+            )));
+        }
+        out.push(s);
+    }
+    Ok(out)
+}
+
+/// Cross-check populated policy rows in `registries/siblings.toml` against `franken-stack.lock`.
+///
+/// Any posture or Cargo-policy disagreement with the matching `[[foundation]]` row is a
+/// load error explicitly naming both `registries/siblings.toml` and `franken-stack.lock` (`N33c-09`).
+pub fn validate_siblings_against_stack_lock(
+    register: &SiblingsRegister,
+    stack_lock: &StackLock,
+) -> Result<(), SiblingsLoadError> {
+    for row in &register.siblings {
+        if !row.has_policy() {
+            continue;
+        }
+        let row_norm = normalize_pkg_ident(&row.name);
+        let Some(foundation) = stack_lock
+            .foundations
+            .iter()
+            .find(|f| f.name == row.name || normalize_pkg_ident(&f.name) == row_norm)
+        else {
+            continue;
+        };
+
+        let sib_postures: BTreeSet<Posture> = row.posture.iter().copied().collect();
+        let lock_postures: BTreeSet<Posture> = foundation.uses.iter().map(|u| u.posture).collect();
+        if sib_postures != lock_postures {
+            let sib_list: Vec<&str> = sib_postures.iter().map(|p| p.as_str()).collect();
+            let lock_list: Vec<&str> = lock_postures.iter().map(|p| p.as_str()).collect();
+            return Err(SiblingsLoadError::new(format!(
+                "posture disagreement for sibling `{}` (`{}`): `registries/siblings.toml` declares {:?} but `franken-stack.lock` declares {:?}",
+                row.name, foundation.id, sib_list, lock_list
+            )));
+        }
+
+        let lock_allows_normal_or_build = lock_postures.iter().any(|p| {
+            matches!(
+                p,
+                Posture::Consume | Posture::ConsumePath | Posture::BuildTime
+            )
+        });
+        let lock_allows_oracle = lock_postures.contains(&Posture::Oracle);
+        let cargo_ok = match row.cargo {
+            CargoPolicy::Empty => true,
+            CargoPolicy::Allowed => lock_allows_normal_or_build,
+            CargoPolicy::DevOnly => lock_allows_oracle && !lock_allows_normal_or_build,
+            CargoPolicy::Never => !lock_allows_normal_or_build && !lock_allows_oracle,
+        };
+        if !cargo_ok {
+            let lock_list: Vec<&str> = lock_postures.iter().map(|p| p.as_str()).collect();
+            return Err(SiblingsLoadError::new(format!(
+                "cargo policy disagreement for sibling `{}` (`{}`): `registries/siblings.toml` declares cargo = `{}` but `franken-stack.lock` declares postures {:?}",
+                row.name,
+                foundation.id,
+                row.cargo.as_str(),
+                lock_list
+            )));
+        }
+    }
+    Ok(())
+}
+
+/// Discover all present FrankenRobotics workspaces under `repo_root` (`core`, GPU annexes,
+/// `apps/`, `derive/`, `bindings/`, `worker/`), deliberately excluding `tests/admission/`.
+#[must_use]
+pub fn discover_workspace_roots(repo_root: &Path) -> Vec<WorkspaceRoot> {
+    let mut roots = vec![WorkspaceRoot::core(repo_root)];
+    let mut seen_rel = BTreeSet::new();
+    seen_rel.insert(String::new());
+
+    let mut push_if_manifest = |ws: WorkspaceRoot| {
+        if ws.has_manifest() && seen_rel.insert(ws.rel_dir.clone()) {
+            roots.push(ws);
+        }
+    };
+
+    // GPU annexes (prefer workspace root `spark/` if present, otherwise per-annex crates).
+    let spark_root = WorkspaceRoot::annex("spark", "spark", repo_root.join("spark"));
+    if spark_root.has_manifest() {
+        push_if_manifest(spark_root);
+    } else {
+        push_if_manifest(WorkspaceRoot::annex(
+            "spark-metal",
+            "spark/frob-spark-metal",
+            repo_root.join("spark/frob-spark-metal"),
+        ));
+        push_if_manifest(WorkspaceRoot::annex(
+            "spark-cuda",
+            "spark/frob-spark-cuda",
+            repo_root.join("spark/frob-spark-cuda"),
+        ));
+    }
+
+    push_if_manifest(WorkspaceRoot::link(
+        "apps",
+        "apps",
+        repo_root.join("apps"),
+        Vec::new(),
+    ));
+
+    let derive_root = WorkspaceRoot::annex("derive", "derive", repo_root.join("derive"));
+    if derive_root.has_manifest() {
+        push_if_manifest(derive_root);
+    } else {
+        push_if_manifest(WorkspaceRoot::annex(
+            "derive-frob-derive",
+            "derive/frob-derive",
+            repo_root.join("derive/frob-derive"),
+        ));
+    }
+
+    let bindings_root = WorkspaceRoot::annex("bindings", "bindings", repo_root.join("bindings"));
+    if bindings_root.has_manifest() {
+        push_if_manifest(bindings_root);
+    } else {
+        push_if_manifest(WorkspaceRoot::annex(
+            "bindings-gymnasium",
+            "bindings/frob-gymnasium",
+            repo_root.join("bindings/frob-gymnasium"),
+        ));
+    }
+
+    push_if_manifest(WorkspaceRoot::annex(
+        "worker",
+        "worker",
+        repo_root.join("worker"),
+    ));
+
+    roots
+}
 
 /// The six boundary crates permitted exact-pinned `serde` / `serde_json` direct dependencies (L-5).
 pub const SERDE_BOUNDARY_CRATES: &[&str] = &[
@@ -163,10 +745,16 @@ pub fn run_command(ctx: &CheckContext) -> Result<CheckOutcome, CheckError> {
             ctx.extra_args.join(" ")
         )));
     }
-    check_deps(&ctx.repo_root, &ctx.roots)
+    if ctx.roots.len() == 1 && ctx.roots[0].kind == WorkspaceKind::Core {
+        let roots = discover_workspace_roots(&ctx.repo_root);
+        check_deps(&ctx.repo_root, &roots)
+    } else {
+        check_deps(&ctx.repo_root, &ctx.roots)
+    }
 }
 
-/// Run `check-deps` over `roots` reading `<repo_root>/franken-stack.lock` via `stack::lock::load`.
+/// Run `check-deps` over `roots` reading `<repo_root>/franken-stack.lock` via `stack::lock::load`
+/// and `<repo_root>/registries/siblings.toml` (when present) via `load_siblings_register`.
 pub fn check_deps(repo_root: &Path, roots: &[WorkspaceRoot]) -> Result<CheckOutcome, CheckError> {
     let lock_path = repo_root.join("franken-stack.lock");
     if !lock_path.is_file() {
@@ -195,10 +783,22 @@ pub fn check_deps_with_config(
     crate_map: &[CrateRow],
     proof_boundary_edges: &[ForbiddenEdgeRow],
 ) -> Result<CheckOutcome, CheckError> {
+    let siblings_path = repo_root.join(SIBLINGS_REL_PATH);
+    let siblings = if siblings_path.is_file() {
+        let reg = load_siblings_register(&siblings_path)
+            .map_err(|err| CheckError::Fault(err.to_string()))?;
+        validate_siblings_against_stack_lock(&reg, stack_lock)
+            .map_err(|err| CheckError::Fault(err.to_string()))?;
+        Some(reg)
+    } else {
+        None
+    };
+
     let mut findings = Vec::new();
     let mut checked_workspaces = Vec::new();
     let mut absent_workspaces = Vec::new();
     let mut ws_facts_map: BTreeMap<String, FactValue> = BTreeMap::new();
+    let mut reported_lock_asup: BTreeSet<(String, String)> = BTreeSet::new();
 
     for ws in roots {
         if !ws.has_manifest() {
@@ -213,21 +813,68 @@ pub fn check_deps_with_config(
         }
 
         let declared = load_declared_metadata(repo_root, ws).map_err(metadata_err_to_check_err)?;
-        let resolved = load_resolved_metadata(repo_root, ws).map_err(metadata_err_to_check_err)?;
+        let resolved = match load_resolved_metadata(repo_root, ws) {
+            Ok(r) => r,
+            Err(err) => {
+                // If an orphaned `asupersync 0.5.*` entry in this workspace's Cargo.lock
+                // caused `--locked` to reject the lockfile, still report `asup.v0_5_0`
+                // directly rather than hiding the ban behind a lockfile usage error.
+                let lock_file = ws.root_dir.join("Cargo.lock");
+                let mut lock_findings = Vec::new();
+                if lock_file.is_file() {
+                    scan_single_lockfile_for_asup_0_5(
+                        repo_root,
+                        &lock_file,
+                        &reported_lock_asup,
+                        &mut lock_findings,
+                    );
+                }
+                if !lock_findings.is_empty() {
+                    findings.extend(lock_findings);
+                    checked_workspaces.push(ws.name.clone());
+                    continue;
+                }
+                return Err(metadata_err_to_check_err(err));
+            }
+        };
+        let resolved_all = load_resolved_metadata_all_features(repo_root, ws)
+            .map_err(metadata_err_to_check_err)?;
         checked_workspaces.push(ws.name.clone());
 
         evaluate_workspace(
+            ws,
             &declared.members,
             &resolved,
-            ws.kind,
             stack_lock,
+            siblings.as_ref(),
             crate_map,
             proof_boundary_edges,
             &mut findings,
         );
 
+        evaluate_suite_resolved_rules(
+            ws,
+            &declared.members,
+            &resolved,
+            stack_lock,
+            siblings.as_ref(),
+            &mut reported_lock_asup,
+            &mut findings,
+        );
+        evaluate_suite_resolved_rules(
+            ws,
+            &declared.members,
+            &resolved_all,
+            stack_lock,
+            siblings.as_ref(),
+            &mut reported_lock_asup,
+            &mut findings,
+        );
+
         ws_facts_map.insert(ws.name.clone(), build_workspace_closure_facts(&resolved));
     }
+
+    scan_lockfiles_for_asup_0_5(repo_root, roots, &reported_lock_asup, &mut findings);
 
     findings.sort();
     findings.dedup();
@@ -265,15 +912,18 @@ fn metadata_err_to_check_err(err: crate::metadata::MetadataLoadError) -> CheckEr
     }
 }
 
+#[allow(clippy::too_many_arguments)]
 fn evaluate_workspace(
+    ws: &WorkspaceRoot,
     members: &[PackageMeta],
     resolved: &ResolvedWorkspace,
-    ws_kind: WorkspaceKind,
     stack_lock: &StackLock,
+    siblings: Option<&SiblingsRegister>,
     crate_map: &[CrateRow],
     proof_boundary_edges: &[ForbiddenEdgeRow],
     findings: &mut Vec<Finding>,
 ) {
+    let ws_kind = ws.kind;
     let fsim_row = find_fsim_foundation(stack_lock);
 
     for pkg in members {
@@ -446,6 +1096,41 @@ fn evaluate_workspace(
                         ),
                     });
                     // DESIGN (BD-003): one finding per defect — no L-4 finding on this edge.
+                    continue;
+                }
+            }
+
+            // Step 7 direct-edge ownership (N33c-09):
+            // - `egg` is reported exclusively by `suite.egg` (no duplicate L-5.third-party).
+            if dep.name == "egg" {
+                continue;
+            }
+            // - Never-dependency siblings not explicitly admitted for this workspace in
+            //   `franken-stack.lock` are reported exclusively by `suite.forbidden-package`.
+            if let Some(sib) = match_never_dependency_dep(dep, siblings)
+                && !is_forbidden_sibling_admitted_in_workspace(&sib, ws, Some(pkg), stack_lock)
+            {
+                continue;
+            }
+            // - Direct frankentui dependencies outside `frob-tui` (or `allowed_in` of siblings.toml)
+            //   are refused by `ftui.executor-feature`.
+            if is_frankentui_dep(dep, siblings) {
+                let allowed_crates = ftui_allowed_crates(siblings);
+                if !allowed_crates.iter().any(|c| c == &pkg.name) {
+                    findings.push(Finding {
+                        rule: RULE_FTUI_EXECUTOR_FEATURE,
+                        subject: format!("{} -> {}", pkg.name, dep.name),
+                        path: pkg.rel_manifest.clone(),
+                        line: None,
+                        message: format!(
+                            "crate `{}` has a direct {} dependency on frankentui crate `{}`; frankentui crates may be direct dependencies of {:?} only (N33c-09)",
+                            pkg.name, dep.kind, dep.name, allowed_crates
+                        ),
+                        repair: format!(
+                            "remove `{}` from `{}`; restrict direct frankentui dependencies to `frob-tui` with default features off",
+                            dep.name, pkg.name
+                        ),
+                    });
                     continue;
                 }
             }
@@ -868,15 +1553,22 @@ fn is_frankensim_dep(dep: &DeclaredDep, fsim_row: Option<&Foundation>) -> bool {
 }
 
 fn match_foundation_row<'a>(dep: &DeclaredDep, stack_lock: &'a StackLock) -> Option<&'a Foundation> {
-    // 1. Sibling path prefix match (consume-path / build-time / oracle / path-form consume).
+    // 1. Sibling path prefix match (pick the longest / most-specific `row.path` so
+    //    `../asupersync/franken_kernel` matches `FD-FKER` rather than `FD-ASUP` `../asupersync`).
     if let Some(sib_path) = dep.sibling_rel_path.as_deref() {
+        let mut best: Option<(usize, &'a Foundation)> = None;
         for row in &stack_lock.foundations {
             if let Some(row_path) = row.path.as_ref() {
                 let rp = row_path.as_str().trim_end_matches('/');
-                if sib_path == rp || sib_path.starts_with(&format!("{rp}/")) {
-                    return Some(row);
+                if (sib_path == rp || sib_path.starts_with(&format!("{rp}/")))
+                    && best.is_none_or(|(best_len, _)| rp.len() > best_len)
+                {
+                    best = Some((rp.len(), row));
                 }
             }
+        }
+        if let Some((_, row)) = best {
+            return Some(row);
         }
     }
 
@@ -884,6 +1576,18 @@ fn match_foundation_row<'a>(dep: &DeclaredDep, stack_lock: &'a StackLock) -> Opt
     let dep_norm = normalize_pkg_ident(&dep.name);
     for row in &stack_lock.foundations {
         if row.name == dep.name || normalize_pkg_ident(&row.name) == dep_norm {
+            return Some(row);
+        }
+    }
+
+    // 2b. Known multi-crate sibling family prefixes (for registry-consumed or subcrate names).
+    if let Some(family_name) = foundation_family_for_package(&dep.name) {
+        let fam_norm = normalize_pkg_ident(family_name);
+        if let Some(row) = stack_lock
+            .foundations
+            .iter()
+            .find(|f| f.name == family_name || normalize_pkg_ident(&f.name) == fam_norm)
+        {
             return Some(row);
         }
     }
@@ -912,6 +1616,32 @@ fn match_foundation_row<'a>(dep: &DeclaredDep, stack_lock: &'a StackLock) -> Opt
         return find_fsim_foundation(stack_lock);
     }
 
+    None
+}
+
+fn foundation_family_for_package(pkg_name: &str) -> Option<&'static str> {
+    if pkg_name == "franken-kernel" || pkg_name == "franken-evidence" {
+        return Some("franken-kernel");
+    }
+    if pkg_name == "frankentui"
+        || pkg_name == "ftui"
+        || pkg_name == "doctor_frankentui"
+        || pkg_name.starts_with("ftui-")
+    {
+        return Some("frankentui");
+    }
+    if pkg_name.starts_with("fj-") {
+        return Some("frankenjax");
+    }
+    if pkg_name.starts_with("f3d-") {
+        return Some("franken_threed");
+    }
+    if pkg_name.starts_with("ftx-") {
+        return Some("franken_textiles");
+    }
+    if pkg_name.starts_with("fss-") {
+        return Some("franken_surveillance_system");
+    }
     None
 }
 
@@ -1395,4 +2125,609 @@ fn skip_char_lit(bytes: &[u8], open: usize, line: &mut u32) -> Option<usize> {
         return Some(after + 1);
     }
     None
+}
+
+// ============================================================================
+// Step 7: Suite deny rules (N33c-09) — resolved graphs, --all-features, Cargo.lock
+// ============================================================================
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct MatchedForbiddenSibling {
+    name: String,
+    rel_path: String,
+}
+
+#[must_use]
+fn is_asupersync_0_5(name: &str, version: &str) -> bool {
+    name == "asupersync" && (version == "0.5" || version.starts_with("0.5."))
+}
+
+fn is_frankentui_name(name: &str) -> bool {
+    name == "frankentui"
+        || name == "ftui"
+        || name == "doctor_frankentui"
+        || name.starts_with("ftui-")
+}
+
+fn sib_path_matches(sib_path: &str, root_rel: &str) -> bool {
+    let rp = root_rel.trim_end_matches('/');
+    sib_path == rp || sib_path.starts_with(&format!("{rp}/"))
+}
+
+fn is_frankentui_path(sib_path: &str, siblings: Option<&SiblingsRegister>) -> bool {
+    if sib_path_matches(sib_path, "../frankentui") {
+        return true;
+    }
+    siblings
+        .and_then(|reg| reg.find("frankentui"))
+        .is_some_and(|row| sib_path_matches(sib_path, &row.path))
+}
+
+fn is_frankentui_dep(dep: &DeclaredDep, siblings: Option<&SiblingsRegister>) -> bool {
+    if let Some(sp) = dep.sibling_rel_path.as_deref()
+        && is_frankentui_path(sp, siblings)
+    {
+        return true;
+    }
+    is_frankentui_name(&dep.name)
+}
+
+fn is_frankentui_package(pkg: &ResolvedPackage, siblings: Option<&SiblingsRegister>) -> bool {
+    if let Some(sp) = pkg.sibling_rel_path.as_deref()
+        && is_frankentui_path(sp, siblings)
+    {
+        return true;
+    }
+    is_frankentui_name(&pkg.name)
+}
+
+fn ftui_allowed_crates(siblings: Option<&SiblingsRegister>) -> Vec<String> {
+    if let Some(row) = siblings.and_then(|reg| reg.find("frankentui"))
+        && !row.allowed_in.is_empty()
+    {
+        return row.allowed_in.clone();
+    }
+    vec!["frob-tui".to_owned()]
+}
+
+fn ftui_forbidden_features(siblings: Option<&SiblingsRegister>) -> Vec<String> {
+    let mut feats = BTreeSet::new();
+    feats.insert(FTUI_FORBIDDEN_FEATURE.to_owned());
+    if let Some(row) = siblings.and_then(|reg| reg.find("frankentui")) {
+        for f in &row.forbidden_features {
+            feats.insert(f.clone());
+        }
+    }
+    feats.into_iter().collect()
+}
+
+fn match_never_dependency_by_path_or_name(
+    sib_path: Option<&str>,
+    pkg_name: &str,
+    siblings: Option<&SiblingsRegister>,
+) -> Option<MatchedForbiddenSibling> {
+    if let Some(sp) = sib_path {
+        for spec in NEVER_DEPENDENCY_SIBLINGS {
+            if sib_path_matches(sp, spec.rel_path) {
+                return Some(MatchedForbiddenSibling {
+                    name: spec.name.to_owned(),
+                    rel_path: spec.rel_path.to_owned(),
+                });
+            }
+        }
+        if let Some(reg) = siblings {
+            for row in &reg.siblings {
+                if row.cargo == CargoPolicy::Never && sib_path_matches(sp, &row.path) {
+                    return Some(MatchedForbiddenSibling {
+                        name: row.name.clone(),
+                        rel_path: row.path.clone(),
+                    });
+                }
+            }
+        }
+    }
+
+    for spec in NEVER_DEPENDENCY_SIBLINGS {
+        if matches_any_pattern(pkg_name, spec.pkg_patterns) {
+            return Some(MatchedForbiddenSibling {
+                name: spec.name.to_owned(),
+                rel_path: spec.rel_path.to_owned(),
+            });
+        }
+    }
+
+    if let Some(reg) = siblings {
+        let pkg_norm = normalize_pkg_ident(pkg_name);
+        for row in &reg.siblings {
+            if row.cargo == CargoPolicy::Never
+                && (row.name == pkg_name || normalize_pkg_ident(&row.name) == pkg_norm)
+            {
+                return Some(MatchedForbiddenSibling {
+                    name: row.name.clone(),
+                    rel_path: row.path.clone(),
+                });
+            }
+        }
+    }
+
+    None
+}
+
+fn match_never_dependency_dep(
+    dep: &DeclaredDep,
+    siblings: Option<&SiblingsRegister>,
+) -> Option<MatchedForbiddenSibling> {
+    match_never_dependency_by_path_or_name(dep.sibling_rel_path.as_deref(), &dep.name, siblings)
+}
+
+fn match_never_dependency_package(
+    pkg: &ResolvedPackage,
+    siblings: Option<&SiblingsRegister>,
+) -> Option<MatchedForbiddenSibling> {
+    match_never_dependency_by_path_or_name(pkg.sibling_rel_path.as_deref(), &pkg.name, siblings)
+}
+
+/// Fail-closed stack-lock exception for `suite.forbidden-package` (`N33c-09`):
+/// a workspace may carry a package of a never-dependency sibling ONLY if a
+/// `[[foundation]]` row in `franken-stack.lock` matches that sibling, names a
+/// non-`"none"` `admission_gate`, and declares a Cargo-allowing posture whose
+/// `confined_to` explicitly lists this workspace or the importing crate.
+fn is_forbidden_sibling_admitted_in_workspace(
+    sib: &MatchedForbiddenSibling,
+    ws: &WorkspaceRoot,
+    root_member: Option<&PackageMeta>,
+    stack_lock: &StackLock,
+) -> bool {
+    let sib_norm = normalize_pkg_ident(&sib.name);
+    let sib_path_trim = sib.rel_path.trim_end_matches('/');
+    let Some(foundation) = stack_lock.foundations.iter().find(|f| {
+        f.name == sib.name
+            || normalize_pkg_ident(&f.name) == sib_norm
+            || f.path
+                .as_ref()
+                .is_some_and(|p| p.as_str().trim_end_matches('/') == sib_path_trim)
+    }) else {
+        return false;
+    };
+
+    if foundation.admission_gate.is_none() {
+        return false;
+    }
+
+    foundation.uses.iter().any(|u| {
+        let cargo_allowing = matches!(
+            u.posture,
+            Posture::Consume | Posture::ConsumePath | Posture::BuildTime | Posture::Oracle
+        );
+        cargo_allowing && confinement_admits_workspace(&u.confined_to, ws, root_member)
+    })
+}
+
+fn confinement_admits_workspace(
+    confined_to: &[String],
+    ws: &WorkspaceRoot,
+    root_member: Option<&PackageMeta>,
+) -> bool {
+    let ws_rel = ws.rel_dir.trim_end_matches('/');
+    for entry in confined_to {
+        // Explicit workspace or crate admission is required; `"any"` never grants an exception.
+        if entry == "any" {
+            continue;
+        }
+        let trimmed = entry.trim_end_matches('/');
+        if trimmed.is_empty() {
+            continue;
+        }
+        if !ws_rel.is_empty()
+            && (trimmed == ws_rel || ws_rel.starts_with(&format!("{trimmed}/")))
+        {
+            return true;
+        }
+        if trimmed == ws.name {
+            return true;
+        }
+        if let Some(pkg) = root_member {
+            if trimmed == pkg.name || trimmed == pkg.rel_dir {
+                return true;
+            }
+            if entry.ends_with('/')
+                && !pkg.rel_dir.is_empty()
+                && (pkg.rel_dir.starts_with(entry.as_str()) || pkg.rel_dir == trimmed)
+            {
+                return true;
+            }
+        }
+    }
+    false
+}
+
+/// Evaluate the four suite deny rules (`asup.v0_5_0`, `ftui.executor-feature`,
+/// `suite.forbidden-package`, `suite.egg`) over one resolved workspace graph.
+fn evaluate_suite_resolved_rules(
+    ws: &WorkspaceRoot,
+    declared_members: &[PackageMeta],
+    resolved: &ResolvedWorkspace,
+    stack_lock: &StackLock,
+    siblings: Option<&SiblingsRegister>,
+    reported_lock_asup: &mut BTreeSet<(String, String)>,
+    findings: &mut Vec<Finding>,
+) {
+    let members_by_id: BTreeMap<&str, &PackageMeta> = declared_members
+        .iter()
+        .map(|m| (m.id.as_str(), m))
+        .collect();
+    let parent = build_resolved_bfs_parents(resolved);
+    let default_manifest = if ws.rel_dir.is_empty() {
+        "Cargo.toml".to_owned()
+    } else {
+        format!("{}/Cargo.toml", ws.rel_dir)
+    };
+    let ws_lock_rel = if ws.rel_dir.is_empty() {
+        "Cargo.lock".to_owned()
+    } else {
+        format!("{}/Cargo.lock", ws.rel_dir)
+    };
+
+    let forbidden_ftui_feats = ftui_forbidden_features(siblings);
+
+    let mut all_pkgs: Vec<(&str, &ResolvedPackage)> = resolved
+        .packages
+        .iter()
+        .map(|(id, pkg)| (id.as_str(), pkg))
+        .collect();
+    all_pkgs.sort_by(|a, b| {
+        a.1.name
+            .cmp(&b.1.name)
+            .then_with(|| a.1.version.cmp(&b.1.version))
+            .then_with(|| a.0.cmp(b.0))
+    });
+
+    for (pkg_id, pkg) in all_pkgs {
+        let (chain, root_member) =
+            reconstruct_chain(pkg_id, &parent, resolved, &members_by_id);
+        let chain_display = if chain.is_empty() {
+            format!("{} -> {}", ws.name, pkg.name)
+        } else {
+            chain.join(" -> ")
+        };
+        let manifest_rel = root_member
+            .map(|m| m.rel_manifest.clone())
+            .unwrap_or_else(|| default_manifest.clone());
+
+        // Rule 1: `asup.v0_5_0` — any `asupersync` package on the `0.5.*` line.
+        if is_asupersync_0_5(&pkg.name, &pkg.version) {
+            reported_lock_asup.insert((ws_lock_rel.clone(), pkg.version.clone()));
+            findings.push(Finding {
+                rule: RULE_ASUP_V0_5_0,
+                subject: format!("{chain_display}@{}", pkg.version),
+                path: manifest_rel.clone(),
+                line: None,
+                message: format!(
+                    "forbidden `asupersync` `{}` (0.5.* line) in workspace `{}` via dependency path `{chain_display}` (N33c-09, INV-SUITE-02)",
+                    pkg.version, ws.name
+                ),
+                repair: "remove the dependency path pulling `asupersync 0.5.*` and align on the single version pinned in franken-stack.lock".to_owned(),
+            });
+        }
+
+        // Rule 2: `ftui.executor-feature` — resolved feature set of any frankentui package
+        // must never enable `asupersync-executor` (or any forbidden feature in siblings.toml).
+        if is_frankentui_package(pkg, siblings)
+            && let Some(node) = resolved.nodes.get(pkg_id)
+        {
+            for feat in &forbidden_ftui_feats {
+                if node.features.iter().any(|f| f == feat) {
+                    findings.push(Finding {
+                        rule: RULE_FTUI_EXECUTOR_FEATURE,
+                        subject: format!("{chain_display} [{feat}]"),
+                        path: manifest_rel.clone(),
+                        line: None,
+                        message: format!(
+                            "frankentui package `{}` enables forbidden feature `{feat}` in workspace `{}` via dependency path `{chain_display}` (N33c-09)",
+                            pkg.name, ws.name
+                        ),
+                        repair: format!(
+                            "disable `{feat}` and set `default-features = false` on `{}` until FD-FTUI-01 lands",
+                            pkg.name
+                        ),
+                    });
+                }
+            }
+        }
+
+        // Rule 3: `suite.forbidden-package` — eight never-dependency siblings,
+        // fail-closed unless explicitly admitted for this workspace in `franken-stack.lock`.
+        if let Some(sib) = match_never_dependency_package(pkg, siblings)
+            && !is_forbidden_sibling_admitted_in_workspace(&sib, ws, root_member, stack_lock)
+        {
+            let loc = pkg
+                .sibling_rel_path
+                .as_deref()
+                .or(pkg.source.as_deref())
+                .unwrap_or(&sib.rel_path);
+            findings.push(Finding {
+                rule: RULE_SUITE_FORBIDDEN_PACKAGE,
+                subject: chain_display.clone(),
+                path: manifest_rel.clone(),
+                line: None,
+                message: format!(
+                    "never-dependency sibling `{}` package `{}` ({loc}) appears in workspace `{}` via dependency path `{chain_display}` without a workspace-scoped admission row in franken-stack.lock (N33c-09)",
+                    sib.name, pkg.name, ws.name
+                ),
+                repair: format!(
+                    "remove `{}` (`{}`) from workspace `{}`; never-dependency siblings remain outside Cargo graphs unless admitted with a gate in franken-stack.lock",
+                    pkg.name, sib.name, ws.name
+                ),
+            });
+        }
+
+        // Rule 5: `suite.egg` — third-party `egg` crate in any resolved graph.
+        if pkg.name == "egg" {
+            findings.push(Finding {
+                rule: RULE_SUITE_EGG,
+                subject: chain_display.clone(),
+                path: manifest_rel,
+                line: None,
+                message: format!(
+                    "forbidden third-party crate `egg` `{}` in workspace `{}` via dependency path `{chain_display}` (hint: `egg` typically arrives through `frankenjax` / `fj-egraph`; N33c-09)",
+                    pkg.version, ws.name
+                ),
+                repair: "remove `egg` and any `frankenjax` / `fj-egraph` dependency pulling it into the build graph".to_owned(),
+            });
+        }
+    }
+}
+
+fn build_resolved_bfs_parents(resolved: &ResolvedWorkspace) -> BTreeMap<&str, Option<&str>> {
+    let mut member_ids: Vec<&str> = resolved
+        .workspace_members
+        .iter()
+        .map(String::as_str)
+        .collect();
+    member_ids.sort_by(|a, b| {
+        let na = resolved.packages.get(*a).map_or(*a, |p| p.name.as_str());
+        let nb = resolved.packages.get(*b).map_or(*b, |p| p.name.as_str());
+        na.cmp(nb).then_with(|| a.cmp(b))
+    });
+
+    let mut parent: BTreeMap<&str, Option<&str>> = BTreeMap::new();
+    let mut queue: VecDeque<&str> = VecDeque::new();
+    for &mid in &member_ids {
+        parent.insert(mid, None);
+        queue.push_back(mid);
+    }
+
+    while let Some(cur) = queue.pop_front() {
+        let Some(node) = resolved.nodes.get(cur) else {
+            continue;
+        };
+        let mut child_set: BTreeSet<&str> = node.dependencies.iter().map(String::as_str).collect();
+        for d in &node.deps {
+            child_set.insert(d.pkg.as_str());
+        }
+        let mut children: Vec<&str> = child_set.into_iter().collect();
+        children.sort_by(|a, b| {
+            let na = resolved.packages.get(*a).map_or(*a, |p| p.name.as_str());
+            let nb = resolved.packages.get(*b).map_or(*b, |p| p.name.as_str());
+            na.cmp(nb).then_with(|| a.cmp(b))
+        });
+        for child in children {
+            if !parent.contains_key(child) {
+                parent.insert(child, Some(cur));
+                queue.push_back(child);
+            }
+        }
+    }
+
+    parent
+}
+
+fn reconstruct_chain<'a>(
+    pkg_id: &str,
+    parent: &BTreeMap<&str, Option<&str>>,
+    resolved: &ResolvedWorkspace,
+    members_by_id: &BTreeMap<&str, &'a PackageMeta>,
+) -> (Vec<String>, Option<&'a PackageMeta>) {
+    if !parent.contains_key(pkg_id) {
+        let label = resolved
+            .packages
+            .get(pkg_id)
+            .map_or_else(|| pkg_id.to_owned(), |p| p.name.clone());
+        return (vec![label], None);
+    }
+    let mut chain = Vec::new();
+    let mut root_id = pkg_id;
+    let mut cursor = Some(pkg_id);
+    while let Some(id) = cursor {
+        root_id = id;
+        let label = resolved
+            .packages
+            .get(id)
+            .map_or_else(|| id.to_owned(), |p| p.name.clone());
+        chain.push(label);
+        cursor = parent.get(id).copied().flatten();
+    }
+    chain.reverse();
+    let root_member = members_by_id.get(root_id).copied();
+    (chain, root_member)
+}
+
+/// Scan every checked workspace's `Cargo.lock` and every committed `Cargo.lock` under
+/// `repo_root` (excluding `tests/admission/`, `target/`, `.git/`, etc.) for any
+/// `asupersync` entry on the `0.5.*` line, catching unlinked lockfile entries (`N33c-09`).
+fn scan_lockfiles_for_asup_0_5(
+    repo_root: &Path,
+    roots: &[WorkspaceRoot],
+    reported_lock_asup: &BTreeSet<(String, String)>,
+    findings: &mut Vec<Finding>,
+) {
+    let mut lockfiles: BTreeSet<PathBuf> = BTreeSet::new();
+    for ws in roots {
+        let candidate = ws.root_dir.join("Cargo.lock");
+        if candidate.is_file() {
+            lockfiles.insert(candidate);
+        }
+    }
+    collect_committed_lockfiles(repo_root, repo_root, 0, &mut lockfiles);
+
+    for lock_path in lockfiles {
+        scan_single_lockfile_for_asup_0_5(repo_root, &lock_path, reported_lock_asup, findings);
+    }
+}
+
+fn collect_committed_lockfiles(
+    repo_root: &Path,
+    dir: &Path,
+    depth: usize,
+    out: &mut BTreeSet<PathBuf>,
+) {
+    if depth > 4 {
+        return;
+    }
+    let Ok(entries) = fs::read_dir(dir) else {
+        return;
+    };
+    let mut paths: Vec<PathBuf> = entries.filter_map(|e| e.ok().map(|x| x.path())).collect();
+    paths.sort();
+
+    for path in paths {
+        let Some(fname) = path.file_name().and_then(|s| s.to_str()) else {
+            continue;
+        };
+        if path.is_dir() {
+            if matches!(
+                fname,
+                ".git"
+                    | "target"
+                    | ".beads"
+                    | ".ruff_cache"
+                    | ".ee"
+                    | ".local-implementation"
+                    | ".ntm"
+                    | "repro"
+                    | "planning"
+                    | "node_modules"
+            ) {
+                continue;
+            }
+            if let Ok(rel) = path.strip_prefix(repo_root) {
+                let rel_s = normalize_rel_path(rel);
+                if rel_s == "tests/admission" || rel_s.starts_with("tests/admission/") {
+                    continue;
+                }
+            }
+            collect_committed_lockfiles(repo_root, &path, depth + 1, out);
+        } else if fname == "Cargo.lock" {
+            out.insert(path);
+        }
+    }
+}
+
+fn scan_single_lockfile_for_asup_0_5(
+    repo_root: &Path,
+    lock_path: &Path,
+    reported_lock_asup: &BTreeSet<(String, String)>,
+    findings: &mut Vec<Finding>,
+) {
+    let Ok(bytes) = fs::read(lock_path) else {
+        return;
+    };
+    let Ok(root) = toml::parse(&bytes) else {
+        return;
+    };
+    let rel_lock = lock_path
+        .strip_prefix(repo_root)
+        .ok()
+        .map(normalize_rel_path)
+        .unwrap_or_else(|| normalize_rel_path(lock_path));
+
+    // Collect `[[package]]` entries and reverse dependency pointers for diagnostics.
+    let mut pkg_entries: Vec<(String, String, Vec<String>)> = Vec::new();
+    if let Some(Value::Array(items)) = root.get("package") {
+        for item in items {
+            if let Value::Table(tbl) = &item.value {
+                let name = tbl
+                    .get("name")
+                    .and_then(Value::as_str)
+                    .unwrap_or("")
+                    .to_owned();
+                let ver = tbl
+                    .get("version")
+                    .and_then(Value::as_str)
+                    .unwrap_or("")
+                    .to_owned();
+                let mut deps = Vec::new();
+                if let Some(Value::Array(darr)) = tbl.get("dependencies") {
+                    for d in darr {
+                        if let Some(ds) = d.value.as_str() {
+                            deps.push(ds.to_owned());
+                        }
+                    }
+                }
+                pkg_entries.push((name, ver, deps));
+            }
+        }
+    }
+
+    let mut hits: Vec<(String, String)> = Vec::new();
+    for (name, ver, _) in &pkg_entries {
+        if is_asupersync_0_5(name, ver) {
+            if reported_lock_asup.contains(&(rel_lock.clone(), ver.clone())) {
+                continue;
+            }
+            let dependents: Vec<String> = pkg_entries
+                .iter()
+                .filter(|(_, _, deps)| {
+                    deps.iter().any(|d| {
+                        let mut parts = d.split_whitespace();
+                        let dname = parts.next().unwrap_or("");
+                        let dver = parts.next();
+                        dname == "asupersync" && dver.is_none_or(|dv| dv == ver)
+                    })
+                })
+                .map(|(n, _, _)| n.clone())
+                .collect();
+            let detail = if dependents.is_empty() {
+                "unlinked in lockfile".to_owned()
+            } else {
+                format!("referenced in lockfile by {}", dependents.join(", "))
+            };
+            hits.push((ver.clone(), detail));
+        }
+    }
+
+    // Also inspect `[[patch.unused]]` entries (Cargo records unused patches here).
+    if let Some(Value::Table(ptbl)) = root.get("patch")
+        && let Some(Value::Array(uarr)) = ptbl.get("unused")
+    {
+        for item in uarr {
+            if let Value::Table(tbl) = &item.value {
+                let name = tbl.get("name").and_then(Value::as_str).unwrap_or("");
+                let ver = tbl.get("version").and_then(Value::as_str).unwrap_or("");
+                if is_asupersync_0_5(name, ver)
+                    && !reported_lock_asup.contains(&(rel_lock.clone(), ver.to_owned()))
+                {
+                    hits.push((
+                        ver.to_owned(),
+                        "unlinked `[[patch.unused]]` entry in lockfile".to_owned(),
+                    ));
+                }
+            }
+        }
+    }
+
+    for (ver, detail) in hits {
+        findings.push(Finding {
+            rule: RULE_ASUP_V0_5_0,
+            subject: format!("{rel_lock} -> asupersync@{ver}"),
+            path: rel_lock.clone(),
+            line: None,
+            message: format!(
+                "forbidden `asupersync` `{ver}` (0.5.* line) present in `{rel_lock}` ({detail}; N33c-09, INV-SUITE-02)"
+            ),
+            repair: format!(
+                "remove `asupersync {ver}` from `{rel_lock}` and update any dependency or patch pulling the 0.5.* line"
+            ),
+        });
+    }
 }

@@ -289,7 +289,7 @@ pub fn load_declared_metadata(
     repo_root: &Path,
     ws: &WorkspaceRoot,
 ) -> Result<DeclaredWorkspace, MetadataLoadError> {
-    let stdout = run_cargo_metadata(ws, true)?;
+    let stdout = run_cargo_metadata(ws, true, false)?;
     parse_declared_metadata_json(repo_root, &stdout)
 }
 
@@ -299,11 +299,26 @@ pub fn load_resolved_metadata(
     repo_root: &Path,
     ws: &WorkspaceRoot,
 ) -> Result<ResolvedWorkspace, MetadataLoadError> {
-    let stdout = run_cargo_metadata(ws, false)?;
+    let stdout = run_cargo_metadata(ws, false, false)?;
     parse_resolved_metadata_json(repo_root, &stdout)
 }
 
-fn run_cargo_metadata(ws: &WorkspaceRoot, no_deps: bool) -> Result<Vec<u8>, MetadataLoadError> {
+/// Run `cargo metadata --format-version 1 --all-features --locked --offline`
+/// (resolved closure with every optional feature group enabled) for `ws`
+/// and parse the result through `frob_core::json::admit` (N33c-09).
+pub fn load_resolved_metadata_all_features(
+    repo_root: &Path,
+    ws: &WorkspaceRoot,
+) -> Result<ResolvedWorkspace, MetadataLoadError> {
+    let stdout = run_cargo_metadata(ws, false, true)?;
+    parse_resolved_metadata_json(repo_root, &stdout)
+}
+
+fn run_cargo_metadata(
+    ws: &WorkspaceRoot,
+    no_deps: bool,
+    all_features: bool,
+) -> Result<Vec<u8>, MetadataLoadError> {
     let manifest_path = ws.manifest_path();
     if !manifest_path.is_file() {
         return Err(MetadataLoadError::MissingManifest(manifest_path));
@@ -314,6 +329,9 @@ fn run_cargo_metadata(ws: &WorkspaceRoot, no_deps: bool) -> Result<Vec<u8>, Meta
     cmd.args(["metadata", "--format-version", "1"]);
     if no_deps {
         cmd.arg("--no-deps");
+    }
+    if all_features {
+        cmd.arg("--all-features");
     }
     cmd.args(["--locked", "--offline", "--manifest-path"])
         .arg(&manifest_path);

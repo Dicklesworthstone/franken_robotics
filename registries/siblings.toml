@@ -153,12 +153,12 @@ toolchain_file = "rust-toolchain.toml"
 asupersync_manifest = "crates/ftui-runtime/Cargo.toml"
 asupersync_key = "dependencies.asupersync"
 watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "crates/ftui-runtime/Cargo.toml:dependencies.serde_json" }
-posture = []
-cargo = ""
-allowed_in = []
-forbidden_features = []
-reason = ""
-fallback = ""
+posture = ["consume"]
+cargo = "allowed"
+allowed_in = ["frob-tui"]
+forbidden_features = ["asupersync-executor"]
+reason = "Terminal dashboard allowed in frob-tui only with default features off and runtime plus native-backend on; ftui-runtime optional feature asupersync-executor pins asupersync =0.5.0 and is forbidden until FD-FTUI-01 lands."
+fallback = "No dashboard; line-delimited JSON job events."
 
 [[sibling]]
 name = "franken_threed"
@@ -168,12 +168,12 @@ toolchain_file = "rust-toolchain.toml"
 asupersync_manifest = "crates/f3d-runtime/Cargo.toml"
 asupersync_key = "dependencies.asupersync"
 watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "Cargo.toml:workspace.dependencies.serde_json" }
-posture = []
-cargo = ""
+posture = ["pattern", "subprocess"]
+cargo = "never"
 allowed_in = []
 forbidden_features = []
-reason = ""
-fallback = ""
+reason = "Pins asupersync =0.5.0 and serde_json =1.0.151; admission-record discipline is adopted as a pattern and optional viewer renderer runs as a subprocess, never in a workspace that builds a frob binary (tests/admission/ probes are outside checked workspaces)."
+fallback = "A plain Three.js bundle."
 
 [[sibling]]
 name = "frankenjax"
@@ -183,12 +183,12 @@ toolchain_file = "rust-toolchain.toml"
 asupersync_manifest = "crates/fj-runtime/Cargo.toml"
 asupersync_key = "dependencies.asupersync"
 watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "crates/fj-conformance/Cargo.toml:dependencies.serde_json" }
-posture = []
-cargo = ""
+posture = ["pattern"]
+cargo = "never"
 allowed_in = []
 forbidden_features = []
-reason = ""
-fallback = ""
+reason = "fj-egraph depends on third-party egg and optionally requires asupersync 0.5.0; batching, differentiation reference semantics, and e-graph rule sets are adopted as a pattern only."
+fallback = "Common-subexpression elimination only."
 
 [[sibling]]
 name = "franken_drone_geometry_reconstruction"
@@ -213,12 +213,12 @@ toolchain_file = "rust-toolchain.toml"
 asupersync_manifest = "Cargo.toml"
 asupersync_key = "workspace.dependencies.asupersync"
 watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "Cargo.toml:workspace.dependencies.serde_json" }
-posture = []
-cargo = ""
+posture = ["subprocess"]
+cargo = "never"
 allowed_in = []
 forbidden_features = []
-reason = ""
-fallback = ""
+reason = "Cloth reference oracle worker (ftx-drape, ~116k lines) pins serde_json =1.0.151 which conflicts with the core graph; invoked strictly as a subprocess worker in its own workspace and never a Cargo dependency (matches FD-FTX)."
+fallback = "No cloth tier; rigid proxies."
 
 [[sibling]]
 name = "franken_firmware"
@@ -228,12 +228,12 @@ toolchain_file = "rust-toolchain.toml"
 asupersync_manifest = "crates/franken-speaker/Cargo.toml"
 asupersync_key = "dependencies.asupersync"
 watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "Cargo.toml:workspace.dependencies.serde_json" }
-posture = []
-cargo = ""
+posture = ["pattern"]
+cargo = "never"
 allowed_in = []
 forbidden_features = []
-reason = ""
-fallback = ""
+reason = "Eighteen crates on stable 1.99.0 including franken-hal, franken-control, and franken-platform; hardware-abstraction boundary is adopted as a pattern only so exported firmware never touches a register, bus, or stop relay."
+fallback = "No firmware export."
 
 # Non-surveyed siblings named by the suite deny rules (N33c-09).
 
@@ -246,11 +246,11 @@ asupersync_manifest = "crates/fnx-runtime/Cargo.toml"
 asupersync_key = "dependencies.asupersync"
 watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version" }
 posture = []
-cargo = ""
+cargo = "never"
 allowed_in = []
 forbidden_features = []
-reason = ""
-fallback = ""
+reason = "Not admitted; small tree and cycle algorithms on kinematic graphs are written directly in frob-design instead of linking fnx-* crates."
+fallback = "In-house kinematic graph algorithms in frob-design."
 
 [[sibling]]
 name = "franken_markdown"
@@ -260,12 +260,12 @@ toolchain_file = "rust-toolchain.toml"
 asupersync_manifest = "Cargo.toml"
 asupersync_key = "dependencies.asupersync"
 watched = { workspace_version = "Cargo.toml:package.version", rust_version = "Cargo.toml:package.rust-version" }
-posture = []
-cargo = ""
+posture = ["subprocess"]
+cargo = "never"
 allowed_in = []
 forbidden_features = []
-reason = ""
-fallback = ""
+reason = "Optional report renderer invoked strictly as a subprocess; reports are generated as text by frob-chronicle."
+fallback = "Plain Markdown text generated by frob-chronicle."
 
 [[sibling]]
 name = "frankenmermaid"
@@ -275,12 +275,12 @@ toolchain_file = "rust-toolchain.toml"
 asupersync_manifest = "Cargo.toml"
 asupersync_key = "workspace.dependencies.asupersync"
 watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version", serde_json = "Cargo.toml:workspace.dependencies.serde_json" }
-posture = []
-cargo = ""
+posture = ["subprocess"]
+cargo = "never"
 allowed_in = []
 forbidden_features = []
-reason = ""
-fallback = ""
+reason = "Optional diagram renderer invoked strictly as a subprocess; diagrams are generated as text by frob-chronicle."
+fallback = "Plain Mermaid text generated by frob-chronicle."
 
 [[sibling]]
 name = "franken_surveillance_system"
@@ -290,9 +290,24 @@ toolchain_file = "rust-toolchain.toml"
 asupersync_manifest = "crates/fss-runtime/Cargo.toml"
 asupersync_key = "dependencies.asupersync"
 watched = { workspace_version = "Cargo.toml:workspace.package.version", rust_version = "Cargo.toml:workspace.package.rust-version" }
-posture = []
-cargo = ""
+posture = ["pattern"]
+cargo = "never"
 allowed_in = []
 forbidden_features = []
-reason = ""
-fallback = ""
+reason = "Twin package and camera-model contract adopted as a pattern only; never linked as a Cargo dependency."
+fallback = "none"
+
+[[sibling]]
+name = "franken-kernel"
+path = "../asupersync"
+survey = false
+toolchain_file = "rust-toolchain.toml"
+asupersync_manifest = "Cargo.toml"
+asupersync_key = "package.version"
+watched = { kernel_version = "franken_kernel/Cargo.toml:package.version" }
+posture = ["pattern", "oracle"]
+cargo = "dev-only"
+allowed_in = ["frob-conformance"]
+forbidden_features = []
+reason = "Package in the asupersync repository defining TraceId, DecisionId, PolicyId, SchemaVersion, Budget, and capability-typed Cx; depends on serde, so frob-core adopts the identifier text form as a pattern and frob-conformance links it dev-only as a round-trip oracle (FD-FKER)."
+fallback = "Local identifier types with the same text form."

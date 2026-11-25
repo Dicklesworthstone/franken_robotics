@@ -1,5 +1,4 @@
-# Pinned verbatim copy of the twelve accelerator evidence field names (AE-01..AE-12)
-# from frankensim/docs/ACCELERATOR_DOCTRINE.md (BD-014, INV-SPARK-02).
+# recorded: verbatim AE-01..AE-12 field names from frankensim/docs/ACCELERATOR_DOCTRINE.md at 83c260121532a6a16d5b014326f9a3f937e14e94 (BD-014, INV-SPARK-02).
 # FrankenRobotics copies these field names verbatim and never renames or drops one.
 
 schema = "frob.accelerator_doctrine_fields/1"

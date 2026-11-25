@@ -297,6 +297,46 @@ impl CheckReport {
                 }
             }
         }
+        if matches!(self.facts.get("schema"), Some(FactValue::Str(s)) if s == "frob.check-stack/1")
+        {
+            if let Some(FactValue::Str(wrote)) = self.facts.get("wrote_receipt") {
+                let _ = writeln!(out, "receipt: {wrote}");
+            }
+            if let Some(FactValue::Bool(pass)) = self.facts.get("may_record_pass") {
+                let _ = writeln!(out, "may_record_pass: {pass}");
+            }
+            if let Some(FactValue::Array(sibs)) = self.facts.get("siblings") {
+                let _ = writeln!(out, "siblings ({}):", sibs.len());
+                for item in sibs {
+                    if let FactValue::Object(m) = item {
+                        let fd = match m.get("fd") { Some(FactValue::Str(s)) => s.as_str(), _ => "?" };
+                        let rev = match m.get("rev") { Some(FactValue::Str(s)) => s.as_str(), _ => "?" };
+                        let cls = match m.get("class") { Some(FactValue::Str(s)) => s.as_str(), _ => "?" };
+                        let reason = match m.get("reason") { Some(FactValue::Str(s)) => Some(s.as_str()), _ => None };
+                        let dirty = match m.get("dirty") { Some(FactValue::Bool(b)) => *b, _ => false };
+                        match reason {
+                            Some(r) => {
+                                let _ = writeln!(out, "  {fd}  rev={rev}  class={cls}:{r}  dirty={dirty}");
+                            }
+                            None => {
+                                let _ = writeln!(out, "  {fd}  rev={rev}  class={cls}  dirty={dirty}");
+                            }
+                        }
+                    }
+                }
+            }
+            if let Some(FactValue::Array(dups)) = self.facts.get("duplicates") {
+                let list: Vec<&str> = dups
+                    .iter()
+                    .filter_map(|v| match v { FactValue::Str(s) => Some(s.as_str()), _ => None })
+                    .collect();
+                if list.is_empty() {
+                    out.push_str("duplicates: (none)\n");
+                } else {
+                    let _ = writeln!(out, "duplicates: [{}]", list.join(", "));
+                }
+            }
+        }
         out
     }
 }

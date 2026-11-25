@@ -1,0 +1,29 @@
+[package]
+name = "frob-fsim"
+version = { workspace = true }
+edition = { workspace = true }
+license-file = { workspace = true }
+repository = { workspace = true }
+authors = { workspace = true }
+publish = false
+description = "Airlock crate isolating FrankenSim path dependencies (ADR-SUITE-01, INT-FSIM-01)."
+
+[package.metadata.frob]
+layer = 0
+rank = 2
+
+[dependencies]
+fs-contact = { path = "../../../frankensim/crates/fs-contact", default-features = false }
+fs-ga = { path = "../../../frankensim/crates/fs-ga", default-features = false }
+fs-mbd = { path = "../../../frankensim/crates/fs-mbd", default-features = false }
+fs-query = { path = "../../../frankensim/crates/fs-query", default-features = false }
+fs-time = { path = "../../../frankensim/crates/fs-time", default-features = false }
+
+[dev-dependencies]
+frob-core = { path = "../frob-core" }
+
+[features]
+default = []
+
+[lints]
+workspace = true

@@ -1,0 +1,8 @@
+# KILL-FSIM trigger ledger (BD-006 step 8; schema extended by N33a-10).
+# Append-only effort clock tracking hours spent on INT-FSIM-01.
+# Written strictly in the frob_core::registry::toml subset (integer hours).
+
+[effort_clock]
+started = "2026-11-24"
+entries = [ { date = "2026-11-24", session = "BronzePelican", hours = 2, note = "BD-006: created frob-fsim airlock (5 path deps), cold check exit 0 on nightly-2026-08-31 via hz3 (649.3s e2e / 455.9s remote, peak tree RSS 1.05 GiB, 45 fsim crates / 1734377 lib LOC), warm 1.58s / touch 1.66s remote, 3 necessity tests + fail-closed salt control caught (exit 101)" } ]
+passed_on = ""

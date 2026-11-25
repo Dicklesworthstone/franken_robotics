@@ -1,0 +1,246 @@
+{
+  "foundation": "FD-FSIM",
+  "workspace": "core",
+  "covers": {
+    "crates": [
+      "fs-contact",
+      "fs-ga",
+      "fs-mbd",
+      "fs-query",
+      "fs-time"
+    ],
+    "groups": [],
+    "tool": null
+  },
+  "command": [
+    "cargo",
+    "check",
+    "--locked",
+    "--all-targets",
+    "-p",
+    "frob-fsim",
+    "-j",
+    "1"
+  ],
+  "measured": [
+    {
+      "name": "cold_check_s",
+      "value": 649.346,
+      "unit": "s",
+      "threshold": 3600,
+      "relation": "<="
+    },
+    {
+      "name": "cold_check_remote_s",
+      "value": 455.895,
+      "unit": "s",
+      "threshold": 3600,
+      "relation": "<="
+    },
+    {
+      "name": "warm_check_s",
+      "value": 1.58,
+      "unit": "s",
+      "threshold": 3600,
+      "relation": "<="
+    },
+    {
+      "name": "warm_check_e2e_s",
+      "value": 151.086,
+      "unit": "s",
+      "threshold": 3600,
+      "relation": "<="
+    },
+    {
+      "name": "warm_touch_s",
+      "value": 1.66,
+      "unit": "s",
+      "threshold": 3600,
+      "relation": "<="
+    },
+    {
+      "name": "warm_touch_e2e_s",
+      "value": 192.827,
+      "unit": "s",
+      "threshold": 3600,
+      "relation": "<="
+    },
+    {
+      "name": "peak_rss_bytes",
+      "value": 1131048960,
+      "unit": "bytes",
+      "threshold": 17179869184,
+      "relation": "<="
+    },
+    {
+      "name": "jobs",
+      "value": 1,
+      "unit": "cores",
+      "threshold": 8,
+      "relation": "<="
+    },
+    {
+      "name": "max_single_process_rss_bytes",
+      "value": 974606336,
+      "unit": "bytes",
+      "threshold": 17179869184,
+      "relation": "<="
+    },
+    {
+      "name": "local_client_max_rss_bytes",
+      "value": 101613568,
+      "unit": "bytes",
+      "threshold": 17179869184,
+      "relation": "<="
+    },
+    {
+      "name": "fsim_crates_compiled",
+      "value": 45,
+      "unit": "crates",
+      "threshold": 1,
+      "relation": ">="
+    },
+    {
+      "name": "fsim_lib_lines_compiled",
+      "value": 1734377,
+      "unit": "lines",
+      "threshold": 1,
+      "relation": ">="
+    },
+    {
+      "name": "lockfile_packages_total",
+      "value": 233,
+      "unit": "packages",
+      "threshold": 1,
+      "relation": ">="
+    },
+    {
+      "name": "lockfile_packages_registry",
+      "value": 175,
+      "unit": "packages",
+      "threshold": 0,
+      "relation": ">="
+    },
+    {
+      "name": "asupersync_packages",
+      "value": 1,
+      "unit": "packages",
+      "threshold": 1,
+      "relation": "=="
+    },
+    {
+      "name": "necessity_patch_removed_5crate_exit",
+      "value": 0,
+      "unit": "exit_code",
+      "threshold": 0,
+      "relation": "=="
+    },
+    {
+      "name": "necessity_patch_removed_5crate_asupersync",
+      "value": 1,
+      "unit": "packages",
+      "threshold": 1,
+      "relation": "=="
+    },
+    {
+      "name": "necessity_patch_removed_registry_consumer_asupersync",
+      "value": 2,
+      "unit": "packages",
+      "threshold": 2,
+      "relation": "=="
+    },
+    {
+      "name": "necessity_patch_present_registry_consumer_asupersync",
+      "value": 1,
+      "unit": "packages",
+      "threshold": 1,
+      "relation": "=="
+    },
+    {
+      "name": "necessity_profiles_removed_exit",
+      "value": 0,
+      "unit": "exit_code",
+      "threshold": 0,
+      "relation": "=="
+    },
+    {
+      "name": "necessity_salt_cleared_exit",
+      "value": 101,
+      "unit": "exit_code",
+      "threshold": 1,
+      "relation": ">="
+    }
+  ],
+  "controls": [
+    {
+      "id": "NC-INT-FSIM-01-unset-build-identity",
+      "caught": true
+    }
+  ],
+  "facts_reread": [
+    {
+      "fact": "toolchain_matrix_core_row_candidate_a",
+      "path": "rust-toolchain.toml",
+      "value": "nightly-2026-08-31: builds (exit 0 on rch worker hz3; 45 FrankenSim crates including fs-qty and fs-la compiled cleanly; candidate (b) nightly-2026-07-06 not needed)"
+    },
+    {
+      "fact": "admitted_items_exercised",
+      "path": "crates/frob-fsim/src/lib.rs",
+      "value": "fs_contact::ballistic::first_ballistic_contact, fs_ga::Vec3::cross+Quat::rotate, fs_mbd::Vec3::dot+cross, fs_query::closest_triangle_point, fs_time::verlet_step (all default-features = false)"
+    },
+    {
+      "fact": "frankensim_lockfile_packages",
+      "path": "../frankensim/Cargo.lock",
+      "value": "488 total, 269 registry, 2 asupersync (0.6.2 registry + 0.7.0 path); plan-time 2026-11-21 was 479 total, 262 registry"
+    },
+    {
+      "fact": "frankensim_fs_mbd_closure",
+      "path": "../frankensim/crates/fs-mbd/Cargo.toml",
+      "value": "45 FrankenSim crates (44 other), 1734377 lib .rs lines (plan-time was 42 other, ~1.57M); fs-mbd total .rs=306470, fs-contact total .rs=146603; 30d churn=412 commits on 19 days"
+    },
+    {
+      "fact": "frankensim_m1_sample_closure",
+      "path": "../frankensim/Cargo.toml",
+      "value": "49 FrankenSim crates, 1796637 lib .rs lines across 13 M1 roots (plan-time M1 set was 65 crates, ~2.06M)"
+    },
+    {
+      "fact": "frankensim_contact_capacity",
+      "path": "../frankensim/crates/fs-contact/src/sustained/solve.rs",
+      "value": "MAX_CONTACTS = 21"
+    },
+    {
+      "fact": "frankensim_constellation_lock",
+      "path": "../frankensim/constellation.lock",
+      "value": "asupersync 0.5.0 @ 7a0f2f55047c9405118d1717c74e51c27ec95196 (stale vs Cargo.lock)"
+    },
+    {
+      "fact": "frankensim_toolchain_pin",
+      "path": "../frankensim/rust-toolchain.toml",
+      "value": "nightly-2026-07-06 (rustc 1.99.0-nightly)"
+    },
+    {
+      "fact": "necessity_patch_hypothesis",
+      "path": "Cargo.toml",
+      "value": "CONFIRMED non-propagation: 5-crate closure alone pulls asupersync 0.7.0 only by path via fs-exec (1 pkg without patch), but adding any crates.io asupersync 0.7 consumer produces 2 packages without root [patch.crates-io] vs 1 with root patch"
+    },
+    {
+      "fact": "necessity_profiles_hypothesis",
+      "path": "Cargo.toml",
+      "value": "5-crate closure contains 0 fsqlite* packages (Cargo emits 19 unused profile warnings); removing overrides exits 0 with no test-time delta until BD-009 links fsqlite"
+    },
+    {
+      "fact": "necessity_build_identity_fail_closed",
+      "path": "../frankensim/crates/fs-la/build.rs",
+      "value": "CAUGHT (exit 101 on hz3, output b3=608a60798b432921b49ee23b0446b6c26efa5afd129cf3aa7fdc8bf591ae8084): clearing FRANKENSIM_DEPGRAPH_SALT overrides .cargo/config.toml (force=false) and panics at crates/fs-la/build.rs:327:9 (`FRANKENSIM_DEPGRAPH_SALT must be short printable ASCII, got \"\"`), proving no propagation from ../frankensim/.cargo/config.toml and zero fallback defaults"
+    }
+  ],
+  "host": {
+    "class": "m5-ultra",
+    "fingerprint": null
+  },
+  "recorded": {
+    "date": "2026-11-25T04:00:00Z",
+    "session": "",
+    "implemented_by": "BronzePelican"
+  }
+}

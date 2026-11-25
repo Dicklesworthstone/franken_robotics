@@ -1,0 +1,19 @@
+# Machine-readable crate contract for frob-fsim (BD-006, INT-FSIM-01, N34-08).
+
+[crate]
+name = "frob-fsim"
+layer = 0
+rank = 2
+plane = "compute"
+determinism = "D0"
+evidence = "Tested"
+gates = []
+refusals = []
+
+[budgets]
+wall_ms = 50
+memory_mib = 64
+
+[safe_mode]
+on_budget = "reference-path"
+on_calibration = "reference-path"

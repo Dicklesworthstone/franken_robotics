@@ -1,0 +1,114 @@
+{
+  "foundation": "FD-FSQL",
+  "workspace": "core",
+  "covers": {
+    "crates": [
+      "fs-ledger",
+      "fsqlite",
+      "fsqlite-ast",
+      "fsqlite-btree",
+      "fsqlite-core",
+      "fsqlite-error",
+      "fsqlite-ext-fts5",
+      "fsqlite-ext-icu",
+      "fsqlite-ext-json",
+      "fsqlite-ext-misc",
+      "fsqlite-ext-rtree",
+      "fsqlite-func",
+      "fsqlite-mvcc",
+      "fsqlite-observability",
+      "fsqlite-pager",
+      "fsqlite-parser",
+      "fsqlite-planner",
+      "fsqlite-types",
+      "fsqlite-vdbe",
+      "fsqlite-vfs",
+      "fsqlite-wal"
+    ],
+    "groups": [],
+    "tool": null
+  },
+  "command": [
+    "cargo",
+    "test",
+    "-p",
+    "frob-fsim",
+    "--test",
+    "ledger_forced_kill",
+    "--",
+    "--ignored",
+    "forced_kill_100"
+  ],
+  "measured": [
+    {
+      "name": "forced_kill_trials_passed",
+      "value": 100,
+      "unit": "trials",
+      "threshold": 100,
+      "relation": "=="
+    },
+    {
+      "name": "kill_during_recovery_trials_passed",
+      "value": 10,
+      "unit": "trials",
+      "threshold": 10,
+      "relation": "=="
+    }
+  ],
+  "controls": [
+    {
+      "id": "NC-INT-FSQL-01-split-writer",
+      "caught": true
+    },
+    {
+      "id": "NC-INT-FSQL-01-row-swap-skip-chain",
+      "caught": true
+    }
+  ],
+  "facts_reread": [
+    {
+      "fact": "journal_mode_at_pin",
+      "path": "../frankensim/crates/fs-ledger/src/lib.rs",
+      "value": "PRAGMA journal_mode=WAL (applied in fs_ledger::Ledger::open at line 3718)"
+    },
+    {
+      "fact": "synchronous_level_at_pin",
+      "path": "../frankensim/crates/fs-ledger/src/lib.rs",
+      "value": "PRAGMA synchronous=FULL (fsync-before-publish durability applied in fs_ledger::Ledger::open at line 3719; SIGKILL tests process death only, no power-loss claim at M0)"
+    },
+    {
+      "fact": "busy_timeout_and_foreign_keys_at_pin",
+      "path": "../frankensim/crates/fs-ledger/src/lib.rs",
+      "value": "PRAGMA busy_timeout=5000 and PRAGMA foreign_keys=ON (lines 3720-3721); frob_fsim::ledger enforces single-writer exclusion via OS file lock + process mutex honoring OpenOptions::busy_timeout"
+    },
+    {
+      "fact": "fs_ledger_schema_version",
+      "path": "../frankensim/crates/fs-ledger/src/schema.rs",
+      "value": "SCHEMA_VERSION = 21 (refuses newer PRAGMA user_version before writing; frob_fsim::ledger additionally stores and enforces M0 SchemaVersion before any write)"
+    },
+    {
+      "fact": "frankensqlite_revision_and_version",
+      "path": "../frankensqlite/crates/fsqlite/Cargo.toml",
+      "value": "fsqlite 0.5.1 (20 fsqlite* packages in Cargo.lock); live checkout HEAD 61e026e8342f0e99ac62922c7b93ed96e3ac10fa vs franken-stack.lock pin 8a4b4a5fa047423cce6cc4ef6158cf23bd8ab771; workspace toolchain nightly-2026-08-31; 19 dev opt-level=1 overrides in root Cargo.toml"
+    },
+    {
+      "fact": "asupersync_observation_fd_asup_01",
+      "path": "Cargo.lock",
+      "value": "2 asupersync packages observed with feature ledger enabled: 0.6.2 (registry, required by ../frankensqlite/Cargo.toml line 216) and 0.7.0 (path ../asupersync); tracked under FD-ASUP-01 / gate INT-ASUP-01"
+    },
+    {
+      "fact": "uninterrupted_reference_digest_seed_0",
+      "path": "tests/admission/recompute_int_fsql_01_chain.py",
+      "value": "seed=0, N=200, k=8 golden BLAKE3 chain digest 622fea544d7e709ed724e853d5a25c356584618a00b9e0d02bcd3395d5994b53 (independently verified against b3sum 1.8.7)"
+    }
+  ],
+  "host": {
+    "class": "m5-ultra",
+    "fingerprint": null
+  },
+  "recorded": {
+    "date": "2026-11-25T05:33:00Z",
+    "session": "",
+    "implemented_by": "BrownHeron"
+  }
+}

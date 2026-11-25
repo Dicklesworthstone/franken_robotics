@@ -41,6 +41,10 @@ path = "examples/evidence_ledger.rs"
 name = "pilots"
 path = "examples/pilots.rs"
 
+[[example]]
+name = "validate_register"
+path = "examples/validate_register.rs"
+
 [features]
 default = []
 # Umbrella for workspace crate conformance facilities (BD-025 / ADR-GAUNT-03).

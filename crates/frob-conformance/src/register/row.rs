@@ -801,9 +801,10 @@ fn parse_gate_row(tbl: Table, idx: usize, file: &str) -> Result<GateBase, BaseRo
         if let Some(ref d) = decided {
             validate_milestone(d, file, &id, "decided")?;
         }
-        // Tolerate register-layer kill fields owned by N40-01 / N40-03.
+        // Tolerate register-layer kill fields owned by N40-01 / N40-03 / NAB-10.
         for additive in [
             "consumers",
+            "sources",
             "trigger",
             "fallback",
             "mode",
@@ -812,6 +813,9 @@ fn parse_gate_row(tbl: Table, idx: usize, file: &str) -> Result<GateBase, BaseRo
             "reread",
             "scope_kind",
             "milestone",
+            "recurring",
+            "needs",
+            "blocks_exit",
         ] {
             let _ = f.take(additive);
         }
@@ -895,9 +899,10 @@ fn parse_gate_row(tbl: Table, idx: usize, file: &str) -> Result<GateBase, BaseRo
         parts.push(parse_part_base(ptbl, file, &id, pidx)?);
     }
 
-    // Tolerate additive register-layer gate fields owned by N40-01.
+    // Tolerate additive register-layer gate fields owned by N40-01 / NAB-10.
     for additive in [
         "consumers",
+        "sources",
         "recurring",
         "needs",
         "blocks_exit",

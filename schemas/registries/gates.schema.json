@@ -2,8 +2,8 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://frankenrobotics.local/schemas/registries/gates.schema.json",
   "title": "FrankenRobotics Gate Registry (frob.gates/1)",
-  "description": "Single schema for registries/gates.toml: first-commit BD-002 layout extended additively by N38b-18 (base record, seven closed claims, seven reconciled statuses, kill-row exemption) and extended additively by N40-01 (register layer). Status is recorded per [[gate.part]] (40 convergence gates including GATE-MARROW-01, GATE-HAB-01, GATE-HAB-13, GATE-ARENA-01, GATE-LEMMA-03 plus 3 admission gates carry multi-milestone parts per N40-02 step 5) and derived for each gate.",
-  "$comment": "VALIDATOR CONTRACT (enforced by N40-01): (1) claim takes one of the seven closed strings; 'method' and 'Performance of the method' are rejected and map to 'design-comparison' only by explicit row edit. (2) status is the reconciled union of seven values: not-run (printed 'not run', never passed), pass, fail (requires measured + register-layer commit, command, resolving receipt), killed (names kill gate and adopted fallback in detail; printed 'killed: fallback adopted (<fallback>)'), blocked (names OPEN-id in detail; printed 'blocked: OPEN-...'), no-claim (terminal, valid only for claim='reality' import-lane gates), superseded (names successor gate in detail). (3) pass is refused in four cases: (a) controls is empty; (b) any listed control was not caught in the same run as the passing measurement; (c) recorded.session is a member of recorded.implemented_by (sorted comma-joined implementing sessions, N38b-19); (d) an evidence item or claim_id does not resolve in the artifact graph (FROB-REF-869), or the part receipt does not name a committed receipts/gates/<hash>.json whose bytes hash to it. (4) measured carries the measured value with unit/interval or count, never empty and never byte-equal to threshold. (5) Gate identifiers are unique and append-only; retired IDs are tombstoned, never reused. (6) Milestone exit requires every gate with a due part to be pass or killed with fallback adopted. (7) kind='kill' rows measure nothing and must never carry claim, claim_id, threshold, tier, controls, or [[gate.part]].",
+  "description": "Single schema for registries/gates.toml: first-commit BD-002 layout extended additively by N38b-18 (base record, seven closed claims, seven reconciled statuses, kill-row exemption) and N40-01 (register layer, nine rules, ten write-time refusals, receipt path receipts/gates/<hash>.json, optional sources per NAB-10, pilot scope grammar per N38a-09). Status reconciliation is recorded in docs/adr/ADR-GAUNT-04.md.",
+  "$comment": "ADR: docs/adr/ADR-GAUNT-04.md. VALIDATOR CONTRACT (enforced by N40-01 in frob_conformance::register::{validate,write}): (1) claim takes one of the seven closed strings on admission/convergence/program rows; 'method' and 'Performance of the method' are rejected (claim-not-one-of-seven). (2) status is the reconciled union of seven values per ADR-GAUNT-04: not-run (printed 'not run', never passed), pass, fail (requires measured + commit + command + resolving receipt under receipts/gates/<hash>.json), killed (names kill gate or program bet, adopted fallback, and ADR in detail -> killed-without-decision), blocked (names OPEN-... or 'claim-reading: <bead>' in detail -> blocked-without-question), no-claim (terminal, valid only for claim='reality' with non-empty detail -> no-claim-on-non-reality), superseded (names existing successor gate in detail). (3) pass is refused in four cases: (a) controls is empty (pass-without-control); (b) any listed due control was not caught in the same run (control-not-caught); (c) recorded.session is a member of recorded.implemented_by (self-certified); (d) an evidence item or claim_id (parsed via frob_core::graph_id::ClaimId) does not resolve, or part.receipt does not name a committed receipts/gates/<hash>.json hashing to <hash> (evidence-unresolved). (4) measured is never empty or byte-equal to threshold (target-as-measurement). (5) Gate identifiers are unique and append-only (duplicate-id, reused-id). (6) needs='import-lane' requires claim='reality' and excludes the gate from every exit due set; blocks_exit=false is valid only on kind='admission'. (7) kind='kill' rows measure nothing and must never carry claim, claim_id, threshold, tier, controls, or [[gate.part]]. (8) Additive top-level tables [[amendment]] (N40-03), [[shared_fixture]]/[[related_threshold]] (N40-08), [[fallback_exit]] (N40-32), [[variant]] (N40-33) are admitted additively; unknown top-level tables fail load.",
   "type": "object",
   "required": ["schema"],
   "additionalProperties": false,
@@ -11,11 +11,44 @@
     "schema": {
       "const": "frob.gates/1"
     },
+    "retired_ids": {
+      "type": "array",
+      "description": "Tombstoned retired gate identifiers that may never be reused (INV-GAUNT-07).",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
     "gate": {
       "type": "array",
       "items": {
         "$ref": "#/$defs/gate_row"
       }
+    },
+    "amendment": {
+      "type": "array",
+      "description": "Dated kill-gate amendments (additive top-level table owned by N40-03).",
+      "items": { "type": "object" }
+    },
+    "shared_fixture": {
+      "type": "array",
+      "description": "Shared fixture declarations (additive top-level table owned by N40-08).",
+      "items": { "type": "object" }
+    },
+    "related_threshold": {
+      "type": "array",
+      "description": "Related threshold cross-links (additive top-level table owned by N40-08).",
+      "items": { "type": "object" }
+    },
+    "fallback_exit": {
+      "type": "array",
+      "description": "Fallback exit specifications (additive top-level table owned by N40-32).",
+      "items": { "type": "object" }
+    },
+    "variant": {
+      "type": "array",
+      "description": "Milestone exit variants (additive top-level table owned by N40-33 / N40-34).",
+      "items": { "type": "object" }
     }
   },
   "$defs": {
@@ -25,8 +58,13 @@
     },
     "gate_kind": {
       "type": "string",
-      "description": "Gate row kind (optional on pre-N40-01 base rows; kill rows carry no measurement fields).",
+      "description": "Gate row kind (admission, convergence, program, kill; kill rows carry no measurement fields).",
       "enum": ["admission", "convergence", "program", "kill"]
+    },
+    "needs_kind": {
+      "type": "string",
+      "description": "Measurement environment requirement (N40-01): simulator (default) or import-lane (requires claim='reality' and excluded from exit due sets).",
+      "enum": ["simulator", "import-lane"]
     },
     "claim_kind": {
       "type": "string",
@@ -43,7 +81,7 @@
     },
     "part_status": {
       "type": "string",
-      "description": "Reconciled union of seven per-part statuses: six base values plus register-layer 'blocked'.",
+      "description": "Reconciled union of seven per-part statuses per docs/adr/ADR-GAUNT-04.md.",
       "enum": [
         "not-run",
         "pass",
@@ -59,15 +97,11 @@
       "required": ["date", "session", "implemented_by"],
       "additionalProperties": false,
       "properties": {
-        "date": {
-          "type": "string"
-        },
-        "session": {
-          "type": "string"
-        },
+        "date": { "type": "string" },
+        "session": { "type": "string" },
         "implemented_by": {
           "type": "string",
-          "description": "Sorted, comma-joined session identifiers of all implementers; pass is refused if recorded.session is a member (condition c)."
+          "description": "Sorted, comma-joined session identifiers of all implementers; pass is refused if recorded.session is a member (self-certified)."
         }
       }
     },
@@ -76,38 +110,33 @@
       "required": ["milestone", "status", "measured", "evidence", "recorded"],
       "additionalProperties": false,
       "properties": {
-        "milestone": {
-          "$ref": "#/$defs/milestone"
+        "milestone": { "$ref": "#/$defs/milestone" },
+        "scope": {
+          "type": "string",
+          "description": "Part scope description; 'pilot: <PILOT-id>' must match N38a-09 pilot ID grammar and remain status='not-run'."
         },
-        "status": {
-          "$ref": "#/$defs/part_status"
-        },
+        "status": { "$ref": "#/$defs/part_status" },
         "measured": {
           "type": "string",
-          "description": "Measured value with unit/interval or count; never empty or byte-equal to threshold on pass."
+          "description": "Measured value with unit/interval or count; never empty or byte-equal to threshold on pass/fail."
         },
+        "commit": { "type": "string" },
+        "command": { "type": "string" },
+        "receipt": {
+          "type": "string",
+          "description": "64-hex BLAKE3 digest naming committed receipts/gates/<hash>.json (or receipt-set)."
+        },
+        "fingerprint": { "type": "string" },
+        "seed": { "type": "string" },
         "evidence": {
           "type": "array",
-          "items": {
-            "type": "string",
-            "minLength": 1
-          }
+          "items": { "type": "string", "minLength": 1 }
         },
-        "recorded": {
-          "$ref": "#/$defs/recorded"
-        },
-        "kill_gate": {
-          "type": "string"
-        },
-        "fallback": {
-          "type": "string"
-        },
-        "open_question": {
-          "type": "string"
-        },
-        "detail": {
-          "type": "string"
-        }
+        "recorded": { "$ref": "#/$defs/recorded" },
+        "kill_gate": { "type": "string" },
+        "fallback": { "type": "string" },
+        "open_question": { "type": "string" },
+        "detail": { "type": "string" }
       },
       "allOf": [
         {
@@ -119,9 +148,7 @@
             "properties": {
               "measured": { "minLength": 1 },
               "recorded": {
-                "properties": {
-                  "session": { "minLength": 1 }
-                },
+                "properties": { "session": { "minLength": 1 } },
                 "required": ["session"]
               }
             }
@@ -143,9 +170,7 @@
               },
               {
                 "required": ["detail"],
-                "properties": {
-                  "detail": { "minLength": 1 }
-                }
+                "properties": { "detail": { "minLength": 1 } }
               }
             ]
           }
@@ -159,15 +184,11 @@
             "anyOf": [
               {
                 "required": ["open_question"],
-                "properties": {
-                  "open_question": { "minLength": 1 }
-                }
+                "properties": { "open_question": { "minLength": 1 } }
               },
               {
                 "required": ["detail"],
-                "properties": {
-                  "detail": { "minLength": 1 }
-                }
+                "properties": { "detail": { "minLength": 1 } }
               }
             ]
           }
@@ -179,9 +200,7 @@
           },
           "then": {
             "required": ["detail"],
-            "properties": {
-              "detail": { "minLength": 1 }
-            }
+            "properties": { "detail": { "minLength": 1 } }
           }
         }
       ]
@@ -191,55 +210,50 @@
       "required": ["id", "section"],
       "additionalProperties": false,
       "properties": {
-        "id": {
-          "type": "string",
-          "minLength": 1
+        "id": { "type": "string", "minLength": 1 },
+        "kind": { "$ref": "#/$defs/gate_kind" },
+        "claim": { "$ref": "#/$defs/claim_kind" },
+        "claim_id": { "type": "string", "minLength": 1 },
+        "section": { "type": "string", "minLength": 1 },
+        "consumers": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
         },
-        "kind": {
-          "$ref": "#/$defs/gate_kind"
+        "sources": {
+          "type": "array",
+          "description": "Optional source-register citations (SRC-... with optional #figure suffix; NAB-10).",
+          "items": { "type": "string", "minLength": 1 }
         },
-        "claim": {
-          "$ref": "#/$defs/claim_kind"
+        "threshold": { "type": "string", "minLength": 1 },
+        "milestone": { "$ref": "#/$defs/milestone" },
+        "recurring": { "type": "boolean" },
+        "needs": { "$ref": "#/$defs/needs_kind" },
+        "blocks_exit": { "type": "boolean" },
+        "foundation": { "type": "string", "minLength": 1 },
+        "first_needed": { "$ref": "#/$defs/milestone" },
+        "trigger": { "type": "string", "minLength": 1 },
+        "fallback": { "type": "string", "minLength": 1 },
+        "decided": { "$ref": "#/$defs/milestone" },
+        "mode": { "type": "string", "minLength": 1 },
+        "reads": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
         },
-        "claim_id": {
-          "type": "string",
-          "minLength": 1
-        },
-        "section": {
-          "type": "string",
-          "minLength": 1
-        },
-        "threshold": {
-          "type": "string",
-          "minLength": 1
-        },
-        "milestone": {
-          "$ref": "#/$defs/milestone"
-        },
-        "decided": {
-          "$ref": "#/$defs/milestone",
-          "description": "Milestone at which a kill gate is decided (kill rows only)."
-        },
+        "decision": { "type": "string" },
+        "reread": { "type": "string" },
+        "scope_kind": { "type": "string" },
         "tier": {
           "type": "array",
           "minItems": 1,
-          "items": {
-            "type": "string",
-            "minLength": 1
-          }
+          "items": { "type": "string", "minLength": 1 }
         },
         "controls": {
           "type": "array",
-          "items": {
-            "type": "string",
-            "minLength": 1
-          }
+          "items": { "type": "string", "minLength": 1 }
         },
         "part": {
           "type": "array",
-          "items": {
-            "$ref": "#/$defs/gate_part"
-          }
+          "items": { "$ref": "#/$defs/gate_part" }
         }
       },
       "allOf": [
@@ -286,9 +300,7 @@
             "required": ["part"]
           },
           "then": {
-            "properties": {
-              "controls": { "minItems": 1 }
-            }
+            "properties": { "controls": { "minItems": 1 } }
           }
         },
         {
@@ -304,9 +316,7 @@
             "required": ["part"]
           },
           "then": {
-            "properties": {
-              "claim": { "const": "reality" }
-            }
+            "properties": { "claim": { "const": "reality" } }
           }
         }
       ]

@@ -1,12 +1,16 @@
 #![deny(unsafe_code)]
 
-//! Base gate-register records and count expectations (`N38b-18`, schema `frob.gates/1`).
+//! Gate-register (`frob.gates/1`) base records (`N38b-18`), full register types, nine-rule
+//! validator, ten write-time refusals, and validated write path (`N40-01`, `ADR-GAUNT-04`).
 //!
-//! Depends strictly on `std` and `frob-core`. Extended additively by `N40-01` (`GateRow`,
-//! `Part`, `Kind`, `validate.rs`, `write.rs`).
+//! `row.rs` and `counts.rs` depend strictly on `std` and `frob-core`. `validate.rs` and
+//! `write.rs` extend them additively with full `GateRow`, `Part`, `Kind`, `Needs`,
+//! cross-file receipt/control/artifact-graph validation, and atomic write-time refusal checks.
 
 pub mod counts;
 pub mod row;
+pub mod validate;
+pub mod write;
 
 pub use counts::{
     CountMismatch, CountReport, CountRevision, GATE_COUNTS_PATH, GATE_COUNTS_SCHEMA,
@@ -16,6 +20,14 @@ pub use row::{
     BaseDocument, BaseKind, BaseRowError, Claim, GATES_SCHEMA, GateBase, KILL_FORBIDDEN_FIELDS,
     KindCounts, MeasuredFields, PartBase, Recorded, Status, parse_milestone_ord,
 };
+pub use validate::{
+    ADDITIVE_TOP_TABLES, AdmissionFields, COMPILED_RECURRING_GATES, GateRow, KillFields, Kind,
+    LATE_RECURRING_GATES, Needs, Part, Register, ValidationContext, Violation,
+    check_append_only_ids, has_valid_killed_decision, is_known_recurring_gate,
+    is_session_implementer, is_valid_blocked_detail, is_valid_pilot_id, is_valid_source_citation,
+    load, load_with_context, parse_and_validate_bytes, parse_register_bytes, validate,
+};
+pub use write::{record, record_in_memory};
 
 #[cfg(test)]
 #[path = "base_tests.rs"]

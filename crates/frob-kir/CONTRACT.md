@@ -32,10 +32,12 @@ Provide the static shared-dialect lint (`dialect_lint`, BD-013) that inspects CU
   - **Rule 4:** Floating-point contraction off, no fast-math relaxations, and no explicit fused multiply-add (`fma`, `fmaf`, `fmal`, `mad`, `madf`, `__fma*`, contraction-on or fast-math `#pragma`, CUDA `--use_fast_math` / `--fmad=true` / missing `--fmad=false`, or Metal math mode other than `Safe`).
   - **Rule 6:** No grid-wide barrier and no `while` or `do` spin-wait loops; intra-group synchronization uses `FROB_GROUP_BARRIER` only.
 - **Exact 1-based line and column tracking:** C/C++ line (`//`) and block (`/* ... */`) comments are stripped without shifting line or column coordinates of subsequent tokens.
+- **Schema `frob.kir/1` v0 layout (`BD-018`, exported as `frob_kir::KIR_SCHEMA`):** canonical JSON object with required members `schema` (`"frob.kir/1"`), `name`, `inputs` (`[{name, ty, dim[6]}]`), `outputs` (`[{name, ty, dim[6], node}]`), `nodes` (SSA index-ordered `[{op, ty, dim[6], expr_name, port|bits_hex|args|cmp}]` over `Input`, `Const`, `Add`, `Sub`, `Mul`, `Div`, `Sqrt`, `Neg`, `Abs`, `Min`, `Max`, `Cmp`, `Select`), and `meta` (`{math_mode: "Ieee754Safe", op_counts, cpu_reference, determinism}`). Content hash is domain-separated BLAKE3 over those canonical bytes. Bounded hash-consing CSE (default cap 65,536 nodes) merges exact commutative pairs (`Add`/`Mul`/`Min`/`Max`) without reassociation, distribution, or inexact constant folding; `+0.0` and `-0.0` are distinct constants. Rust and shared-dialect emitters write strictly one operation per statement with bit-encoded constants (`f32::from_bits` / `FROB_F32_BITS`), zero decimal float literals, and build-time refusal of `F64` on the dialect emitter.
 - **Not a seventh `xtask` subcommand (INV-WS-05):** The lint is a library module called by crate tests, `xtask check-generated`, and backend compile paths.
 
 ## Refusals
 
+- `FROB-REF-250` (exit 3, `after-change`): a `frob.kir/1` program is not dimensionally homogeneous (`Add`/`Sub`/`Min`/`Max`/`Cmp`/`Select` on unequal `frob_core::qty` exponent vectors, `Sqrt` on an odd exponent vector, or output port dimension mismatch; T-09, PO-SPARK-01). Names kernel, node index, source expression, and both exponent vectors.
 - `FROB-REF-251` (exit 3, `after-change`): a banned operation or inadmissible compile option appears in a shared-dialect kernel unit (build time). Every finding carries `{rule, file, line, column, token, message}` in canonical JSON inside `Refusal::detail` and ranked repairs naming the admitted replacement.
 
 ## Determinism class
@@ -62,4 +64,4 @@ Provide the static shared-dialect lint (`dialect_lint`, BD-013) that inspects CU
 
 - Rules 5 (explicit bounded loops, unsigned indices, no recursion, no pointer arithmetic), 7 (exact unsigned 32-bit integer arithmetic, masked shifts, 64-bit feature gating), 8 (select-only masks, no arithmetic blends), and 9 (neutral padding constants), the Rust kernel lint, and `registries/kernel_bans.toml` token-table loading land in N21a-10.
 - Wiring `dialect_lint::lint` into CUDA and Metal compile paths and exposing structured `FROB-REF-251` lint reports from `frob --json` on refused compiles belong to BD-015, BD-016, and N21a-10 (BD-013 has no compile path or `frob` verb, per polishing-round-4 review notes 1 and 2).
-- The `frob.kir/1` straight-line program IR, dimension checker (`FROB-REF-250`), bounded CSE, and Rust/dialect emitters land in BD-018.
+- Bounded loops, composite types, loads/stores, and `frob schema frob.kir/1 --json` land in N21a-16; unsigned integer ops in N21a-17; resource metadata in N21a-18; symbolic derivation in BD-019.

@@ -8,7 +8,7 @@ plane = "compute"
 determinism = "D0"
 evidence = "Tested"
 gates = []
-refusals = ["FROB-REF-251"]
+refusals = ["FROB-REF-250", "FROB-REF-251"]
 
 [budgets]
 wall_ms = 50

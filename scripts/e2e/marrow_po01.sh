@@ -35,8 +35,8 @@ STACK_LOCK="${REPO_ROOT}/franken-stack.lock"
 CAPTURE_MANIFEST="${REPO_ROOT}/tools/oracle/marrow_fsga_capture/Cargo.toml"
 
 TARGET_BASE="${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}"
-CAPTURE_TARGET="${TARGET_BASE}/frob-marrow-capture-e2e"
-LIE_TARGET="${CARGO_TARGET_DIR:-${TARGET_BASE}/frob-lie-e2e}"
+CAPTURE_TARGET="${TARGET_BASE}/frob-marrow-capture-${E2E_RUN_ID}"
+LIE_TARGET="${CARGO_TARGET_DIR:-${TARGET_BASE}/frob-lie-${E2E_RUN_ID}}"
 
 e2e_assert_file "committed_fixture_exists" "${FIXTURE}"
 e2e_assert_file "stack_lock_exists" "${STACK_LOCK}"
@@ -59,7 +59,7 @@ e2e_assert_eq "capture_exit_zero" "${E2E_LAST_EXIT}" "0"
 # and independently hash the record section (header excluded) with BLAKE3.
 CAPTURE_CHECK_OUT="${WORK}/capture_check.kv"
 python3 - "${E2E_LAST_STDOUT}" "${E2E_LAST_STDERR}" "${FRESH_FIXTURE}" "${FIXTURE}" "${CAPTURE_CHECK_OUT}" "${REPO_ROOT}/tools/oracle/design_canon" <<'PYEOF'
-import pathlib, re, sys
+import hashlib, pathlib, re, sys
 
 sys.path.insert(0, sys.argv[6])
 import blake3_ref
@@ -83,7 +83,8 @@ else:
     fresh_text = fresh_raw
 pathlib.Path(sys.argv[3]).write_text(fresh_text, encoding="utf-8", newline="\n")
 
-committed_text = pathlib.Path(sys.argv[4]).read_text(encoding="utf-8")
+committed_bytes = pathlib.Path(sys.argv[4]).read_bytes()
+committed_text = committed_bytes.decode("utf-8")
 
 def extract_field(txt, key):
     m = re.search(rf'^{re.escape(key)}\s*=\s*"([^"]+)"\s*$', txt, re.M)
@@ -105,6 +106,13 @@ fresh_b3 = hash_record_section(fresh_recs)
 committed_b3 = hash_record_section(committed_recs)
 declared_committed_b3 = extract_field(committed_text, "records_blake3")
 committed_sha = extract_field(committed_text, "bytes_sha256")
+zeroed_bytes = re.sub(
+    rb'(?m)^bytes_sha256 = "[0-9a-f]{64}"$',
+    b'bytes_sha256 = "' + b'0' * 64 + b'"',
+    committed_bytes,
+    count=1,
+)
+computed_sha = hashlib.sha256(zeroed_bytes).hexdigest()
 fixture_commit = extract_field(committed_text, "frankensim_commit")
 records_exact = (fresh_recs == committed_recs) and (len(committed_recs) == 1000) and (committed_b3 == declared_committed_b3)
 
@@ -112,6 +120,7 @@ with open(sys.argv[5], "w", encoding="utf-8", newline="\n") as out:
     out.write(f"fresh_b3={fresh_b3}\n")
     out.write(f"committed_b3={committed_b3}\n")
     out.write(f"committed_sha={committed_sha}\n")
+    out.write(f"computed_sha={computed_sha}\n")
     out.write(f"fixture_commit={fixture_commit}\n")
     out.write(f"records_exact={1 if records_exact else 0}\n")
     out.write(f"record_count={len(committed_recs)}\n")
@@ -120,6 +129,7 @@ PYEOF
 FRESH_B3=""
 COMMITTED_B3=""
 COMMITTED_SHA=""
+COMPUTED_SHA=""
 FIXTURE_COMMIT=""
 RECORDS_EXACT="0"
 RECORD_COUNT="0"
@@ -128,6 +138,7 @@ while IFS='=' read -r k v; do
     fresh_b3) FRESH_B3="${v}" ;;
     committed_b3) COMMITTED_B3="${v}" ;;
     committed_sha) COMMITTED_SHA="${v}" ;;
+    computed_sha) COMPUTED_SHA="${v}" ;;
     fixture_commit) FIXTURE_COMMIT="${v}" ;;
     records_exact) RECORDS_EXACT="${v}" ;;
     record_count) RECORD_COUNT="${v}" ;;
@@ -135,14 +146,9 @@ while IFS='=' read -r k v; do
 done < "${CAPTURE_CHECK_OUT}"
 
 e2e_assert_eq "record_count_is_1000" "${RECORD_COUNT}" "1000"
-e2e_assert_eq "capture_records_blake3_matches_committed" "${FRESH_B3}" "${COMMITTED_B3}"
+e2e_assert_digest_eq "capture_records_blake3_matches_committed" "${FRESH_B3}" "${COMMITTED_B3}"
 e2e_assert_eq "capture_records_section_exact_match" "${RECORDS_EXACT}" "1"
-COMMITTED_SHA_PRESENT="no"
-if [ -n "${COMMITTED_SHA}" ]; then
-  COMMITTED_SHA_PRESENT="yes"
-fi
-e2e_assert_eq "committed_bytes_sha256_present" "${COMMITTED_SHA_PRESENT}" "yes"
-e2e_metric "po_marrow_01_record_count" "${RECORD_COUNT}" "records" --observe
+e2e_assert_digest_eq "committed_bytes_sha256_matches" "${COMPUTED_SHA}" "${COMMITTED_SHA}"
 
 STEP1_PASSED="1"
 if [ "${FRESH_B3}" != "${COMMITTED_B3}" ] || [ "${RECORDS_EXACT}" != "1" ]; then
@@ -158,6 +164,16 @@ e2e_cmd --name cargo_test_po_marrow_01 -- \
   env "CARGO_TARGET_DIR=${LIE_TARGET}" \
   cargo test --offline --manifest-path "${REPO_ROOT}/Cargo.toml" -p frob-lie --test po_marrow_01 -j 1
 e2e_assert_eq "po_marrow_01_test_exit_zero" "${E2E_LAST_EXIT}" "0"
+if [ "${E2E_LAST_EXIT}" != 0 ]; then
+  mismatch='PO-MARROW-01 bit-parity mismatch at record=([0-9]+) field=([^ ]+) expected=(0x[0-9a-f]{16}) .*actual=(0x[0-9a-f]{16})'
+  while IFS= read -r line; do
+    if [[ "${line}" =~ ${mismatch} ]]; then
+      e2e_assert_eq "${FIXTURE}:record=${BASH_REMATCH[1]}:field=${BASH_REMATCH[2]}" \
+        "${BASH_REMATCH[4]}" "${BASH_REMATCH[3]}" --ka KA-256
+      break
+    fi
+  done < <(cat "${E2E_LAST_STDOUT}" "${E2E_LAST_STDERR}")
+fi
 
 # ----------------------------------------------------------------------------
 # Step 3: Compare franken-stack.lock FD-FSIM git_rev with fixture commit
@@ -199,5 +215,5 @@ fi
 # ----------------------------------------------------------------------------
 # Step 4: Summary naming PO-MARROW-01
 # ----------------------------------------------------------------------------
-e2e_step "summary_po_marrow_01" "Record PO-MARROW-01 completion summary and fixture digests"
-e2e_metric "PO-MARROW-01" "1" "pass" --observe
+e2e_step "summary_po_marrow_01" "Record the PO-MARROW-01 record count"
+e2e_metric "PO-MARROW-01" "${RECORD_COUNT}" "records" --observe

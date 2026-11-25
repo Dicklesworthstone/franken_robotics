@@ -529,18 +529,20 @@ pub fn validate_forbidden_list(
 pub fn validate_workspace_table_against_repo(repo_root: &Path) -> Result<(), Vec<String>> {
     let routes_path = repo_root.join(ROUTES_NOT_TAKEN_PATH);
     let routes_bytes = if routes_path.is_file() {
-        Some(fs::read(&routes_path).map_err(|e| {
-            vec![format!("failed reading {}: {e}", routes_path.display())]
-        })?)
+        Some(
+            fs::read(&routes_path)
+                .map_err(|e| vec![format!("failed reading {}: {e}", routes_path.display())])?,
+        )
     } else {
         None
     };
 
     let nongoals_path = repo_root.join(NONGOALS_PATH);
     let nongoals_bytes = if nongoals_path.is_file() {
-        Some(fs::read(&nongoals_path).map_err(|e| {
-            vec![format!("failed reading {}: {e}", nongoals_path.display())]
-        })?)
+        Some(
+            fs::read(&nongoals_path)
+                .map_err(|e| vec![format!("failed reading {}: {e}", nongoals_path.display())])?,
+        )
     } else {
         None
     };
@@ -558,8 +560,8 @@ fn parse_registry_ids(
     array_key: &str,
     label: &str,
 ) -> Result<BTreeSet<String>, String> {
-    let root = toml::parse(bytes)
-        .map_err(|e| format!("{label}: failed to parse strict TOML: {e}"))?;
+    let root =
+        toml::parse(bytes).map_err(|e| format!("{label}: failed to parse strict TOML: {e}"))?;
     let mut ids = BTreeSet::new();
     if let Some(Value::Array(items)) = root.get(array_key) {
         for (idx, sp) in items.iter().enumerate() {
@@ -721,21 +723,24 @@ fn walk_toolchain_files(repo_root: &Path, dir: &Path, depth: usize, out: &mut Ve
             continue;
         };
         if path.is_dir() {
-            if matches!(
-                name,
-                ".git"
-                    | "target"
-                    | ".beads"
-                    | ".ruff_cache"
-                    | ".ee"
-                    | ".local-implementation"
-                    | ".ntm"
-                    | "repro"
-                    | "planning"
-                    | "node_modules"
-                    | "lean"
-                    | "viewer"
-            ) {
+            if name == ".rch-tmp"
+                || name.starts_with(".rch-target-")
+                || matches!(
+                    name,
+                    ".git"
+                        | "target"
+                        | ".beads"
+                        | ".ruff_cache"
+                        | ".ee"
+                        | ".local-implementation"
+                        | ".ntm"
+                        | "repro"
+                        | "planning"
+                        | "node_modules"
+                        | "lean"
+                        | "viewer"
+                )
+            {
                 continue;
             }
             walk_toolchain_files(repo_root, &path, depth + 1, out);

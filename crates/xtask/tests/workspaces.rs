@@ -26,9 +26,9 @@ use xtask::crate_map::{WorkspaceMember, validate as validate_crate_map};
 use xtask::metadata::{WorkspaceKind, WorkspaceRoot};
 use xtask::report::FactValue;
 use xtask::workspaces::{
-    APPS_LINK_PACKAGES, CERT_TOOLCHAIN_FILE, EXPECTED_CODE_LINKING_COUNT,
-    EXPECTED_RETARGET_COUNT, EXPECTED_WORKSPACE_COUNT, FORBIDDEN_CORE_PACKAGES, ForbiddenPackage,
-    ForbiddenReason, REPOSITORY_LAYOUT, ROOT_TOOLCHAIN_FILE, WORKER_TOOLCHAIN_FILE, WORKSPACES,
+    APPS_LINK_PACKAGES, CERT_TOOLCHAIN_FILE, EXPECTED_CODE_LINKING_COUNT, EXPECTED_RETARGET_COUNT,
+    EXPECTED_WORKSPACE_COUNT, FORBIDDEN_CORE_PACKAGES, ForbiddenPackage, ForbiddenReason,
+    REPOSITORY_LAYOUT, ROOT_TOOLCHAIN_FILE, WORKER_TOOLCHAIN_FILE, WORKSPACES,
     check_toolchain_files, link_packages, match_forbidden_core_manifest_dir,
     match_forbidden_core_package, package_pattern_matches, validate_forbidden_list,
     validate_workspace_table_against_repo, workspace_by_name, workspace_roots,
@@ -142,7 +142,7 @@ impl SynthEnv {
     fn add_reg_crate(&self, name: &str, version: &str, extra_toml: &str) {
         let dir = self.reg.join(format!("{name}-{version}"));
         let mut manifest = format!(
-            "[package]\nname = \"{name}\"\nversion = \"{version}\"\nedition = \"2021\"\n"
+            "[workspace]\n\n[package]\nname = \"{name}\"\nversion = \"{version}\"\nedition = \"2021\"\n"
         );
         if !extra_toml.is_empty() {
             manifest.push('\n');
@@ -154,10 +154,16 @@ impl SynthEnv {
         write_file(&dir.join(".cargo-checksum.json"), "{\"files\":{}}\n");
     }
 
-    fn write_sibling_crate(&self, rel_from_base: &str, name: &str, version: &str, extra_toml: &str) {
+    fn write_sibling_crate(
+        &self,
+        rel_from_base: &str,
+        name: &str,
+        version: &str,
+        extra_toml: &str,
+    ) {
         let dir = self.base.join(rel_from_base);
         let mut manifest = format!(
-            "[package]\nname = \"{name}\"\nversion = \"{version}\"\nedition = \"2021\"\n"
+            "[workspace]\n\n[package]\nname = \"{name}\"\nversion = \"{version}\"\nedition = \"2021\"\n"
         );
         if !extra_toml.is_empty() {
             manifest.push('\n');
@@ -169,12 +175,7 @@ impl SynthEnv {
     }
 
     fn write_stack_lock(&self, foundations_toml: &str) {
-        let text = format!(
-            "schema = \"frob.stack-lock/1\"\n\
-             toolchain = \"nightly-2026-11-15\"\n\
-             receipt = \"{SAMPLE_RECEIPT}\"\n\n\
-             {foundations_toml}"
-        );
+        let text = format!("toolchain = \"nightly-2026-08-31\"\n\n{foundations_toml}");
         write_file(&self.repo.join("franken-stack.lock"), &text);
     }
 
@@ -255,9 +256,21 @@ fn seven_workspaces_listed() {
     let mut seen_roots = BTreeSet::new();
     let mut seen_locks = BTreeSet::new();
     for row in WORKSPACES {
-        assert!(seen_names.insert(row.name), "duplicate workspace name {}", row.name);
-        assert!(seen_roots.insert(row.root_dir), "duplicate root_dir {}", row.root_dir);
-        assert!(seen_locks.insert(row.lockfile), "duplicate lockfile {}", row.lockfile);
+        assert!(
+            seen_names.insert(row.name),
+            "duplicate workspace name {}",
+            row.name
+        );
+        assert!(
+            seen_roots.insert(row.root_dir),
+            "duplicate root_dir {}",
+            row.root_dir
+        );
+        assert!(
+            seen_locks.insert(row.lockfile),
+            "duplicate lockfile {}",
+            row.lockfile
+        );
         assert_eq!(
             row.lockfile,
             row.expected_lockfile(),
@@ -303,7 +316,14 @@ fn six_link_code_one_retargets() {
     assert_eq!(retarget.len(), EXPECTED_RETARGET_COUNT);
     assert_eq!(
         linking,
-        vec!["core", "spark-cuda", "spark-metal", "apps", "derive", "bindings"]
+        vec![
+            "core",
+            "spark-cuda",
+            "spark-metal",
+            "apps",
+            "derive",
+            "bindings"
+        ]
     );
     assert_eq!(retarget, vec!["worker"]);
 }
@@ -451,13 +471,9 @@ id = "ROUTE-SPARK-WGPU"
         ForbiddenPackage::route("burn*", "ROUTE-SPARK-RUSTGPU-BURN"),
         ForbiddenPackage::route("wgpu", "ROUTE-SPARK-WGPU"),
     ];
-    let errs = validate_forbidden_list(
-        &route_entries,
-        WORKSPACES,
-        Some(synth_routes_missing),
-        None,
-    )
-    .expect_err("missing route id must fail");
+    let errs =
+        validate_forbidden_list(&route_entries, WORKSPACES, Some(synth_routes_missing), None)
+            .expect_err("missing route id must fail");
     assert!(
         errs.iter()
             .any(|e| e.contains("ROUTE-SPARK-RUSTGPU-BURN") && e.contains("routes_not_taken.toml")),
@@ -473,8 +489,13 @@ id = "ROUTE-SPARK-WGPU"
 [[route]]
 id = "ROUTE-SPARK-RUSTGPU-BURN"
 "#;
-    validate_forbidden_list(&route_entries, WORKSPACES, Some(synth_routes_complete), None)
-        .expect("complete synthetic routes_not_taken.toml must pass");
+    validate_forbidden_list(
+        &route_entries,
+        WORKSPACES,
+        Some(synth_routes_complete),
+        None,
+    )
+    .expect("complete synthetic routes_not_taken.toml must pass");
 
     // 5. Nongoal naming no record of a synthetic `nongoals.toml` must fail;
     //    when present in the synthetic file it passes.
@@ -601,7 +622,10 @@ fn link_packages_exempt() {
 #[test]
 fn absent_root_is_fact_not_clean() {
     let env = SynthEnv::new("absent-root-fact");
-    env.write_workspace(&["crates/*"], &["spark", "apps", "derive", "bindings", "worker"]);
+    env.write_workspace(
+        &["crates/*"],
+        &["spark", "apps", "derive", "bindings", "worker"],
+    );
     env.write_crate("crates/frob-core", "frob-core", "0", 1, "");
     env.write_stack_lock(&cudarc_foundation_toml());
     env.generate_lockfile(&env.repo);
@@ -691,7 +715,9 @@ fn forbidden_package_in_core_closure() {
     assert!(
         forb[0].message.contains("cudarc")
             && forb[0].message.contains("annex = \"spark-cuda\"")
-            && forb[0].message.contains("frob-core -> ext-helper -> cudarc"),
+            && forb[0]
+                .message
+                .contains("frob-core -> ext-helper -> cudarc"),
         "unexpected transitive cudarc message: {}",
         forb[0].message
     );
@@ -716,8 +742,8 @@ fn forbidden_package_in_core_closure() {
     burn.write_stack_lock(&helper_foundation_toml());
     burn.generate_lockfile(&burn.repo);
 
-    let burn_out = check_deps(&burn.repo, &[WorkspaceRoot::core(&burn.repo)])
-        .expect("check_deps burn-core");
+    let burn_out =
+        check_deps(&burn.repo, &[WorkspaceRoot::core(&burn.repo)]).expect("check_deps burn-core");
     let burn_forb: Vec<_> = burn_out
         .findings
         .iter()
@@ -732,7 +758,9 @@ fn forbidden_package_in_core_closure() {
     assert_eq!(burn_forb[0].subject, "frob-core -> ext-helper -> burn-core");
     assert!(
         burn_forb[0].message.contains("burn-core")
-            && burn_forb[0].message.contains("route = \"ROUTE-SPARK-RUSTGPU-BURN\""),
+            && burn_forb[0]
+                .message
+                .contains("route = \"ROUTE-SPARK-RUSTGPU-BURN\""),
         "expected route tag for burn-core, got: {}",
         burn_forb[0].message
     );
@@ -875,13 +903,22 @@ fn toolchain_file_rules_on_clean_tree_and_plants() {
         .expect("clean tree must satisfy the one-toolchain-file rule");
     assert_eq!(
         found,
-        vec![CERT_TOOLCHAIN_FILE.to_owned(), ROOT_TOOLCHAIN_FILE.to_owned()]
+        vec![
+            CERT_TOOLCHAIN_FILE.to_owned(),
+            ROOT_TOOLCHAIN_FILE.to_owned()
+        ]
     );
 
     // Planted stray toolchain file under `spark/frob-spark-cuda/` fails.
     let stray = scratch_dir("stray-toolchain");
-    write_file(&stray.join(ROOT_TOOLCHAIN_FILE), "[toolchain]\nchannel = \"nightly\"\n");
-    write_file(&stray.join(CERT_TOOLCHAIN_FILE), "[toolchain]\nchannel = \"stable\"\n");
+    write_file(
+        &stray.join(ROOT_TOOLCHAIN_FILE),
+        "[toolchain]\nchannel = \"nightly\"\n",
+    );
+    write_file(
+        &stray.join(CERT_TOOLCHAIN_FILE),
+        "[toolchain]\nchannel = \"stable\"\n",
+    );
     write_file(
         &stray.join("spark/frob-spark-cuda/rust-toolchain.toml"),
         "[toolchain]\nchannel = \"nightly\"\n",
@@ -896,8 +933,14 @@ fn toolchain_file_rules_on_clean_tree_and_plants() {
 
     // `worker/rust-toolchain.toml` is rejected when worker fallback is inactive and accepted when active.
     let worker = scratch_dir("worker-toolchain");
-    write_file(&worker.join(ROOT_TOOLCHAIN_FILE), "[toolchain]\nchannel = \"nightly\"\n");
-    write_file(&worker.join(WORKER_TOOLCHAIN_FILE), "[toolchain]\nchannel = \"nightly\"\n");
+    write_file(
+        &worker.join(ROOT_TOOLCHAIN_FILE),
+        "[toolchain]\nchannel = \"nightly\"\n",
+    );
+    write_file(
+        &worker.join(WORKER_TOOLCHAIN_FILE),
+        "[toolchain]\nchannel = \"nightly\"\n",
+    );
     assert!(check_toolchain_files(&worker, false).is_err());
     assert!(check_toolchain_files(&worker, true).is_ok());
 }

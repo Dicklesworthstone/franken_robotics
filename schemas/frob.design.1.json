@@ -1,0 +1,29 @@
+{
+  "$comment": "@generated from registries/formats.toml, registries/verbs.toml by xtask::generate::format_and_verb_schemas; do not edit by hand.",
+  "$id": "frob.design/1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "FrankenRobotics artifact format FMT-FBOT (.fbot, owner frob-design, encoding canonical).",
+  "properties": {
+    "execution_authorized": { "const": false },
+    "hardware_safety_signoff": { "const": false },
+    "schema": { "const": "frob.design/1" },
+    "sim_to_real_certified": { "const": false }
+  },
+  "required": [
+    "execution_authorized",
+    "hardware_safety_signoff",
+    "schema",
+    "sim_to_real_certified"
+  ],
+  "title": "FMT-FBOT (frob.design/1)",
+  "type": "object",
+  "x-frob": {
+    "consumers": ["frob-analyze", "frob-arena", "frob-cli", "frob-design", "frob-model"],
+    "encoding": "canonical",
+    "extension": ".fbot",
+    "id": "FMT-FBOT",
+    "owner": "frob-design",
+    "producers": ["frob-design"]
+  }
+}

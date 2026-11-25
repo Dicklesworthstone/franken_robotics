@@ -1,0 +1,31 @@
+{
+  "$comment": "@generated from registries/formats.toml, registries/verbs.toml by xtask::generate::format_and_verb_schemas; do not edit by hand.",
+  "$id": "frob.card/1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "FrankenRobotics artifact format FMT-FCARD (.fcard, owner frob-actuate, encoding canonical).",
+  "properties": {
+    "execution_authorized": { "const": false },
+    "hardware_safety_signoff": { "const": false },
+    "kind": { "enum": ["actuator", "battery", "interface", "material", "optical", "payload", "sensor", "soil", "transmission"] },
+    "schema": { "const": "frob.card/1" },
+    "sim_to_real_certified": { "const": false }
+  },
+  "required": [
+    "execution_authorized",
+    "hardware_safety_signoff",
+    "kind",
+    "schema",
+    "sim_to_real_certified"
+  ],
+  "title": "FMT-FCARD (frob.card/1)",
+  "type": "object",
+  "x-frob": {
+    "consumers": ["frob-actuate", "frob-analyze", "frob-design", "frob-sensor", "frob-terrain"],
+    "encoding": "canonical",
+    "extension": ".fcard",
+    "id": "FMT-FCARD",
+    "owner": "frob-actuate",
+    "producers": ["frob-actuate"]
+  }
+}

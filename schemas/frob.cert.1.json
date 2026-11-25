@@ -1,0 +1,29 @@
+{
+  "$comment": "@generated from registries/formats.toml, registries/verbs.toml by xtask::generate::format_and_verb_schemas; do not edit by hand.",
+  "$id": "frob.cert/1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "FrankenRobotics artifact format FMT-FROBCERT (.frobcert, owner frob-cert, encoding canonical).",
+  "properties": {
+    "execution_authorized": { "const": false },
+    "hardware_safety_signoff": { "const": false },
+    "schema": { "const": "frob.cert/1" },
+    "sim_to_real_certified": { "const": false }
+  },
+  "required": [
+    "execution_authorized",
+    "hardware_safety_signoff",
+    "schema",
+    "sim_to_real_certified"
+  ],
+  "title": "FMT-FROBCERT (frob.cert/1)",
+  "type": "object",
+  "x-frob": {
+    "consumers": ["frob-cert", "frob-chronicle", "frob-verify"],
+    "encoding": "canonical",
+    "extension": ".frobcert",
+    "id": "FMT-FROBCERT",
+    "owner": "frob-cert",
+    "producers": ["frob-lemma"]
+  }
+}

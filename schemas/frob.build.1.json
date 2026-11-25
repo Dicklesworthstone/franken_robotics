@@ -1,0 +1,29 @@
+{
+  "$comment": "@generated from registries/formats.toml, registries/verbs.toml by xtask::generate::format_and_verb_schemas; do not edit by hand.",
+  "$id": "frob.build/1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "description": "FrankenRobotics artifact format FMT-FBUILD (.fbuild, owner frob-foundry, encoding canonical).",
+  "properties": {
+    "execution_authorized": { "const": false },
+    "hardware_safety_signoff": { "const": false },
+    "schema": { "const": "frob.build/1" },
+    "sim_to_real_certified": { "const": false }
+  },
+  "required": [
+    "execution_authorized",
+    "hardware_safety_signoff",
+    "schema",
+    "sim_to_real_certified"
+  ],
+  "title": "FMT-FBUILD (frob.build/1)",
+  "type": "object",
+  "x-frob": {
+    "consumers": ["frob-cli", "frob-foundry", "frob-verify"],
+    "encoding": "canonical",
+    "extension": ".fbuild",
+    "id": "FMT-FBUILD",
+    "owner": "frob-foundry",
+    "producers": ["frob-foundry"]
+  }
+}

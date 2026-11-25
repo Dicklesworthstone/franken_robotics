@@ -8,7 +8,8 @@
 # measured, killed, no-claim), verifies the empty-measured pass refusal, blesses
 # the 4-row fixture, verifies the printed statuses and block digest, verifies
 # clean check without FROB_BLESS, verifies hand-edit refusal naming the first
-# differing line, and logs N34p4-03 check-generated steps as not due.
+# differing line, and exercises N34p4-03 cargo xtask check-generated [--write]
+# on the same fixtures.
 #
 # Bash 3.2 compatible; never deletes files or directories (COMMON.md 9b).
 
@@ -49,7 +50,7 @@ for fn in top_files:
     if os.path.isfile(sp):
         shutil.copy2(sp, os.path.join(dst, fn))
 
-for rel_dir in [".cargo", "crates", "registries", "schemas"]:
+for rel_dir in [".cargo", "crates", "registries", "schemas", "receipts", "kernels"]:
     sp = os.path.join(src, rel_dir)
     if os.path.isdir(sp):
         shutil.copytree(sp, os.path.join(dst, rel_dir), dirs_exist_ok=True)
@@ -312,9 +313,209 @@ else
 fi
 
 # ---------------------------------------------------------------------------
-# Step 6: N34p4-03 check-generated steps (not due until N34p4-03 lands)
-# (Per BD-002 round-4 review note slice F-U34: check-generated --write is N34p4-03's)
+# Step 6: N34p4-03 cargo xtask check-generated [--write] steps (GATE-GAUNT-10)
 # ---------------------------------------------------------------------------
-e2e_step "check_generated_not_due" "Log N34p4-03 cargo xtask check-generated [--write] steps as not due"
+e2e_step "check_generated_invalid_5row" "Run check-generated --write on 5-row fixture with invalid empty-measured pass and assert exit 2 + gen.status-invalid"
 
-e2e_skip "not due: cargo xtask check-generated --write and check-generated arrive in N34p4-03"
+cat > "${REPO_COPY}/registries/gates.toml" <<'EOF'
+schema = "frob.gates/1"
+
+[[gate]]
+id = "GATE-SYN-01-NOTRUN"
+claim = "known-answer"
+claim_id = "clm:syn-01"
+section = "38.13"
+threshold = "exact"
+milestone = "M1"
+tier = ["G1:host"]
+controls = ["NC-0001"]
+
+[[gate.part]]
+milestone = "M1"
+status = "not-run"
+measured = ""
+evidence = []
+recorded = { date = "", session = "", implemented_by = "" }
+
+[[gate]]
+id = "GATE-SYN-02-PASS"
+claim = "known-answer"
+claim_id = "clm:syn-02"
+section = "38.13"
+threshold = "561 cells"
+milestone = "M1"
+tier = ["G1:host"]
+controls = ["NC-0002"]
+
+[[gate.part]]
+milestone = "M1"
+status = "pass"
+measured = "561 of 561 cells"
+evidence = ["seq:10"]
+recorded = { date = "2026-11-24", session = "session:reviewer", implemented_by = "session:author" }
+
+[[gate]]
+id = "GATE-SYN-03-BADPASS"
+claim = "known-answer"
+claim_id = "clm:syn-03"
+section = "38.13"
+threshold = "exact"
+milestone = "M1"
+tier = ["G1:host"]
+controls = ["NC-0003"]
+
+[[gate.part]]
+milestone = "M1"
+status = "pass"
+measured = ""
+evidence = ["seq:11"]
+recorded = { date = "2026-11-24", session = "session:reviewer", implemented_by = "session:author" }
+
+[[gate]]
+id = "GATE-SYN-04-KILLED"
+claim = "parity"
+claim_id = "clm:syn-04"
+section = "38.13"
+threshold = "parity"
+milestone = "M1"
+tier = ["G2:host"]
+controls = ["NC-0004"]
+
+[[gate.part]]
+milestone = "M1"
+status = "killed"
+measured = ""
+evidence = ["seq:12"]
+recorded = { date = "2026-11-24", session = "session:reviewer", implemented_by = "session:author" }
+kill_gate = "KILL-FSIM"
+fallback = "pinned worker process"
+
+[[gate]]
+id = "GATE-SYN-05-NOCLAIM"
+claim = "reality"
+claim_id = "clm:syn-05"
+section = "38.13"
+threshold = "bench"
+milestone = "M5"
+tier = ["G1:host"]
+controls = []
+
+[[gate.part]]
+milestone = "M5"
+status = "no-claim"
+measured = ""
+evidence = []
+recorded = { date = "2026-11-24", session = "session:reviewer", implemented_by = "" }
+EOF
+
+e2e_cmd --name check_generated_write_5row_invalid --expect-exit "2" -- \
+  env "CARGO_TARGET_DIR=${TARGET_DIR}" \
+  cargo xtask check-generated --root "${REPO_COPY}" --json --write
+e2e_assert_json "check_generated_5row_rule" "/findings/0/rule" "gen.status-invalid" --gate "GATE-GAUNT-10"
+
+e2e_step "check_generated_valid_4row" "Remove invalid row, run check-generated --write then check-generated, assert exit 0"
+
+cat > "${REPO_COPY}/registries/gates.toml" <<'EOF'
+schema = "frob.gates/1"
+
+[[gate]]
+id = "GATE-SYN-01-NOTRUN"
+claim = "known-answer"
+claim_id = "clm:syn-01"
+section = "38.13"
+threshold = "exact"
+milestone = "M1"
+tier = ["G1:host"]
+controls = ["NC-0001"]
+
+[[gate.part]]
+milestone = "M1"
+status = "not-run"
+measured = ""
+evidence = []
+recorded = { date = "", session = "", implemented_by = "" }
+
+[[gate]]
+id = "GATE-SYN-02-PASS"
+claim = "known-answer"
+claim_id = "clm:syn-02"
+section = "38.13"
+threshold = "561 cells"
+milestone = "M1"
+tier = ["G1:host"]
+controls = ["NC-0002"]
+
+[[gate.part]]
+milestone = "M1"
+status = "pass"
+measured = "561 of 561 cells"
+evidence = ["seq:10"]
+recorded = { date = "2026-11-24", session = "session:reviewer", implemented_by = "session:author" }
+
+[[gate]]
+id = "GATE-SYN-04-KILLED"
+claim = "parity"
+claim_id = "clm:syn-04"
+section = "38.13"
+threshold = "parity"
+milestone = "M1"
+tier = ["G2:host"]
+controls = ["NC-0004"]
+
+[[gate.part]]
+milestone = "M1"
+status = "killed"
+measured = ""
+evidence = ["seq:12"]
+recorded = { date = "2026-11-24", session = "session:reviewer", implemented_by = "session:author" }
+kill_gate = "KILL-FSIM"
+fallback = "pinned worker process"
+
+[[gate]]
+id = "GATE-SYN-05-NOCLAIM"
+claim = "reality"
+claim_id = "clm:syn-05"
+section = "38.13"
+threshold = "bench"
+milestone = "M5"
+tier = ["G1:host"]
+controls = []
+
+[[gate.part]]
+milestone = "M5"
+status = "no-claim"
+measured = ""
+evidence = []
+recorded = { date = "2026-11-24", session = "session:reviewer", implemented_by = "" }
+EOF
+
+e2e_cmd --name check_generated_write_4row --expect-exit "0" -- \
+  env "CARGO_TARGET_DIR=${TARGET_DIR}" \
+  cargo xtask check-generated --root "${REPO_COPY}" --json --write
+e2e_assert_json "check_generated_write_ok" "/ok" "true" --gate "GATE-GAUNT-10"
+
+e2e_cmd --name check_generated_verify_4row --expect-exit "0" -- \
+  env "CARGO_TARGET_DIR=${TARGET_DIR}" \
+  cargo xtask check-generated --root "${REPO_COPY}" --json
+e2e_assert_json "check_generated_verify_ok" "/ok" "true" --gate "GATE-GAUNT-10"
+
+e2e_step "check_generated_hand_edit" "Hand-edit README status block and assert check-generated exits 2 with gen.differs and line number"
+
+EDIT_LINE="$(python3 - "${REPO_COPY}/README.md" <<'PY'
+import sys
+p = sys.argv[1]
+txt = open(p, encoding="utf-8").read()
+assert "Summary: 4 gates" in txt
+line_no = next(i for i, l in enumerate(txt.splitlines(), 1) if "Summary: 4 gates" in l)
+txt = txt.replace("Summary: 4 gates", "Summary: 999 gates", 1)
+open(p, "w", encoding="utf-8").write(txt)
+print(line_no)
+PY
+)"
+
+e2e_cmd --name check_generated_hand_edit_fail --expect-exit "2" -- \
+  env "CARGO_TARGET_DIR=${TARGET_DIR}" \
+  cargo xtask check-generated --root "${REPO_COPY}" --json
+e2e_assert_json "check_generated_hand_edit_rule" "/findings/0/rule" "gen.differs" --gate "GATE-GAUNT-10"
+e2e_assert_json "check_generated_hand_edit_path" "/findings/0/path" "README.md" --gate "GATE-GAUNT-10"
+e2e_assert_json "check_generated_hand_edit_line" "/findings/0/line" "${EDIT_LINE}" --gate "GATE-GAUNT-10"

@@ -1,0 +1,172 @@
+# Mathematics compendium section D.4: Actuators and power (bead N12-44).
+#
+# Exact mathematical formulas, validity domains, oracle entry points, law tests,
+# and negative controls for Appendix D.4 and §15.4–§15.11, §24.8, §29.9.
+# Validated by crates/frob-conformance/tests/compendium_registry.rs and rendered
+# into docs/math/compendium.md by examples/compendium_doc.rs.
+
+schema = "frob.compendium.section/1"
+section = "D.4"
+title = "Actuators and power"
+expected_rows = 14
+
+[[row]]
+name = "Port-Hamiltonian form"
+statement = "ẋ = (J(x) − R(x))·∇H(x) + G(x)·u, y = G(x)ᵀ·∇H(x), so Ḣ = uᵀy − ∇HᵀR∇H"
+validity = "J skew, R positive semidefinite"
+used_in = ["C-38", "C-12", "§15.5"]
+oracle = "frob_conformance::compendium::d4::phs_step_derivatives"
+tests = ["d4_phs_power_balance"]
+negative_control = "d4_nc_phs_symmetric_j"
+carried_by = ["SPEC-C-38", "SPEC-C-12"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Motor axis"
+statement = "L·di/dt = V − R_w·i − k·ω; J_r·ω̇ = k·i − b·ω − τ_load; locked-rotor current (V/R_w)·(1 − e^(−t/τ)) with τ = L/R_w"
+validity = "k_t = k_e = k in SI units"
+used_in = ["C-38", "§15.4"]
+oracle = "frob_conformance::compendium::d4::motor_axis_locked_rotor_current"
+tests = ["d4_motor_locked_rotor_tau_10ms", "d4_motor_is_phs_with_gyrator"]
+negative_control = "d4_nc_motor_kt_ne_ke"
+carried_by = ["SPEC-C-38"]
+arithmetic = "tolerance"
+tolerance = "1e-12 A"
+
+[[row]]
+name = "Motor envelope"
+statement = "i ≤ min(I_max, (V_bus − k_e·N·ω)/R); τ = η·N·k_t·i − τ_friction"
+validity = "Steady-state electrical model at level L1"
+used_in = ["§15.4", "A-11"]
+oracle = "frob_conformance::compendium::d4::motor_envelope_l1"
+tests = ["d4_envelope_no_load_speed_and_stall"]
+negative_control = "d4_nc_envelope_no_back_emf"
+carried_by = ["compendium-only"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Voltage limit and field weakening"
+statement = "(λ + L_d·i_d)² + (L_q·i_q)² ≤ (V_lim/ω_e)² with V_lim = V_bus/√2; base speed V_lim/√(λ² + (L·I_max)²); top speed V_lim/(λ − L·I_max) when λ > L·I_max"
+validity = "Power-invariant dq coordinates, resistance neglected, non-salient for the closed forms; the inscribed circle is conservative by at most 1 − √3/2 of voltage"
+used_in = ["§15.8"]
+oracle = "frob_conformance::compendium::d4::voltage_limit_field_weakening"
+tests = ["d4_voltage_circle_base_and_top_speed", "d4_inscribed_circle_margin"]
+negative_control = "d4_nc_field_weakening_infinite_top_speed"
+carried_by = ["compendium-only"]
+arithmetic = "tolerance"
+tolerance = "1e-9 rad/s"
+
+[[row]]
+name = "Thermal node"
+statement = "C·Ṫ_w = P_loss − G_th·(T_w − T_amb), with copper loss i²·R₀·(1 + α·(T_w − T₀))"
+validity = "One lumped node; card values are `Estimated` unless calibrated"
+used_in = ["C-38", "§15.7"]
+oracle = "frob_conformance::compendium::d4::thermal_node_closed_form"
+tests = ["d4_thermal_node_linear_solution"]
+negative_control = "d4_nc_thermal_node_wrong_sign_alpha"
+carried_by = ["SPEC-C-38"]
+arithmetic = "tolerance"
+tolerance = "1e-6 K"
+
+[[row]]
+name = "Thermal runaway condition"
+statement = "With s = i²·R₀·α: a stable equilibrium T_amb + P_amb/(G − s) exists exactly when s < G; runaway begins at I_crit = √(G/(R₀·α)). In general an equilibrium is stable where dP/dT < G"
+validity = "Constant current. Under torque control the loss curve is convex and the equilibrium vanishes at a tangency below the slope estimate"
+used_in = ["C-38", "§15.7", "A-11"]
+oracle = "frob_conformance::compendium::d4::thermal_runaway_analysis"
+tests = ["d4_runaway_critical_current_35_8"]
+negative_control = "d4_nc_runaway_constant_resistance"
+carried_by = ["SPEC-C-38"]
+arithmetic = "tolerance"
+tolerance = "1e-9 A"
+
+[[row]]
+name = "Entropy production"
+statement = "σ = P_loss/T_w + G_th·(T_w − T_amb)²/(T_w·T_amb) ≥ 0 whenever P_loss ≥ 0"
+validity = "A sign check on each assigned loss; it cannot fail for a correct model"
+used_in = ["C-38"]
+oracle = "frob_conformance::compendium::d4::entropy_production"
+tests = ["d4_entropy_production_nonnegative"]
+negative_control = "d4_negated_loss_gives_negative_entropy"
+carried_by = ["SPEC-C-38"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Two-RC battery"
+statement = "V = OCV(z) − R₀·I − V₁ − V₂; dVₖ/dt = −Vₖ/(Rₖ·Cₖ) + I/Cₖ; dz/dt = −I/Q"
+validity = "I positive on discharge; R₀ depends on cell temperature; ageing advances between episodes only"
+used_in = ["§15.10"]
+oracle = "frob_conformance::compendium::d4::two_rc_battery_step_response"
+tests = ["d4_two_rc_step_response"]
+negative_control = "d4_nc_two_rc_reversed_current_sign"
+carried_by = ["compendium-only"]
+arithmetic = "tolerance"
+tolerance = "1e-9 V"
+
+[[row]]
+name = "Bus power ceiling"
+statement = "A source E with series resistance R delivers P only if P ≤ E²/(4·R), at V = [E + √(E² − 4·R·P)]/2"
+validity = "Constant-power loads; above the ceiling there is no operating point and the step records a brownout"
+used_in = ["§15.10"]
+oracle = "frob_conformance::compendium::d4::bus_operating_point"
+tests = ["d4_bus_ceiling_e2_over_4r"]
+negative_control = "d4_bus_brownout_above_ceiling"
+carried_by = ["compendium-only"]
+arithmetic = "tolerance"
+tolerance = "1e-9 V"
+
+[[row]]
+name = "Four-quadrant transmission"
+statement = "Motoring: τ_joint = η_f·N·τ_motor. Back-driven: τ_motor = η_b·τ_joint/N. A screw with lead angle a and friction angle φ has η_f = tan a/tan(a + φ), η_b = tan(a − φ)/tan a, and locks when φ ≥ a"
+validity = "One multiplier in all quadrants creates energy"
+used_in = ["§15.9"]
+oracle = "frob_conformance::compendium::d4::screw_efficiencies"
+tests = ["d4_screw_efficiencies_and_lock"]
+negative_control = "d4_single_multiplier_creates_energy"
+carried_by = ["compendium-only"]
+arithmetic = "tolerance"
+tolerance = "1e-9"
+
+[[row]]
+name = "Rational gear law"
+statement = "From f₂ = r·f₁ and e₁ = −r·e₂ it follows that e₁·f₁ + e₂·f₂ = 0"
+validity = "Ideal transformer; a composition of power-preserving maps preserves power"
+used_in = ["C-12", "T-15"]
+oracle = "frob_conformance::compendium::d4::rational_gear_map"
+tests = ["d4_gear_law_identity"]
+negative_control = "d4_nc_gear_law_wrong_sign"
+carried_by = ["SPEC-C-12"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Energy balance"
+statement = "Supplied = change in stored + dissipated + exported, per mechanism and per step, with the numerical residual on its own line"
+validity = "Heat held in a thermal node is stored energy, not loss"
+used_in = ["C-12", "C-38", "§29.9"]
+oracle = "frob_conformance::compendium::d4::energy_balance_residual"
+tests = ["d4_energy_balance_closes"]
+negative_control = "d4_double_counted_heat_flagged"
+carried_by = ["SPEC-C-12", "SPEC-C-38"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Cost of transport"
+statement = "E/(m·g·d)"
+validity = "Stated separately for mechanical and electrical energy"
+used_in = ["§24.8"]
+oracle = "frob_conformance::compendium::d4::cost_of_transport"
+tests = ["d4_cost_of_transport_dimensionless"]
+negative_control = "d4_nc_cost_of_transport_mixed_energy"
+carried_by = ["compendium-only"]
+arithmetic = "exact-rational"
+
+[[row]]
+name = "Froude number"
+statement = "v²/(g·L)"
+validity = "L is leg length, or ℓ₀ in canonical form"
+used_in = ["§24.8", "C-21"]
+oracle = "frob_conformance::compendium::d4::froude_number"
+tests = ["d4_froude_dimensionless"]
+negative_control = "d4_nc_froude_linear_v_not_dimensionless"
+carried_by = ["compendium-only"]
+arithmetic = "exact-rational"

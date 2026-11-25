@@ -1,16 +1,50 @@
 //! Closed SI quantity re-export surface over `fs-qty` (BD-005, N33c-03, rule L-6).
 //!
-//! Exports 36 named SI types (`<= 64`, OPEN-SUITE-4) plus [`Checked`], and nothing generic
-//! over a dimension parameter. Equal-dimension kinds remain distinct types (CX-354):
+//! Exports 36 named SI types (`<= 64`, OPEN-SUITE-4) generated from
+//! `registries/qty_aliases.toml` and `registries/qty_products.toml` plus
+//! [`Checked`], and nothing generic over a dimension parameter.
 //!
-//! ```compile_fail,E0308
-//! use frob_core::qty::{Energy, Torque};
-//! let _ = Torque::new(1.0) + Energy::new(1.0);
-//! ```
+//! Equal-dimension kinds remain distinct types (`CX-354`, `KA-779`):
 //!
 //! ```compile_fail,E0308
 //! use frob_core::qty::{Pressure, Time};
 //! let _ = Pressure::new(1.0) + Time::new(1.0);
+//! ```
+//! ```compile_fail,E0308
+//! use frob_core::qty::{Energy, Torque};
+//! let _ = Torque::new(1.0) + Energy::new(1.0);
+//! ```
+//! ```compile_fail,E0308
+//! use frob_core::qty::{AngularStiffness, Torque};
+//! let _ = Torque::new(1.0) + AngularStiffness::new(1.0);
+//! ```
+//! ```compile_fail,E0308
+//! use frob_core::qty::{AngularStiffness, Energy};
+//! let _ = Energy::new(1.0) + AngularStiffness::new(1.0);
+//! ```
+//! ```compile_fail,E0308
+//! use frob_core::qty::{AngularVelocity, Frequency};
+//! let _ = Frequency::new(1.0) + AngularVelocity::new(1.0);
+//! ```
+//! ```compile_fail,E0308
+//! use frob_core::qty::{Impulse, Momentum};
+//! let _ = Momentum::new(1.0) + Impulse::new(1.0);
+//! ```
+//! ```compile_fail,E0308
+//! use frob_core::qty::{AngularDamping, AngularMomentum};
+//! let _ = AngularMomentum::new(1.0) + AngularDamping::new(1.0);
+//! ```
+//! ```compile_fail,E0308
+//! use frob_core::qty::{Angle, Ratio};
+//! let _ = Angle::new(1.0) + Ratio::new(1.0);
+//! ```
+//! ```compile_fail,E0308
+//! use frob_core::qty::{Angle, FrictionCoefficient};
+//! let _ = Angle::new(1.0) + FrictionCoefficient::new(1.0);
+//! ```
+//! ```compile_fail,E0308
+//! use frob_core::qty::{FrictionCoefficient, Ratio};
+//! let _ = Ratio::new(1.0) + FrictionCoefficient::new(1.0);
 //! ```
 //!
 //! Determinism D0; prints nothing (L-7); zero `unsafe`.
@@ -20,28 +54,69 @@ use std::fmt;
 use std::ops::{Add, Div, Mul, Neg, Sub};
 
 pub const MAX_ALIASES: usize = 64;
-pub const ALIAS_COUNT: usize = 36;
+
+/// Refusal code assigned to runtime unit/dimension mismatch (`N33c-03`, `N14-REF`).
+pub const DIMENSION_MISMATCH_CODE: &str = "FROB-REF-102";
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct DimensionMismatch { pub observed: [i8; 6], pub required: [i8; 6], pub target_name: &'static str }
+pub struct DimensionMismatch {
+    pub observed: [i8; 6],
+    pub required: [i8; 6],
+    pub target_name: &'static str,
+}
+
+impl DimensionMismatch {
+    /// Canonical refusal code string (`FROB-REF-102`).
+    #[must_use]
+    pub const fn refusal_code(&self) -> &'static str {
+        DIMENSION_MISMATCH_CODE
+    }
+}
 
 impl fmt::Display for DimensionMismatch {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "dimension mismatch for {}: observed {:?}, required {:?}", self.target_name, self.observed, self.required)
+        write!(
+            f,
+            "{}: dimension mismatch for {}: observed {:?}, required {:?}",
+            DIMENSION_MISMATCH_CODE, self.target_name, self.observed, self.required
+        )
     }
 }
 impl std::error::Error for DimensionMismatch {}
 
 #[derive(Debug, Clone, Copy, PartialEq)]
-pub struct Checked { inner: fs_qty::QtyAny }
+pub struct Checked {
+    inner: fs_qty::QtyAny,
+}
 
 impl Checked {
-    #[must_use] pub const fn new(value: f64, dimension: [i8; 6]) -> Self { Self { inner: fs_qty::QtyAny::new(value, fs_qty::Dims(dimension)) } }
-    #[must_use] pub const fn value(self) -> f64 { self.inner.value }
-    #[must_use] pub const fn dimension(self) -> [i8; 6] { self.inner.dims.0 }
+    #[must_use]
+    pub const fn new(value: f64, dimension: [i8; 6]) -> Self {
+        Self {
+            inner: fs_qty::QtyAny::new(value, fs_qty::Dims(dimension)),
+        }
+    }
+
+    #[must_use]
+    pub const fn value(self) -> f64 {
+        self.inner.value
+    }
+
+    #[must_use]
+    pub const fn dimension(self) -> [i8; 6] {
+        self.inner.dims.0
+    }
+
     pub fn into_alias<A: QuantityAlias>(self) -> Result<A, DimensionMismatch> {
-        if self.dimension() == A::DIMENSION { Ok(A::from_si(self.value())) }
-        else { Err(DimensionMismatch { observed: self.dimension(), required: A::DIMENSION, target_name: A::NAME }) }
+        if self.dimension() == A::DIMENSION {
+            Ok(A::from_si(self.value()))
+        } else {
+            Err(DimensionMismatch {
+                observed: self.dimension(),
+                required: A::DIMENSION,
+                target_name: A::NAME,
+            })
+        }
     }
 }
 
@@ -52,9 +127,13 @@ pub trait QuantityAlias: Copy + Sized + private::Sealed {
     const DIMENSION: [i8; 6];
     fn from_si(value: f64) -> Self;
     fn value(self) -> f64;
-    fn to_checked(self) -> Checked { Checked::new(self.value(), Self::DIMENSION) }
+    fn to_checked(self) -> Checked {
+        Checked::new(self.value(), Self::DIMENSION)
+    }
 }
-mod private { pub trait Sealed {} }
+mod private {
+    pub trait Sealed {}
+}
 
 macro_rules! define_qty_aliases {
     ($($name:ident = ($m:literal, $kg:literal, $s:literal, $k:literal, $a:literal, $mol:literal), $kind:literal, $unit:literal;)+) => {
@@ -90,45 +169,6 @@ macro_rules! define_qty_aliases {
     };
 }
 
-define_qty_aliases! {
-    Length = (1, 0, 0, 0, 0, 0), "length", "m";
-    Area = (2, 0, 0, 0, 0, 0), "area", "m^2";
-    Volume = (3, 0, 0, 0, 0, 0), "volume", "m^3";
-    Angle = (0, 0, 0, 0, 0, 0), "angle", "rad";
-    Ratio = (0, 0, 0, 0, 0, 0), "ratio", "1";
-    Mass = (0, 1, 0, 0, 0, 0), "mass", "kg";
-    Density = (-3, 1, 0, 0, 0, 0), "density", "kg·m^-3";
-    Time = (0, 0, 1, 0, 0, 0), "time", "s";
-    Frequency = (0, 0, -1, 0, 0, 0), "frequency", "Hz";
-    AngularVelocity = (0, 0, -1, 0, 0, 0), "angular-velocity", "rad·s^-1";
-    AngularAcceleration = (0, 0, -2, 0, 0, 0), "angular-acceleration", "rad·s^-2";
-    Velocity = (1, 0, -1, 0, 0, 0), "velocity", "m·s^-1";
-    Acceleration = (1, 0, -2, 0, 0, 0), "acceleration", "m·s^-2";
-    Force = (1, 1, -2, 0, 0, 0), "force", "N";
-    Torque = (2, 1, -2, 0, 0, 0), "torque", "N·m";
-    Energy = (2, 1, -2, 0, 0, 0), "energy", "J";
-    Power = (2, 1, -3, 0, 0, 0), "power", "W";
-    Momentum = (1, 1, -1, 0, 0, 0), "momentum", "kg·m·s^-1";
-    Impulse = (1, 1, -1, 0, 0, 0), "impulse", "N·s";
-    AngularMomentum = (2, 1, -1, 0, 0, 0), "angular-momentum", "kg·m^2·s^-1";
-    MomentOfInertia = (2, 1, 0, 0, 0, 0), "moment-of-inertia", "kg·m^2";
-    Stiffness = (0, 1, -2, 0, 0, 0), "stiffness", "N·m^-1";
-    AngularStiffness = (2, 1, -2, 0, 0, 0), "angular-stiffness", "N·m·rad^-1";
-    Damping = (0, 1, -1, 0, 0, 0), "damping", "N·s·m^-1";
-    AngularDamping = (2, 1, -1, 0, 0, 0), "angular-damping", "N·m·s·rad^-1";
-    Pressure = (-1, 1, -2, 0, 0, 0), "pressure", "Pa";
-    Temperature = (0, 0, 0, 1, 0, 0), "temperature", "K";
-    HeatCapacity = (2, 1, -2, -1, 0, 0), "heat-capacity", "J·K^-1";
-    ThermalResistance = (-2, -1, 3, 1, 0, 0), "thermal-resistance", "K·W^-1";
-    Current = (0, 0, 0, 0, 1, 0), "current", "A";
-    Voltage = (2, 1, -3, 0, -1, 0), "voltage", "V";
-    Resistance = (2, 1, -3, 0, -2, 0), "resistance", "Ω";
-    Inductance = (2, 1, -2, 0, -2, 0), "inductance", "H";
-    Charge = (0, 0, 1, 0, 1, 0), "charge", "C";
-    TorqueConstant = (2, 1, -2, 0, -1, 0), "torque-constant", "N·m·A^-1";
-    FrictionCoefficient = (0, 0, 0, 0, 0, 0), "friction-coefficient", "1";
-}
-
 macro_rules! define_qty_ops {
     ($($l:ident * $r:ident => $o:ident;)* ; $($dl:ident / $dr:ident => $do:ident;)*) => {
         $(impl Mul<$r> for $l { type Output = $o; #[inline] fn mul(self, rhs: $r) -> $o { $o::new(self.value() * rhs.value()) } })*
@@ -136,24 +176,14 @@ macro_rules! define_qty_ops {
     };
 }
 
-define_qty_ops! {
-    Length * Length => Area; Area * Length => Volume; Length * Area => Volume; Density * Volume => Mass;
-    Velocity * Time => Length; Acceleration * Time => Velocity; Mass * Acceleration => Force;
-    Mass * Velocity => Momentum; Force * Time => Impulse; Force * Length => Energy;
-    Force * Velocity => Power; Torque * AngularVelocity => Power; Power * Time => Energy;
-    MomentOfInertia * AngularAcceleration => Torque; MomentOfInertia * AngularVelocity => AngularMomentum;
-    Stiffness * Length => Force; Damping * Velocity => Force; AngularStiffness * Angle => Torque;
-    AngularDamping * AngularVelocity => Torque; Pressure * Area => Force; Voltage * Current => Power;
-    Resistance * Current => Voltage; Current * Time => Charge; TorqueConstant * Current => Torque;
-    ;
-    Length / Time => Velocity; Velocity / Time => Acceleration; Angle / Time => AngularVelocity;
-    AngularVelocity / Time => AngularAcceleration; Mass / Volume => Density; Force / Area => Pressure;
-    Energy / Time => Power; Voltage / Current => Resistance; Power / Current => Voltage;
-    Power / Voltage => Current; Torque / Current => TorqueConstant;
-}
+include!("qty_gen.rs");
 
 impl Torque {
-    #[inline] #[must_use] pub fn from_force_arm(force: Force, lever_arm: Length) -> Self { Self::new(force.value() * lever_arm.value()) }
+    #[inline]
+    #[must_use]
+    pub fn from_force_arm(force: Force, lever_arm: Length) -> Self {
+        Self::new(force.value() * lever_arm.value())
+    }
 }
 
 #[cfg(test)]
@@ -177,11 +207,25 @@ mod tests {
 
     #[test]
     fn checked_roundtrip_and_mismatch_refusal() {
-        for raw in [-0.0_f64, 0.0, f64::MIN_POSITIVE, 5e-324, 1.0, -42.25, f64::MAX] {
+        for raw in [
+            -0.0_f64,
+            0.0,
+            f64::MIN_POSITIVE,
+            5e-324,
+            1.0,
+            -42.25,
+            f64::MAX,
+        ] {
             let l: Length = Checked::new(raw, Length::DIMENSION).into_alias().unwrap();
             assert_eq!(l.to_checked().value().to_bits(), raw.to_bits());
         }
-        let err = Checked::new(3.0, Velocity::DIMENSION).into_alias::<Length>().unwrap_err();
-        assert_eq!((err.observed, err.required), (Velocity::DIMENSION, Length::DIMENSION));
+        let err = Checked::new(3.0, Velocity::DIMENSION)
+            .into_alias::<Length>()
+            .unwrap_err();
+        assert_eq!(err.refusal_code(), "FROB-REF-102");
+        assert_eq!(
+            (err.observed, err.required),
+            (Velocity::DIMENSION, Length::DIMENSION)
+        );
     }
 }

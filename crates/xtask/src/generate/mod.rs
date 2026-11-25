@@ -25,6 +25,9 @@ use crate::status_table::{self, FormatRow};
 /// Marker embedded in `$comment` of every generated `schemas/frob.*.json` file.
 pub const FORMAT_SCHEMA_MARKER: &str = "@generated from registries/formats.toml, registries/verbs.toml by xtask::generate::format_and_verb_schemas; do not edit by hand.";
 
+/// First-line marker on `crates/frob-core/src/qty_gen.rs` (`N33c-03`).
+pub const QTY_GEN_MARKER: &str = "// @generated from registries/qty_aliases.toml, registries/qty_products.toml by xtask::generate::quantity_aliases_and_products (N33c-03); do not edit by hand.";
+
 /// Verification mode for a [`GeneratorRow`].
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum GeneratorMode {
@@ -107,7 +110,11 @@ pub struct GeneratorError {
 
 impl fmt::Display for GeneratorError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "[{}] {} ({}): {}", self.rule, self.subject, self.path, self.message)
+        write!(
+            f,
+            "[{}] {} ({}): {}",
+            self.rule, self.subject, self.path, self.message
+        )
     }
 }
 
@@ -178,6 +185,16 @@ pub const BUILTIN_GENERATORS: &[GeneratorRow] = &[
         mode: GeneratorMode::Digest,
         run: run_kernel_arithmetic,
     },
+    GeneratorRow {
+        name: "quantity-aliases-and-products",
+        input_globs: &[
+            "registries/qty_aliases.toml",
+            "registries/qty_products.toml",
+        ],
+        output_globs: &["crates/frob-core/src/qty_gen.rs"],
+        mode: GeneratorMode::Regenerate,
+        run: run_quantity_aliases_and_products,
+    },
 ];
 
 // ============================================================================
@@ -215,8 +232,7 @@ pub fn expand_globs(repo_root: &Path, globs: &[&str]) -> Vec<PathBuf> {
         if !scan_dir.is_dir() {
             continue;
         }
-        let recursive = pat_segs.contains(&"**")
-            || pat_segs.len() > prefix_segs.len() + 1;
+        let recursive = pat_segs.contains(&"**") || pat_segs.len() > prefix_segs.len() + 1;
         let mut candidates = Vec::new();
         collect_files(&scan_dir, recursive, &mut candidates);
         for abs in candidates {
@@ -325,13 +341,14 @@ fn run_format_and_verb_schemas(
         message: format!("failed to read registries/formats.toml: {e}"),
         repair: "restore registries/formats.toml".to_owned(),
     })?;
-    let format_reg = status_table::parse_formats_toml(&formats_bytes).map_err(|e| GeneratorError {
-        rule: RULE_DIFFERS,
-        subject: "format-and-verb-schemas".to_owned(),
-        path: "registries/formats.toml".to_owned(),
-        message: format!("failed to parse registries/formats.toml: {e}"),
-        repair: "fix registries/formats.toml so it conforms to frob.formats/1".to_owned(),
-    })?;
+    let format_reg =
+        status_table::parse_formats_toml(&formats_bytes).map_err(|e| GeneratorError {
+            rule: RULE_DIFFERS,
+            subject: "format-and-verb-schemas".to_owned(),
+            path: "registries/formats.toml".to_owned(),
+            message: format!("failed to parse registries/formats.toml: {e}"),
+            repair: "fix registries/formats.toml so it conforms to frob.formats/1".to_owned(),
+        })?;
 
     let mut files_by_path: BTreeMap<String, GeneratedFile> = BTreeMap::new();
     let mut format_rows: Vec<&FormatRow> = format_reg.formats.iter().collect();
@@ -384,7 +401,9 @@ fn run_format_and_verb_schemas(
     ))
 }
 
-fn parse_verb_schema_ids(bytes: &[u8]) -> Result<BTreeMap<String, BTreeSet<String>>, GeneratorError> {
+fn parse_verb_schema_ids(
+    bytes: &[u8],
+) -> Result<BTreeMap<String, BTreeSet<String>>, GeneratorError> {
     let tbl = toml::parse(bytes).map_err(|e| GeneratorError {
         rule: RULE_DIFFERS,
         subject: "format-and-verb-schemas".to_owned(),
@@ -397,7 +416,9 @@ fn parse_verb_schema_ids(bytes: &[u8]) -> Result<BTreeMap<String, BTreeSet<Strin
         return Ok(by_schema);
     };
     for sp in verbs {
-        let Some(v) = sp.value.as_table() else { continue };
+        let Some(v) = sp.value.as_table() else {
+            continue;
+        };
         let name = v.get("name").and_then(TomlValue::as_str).unwrap_or("");
         for key in ["input_schema", "output_schema"] {
             if let Some(sid) = v.get(key).and_then(TomlValue::as_str)
@@ -446,7 +467,10 @@ pub fn render_format_schema(row: &FormatRow) -> Result<Vec<u8>, GeneratorError> 
 
     let mut out = String::with_capacity(1024);
     out.push_str("{\n");
-    out.push_str(&format!("  \"$comment\": {},\n", canon_str(FORMAT_SCHEMA_MARKER)));
+    out.push_str(&format!(
+        "  \"$comment\": {},\n",
+        canon_str(FORMAT_SCHEMA_MARKER)
+    ));
     out.push_str(&format!("  \"$id\": {},\n", canon_str(&row.schema)));
     out.push_str("  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n");
     out.push_str("  \"additionalProperties\": true,\n");
@@ -455,9 +479,15 @@ pub fn render_format_schema(row: &FormatRow) -> Result<Vec<u8>, GeneratorError> 
     out.push_str("    \"execution_authorized\": { \"const\": false },\n");
     out.push_str("    \"hardware_safety_signoff\": { \"const\": false },\n");
     if !row.kinds.is_empty() {
-        out.push_str(&format!("    \"kind\": {{ \"enum\": {} }},\n", canon_str_list(&row.kinds)));
+        out.push_str(&format!(
+            "    \"kind\": {{ \"enum\": {} }},\n",
+            canon_str_list(&row.kinds)
+        ));
     }
-    out.push_str(&format!("    \"schema\": {{ \"const\": {} }},\n", canon_str(&row.schema)));
+    out.push_str(&format!(
+        "    \"schema\": {{ \"const\": {} }},\n",
+        canon_str(&row.schema)
+    ));
     out.push_str("    \"sim_to_real_certified\": { \"const\": false }\n");
     out.push_str("  },\n");
     out.push_str("  \"required\": [\n");
@@ -472,12 +502,24 @@ pub fn render_format_schema(row: &FormatRow) -> Result<Vec<u8>, GeneratorError> 
     out.push_str(&format!("  \"title\": {},\n", canon_str(&title)));
     out.push_str("  \"type\": \"object\",\n");
     out.push_str("  \"x-frob\": {\n");
-    out.push_str(&format!("    \"consumers\": {},\n", canon_str_list(&row.consumers)));
-    out.push_str(&format!("    \"encoding\": {},\n", canon_str(&row.encoding)));
-    out.push_str(&format!("    \"extension\": {},\n", canon_str(&row.extension)));
+    out.push_str(&format!(
+        "    \"consumers\": {},\n",
+        canon_str_list(&row.consumers)
+    ));
+    out.push_str(&format!(
+        "    \"encoding\": {},\n",
+        canon_str(&row.encoding)
+    ));
+    out.push_str(&format!(
+        "    \"extension\": {},\n",
+        canon_str(&row.extension)
+    ));
     out.push_str(&format!("    \"id\": {},\n", canon_str(&row.id)));
     out.push_str(&format!("    \"owner\": {},\n", canon_str(&row.owner)));
-    out.push_str(&format!("    \"producers\": {}\n", canon_str_list(&row.producers)));
+    out.push_str(&format!(
+        "    \"producers\": {}\n",
+        canon_str_list(&row.producers)
+    ));
     out.push_str("  }\n");
     out.push_str("}\n");
 
@@ -504,13 +546,19 @@ fn render_verb_schema(
     );
     let mut out = String::with_capacity(512);
     out.push_str("{\n");
-    out.push_str(&format!("  \"$comment\": {},\n", canon_str(FORMAT_SCHEMA_MARKER)));
+    out.push_str(&format!(
+        "  \"$comment\": {},\n",
+        canon_str(FORMAT_SCHEMA_MARKER)
+    ));
     out.push_str(&format!("  \"$id\": {},\n", canon_str(schema_id)));
     out.push_str("  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n");
     out.push_str("  \"additionalProperties\": true,\n");
     out.push_str(&format!("  \"description\": {},\n", canon_str(&desc)));
     out.push_str("  \"properties\": {\n");
-    out.push_str(&format!("    \"schema\": {{ \"const\": {} }}\n", canon_str(schema_id)));
+    out.push_str(&format!(
+        "    \"schema\": {{ \"const\": {} }}\n",
+        canon_str(schema_id)
+    ));
     out.push_str("  },\n");
     out.push_str("  \"required\": [\"schema\"],\n");
     out.push_str(&format!("  \"title\": {},\n", canon_str(schema_id)));
@@ -660,10 +708,7 @@ fn run_kernel_arithmetic(
         message: format!("failed to parse registries/kernels.toml: {e}"),
         repair: "fix registries/kernels.toml so it conforms to frob.kernels/1".to_owned(),
     })?;
-    let schema = tbl
-        .get("schema")
-        .and_then(TomlValue::as_str)
-        .unwrap_or("");
+    let schema = tbl.get("schema").and_then(TomlValue::as_str).unwrap_or("");
     if schema != "frob.kernels/1" {
         return Err(GeneratorError {
             rule: RULE_DIGEST,
@@ -710,7 +755,8 @@ fn run_kernel_arithmetic(
                 subject: id.to_owned(),
                 path: "registries/kernels.toml".to_owned(),
                 message: format!("kernel `{id}` missing `source_digest`"),
-                repair: "record `source_digest = \"b3:<64-hex>\"` from the derivation lane".to_owned(),
+                repair: "record `source_digest = \"b3:<64-hex>\"` from the derivation lane"
+                    .to_owned(),
             })?;
         let hex = raw_digest
             .strip_prefix("b3:")
@@ -746,6 +792,186 @@ fn run_kernel_arithmetic(
         });
     }
 
-    expectations.sort_by(|a, b| a.rel_path.cmp(&b.rel_path).then_with(|| a.subject.cmp(&b.subject)));
+    expectations.sort_by(|a, b| {
+        a.rel_path
+            .cmp(&b.rel_path)
+            .then_with(|| a.subject.cmp(&b.subject))
+    });
     Ok(GeneratorOutput::Digests(expectations))
+}
+
+// ============================================================================
+// Row 7: Quantity aliases and products (`registries/qty_*.toml` -> `qty_gen.rs`, N33c-03)
+// ============================================================================
+
+fn qty_gen_err(path: &str, msg: impl Into<String>) -> GeneratorError {
+    GeneratorError {
+        rule: RULE_DIFFERS,
+        subject: "quantity-aliases-and-products".to_owned(),
+        path: path.to_owned(),
+        message: msg.into(),
+        repair: "fix registries/qty_aliases.toml and registries/qty_products.toml, then run `cargo xtask check-generated --write`".to_owned(),
+    }
+}
+
+fn run_quantity_aliases_and_products(
+    repo_root: &Path,
+    _inputs: &[PathBuf],
+) -> Result<GeneratorOutput, GeneratorError> {
+    let aliases_rel = "registries/qty_aliases.toml";
+    let products_rel = "registries/qty_products.toml";
+    let aliases_bytes = fs::read(repo_root.join(aliases_rel)).map_err(|e| GeneratorError {
+        rule: RULE_MISSING,
+        subject: "quantity-aliases-and-products".to_owned(),
+        path: aliases_rel.to_owned(),
+        message: format!("failed to read {aliases_rel}: {e}"),
+        repair: "restore registries/qty_aliases.toml".to_owned(),
+    })?;
+    let products_bytes = fs::read(repo_root.join(products_rel)).map_err(|e| GeneratorError {
+        rule: RULE_MISSING,
+        subject: "quantity-aliases-and-products".to_owned(),
+        path: products_rel.to_owned(),
+        message: format!("failed to read {products_rel}: {e}"),
+        repair: "restore registries/qty_products.toml".to_owned(),
+    })?;
+
+    let a_tbl = toml::parse(&aliases_bytes)
+        .map_err(|e| qty_gen_err(aliases_rel, format!("parse error: {e}")))?;
+    if a_tbl.get("schema").and_then(TomlValue::as_str) != Some("frob.qty_aliases/1") {
+        return Err(qty_gen_err(
+            aliases_rel,
+            "expected schema `frob.qty_aliases/1`",
+        ));
+    }
+    let alias_items = a_tbl
+        .get("alias")
+        .and_then(TomlValue::as_array)
+        .ok_or_else(|| qty_gen_err(aliases_rel, "missing [[alias]] array"))?;
+
+    let mut aliases: Vec<(String, [i8; 6], String, String)> = Vec::with_capacity(alias_items.len());
+    let mut seen_names: BTreeSet<String> = BTreeSet::new();
+    for (idx, sp) in alias_items.iter().enumerate() {
+        let row = sp
+            .value
+            .as_table()
+            .ok_or_else(|| qty_gen_err(aliases_rel, format!("alias[{idx}] must be a table")))?;
+        let name = row
+            .get("name")
+            .and_then(TomlValue::as_str)
+            .filter(|s| !s.is_empty())
+            .ok_or_else(|| qty_gen_err(aliases_rel, format!("alias[{idx}] missing `name`")))?;
+        if !seen_names.insert(name.to_owned()) {
+            return Err(qty_gen_err(
+                aliases_rel,
+                format!("duplicate alias `{name}`"),
+            ));
+        }
+        let dims_arr = row
+            .get("dimension")
+            .and_then(TomlValue::as_array)
+            .filter(|a| a.len() == 6)
+            .ok_or_else(|| {
+                qty_gen_err(
+                    aliases_rel,
+                    format!("alias `{name}` needs 6-element `dimension`"),
+                )
+            })?;
+        let mut dim = [0i8; 6];
+        for (i, d) in dims_arr.iter().enumerate() {
+            let v = d
+                .value
+                .as_int()
+                .and_then(|n| i8::try_from(n).ok())
+                .ok_or_else(|| {
+                    qty_gen_err(aliases_rel, format!("alias `{name}` dim[{i}] not i8"))
+                })?;
+            dim[i] = v;
+        }
+        let kind = row
+            .get("kind")
+            .and_then(TomlValue::as_str)
+            .filter(|s| !s.is_empty())
+            .ok_or_else(|| qty_gen_err(aliases_rel, format!("alias `{name}` missing `kind`")))?;
+        let unit = row
+            .get("unit")
+            .and_then(TomlValue::as_str)
+            .filter(|s| !s.is_empty())
+            .ok_or_else(|| qty_gen_err(aliases_rel, format!("alias `{name}` missing `unit`")))?;
+        aliases.push((name.to_owned(), dim, kind.to_owned(), unit.to_owned()));
+    }
+
+    let p_tbl = toml::parse(&products_bytes)
+        .map_err(|e| qty_gen_err(products_rel, format!("parse error: {e}")))?;
+    if p_tbl.get("schema").and_then(TomlValue::as_str) != Some("frob.qty_products/1") {
+        return Err(qty_gen_err(
+            products_rel,
+            "expected schema `frob.qty_products/1`",
+        ));
+    }
+    let prod_items = p_tbl
+        .get("product")
+        .and_then(TomlValue::as_array)
+        .ok_or_else(|| qty_gen_err(products_rel, "missing [[product]] array"))?;
+
+    let mut muls: Vec<(String, String, String)> = Vec::new();
+    let mut divs: Vec<(String, String, String)> = Vec::new();
+    for (idx, sp) in prod_items.iter().enumerate() {
+        let row = sp
+            .value
+            .as_table()
+            .ok_or_else(|| qty_gen_err(products_rel, format!("product[{idx}] must be a table")))?;
+        let lhs = row
+            .get("lhs")
+            .and_then(TomlValue::as_str)
+            .ok_or_else(|| qty_gen_err(products_rel, format!("product[{idx}] missing `lhs`")))?;
+        let op = row
+            .get("op")
+            .and_then(TomlValue::as_str)
+            .ok_or_else(|| qty_gen_err(products_rel, format!("product[{idx}] missing `op`")))?;
+        let rhs = row
+            .get("rhs")
+            .and_then(TomlValue::as_str)
+            .ok_or_else(|| qty_gen_err(products_rel, format!("product[{idx}] missing `rhs`")))?;
+        let out = row
+            .get("out")
+            .and_then(TomlValue::as_str)
+            .ok_or_else(|| qty_gen_err(products_rel, format!("product[{idx}] missing `out`")))?;
+        match op {
+            "mul" => muls.push((lhs.to_owned(), rhs.to_owned(), out.to_owned())),
+            "div" => divs.push((lhs.to_owned(), rhs.to_owned(), out.to_owned())),
+            other => {
+                return Err(qty_gen_err(
+                    products_rel,
+                    format!("product[{idx}] invalid op `{other}` (expected `mul` or `div`)"),
+                ));
+            }
+        }
+    }
+
+    let mut out = format!(
+        "{QTY_GEN_MARKER}\n\npub const ALIAS_COUNT: usize = {};\n\ndefine_qty_aliases! {{\n",
+        aliases.len()
+    );
+    for (name, d, kind, unit) in &aliases {
+        out.push_str(&format!(
+            "    {name} = ({}, {}, {}, {}, {}, {}), \"{}\", \"{}\";\n",
+            d[0], d[1], d[2], d[3], d[4], d[5], kind, unit
+        ));
+    }
+    out.push_str("}\n\ndefine_qty_ops! {\n");
+    for (l, r, o) in &muls {
+        out.push_str(&format!("    {l} * {r} => {o};\n"));
+    }
+    out.push_str("    ;\n");
+    for (l, r, o) in &divs {
+        out.push_str(&format!("    {l} / {r} => {o};\n"));
+    }
+    out.push_str("}\n");
+
+    Ok(GeneratorOutput::Regenerated(vec![GeneratedFile {
+        rel_path: "crates/frob-core/src/qty_gen.rs".to_owned(),
+        kind: OutputKind::WholeFile,
+        marker: ExpectedMarker::LinePrefix("// @generated"),
+        bytes: out.into_bytes(),
+    }]))
 }

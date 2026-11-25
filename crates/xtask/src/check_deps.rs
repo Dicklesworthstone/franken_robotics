@@ -44,11 +44,10 @@ use crate::metadata::{
 };
 
 pub use crate::check_deps_airlock::{
-    AirlockGroupRecord, AsupInstance, BinaryAsupFact as BinaryAsupersyncFact,
-    RULE_ASUP_DUPLICATE, RULE_FSIM_DEFAULT_SET, RULE_FSIM_GROUP_NOT_ALLOWED,
-    RULE_FSIM_OPTIONAL_DEFAULT_ON, RULE_RESOLVE_ALL_FEATURES, RULE_TIER_DEFAULT_ON,
-    RULE_TIER_UNNAMED, check_airlock_manifest_file, load_airlock_groups,
-    parse_airlock_groups_bytes,
+    AirlockGroupRecord, AsupInstance, BinaryAsupFact as BinaryAsupersyncFact, RULE_ASUP_DUPLICATE,
+    RULE_FSIM_DEFAULT_SET, RULE_FSIM_GROUP_NOT_ALLOWED, RULE_FSIM_OPTIONAL_DEFAULT_ON,
+    RULE_RESOLVE_ALL_FEATURES, RULE_TIER_DEFAULT_ON, RULE_TIER_UNNAMED,
+    check_airlock_manifest_file, load_airlock_groups, parse_airlock_groups_bytes,
 };
 use crate::report::FactValue;
 use crate::stack::lock::{self, Foundation, RelPath, StackLock};
@@ -321,9 +320,8 @@ impl std::error::Error for SiblingsLoadError {}
 
 /// Load and strictly validate `registries/siblings.toml` from `path`.
 pub fn load_siblings_register(path: &Path) -> Result<SiblingsRegister, SiblingsLoadError> {
-    let bytes = fs::read(path).map_err(|e| {
-        SiblingsLoadError::new(format!("failed to read `{}`: {e}", path.display()))
-    })?;
+    let bytes = fs::read(path)
+        .map_err(|e| SiblingsLoadError::new(format!("failed to read `{}`: {e}", path.display())))?;
     parse_siblings_register_bytes(&bytes, &path.display().to_string())
 }
 
@@ -333,9 +331,8 @@ pub fn parse_siblings_register_bytes(
     bytes: &[u8],
     source_label: &str,
 ) -> Result<SiblingsRegister, SiblingsLoadError> {
-    let root = toml::parse(bytes).map_err(|e| {
-        SiblingsLoadError::new(format!("{source_label}: TOML parse error: {e}"))
-    })?;
+    let root = toml::parse(bytes)
+        .map_err(|e| SiblingsLoadError::new(format!("{source_label}: TOML parse error: {e}")))?;
     let mut top = Fields::new(root, source_label);
     let raw_schema = top
         .opt_str("schema")
@@ -438,20 +435,16 @@ fn parse_sibling_row(
     f.finish()
         .map_err(|e| SiblingsLoadError::new(format!("{source_label} ({row_label}): {e}")))?;
 
-    let name = raw_name
-        .filter(|s| !s.trim().is_empty())
-        .ok_or_else(|| {
-            SiblingsLoadError::new(format!(
-                "{source_label}: {fallback_row} missing non-empty `name`"
-            ))
-        })?;
-    let path_str = raw_path
-        .filter(|s| !s.trim().is_empty())
-        .ok_or_else(|| {
-            SiblingsLoadError::new(format!(
-                "{source_label}: row `{name}` missing non-empty `path`"
-            ))
-        })?;
+    let name = raw_name.filter(|s| !s.trim().is_empty()).ok_or_else(|| {
+        SiblingsLoadError::new(format!(
+            "{source_label}: {fallback_row} missing non-empty `name`"
+        ))
+    })?;
+    let path_str = raw_path.filter(|s| !s.trim().is_empty()).ok_or_else(|| {
+        SiblingsLoadError::new(format!(
+            "{source_label}: row `{name}` missing non-empty `path`"
+        ))
+    })?;
     RelPath::parse(&path_str, &name).map_err(|e| {
         SiblingsLoadError::new(format!("{source_label}: row `{name}` invalid `path`: {e}"))
     })?;
@@ -481,9 +474,8 @@ fn parse_sibling_row(
                     sp.value.type_name()
                 )));
             };
-            let parsed = Posture::parse(&s, &name).map_err(|e| {
-                SiblingsLoadError::new(format!("{source_label}: {e}"))
-            })?;
+            let parsed = Posture::parse(&s, &name)
+                .map_err(|e| SiblingsLoadError::new(format!("{source_label}: {e}")))?;
             posture.push(parsed);
         }
     }
@@ -628,7 +620,9 @@ pub fn discover_workspace_roots(repo_root: &Path) -> Vec<WorkspaceRoot> {
     seen_rel.insert(String::new());
 
     for ws in workspaces::workspace_roots(repo_root) {
-        if ws.kind != WorkspaceKind::Core && ws.has_manifest() && seen_rel.insert(ws.rel_dir.clone())
+        if ws.kind != WorkspaceKind::Core
+            && ws.has_manifest()
+            && seen_rel.insert(ws.rel_dir.clone())
         {
             roots.push(ws);
         }
@@ -636,7 +630,11 @@ pub fn discover_workspace_roots(repo_root: &Path) -> Vec<WorkspaceRoot> {
 
     // Fallback for synthetic fixtures placing a workspace Cargo.toml directly at
     // `spark/`, `derive/`, or `bindings/` when the per-annex subdirectory has none.
-    for (name, dir) in [("spark", "spark"), ("derive", "derive"), ("bindings", "bindings")] {
+    for (name, dir) in [
+        ("spark", "spark"),
+        ("derive", "derive"),
+        ("bindings", "bindings"),
+    ] {
         let prefix = format!("{dir}/");
         let has_nested = seen_rel.iter().any(|r| r.starts_with(&prefix));
         if !has_nested {
@@ -661,11 +659,7 @@ pub const SERDE_BOUNDARY_CRATES: &[&str] = &[
 ];
 
 /// The three crates permitted to depend on the independent auditor `frob-cert` (L-9, INV-WS-02).
-pub const CERT_ALLOWED_DEPENDENTS: &[&str] = &[
-    "frob-verbs",
-    "frob-cli",
-    "frob-conformance",
-];
+pub const CERT_ALLOWED_DEPENDENTS: &[&str] = &["frob-verbs", "frob-cli", "frob-conformance"];
 
 /// Build-dependency crate names indicating C/C++ native compilation forbidden in core direct deps.
 pub const FORBIDDEN_NATIVE_BUILD_DEPS: &[&str] = &["cc", "cmake", "bindgen"];
@@ -682,37 +676,89 @@ pub struct ForbiddenNameRow {
 /// Authoritative direct-edge forbidden package name table (rule L-5).
 pub const FORBIDDEN_DIRECT_NAMES: &[ForbiddenNameRow] = &[
     // Tokio family and async stacks built on it.
-    ForbiddenNameRow { pattern: "tokio", reason: "L-5:tokio-family" },
-    ForbiddenNameRow { pattern: "tokio-*", reason: "L-5:tokio-family" },
-    ForbiddenNameRow { pattern: "hyper", reason: "L-5:tokio-family" },
-    ForbiddenNameRow { pattern: "hyper-*", reason: "L-5:tokio-family" },
-    ForbiddenNameRow { pattern: "tonic", reason: "L-5:tokio-family" },
-    ForbiddenNameRow { pattern: "axum", reason: "L-5:tokio-family" },
-    ForbiddenNameRow { pattern: "tower", reason: "L-5:tokio-family" },
-    ForbiddenNameRow { pattern: "tower-*", reason: "L-5:tokio-family" },
-    ForbiddenNameRow { pattern: "reqwest", reason: "L-5:tokio-family" },
+    ForbiddenNameRow {
+        pattern: "tokio",
+        reason: "L-5:tokio-family",
+    },
+    ForbiddenNameRow {
+        pattern: "tokio-*",
+        reason: "L-5:tokio-family",
+    },
+    ForbiddenNameRow {
+        pattern: "hyper",
+        reason: "L-5:tokio-family",
+    },
+    ForbiddenNameRow {
+        pattern: "hyper-*",
+        reason: "L-5:tokio-family",
+    },
+    ForbiddenNameRow {
+        pattern: "tonic",
+        reason: "L-5:tokio-family",
+    },
+    ForbiddenNameRow {
+        pattern: "axum",
+        reason: "L-5:tokio-family",
+    },
+    ForbiddenNameRow {
+        pattern: "tower",
+        reason: "L-5:tokio-family",
+    },
+    ForbiddenNameRow {
+        pattern: "tower-*",
+        reason: "L-5:tokio-family",
+    },
+    ForbiddenNameRow {
+        pattern: "reqwest",
+        reason: "L-5:tokio-family",
+    },
     // Direct Rayon pools.
-    ForbiddenNameRow { pattern: "rayon", reason: "L-5:direct-rayon" },
-    ForbiddenNameRow { pattern: "rayon-core", reason: "L-5:direct-rayon" },
+    ForbiddenNameRow {
+        pattern: "rayon",
+        reason: "L-5:direct-rayon",
+    },
+    ForbiddenNameRow {
+        pattern: "rayon-core",
+        reason: "L-5:direct-rayon",
+    },
     // BLAS and LAPACK bindings.
-    ForbiddenNameRow { pattern: "blas*", reason: "L-5:blas-lapack" },
-    ForbiddenNameRow { pattern: "lapack*", reason: "L-5:blas-lapack" },
-    ForbiddenNameRow { pattern: "openblas-src", reason: "L-5:blas-lapack" },
-    ForbiddenNameRow { pattern: "intel-mkl-src", reason: "L-5:blas-lapack" },
-    ForbiddenNameRow { pattern: "netlib-src", reason: "L-5:blas-lapack" },
-    ForbiddenNameRow { pattern: "accelerate-src", reason: "L-5:blas-lapack" },
-    ForbiddenNameRow { pattern: "ndarray-linalg", reason: "L-5:blas-lapack" },
-    ForbiddenNameRow { pattern: "nalgebra-lapack", reason: "L-5:blas-lapack" },
+    ForbiddenNameRow {
+        pattern: "blas*",
+        reason: "L-5:blas-lapack",
+    },
+    ForbiddenNameRow {
+        pattern: "lapack*",
+        reason: "L-5:blas-lapack",
+    },
+    ForbiddenNameRow {
+        pattern: "openblas-src",
+        reason: "L-5:blas-lapack",
+    },
+    ForbiddenNameRow {
+        pattern: "intel-mkl-src",
+        reason: "L-5:blas-lapack",
+    },
+    ForbiddenNameRow {
+        pattern: "netlib-src",
+        reason: "L-5:blas-lapack",
+    },
+    ForbiddenNameRow {
+        pattern: "accelerate-src",
+        reason: "L-5:blas-lapack",
+    },
+    ForbiddenNameRow {
+        pattern: "ndarray-linalg",
+        reason: "L-5:blas-lapack",
+    },
+    ForbiddenNameRow {
+        pattern: "nalgebra-lapack",
+        reason: "L-5:blas-lapack",
+    },
 ];
 
 /// Python interpreter and numpy binding patterns permitted only in `bindings/frob-gymnasium`.
-pub const PYTHON_FORBIDDEN_PATTERNS: &[&str] = &[
-    "pyo3",
-    "pyo3-*",
-    "cpython",
-    "rustpython*",
-    "numpy",
-];
+pub const PYTHON_FORBIDDEN_PATTERNS: &[&str] =
+    &["pyo3", "pyo3-*", "cpython", "rustpython*", "numpy"];
 
 /// One row of the proof-boundary forbidden-edge table (step 6).
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -755,8 +801,9 @@ pub fn check_deps(repo_root: &Path, roots: &[WorkspaceRoot]) -> Result<CheckOutc
             lock_path.display()
         )));
     }
-    let stack_lock = lock::load(&lock_path)
-        .map_err(|err| CheckError::Fault(format!("failed to load {}: {err}", lock_path.display())))?;
+    let stack_lock = lock::load(&lock_path).map_err(|err| {
+        CheckError::Fault(format!("failed to load {}: {err}", lock_path.display()))
+    })?;
     check_deps_with_config(
         repo_root,
         roots,
@@ -984,10 +1031,7 @@ pub fn check_deps_with_config(
             "Franken-only applies to direct edges; resolved closure counts and transitive forbidden hits are reported under `workspaces` as facts.",
         ),
     );
-    facts.insert(
-        "workspaces".to_owned(),
-        FactValue::Object(ws_facts_map),
-    );
+    facts.insert("workspaces".to_owned(), FactValue::Object(ws_facts_map));
     facts.insert(
         "workspaces_absent".to_owned(),
         FactValue::str_array(absent_workspaces),
@@ -995,6 +1039,10 @@ pub fn check_deps_with_config(
     facts.insert(
         "workspaces_checked".to_owned(),
         FactValue::str_array(checked_workspaces),
+    );
+    facts.insert(
+        "fs_qty_path_hints".to_owned(),
+        FactValue::str_array(find_fs_qty_path_hints(repo_root)),
     );
 
     Ok(CheckOutcome { findings, facts })
@@ -1232,21 +1280,14 @@ fn evaluate_workspace(
             }
 
             // Step 2 & Step 3a: Rule L-4 (stack-lock confinement & spec via `edge_allowed`) and L-5.third-party.
-            check_foundation_and_third_party(
-                pkg,
-                dep,
-                from_id,
-                from_is_core,
-                stack_lock,
-                findings,
-            );
+            check_foundation_and_third_party(pkg, dep, from_id, from_is_core, stack_lock, findings);
         }
     }
 }
 
 fn check_serde_boundary(pkg: &PackageMeta, dep: &DeclaredDep, findings: &mut Vec<Finding>) {
-    let is_boundary = SERDE_BOUNDARY_CRATES.contains(&pkg.name.as_str())
-        || pkg.rel_dir == "surface/frob-mcp";
+    let is_boundary =
+        SERDE_BOUNDARY_CRATES.contains(&pkg.name.as_str()) || pkg.rel_dir == "surface/frob-mcp";
     if !is_boundary {
         findings.push(Finding {
             rule: RULE_L5_SERDE_OUTSIDE_BOUNDARY,
@@ -1265,10 +1306,7 @@ fn check_serde_boundary(pkg: &PackageMeta, dep: &DeclaredDep, findings: &mut Vec
         return;
     }
 
-    let is_git = dep
-        .source
-        .as_deref()
-        .is_some_and(|s| s.starts_with("git+"));
+    let is_git = dep.source.as_deref().is_some_and(|s| s.starts_with("git+"));
     if is_git || dep.path.is_some() || !is_exact_semver(&dep.req) {
         findings.push(Finding {
             rule: RULE_L5_SERDE_NOT_EXACT,
@@ -1356,13 +1394,12 @@ fn check_foundation_and_third_party(
     let mut first_confinement_denial: Option<EdgeDenial> = None;
 
     for use_ in &row.uses {
-        let effective_from = if is_bedrock_target
-            && use_.confined_to.iter().any(|c| c == "bedrock-direct")
-        {
-            "bedrock-direct"
-        } else {
-            from_id
-        };
+        let effective_from =
+            if is_bedrock_target && use_.confined_to.iter().any(|c| c == "bedrock-direct") {
+                "bedrock-direct"
+            } else {
+                from_id
+            };
 
         // Authoritative posture-to-graph gate (N33a-01 / BD-003).
         if edge_allowed(use_, effective_from, edge_kind, &spec) {
@@ -1608,8 +1645,7 @@ fn core_native_links_or_build_dep_reason(pkg: &ResolvedPackage) -> Option<String
         return Some(format!("declares `links = \"{links}\"`"));
     }
     for bdep in &pkg.dependencies {
-        if bdep.kind == DepKind::Build
-            && FORBIDDEN_NATIVE_BUILD_DEPS.contains(&bdep.name.as_str())
+        if bdep.kind == DepKind::Build && FORBIDDEN_NATIVE_BUILD_DEPS.contains(&bdep.name.as_str())
         {
             return Some(format!("build-depends on `{}`", bdep.name));
         }
@@ -1648,7 +1684,10 @@ fn is_frankensim_dep(dep: &DeclaredDep, fsim_row: Option<&Foundation>) -> bool {
     false
 }
 
-fn match_foundation_row<'a>(dep: &DeclaredDep, stack_lock: &'a StackLock) -> Option<&'a Foundation> {
+fn match_foundation_row<'a>(
+    dep: &DeclaredDep,
+    stack_lock: &'a StackLock,
+) -> Option<&'a Foundation> {
     // 1. Sibling path prefix match (pick the longest / most-specific `row.path` so
     //    `../asupersync/franken_kernel` matches `FD-FKER` rather than `FD-ASUP` `../asupersync`).
     if let Some(sib_path) = dep.sibling_rel_path.as_deref() {
@@ -1809,16 +1848,28 @@ const fn is_spec_denial(denial: EdgeDenial) -> bool {
 const fn describe_denial(denial: EdgeDenial) -> &'static str {
     match denial {
         EdgeDenial::PostureForbidsCargoEdge => "posture forbids any Cargo dependency edge",
-        EdgeDenial::EdgeKindNotAllowed => "dependency kind (normal/build/dev) is not permitted by this posture",
+        EdgeDenial::EdgeKindNotAllowed => {
+            "dependency kind (normal/build/dev) is not permitted by this posture"
+        }
         EdgeDenial::CrateNotConfined => "crate is not listed in `confined_to`",
-        EdgeDenial::CoreCrateInBuildTime => "core crate may not use a `build-time` annex foundation",
+        EdgeDenial::CoreCrateInBuildTime => {
+            "core crate may not use a `build-time` annex foundation"
+        }
         EdgeDenial::DefaultFeaturesEnabled => "`default-features = false` is required",
         EdgeDenial::GitSourceForbidden => "git dependencies are forbidden",
         EdgeDenial::VersionNotExact => "exact version pin `=x.y.z` is required",
-        EdgeDenial::VersionMismatch => "version pin does not match the foundation row in franken-stack.lock",
-        EdgeDenial::UnexpectedPathOnRegistryConsume => "`consume` posture requires an exact registry pin, not a path dependency",
-        EdgeDenial::UnexpectedVersionOnConsumePath => "`consume-path` posture must not carry a registry version requirement",
-        EdgeDenial::MissingOrMismatchedPath => "dependency path does not match the foundation row's sibling path",
+        EdgeDenial::VersionMismatch => {
+            "version pin does not match the foundation row in franken-stack.lock"
+        }
+        EdgeDenial::UnexpectedPathOnRegistryConsume => {
+            "`consume` posture requires an exact registry pin, not a path dependency"
+        }
+        EdgeDenial::UnexpectedVersionOnConsumePath => {
+            "`consume-path` posture must not carry a registry version requirement"
+        }
+        EdgeDenial::MissingOrMismatchedPath => {
+            "dependency path does not match the foundation row's sibling path"
+        }
     }
 }
 
@@ -1855,13 +1906,19 @@ fn repair_for_spec_denial(row: &Foundation, dep: &DeclaredDep, denial: EdgeDenia
                 "replace path dependency `{}` with `version = \"{ver}\", default-features = false`",
                 dep.name
             ),
-            None => format!("replace path dependency `{}` with an exact registry version", dep.name),
+            None => format!(
+                "replace path dependency `{}` with an exact registry version",
+                dep.name
+            ),
         },
         EdgeDenial::UnexpectedVersionOnConsumePath => format!(
             "remove the version requirement from path dependency `{}`",
             dep.name
         ),
-        _ => format!("update `{}` dependency specification to match {}", dep.name, row.id),
+        _ => format!(
+            "update `{}` dependency specification to match {}",
+            dep.name, row.id
+        ),
     }
 }
 
@@ -1894,9 +1951,7 @@ fn confinement_subject_for(pkg: &PackageMeta) -> &str {
 
 fn is_repo_internal_dep(dep: &DeclaredDep, crate_map: &[CrateRow]) -> bool {
     dep.rel_path.is_some()
-        || (dep.source.is_none()
-            && dep.path.is_none()
-            && lookup_in(crate_map, &dep.name).is_some())
+        || (dep.source.is_none() && dep.path.is_none() && lookup_in(crate_map, &dep.name).is_some())
 }
 
 /// Match a package name against an exact name or trailing-`*` prefix pattern.
@@ -2032,6 +2087,62 @@ fn find_volatile_reexports(src: &str) -> Vec<(u32, String)> {
     hits
 }
 
+/// Scan `crates/*/src/**/*.rs` outside `frob-core` and `frob-fsim` for `fs_qty::`
+/// path references (ignoring comments and strings), reported as `facts` hints (`N33c-03`).
+#[must_use]
+pub fn find_fs_qty_path_hints(repo_root: &Path) -> Vec<String> {
+    let crates_dir = repo_root.join("crates");
+    let Ok(entries) = fs::read_dir(&crates_dir) else {
+        return Vec::new();
+    };
+    let mut hits = Vec::new();
+    for entry in entries.flatten() {
+        let crate_dir = entry.path();
+        let Some(name) = crate_dir.file_name().and_then(|s| s.to_str()) else {
+            continue;
+        };
+        if matches!(name, "frob-core" | "frob-fsim") {
+            continue;
+        }
+        let src_dir = crate_dir.join("src");
+        if !src_dir.is_dir() {
+            continue;
+        }
+        let mut stack = vec![src_dir];
+        while let Some(dir) = stack.pop() {
+            let Ok(rd) = fs::read_dir(&dir) else { continue };
+            for item in rd.flatten() {
+                let p = item.path();
+                if p.is_dir() {
+                    stack.push(p);
+                } else if p.extension().and_then(|e| e.to_str()) == Some("rs")
+                    && let Ok(text) = fs::read_to_string(&p)
+                {
+                    let tokens = lex_rust_tokens(&text);
+                    let rel = p
+                        .strip_prefix(repo_root)
+                        .map(normalize_rel_path)
+                        .unwrap_or_else(|_| normalize_rel_path(&p));
+                    for w in tokens.windows(3) {
+                        if let [
+                            (line, Tok::Ident(id)),
+                            (_, Tok::Punct(':')),
+                            (_, Tok::Punct(':')),
+                        ] = w
+                            && id == "fs_qty"
+                        {
+                            hits.push(format!("{rel}:{line}: fs_qty::"));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    hits.sort();
+    hits.dedup();
+    hits
+}
+
 fn is_forbidden_reexport_crate(ident: &str) -> bool {
     if !ident.starts_with("fs_") {
         return false;
@@ -2103,7 +2214,8 @@ fn lex_rust_tokens(src: &str) -> Vec<(u32, Tok)> {
             continue;
         }
         // Char / byte literal vs lifetime
-        if b == b'b' && bytes.get(i + 1) == Some(&b'\'')
+        if b == b'b'
+            && bytes.get(i + 1) == Some(&b'\'')
             && let Some(next_i) = skip_char_lit(bytes, i + 1, &mut line)
         {
             i = next_i;
@@ -2414,9 +2526,7 @@ fn confinement_admits_workspace(
         if trimmed.is_empty() {
             continue;
         }
-        if !ws_rel.is_empty()
-            && (trimmed == ws_rel || ws_rel.starts_with(&format!("{trimmed}/")))
-        {
+        if !ws_rel.is_empty() && (trimmed == ws_rel || ws_rel.starts_with(&format!("{trimmed}/"))) {
             return true;
         }
         if trimmed == ws.name {
@@ -2479,8 +2589,7 @@ fn evaluate_suite_resolved_rules(
     });
 
     for (pkg_id, pkg) in all_pkgs {
-        let (chain, root_member) =
-            reconstruct_chain(pkg_id, &parent, resolved, &members_by_id);
+        let (chain, root_member) = reconstruct_chain(pkg_id, &parent, resolved, &members_by_id);
         let chain_display = if chain.is_empty() {
             format!("{} -> {}", ws.name, pkg.name)
         } else {
@@ -2893,8 +3002,7 @@ fn evaluate_core_forbidden_packages(
                 continue;
             }
 
-            let (chain, root_member) =
-                reconstruct_chain(pkg_id, &parent, res, &members_by_id);
+            let (chain, root_member) = reconstruct_chain(pkg_id, &parent, res, &members_by_id);
             let chain_display = if chain.is_empty() {
                 pkg.name.clone()
             } else {
@@ -2984,9 +3092,10 @@ fn scan_core_lockfile_for_forbidden_packages(
         let Some(entry) = workspaces::match_forbidden_core_package(&pkg_name) else {
             continue;
         };
-        let reason_tag = entry
-            .why
-            .map_or_else(|| "reason = \"missing\"".to_owned(), ForbiddenReason::format_tag);
+        let reason_tag = entry.why.map_or_else(
+            || "reason = \"missing\"".to_owned(),
+            ForbiddenReason::format_tag,
+        );
         findings.push(Finding {
             rule: RULE_CORE_FORBIDDEN_PACKAGE,
             subject: format!("{pkg_name} (lockfile-only)"),

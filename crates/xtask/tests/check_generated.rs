@@ -82,13 +82,17 @@ fn build_scratch_repo(tag: &str) -> PathBuf {
         "README.md",
         "DEPENDENCY_ADMISSION.md",
         "crates/frob-core/src/refusal/code_gen.rs",
+        "crates/frob-core/src/qty_gen.rs",
         "crates/xtask/src/stack/lock.rs",
     ] {
         copy_file(&real.join(rel), &dst.join(rel));
     }
     copy_dir_recursive(&real.join("registries"), &dst.join("registries"));
     copy_dir_recursive(&real.join("schemas"), &dst.join("schemas"));
-    copy_dir_recursive(&real.join("receipts/admissions"), &dst.join("receipts/admissions"));
+    copy_dir_recursive(
+        &real.join("receipts/admissions"),
+        &dst.join("receipts/admissions"),
+    );
     copy_dir_recursive(&real.join("kernels"), &dst.join("kernels"));
     // Add an unrelated bystander file outside the outputs column.
     fs::write(dst.join("BYSTANDER.txt"), "do-not-touch\n").expect("write bystander");
@@ -157,7 +161,10 @@ fn clean_repo_passes_check_generated() {
     );
     validate_report_json(stdout.as_bytes()).expect("valid frob.xtask.report/1");
     let adm = admit(stdout.as_bytes(), &Limits::default()).expect("admit report");
-    assert_eq!(adm.value().get("check").and_then(|v| v.as_str()), Some("check-generated"));
+    assert_eq!(
+        adm.value().get("check").and_then(|v| v.as_str()),
+        Some("check-generated")
+    );
     assert_eq!(adm.value().get("ok").and_then(|v| v.as_bool()), Some(true));
 
     // Unknown flag exits 3 (usage).
@@ -166,7 +173,10 @@ fn clean_repo_passes_check_generated() {
 
     // All owned rules are namespaced `gen.*`.
     for &rule in OWNED_RULES {
-        assert!(rule.starts_with("gen."), "rule `{rule}` must start with `gen.`");
+        assert!(
+            rule.starts_with("gen."),
+            "rule `{rule}` must start with `gen.`"
+        );
     }
 }
 
@@ -189,10 +199,9 @@ fn generated_schema_roundtrip() {
 
     let outcome = run_check(&dir, BUILTIN_GENERATORS, false).expect("check");
     assert!(
-        outcome
-            .findings
-            .iter()
-            .any(|f| f.rule == RULE_DIFFERS && f.path == "schemas/frob.design.1.json" && f.line == Some(6)),
+        outcome.findings.iter().any(|f| f.rule == RULE_DIFFERS
+            && f.path == "schemas/frob.design.1.json"
+            && f.line == Some(6)),
         "expected gen.differs at line 6, got {:?}",
         outcome.findings
     );
@@ -260,16 +269,13 @@ fn marker_required() {
     // Strip the `// @generated` first line from code_gen.rs -> gen.marker-missing.
     let cg = dir.join("crates/frob-core/src/refusal/code_gen.rs");
     let orig = fs::read_to_string(&cg).expect("read code_gen.rs");
-    let stripped = orig
-        .split_once('\n')
-        .map_or("", |(_, rest)| rest);
+    let stripped = orig.split_once('\n').map_or("", |(_, rest)| rest);
     fs::write(&cg, stripped).expect("strip marker");
 
     let out = run_check(&dir, BUILTIN_GENERATORS, false).expect("check");
     assert!(
-        out.findings
-            .iter()
-            .any(|f| f.rule == RULE_MARKER_MISSING && f.path == "crates/frob-core/src/refusal/code_gen.rs"),
+        out.findings.iter().any(|f| f.rule == RULE_MARKER_MISSING
+            && f.path == "crates/frob-core/src/refusal/code_gen.rs"),
         "expected gen.marker-missing on stripped code_gen.rs, got {:?}",
         out.findings
     );
@@ -307,13 +313,16 @@ fn stack_lock_schema_regenerates() {
     let dir = build_scratch_repo("stack_lock");
     let p = dir.join("schemas/frob.stack-lock.1.json");
     let mut raw = fs::read_to_string(&p).expect("read");
-    raw = raw.replace("\"additionalProperties\": false", "\"additionalProperties\": true");
+    raw = raw.replace(
+        "\"additionalProperties\": false",
+        "\"additionalProperties\": true",
+    );
     fs::write(&p, raw).expect("edit 1 line");
     let out = run_check(&dir, BUILTIN_GENERATORS, false).expect("check");
     assert!(
-        out.findings
-            .iter()
-            .any(|f| f.rule == RULE_DIFFERS && f.path == "schemas/frob.stack-lock.1.json" && f.line.is_some()),
+        out.findings.iter().any(|f| f.rule == RULE_DIFFERS
+            && f.path == "schemas/frob.stack-lock.1.json"
+            && f.line.is_some()),
         "expected gen.differs on edited stack-lock schema, got {:?}",
         out.findings
     );
@@ -346,7 +355,11 @@ fn write_mode_touches_only_outputs() {
     // Corrupt one output so --write actually rewrites files.
     fs::write(dir.join("schemas/frob.design.1.json"), "{}\n").expect("corrupt output");
     let w_out = run_check(&dir, BUILTIN_GENERATORS, true).expect("write mode");
-    assert!(w_out.findings.is_empty(), "write mode must succeed: {:?}", w_out.findings);
+    assert!(
+        w_out.findings.is_empty(),
+        "write mode must succeed: {:?}",
+        w_out.findings
+    );
     let outside_after = digest_tree_excluding(&dir, &outputs);
     assert_eq!(
         outside_before, outside_after,
@@ -376,7 +389,11 @@ determinism = \"D0\"\nsource_digest = \"b3:{kernel_hex}\"\ntargets = [\"cpu\"]\n
     .expect("write kernels.toml");
 
     let clean = run_check(&dir, BUILTIN_GENERATORS, false).expect("clean check");
-    assert!(clean.findings.is_empty(), "unedited tree must be clean: {:?}", clean.findings);
+    assert!(
+        clean.findings.is_empty(),
+        "unedited tree must be clean: {:?}",
+        clean.findings
+    );
 
     // (b) One byte changed in kernel file -> gen.digest naming the file and manifest digest.
     let mut k_mut = kernel_src.to_vec();
@@ -398,10 +415,26 @@ determinism = \"D0\"\nsource_digest = \"b3:{kernel_hex}\"\ntargets = [\"cpu\"]\n
 
     // (c) One byte changed in EACH of the five regenerable output kinds -> gen.differs + line.
     let targets: &[(&str, &str, &str)] = &[
-        ("schemas/frob.design.1.json", "\"owner\": \"frob-design\"", "\"owner\": \"frob-desigX\""),
-        ("schemas/frob.stack-lock.1.json", "\"required\": [\"toolchain\"]", "\"required\": [\"toolchaiX\"]"),
-        ("DEPENDENCY_ADMISSION.md", "| `INT-FSIM-01` | `FD-FSIM` |", "| `INT-FSIM-01` | `FD-FSIX` |"),
-        ("crates/frob-core/src/refusal/code_gen.rs", "FrobRef802 = 802,", "FrobRef802 = 803,"),
+        (
+            "schemas/frob.design.1.json",
+            "\"owner\": \"frob-design\"",
+            "\"owner\": \"frob-desigX\"",
+        ),
+        (
+            "schemas/frob.stack-lock.1.json",
+            "\"required\": [\"toolchain\"]",
+            "\"required\": [\"toolchaiX\"]",
+        ),
+        (
+            "DEPENDENCY_ADMISSION.md",
+            "| `INT-FSIM-01` | `FD-FSIM` |",
+            "| `INT-FSIM-01` | `FD-FSIX` |",
+        ),
+        (
+            "crates/frob-core/src/refusal/code_gen.rs",
+            "FrobRef802 = 802,",
+            "FrobRef802 = 803,",
+        ),
         ("README.md", "Summary: ", "Summary: X"),
     ];
     for &(rel, from, to) in targets {
@@ -429,10 +462,12 @@ determinism = \"D0\"\nsource_digest = \"b3:{kernel_hex}\"\ntargets = [\"cpu\"]\n
 #[test]
 fn write_mode_does_not_rewrite_digests() {
     let dir = build_scratch_repo("write_no_digest");
-    let orig_kernel = b"// @generated from derive/frob-derive; do not edit.\npub const K: f64 = 1.0;\n";
+    let orig_kernel =
+        b"// @generated from derive/frob-derive; do not edit.\npub const K: f64 = 1.0;\n";
     let orig_hex = fs_blake3::hash_bytes(orig_kernel).to_hex();
     fs::create_dir_all(dir.join("kernels")).expect("mkdir kernels");
-    let mutated_kernel = b"// @generated from derive/frob-derive; do not edit.\npub const K: f64 = 2.0;\n";
+    let mutated_kernel =
+        b"// @generated from derive/frob-derive; do not edit.\npub const K: f64 = 2.0;\n";
     fs::write(dir.join("kernels/K-norm.rs"), mutated_kernel).expect("write mutated kernel");
     let manifest_text = format!(
         "schema = \"frob.kernels/1\"\n\n[[kernel]]\nid = \"K-norm\"\nowner = \"frob-kernels\"\n\
@@ -529,7 +564,12 @@ fn input_globs_per_row() {
     assert!(w1.findings.is_empty());
     let before = fs::read_to_string(dir.join("out/combined.txt")).expect("read combined");
     assert!(before.contains("alpha") && before.contains("beta"));
-    assert!(run_check(&dir, SYNTHETIC_ROWS, false).expect("check 1").findings.is_empty());
+    assert!(
+        run_check(&dir, SYNTHETIC_ROWS, false)
+            .expect("check 1")
+            .findings
+            .is_empty()
+    );
 
     // Edit ONLY the second input glob -> check fails with gen.differs, and --write updates output.
     fs::write(dir.join("inputs/b/second.txt"), "gamma\n").expect("edit b");

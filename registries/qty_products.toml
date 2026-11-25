@@ -1,0 +1,214 @@
+# FrankenRobotics closed SI quantity product and quotient registry (schema frob.qty_products/1, N33c-03).
+# At most one output per ordered (lhs, op, rhs) pair. Generated into crates/frob-core/src/qty_gen.rs.
+
+schema = "frob.qty_products/1"
+
+[[product]]
+lhs = "Length"
+op = "mul"
+rhs = "Length"
+out = "Area"
+
+[[product]]
+lhs = "Area"
+op = "mul"
+rhs = "Length"
+out = "Volume"
+
+[[product]]
+lhs = "Length"
+op = "mul"
+rhs = "Area"
+out = "Volume"
+
+[[product]]
+lhs = "Density"
+op = "mul"
+rhs = "Volume"
+out = "Mass"
+
+[[product]]
+lhs = "Velocity"
+op = "mul"
+rhs = "Time"
+out = "Length"
+
+[[product]]
+lhs = "Acceleration"
+op = "mul"
+rhs = "Time"
+out = "Velocity"
+
+[[product]]
+lhs = "Mass"
+op = "mul"
+rhs = "Acceleration"
+out = "Force"
+
+[[product]]
+lhs = "Mass"
+op = "mul"
+rhs = "Velocity"
+out = "Momentum"
+
+[[product]]
+lhs = "Force"
+op = "mul"
+rhs = "Time"
+out = "Impulse"
+
+[[product]]
+lhs = "Force"
+op = "mul"
+rhs = "Length"
+out = "Energy"
+
+[[product]]
+lhs = "Force"
+op = "mul"
+rhs = "Velocity"
+out = "Power"
+
+[[product]]
+lhs = "Torque"
+op = "mul"
+rhs = "AngularVelocity"
+out = "Power"
+
+[[product]]
+lhs = "Power"
+op = "mul"
+rhs = "Time"
+out = "Energy"
+
+[[product]]
+lhs = "MomentOfInertia"
+op = "mul"
+rhs = "AngularAcceleration"
+out = "Torque"
+
+[[product]]
+lhs = "MomentOfInertia"
+op = "mul"
+rhs = "AngularVelocity"
+out = "AngularMomentum"
+
+[[product]]
+lhs = "Stiffness"
+op = "mul"
+rhs = "Length"
+out = "Force"
+
+[[product]]
+lhs = "Damping"
+op = "mul"
+rhs = "Velocity"
+out = "Force"
+
+[[product]]
+lhs = "AngularStiffness"
+op = "mul"
+rhs = "Angle"
+out = "Torque"
+
+[[product]]
+lhs = "AngularDamping"
+op = "mul"
+rhs = "AngularVelocity"
+out = "Torque"
+
+[[product]]
+lhs = "Pressure"
+op = "mul"
+rhs = "Area"
+out = "Force"
+
+[[product]]
+lhs = "Voltage"
+op = "mul"
+rhs = "Current"
+out = "Power"
+
+[[product]]
+lhs = "Resistance"
+op = "mul"
+rhs = "Current"
+out = "Voltage"
+
+[[product]]
+lhs = "Current"
+op = "mul"
+rhs = "Time"
+out = "Charge"
+
+[[product]]
+lhs = "TorqueConstant"
+op = "mul"
+rhs = "Current"
+out = "Torque"
+
+[[product]]
+lhs = "Length"
+op = "div"
+rhs = "Time"
+out = "Velocity"
+
+[[product]]
+lhs = "Velocity"
+op = "div"
+rhs = "Time"
+out = "Acceleration"
+
+[[product]]
+lhs = "Angle"
+op = "div"
+rhs = "Time"
+out = "AngularVelocity"
+
+[[product]]
+lhs = "AngularVelocity"
+op = "div"
+rhs = "Time"
+out = "AngularAcceleration"
+
+[[product]]
+lhs = "Mass"
+op = "div"
+rhs = "Volume"
+out = "Density"
+
+[[product]]
+lhs = "Force"
+op = "div"
+rhs = "Area"
+out = "Pressure"
+
+[[product]]
+lhs = "Energy"
+op = "div"
+rhs = "Time"
+out = "Power"
+
+[[product]]
+lhs = "Voltage"
+op = "div"
+rhs = "Current"
+out = "Resistance"
+
+[[product]]
+lhs = "Power"
+op = "div"
+rhs = "Current"
+out = "Voltage"
+
+[[product]]
+lhs = "Power"
+op = "div"
+rhs = "Voltage"
+out = "Current"
+
+[[product]]
+lhs = "Torque"
+op = "div"
+rhs = "Current"
+out = "TorqueConstant"

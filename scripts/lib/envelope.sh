@@ -1737,6 +1737,7 @@ def scan_file(path, is_e2e_script):
                     "echo", "printf", "grep", "rg", "awk", "sed", "cat", "local",
                     "export", "record_assert", "begin_step", "e2e_step", "e2e_assert_eq",
                     "e2e_assert_file", "e2e_assert_json", "e2e_metric", "e2e_skip",
+                    "[", "[[", "test",
                 )
                 if not has_guard and not is_meta_call:
                     for idx_t, tok_t in enumerate(ut):

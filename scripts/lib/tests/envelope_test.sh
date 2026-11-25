@@ -615,6 +615,16 @@ set -euo pipefail
 frob_envelope_run --class E0 -- cargo test -p frob-core
 EOF
 
+  # 6) E2E script probing `${FROB_BIN}` with POSIX `[ -x ... ]` -> MUST NOT be flagged
+  cat > "${_sdir}/e2e/probe_frob_exists.sh" <<'EOF'
+#!/usr/bin/env bash
+# e2e: bead=TEST milestone=M0 labels=m0 seed=0 needs=cpu
+set -euo pipefail
+if [ -x "${FROB_BIN}" ] || test -x "${FROB_BIN}"; then
+  :
+fi
+EOF
+
   _scan_out="${TMP_ROOT}/selftest_scan.txt"
   _rc=0
   frob_envelope_selftest --scripts-dir "${_sdir}" --e2e-dir "${_sdir}/e2e" >"$_scan_out" 2>&1 || _rc=$?
@@ -628,7 +638,8 @@ EOF
      grep -Fq "/above_e0_bare.sh:4:" "$_scan_out" &&
      grep -Fq "/unguarded_cargo.sh:4:" "$_scan_out" &&
      ! grep -Fq "/pilot_launched.sh" "$_scan_out" &&
-     ! grep -Fq "/guarded_cargo.sh" "$_scan_out"; then
+     ! grep -Fq "/guarded_cargo.sh" "$_scan_out" &&
+     ! grep -Fq "/probe_frob_exists.sh" "$_scan_out"; then
     pass "device_lane_outside_launcher_is_flagged"
   else
     fail "device_lane_outside_launcher_is_flagged" "unexpected scan findings: $(cat "$_scan_out")"

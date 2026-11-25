@@ -122,7 +122,7 @@ admission_gate = "INT-FNP-01..02"
 receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
 fallback = "Plain binary columns; drop the oracle."
 first_needed = "M0"
-note = "franken_numpy is an f64 array library on heap vectors with no single-precision storage and no fixed-size matrix types, and it lists GPU arrays and automatic differentiation as out of scope. It is the right tool at the interchange boundary and as an oracle, never in a hot path. Its stride convention differs from FrankenTorch (signed byte strides vs unsigned element strides), requiring a typed converter at the boundary (BD-036)."
+note = "At this pin, fnp-ufunc stores arithmetic values in Vec<f64>. fnp-dtype also has native F32 storage, and fnp-linalg offers fixed-size f64 routines such as solve_2x2. GPU arrays and automatic differentiation are out of scope. Use franken_numpy for interchange and as an oracle, outside hot paths. Its NdLayout uses signed byte strides, while FrankenTorch's TensorMeta uses unsigned element strides, requiring a typed converter at the boundary (BD-036)."
 
 [[foundation.uses]]
 posture = "consume"
@@ -161,7 +161,7 @@ admission_gate = "INT-FSYM-01..02"
 receipt = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4"
 fallback = "KILL-KIR, KILL-LEMMA."
 first_needed = "M0"
-note = "frankensympy workspace refers to two sibling pin directories (../franken_numpy-pin and ../frankenscipy-pin) absent on this machine and pins a different nightly (frankensympy/Cargo.toml:95-96, frankensympy/rust-toolchain.toml). derive/ therefore depends on individual fsym-* crates by path, builds on T, has no toolchain file of its own, and FrankenSymPy moves to T on the toolchain train."
+note = "The pinned frankensympy workspace requires two sibling pin directories (../franken_numpy-pin and ../frankenscipy-pin) that are absent from the standard checkout and selects a different nightly (frankensympy/Cargo.toml:96-97, frankensympy/rust-toolchain.toml). The derive/ annex is to depend on individual fsym-* crates by path and build on T without its own toolchain file. The toolchain train moves FrankenSymPy to T."
 
 [[foundation.uses]]
 posture = "build-time"
@@ -249,7 +249,7 @@ toolchain = "nightly-2026-08-31"
 admission_gate = "INT-F3D-01"
 fallback = "A plain Three.js bundle."
 first_needed = "M3"
-note = "franken_threed does not yet package a single self-contained page (franken_threed/README.md, Honest status). The viewer's self-contained HTML export is this project's own build step."
+note = "At this pin, franken_threed's --pack-html embeds the static resource graph in one self-contained HTML file. Application-created networking and host services remain external (tools/ingest/cli.mjs, tools/ingest/pack_html.mjs). FrankenRobotics owns the viewer's HTML export build step."
 
 [[foundation.uses]]
 posture = "pattern"
@@ -341,7 +341,7 @@ first_needed = "M6"
 
 [[foundation.uses]]
 posture = "subprocess"
-purpose = "Oracle worker for cloth evaluation tier (ftx-drape) in its own workspace; never a Cargo dependency"
+purpose = "Oracle worker for cloth evaluation (ftx-drape) in its own workspace because its exact serde_json pin (=1.0.151) conflicts with the core graph (1.0.154). Invoke it as a subprocess."
 confined_to = ["tools/oracle/"]
 tier = "moonshot"
 first_needed = "M6"

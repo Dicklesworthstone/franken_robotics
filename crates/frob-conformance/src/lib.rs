@@ -10,6 +10,8 @@
 //! - `oracles`: oracle register (`registry/oracles.toml`), role grammar, pin-move audit,
 //!   pinned fixtures, and disagreement findings (`N38a-04`).
 //! - `perf`: performance-program conformance lints and KA-815 workload checks (`N36-02`).
+//! - `reasons`: closed Gauntlet harness refusal vocabulary (`registry/reasons.toml`),
+//!   existing public `FROB-REF-nnn` code references, and source/log scanners (`N38-REF`).
 //! - `register`: base gate-register record types (`Claim`, `Status`, `GateBase`, `PartBase`),
 //!   D0 TOML printer, and plan-time/revision count assertions (`N38b-18`; `frob-core`-only).
 //! - `tenfold`: ten-fold comparative benchmark harness skeleton, five harness records,
@@ -23,5 +25,6 @@ pub mod e2e;
 pub mod gates_v0;
 pub mod oracles;
 pub mod perf;
+pub mod reasons;
 pub mod register;
 pub mod tenfold;

@@ -1,0 +1,836 @@
+# FrankenRobotics Gauntlet harness refusal vocabulary (schema frob.gauntlet.reasons/1).
+#
+# Owned by N38-REF (`frob-n38-ref-cnru`, §38.10-§38.14, Appendix O, ADR-GAUNT-01).
+# Written strictly in the `frob-core::registry::toml` subset (`N34p2-01`).
+#
+# By decision (`ADR-GAUNT-01`), `frob-conformance` exposes no agent verb and defines
+# zero public `FROB-REF-nnn` refusal codes. Every Gauntlet harness refusal reason is
+# closed in this file and mirrored 1-to-1 by `frob_conformance::reasons::HarnessReason`.
+#
+# Exit convention (N38-REF):
+# - 101: Cargo test targets (`reason=<id>` on the first failure line)
+# -   3: Refused requests from example/CLI tools (`record_gate`, `validate_register`,
+#        `pilots` status change, `moonshot enter`)
+# -   0: Warnings (`burst`), flags (`boundary-only`), seeding findings (`plant-changed`),
+#        non-blocking control-runner / gate-line outcomes (`not-yet-due`, `not-eligible`),
+#        and funding-check query answers (`Blocked{<reason>}`)
+# - Exit code 1 is NEVER emitted on purpose anywhere in the program.
+#
+# Review notes applied (polishing round 4):
+# - Note 6 (F-U38b): registered `export-format-unreadable` (close-audit, N38b-03, exit 101)
+#   and `not-yet-due` (control-runner, N38b-04, exit 0).
+# - Note 7 (F-U41): added `moonshot-transition` / `N41-09` to `moonshot-cap`'s tool list.
+
+schema = "frob.gauntlet.reasons/1"
+
+# ---------------------------------------------------------------------------
+# 1. Registry check (4 reasons, exit 101)
+# ---------------------------------------------------------------------------
+
+[[reason]]
+id = "no-control"
+tool = ["registry-check", "BD-025"]
+meaning = "A gate with status `pass` and an empty control list (or no due runnable control)"
+repairs = ["Register a control first", "Set the gate back to `not-run`"]
+exit = 101
+
+[[reason]]
+id = "dangling-control"
+tool = ["registry-check", "BD-025"]
+meaning = "A gate lists a control identifier that does not exist in `controls.toml`"
+repairs = ["Fix the identifier", "Add the missing control record"]
+exit = 101
+
+[[reason]]
+id = "one-way-link"
+tool = ["registry-check", "BD-025"]
+meaning = "A gate lists a control that does not name the gate, or the reverse"
+repairs = ["Add the missing direction of the gate-control link"]
+exit = 101
+
+[[reason]]
+id = "uncaught-control"
+tool = ["registry-check", "BD-025"]
+meaning = "A `pass` row whose control's last recorded outcome is not caught"
+repairs = ["Re-run the gate with its controls", "Fix the test or the plant"]
+exit = 101
+
+# ---------------------------------------------------------------------------
+# 2. Control loader (10 reasons here; 4 append-only reasons shared in §6)
+# ---------------------------------------------------------------------------
+
+[[reason]]
+id = "no-gate"
+tool = ["control-loader", "BD-025"]
+meaning = "A control with an empty `gate` list"
+repairs = ["Name at least one existing gate", "Register the gate in `registries/gates.toml` first"]
+exit = 101
+
+[[reason]]
+id = "unknown-gate"
+tool = ["control-loader", "BD-025"]
+meaning = "A control naming a gate absent from `registries/gates.toml`"
+repairs = ["Name at least one existing gate", "Register the gate in `registries/gates.toml` first"]
+exit = 101
+
+[[reason]]
+id = "kind-not-closed"
+tool = ["control-loader", "BD-025"]
+meaning = "A control whose `kind` is not one of `mutation`, `planted-input`, `planted-design`, `planted-world`, `a-a`"
+repairs = ["Choose one of the five admitted control kinds"]
+exit = 101
+
+[[reason]]
+id = "defect-or-expect-empty"
+tool = ["control-loader", "BD-025"]
+meaning = "A control whose `defect` or `expect` is empty, or whose `expect` states no observable (a value, a refusal code, or a failed row)"
+repairs = ["State the planted defect", "State the observable the gate must show when it catches it (the value, the refusal code, or the failed row)"]
+exit = 101
+
+[[reason]]
+id = "feature-missing"
+tool = ["control-loader", "BD-025"]
+meaning = "A `mutation` control naming no feature declared in its target crate"
+repairs = ["Declare the mutation feature in the target crate's Cargo.toml", "Point the control at the declared feature name"]
+exit = 101
+
+[[reason]]
+id = "fixture-missing"
+tool = ["control-loader", "BD-025"]
+meaning = "A non-mutation control naming no existing fixture with its required `synthetic` kind header"
+repairs = ["Add the fixture file with its `synthetic` header", "Correct the fixture path on the control record"]
+exit = 101
+
+[[reason]]
+id = "unknown-seed-form"
+tool = ["control-loader", "BD-025"]
+meaning = "A `seed` outside the admitted forms (CX, KA, MR, CERT, INV, PO, RISK, SAFE-X, GATE, or empty on a permanent control)"
+repairs = ["Seed the control from its catalogue entry, row, or rule"]
+exit = 101
+
+[[reason]]
+id = "boundary-not-control"
+tool = ["control-loader", "BD-025"]
+meaning = "A control whose defect is the product's own refusal at a limit without naming `removed_check`"
+repairs = ["Name the build or input in which the limit was removed (`removed_check`)"]
+exit = 101
+
+[[reason]]
+id = "cannot-fail"
+tool = ["control-loader"]
+meaning = "A control whose planted value lies on the safe side of its row"
+repairs = ["Choose a defect that errs in the unsafe direction"]
+exit = 101
+
+[[reason]]
+id = "permanent-control-removed"
+tool = ["control-loader"]
+meaning = "A permanent control deleted or detached from a gate"
+repairs = ["Restore the permanent control and its gate link"]
+exit = 101
+
+# ---------------------------------------------------------------------------
+# 3. Control runner, tier runner, and control review (6 reasons)
+# ---------------------------------------------------------------------------
+
+[[reason]]
+id = "missed"
+tool = ["control-runner", "N38b-04"]
+meaning = "The gate's entries pass with the defect planted"
+repairs = ["Strengthen the gate's test", "Re-state the defect so the gate observes it"]
+exit = 101
+
+[[reason]]
+id = "caught-unexpected"
+tool = ["control-runner", "N38b-04"]
+meaning = "The gate fails for a reason other than the control's stated expectation"
+repairs = ["Correct the control's stated expectation", "Correct the planted defect"]
+exit = 101
+
+[[reason]]
+id = "stale"
+tool = ["control-runner", "N38b-04"]
+meaning = "The defect cannot be planted because its feature or fixture is gone"
+repairs = ["Re-plant the control on the current target", "Withdraw the control with a recorded reason"]
+exit = 101
+
+[[reason]]
+id = "not-yet-due"
+tool = ["control-runner", "N38b-04"]
+meaning = "A control-runner outcome (beside `missed` and `stale`) for a control whose `due` is later than the milestone of the part being run; it neither blocks nor supports that part"
+repairs = ["Build the plant by its due milestone"]
+exit = 0
+kind = "outcome"
+
+[[reason]]
+id = "not-eligible"
+tool = ["tier-runner", "gate-line", "registry-check", "BD-025", "N38a-02"]
+meaning = "No control caught in this run, or a declared dependency without a live-dependency proof"
+repairs = ["Run the gate's controls in the same run", "Add the live-dependency proof"]
+exit = 0
+kind = "outcome"
+
+[[reason]]
+id = "suspect-undisposed"
+tool = ["control-review", "N38b-04"]
+meaning = "A control never caught in recorded history with no disposition at a milestone exit"
+repairs = ["Record a disposition of `replanted`, `gate-strengthened`, or `withdrawn`"]
+exit = 101
+dispositions = ["replanted", "gate-strengthened", "withdrawn"]
+
+# ---------------------------------------------------------------------------
+# 4. Gate recorder (15 core reasons here + 5 emitting-bead recorder reasons in §9)
+# ---------------------------------------------------------------------------
+
+[[reason]]
+id = "receipt-hash-mismatch"
+tool = ["recorder", "N38b-19"]
+meaning = "The receipt's bytes do not hash to its content-addressed filename or embedded hash"
+repairs = ["Re-run the tier on a clean, known commit and commit the exact receipt bytes"]
+exit = 3
+
+[[reason]]
+id = "receipt-dirty-tree"
+tool = ["recorder", "N38b-19"]
+meaning = "The receipt was produced from a dirty working tree and cannot be trusted for recording"
+repairs = ["Re-run the tier on a clean, known commit"]
+exit = 3
+
+[[reason]]
+id = "receipt-commit-unknown"
+tool = ["recorder", "N38b-19"]
+meaning = "The receipt's commit cannot be resolved in the repository history"
+repairs = ["Re-run the tier on a clean, known commit"]
+exit = 3
+
+[[reason]]
+id = "gate-line-not-eligible"
+tool = ["recorder", "N38b-19"]
+meaning = "The receipt's line for the gate is not `pass` or `fail`"
+repairs = ["Run the gate's controls in the same run so the gate line is eligible"]
+exit = 3
+
+[[reason]]
+id = "pass-without-control"
+tool = ["recorder", "gate-register-validator", "N38b-19", "N40-01"]
+meaning = "The same-run rule is not met: a `pass` is offered for a gate with no registered control"
+repairs = ["Register and run the control with the gate in the same run"]
+exit = 3
+alt_exits = [101]
+
+[[reason]]
+id = "control-missing-from-receipt"
+tool = ["recorder", "N38b-19"]
+meaning = "The same-run rule is not met: a required due control is absent from the receipt"
+repairs = ["Register and run the control with the gate in the same run"]
+exit = 3
+
+[[reason]]
+id = "control-not-caught"
+tool = ["recorder", "gate-register-validator", "N38b-19", "N40-01"]
+meaning = "The same-run rule is not met: a listed control was not caught in the same run"
+repairs = ["Register and run the control with the gate until it is caught in the same run"]
+exit = 3
+alt_exits = [101]
+
+[[reason]]
+id = "self-certified"
+tool = ["recorder", "gate-register-validator", "N38b-19", "N40-01"]
+meaning = "The recording session implemented the capability (`recorded.session` is in `recorded.implemented_by`)"
+repairs = ["Record the gate from a fresh-context session that did not implement the capability"]
+exit = 3
+alt_exits = [101]
+
+[[reason]]
+id = "evidence-unresolved"
+tool = ["recorder", "gate-register-validator", "N38b-19", "N40-01"]
+meaning = "An evidence item or claim identifier dangles or is tombstoned in the artifact graph"
+repairs = ["Cite a live, committed receipt", "Re-run the tier and record with resolving evidence"]
+exit = 3
+alt_exits = [101]
+
+[[reason]]
+id = "receipt-stack-dev"
+tool = ["recorder", "N38b-19"]
+meaning = "A receipt whose `stack_dev` is true (a result of a development stack identity), whatever its line's status"
+repairs = ["Re-run the tier from a binary built under a clean stack receipt"]
+exit = 3
+
+[[reason]]
+id = "dev-build-identity"
+tool = ["recorder", "N38b-19"]
+meaning = "`may_cite(gate_class)` of N33a-08, called on the receipt's `build_identity`, refuses a `pass` of a Performance or Parity gate from a binary in mode `dev-salt` (a `fail` is recorded)"
+repairs = ["Rebuild under `depgraph-receipt` and re-run", "Record the measured value without citing it as a pass"]
+exit = 3
+
+[[reason]]
+id = "receipt-set-invalid"
+tool = ["recorder", "N38b-19"]
+meaning = "Two receipts of one tier, or receipts of two commits, supplied in one recording (the tier or commits named)"
+repairs = ["Give one receipt per tier, all from one commit"]
+exit = 3
+
+[[reason]]
+id = "part-rows-dropped"
+tool = ["recorder", "N38b-19"]
+meaning = "A re-recording whose receipts omit an entry that the replaced recording measured and that is still registered (the entry named)"
+repairs = ["Add the receipt of the dropped entry's tier"]
+exit = 3
+
+[[reason]]
+id = "receipt-not-of-record"
+tool = ["recorder", "N38b-19", "N32ax-03"]
+meaning = "An evidence receipt that fails `frob_core::registries::assert_of_record` (made under a scratch or snapshot registry root, or with a run-time registry in its fail-closed reading); nothing written"
+repairs = ["Re-run under the registries of record"]
+exit = 3
+
+[[reason]]
+id = "reduced-not-recordable"
+tool = ["recorder", "N38b-19"]
+meaning = "A reduced-count receipt offered for a full-count threshold"
+repairs = ["Run the full count", "Record the reduced value only as measured without claiming pass"]
+exit = 3
+
+# ---------------------------------------------------------------------------
+# 5. Seeding join (3 reasons, exit 101)
+# ---------------------------------------------------------------------------
+
+[[reason]]
+id = "unmatched-seed"
+tool = ["seeding-join", "N38b-05"]
+meaning = "A catalogue entry or stated control cell with no corresponding control in `controls.toml`"
+repairs = ["Seed the entry into `controls.toml`", "Withdraw the entry with a recorded reason"]
+exit = 101
+
+[[reason]]
+id = "orphan-control"
+tool = ["seeding-join", "N38b-05"]
+meaning = "A control whose `seed` does not resolve to any catalogue entry, row, or rule"
+repairs = ["Fix the control's `seed` reference"]
+exit = 101
+
+[[reason]]
+id = "rule-without-gate"
+tool = ["seeding-join", "N38b-05"]
+meaning = "A seeded rule that resolves to no gate in `registries/gates.toml`"
+repairs = ["Add the missing gate to `registries/gates.toml`", "Withdraw the entry with a recorded reason"]
+exit = 101
+
+# ---------------------------------------------------------------------------
+# 6. Registry diff (5 reasons, exit 101; shared with control-loader and pilot-loader)
+# ---------------------------------------------------------------------------
+
+[[reason]]
+id = "removed"
+tool = ["registry-diff", "control-loader", "pilot-loader", "BD-025", "N38a-09"]
+meaning = "An append-only identifier was removed from a registry family"
+repairs = ["Restore the removed identifier", "Append a new record instead of deleting an existing one"]
+exit = 101
+
+[[reason]]
+id = "reused"
+tool = ["registry-diff", "control-loader", "pilot-loader", "BD-025", "N38a-09"]
+meaning = "An append-only identifier was duplicated or reused"
+repairs = ["Restore the original identifier", "Append a fresh unused identifier instead"]
+exit = 101
+
+[[reason]]
+id = "renumbered"
+tool = ["registry-diff", "control-loader", "BD-025"]
+meaning = "An existing identifier's immutable identity (seed, kind, or non-placeholder target) was changed"
+repairs = ["Restore the identifier's original binding", "Append a new record instead"]
+exit = 101
+
+[[reason]]
+id = "out-of-order"
+tool = ["registry-diff", "control-loader", "BD-025"]
+meaning = "An append-only identifier family is not in strictly increasing numeric order"
+repairs = ["Restore strictly increasing order", "Append new identifiers at the end"]
+exit = 101
+
+[[reason]]
+id = "gap"
+tool = ["registry-diff"]
+meaning = "An unrecorded numbering gap appears in an append-only identifier family"
+repairs = ["Restore the missing identifier", "Append sequentially without leaving an unrecorded gap"]
+exit = 101
+
+# ---------------------------------------------------------------------------
+# 7. Close audit (8 reasons: 7 failing exit 101 + 1 warning exit 0)
+# ---------------------------------------------------------------------------
+
+[[reason]]
+id = "untyped"
+tool = ["close-audit", "N38b-03"]
+meaning = "A bead's close reason does not use a typed close-reason form"
+repairs = ["Re-close with a typed reason and its own evidence"]
+exit = 101
+
+[[reason]]
+id = "foreign-test"
+tool = ["close-audit", "N38b-03"]
+meaning = "A bead's close reason cites a test that does not belong to that bead"
+repairs = ["Re-close citing the bead's own test and output from another session"]
+exit = 101
+
+[[reason]]
+id = "no-output"
+tool = ["close-audit", "N38b-03"]
+meaning = "A bead's close reason cites no resolving test output"
+repairs = ["Re-close with a typed reason and its own resolving test output"]
+exit = 101
+
+[[reason]]
+id = "self-closed"
+tool = ["close-audit", "N38b-03"]
+meaning = "A bead was closed using output from the same session that implemented it"
+repairs = ["Re-close using resolving output verified by another session"]
+exit = 101
+
+[[reason]]
+id = "shared-reason"
+tool = ["close-audit", "N38b-03"]
+meaning = "Multiple beads share an identical close reason string"
+repairs = ["Re-close each bead with its own typed reason and distinct evidence"]
+exit = 101
+
+[[reason]]
+id = "shared-output"
+tool = ["close-audit", "N38b-03"]
+meaning = "Multiple beads share identical cited test output"
+repairs = ["Re-close each bead with its own test run and resolving output"]
+exit = 101
+
+[[reason]]
+id = "burst"
+tool = ["close-audit", "N38b-03"]
+meaning = "More than 5 closes by one session in 60 seconds (warning)"
+repairs = ["Record a written disposition by the exit reviewer"]
+exit = 0
+kind = "warning"
+
+[[reason]]
+id = "export-format-unreadable"
+tool = ["close-audit", "N38b-03"]
+meaning = "The tracker export lacks or renames a field that N38b-03's close audit reads"
+repairs = ["Update the close audit to the tracker export's fields", "Regenerate the tracker export in the expected format"]
+exit = 101
+
+# ---------------------------------------------------------------------------
+# 8. Live-dependency helper & status views (3 reasons, exit 101)
+# ---------------------------------------------------------------------------
+
+[[reason]]
+id = "stand-in-suspected"
+tool = ["live-dependency-helper", "N38b-06"]
+meaning = "A perturbed declared input does not change the measured output"
+repairs = ["Remove the stand-in or stub and wire the real dependency"]
+exit = 101
+
+[[reason]]
+id = "unbound-dependency"
+tool = ["live-dependency-helper", "N38b-06"]
+meaning = "Perturbing an input changes the output without changing the bound identities in the envelope"
+repairs = ["Bind the input identity in the envelope"]
+exit = 101
+
+[[reason]]
+id = "views-differ"
+tool = ["status-views", "N38b-20"]
+meaning = "A generated status view differs from the committed file"
+repairs = ["Regenerate the status views from `registries/gates.toml`; never edit by hand"]
+exit = 101
+
+# ---------------------------------------------------------------------------
+# 9. Emitting-bead reasons after `reduced-not-recordable` (23 reasons)
+# ---------------------------------------------------------------------------
+
+[[reason]]
+id = "claim-evidence-mismatch"
+tool = ["recorder", "N38a-05"]
+meaning = "A row's claim kind is stronger than the kind its evidence can carry: a `reality` row whose evidence includes a `ParityResult` of any status; nothing written"
+repairs = ["Record the row with claim `parity`", "Cite evidence of the claimed kind", "Leave the gate `not-run`"]
+exit = 3
+
+[[reason]]
+id = "no-potency-record"
+tool = ["recorder", "N38a-36"]
+meaning = "An analysis, screen, or attribution method is cited with no potency record, or with one made under a stale corpus version; nothing written"
+repairs = ["Run the potency check on the current corpus", "Cite a different potent method"]
+exit = 3
+
+[[reason]]
+id = "not-potent"
+tool = ["recorder", "N38a-36"]
+meaning = "The cited method's current potency record has the verdict `not-potent`; nothing written"
+repairs = ["Improve the method and re-run it on the held-out half", "Leave the gate `not-run`"]
+exit = 3
+
+[[reason]]
+id = "origin-label-mismatch"
+tool = ["recorder", "N38b-07", "N38b-19"]
+meaning = "The claim product recomputed from an evidence item's inputs carries `origin-synthetic` or `origin-development-oracle` and the presented evidence block does not (the recorder's form of FROB-REF-819); nothing written, `gates.toml` byte-identical"
+repairs = ["Cite the receipt as it was produced, with its origin labels", "Re-run on the real tier"]
+exit = 3
+
+[[reason]]
+id = "origin-not-admissible"
+tool = ["recorder", "N38b-07", "N38b-19"]
+meaning = "An evidence item carries `origin-development-oracle` (for any gate), or carries `origin-synthetic` for a gate whose claim is `reality`; nothing written"
+repairs = ["Re-run on the CPU referee", "Record a claim other than `reality`"]
+exit = 3
+
+[[reason]]
+id = "ka-second-file"
+tool = ["known-answer-loader", "N38a-12"]
+meaning = "A file other than `known_answers.toml` matches `known_answers*.toml` or `known-answers*.toml`, or is a `.toml` file under a directory named `known_answers` or `known-answers`"
+repairs = ["Move its rows into the single canonical `known_answers.toml` file", "Remove the second file"]
+exit = 101
+
+[[reason]]
+id = "boundary-only"
+tool = ["known-answer-loader", "N38a-12"]
+meaning = "A known-answer row whose `control.text` only restates a refusal at a limit; the load does not fail (exit 0) and the row stays `obligation: control`"
+repairs = ["Name the build or input in which the limit was removed and register it as the row's control"]
+exit = 0
+kind = "flag"
+
+[[reason]]
+id = "relation-without-control"
+tool = ["control-loader", "relation-registry", "N38a-14"]
+meaning = "A metamorphic relation has no mutation control in `controls.toml` (the map relation <-> control is one-to-one)"
+repairs = ["Register the relation's mutation as a control in `controls.toml`"]
+exit = 101
+
+[[reason]]
+id = "control-without-relation"
+tool = ["control-loader", "relation-registry", "N38a-14"]
+meaning = "A mutation control references a metamorphic relation that is gone (the map relation <-> control is one-to-one)"
+repairs = ["Withdraw the control with a recorded reason", "Restore the metamorphic relation"]
+exit = 101
+
+[[reason]]
+id = "mutation-survived"
+tool = ["g3-runner", "N38a-14", "N38a-19"]
+meaning = "A metamorphic relation's mutant produced no violation in the scenarios tried (count reported)"
+repairs = ["Strengthen the relation's test", "Re-state the mutation"]
+exit = 101
+
+[[reason]]
+id = "mutation-stale"
+tool = ["g3-runner", "N38a-14", "N38a-19"]
+meaning = "A metamorphic relation's mutation cannot be planted as described because the code path no longer exists; never counted as caught and reviewed at the milestone exit"
+repairs = ["Re-state the mutation at the current code path; never drop it"]
+exit = 101
+
+[[reason]]
+id = "due-unbound"
+tool = ["g3-binding-check", "tier-matrix-check", "N38a-15", "N38a-16", "N38a-17", "N38a-18", "N38a-19", "N38a-03"]
+meaning = "A metamorphic relation due at the current milestone has no runner entry on a site it lists, or a due cell of the tier matrix has no runner entry"
+repairs = ["Bind the relation on every listed site", "Bind the tier-matrix cell to its leading test's entry"]
+exit = 101
+
+[[reason]]
+id = "unexpected-owner"
+tool = ["pilot-ledger-check", "N38a-10"]
+meaning = "A pilot record names a re-run owner the plan-time pilot ledger does not give it (rows 19 and 20 name N38a-11 only)"
+repairs = ["Keep the owners the ledger names", "Remove the extra owner"]
+exit = 101
+
+[[reason]]
+id = "unallocated-number"
+tool = ["allocation-validator", "N38a-40"]
+meaning = "A KA or CX number above the plan-time maximum that lies in no block, or in a block owned by another bead's chapter"
+repairs = ["Request a block in `allocations.toml` and take the number from it; never type an unallocated number"]
+exit = 101
+
+[[reason]]
+id = "missing-number"
+tool = ["allocation-validator", "N38a-40"]
+meaning = "A hole in a numbering family outside a block whose status is `reserved` or `filling`"
+repairs = ["Add the missing row", "Record the number as `void` in its block"]
+exit = 101
+
+[[reason]]
+id = "provisional-tag-past-due"
+tool = ["allocation-validator", "N38a-40"]
+meaning = "A provisional tag still used in a registry, a test name, or a derivation file at its owner's milestone after the owner's block was issued"
+repairs = ["Map the provisional tag to its block's number in table order, in one commit"]
+exit = 101
+
+[[reason]]
+id = "cx-count-mismatch"
+tool = ["counterexample-validation", "N38b-05"]
+meaning = "A chapter's count of counterexample entries, or the plan-time count, differs from N38b-05's count table"
+repairs = ["Add the missing entries or remove the extra ones; the count table changes only with the plan"]
+exit = 101
+
+[[reason]]
+id = "same-as-invalid"
+tool = ["counterexample-validation", "N38b-05"]
+meaning = "`same_as` names a missing counterexample entry or a later one"
+repairs = ["Point `same_as` at an existing earlier entry"]
+exit = 101
+
+[[reason]]
+id = "case-supplier-invalid"
+tool = ["counterexample-validation", "N38b-05"]
+meaning = "`case_supplied_by` names a missing entry, an earlier one, or one with `numeric = false`"
+repairs = ["Point `case_supplied_by` at an existing later entry with `numeric = true`"]
+exit = 101
+
+[[reason]]
+id = "fact-without-rerun"
+tool = ["counterexample-validation", "N38b-05"]
+meaning = "A FACT counterexample entry with no `rerun` field"
+repairs = ["Record `rerun`, with `rerun_receipt` when it is true"]
+exit = 101
+
+[[reason]]
+id = "plant-missing"
+tool = ["counterexample-validation", "N38b-05"]
+meaning = "A runnable counterexample entry with an empty `plant`"
+repairs = ["State the plant; until then the entry stays an obligation"]
+exit = 101
+
+[[reason]]
+id = "rerun-disagrees-with-pilot"
+tool = ["counterexample-validation", "N38b-05"]
+meaning = "A pilot-derived FACT entry whose `rerun` / `rerun_receipt` pair disagrees with its PILOT record's status (`rerun = true` with that result's receipt exactly when the status is `reproduced`)"
+repairs = ["Copy the pair from the pilot register's status read (`pilots::rerun_status`)", "Re-run the pilot if the case must be reproduced"]
+exit = 101
+
+[[reason]]
+id = "plant-changed"
+tool = ["seeding-tool", "N38b-05"]
+meaning = "A plant's kind or target changed after its control exists, outside the one placeholder exception (finding written to `registry/seed_findings.toml`)"
+repairs = ["Restore the text (disposition `restored`)", "Append a plant with a new `id`, which gets a new control (disposition `new-plant`)"]
+exit = 0
+kind = "finding"
+dispositions = ["restored", "new-plant"]
+
+# ---------------------------------------------------------------------------
+# 10. Gate-register write validator (7 new reasons here + 4 shared in §4)
+# ---------------------------------------------------------------------------
+
+[[reason]]
+id = "target-as-measurement"
+tool = ["gate-register-validator", "N40-01"]
+meaning = "`measured` is empty or byte-equal to `threshold`"
+repairs = ["Record the actual measured value"]
+exit = 3
+alt_exits = [101]
+
+[[reason]]
+id = "claim-not-one-of-seven"
+tool = ["gate-register-validator", "N40-01"]
+meaning = "`claim` is outside the seven admitted claim kinds, or carries two values"
+repairs = ["Apply rule 3 of the gate register (the claim of the governing part)"]
+exit = 3
+alt_exits = [101]
+
+[[reason]]
+id = "no-claim-on-non-reality"
+tool = ["gate-register-validator", "tier-runner", "N40-01", "N38a-02"]
+meaning = "`no-claim` on a gate whose claim is not `reality`, or with no reason in `detail`; in the tier runner, an entry returning `NoClaim` for a gate whose claim is not `reality`"
+repairs = ["Use `not-run` or `fail` on non-reality gates", "On a Reality gate, name the reason (for example `no-dataset-admitted`) in `detail`"]
+exit = 3
+alt_exits = [101]
+
+[[reason]]
+id = "blocked-without-question"
+tool = ["gate-register-validator", "N40-01"]
+meaning = "`blocked` with neither an `OPEN-...` identifier nor `claim-reading: <bead>` in `detail`"
+repairs = ["Name the blocking `OPEN-...` question in `detail`", "Name `claim-reading: <bead>` for the chapter bead whose owner must confirm the claim reading"]
+exit = 3
+alt_exits = [101]
+
+[[reason]]
+id = "killed-without-decision"
+tool = ["gate-register-validator", "N40-01"]
+meaning = "`killed` with no kill gate (or, for a `program` row, the bet whose written consequence is the fallback), fallback, and ADR in `detail`"
+repairs = ["Record the kill-gate decision, adopted fallback, and ADR in `detail`"]
+exit = 3
+alt_exits = [101]
+
+[[reason]]
+id = "duplicate-id"
+tool = ["gate-register-validator", "N40-01"]
+meaning = "A gate identifier appears twice in `registries/gates.toml`"
+repairs = ["Restore the original gate identifier", "Append a new unique gate identifier"]
+exit = 3
+alt_exits = [101]
+
+[[reason]]
+id = "reused-id"
+tool = ["gate-register-validator", "N40-01"]
+meaning = "A retired gate identifier returns in `registries/gates.toml`"
+repairs = ["Restore the retired identifier's retirement", "Append a new unused gate identifier"]
+exit = 3
+alt_exits = [101]
+
+# ---------------------------------------------------------------------------
+# 11. Pilot register funding check & Moonshot cap (11 reasons)
+# ---------------------------------------------------------------------------
+
+[[reason]]
+id = "missing"
+tool = ["pilot-funding-check", "N38a-09"]
+meaning = "An upper-tier mechanism of the package has no pilot record in `pilots.toml`"
+repairs = ["Register the pilot record in `pilots.toml`"]
+exit = 0
+kind = "answer"
+
+[[reason]]
+id = "unregistered"
+tool = ["pilot-funding-check", "N38a-09"]
+meaning = "A pilot record lacks a frozen protocol"
+repairs = ["Freeze the pilot's protocol before funding"]
+exit = 0
+kind = "answer"
+
+[[reason]]
+id = "void"
+tool = ["pilot-funding-check", "N38a-09"]
+meaning = "A pilot record was voided by a changed protocol or value"
+repairs = ["Register a new pilot record under a fresh identifier"]
+exit = 0
+kind = "answer"
+
+[[reason]]
+id = "registered"
+tool = ["pilot-funding-check", "N38a-09"]
+meaning = "The pilot record is registered but has no result yet"
+repairs = ["Run the pilot", "Open the package for its fundable mechanisms only"]
+exit = 0
+kind = "answer"
+
+[[reason]]
+id = "running"
+tool = ["pilot-funding-check", "N38a-09"]
+meaning = "The pilot is currently running and has no result yet"
+repairs = ["Wait for the pilot result", "Open the package for its fundable mechanisms only"]
+exit = 0
+kind = "answer"
+
+[[reason]]
+id = "falsifier-holds"
+tool = ["pilot-funding-check", "N38a-09"]
+meaning = "The pilot's verdict is `falsifier-holds`; the fallback ships (printed with its kill gate)"
+repairs = ["Fund the fallback under its own name"]
+exit = 0
+kind = "answer"
+
+[[reason]]
+id = "inconclusive"
+tool = ["pilot-funding-check", "N38a-09"]
+meaning = "The pilot's verdict is `inconclusive`; the record states what would decide it"
+repairs = ["Run what the pilot record says would make the pilot decisive"]
+exit = 0
+kind = "answer"
+
+[[reason]]
+id = "kill-gate-to-register"
+tool = ["pilot-funding-check", "N38a-09"]
+meaning = "The pilot record names a kill gate that `registries/gates.toml` does not yet hold"
+repairs = ["Register the kill gate in `registries/gates.toml`"]
+exit = 0
+kind = "answer"
+
+[[reason]]
+id = "moonshot-cap"
+tool = ["pilot-status-change", "pilot-funding-check", "moonshot-transition", "N38a-09", "N41-09"]
+meaning = "A fifth Moonshot pilot or work package set `running` / entered in one milestone, breaking N10a-02's `moonshot_cap`"
+repairs = ["Wait until a running Moonshot closes; at most four run per milestone"]
+exit = 3
+alt_exits = [0]
+
+[[reason]]
+id = "plan-time-differs"
+tool = ["pilot-funding-check", "N38a-09", "N38a-10"]
+meaning = "A linked plan-time ledger record (N38a-10) has status `differs`"
+repairs = ["Resolve or withdraw the linked plan-time ledger record"]
+exit = 0
+kind = "answer"
+
+[[reason]]
+id = "plan-time-not-run"
+tool = ["pilot-funding-check", "N38a-09", "N38a-10"]
+meaning = "A linked plan-time ledger record (N38a-10) is not yet run"
+repairs = ["Run the linked plan-time ledger record"]
+exit = 0
+kind = "answer"
+
+# ---------------------------------------------------------------------------
+# 12. Pilot register loader (10 new reasons here + `reused` & `removed` in §6 = 12)
+# ---------------------------------------------------------------------------
+
+[[reason]]
+id = "pilot-id-form"
+tool = ["pilot-loader", "N38a-09"]
+meaning = "A pilot record identifier outside the grammar `^PILOT-(C-[0-9]{2}(-[a-z]+)?|PT-([0-9]{2}|S[0-9])|[A-Z]{2,14}-[0-9]{2})$`"
+repairs = ["Give the record an identifier of the grammar: `PILOT-C-<nn>` with optional lower-case suffix, `PILOT-PT-<nn>` or `PILOT-PT-S<n>`, or `PILOT-<SET>-<nn>`"]
+exit = 101
+
+[[reason]]
+id = "pilot-part-missing"
+tool = ["pilot-loader", "N38a-09"]
+meaning = "One of the four mandatory pilot parts is absent or malformed at registration (`falsifier`, `ceiling`, `fallback.ships`, or `fallback.kill_gate`)"
+repairs = ["State the named mandatory part", "For a mechanism with no gate yet, write `to-register` with its proposed wording"]
+exit = 101
+
+[[reason]]
+id = "pilot-cannot-fail"
+tool = ["pilot-loader", "N38a-09"]
+meaning = "A pilot whose expected outcome is certain (`falsifier` text empty or `cannot fail`)"
+repairs = ["State a falsifier that the pilot result can actually fail"]
+exit = 101
+
+[[reason]]
+id = "result-protocol-mismatch"
+tool = ["pilot-loader", "N38a-09"]
+meaning = "A pilot result whose `protocol_blake3` differs from the registered protocol hash"
+repairs = ["Register the changed protocol under a new pilot identifier and run it there; keep the old record's result"]
+exit = 101
+
+[[reason]]
+id = "result-before-registration"
+tool = ["pilot-loader", "N38a-09"]
+meaning = "A pilot result whose date or ledger sequence does not follow the registration's"
+repairs = ["Register the pilot record first, then run the pilot and append the result"]
+exit = 101
+
+[[reason]]
+id = "pilot-receipt-uncommitted"
+tool = ["pilot-loader", "N38a-09"]
+meaning = "A pilot result whose receipt is not committed byte-identical at `receipts/pilots/<hash>.json`"
+repairs = ["Commit the receipt's exact bytes at `receipts/pilots/<hash>.json` in the commit that appends the result"]
+exit = 101
+
+[[reason]]
+id = "fallback-tier-not-lower"
+tool = ["pilot-loader", "N38a-09"]
+meaning = "`fallback.ships` names a mechanism whose tier is not lower than the pilot's (for `tier = \"S\"`, not a Solid mechanism)"
+repairs = ["Name a lower-tier mechanism the design already contains", "Put a conditional upper-tier part in `fallback.also` with the pilot that funds it"]
+exit = 101
+
+[[reason]]
+id = "fallback-also-unknown"
+tool = ["pilot-loader", "N38a-09"]
+meaning = "A `fallback.also` entry naming no existing pilot record"
+repairs = ["Name the existing pilot record that funds the part", "Remove the unknown entry"]
+exit = 101
+
+[[reason]]
+id = "tier-s-without-required-by"
+tool = ["pilot-loader", "N38a-09"]
+meaning = "A pilot record with `tier = \"S\"` and no `required_by`"
+repairs = ["Name in `required_by` the chapter subsection that requires the pilot", "Remove the record (a Solid mechanism needs no pilot otherwise)"]
+exit = 101
+
+[[reason]]
+id = "plan-time-record-unknown"
+tool = ["pilot-loader", "N38a-09", "N38a-10"]
+meaning = "A `plan_time_records` identifier that is not a record of the plan-time ledger (N38a-10)"
+repairs = ["Name an existing ledger record (`PILOT-PT-<nn>` or `PILOT-PT-S<n>`)", "Remove the unknown identifier"]
+exit = 101

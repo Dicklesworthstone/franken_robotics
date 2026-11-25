@@ -16,7 +16,7 @@
 
 ## 2. Inputs
 
-- The Gauntlet registries under `crates/frob-conformance/registry/`: `controls.toml`, `known_answers.toml`, `relations.toml`, `counterexamples.toml`, `pilots.toml` (parsed exclusively through `frob_core::testkit::registry` and `frob_core::registry::toml`).
+- The Gauntlet registries under `crates/frob-conformance/registry/`: `controls.toml`, `known_answers.toml`, `relations.toml`, `counterexamples.toml`, `pilots.toml`, `reasons.toml` (parsed exclusively through `frob_core::testkit::registry` and `frob_core::registry::toml`).
 - The workspace gate register `registries/gates.toml` (`frob.gates/1`).
 - Previous-commit snapshots of `controls.toml` for append-only and placeholder-target checks.
 - End-to-end script headers (`# e2e:`) and `frob.e2elog/1` NDJSON logs for `frob-e2e`.
@@ -58,9 +58,10 @@
 
 ## 5. Refusals
 
-`frob-conformance` defines no public agent-verb refusal codes (`FROB-REF-nnn`); its checks fail closed with typed Gauntlet harness reasons (`N38-REF`):
+`frob-conformance` defines no public agent-verb refusal codes (`FROB-REF-nnn`); its checks fail closed with the closed Gauntlet harness reason vocabulary (`N38-REF`, `registry/reasons.toml`, `src/reasons.rs`):
 - Control loader: `out-of-order`, `reused`, `removed`, `renumbered`, `no-gate`, `unknown-gate`, `kind-not-closed`, `feature-missing`, `fixture-missing`, `defect-or-expect-empty`, `boundary-not-control`, `unknown-seed-form`.
 - Registry check: `no-control`, `dangling-control`, `one-way-link`, `uncaught-control`.
+- Full closed harness vocabulary (105 reasons across registry check, control loader/runner/review, tier runner, gate recorder, seeding join, registry diff, close audit, live-dependency helper, status views, known-answer/relation/allocation/counterexample validators, gate-register validator, pilot register, and Moonshot transitions): `crates/frob-conformance/registry/reasons.toml` (`frob.gauntlet.reasons/1`).
 - Command-form lint: `frob conformance`, command-position `frob-conformance`, default `cargo run -p frob-conformance`, short tier targets `--test g0..g5`, and `unknown-target`.
 
 ## 6. Determinism Class

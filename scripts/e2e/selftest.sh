@@ -148,19 +148,25 @@ e2e_cmd --name st_pass_run_b -- \
 PASS_LOG_B="$(latest_log_for "${IDEMP_LOGS}" "st_pass")"
 e2e_cmd --name lint_st_pass_b -- "${FROB_E2E_TOOL}" lint "${PASS_LOG_B}"
 
-# Idempotence: strip ts, wall_ms, body_sha256 and replace run_id / utc stem with <RUN>.
+# Idempotence: strip ts, wall_ms, body_sha256 and normalize this run's own run_id / artifacts stem.
 IDEMP_DIFF="$(python3 - "${PASS_LOG_A}" "${PASS_LOG_B}" <<'PY'
-import json, sys
+import json, os, sys
 def norm(path):
     lines = [json.loads(l) for l in open(path, "r", encoding="utf-8") if l.strip()]
     rid = lines[0]["run_id"]
-    utc = rid.rsplit("-", 1)[0]
+    stem = os.path.basename(path)[:-len(".ndjson")]
     out = []
     for obj in lines:
         for k in ("ts", "wall_ms", "body_sha256"):
             obj.pop(k, None)
+        if obj.get("run_id") == rid:
+            obj["run_id"] = "<RUN_ID>"
+        for pk in ("stdout_path", "stderr_path"):
+            if isinstance(obj.get(pk), str):
+                obj[pk] = obj[pk].replace(f"/{stem}.artifacts/", "/<UTC>.artifacts/")
+        if isinstance(obj.get("cwd"), str):
+            obj["cwd"] = obj["cwd"].replace(rid, "<RUN_ID>")
         s = json.dumps(obj, sort_keys=True, separators=(",", ":"))
-        s = s.replace(rid, "<RUN_ID>").replace(utc, "<UTC>")
         out.append(s)
     return out
 a, b = norm(sys.argv[1]), norm(sys.argv[2])
@@ -169,7 +175,7 @@ if a == b:
 else:
     for i, (la, lb) in enumerate(zip(a, b)):
         if la != lb:
-            print(f"line {i}: {la[:120]} != {lb[:120]}")
+            print(f"line {i}: {la[:160]} != {lb[:160]}")
             break
     else:
         print(f"len {len(a)} != {len(b)}")
@@ -719,7 +725,7 @@ if [ "${1:-}" = "--json" ] && [ "${2:-}" = "session" ] && [ "${3:-}" = "open" ];
   for a in "$@"; do
     case "$a" in
       --derive) is_derive=1 ;;
-      *refuse*) refuse_me=1 ;;
+      refuse-scope) refuse_me=1 ;;
     esac
   done
   if [ "$refuse_me" -eq 1 ]; then
@@ -843,7 +849,7 @@ e2e_init "st_sess_refuse_derive" "STD-E2E"
 e2e_step "refuse_derive" "Refused derive keeps parent token unchanged"
 e2e_session open root-b --ttl-s 10
 before_tok="\${FROB_SESSION_TOKEN}"
-e2e_session derive child-refuse --scopes refuse
+e2e_session derive child-bad --scopes refuse-scope
 if [ "\${FROB_SESSION_TOKEN}" = "\${before_tok}" ]; then
   e2e_assert_eq "token_unchanged_after_refusal" "unchanged" "unchanged"
 else

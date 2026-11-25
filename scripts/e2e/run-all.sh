@@ -16,8 +16,8 @@
 
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd -P)"
 
 SCRIPTS_DIR="${SCRIPT_DIR}"
 LOGS_DIR="${E2E_LOGS_ROOT:-${REPO_ROOT}/target/e2e-logs}"
@@ -227,7 +227,12 @@ run_one_invocation() {
     exit 2
   fi
 
-  local env_cmd=(env "E2E_LOGS_ROOT=${LOGS_DIR}" "FROB_E2E_TOOL=${FROB_E2E_TOOL}")
+  # Options (-u) must precede NAME=VALUE pairs for GNU env compatibility on Linux.
+  local env_cmd=(env)
+  if [ -z "$plant" ]; then
+    env_cmd=("${env_cmd[@]}" -u E2E_PLANT_FAILURE)
+  fi
+  env_cmd=("${env_cmd[@]}" "E2E_LOGS_ROOT=${LOGS_DIR}" "FROB_E2E_TOOL=${FROB_E2E_TOOL}")
   if [ "$SMALL_MODE" = "1" ]; then
     env_cmd=("${env_cmd[@]}" "E2E_SMALL=1")
   fi
@@ -236,8 +241,6 @@ run_one_invocation() {
   fi
   if [ -n "$plant" ]; then
     env_cmd=("${env_cmd[@]}" "E2E_PLANT_FAILURE=${plant}")
-  else
-    env_cmd=("${env_cmd[@]}" -u E2E_PLANT_FAILURE)
   fi
 
   run_with_timeout "${timeout_s:-600}" "${env_cmd[@]}" bash "$spath"

@@ -18,8 +18,8 @@ if [ "${BASH_SOURCE[0]}" = "$0" ]; then
   exit 2
 fi
 
-_E2E_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-E2E_REPO_ROOT="$(cd "${_E2E_LIB_DIR}/../.." && pwd)"
+_E2E_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+E2E_REPO_ROOT="$(cd "${_E2E_LIB_DIR}/../.." && pwd -P)"
 export E2E_REPO_ROOT
 
 # Source POSIX machine-envelope guard (bead N34-15).
@@ -389,10 +389,11 @@ e2e_init() {
   FROB_E2E_SEED="$E2E_SEED"
   export FROB_E2E_SEED E2E_SEED
 
-  # Create log directory layout
+  # Create log directory layout (canonicalized with pwd -P so symlinked roots never split cwd vs scratch_root)
   local logs_root="${E2E_LOGS_ROOT:-${E2E_REPO_ROOT}/target/e2e-logs}"
-  local script_log_dir="${logs_root}/${E2E_SCRIPT}"
-  mkdir -p "$script_log_dir"
+  mkdir -p "${logs_root}/${E2E_SCRIPT}"
+  local script_log_dir
+  script_log_dir="$(cd "${logs_root}/${E2E_SCRIPT}" && pwd -P)"
 
   local utc_base utc_stamp suffix=0
   utc_base="$(date -u +%Y%m%dT%H%M%SZ)"
@@ -413,17 +414,18 @@ e2e_init() {
   printf '%s\n' "${utc_stamp}" > "${script_log_dir}/.LATEST.$$"
   mv "${script_log_dir}/.LATEST.$$" "${script_log_dir}/LATEST"
 
-  # Create scratch directory layout
+  # Create scratch directory layout (canonicalized with pwd -P)
   local scratch_root="${E2E_SCRATCH_ROOT:-${E2E_REPO_ROOT}/target/e2e-scratch}"
-  local id_seed_dir="${scratch_root}/${E2E_SCRIPT}"
-  mkdir -p "$id_seed_dir"
+  mkdir -p "${scratch_root}/${E2E_SCRIPT}"
+  local id_seed_dir
+  id_seed_dir="$(cd "${scratch_root}/${E2E_SCRIPT}" && pwd -P)"
   local tmp_id_in="${id_seed_dir}/.id_${utc_stamp}_$$"
   printf '%s:%s:%s' "${E2E_SCRIPT}" "${utc_stamp}" "$$" > "$tmp_id_in"
   local hex8
   hex8="$("${FROB_E2E_TOOL}" cmp sha256 "$tmp_id_in" | cut -c1-8)"
   E2E_RUN_ID="${utc_stamp}-${hex8}"
 
-  E2E_SCRATCH_DIR="${scratch_root}/${E2E_SCRIPT}/${E2E_RUN_ID}"
+  E2E_SCRATCH_DIR="${id_seed_dir}/${E2E_RUN_ID}"
   E2E_WORK_DIR="${E2E_SCRATCH_DIR}/work"
   E2E_META_DIR="${E2E_SCRATCH_DIR}/_meta"
   FROB_STATE="${E2E_SCRATCH_DIR}/state"
@@ -1319,7 +1321,12 @@ _e2e_session_has_open_verb() {
   if [ -z "${FROB_BIN:-}" ] || [ ! -x "${FROB_BIN}" ]; then
     return 1
   fi
-  "${FROB_BIN}" capabilities 2>/dev/null | grep -q 'session\.open'
+  local caps=""
+  caps="$("${FROB_BIN}" capabilities 2>/dev/null)" || return 1
+  case "$caps" in
+    *session.open*) return 0 ;;
+    *) return 1 ;;
+  esac
 }
 
 e2e_session() {

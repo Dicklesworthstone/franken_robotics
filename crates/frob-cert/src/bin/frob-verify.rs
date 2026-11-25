@@ -12,14 +12,20 @@ use std::path::PathBuf;
 use std::process::ExitCode;
 
 use frob_cert::json::{JsonValue, serialize_canonical};
+use frob_cert::kinds::registry::Class;
+use frob_cert::kinds::rules::RuleId;
 use frob_cert::limits::{COMPILED_LIMITS, RULE_INPUT_UNREADABLE, RULE_LIMITS_EXCEEDED};
-use frob_cert::{AuditReport, TRUSTED_BASE_LINE, Verdict, audit_bytes_with_options};
+use frob_cert::schema::{
+    BUNDLE_SCHEMA_VERSION, bundle_bytes_leaf_digest, compute_merkle_root, set_weakest_class,
+};
+use frob_cert::{AuditReport, TRUSTED_BASE_LINE, Verdict, audit_bytes_with_query};
 
 struct CliArgs {
     help: bool,
     json: bool,
     canonical_only: bool,
     reserialize: Option<PathBuf>,
+    query: Option<PathBuf>,
     files: Vec<PathBuf>,
 }
 
@@ -32,6 +38,7 @@ fn parse_args() -> Result<CliArgs, String> {
         json: false,
         canonical_only: false,
         reserialize: None,
+        query: None,
         files: Vec::new(),
     };
     let mut positional_only = false;
@@ -64,6 +71,13 @@ fn parse_args() -> Result<CliArgs, String> {
             parsed.reserialize = Some(PathBuf::from(out_path));
             continue;
         }
+        if raw == "--query" {
+            let Some(query_path) = args.next() else {
+                return Err("--query requires a query file path".to_string());
+            };
+            parsed.query = Some(PathBuf::from(query_path));
+            continue;
+        }
         if let Some(s) = raw.to_str() {
             if s.starts_with('-') && s.len() > 1 {
                 return Err(format!("unknown option {s:?} (try --help)"));
@@ -87,13 +101,14 @@ fn print_help() {
     let _ = writeln!(
         out,
         "frob-verify {}\n\
-         Offline std-only certificate auditor for FrankenRobotics (BD-026).\n\n\
+         Offline std-only certificate auditor for FrankenRobotics (BD-026 / N12-03).\n\n\
          USAGE:\n  \
-           frob-verify [--json] [--canonical-only] [--reserialize <out>] <bundle>...\n  \
+           frob-verify [--json] [--canonical-only] [--query <file>] [--reserialize <out>] <bundle>...\n  \
            frob-verify --help\n\n\
          OPTIONS:\n  \
            --json                Emit structured canonical JSON report on stdout\n  \
-           --canonical-only      Verify canonical JSON and BLAKE3 without kind dispatch\n  \
+           --canonical-only      Check canonical JSON and BLAKE3 without kind dispatch\n  \
+           --query <file>        Compare every bundle against the offered query file\n  \
            --reserialize <out>   Write canonical re-serialized bytes to <out>\n  \
            -h, --help            Print this help message and exit 0\n\n\
          EXIT CODES:\n  \
@@ -145,6 +160,9 @@ fn unreadable_report(rule: &'static str, message: String) -> AuditReport {
         domain_blake3_hex: None,
         schema: None,
         kind: None,
+        claim_class: None,
+        equations_reviewed: None,
+        declared_merkle_root: None,
         verdict: Verdict::Reject {
             rule,
             refusal: None,
@@ -164,10 +182,17 @@ fn path_label(path: &PathBuf) -> String {
 }
 
 fn report_to_json_value(file_label: &str, report: &AuditReport) -> JsonValue {
+    // Keys must stay in strictly ascending UTF-8 byte order for canonical serialization.
     let mut entries: Vec<(String, JsonValue)> = Vec::new();
     entries.push(("blake3".to_string(), JsonValue::Str(report.blake3_hex.clone())));
+    if let Some(cls) = report.claim_class {
+        entries.push(("class".to_string(), JsonValue::Str(cls.as_str().to_string())));
+    }
     if let Some(domain) = &report.domain_blake3_hex {
         entries.push(("domain_blake3".to_string(), JsonValue::Str(domain.clone())));
+    }
+    if let Some(rev) = report.equations_reviewed {
+        entries.push(("equations_reviewed".to_string(), JsonValue::Bool(rev)));
     }
     entries.push(("file".to_string(), JsonValue::Str(file_label.to_string())));
     entries.push((
@@ -204,6 +229,51 @@ fn report_to_json_value(file_label: &str, report: &AuditReport) -> JsonValue {
             entries.push(("unsupported_kind".to_string(), JsonValue::Str(kind.clone())));
         }
     }
+    entries.sort_by(|(a, _), (b, _)| a.cmp(b));
+    JsonValue::Obj(entries)
+}
+
+struct CliSetSummary {
+    merkle_root: Option<String>,
+    recomputed: bool,
+    level_widths: Vec<usize>,
+    class: Option<Class>,
+    weakest_entry: Option<String>,
+    rule: Option<&'static str>,
+    path: Option<String>,
+    message: Option<String>,
+}
+
+fn set_to_json_value(set: &CliSetSummary) -> JsonValue {
+    let mut entries: Vec<(String, JsonValue)> = Vec::new();
+    if let Some(cls) = set.class {
+        entries.push(("class".to_string(), JsonValue::Str(cls.as_str().to_string())));
+    }
+    entries.push((
+        "level_widths".to_string(),
+        JsonValue::Arr(set.level_widths.iter().map(|&w| JsonValue::Int(w as i64)).collect()),
+    ));
+    entries.push((
+        "merkle_root".to_string(),
+        match &set.merkle_root {
+            Some(r) => JsonValue::Str(r.clone()),
+            None => JsonValue::Null,
+        },
+    ));
+    if let Some(msg) = &set.message {
+        entries.push(("message".to_string(), JsonValue::Str(msg.clone())));
+    }
+    if let Some(p) = &set.path {
+        entries.push(("path".to_string(), JsonValue::Str(p.clone())));
+    }
+    entries.push(("recomputed".to_string(), JsonValue::Bool(set.recomputed)));
+    if let Some(r) = set.rule {
+        entries.push(("rule".to_string(), JsonValue::Str(r.to_string())));
+    }
+    if let Some(w) = &set.weakest_entry {
+        entries.push(("weakest_entry".to_string(), JsonValue::Str(w.clone())));
+    }
+    entries.sort_by(|(a, _), (b, _)| a.cmp(b));
     JsonValue::Obj(entries)
 }
 
@@ -243,6 +313,18 @@ fn main() -> ExitCode {
         return ExitCode::SUCCESS;
     }
 
+    let offered_query: Option<Vec<u8>> = match &args.query {
+        None => None,
+        Some(qpath) => match read_bounded_file(qpath) {
+            Ok(bytes) => Some(bytes),
+            Err((rule, msg)) => {
+                let mut err = io::stderr().lock();
+                let _ = writeln!(err, "frob-verify: --query {}: {rule}: {msg}", qpath.display());
+                return ExitCode::from(3);
+            }
+        },
+    };
+
     let mut results: Vec<(String, AuditReport)> = Vec::with_capacity(args.files.len());
     let mut any_reject = false;
     let mut any_unsupported = false;
@@ -250,7 +332,12 @@ fn main() -> ExitCode {
     for path in &args.files {
         let label = path_label(path);
         let mut report = match read_bounded_file(path) {
-            Ok(bytes) => audit_bytes_with_options(&bytes, COMPILED_LIMITS, args.canonical_only),
+            Ok(bytes) => audit_bytes_with_query(
+                &bytes,
+                offered_query.as_deref(),
+                COMPILED_LIMITS,
+                args.canonical_only,
+            ),
             Err((rule, msg)) => unreadable_report(rule, msg),
         };
 
@@ -275,6 +362,122 @@ fn main() -> ExitCode {
         results.push((label, report));
     }
 
+    // Set-level Merkle root and weakest-class summary when auditing frob.cert/1 bundles.
+    let all_frobcert = !args.canonical_only
+        && !results.is_empty()
+        && results
+            .iter()
+            .all(|(_, r)| r.schema.as_deref() == Some(BUNDLE_SCHEMA_VERSION));
+
+    let set_summary: Option<CliSetSummary> = if all_frobcert {
+        let classes: Vec<Class> = results.iter().filter_map(|(_, r)| r.claim_class).collect();
+        let (weak_class, weak_label) = if classes.len() == results.len() {
+            match set_weakest_class(&classes) {
+                Some((c, idx)) => (Some(c), Some(results[idx].0.clone())),
+                None => (None, None),
+            }
+        } else {
+            (None, None)
+        };
+
+        if results.len() == 1 {
+            Some(CliSetSummary {
+                merkle_root: results[0].1.declared_merkle_root.clone(),
+                recomputed: false,
+                level_widths: vec![1],
+                class: weak_class,
+                weakest_entry: weak_label,
+                rule: None,
+                path: None,
+                message: None,
+            })
+        } else {
+            let mut leaves = Vec::with_capacity(results.len());
+            let mut leaf_err = None;
+            for (idx, (_, rep)) in results.iter().enumerate() {
+                if let Some(canon) = &rep.canonical_bytes {
+                    match bundle_bytes_leaf_digest(canon) {
+                        Ok(d) => leaves.push(d),
+                        Err(e) => {
+                            leaf_err = Some((e.rule, format!("bundles[{idx}].{}", e.path), e.message));
+                            break;
+                        }
+                    }
+                } else {
+                    leaf_err = Some((
+                        RuleId::SchemaFieldType,
+                        format!("bundles[{idx}]"),
+                        "bundle lacks canonical bytes for Merkle leaf".to_string(),
+                    ));
+                    break;
+                }
+            }
+
+            if let Some((rule, path, msg)) = leaf_err {
+                any_reject = true;
+                Some(CliSetSummary {
+                    merkle_root: None,
+                    recomputed: false,
+                    level_widths: Vec::new(),
+                    class: weak_class,
+                    weakest_entry: weak_label,
+                    rule: Some(rule.as_str()),
+                    path: Some(path),
+                    message: Some(msg),
+                })
+            } else {
+                match compute_merkle_root(&leaves) {
+                    Ok(tree) => {
+                        let mut mismatch = None;
+                        for (idx, (label, rep)) in results.iter().enumerate() {
+                            if let Some(decl) = &rep.declared_merkle_root {
+                                if decl != &tree.root_hex {
+                                    mismatch = Some((
+                                        RuleId::HashMerkleRoot.as_str(),
+                                        format!("bundles[{idx}].lineage.merkle_root"),
+                                        format!(
+                                            "{label}: declared merkle_root {decl:?} != recomputed {:?}",
+                                            tree.root_hex
+                                        ),
+                                    ));
+                                    break;
+                                }
+                            }
+                        }
+                        if mismatch.is_some() {
+                            any_reject = true;
+                        }
+                        Some(CliSetSummary {
+                            merkle_root: Some(tree.root_hex),
+                            recomputed: true,
+                            level_widths: tree.level_widths,
+                            class: weak_class,
+                            weakest_entry: weak_label,
+                            rule: mismatch.as_ref().map(|m| m.0),
+                            path: mismatch.as_ref().map(|m| m.1.clone()),
+                            message: mismatch.as_ref().map(|m| m.2.clone()),
+                        })
+                    }
+                    Err(rej) => {
+                        any_reject = true;
+                        Some(CliSetSummary {
+                            merkle_root: None,
+                            recomputed: true,
+                            level_widths: Vec::new(),
+                            class: weak_class,
+                            weakest_entry: weak_label,
+                            rule: Some(rej.rule.as_str()),
+                            path: Some(rej.path),
+                            message: Some(rej.message),
+                        })
+                    }
+                }
+            }
+        }
+    } else {
+        None
+    };
+
     let overall = if any_reject {
         "reject"
     } else if any_unsupported {
@@ -289,26 +492,35 @@ fn main() -> ExitCode {
             .iter()
             .map(|(label, rep)| report_to_json_value(label, rep))
             .collect();
-        let doc = JsonValue::Obj(vec![
+        let mut top = vec![
             ("limits".to_string(), limits_to_json_value()),
             ("overall".to_string(), JsonValue::Str(overall.to_string())),
             ("reports".to_string(), JsonValue::Arr(report_arr)),
-            (
-                "trusted_base".to_string(),
-                JsonValue::Str(TRUSTED_BASE_LINE.to_string()),
-            ),
-        ]);
+        ];
+        if let Some(set) = &set_summary {
+            top.push(("set".to_string(), set_to_json_value(set)));
+        }
+        top.push((
+            "trusted_base".to_string(),
+            JsonValue::Str(TRUSTED_BASE_LINE.to_string()),
+        ));
+        let doc = JsonValue::Obj(top);
         let _ = writeln!(out, "{}", serialize_canonical(&doc));
     } else {
         for (label, rep) in &results {
+            let rev_note = match rep.equations_reviewed {
+                Some(true) => " equations_reviewed=yes",
+                Some(false) => " equations_reviewed=no",
+                None => "",
+            };
             match &rep.verdict {
                 Verdict::Accept => {
-                    let _ = writeln!(out, "accept   {label} blake3={}", rep.blake3_hex);
+                    let _ = writeln!(out, "accept   {label} blake3={}{rev_note}", rep.blake3_hex);
                 }
                 Verdict::Unsupported { kind, message } => {
                     let _ = writeln!(
                         out,
-                        "unsupported  {label} kind={kind} blake3={} ({message})",
+                        "unsupported  {label} kind={kind} blake3={}{rev_note} ({message})",
                         rep.blake3_hex
                     );
                 }
@@ -327,6 +539,29 @@ fn main() -> ExitCode {
                         rep.blake3_hex
                     );
                 }
+            }
+        }
+        if let Some(set) = &set_summary {
+            let cls_str = set.class.map_or("unknown", Class::as_str);
+            let mr_str = if set.recomputed {
+                set.merkle_root.as_deref().unwrap_or("none")
+            } else {
+                "not-recomputed"
+            };
+            if let Some(rule) = set.rule {
+                let _ = writeln!(
+                    out,
+                    "set: reject rule={rule} path={} merkle_root={mr_str} class={cls_str} ({})",
+                    set.path.as_deref().unwrap_or("lineage.merkle_root"),
+                    set.message.as_deref().unwrap_or("")
+                );
+            } else {
+                let _ = writeln!(
+                    out,
+                    "set: {overall} entries={} class={cls_str} merkle_root={mr_str} recomputed={}",
+                    results.len(),
+                    set.recomputed
+                );
             }
         }
         let _ = writeln!(out, "{}", COMPILED_LIMITS.summary_line());

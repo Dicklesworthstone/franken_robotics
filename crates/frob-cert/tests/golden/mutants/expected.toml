@@ -1,0 +1,191 @@
+# Expected verdicts and first failing rules for N12-03 generic mutants.
+# Each entry corresponds to one canonical .frobcert mutant in this directory.
+
+[[mutant]]
+file = "reject-schema.unknown-field-top.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "schema.unknown-field"
+refusal = ""
+path = "extra_field"
+description = "Unknown top-level field"
+
+[[mutant]]
+file = "reject-schema.review-missing-mission.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "schema.review-missing"
+refusal = ""
+path = "review"
+description = "Mission claim missing OPEN-AUGUR-8 review marker"
+
+[[mutant]]
+file = "reject-hash.equations-digest-mismatch.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "hash.equations-digest"
+refusal = ""
+path = "review.equations_digest"
+description = "equations_reviewed=true with wrong equations_digest"
+
+[[mutant]]
+file = "reject-flags.true-execution-authorized.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "flags.true"
+refusal = "FROB-REF-833"
+path = "authorization.execution_authorized"
+description = "KA-214: execution_authorized set to true"
+
+[[mutant]]
+file = "reject-flags.missing-signoff.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "flags.missing"
+refusal = "FROB-REF-833"
+path = "authorization.hardware_safety_signoff"
+description = "KA-216 / CX-115: missing no-authorization flag"
+
+[[mutant]]
+file = "reject-kind.unknown-fabricated.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "kind.unknown"
+refusal = "FROB-REF-823"
+path = "proof.kind"
+description = "KA-215 / CX-106: fabricated proof kind lp-primal-fast with consistent hashes"
+
+[[mutant]]
+file = "reject-query.prefix-quantifiers-reordered.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "query.prefix"
+refusal = "FROB-REF-826"
+path = "claim.quantifiers"
+description = "KA-209 / KA-217 / CX-107: quantifiers reordered with consistent hashes"
+
+[[mutant]]
+file = "reject-query.domain-cell-changed.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "query.domain"
+refusal = "FROB-REF-826"
+path = "domain"
+description = "Domain cell lo changed from 3/14 to 1/5 with consistent hashes"
+
+[[mutant]]
+file = "reject-query.assumptions-removed.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "query.assumptions"
+refusal = "FROB-REF-826"
+path = "assumptions"
+description = "Assumption removed from bundle with consistent hashes"
+
+[[mutant]]
+file = "reject-query.policy-class-edited.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "query.policy-class"
+refusal = "FROB-REF-826"
+path = "plant.policy_class"
+description = "plant.policy_class digest edited away from offered query policy_class"
+
+[[mutant]]
+file = "reject-side.equations-missing.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "side.equations-missing"
+refusal = "FROB-REF-829"
+path = "proof.primitive_equations"
+description = "R2: empty primitive_equations"
+
+[[mutant]]
+file = "reject-side.missing-partition-subcerts.frobcert"
+base = "six_entry/e5_partition_box.frobcert"
+expected_verdict = "reject"
+rule = "side.missing"
+refusal = "FROB-REF-829"
+path = "proof.side_conditions"
+description = "Partition bundle missing required side-condition sub-certificates"
+
+[[mutant]]
+file = "reject-field.type-moment-as-torque.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "field.type"
+refusal = "FROB-REF-829"
+path = "proof.payload.torque"
+description = "CX-108 / CX-077: first moment (60, 30) passed where 3D torque (30, -60, 0) N*m is expected"
+
+[[mutant]]
+file = "reject-claim.minimum-unbounded-open-claimed-attained.frobcert"
+base = "docking_open_threshold.frobcert"
+expected_verdict = "reject"
+rule = "claim.minimum-unbounded"
+refusal = ""
+path = "claim.cost_bounds"
+description = "R3 / CX-114: unattained open docking threshold 5/16 claimed as attained"
+
+[[mutant]]
+file = "reject-claim.mass-without-weighting.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "claim.mass-without-weighting"
+refusal = ""
+path = "claim.unresolved_mass.weighting"
+description = "R4: unresolved probability mass reported without supplied weighting"
+
+[[mutant]]
+file = "reject-num.rational-form-nonreduced.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "num.rational-form"
+refusal = "FROB-REF-849"
+path = "domain.cell.lo"
+description = "R5: non-reduced rational pair [2, 4]"
+
+[[mutant]]
+file = "reject-num.interval-decl-missing.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "num.interval-decl"
+refusal = "FROB-REF-849"
+path = "proof.payload.margin_interval"
+description = "R5: outward-rounded interval missing impl and precision declaration"
+
+[[mutant]]
+file = "reject-class.above-input-estimated.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "class.above-input"
+refusal = "FROB-REF-834"
+path = "assumptions[1].class"
+description = "CX-109: Certified claim resting on an Estimated assumption"
+
+[[mutant]]
+file = "reject-class.above-kind-cap.frobcert"
+base = "six_entry/e6_qualification_receipt.frobcert"
+expected_verdict = "reject"
+rule = "class.above-kind-cap"
+refusal = "FROB-REF-834"
+path = "claim.class"
+description = "sample-coverage claimed as Certified above its Tested cap"
+
+[[mutant]]
+file = "reject-class.no-receipt.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "class.no-receipt"
+refusal = "FROB-REF-834"
+path = "checker.build"
+description = "Certified claim without checker build identity"
+
+[[mutant]]
+file = "reject-rule-order-flags-before-kind.frobcert"
+base = "stance_inclusion.frobcert"
+expected_verdict = "reject"
+rule = "flags.true"
+refusal = "FROB-REF-833"
+path = "authorization.execution_authorized"
+description = "Rule-order control: true flag and unknown kind must report flags.true first"

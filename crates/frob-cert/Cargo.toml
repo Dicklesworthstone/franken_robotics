@@ -25,6 +25,7 @@ nc-skip-key-order = []
 nc-interval-mul-nearest = []
 nc-dup-key-first-wins = []
 shortcut-accept-on-hashes = []
+nc-omit-policy-class = []
 # Test-only fixture feature (N12-02): marks `alpha-root` as disabled-pending-cause.
 # Refused in release builds by compile_error!.
 registry-fixture = []

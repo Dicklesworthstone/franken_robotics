@@ -17,8 +17,35 @@ use crate::limits::{
 /// (N12-REF, ADR-LEMMA-04, INV-LEMMA-04).
 pub const REFUSAL_UNKNOWN_PROOF_KIND: &str = "FROB-REF-823";
 
-/// Refusal code for a claim presented above its kind's class cap or weakest input (N12-REF).
+/// Refusal code for a bundle whose quantifier prefix, domain, assumption set, or policy class
+/// does not match the query it is offered for (N12-REF, N12-03).
+pub const REFUSAL_QUERY_MISMATCH: &str = "FROB-REF-826";
+
+/// Refusal code for a missing side condition, missing primitive equations, or typed-field error
+/// (N12-REF, N12-03).
+pub const REFUSAL_SIDE_OR_FIELD: &str = "FROB-REF-829";
+
+/// Refusal code for a missing or true no-authorization flag (N12-REF, N12-03, INV-LEMMA-03).
+pub const REFUSAL_FLAG_VIOLATION: &str = "FROB-REF-833";
+
+/// Refusal code for a claim presented above its kind's class cap or weakest input, or without a
+/// certificate receipt (N12-REF, N12-03).
 pub const REFUSAL_CLASS_ABOVE_CAP: &str = "FROB-REF-834";
+
+/// Ranked repairs for `query.*` mismatches (N12-03 / N12-REF).
+pub const REPAIRS_QUERY_MISMATCH: &[&str] = &[
+    "offer the bundle for the query it was made for",
+    "re-derive for the new query",
+];
+
+/// Ranked repairs for `side.*` and `field.*` violations (N12-03 / N12-REF).
+pub const REPAIRS_SIDE_OR_FIELD: &[&str] = &[
+    "re-emit with the typed field or the missing sub-certificate",
+    "drop the cell to unresolved",
+];
+
+/// Ranked repairs for `flags.*` violations (N12-03 / N12-REF: no repair makes a true flag valid).
+pub const REPAIRS_FLAG_VIOLATION: &[&str] = &[];
 
 /// Ranked repairs for `kind.unknown`, `kind.version-unknown`, and `kind.out-of-scope` (N12-02 / N12-REF).
 pub const REPAIRS_UNKNOWN_KIND: &[&str] = &[
@@ -60,10 +87,14 @@ pub enum RuleId {
     // Area: schema
     SchemaUnknown,
     SchemaMissingField,
+    SchemaUnknownField,
     SchemaFieldType,
+    SchemaReviewMissing,
     // Area: hash
     HashMismatch,
+    HashEquationsDigest,
     HashMerkleRoot,
+    HashMerkleDuplicate,
     // Area: kind
     KindUnknown,
     KindVersionUnknown,
@@ -72,18 +103,29 @@ pub enum RuleId {
     // Area: query
     QueryMismatch,
     QueryDigestMismatch,
+    QueryPrefix,
+    QueryDomain,
+    QueryAssumptions,
+    QueryPolicyClass,
     // Area: side
+    SideMissing,
+    SideEquationsMissing,
     SideConditionMissing,
     SideConditionRejected,
     // Area: field
+    FieldType,
     FieldUnitsMismatch,
     FieldFrameMismatch,
     FieldPortOrder,
+    // Area: claim
+    ClaimMinimumUnbounded,
+    ClaimMassWithoutWeighting,
     // Area: num
     NumFloatInBundle,
     NumIntRange,
     NumIntForm,
     NumRationalForm,
+    NumIntervalDecl,
     // Area: limits
     LimitsExceeded,
     // Area: class
@@ -134,24 +176,38 @@ pub const RULE_CATALOGUE: &[RuleId] = &[
     RuleId::JsonEscape,
     RuleId::SchemaUnknown,
     RuleId::SchemaMissingField,
+    RuleId::SchemaUnknownField,
     RuleId::SchemaFieldType,
+    RuleId::SchemaReviewMissing,
     RuleId::HashMismatch,
+    RuleId::HashEquationsDigest,
     RuleId::HashMerkleRoot,
+    RuleId::HashMerkleDuplicate,
     RuleId::KindUnknown,
     RuleId::KindVersionUnknown,
     RuleId::KindOutOfScope,
     RuleId::KindDisabled,
     RuleId::QueryMismatch,
     RuleId::QueryDigestMismatch,
+    RuleId::QueryPrefix,
+    RuleId::QueryDomain,
+    RuleId::QueryAssumptions,
+    RuleId::QueryPolicyClass,
+    RuleId::SideMissing,
+    RuleId::SideEquationsMissing,
     RuleId::SideConditionMissing,
     RuleId::SideConditionRejected,
+    RuleId::FieldType,
     RuleId::FieldUnitsMismatch,
     RuleId::FieldFrameMismatch,
     RuleId::FieldPortOrder,
+    RuleId::ClaimMinimumUnbounded,
+    RuleId::ClaimMassWithoutWeighting,
     RuleId::NumFloatInBundle,
     RuleId::NumIntRange,
     RuleId::NumIntForm,
     RuleId::NumRationalForm,
+    RuleId::NumIntervalDecl,
     RuleId::LimitsExceeded,
     RuleId::ClassAboveKindCap,
     RuleId::ClassAboveInput,
@@ -200,24 +256,38 @@ impl RuleId {
             Self::JsonEscape => RULE_JSON_ESCAPE,
             Self::SchemaUnknown => "schema.unknown",
             Self::SchemaMissingField => "schema.missing-field",
+            Self::SchemaUnknownField => "schema.unknown-field",
             Self::SchemaFieldType => "schema.field-type",
+            Self::SchemaReviewMissing => "schema.review-missing",
             Self::HashMismatch => "hash.mismatch",
+            Self::HashEquationsDigest => "hash.equations-digest",
             Self::HashMerkleRoot => "hash.merkle-root",
+            Self::HashMerkleDuplicate => "hash.merkle-duplicate",
             Self::KindUnknown => RULE_KIND_UNKNOWN,
             Self::KindVersionUnknown => "kind.version-unknown",
             Self::KindOutOfScope => "kind.out-of-scope",
             Self::KindDisabled => "kind.disabled",
             Self::QueryMismatch => "query.mismatch",
             Self::QueryDigestMismatch => "query.digest-mismatch",
+            Self::QueryPrefix => "query.prefix",
+            Self::QueryDomain => "query.domain",
+            Self::QueryAssumptions => "query.assumptions",
+            Self::QueryPolicyClass => "query.policy-class",
+            Self::SideMissing => "side.missing",
+            Self::SideEquationsMissing => "side.equations-missing",
             Self::SideConditionMissing => "side.condition-missing",
             Self::SideConditionRejected => "side.condition-rejected",
+            Self::FieldType => "field.type",
             Self::FieldUnitsMismatch => "field.units-mismatch",
             Self::FieldFrameMismatch => "field.frame-mismatch",
             Self::FieldPortOrder => "field.port-order",
+            Self::ClaimMinimumUnbounded => "claim.minimum-unbounded",
+            Self::ClaimMassWithoutWeighting => "claim.mass-without-weighting",
             Self::NumFloatInBundle => RULE_NUM_FLOAT_IN_BUNDLE,
             Self::NumIntRange => RULE_NUM_INT_RANGE,
             Self::NumIntForm => RULE_NUM_INT_FORM,
             Self::NumRationalForm => RULE_NUM_RATIONAL_FORM,
+            Self::NumIntervalDecl => "num.interval-decl",
             Self::LimitsExceeded => RULE_LIMITS_EXCEEDED,
             Self::ClassAboveKindCap => "class.above-kind-cap",
             Self::ClassAboveInput => "class.above-input",
@@ -270,13 +340,29 @@ impl RuleId {
             | Self::KindVersionUnknown
             | Self::KindOutOfScope
             | Self::KindDisabled => Some(REFUSAL_UNKNOWN_PROOF_KIND),
+            Self::QueryMismatch
+            | Self::QueryDigestMismatch
+            | Self::QueryPrefix
+            | Self::QueryDomain
+            | Self::QueryAssumptions
+            | Self::QueryPolicyClass => Some(REFUSAL_QUERY_MISMATCH),
+            Self::SideMissing
+            | Self::SideEquationsMissing
+            | Self::SideConditionMissing
+            | Self::SideConditionRejected
+            | Self::FieldType
+            | Self::FieldUnitsMismatch
+            | Self::FieldFrameMismatch
+            | Self::FieldPortOrder => Some(REFUSAL_SIDE_OR_FIELD),
+            Self::FlagsMissing | Self::FlagsTrue => Some(REFUSAL_FLAG_VIOLATION),
             Self::ClassAboveKindCap | Self::ClassAboveInput | Self::ClassNoReceipt => {
                 Some(REFUSAL_CLASS_ABOVE_CAP)
             }
             Self::NumFloatInBundle
             | Self::NumIntRange
             | Self::NumIntForm
-            | Self::NumRationalForm => Some(REFUSAL_ARITHMETIC_MALFORMED),
+            | Self::NumRationalForm
+            | Self::NumIntervalDecl => Some(REFUSAL_ARITHMETIC_MALFORMED),
             _ => None,
         }
     }

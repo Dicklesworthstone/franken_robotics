@@ -12,6 +12,7 @@
         feature = "nc-interval-mul-nearest",
         feature = "nc-dup-key-first-wins",
         feature = "shortcut-accept-on-hashes",
+        feature = "nc-omit-policy-class",
     ),
     any(not(feature = "gauntlet-mutations"), not(debug_assertions))
 ))]
@@ -26,6 +27,7 @@ pub mod json;
 pub mod kinds;
 pub mod limits;
 pub mod rational;
+pub mod schema;
 
 use crate::interval::INTERVAL_IMPL_ID;
 use crate::json::{JsonValue, parse_canonical, serialize_canonical};
@@ -95,6 +97,12 @@ pub struct AuditReport {
     pub schema: Option<String>,
     /// Extracted proof kind (`proof.kind` or top-level `kind`) if present.
     pub kind: Option<String>,
+    /// Extracted claim class (`claim.class`) for `frob.cert/1` bundles when validated.
+    pub claim_class: Option<Class>,
+    /// OPEN-AUGUR-8 `review.equations_reviewed` marker when present on a validated bundle.
+    pub equations_reviewed: Option<bool>,
+    /// Declared `lineage.merkle_root` when present on a validated `frob.cert/1` bundle.
+    pub declared_merkle_root: Option<String>,
     /// Final verdict (`accept`, `reject`, or `unsupported`).
     pub verdict: Verdict,
     /// Compiled resource limits active during this audit.
@@ -109,12 +117,22 @@ pub struct AuditReport {
 
 /// Audit raw input bytes under `COMPILED_LIMITS`, dispatching proof kinds on the M0 closed registry.
 pub fn audit_bytes(bytes: &[u8]) -> AuditReport {
-    audit_bytes_with_options(bytes, COMPILED_LIMITS, false)
+    audit_bytes_with_query(bytes, None, COMPILED_LIMITS, false)
 }
 
 /// Audit raw input bytes under custom `limits` with optional `canonical_only` mode.
 pub fn audit_bytes_with_options(
     bytes: &[u8],
+    limits: Limits,
+    canonical_only: bool,
+) -> AuditReport {
+    audit_bytes_with_query(bytes, None, limits, canonical_only)
+}
+
+/// Audit raw input bytes against an optional offered query under custom `limits`.
+pub fn audit_bytes_with_query(
+    bytes: &[u8],
+    offered_query_bytes: Option<&[u8]>,
     limits: Limits,
     canonical_only: bool,
 ) -> AuditReport {
@@ -127,6 +145,9 @@ pub fn audit_bytes_with_options(
                 domain_blake3_hex: None,
                 schema: None,
                 kind: None,
+                claim_class: None,
+                equations_reviewed: None,
+                declared_merkle_root: None,
                 verdict: Verdict::Reject {
                     rule: e.rule,
                     refusal: e.refusal,
@@ -150,10 +171,41 @@ pub fn audit_bytes_with_options(
         .as_deref()
         .map(|s| blake3::domain_hash_hex(s, &canonical_bytes));
 
-    let (kind, verdict) = if canonical_only {
-        (extract_kind(&parsed).ok().flatten(), Verdict::Accept)
+    let (kind, claim_class, equations_reviewed, declared_merkle_root, verdict) = if canonical_only {
+        (
+            extract_kind(&parsed).ok().flatten(),
+            None,
+            None,
+            None,
+            Verdict::Accept,
+        )
+    } else if parsed.get("schema").is_some() {
+        let extracted_kind = extract_kind(&parsed).ok().flatten();
+        match schema::validate_bundle_value(&parsed, offered_query_bytes, &limits) {
+            Ok(validated) => {
+                let cc = Some(validated.bundle.claim.class);
+                let rev = validated.bundle.review.as_ref().map(|r| r.equations_reviewed);
+                let mr = Some(validated.bundle.lineage.merkle_root.clone());
+                let k = Some(validated.bundle.proof.kind.clone());
+                let v = schema::dispatch_validated(&validated);
+                (k, cc, rev, mr, v)
+            }
+            Err(rej) => (
+                extracted_kind,
+                None,
+                None,
+                None,
+                Verdict::Reject {
+                    rule: rej.rule.as_str(),
+                    refusal: rej.refusal,
+                    path: rej.path,
+                    message: rej.message,
+                },
+            ),
+        }
     } else {
-        dispatch_m0_kind(&parsed, schema.as_deref())
+        let (k, v) = dispatch_m0_kind(&parsed, schema.as_deref());
+        (k, None, None, None, v)
     };
 
     AuditReport {
@@ -161,6 +213,9 @@ pub fn audit_bytes_with_options(
         domain_blake3_hex,
         schema,
         kind,
+        claim_class,
+        equations_reviewed,
+        declared_merkle_root,
         verdict,
         limits,
         interval_impl: INTERVAL_IMPL_ID,

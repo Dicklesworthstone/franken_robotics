@@ -311,24 +311,38 @@ fn rule_ids_closed() {
             | RuleId::JsonEscape
             | RuleId::SchemaUnknown
             | RuleId::SchemaMissingField
+            | RuleId::SchemaUnknownField
             | RuleId::SchemaFieldType
+            | RuleId::SchemaReviewMissing
             | RuleId::HashMismatch
+            | RuleId::HashEquationsDigest
             | RuleId::HashMerkleRoot
+            | RuleId::HashMerkleDuplicate
             | RuleId::KindUnknown
             | RuleId::KindVersionUnknown
             | RuleId::KindOutOfScope
             | RuleId::KindDisabled
             | RuleId::QueryMismatch
             | RuleId::QueryDigestMismatch
+            | RuleId::QueryPrefix
+            | RuleId::QueryDomain
+            | RuleId::QueryAssumptions
+            | RuleId::QueryPolicyClass
+            | RuleId::SideMissing
+            | RuleId::SideEquationsMissing
             | RuleId::SideConditionMissing
             | RuleId::SideConditionRejected
+            | RuleId::FieldType
             | RuleId::FieldUnitsMismatch
             | RuleId::FieldFrameMismatch
             | RuleId::FieldPortOrder
+            | RuleId::ClaimMinimumUnbounded
+            | RuleId::ClaimMassWithoutWeighting
             | RuleId::NumFloatInBundle
             | RuleId::NumIntRange
             | RuleId::NumIntForm
             | RuleId::NumRationalForm
+            | RuleId::NumIntervalDecl
             | RuleId::LimitsExceeded
             | RuleId::ClassAboveKindCap
             | RuleId::ClassAboveInput

@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Status](https://img.shields.io/badge/status-planning%20only-blue)](#honest-status)
+[![Status](https://img.shields.io/badge/status-building%20M0-blue)](#honest-status)
 [![Plan](https://img.shields.io/badge/plan-v1.0%20assembled-blue)](#the-plan-v10)
 [![Physics](https://img.shields.io/badge/physics-FrankenSim%20referee-2ea44f)](#foundations)
 [![Core](https://img.shields.io/badge/core-Rust%20%C2%B7%20CUDA%20%C2%B7%20Metal-b7410e)](#architecture)
@@ -39,36 +39,45 @@ wheel's lever arm rises from 36.0 to 40.7 mm, and the push needed per unit of lo
 lag, compliance and clearance, so it is a question for the simulator and a paired comparison, not for
 intuition.
 
-**This project is in planning only.** This repository holds [plan v1.0](#the-plan-v10), the editions it was made from,
-the multi-model research rounds and reviews behind it, and a reproduction bundle for the planning experiments. Read
-[Honest status](#honest-status) first.
+**This project is building its first milestone.** This repository holds the M0 foundation code, [plan v1.0](#the-plan-v10),
+the editions it was made from, the multi-model research rounds and reviews behind it, and a reproduction bundle for the
+planning experiments. No robot has been simulated yet. Read [Honest status](#honest-status) first.
 
 ---
 
 ## Honest status
 
-**Status.** Plan stage. There is no Cargo workspace, no crate and no binary. Every command, crate, file format
-and throughput number below is a proposal unless it is marked as a computed planning result. Every throughput
-figure is a target. The plans and their reviews were written on 2026-11-21 and in the first minutes of 2026-11-22
+**Status.** Building M0, the bootstrap milestone (§43). Since 2026-11-24 there is a Cargo workspace on one toolchain
+with nine crates: `frob-core` (identities, canonical JSON, claims, refusals, units), `frob-cert` (the independent
+certificate auditor and its `frob-verify` binary), `frob-conformance` (the end-to-end harness `frob-e2e`, the gate,
+pilot and hypothesis registers, and the ten-fold harness `frob-tenfold`), `frob-verbs` (the verb registry),
+`frob-kir` and `frob-kernels` (the kernel dialect lint and prelude), `frob-fsim` (the airlock that takes FrankenSim
+by path), `frob-lie` (SO(3) and SE(3) over FrankenSim's `fs-ga`, in progress) and `xtask` (six workspace checks:
+layers, deps, unsafe, stack, contracts and generated files). There is no `frob` command yet, no robot design type,
+no physics step, no GPU kernel and no training run. Work is tracked as 3,658 Beads converted from the plan; a Bead
+closes only after a central verifier re-runs its tests at an exact commit, and on 2026-11-25 six had closed. Every
+command, file format and throughput number below that is not in this paragraph is a proposal unless it is marked
+as a computed planning result. Every throughput figure is a target. The plans and their reviews were written on
+2026-11-21 and in the first minutes of 2026-11-22
 (EST). The audits found errors in claims that earlier revisions of this README repeated; they are corrected below and
 listed in [CHANGELOG.md](CHANGELOG.md). A bare "§" below cites plan v1.0.
 
 | Question | Answer |
 |---|---|
 | Is there a design? | **Yes.** [Plan v1.0](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md) has 47 chapters and Appendices A to O in 36,990 lines, about 638,800 words. It was assembled at 00:17 EST on 2026-11-22 and replaces v0.2. At 3.9 MB it is too large for GitHub to display; [read it by part](#read-it-by-part) |
-| Is there a studio implementation? | The studio, gym and agent interfaces are proposals. Current work covers the plans and their supporting research. |
-| Can I run anything? | **Only the planning checks.** [`planning/astra-10x-reproduction.zip`](planning/astra-10x-reproduction.zip) re-checks Astra's analytic and pilot results with Python, NumPy, SciPy and Z3. [`planning/verify_plan_math.py`](planning/verify_plan_math.py) re-checks Neon's arithmetic, crate table, bead graph and cross-references. [`planning/fable/blend/tools/`](planning/fable/blend/tools/) rebuilds v1.0 from its parts and checks its identifiers. The Astra archive includes an exploratory planar cart model. See [Planning experiments](#planning-experiments-already-computed) |
+| Is there a studio implementation? | **Not yet.** The studio, gym and agent interfaces are proposals. The code so far is the M0 foundation listed above. |
+| Can I run anything? | **The workspace's checks and tests, and the planning checks. Nothing simulates a robot yet.** In the workspace, `cargo xtask <check>` runs the six workspace checks, `cargo test` runs the crates' tests and `scripts/e2e/run-all.sh` runs the end-to-end scripts. [`planning/astra-10x-reproduction.zip`](planning/astra-10x-reproduction.zip) re-checks Astra's analytic and pilot results with Python, NumPy, SciPy and Z3. [`planning/verify_plan_math.py`](planning/verify_plan_math.py) re-checks Neon's arithmetic, crate table, bead graph and cross-references. [`planning/fable/blend/tools/`](planning/fable/blend/tools/) rebuilds v1.0 from its parts and checks its identifiers. The Astra archive includes an exploratory planar cart model. See [Planning experiments](#planning-experiments-already-computed) |
 | Has anything been measured? | **Planning experiments have run on the target hardware.** Astra §11.6 classified points on a docking boundary on the M5 Ultra and on both RTX 4090s; exact integer arithmetic on the CPU had the lowest end-to-end time on both hosts. Astra also ran normalization arithmetic (§11.2) and a sampled slider with three physics updates (§9.1) on those GPUs. Round-2 evidence packs also timed CPU MuJoCo on the M5 Ultra, under background load, to size the referee. No FrankenRobotics physics step, environment step or training run has been measured, and neither round ran an incumbent training loop |
 | Has v1.0 been reviewed? | **Its chapters have; its last insertions have not.** A mathematical review (26 findings) and a coherence review (44) were applied, and three completeness audits checked it against its sources. The 66 subsections those audits inserted, about 3,200 lines, "have had no independent review" (Appendix K.5). Round 2 tested the hypotheses behind it on paper, and two other model families challenged the verdicts. No review has come from outside the program |
 | Which plan is canonical? | **v1.0.** It absorbs the [Astra edition](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__ASTRA.md) as of `47e8e89` and [Neon v2.0](COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS__NEON.md) as of `1f5703d`, the current text of both, and keeps v0.2's names. v0.2 is kept as [a backup](planning/fable/blend/PLAN_v0.2_BACKUP.md). See [Where v1.0 came from](#where-v10-came-from) |
 | Public or private, and which license? | Public, under the suite's MIT license with the OpenAI/Anthropic rider. v1.0 still prints this as an open question whose default is "Private" (OPEN-PROG-1) |
 | Anything decided since v1.0 was assembled? | **Yes, and the plan text does not say it yet.** An owner ruling of 2026-11-22, recorded as [Revision 2](planning/fable/blend/REVISION_2.md), says every sibling project is the owner's: a mismatch is fixed in the sibling instead of worked around, one Rust toolchain covers the whole build, and `frob-mcp` is built in the core graph. Where v1.0 says siblings are read-only or puts the MCP server behind a process boundary, Revision 2 governs |
-| What happens next? | v1.0 names external review rounds, the incumbent audit and phase ledger of M0 (§39), the paper-scale pilots that fund Frontier and Moonshot work (§0.7), then conversion to beads (§45). Building starts only if the owner changes the scope in [AGENTS.md](AGENTS.md) |
+| What happens next? | The rest of M0 (§43). The first runnable result is `sim.run --tier referee` on the built-in G1 model (BD-024), which needs the referee dynamics over FrankenSim (BD-007), the ledger (BD-009) and the `frob` command (BD-022). M0 also holds the CUDA and Metal kernel backends, the incumbent audit and phase ledger (§39) and the paper-scale pilots that fund Frontier and Moonshot work (§0.7). The conversion to Beads (§45) is done |
 
 The plan is written to be falsifiable. Each bet names the measurement that would kill it, and each kill
-gate names its fallback before any code exists ([Gates and kill gates](#gates-and-kill-gates)). Once the
-workspace exists, this status table is to be generated from `registries/gates.toml` (GATE-GAUNT-10), so it can
-only say what a gate has recorded.
+gate names its fallback before any code exists ([Gates and kill gates](#gates-and-kill-gates)). The table below
+is generated from `registries/gates.toml` by `cargo xtask check-generated --write` (GATE-GAUNT-10), so it can only
+say what a gate has recorded.
 
 <!-- status:begin -->
 | Gate             | Claim             | Milestone | Status     | Measured     | Recorded     |
@@ -870,9 +879,16 @@ planning/verify_plan_math.py                        consistency checker for the 
 planning/fable/mor/ brenner/ duel/                  round 2 on plan v0.2: audited claims, the verdict register, its
                                                     challenges and adjudication, three-model duel
 planning/fable/graveyard/ artifact/                 graveyard harvest and decision-core compilation
-AGENTS.md                                           project scope: planning only
-.beads/                                             issue tracker (`br`) workspace, no issues
 planning/astra-10x-reproduction.zip                 Astra's planning experiments, receipts and verifiers (reproduction bundle)
+AGENTS.md                                           agent contract and swarm rules
+.beads/                                             issue tracker (`br`): the plan as 3,658 Beads
+Cargo.toml  rust-toolchain.toml  franken-stack.lock core workspace (M0); one toolchain; sibling pins
+.cargo/config.toml  DEPENDENCY_ADMISSION.md         build identity; admission evidence per foundation
+crates/frob-*/  crates/xtask/                       the nine crates listed under Honest status
+registries/  schemas/                               registries as data; their JSON schemas
+scripts/e2e/  scripts/lib/  scripts/precommit.sh    end-to-end scripts and harness; shared shell; pre-commit
+receipts/  tests/admission/  tools/oracle/          stack receipts; admission records; oracle capture tools
+docs/delivery/                                      the delivery log (never in the plan)
 ```
 
 Target (§34.1; seven workspaces, an eighth that re-targets one crate):

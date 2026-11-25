@@ -87,7 +87,43 @@ enabling `frob_fsim::conformance` for `frob-conformance` only).
 
 ## Known gaps
 
-- Adapter bodies for every group land only with their owning admission beads (`BD-007`, `BD-009`, `N33a-14..19`, `N33a-30..31`, `N33b-11..16`).
+- Remaining adapter bodies for other groups land only with their owning admission beads (`BD-009`, `N33a-14..19`, `N33a-30..31`, `N33b-11..16`).
 - Upstream refusal conversion (`FROB-REF-792`) lands in `N33a-13`; `mode-remote` client and mutually-exclusive mode compile guards land in `N33c-11`.
 - Verb-level `needs_groups` checking, `admitted` status, and ranked-repair envelope attachment land in `N33c-32`; `check-deps` airlock consumer allow-lists land in `N34-03` / `N33b-09` / `N33c-29`.
 - Upstream `FD-ASUP-01`: `../frankensqlite/Cargo.toml` currently pins `asupersync = "0.6.2"` while `../asupersync` is `0.7.0`, so enabling `ledger` (in `default`) currently pulls both `0.6.2` and `0.7.0` until `FD-ASUP-01` aligns `frankensqlite`.
+
+## `RefereeDynamics` (`BD-007`, feature `referee`)
+
+In-process adapter `frob_fsim::referee::InProcRefereeDynamics` over FrankenSim's `fs_mbd::articulated` (compiled strictly under `#[cfg(feature = "referee")]`; zero volatile FrankenSim types in any public signature).
+
+- **Inputs:**
+  - `catalog_model(CatalogRobot)`: v0 supports `CatalogRobot::G1` (Unitree G1 mode-11 29-DoF reduced catalog humanoid, 30 retained links, `nq = 36`, `nv = 35`, `actuators = 29`, total mass `31.96314202` kg).
+  - `forward_dynamics(model, state, tau)` and `step_free(model, state, tau, h)`: `RefereeState { q: Vec<f64>, v: Vec<f64> }` (base world position `[x, y, z]` in `m`, base unit quaternion `[w, x, y, z]`, tree-order joint positions in `rad`/`m`; body-frame base angular velocity in `rad/s`, body-frame base linear velocity in `m/s`, tree-order joint velocities in `rad/s`/`m/s`), actuator torques `tau: &[f64]` in `N·m`/`N` (`len == actuators`), and strictly positive exact rational timestep `h: Rational` (converted to `f64` as `(h.num() as f64) / (h.den() as f64)`; standard M0 rollout step `1/480` s = `1.0 / 480.0`), under standard world gravity `[0, 0, -9.80665]` `m/s^2` and zero external body wrenches.
+- **Outputs:**
+  - `catalog_model`: opaque airlock-owned `RefereeModel` handle.
+  - `reference_state`: stationary identity-base neutral-joint `RefereeState`.
+  - `forward_dynamics`: generalized accelerations `Vec<f64>` (`len == nv`: body-frame base angular/linear acceleration followed by joint accelerations).
+  - `step_free`: contact-free next `RefereeState` advanced by one Lie-midpoint step of duration `h`.
+  - `describe`: `ModelFacts` reporting `links`, `nq`, `nv`, `actuators`, `mass_kg`, and self-describing `CoordLayout` read dynamically from FrankenSim at the pin.
+  - Canonical digest (`frob_fsim::referee::digest`, depending only on `std` + bedrock `fs-blake3`): 32-byte BLAKE3 rendered as 64 lower-case hex digits over `b"frob.referee-state/1\0"`, `(links, nq, nv)` as `u32` LE, `q` then `v` as IEEE-754 `f64::to_bits().to_le_bytes()` (`-0.0` distinct from `+0.0`), and payload tag `0x00` (plain state / rollout) or `0x01` + `qdd` (forward dynamics).
+- **Refusals:**
+  - Typed `RefereeRefusal` with machine-readable `RefereeRefusalKind`:
+    - `NonFinite { field, index }`: refuses any `NaN`, `+inf`, or `-inf` in `q`, `v`, or `tau` **before** calling FrankenSim.
+    - `LengthMismatch { field, expected, actual }`: refuses wrong `q` (`!= nq`), `v` (`!= nv`), or `tau` (`!= actuators`) lengths **before** calling FrankenSim, naming both expected and supplied lengths in `reason`.
+    - `InvalidStep`: refuses zero or non-finite rational step durations **before** calling FrankenSim.
+    - `Upstream`: converts every upstream FrankenSim error into a typed refusal preserving the upstream reason text; never retries with weakened inputs.
+  - When compiled without feature `referee`, `new_referee_dynamics()` returns `Err(GroupAbsent { group: Group::Referee })` (`FROB-REF-790`).
+- **Determinism class:**
+  - Same-platform, same-binary bit equality only (`D1`/`D2` per upstream FrankenSim platform square-root/trig contracts; cross-platform and debug-vs-release equality are not claimed for the referee). The canonical digest encoding itself is `D0`.
+- **Evidence class of outputs:**
+  - `Tested` (v0 outputs verified against the pinned in-tree FrankenSim oracle capture for `INT-FSIM-01`).
+- **Validity domain:**
+  - Contact-free articulated tree kinematics and free-floating dynamics over FrankenSim's supported joint classes: **fixed, revolute, prismatic, and helical** joints, evaluated strictly at the pinned FrankenSim revision (`franken-stack.lock`, `FD-FSIM.git_rev`). The G1 catalog model is a 30-link reduced profile (`31.96314202` kg; four welded links totaling `1.377` kg omitted relative to the 38-link `33.34014202` kg import-parity reference) and is never used as an import-parity reference.
+- **Oracle:**
+  - In-tree FrankenSim oracle probe (`crates/frob-fsim/intree-probe/`, driven by `tools/oracle/fsim_g1_digest.sh`), executed inside a read-only `git archive` export of FrankenSim at the pinned commit under FrankenSim's own toolchain and `.cargo/config.toml`, hashing with the byte-identical `crates/frob-fsim/src/referee/digest.rs` source.
+  - Checked-in authenticated fixture `tests/fixtures/oracle/fsim/g1_fd_digest.toml` plus append-only capture log `tests/fixtures/oracle/fsim/g1_fd_digest.capture.log` (bound via `capture_log_blake3`, `digest_source_blake3`, `rustc -vV`, `fd_digest`, and `rollout_2s_digest`), verified by `crates/frob-fsim/tests/referee.rs` (including ULP, torque, and four planted capture-record negative controls).
+- **Known gaps:**
+  - **No contact** (`RefereeContact` lands in `N33a-14`).
+  - **No adjoints / automatic differentiation** (plain `f64` only, not generic over a differentiation scalar; no articulated adjoints).
+  - **`f64` only** and single-world unbatched execution; the underlying Lie-midpoint integrator is neither energy-exact nor variational/symplectic.
+  - Full `FROB-REF-792` upstream refusal mapping lands in `N33a-13`; compiled design lowering lands in `BD-061`; worker-process remote serving lands in `BD-038`/`N33c-11`.

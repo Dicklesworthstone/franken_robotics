@@ -1846,6 +1846,7 @@ dependencies = [
  "fs-fft",
  "fs-ga",
  "fs-la",
+ "fs-ladder",
  "fs-matdb",
  "fs-material",
  "fs-math",

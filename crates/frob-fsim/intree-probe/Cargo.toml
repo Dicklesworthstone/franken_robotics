@@ -1,0 +1,19 @@
+[package]
+name = "frob-digest-probe"
+version = "0.0.1"
+edition = "2024"
+publish = false
+description = "In-tree FrankenSim oracle probe for Unitree G1 forward-dynamics and 2s rollout digests (BD-007)."
+
+[workspace]
+
+[patch.crates-io]
+asupersync = { path = "../../../asupersync" }
+
+[dependencies]
+fs-blake3 = { path = "../../crates/fs-blake3", default-features = false }
+fs-ga = { path = "../../crates/fs-ga", default-features = false }
+fs-mbd = { path = "../../crates/fs-mbd", default-features = false }
+
+[lints.rust]
+unsafe_code = "forbid"

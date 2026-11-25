@@ -15,7 +15,8 @@ rank = 2
 [dependencies]
 frob-core = { path = "../frob-core" }
 
-# Bedrock-direct FrankenSim crate (unaffected by airlock groups and modes; N33a-12).
+# Bedrock-direct FrankenSim crates (unaffected by airlock groups and modes; N33a-12, BD-007).
+fs-blake3 = { path = "../../../frankensim/crates/fs-blake3", default-features = false }
 fs-ga = { path = "../../../frankensim/crates/fs-ga", default-features = false }
 
 # Optional volatile/oracle FrankenSim path dependencies behind the ten feature groups.

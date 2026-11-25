@@ -393,16 +393,29 @@ impl StackReceipt {
 /// paths in `repo_dir`. Never writes to `repo_dir` and ignores untracked files
 /// and file modification timestamps.
 pub fn tree_hash(repo_dir: &Path) -> Result<String, ReceiptError> {
-    let ls = git_ro(repo_dir, &["ls-files", "-z"])?;
-    let mut paths: Vec<&[u8]> = ls.split(|&b| b == 0).filter(|p| !p.is_empty()).collect();
-    paths.sort_unstable();
-    paths.dedup();
+    let ls = git_ro(repo_dir, &["ls-files", "--stage", "-z"])?;
+    let mut index = BTreeMap::new();
+    for entry in ls.split(|&b| b == 0).filter(|entry| !entry.is_empty()) {
+        let mut parts = entry.splitn(2, |&b| b == b'\t');
+        let (Some(header), Some(path)) = (parts.next(), parts.next()) else {
+            return Err(ReceiptError::Git("malformed ls-files --stage entry".into()));
+        };
+        let mut fields = header.split(|&b| b == b' ');
+        let (Some(mode), Some(oid), Some(_stage)) = (fields.next(), fields.next(), fields.next())
+        else {
+            return Err(ReceiptError::Git(
+                "malformed ls-files --stage header".into(),
+            ));
+        };
+        // Git orders merge stages numerically. Use the first available entry for a conflicted path.
+        index.entry(path).or_insert((mode, oid));
+    }
 
     let mut hasher = fs_blake3::Blake3::new();
     hasher.update(TREE_HASH_DOMAIN);
 
     let mut chunk_buf = [0u8; 65_536];
-    for rel_bytes in paths {
+    for (rel_bytes, (mode, oid)) in index {
         hasher.update(&(rel_bytes.len() as u64).to_le_bytes());
         hasher.update(rel_bytes);
 
@@ -431,14 +444,19 @@ pub fn tree_hash(repo_dir: &Path) -> Result<String, ReceiptError> {
             hasher.update(&[0x00]);
             hasher.update(&(target_bytes.len() as u64).to_le_bytes());
             hasher.update(&target_bytes);
-        } else if meta.is_dir() {
-            // Gitlink / submodule entry: feed staged OID bytes if present.
-            let oid = gitlink_staged_oid(repo_dir, rel_bytes);
+        } else if meta.is_dir() && mode == b"160000" {
+            // Gitlinks have an indexed object ID in place of regular file bytes.
             hasher.update(&[0x00]);
             hasher.update(&(oid.len() as u64).to_le_bytes());
-            hasher.update(&oid);
+            hasher.update(oid);
         } else {
-            let exec_byte = regular_file_exec_byte(repo_dir, rel_bytes, &meta);
+            if !meta.is_file() {
+                return Err(ReceiptError::Io(format!(
+                    "tracked path `{}` is not a regular file, symlink, or gitlink",
+                    String::from_utf8_lossy(rel_bytes)
+                )));
+            }
+            let exec_byte = u8::from(mode == b"100755");
             let mut file = File::open(&full).map_err(|e| {
                 ReceiptError::Io(format!("open `{}`: {e}", String::from_utf8_lossy(rel_bytes)))
             })?;
@@ -465,33 +483,6 @@ pub fn tree_hash(repo_dir: &Path) -> Result<String, ReceiptError> {
     }
 
     Ok(hasher.finalize().to_hex())
-}
-
-#[cfg(unix)]
-fn regular_file_exec_byte(_repo_dir: &Path, _rel_bytes: &[u8], meta: &fs::Metadata) -> u8 {
-    use std::os::unix::fs::PermissionsExt;
-    u8::from((meta.permissions().mode() & 0o111) != 0)
-}
-
-#[cfg(not(unix))]
-fn regular_file_exec_byte(repo_dir: &Path, rel_bytes: &[u8], _meta: &fs::Metadata) -> u8 {
-    let rel_str = String::from_utf8_lossy(rel_bytes);
-    let Ok(out) = git_ro(repo_dir, &["ls-files", "--stage", "-z", "--", &rel_str]) else {
-        return 0;
-    };
-    u8::from(out.starts_with(b"100755 "))
-}
-
-fn gitlink_staged_oid(repo_dir: &Path, rel_bytes: &[u8]) -> Vec<u8> {
-    let rel_str = String::from_utf8_lossy(rel_bytes);
-    let Ok(out) = git_ro(repo_dir, &["ls-files", "--stage", "-z", "--", &rel_str]) else {
-        return Vec::new();
-    };
-    let first_entry = out.split(|&b| b == 0).next().unwrap_or(&[]);
-    let header = first_entry.split(|&b| b == b'\t').next().unwrap_or(&[]);
-    let mut parts = header.split(|&b| b == b' ');
-    let _mode = parts.next();
-    parts.next().map_or_else(Vec::new, |oid| oid.to_vec())
 }
 
 #[cfg(unix)]
@@ -980,13 +971,10 @@ pub fn build_receipt(
         }
 
         // Verify lockfile consistency through PATH `cargo` (never absolute path).
-        let meta = run_cargo_ro(&ws_dir, &["metadata", "--locked", "--offline", "--format-version", "1"])?;
-        if meta.exit != 0 {
-            return Err(ReceiptError::Cargo(format!(
-                "cargo metadata --locked failed in workspace `{ws_name}`: {}",
-                String::from_utf8_lossy(&meta.stderr).trim()
-            )));
-        }
+        let (metadata, _) = run_cargo_ro(
+            root_dir, &ws_dir, ws_rel, &["metadata", "--format-version", "1"],
+        )?;
+        commands.push(metadata);
 
         let (packages, registry) = parse_cargo_lock_counts(&ws_lock)?;
         let lock_hash = blake3_file(&ws_lock)?;
@@ -997,31 +985,10 @@ pub fn build_receipt(
             registry,
         });
 
-        let tree = run_cargo_ro(&ws_dir, &["tree", "--locked", "--offline", "-d"])?;
-        if tree.exit != 0 {
-            return Err(ReceiptError::Cargo(format!(
-                "cargo tree -d failed in workspace `{ws_name}`: {}",
-                String::from_utf8_lossy(&tree.stderr).trim()
-            )));
-        }
-        let norm_stdout = normalize_command_stdout(&tree.stdout, root_dir);
-        let argv = if ws_name == "core" {
-            vec!["cargo".to_owned(), "tree".to_owned(), "-d".to_owned()]
-        } else {
-            vec![
-                "cargo".to_owned(),
-                "tree".to_owned(),
-                "-d".to_owned(),
-                "--manifest-path".to_owned(),
-                format!("{ws_rel}/Cargo.toml"),
-            ]
-        };
-        commands.push(CommandEntry {
-            argv,
-            exit: i64::from(tree.exit),
-            output_hash: fs_blake3::hash_bytes(&norm_stdout).to_hex(),
-        });
-        for dup in parse_duplicates(&norm_stdout) {
+        let (tree, stdout) =
+            run_cargo_ro(root_dir, &ws_dir, ws_rel, &["tree", "-d", "--target", "all"])?;
+        commands.push(tree);
+        for dup in parse_duplicates(&stdout) {
             let not_asup = !dup.starts_with("asupersync ");
             dup_set.insert((not_asup, dup));
         }
@@ -1432,6 +1399,26 @@ fn normalize_command_stdout(stdout: &[u8], root_dir: &Path) -> Vec<u8> {
             pairs.push((format!("{clean}{sep}").into_bytes(), b"../"));
         }
     }
+    let cargo_home = std::env::var_os("CARGO_HOME")
+        .filter(|p| !p.is_empty())
+        .map(PathBuf::from)
+        .or_else(|| std::env::var_os("HOME").map(|home| PathBuf::from(home).join(".cargo")));
+    if let Some(home) = cargo_home.filter(|p| p.is_absolute()) {
+        let home = fs::canonicalize(&home).unwrap_or(home);
+        pairs.push((
+            format!("{}{sep}", home.display()).into_bytes(),
+            b"<cargo-home>/",
+        ));
+    }
+    // Cargo also embeds filesystem paths in path+file:// package IDs.
+    let url_paths: Vec<_> = pairs
+        .iter()
+        .filter_map(|(path, replacement)| {
+            let encoded = encode_file_url_path(path);
+            (encoded != *path).then_some((encoded, *replacement))
+        })
+        .collect();
+    pairs.extend(url_paths);
     pairs.sort_by(|a, b| b.0.len().cmp(&a.0.len()));
 
     let mut out = stdout.to_vec();
@@ -1439,6 +1426,24 @@ fn normalize_command_stdout(stdout: &[u8], root_dir: &Path) -> Vec<u8> {
         out = replace_bytes(&out, &needle, repl);
     }
     out
+}
+
+fn encode_file_url_path(path: &[u8]) -> Vec<u8> {
+    const HEX: &[u8; 16] = b"0123456789ABCDEF";
+    let mut encoded = Vec::with_capacity(path.len());
+    for &byte in path {
+        // URL path-segment encoding keeps the path's separator between segments.
+        if !(0x21..0x7f).contains(&byte) || b"\"#%<>?^`{}\\".contains(&byte) {
+            encoded.extend_from_slice(&[
+                b'%',
+                HEX[usize::from(byte >> 4)],
+                HEX[usize::from(byte & 0x0f)],
+            ]);
+        } else {
+            encoded.push(byte);
+        }
+    }
+    encoded
 }
 
 fn replace_bytes(haystack: &[u8], needle: &[u8], repl: &[u8]) -> Vec<u8> {
@@ -1545,24 +1550,66 @@ fn head_rev(repo_dir: &Path) -> Result<String, ReceiptError> {
     Ok(rev)
 }
 
-struct CmdOutput {
-    exit: i32,
-    stdout: Vec<u8>,
-    stderr: Vec<u8>,
-}
-
-fn run_cargo_ro(ws_dir: &Path, args: &[&str]) -> Result<CmdOutput, ReceiptError> {
-    // Always invoke `cargo` via PATH so it flows through the build-offload shim.
+fn run_cargo_ro(
+    root_dir: &Path,
+    ws_dir: &Path,
+    ws_rel: &str,
+    args: &[&str],
+) -> Result<(CommandEntry, Vec<u8>), ReceiptError> {
+    let manifest = std::path::absolute(ws_dir.join("Cargo.toml"))
+        .map_err(|e| ReceiptError::Io(format!("resolve workspace manifest: {e}")))?;
+    let flags = [
+        "--locked",
+        "--offline",
+        "--color",
+        "never",
+        "--manifest-path",
+    ];
     let out = Command::new("cargo")
         .args(args)
+        .args(flags)
+        .arg(manifest)
         .current_dir(ws_dir)
         .output()
         .map_err(|e| ReceiptError::Cargo(format!("spawn cargo {:?}: {e}", args)))?;
-    Ok(CmdOutput {
-        exit: out.status.code().unwrap_or(1),
-        stdout: out.stdout,
-        stderr: out.stderr,
-    })
+    let exit = i64::from(out.status.code().unwrap_or(1));
+    if !out.status.success() {
+        return Err(ReceiptError::Cargo(format!(
+            "cargo {} failed in workspace `{ws_rel}`: {}",
+            args.join(" "),
+            String::from_utf8_lossy(&out.stderr).trim()
+        )));
+    }
+    let mut stdout = out.stdout;
+    if args.first() == Some(&"metadata") {
+        let limits = Limits {
+            max_bytes: stdout.len(),
+            ..Limits::default()
+        };
+        let admitted = json::admit(&stdout, &limits)
+            .map_err(|e| ReceiptError::Json(format!("cargo metadata: {e}")))?;
+        let mut output_dirs: Vec<_> = ["target_directory", "build_directory"]
+            .iter()
+            .filter_map(|key| admitted.value().get(key).map(|field| field.span))
+            .collect();
+        output_dirs.sort_unstable_by_key(|span| std::cmp::Reverse(span.start));
+        for span in output_dirs {
+            stdout.splice(span.start..span.end, b"\"<cargo-output>\"".iter().copied());
+        }
+    }
+    let stdout = normalize_command_stdout(&stdout, root_dir);
+    let mut argv = vec!["cargo".to_owned()];
+    argv.extend(args.iter().chain(flags.iter()).map(|arg| (*arg).to_owned()));
+    argv.push(format!("{ws_rel}/Cargo.toml"));
+    let output_hash = fs_blake3::hash_bytes(&stdout).to_hex();
+    Ok((
+        CommandEntry {
+            argv,
+            exit,
+            output_hash,
+        },
+        stdout,
+    ))
 }
 
 // ============================================================================
@@ -1717,6 +1764,17 @@ admission_gate = \"INT-SIB-01\"\nfallback = \"synthetic fallback\"\n"
         assert_eq!(h1, h2);
         assert!(!r1.repo_dirty);
         assert_eq!(r1.repo_tree_hash, None);
+        assert_eq!(r1.commands.len(), 2);
+        assert_eq!(r1.commands[0].argv[1], "metadata");
+        assert_eq!(r1.commands[1].argv[1], "tree");
+        for command in &r1.commands {
+            assert_eq!(command.exit, 0);
+            assert_eq!(
+                command.argv.last().map(String::as_str),
+                Some("./Cargo.toml")
+            );
+            assert!(is_lower_hex(&command.output_hash, 64));
+        }
     }
 
     #[test]
@@ -1769,11 +1827,13 @@ admission_gate = \"INT-SIB-01\"\nfallback = \"synthetic fallback\"\n"
             use std::os::unix::fs::PermissionsExt;
             let p = repo.join("run.sh");
             fs::set_permissions(&p, fs::Permissions::from_mode(0o755)).expect("chmod +x");
-            let h_exec = tree_hash(&repo).expect("exec");
-            assert_ne!(h_normal, h_exec, "executable bit toggle must change tree_hash");
+            assert_eq!(h_normal, tree_hash(&repo).expect("unstaged chmod"));
             fs::set_permissions(&p, fs::Permissions::from_mode(0o644)).expect("chmod -x");
-            assert_eq!(h_normal, tree_hash(&repo).expect("restored"));
         }
+        git_fixture(&repo, &["update-index", "--chmod=+x", "run.sh"]);
+        assert_ne!(h_normal, tree_hash(&repo).expect("indexed exec mode"));
+        git_fixture(&repo, &["update-index", "--chmod=-x", "run.sh"]);
+        assert_eq!(h_normal, tree_hash(&repo).expect("restored index mode"));
 
         // Move tracked file outside the repo (simulates working-tree deletion without deleting any file).
         fs::rename(repo.join("run.sh"), aside.join("run.sh")).expect("move aside");
@@ -1983,8 +2043,8 @@ admission_gate = \"INT-SIB-01\"\nfallback = \"synthetic fallback\"\n"
 
     #[test]
     fn receipt_no_machine_paths() {
-        let root_a = fresh_dir("loc_a").join("a").join("b");
-        let root_b = fresh_dir("loc_b").join("c");
+        let root_a = fresh_dir("loc_a").join("a b").join("nested");
+        let root_b = fresh_dir("loc_b").join("c #");
         fs::create_dir_all(&root_a).expect("mkdir a");
         fs::create_dir_all(&root_b).expect("mkdir b");
 
@@ -2132,6 +2192,47 @@ asupersync v0.5.0\n\
                 "serde_json 1.0.154",
             ]
         );
+    }
+
+    #[test]
+    fn receipt_records_resolved_asupersync_duplicates() {
+        let base = fresh_dir("resolved_duplicates");
+        let (repo, _, _) = build_synthetic_stack(&base, "../sib_crate");
+        let app = repo.join("crates/app/Cargo.toml");
+        let mut manifest = fs::read_to_string(&app).expect("app manifest");
+        let lock = repo.join("Cargo.lock");
+        let lockfile = fs::read_to_string(&lock).expect("Cargo.lock").replace(
+            " \"sib-crate\",",
+            " \"asupersync 0.5.0\",\n \"asupersync 0.6.2\",\n \"sib-crate\",",
+        );
+        let mut new_packages = String::new();
+        for (alias, version) in [("earlier", "0.5.0"), ("later", "0.6.2")] {
+            let pkg = base.join(alias);
+            fs::create_dir_all(pkg.join("src")).expect("package src");
+            fs::write(pkg.join("src/lib.rs"), "").expect("package lib");
+            fs::write(pkg.join("Cargo.toml"), format!(
+                "[package]\nname = \"asupersync\"\nversion = \"{version}\"\nedition = \"2024\"\n"
+            )).expect("package manifest");
+            if alias == "later" {
+                manifest.push_str("\n[target.'cfg(windows)'.dependencies]\n");
+            }
+            manifest.push_str(&format!(
+                "{alias} = {{ package = \"asupersync\", path = \"../../../{alias}\" }}\n"
+            ));
+            new_packages.push_str(&format!(
+                "[[package]]\nname = \"asupersync\"\nversion = \"{version}\"\n\n"
+            ));
+        }
+        fs::write(app, manifest).expect("write duplicate dependencies");
+        let sib_package = "[[package]]\nname = \"sib-crate\"";
+        fs::write(
+            lock,
+            lockfile.replace(sib_package, &format!("{new_packages}{sib_package}")),
+        )
+        .expect("write duplicate lock rows");
+        let (receipt, _, _) = build_receipt(&repo, &repo.join("franken-stack.lock"))
+            .expect("resolve two real path packages");
+        assert_eq!(receipt.duplicates, ["asupersync 0.5.0", "asupersync 0.6.2"]);
     }
 
     #[test]

@@ -62,7 +62,7 @@ Provide the shared, dependency-minimal vocabulary that must mean the same thing 
 - `id::SchemaName`: non-empty lower-case ASCII (`[a-z0-9.-]`) starting with `[a-z]`, `major >= 1`.
 - `id::Blake3` / typed IDs: 32 bytes / exactly 64 lower-case hex digits with closed single-letter prefix (`d:`, `m:`, `s:`, `k:`, `p:`, `e:`).
 - `registry::toml`: UTF-8 without BOM, `<= 16 MiB`, nesting depth `<= 64`, strict subset of TOML 1.0.0.
-- `registry::refusals`: codes `FROB-REF-100`..`FROB-REF-999`, valid surface exit codes `{3, 4, 5, 6, 7, 9}`, `9xx` fixed to exit 9 with `retry = "never"`.
+- `registry::refusals`: codes `FROB-REF-[1-9][0-9]{2,3}` (3-digit `100..=999` and 4-digit family continuations `1000..=9999` per `ADR-NUM-refusal-8xx`, compared as whole tokens), valid surface exit codes `{3, 4, 5, 6, 7, 9}`, `9xx` fixed to exit 9 with `retry = "never"`.
 - `qty`: finite SI `f64` scalars over the closed 36-type robotics set; runtime-checked `Checked` conversions validate exact 6-component SI dimension vectors.
 
 ## Oracles

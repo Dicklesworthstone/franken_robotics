@@ -121,7 +121,7 @@ impl RefusalRegistry {
                 if !seen.contains(&n) { return Err(RefusalRegistryError::ExceptionCodeMissing { list, code: format_code(n) }); }
             }
         }
-        rows.sort_by_key(|r| r.number);
+        rows.sort_by_key(|r| (code_family(r.number), r.number));
         let by_number = rows.iter().enumerate().map(|(i, r)| (r.number, i)).collect();
         Ok(Self { schema, exit_rule, rows, by_number })
     }
@@ -177,19 +177,23 @@ pub fn render_refusal_code_enum(reg: &RefusalRegistry) -> String {
     out.push_str("/// Closed refusal code enum generated from `registries/refusals.toml`.\n///\n/// Every variant corresponds to one registered `[[refusal]]` row; an unregistered\n/// code cannot compile.\n");
     out.push_str("#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]\n#[repr(u16)]\npub enum RefusalCode {\n");
     for r in reg.rows() { out.push_str(&format!("    /// {} ({}): {}\n    FrobRef{} = {},\n", r.code, r.defined_in, r.meaning, r.number, r.number)); }
-    out.push_str("}\n\nimpl RefusalCode {\n    /// All registered refusal codes in ascending numeric order.\n    pub const ALL: &'static [Self] = &[\n");
+    out.push_str("}\n\nimpl RefusalCode {\n    /// All registered refusal codes ordered by family, then numerically.\n    pub const ALL: &'static [Self] = &[\n");
     for r in reg.rows() { out.push_str(&format!("        Self::FrobRef{},\n", r.number)); }
-    out.push_str("    ];\n\n    /// Numeric code in `100..=999`.\n    #[must_use]\n    pub const fn number(self) -> u16 {\n        self as u16\n    }\n\n");
-    out.push_str("    /// Family digit (`1..=9`).\n    #[must_use]\n    pub const fn family(self) -> u8 {\n        (self.number() / 100) as u8\n    }\n\n");
-    out.push_str("    /// Canonical wire spelling `FROB-REF-nnn`.\n    #[must_use]\n    pub const fn as_str(self) -> &'static str {\n        match self {\n");
+    out.push_str("    ];\n\n    /// Numeric code matching `FROB-REF-[1-9][0-9]{2,3}`.\n    #[must_use]\n    pub const fn number(self) -> u16 {\n        self as u16\n    }\n\n");
+    out.push_str("    /// Family digit (`1..=9`).\n    #[must_use]\n    pub const fn family(self) -> u8 {\n        let n = self.number();\n        if n >= 1000 { (n / 1000) as u8 } else { (n / 100) as u8 }\n    }\n\n");
+    out.push_str("    /// Canonical wire spelling `FROB-REF-[1-9][0-9]{2,3}`.\n    #[must_use]\n    pub const fn as_str(self) -> &'static str {\n        match self {\n");
     for r in reg.rows() { out.push_str(&format!("            Self::FrobRef{} => \"{}\",\n", r.number, r.code)); }
-    out.push_str("        }\n    }\n\n    /// Parse a canonical wire code `FROB-REF-nnn`.\n    #[must_use]\n    pub fn parse(code: &str) -> Option<Self> {\n        match code {\n");
+    out.push_str("        }\n    }\n\n    /// Parse a canonical wire code `FROB-REF-[1-9][0-9]{2,3}`.\n    #[must_use]\n    pub fn parse(code: &str) -> Option<Self> {\n        match code {\n");
     for r in reg.rows() { out.push_str(&format!("            \"{}\" => Some(Self::FrobRef{}),\n", r.code, r.number)); }
     out.push_str("            _ => None,\n        }\n    }\n}\n\nimpl fmt::Display for RefusalCode {\n    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {\n        f.write_str(self.as_str())\n    }\n}\n");
     out
 }
 
 fn parse_exit_rule(table: Table) -> Result<ExitRule, RefusalRegistryError> {
+    let four_digit_keys: Vec<(String, u8)> = table
+        .iter()
+        .filter_map(|(k, _)| parse_four_digit_hundred_key(k).map(|fam| (k.clone(), fam)))
+        .collect();
     let mut fields = Fields::new(table, "exit_rule");
     let mut ranges = BTreeMap::new();
     for &(k, fixed) in FIXED_EXIT_TABLE {
@@ -215,6 +219,21 @@ fn parse_exit_rule(table: Table) -> Result<ExitRule, RefusalRegistryError> {
             ranges.insert(d.to_owned(), exit);
         }
     }
+    for (k, fam) in four_digit_keys {
+        if let Some(v) = fields.opt_int(&k)? {
+            let exit = checked_exit_u8(v, "exit_rule", &k).map_err(|e| fields.fail(e))?;
+            if let Some(fixed) = fixed_family_exit(fam) && exit != fixed {
+                return Err(fields.fail(RefusalRegistryError::ExitMismatch {
+                    row: "[exit_rule]".into(),
+                    rule_entry: format!("exit_rule.{k}"),
+                    observed: exit,
+                    expected: Some(fixed),
+                    reason: "contradicts fixed surface exit table".into(),
+                }));
+            }
+            ranges.insert(k, exit);
+        }
+    }
     let conflict = parse_exc_list(&mut fields, "conflict")?;
     let integrity = parse_exc_list(&mut fields, "integrity")?;
     let capability = parse_exc_list(&mut fields, "capability")?;
@@ -224,7 +243,7 @@ fn parse_exit_rule(table: Table) -> Result<ExitRule, RefusalRegistryError> {
     }
     for (name, set, obs) in [("conflict", &conflict, 7u8), ("capability", &capability, 5u8)] {
         for &c in set {
-            if (900..=999).contains(&c) {
+            if code_family(c) == 9 {
                 return Err(RefusalRegistryError::ExitMismatch { row: format_code(c), rule_entry: format!("exit_rule.{name}"), observed: obs, expected: Some(9), reason: "9xx is fixed to exit 9".into() });
             }
         }
@@ -237,7 +256,7 @@ fn parse_exc_list(fields: &mut Fields, name: &'static str) -> Result<BTreeSet<u1
     let Some(items) = fields.opt_array(name)? else { return Ok(set); };
     for sp in items {
         let num = match sp.value {
-            Value::Int(n) if (100..=999).contains(&n) => n as u16,
+            Value::Int(n) if (100..=9999).contains(&n) => n as u16,
             Value::Int(n) => {
                 return Err(fields.fail(RefusalRegistryError::InvalidRefusalCode {
                     code: n.to_string(),
@@ -325,7 +344,7 @@ fn parse_refusal_row(table: Table, exit_rule: &ExitRule, idx: usize) -> Result<R
     if exit != expected {
         return Err(RefusalRegistryError::ExitMismatch { row: code, rule_entry, observed: exit, expected: Some(expected), reason: "row exit differs from rule".into() });
     }
-    if (900..=999).contains(&number) && retry != RetryPolicy::Never {
+    if code_family(number) == 9 && retry != RetryPolicy::Never {
         return Err(RefusalRegistryError::ExitMismatch { row: code, rule_entry: "exit_rule.9xx".into(), observed: exit, expected: Some(9), reason: "9xx requires retry = \"never\"".into() });
     }
     Ok(RefusalRow { code, number, meaning, defined_in, exit, retry, repairs, raised_by, related })
@@ -343,14 +362,35 @@ fn extract_str_arr(key: &str, items: Vec<Spanned<Value>>) -> Result<Vec<String>,
     }).collect()
 }
 
-fn parse_code_number(code: &str) -> Option<u16> {
-    let d = code.strip_prefix("FROB-REF-")?;
-    if d.len() != 3 || !d.bytes().all(|b| b.is_ascii_digit()) { return None; }
-    let n: u16 = d.parse().ok()?;
-    (100..=999).contains(&n).then_some(n)
+const fn code_family(num: u16) -> u8 {
+    if num >= 1000 { (num / 1000) as u8 } else { (num / 100) as u8 }
 }
 
-fn format_code(num: u16) -> String { format!("FROB-REF-{num:03}") }
+const fn fixed_family_exit(family: u8) -> Option<u8> {
+    match family {
+        1..=5 | 8 => Some(3),
+        6 => Some(6),
+        9 => Some(9),
+        _ => None,
+    }
+}
+
+fn parse_four_digit_hundred_key(key: &str) -> Option<u8> {
+    let b = key.as_bytes();
+    (b.len() == 4 && matches!(b[0], b'1'..=b'9') && b[1].is_ascii_digit() && &b[2..] == b"xx")
+        .then(|| b[0] - b'0')
+}
+
+fn parse_code_number(code: &str) -> Option<u16> {
+    let d = code.strip_prefix("FROB-REF-")?;
+    let b = d.as_bytes();
+    if !matches!(b.len(), 3 | 4) || !matches!(b[0], b'1'..=b'9') || !b[1..].iter().all(u8::is_ascii_digit) {
+        return None;
+    }
+    d.parse().ok()
+}
+
+fn format_code(num: u16) -> String { format!("FROB-REF-{num}") }
 
 #[cfg(test)]
 mod tests {
@@ -419,6 +459,45 @@ mod tests {
                 assert!(matches!(te.kind, toml::TomlErrorKind::UnknownKey { ref key, .. } if key == "exti"));
             }
             other => panic!("expected Toml UnknownKey for `exti`, got {other:?}"),
+        }
+    }
+
+    #[test]
+    fn four_digit_code_and_whole_token_rule() {
+        let r81 = "\"81xx\" = 3\n";
+        let doc = format!(
+            "{}{}{}{}",
+            hdr(r81, "", "", ""),
+            row("FROB-REF-990", 9, "never"),
+            row("FROB-REF-8100", 3, "after-change"),
+            row("FROB-REF-816", 3, "after-change"),
+        );
+        let reg = RefusalRegistry::from_bytes(doc.as_bytes()).expect("8100 loads with 81xx = 3");
+        let nums: Vec<u16> = reg.rows().iter().map(|r| r.number).collect();
+        assert_eq!(nums, vec![816, 8100, 990], "sorted by family, then numerically");
+        assert_eq!(reg.lookup("FROB-REF-8100", "t").unwrap().exit, 3);
+        let rendered = render_refusal_code_enum(&reg);
+        let i816 = rendered.find("FrobRef816 = 816,").unwrap();
+        let i8100 = rendered.find("FrobRef8100 = 8100,").unwrap();
+        let i990 = rendered.find("FrobRef990 = 990,").unwrap();
+        assert!(i816 < i8100 && i8100 < i990);
+
+        // Whole-token comparison: FROB-REF-810 must never match FROB-REF-8100 or vice versa.
+        assert!(matches!(reg.lookup("FROB-REF-810", "t"), Err(RefusalRegistryError::UnknownRefusalCode { ref code, .. }) if code == "FROB-REF-810"));
+        let verb_810 = b"schema = \"frob.verbs/1\"\n[[verb]]\nname = \"v\"\nrefusals = [\"FROB-REF-810\"]\n";
+        assert!(matches!(reg.validate_verb_refusals(verb_810), Err(RefusalRegistryError::UnknownRefusalCode { ref code, .. }) if code == "FROB-REF-810"));
+        let only_810 = RefusalRegistry::from_bytes(format!("{}{}", hdr(r81, "", "810", ""), row("FROB-REF-810", 9, "never")).as_bytes()).unwrap();
+        assert!(matches!(only_810.lookup("FROB-REF-8100", "t"), Err(RefusalRegistryError::UnknownRefusalCode { ref code, .. }) if code == "FROB-REF-8100"));
+
+        // Missing 81xx rule, contradictory 81xx exit, wrong row exit, and exception list override.
+        assert!(matches!(RefusalRegistry::from_bytes(format!("{}{}", hdr("", "", "", ""), row("FROB-REF-8100", 3, "after-change")).as_bytes()), Err(RefusalRegistryError::ExitMismatch { ref rule_entry, expected: None, .. }) if rule_entry == "exit_rule.81xx"));
+        assert!(matches!(RefusalRegistry::from_bytes(format!("{}{}", hdr("\"81xx\" = 6\n", "", "", ""), row("FROB-REF-8100", 6, "after-change")).as_bytes()), Err(RefusalRegistryError::ExitMismatch { observed: 6, expected: Some(3), .. })));
+        assert!(matches!(RefusalRegistry::from_bytes(format!("{}{}", hdr(r81, "", "", ""), row("FROB-REF-8100", 9, "never")).as_bytes()), Err(RefusalRegistryError::ExitMismatch { observed: 9, expected: Some(3), .. })));
+        let exc = RefusalRegistry::from_bytes(format!("{}{}", hdr(r81, "8100", "", ""), row("FROB-REF-8100", 7, "after-change")).as_bytes()).unwrap();
+        assert_eq!(exc.lookup("FROB-REF-8100", "t").unwrap().exit, 7);
+
+        for bad in ["FROB-REF-81", "FROB-REF-0810", "FROB-REF-81000"] {
+            assert!(matches!(RefusalRegistry::from_bytes(format!("{}{}", hdr(r81, "", "", ""), row(bad, 3, "after-change")).as_bytes()), Err(RefusalRegistryError::InvalidRefusalCode { .. })), "expected InvalidRefusalCode for {bad}");
         }
     }
 }

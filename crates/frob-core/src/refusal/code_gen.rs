@@ -62,7 +62,7 @@ pub enum RefusalCode {
 }
 
 impl RefusalCode {
-    /// All registered refusal codes in ascending numeric order.
+    /// All registered refusal codes ordered by family, then numerically.
     pub const ALL: &'static [Self] = &[
         Self::FrobRef251,
         Self::FrobRef701,
@@ -91,7 +91,7 @@ impl RefusalCode {
         Self::FrobRef990,
     ];
 
-    /// Numeric code in `100..=999`.
+    /// Numeric code matching `FROB-REF-[1-9][0-9]{2,3}`.
     #[must_use]
     pub const fn number(self) -> u16 {
         self as u16
@@ -100,10 +100,11 @@ impl RefusalCode {
     /// Family digit (`1..=9`).
     #[must_use]
     pub const fn family(self) -> u8 {
-        (self.number() / 100) as u8
+        let n = self.number();
+        if n >= 1000 { (n / 1000) as u8 } else { (n / 100) as u8 }
     }
 
-    /// Canonical wire spelling `FROB-REF-nnn`.
+    /// Canonical wire spelling `FROB-REF-[1-9][0-9]{2,3}`.
     #[must_use]
     pub const fn as_str(self) -> &'static str {
         match self {
@@ -135,7 +136,7 @@ impl RefusalCode {
         }
     }
 
-    /// Parse a canonical wire code `FROB-REF-nnn`.
+    /// Parse a canonical wire code `FROB-REF-[1-9][0-9]{2,3}`.
     #[must_use]
     pub fn parse(code: &str) -> Option<Self> {
         match code {

@@ -110,6 +110,21 @@ fn render_validated_registry(
     }
     out.push_str("];\n\n");
 
+    let mut retired: Vec<_> = reg.retired_names.iter().collect();
+    retired.sort_by(|a, b| a.name.cmp(&b.name));
+    out.push_str("/// Retired spellings, sorted by registry name.\n");
+    out.push_str("pub static RETIRED_VERBS: &[RetiredVerb] = &[\n");
+    for row in retired {
+        let _ = writeln!(
+            out,
+            "    RetiredVerb {{ name: {}, use_instead: {}, reason: {} }},",
+            rust_str(&row.name),
+            emit_str_slice(&row.use_instead),
+            rust_str(&row.reason)
+        );
+    }
+    out.push_str("];\n\n");
+
     // TASK_CLUSTERS static array
     let _ = writeln!(
         out,

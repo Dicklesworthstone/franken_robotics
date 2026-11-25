@@ -6,6 +6,66 @@
 
 schema = "frob.verbs/1"
 
+[[retired_name]]
+name = "autopsy.fork"
+use = ["run.fork"]
+reason = "The replay chapter owns forks and their classification."
+
+[[retired_name]]
+name = "autopsy.diverge"
+use = ["telemetry.divergence"]
+reason = "Telemetry owns the first divergence between two runs."
+
+[[retired_name]]
+name = "autopsy.interventions"
+use = ["autopsy.intervene", "autopsy.attribute"]
+reason = "Autopsy registers intervention and attribution as separate verbs."
+
+[[retired_name]]
+name = "eval.audit"
+use = ["nemesis.audit"]
+reason = "Nemesis owns the screening audit."
+
+[[retired_name]]
+name = "eval.rankcheck"
+use = ["fidelity.modelform", "eval.rank-agreement"]
+reason = "Fidelity owns the model-form rank check and eval owns agreement across rungs or tiers."
+
+[[retired_name]]
+name = "fidelity.rank"
+use = ["eval.rank-agreement"]
+reason = "The rank-agreement record accepts a tier pair."
+
+[[retired_name]]
+name = "nemesis.show"
+use = ["nemesis.hardset"]
+reason = "The default hardset action reads the hard-world set."
+
+[[retired_name]]
+name = "cert.bundle"
+use = ["prove.bundle"]
+reason = "The proof chapter owns certificate bundles."
+
+[[retired_name]]
+name = "ground.import"
+use = ["ground.ingest"]
+reason = "Ground calibration registers data ingestion as ground.ingest."
+
+[[retired_name]]
+name = "foundry.structure"
+use = ["foundry.size", "foundry.optimize", "foundry.check"]
+reason = "Foundry registers sizing, optimization, and checking as separate verbs."
+
+[[retired_name]]
+name = "policy.rs"
+use = []
+reason = "This is a source filename."
+
+[[retired_name]]
+name = "contact.rs"
+use = []
+reason = "This is a source filename."
+
 [[verb]]
 name = "doctor"
 cluster = "operator"

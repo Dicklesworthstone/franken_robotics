@@ -28,6 +28,14 @@ pub use lint::{
 pub use names::{BASE_TOOLS, BASE_VERB_NAMES, NameError, cli_path, is_valid_segment, tool_name};
 pub use schema_id::{OwnedSchemaId, SchemaId, SchemaIdError, schema_file_name};
 
+/// A retired name and its ordered CLI repair targets. It has no dispatch entry.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct RetiredVerb {
+    pub name: &'static str,
+    pub use_instead: &'static [&'static str],
+    pub reason: &'static str,
+}
+
 include!(concat!(env!("OUT_DIR"), "/verbs_table.rs"));
 
 /// `true` iff this build compiled against an alternate registry via `FROB_VERBS_REGISTRY`.
@@ -50,6 +58,15 @@ pub fn lookup(name: &str) -> Option<&'static VerbEntry> {
 pub fn lookup_entry_json(name: &str) -> Option<&'static str> {
     let index = VERBS.binary_search_by_key(&name, |entry| entry.name).ok()?;
     VERB_ENTRY_JSON.get(index).copied()
+}
+
+/// Look up repair metadata for a retired spelling.
+#[must_use]
+pub fn lookup_retired_verb(name: &str) -> Option<&'static RetiredVerb> {
+    let index = RETIRED_VERBS
+        .binary_search_by_key(&name, |row| row.name)
+        .ok()?;
+    RETIRED_VERBS.get(index)
 }
 
 /// Look up a registered verb by its MCP tool name (`"."` and `"-"` mapped to `"_"`).

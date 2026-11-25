@@ -209,7 +209,7 @@ pub fn lint_registry(reg: &ParsedRegistry, ctx: &LintContext) -> Result<LintRepo
     let mut seen_names: BTreeSet<&str> = BTreeSet::new();
     let mut seen_tools: BTreeMap<String, &str> = BTreeMap::new();
     let mut seen_schema_pairs: BTreeMap<(&str, &str), &str> = BTreeMap::new();
-    let mut retired_map: BTreeMap<&str, (&[String], &str)> = BTreeMap::new();
+    let mut retired_tools = BTreeMap::new();
     let mut task_cluster_counts: BTreeMap<&str, usize> = BTreeMap::new();
     let mut clusters: BTreeSet<&str> = BTreeSet::new();
 
@@ -223,7 +223,15 @@ pub fn lint_registry(reg: &ParsedRegistry, ctx: &LintContext) -> Result<LintRepo
                 "retired_name entry requires a non-empty reason",
             ));
         }
-        retired_map.insert(ret.name.as_str(), (&ret.use_instead, ret.reason.as_str()));
+        if let Some(prior) = retired_tools.insert(tool_name(&ret.name), ret) {
+            return Err(LintError::new(
+                &ret.name,
+                "RL-03",
+                "retired-name",
+                &ret.name,
+                format!("duplicate retired tool name also used by `{}`", prior.name),
+            ));
+        }
     }
 
     // Track which entries strip which `conformance_only` properties from a given input schema.
@@ -297,15 +305,15 @@ pub fn lint_registry(reg: &ParsedRegistry, ctx: &LintContext) -> Result<LintRepo
         }
 
         // RL-03: retired names and shared (input_schema, output_schema) pairs.
-        if let Some((use_instead, reason)) = retired_map.get(entry.name.as_str()) {
+        if let Some(retired) = retired_tools.get(&tname) {
             return Err(LintError::new(
                 &entry.name,
                 "RL-03",
                 "retired-name",
-                entry.name.clone(),
+                &retired.name,
                 format!(
-                    "retired verb name (use {:?}; reason: {reason})",
-                    use_instead
+                    "retired verb or tool name (use {:?}; reason: {})",
+                    retired.use_instead, retired.reason
                 ),
             ));
         }
@@ -316,7 +324,7 @@ pub fn lint_registry(reg: &ParsedRegistry, ctx: &LintContext) -> Result<LintRepo
             return Err(LintError::new(
                 &entry.name,
                 "RL-03",
-                "retired-name",
+                "same-schemas",
                 format!("({}, {})", entry.input_schema, entry.output_schema),
                 format!("shares both input and output schemas with `{prev}`"),
             ));
@@ -913,6 +921,32 @@ pub fn lint_registry(reg: &ParsedRegistry, ctx: &LintContext) -> Result<LintRepo
                     "derived `short_doc` is {doc_len} characters, exceeding {MAX_DESCRIPTION_CHARS}"
                 ),
             ));
+        }
+    }
+
+    for retired in &reg.retired_names {
+        for target in &retired.use_instead {
+            let cluster = target
+                .split_once('.')
+                .map_or("operator", |(cluster, _)| cluster);
+            if validate_verb_name(target, cluster).is_err()
+                || retired_tools.contains_key(&tool_name(target))
+                || (clusters.contains(cluster) && !seen_names.contains(target.as_str()))
+            {
+                return Err(LintError::new(
+                    &retired.name,
+                    "RL-03",
+                    "retired-target",
+                    target,
+                    format!("expected a registered replacement in cluster `{cluster}`"),
+                ));
+            }
+            if !seen_names.contains(target.as_str()) {
+                warnings.push(format!(
+                    "RL-03 not-due: `{}` uses `{target}`; cluster `{cluster}` is absent",
+                    retired.name
+                ));
+            }
         }
     }
 

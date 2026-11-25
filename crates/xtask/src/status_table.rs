@@ -259,33 +259,6 @@ fn milestone_rank(m: &str) -> Option<u8> {
     }
 }
 
-fn require_str_list(
-    fields: &mut Fields,
-    key: &str,
-    ctx: &str,
-    non_empty_items: bool,
-) -> Result<Vec<String>, StatusTableError> {
-    let items = fields
-        .require_array(key)
-        .map_err(|e| StatusTableError::new(ctx, e.to_string()))?;
-    extract_str_list(&items, key, ctx, non_empty_items)
-}
-
-fn opt_str_list(
-    fields: &mut Fields,
-    key: &str,
-    ctx: &str,
-    non_empty_items: bool,
-) -> Result<Vec<String>, StatusTableError> {
-    let Some(items) = fields
-        .opt_array(key)
-        .map_err(|e| StatusTableError::new(ctx, e.to_string()))?
-    else {
-        return Ok(Vec::new());
-    };
-    extract_str_list(&items, key, ctx, non_empty_items)
-}
-
 fn extract_str_list(
     items: &[Spanned<Value>],
     key: &str,
@@ -316,45 +289,11 @@ fn extract_str_list(
     Ok(out)
 }
 
-fn opt_table_array(
-    fields: &mut Fields,
+fn extract_table_list(
+    items: Vec<Spanned<Value>>,
     key: &str,
     ctx: &str,
 ) -> Result<Vec<Table>, StatusTableError> {
-    let Some(items) = fields
-        .opt_array(key)
-        .map_err(|e| StatusTableError::new(ctx, e.to_string()))?
-    else {
-        return Ok(Vec::new());
-    };
-    let mut out = Vec::with_capacity(items.len());
-    for (idx, sp) in items.into_iter().enumerate() {
-        match sp.value {
-            Value::Table(t) => out.push(t),
-            other => {
-                return Err(StatusTableError::new(
-                    ctx,
-                    format!(
-                        "{key}[{idx}] at {}:{}: expected table, found {}",
-                        sp.line,
-                        sp.column,
-                        other.type_name()
-                    ),
-                ));
-            }
-        }
-    }
-    Ok(out)
-}
-
-fn require_table_array(
-    fields: &mut Fields,
-    key: &str,
-    ctx: &str,
-) -> Result<Vec<Table>, StatusTableError> {
-    let items = fields
-        .require_array(key)
-        .map_err(|e| StatusTableError::new(ctx, e.to_string()))?;
     let mut out = Vec::with_capacity(items.len());
     for (idx, sp) in items.into_iter().enumerate() {
         match sp.value {
@@ -540,16 +479,41 @@ pub fn parse_gates_toml(bytes: &[u8]) -> Result<GateRegistry, StatusTableError> 
     let schema = rf
         .require_str("schema")
         .map_err(|e| StatusTableError::new("gates.toml", e.to_string()))?;
+    let raw_gates_arr = rf
+        .opt_array("gate")
+        .map_err(|e| StatusTableError::new("gates.toml", e.to_string()))?;
+    rf.finish()
+        .map_err(|e| StatusTableError::new("gates.toml", e.to_string()))?;
+
     if schema != "frob.gates/1" {
         return Err(StatusTableError::new(
             "gates.toml",
             format!("unexpected schema `{schema}` (expected `frob.gates/1`)"),
         ));
     }
-
-    let raw_gates = opt_table_array(&mut rf, "gate", "gates.toml")?;
-    rf.finish()
-        .map_err(|e| StatusTableError::new("gates.toml", e.to_string()))?;
+    let raw_gates = match raw_gates_arr {
+        Some(items) => {
+            let mut out = Vec::with_capacity(items.len());
+            for (idx, sp) in items.into_iter().enumerate() {
+                match sp.value {
+                    Value::Table(t) => out.push(t),
+                    other => {
+                        return Err(StatusTableError::new(
+                            "gates.toml",
+                            format!(
+                                "gate[{idx}] at {}:{}: expected table, found {}",
+                                sp.line,
+                                sp.column,
+                                other.type_name()
+                            ),
+                        ));
+                    }
+                }
+            }
+            out
+        }
+        None => Vec::new(),
+    };
 
     let mut seen_ids = BTreeSet::new();
     let mut gates = Vec::with_capacity(raw_gates.len());
@@ -560,21 +524,9 @@ pub fn parse_gates_toml(bytes: &[u8]) -> Result<GateRegistry, StatusTableError> 
         let id = gf
             .require_str("id")
             .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-        if !seen_ids.insert(id.clone()) {
-            return Err(StatusTableError::new(
-                &ctx,
-                format!("duplicate gate id `{id}`"),
-            ));
-        }
         let claim_s = gf
             .require_str("claim")
             .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-        let claim = ClaimKind::parse(&claim_s).ok_or_else(|| {
-            StatusTableError::new(
-                &ctx,
-                format!("gate `{id}` has invalid claim `{claim_s}`"),
-            )
-        })?;
         let claim_id = gf
             .require_str("claim_id")
             .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
@@ -587,11 +539,55 @@ pub fn parse_gates_toml(bytes: &[u8]) -> Result<GateRegistry, StatusTableError> 
         let milestone = gf
             .require_str("milestone")
             .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-        let tier = require_str_list(&mut gf, "tier", &ctx, true)?;
-        let controls = require_str_list(&mut gf, "controls", &ctx, true)?;
-        let raw_parts = opt_table_array(&mut gf, "part", &ctx)?;
+        let raw_tier = gf
+            .require_array("tier")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let raw_controls = gf
+            .require_array("controls")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let raw_parts_arr = gf
+            .opt_array("part")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
         gf.finish()
             .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+
+        if !seen_ids.insert(id.clone()) {
+            return Err(StatusTableError::new(
+                &ctx,
+                format!("duplicate gate id `{id}`"),
+            ));
+        }
+        let claim = ClaimKind::parse(&claim_s).ok_or_else(|| {
+            StatusTableError::new(
+                &ctx,
+                format!("gate `{id}` has invalid claim `{claim_s}`"),
+            )
+        })?;
+        let tier = extract_str_list(&raw_tier, "tier", &ctx, true)?;
+        let controls = extract_str_list(&raw_controls, "controls", &ctx, true)?;
+        let raw_parts = match raw_parts_arr {
+            Some(items) => {
+                let mut out = Vec::with_capacity(items.len());
+                for (pidx, sp) in items.into_iter().enumerate() {
+                    match sp.value {
+                        Value::Table(t) => out.push(t),
+                        other => {
+                            return Err(StatusTableError::new(
+                                &ctx,
+                                format!(
+                                    "part[{pidx}] at {}:{}: expected table, found {}",
+                                    sp.line,
+                                    sp.column,
+                                    other.type_name()
+                                ),
+                            ));
+                        }
+                    }
+                }
+                out
+            }
+            None => Vec::new(),
+        };
 
         let mut parts = Vec::with_capacity(raw_parts.len());
         for (pidx, ptbl) in raw_parts.into_iter().enumerate() {
@@ -603,33 +599,15 @@ pub fn parse_gates_toml(bytes: &[u8]) -> Result<GateRegistry, StatusTableError> 
             let status_s = pf
                 .require_str("status")
                 .map_err(|e| StatusTableError::new(&pctx, e.to_string()))?;
-            let status = PartStatus::parse(&status_s).ok_or_else(|| {
-                StatusTableError::new(
-                    &pctx,
-                    format!("gate `{id}` has invalid part status `{status_s}`"),
-                )
-            })?;
             let measured = pf
                 .require_str("measured")
                 .map_err(|e| StatusTableError::new(&pctx, e.to_string()))?;
-            let evidence = require_str_list(&mut pf, "evidence", &pctx, true)?;
+            let raw_evidence = pf
+                .require_array("evidence")
+                .map_err(|e| StatusTableError::new(&pctx, e.to_string()))?;
             let rec_tbl = pf
                 .require_table("recorded")
                 .map_err(|e| StatusTableError::new(&pctx, e.to_string()))?;
-            let rctx = format!("{pctx}.recorded");
-            let mut recf = Fields::new(rec_tbl, &rctx);
-            let date = recf
-                .require_str("date")
-                .map_err(|e| StatusTableError::new(&rctx, e.to_string()))?;
-            let session = recf
-                .require_str("session")
-                .map_err(|e| StatusTableError::new(&rctx, e.to_string()))?;
-            let implemented_by = recf
-                .require_str("implemented_by")
-                .map_err(|e| StatusTableError::new(&rctx, e.to_string()))?;
-            recf.finish()
-                .map_err(|e| StatusTableError::new(&rctx, e.to_string()))?;
-
             let kill_gate = pf
                 .opt_str("kill_gate")
                 .map_err(|e| StatusTableError::new(&pctx, e.to_string()))?;
@@ -644,6 +622,28 @@ pub fn parse_gates_toml(bytes: &[u8]) -> Result<GateRegistry, StatusTableError> 
                 .map_err(|e| StatusTableError::new(&pctx, e.to_string()))?;
             pf.finish()
                 .map_err(|e| StatusTableError::new(&pctx, e.to_string()))?;
+
+            let status = PartStatus::parse(&status_s).ok_or_else(|| {
+                StatusTableError::new(
+                    &pctx,
+                    format!("gate `{id}` has invalid part status `{status_s}`"),
+                )
+            })?;
+            let evidence = extract_str_list(&raw_evidence, "evidence", &pctx, true)?;
+
+            let rctx = format!("{pctx}.recorded");
+            let mut recf = Fields::new(rec_tbl, &rctx);
+            let date = recf
+                .require_str("date")
+                .map_err(|e| StatusTableError::new(&rctx, e.to_string()))?;
+            let session = recf
+                .require_str("session")
+                .map_err(|e| StatusTableError::new(&rctx, e.to_string()))?;
+            let implemented_by = recf
+                .require_str("implemented_by")
+                .map_err(|e| StatusTableError::new(&rctx, e.to_string()))?;
+            recf.finish()
+                .map_err(|e| StatusTableError::new(&rctx, e.to_string()))?;
 
             parts.push(GatePart {
                 milestone: pmilestone,
@@ -1151,15 +1151,19 @@ pub fn parse_formats_toml(bytes: &[u8]) -> Result<FormatRegistry, StatusTableErr
     let schema = rf
         .require_str("schema")
         .map_err(|e| StatusTableError::new("formats.toml", e.to_string()))?;
+    let raw_formats_arr = rf
+        .require_array("format")
+        .map_err(|e| StatusTableError::new("formats.toml", e.to_string()))?;
+    rf.finish()
+        .map_err(|e| StatusTableError::new("formats.toml", e.to_string()))?;
+
     if schema != "frob.formats/1" {
         return Err(StatusTableError::new(
             "formats.toml",
             format!("unexpected schema `{schema}` (expected `frob.formats/1`)"),
         ));
     }
-    let raw_formats = require_table_array(&mut rf, "format", "formats.toml")?;
-    rf.finish()
-        .map_err(|e| StatusTableError::new("formats.toml", e.to_string()))?;
+    let raw_formats = extract_table_list(raw_formats_arr, "format", "formats.toml")?;
 
     let mut seen_ids = BTreeSet::new();
     let mut seen_exts = BTreeSet::new();
@@ -1172,6 +1176,30 @@ pub fn parse_formats_toml(bytes: &[u8]) -> Result<FormatRegistry, StatusTableErr
         let id = ff
             .require_str("id")
             .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let extension = ff
+            .require_str("extension")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let fschema = ff
+            .require_str("schema")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let owner = ff
+            .require_str("owner")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let raw_producers = ff
+            .require_array("producers")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let raw_consumers = ff
+            .require_array("consumers")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let encoding = ff
+            .require_str("encoding")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let raw_kinds = ff
+            .opt_array("kinds")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        ff.finish()
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+
         if !id.starts_with("FMT-") || id.len() <= 4 {
             return Err(StatusTableError::new(
                 &ctx,
@@ -1184,9 +1212,6 @@ pub fn parse_formats_toml(bytes: &[u8]) -> Result<FormatRegistry, StatusTableErr
                 format!("duplicate format id `{id}`"),
             ));
         }
-        let extension = ff
-            .require_str("extension")
-            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
         if !extension.starts_with('.') || extension.len() < 2 {
             return Err(StatusTableError::new(
                 &ctx,
@@ -1199,9 +1224,6 @@ pub fn parse_formats_toml(bytes: &[u8]) -> Result<FormatRegistry, StatusTableErr
                 format!("duplicate format extension `{extension}` on `{id}`"),
             ));
         }
-        let fschema = ff
-            .require_str("schema")
-            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
         if !fschema.starts_with("frob.") || !fschema.contains('/') {
             return Err(StatusTableError::new(
                 &ctx,
@@ -1214,32 +1236,27 @@ pub fn parse_formats_toml(bytes: &[u8]) -> Result<FormatRegistry, StatusTableErr
                 format!("duplicate format schema `{fschema}` on `{id}`"),
             ));
         }
-        let owner = ff
-            .require_str("owner")
-            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
         if owner.trim().is_empty() {
             return Err(StatusTableError::new(&ctx, format!("format `{id}` owner is empty")));
         }
-        let producers = require_str_list(&mut ff, "producers", &ctx, true)?;
+        let producers = extract_str_list(&raw_producers, "producers", &ctx, true)?;
         if producers.is_empty() {
             return Err(StatusTableError::new(&ctx, format!("format `{id}` producers is empty")));
         }
-        let consumers = require_str_list(&mut ff, "consumers", &ctx, true)?;
+        let consumers = extract_str_list(&raw_consumers, "consumers", &ctx, true)?;
         if consumers.is_empty() {
             return Err(StatusTableError::new(&ctx, format!("format `{id}` consumers is empty")));
         }
-        let encoding = ff
-            .require_str("encoding")
-            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
         if encoding != "canonical" && encoding != "view" {
             return Err(StatusTableError::new(
                 &ctx,
                 format!("format `{id}` encoding `{encoding}` must be `canonical` or `view`"),
             ));
         }
-        let kinds = opt_str_list(&mut ff, "kinds", &ctx, true)?;
-        ff.finish()
-            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let kinds = match raw_kinds {
+            Some(items) => extract_str_list(&items, "kinds", &ctx, true)?,
+            None => Vec::new(),
+        };
 
         formats.push(FormatRow {
             id,
@@ -1267,15 +1284,23 @@ fn validate_empty_or_typed_registry(
     let schema = rf
         .require_str("schema")
         .map_err(|e| StatusTableError::new(file_name, e.to_string()))?;
+    let raw_rows = rf
+        .opt_array(row_key)
+        .map_err(|e| StatusTableError::new(file_name, e.to_string()))?;
+    rf.finish()
+        .map_err(|e| StatusTableError::new(file_name, e.to_string()))?;
+
     if schema != expected_schema {
         return Err(StatusTableError::new(
             file_name,
             format!("unexpected schema `{schema}` (expected `{expected_schema}`)"),
         ));
     }
-    let rows = opt_table_array(&mut rf, row_key, file_name)?;
-    rf.finish()
-        .map_err(|e| StatusTableError::new(file_name, e.to_string()))?;
+    let rows = match raw_rows {
+        Some(items) => extract_table_list(items, row_key, file_name)?,
+        None => Vec::new(),
+    };
+
     for (idx, rtbl) in rows.iter().enumerate() {
         let ctx = format!("{file_name}:{row_key}[{idx}]");
         match file_name {
@@ -1287,23 +1312,29 @@ fn validate_empty_or_typed_registry(
                 let _ = f.require_str("summary").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 let _ = f.opt_str("tier").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 let _ = f.opt_str("milestone").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-                let _ = opt_str_list(&mut f, "refusals", &ctx, true)?;
+                let raw_refs = f.opt_array("refusals").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 f.finish().map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+                if let Some(items) = raw_refs {
+                    let _ = extract_str_list(&items, "refusals", &ctx, true)?;
+                }
             }
             "kernels.toml" => {
                 let mut f = Fields::new(rtbl.clone(), &ctx);
                 let _ = f.require_str("id").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 let _ = f.require_str("owner").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 let det = f.require_str("determinism").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+                let dig = f.require_str("source_digest").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+                let raw_targets = f.opt_array("targets").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+                f.finish().map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 if !VALID_DETERMINISM.contains(&det.as_str()) {
                     return Err(StatusTableError::new(&ctx, format!("invalid determinism `{det}`")));
                 }
-                let dig = f.require_str("source_digest").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 if !is_b3_digest(&dig) {
                     return Err(StatusTableError::new(&ctx, format!("invalid source_digest `{dig}`")));
                 }
-                let _ = opt_str_list(&mut f, "targets", &ctx, true)?;
-                f.finish().map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+                if let Some(items) = raw_targets {
+                    let _ = extract_str_list(&items, "targets", &ctx, true)?;
+                }
             }
             "upstream.toml" => {
                 let mut f = Fields::new(rtbl.clone(), &ctx);
@@ -1319,12 +1350,12 @@ fn validate_empty_or_typed_registry(
                 let _ = f.require_str("id").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 let _ = f.require_str("source_repo").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 let rev = f.require_str("source_rev").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-                if !is_hex40(&rev) {
-                    return Err(StatusTableError::new(&ctx, format!("invalid source_rev `{rev}`")));
-                }
                 let _ = f.require_str("target_path").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 let _ = f.require_str("reason").map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
                 f.finish().map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+                if !is_hex40(&rev) {
+                    return Err(StatusTableError::new(&ctx, format!("invalid source_rev `{rev}`")));
+                }
             }
             "capsules.toml" => {
                 let mut f = Fields::new(rtbl.clone(), &ctx);
@@ -1349,16 +1380,22 @@ pub fn validate_refusals_toml(bytes: &[u8]) -> Result<usize, StatusTableError> {
     let schema = rf
         .require_str("schema")
         .map_err(|e| StatusTableError::new("refusals.toml", e.to_string()))?;
+    let exit_tbl = rf
+        .opt_table("exit_rule")
+        .map_err(|e| StatusTableError::new("refusals.toml", e.to_string()))?;
+    let raw_rows = rf
+        .opt_array("refusal")
+        .map_err(|e| StatusTableError::new("refusals.toml", e.to_string()))?;
+    rf.finish()
+        .map_err(|e| StatusTableError::new("refusals.toml", e.to_string()))?;
+
     if schema != "frob.refusals/1" {
         return Err(StatusTableError::new(
             "refusals.toml",
             format!("unexpected schema `{schema}` (expected `frob.refusals/1`)"),
         ));
     }
-    if let Some(exit_tbl) = rf
-        .opt_table("exit_rule")
-        .map_err(|e| StatusTableError::new("refusals.toml", e.to_string()))?
-    {
+    if let Some(exit_tbl) = exit_tbl {
         for (k, sp) in exit_tbl.iter() {
             match &sp.value {
                 Value::Int(v) if (1..=255).contains(v) => {}
@@ -1390,9 +1427,10 @@ pub fn validate_refusals_toml(bytes: &[u8]) -> Result<usize, StatusTableError> {
             }
         }
     }
-    let rows = opt_table_array(&mut rf, "refusal", "refusals.toml")?;
-    rf.finish()
-        .map_err(|e| StatusTableError::new("refusals.toml", e.to_string()))?;
+    let rows = match raw_rows {
+        Some(items) => extract_table_list(items, "refusal", "refusals.toml")?,
+        None => Vec::new(),
+    };
 
     let mut seen_codes = BTreeSet::new();
     for (idx, rtbl) in rows.into_iter().enumerate() {
@@ -1401,6 +1439,27 @@ pub fn validate_refusals_toml(bytes: &[u8]) -> Result<usize, StatusTableError> {
         let code = f
             .require_str("code")
             .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let meaning = f
+            .require_str("meaning")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let _ = f
+            .require_str("defined_in")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let exit = f
+            .require_int("exit")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let retry = f
+            .require_str("retry")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let raw_repairs = f
+            .require_array("repairs")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let raw_raised = f
+            .require_array("raised_by")
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        f.finish()
+            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+
         if !is_refusal_code(&code) {
             return Err(StatusTableError::new(
                 &ctx,
@@ -1413,27 +1472,15 @@ pub fn validate_refusals_toml(bytes: &[u8]) -> Result<usize, StatusTableError> {
                 format!("duplicate refusal code `{code}`"),
             ));
         }
-        let meaning = f
-            .require_str("meaning")
-            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
         if meaning.trim().is_empty() {
             return Err(StatusTableError::new(&ctx, format!("refusal `{code}` meaning is empty")));
         }
-        let _ = f
-            .require_str("defined_in")
-            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
-        let exit = f
-            .require_int("exit")
-            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
         if !(1..=255).contains(&exit) {
             return Err(StatusTableError::new(
                 &ctx,
                 format!("refusal `{code}` exit `{exit}` out of 1..=255"),
             ));
         }
-        let retry = f
-            .require_str("retry")
-            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
         if !matches!(
             retry.as_str(),
             "never" | "after-change" | "after-backoff" | "same-key" | "with-budget"
@@ -1443,10 +1490,8 @@ pub fn validate_refusals_toml(bytes: &[u8]) -> Result<usize, StatusTableError> {
                 format!("refusal `{code}` invalid retry `{retry}`"),
             ));
         }
-        let _ = require_str_list(&mut f, "repairs", &ctx, true)?;
-        let _ = require_str_list(&mut f, "raised_by", &ctx, true)?;
-        f.finish()
-            .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
+        let _ = extract_str_list(&raw_repairs, "repairs", &ctx, true)?;
+        let _ = extract_str_list(&raw_raised, "raised_by", &ctx, true)?;
     }
     Ok(seen_codes.len())
 }
@@ -1456,19 +1501,55 @@ pub fn validate_contract_toml(bytes: &[u8]) -> Result<(), StatusTableError> {
     let root =
         toml::parse(bytes).map_err(|e| StatusTableError::new("contract.toml", e.to_string()))?;
     let mut rf = Fields::new(root, "contract.toml");
-
     let crate_tbl = rf
         .require_table("crate")
         .map_err(|e| StatusTableError::new("contract.toml", e.to_string()))?;
+    let budgets_tbl = rf
+        .require_table("budgets")
+        .map_err(|e| StatusTableError::new("contract.toml", e.to_string()))?;
+    let sm_tbl = rf
+        .require_table("safe_mode")
+        .map_err(|e| StatusTableError::new("contract.toml", e.to_string()))?;
+    let feat_tbl_opt = rf
+        .opt_table("features")
+        .map_err(|e| StatusTableError::new("contract.toml", e.to_string()))?;
+    let api_tbl_opt = rf
+        .opt_table("api")
+        .map_err(|e| StatusTableError::new("contract.toml", e.to_string()))?;
+    rf.finish()
+        .map_err(|e| StatusTableError::new("contract.toml", e.to_string()))?;
+
     {
         let mut cf = Fields::new(crate_tbl, "contract.toml:[crate]");
         let name = cf
             .require_str("name")
             .map_err(|e| StatusTableError::new("contract.toml:[crate]", e.to_string()))?;
+        let layer_opt = cf.take("layer");
+        let rank = cf
+            .require_int("rank")
+            .map_err(|e| StatusTableError::new("contract.toml:[crate]", e.to_string()))?;
+        let plane = cf
+            .require_str("plane")
+            .map_err(|e| StatusTableError::new("contract.toml:[crate]", e.to_string()))?;
+        let det = cf
+            .require_str("determinism")
+            .map_err(|e| StatusTableError::new("contract.toml:[crate]", e.to_string()))?;
+        let ev = cf
+            .require_str("evidence")
+            .map_err(|e| StatusTableError::new("contract.toml:[crate]", e.to_string()))?;
+        let raw_gates = cf
+            .require_array("gates")
+            .map_err(|e| StatusTableError::new("contract.toml:[crate]", e.to_string()))?;
+        let raw_refs = cf
+            .require_array("refusals")
+            .map_err(|e| StatusTableError::new("contract.toml:[crate]", e.to_string()))?;
+        cf.finish()
+            .map_err(|e| StatusTableError::new("contract.toml:[crate]", e.to_string()))?;
+
         if name.trim().is_empty() {
             return Err(StatusTableError::new("contract.toml:[crate]", "name is empty"));
         }
-        let layer_sp = cf.take("layer").ok_or_else(|| {
+        let layer_sp = layer_opt.ok_or_else(|| {
             StatusTableError::new("contract.toml:[crate]", "missing required key `layer`")
         })?;
         match &layer_sp.value {
@@ -1481,41 +1562,29 @@ pub fn validate_contract_toml(bytes: &[u8]) -> Result<(), StatusTableError> {
                 ));
             }
         }
-        let rank = cf
-            .require_int("rank")
-            .map_err(|e| StatusTableError::new("contract.toml:[crate]", e.to_string()))?;
         if rank < 0 {
             return Err(StatusTableError::new("contract.toml:[crate]", "`rank` must be >= 0"));
         }
-        let plane = cf
-            .require_str("plane")
-            .map_err(|e| StatusTableError::new("contract.toml:[crate]", e.to_string()))?;
         if plane != "compute" && plane != "decision" {
             return Err(StatusTableError::new(
                 "contract.toml:[crate]",
                 format!("invalid plane `{plane}` (expected `compute` or `decision`)"),
             ));
         }
-        let det = cf
-            .require_str("determinism")
-            .map_err(|e| StatusTableError::new("contract.toml:[crate]", e.to_string()))?;
         if !VALID_DETERMINISM.contains(&det.as_str()) {
             return Err(StatusTableError::new(
                 "contract.toml:[crate]",
                 format!("invalid determinism `{det}`"),
             ));
         }
-        let ev = cf
-            .require_str("evidence")
-            .map_err(|e| StatusTableError::new("contract.toml:[crate]", e.to_string()))?;
         if !VALID_EVIDENCE.contains(&ev.as_str()) {
             return Err(StatusTableError::new(
                 "contract.toml:[crate]",
                 format!("invalid evidence `{ev}`"),
             ));
         }
-        let _ = require_str_list(&mut cf, "gates", "contract.toml:[crate]", true)?;
-        let refs = require_str_list(&mut cf, "refusals", "contract.toml:[crate]", true)?;
+        let _ = extract_str_list(&raw_gates, "gates", "contract.toml:[crate]", true)?;
+        let refs = extract_str_list(&raw_refs, "refusals", "contract.toml:[crate]", true)?;
         for r in refs {
             if !is_refusal_code(&r) {
                 return Err(StatusTableError::new(
@@ -1524,13 +1593,8 @@ pub fn validate_contract_toml(bytes: &[u8]) -> Result<(), StatusTableError> {
                 ));
             }
         }
-        cf.finish()
-            .map_err(|e| StatusTableError::new("contract.toml:[crate]", e.to_string()))?;
     }
 
-    let budgets_tbl = rf
-        .require_table("budgets")
-        .map_err(|e| StatusTableError::new("contract.toml", e.to_string()))?;
     {
         if budgets_tbl.get("wall_ms").and_then(Value::as_int).is_none() {
             return Err(StatusTableError::new(
@@ -1561,15 +1625,17 @@ pub fn validate_contract_toml(bytes: &[u8]) -> Result<(), StatusTableError> {
         }
     }
 
-    let sm_tbl = rf
-        .require_table("safe_mode")
-        .map_err(|e| StatusTableError::new("contract.toml", e.to_string()))?;
     {
         let mut smf = Fields::new(sm_tbl, "contract.toml:[safe_mode]");
-        for k in ["on_budget", "on_calibration"] {
-            let v = smf
-                .require_str(k)
-                .map_err(|e| StatusTableError::new("contract.toml:[safe_mode]", e.to_string()))?;
+        let on_budget = smf
+            .require_str("on_budget")
+            .map_err(|e| StatusTableError::new("contract.toml:[safe_mode]", e.to_string()))?;
+        let on_calibration = smf
+            .require_str("on_calibration")
+            .map_err(|e| StatusTableError::new("contract.toml:[safe_mode]", e.to_string()))?;
+        smf.finish()
+            .map_err(|e| StatusTableError::new("contract.toml:[safe_mode]", e.to_string()))?;
+        for (k, v) in [("on_budget", on_budget), ("on_calibration", on_calibration)] {
             let valid = v == "reference-path"
                 || v.strip_prefix("refuse:").is_some_and(is_refusal_code);
             if !valid {
@@ -1579,14 +1645,9 @@ pub fn validate_contract_toml(bytes: &[u8]) -> Result<(), StatusTableError> {
                 ));
             }
         }
-        smf.finish()
-            .map_err(|e| StatusTableError::new("contract.toml:[safe_mode]", e.to_string()))?;
     }
 
-    if let Some(feat_tbl) = rf
-        .opt_table("features")
-        .map_err(|e| StatusTableError::new("contract.toml", e.to_string()))?
-    {
+    if let Some(feat_tbl) = feat_tbl_opt {
         for (fname, sp) in feat_tbl.into_inner() {
             let Value::Table(ft) = sp.value else {
                 return Err(StatusTableError::new(
@@ -1599,12 +1660,6 @@ pub fn validate_contract_toml(bytes: &[u8]) -> Result<(), StatusTableError> {
             let tier = ff
                 .require_str("tier")
                 .map_err(|e| StatusTableError::new(&fctx, e.to_string()))?;
-            if !matches!(tier.as_str(), "S" | "F" | "M") {
-                return Err(StatusTableError::new(
-                    &fctx,
-                    format!("invalid feature tier `{tier}` (expected S, F, or M)"),
-                ));
-            }
             let _ = ff
                 .opt_str("kill")
                 .map_err(|e| StatusTableError::new(&fctx, e.to_string()))?;
@@ -1613,18 +1668,23 @@ pub fn validate_contract_toml(bytes: &[u8]) -> Result<(), StatusTableError> {
                 .map_err(|e| StatusTableError::new(&fctx, e.to_string()))?;
             ff.finish()
                 .map_err(|e| StatusTableError::new(&fctx, e.to_string()))?;
+            if !matches!(tier.as_str(), "S" | "F" | "M") {
+                return Err(StatusTableError::new(
+                    &fctx,
+                    format!("invalid feature tier `{tier}` (expected S, F, or M)"),
+                ));
+            }
         }
     }
 
-    if let Some(api_tbl) = rf
-        .opt_table("api")
-        .map_err(|e| StatusTableError::new("contract.toml", e.to_string()))?
-    {
+    if let Some(api_tbl) = api_tbl_opt {
         let mut af = Fields::new(api_tbl, "contract.toml:[api]");
-        if let Some(fok) = af
+        let fok_opt = af
             .opt_table("float_ok")
-            .map_err(|e| StatusTableError::new("contract.toml:[api]", e.to_string()))?
-        {
+            .map_err(|e| StatusTableError::new("contract.toml:[api]", e.to_string()))?;
+        af.finish()
+            .map_err(|e| StatusTableError::new("contract.toml:[api]", e.to_string()))?;
+        if let Some(fok) = fok_opt {
             for (sig, sp) in fok.iter() {
                 match sp.value.as_str() {
                     Some(reason) if !reason.trim().is_empty() => {}
@@ -1637,12 +1697,8 @@ pub fn validate_contract_toml(bytes: &[u8]) -> Result<(), StatusTableError> {
                 }
             }
         }
-        af.finish()
-            .map_err(|e| StatusTableError::new("contract.toml:[api]", e.to_string()))?;
     }
 
-    rf.finish()
-        .map_err(|e| StatusTableError::new("contract.toml", e.to_string()))?;
     Ok(())
 }
 

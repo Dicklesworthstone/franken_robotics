@@ -22,6 +22,42 @@ _E2E_LIB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 E2E_REPO_ROOT="$(cd "${_E2E_LIB_DIR}/../.." && pwd)"
 export E2E_REPO_ROOT
 
+# Source POSIX machine-envelope guard (bead N34-15).
+if [ -f "${E2E_REPO_ROOT}/scripts/lib/envelope.sh" ]; then
+  FROB_REPO_ROOT="${E2E_REPO_ROOT}"
+  export FROB_REPO_ROOT
+  # shellcheck source=scripts/lib/envelope.sh
+  source "${E2E_REPO_ROOT}/scripts/lib/envelope.sh"
+fi
+
+_e2e_is_heavy_cmd() {
+  local w0=""
+  if command -v _frob_unwrap_cmd0 >/dev/null 2>&1; then
+    w0="$(_frob_unwrap_cmd0 "$@")"
+  else
+    w0="${1:-}"
+  fi
+  case "$w0" in
+    cargo|*/cargo) return 0 ;;
+    frob|*/frob)
+      local tok="" seen_frob=0
+      for tok in "$@"; do
+        if [ "$seen_frob" -eq 0 ]; then
+          [ "$tok" = "$w0" ] && seen_frob=1
+          continue
+        fi
+        case "$tok" in
+          -*) continue ;;
+          doctor|capabilities|version|help|status|list|show|inspect|session|schema) return 1 ;;
+          *) return 0 ;;
+        esac
+      done
+      return 1
+      ;;
+  esac
+  return 1
+}
+
 # Global harness state (initialized by e2e_init; preserve caller E2E_SEED if set)
 E2E_SCRIPT=""
 E2E_BEAD=""
@@ -87,7 +123,12 @@ _e2e_ensure_tool() {
     _e2e_harness_error "cargo not found on PATH and FROB_E2E_TOOL is unset"
   fi
   mkdir -p "$tbase"
-  if ! CARGO_TARGET_DIR="$tbase" cargo build -p frob-conformance --bin frob-e2e --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" >&2; then
+  if command -v frob_envelope_run >/dev/null 2>&1; then
+    if ! FROB_ENVELOPE_LOG_FILE="${tbase}/ensure_tool_envelope.ndjson" \
+      frob_envelope_run --class E0 -- env "CARGO_TARGET_DIR=$tbase" cargo build -p frob-conformance --bin frob-e2e --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" >&2; then
+      _e2e_harness_error "failed to build frob-e2e"
+    fi
+  elif ! CARGO_TARGET_DIR="$tbase" cargo build -p frob-conformance --bin frob-e2e --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" >&2; then
     _e2e_harness_error "failed to build frob-e2e"
   fi
   if [ -x "${tbase}/debug/frob-e2e" ]; then
@@ -404,9 +445,10 @@ e2e_init() {
   local plant="${E2E_PLANT_FAILURE:-}"
 
   # Repo provenance (strictly read-only)
-  local commit dirty toolchain frob_ver host_os host_arch host_fp
+  local commit dirty dirty_out toolchain frob_ver host_os host_arch host_fp
   commit="$(git --no-optional-locks -C "${E2E_REPO_ROOT}" rev-parse HEAD 2>/dev/null || echo unknown)"
-  if [ -n "$(git --no-optional-locks -C "${E2E_REPO_ROOT}" status --porcelain --untracked-files=no 2>/dev/null || true)" ]; then
+  dirty_out="$(git --no-optional-locks -C "${E2E_REPO_ROOT}" status --porcelain --untracked-files=no 2>/dev/null || true)"
+  if [ -n "$dirty_out" ]; then
     dirty="true"
   else
     dirty="false"
@@ -543,7 +585,16 @@ e2e_cmd() {
   fi
 
   local kv_out rc=0
-  kv_out="$("${FROB_E2E_TOOL}" "${run_args[@]}" -- "$@")" || rc=$?
+  if command -v frob_envelope_run >/dev/null 2>&1 && _e2e_is_heavy_cmd "$@"; then
+    local env_log="${E2E_META_DIR}/envelope_cmd_${E2E_LAST_CMD_SEQ:-0}_$$.ndjson"
+    local env_args=(--class "${E2E_ENVELOPE_CLASS:-E0}")
+    if [ -n "${E2E_ENVELOPE_APPROVAL:-}" ]; then
+      env_args=("${env_args[@]}" --approval "${E2E_ENVELOPE_APPROVAL}")
+    fi
+    kv_out="$(FROB_ENVELOPE_LOG_FILE="${env_log}" frob_envelope_run "${env_args[@]}" -- "${FROB_E2E_TOOL}" "${run_args[@]}" -- "$@")" || rc=$?
+  else
+    kv_out="$("${FROB_E2E_TOOL}" "${run_args[@]}" -- "$@")" || rc=$?
+  fi
   if [ "$rc" -eq 2 ]; then
     _e2e_harness_error "frob-e2e run failed for command: $*"
   fi
@@ -1185,7 +1236,16 @@ e2e_tier() {
   fi
 
   local kv_out rc=0
-  kv_out="$("${FROB_E2E_TOOL}" "${run_args[@]}" -- "${cmd[@]}")" || rc=$?
+  if command -v frob_envelope_run >/dev/null 2>&1; then
+    local env_log="${E2E_META_DIR}/envelope_tier_${target}_$$.ndjson"
+    local env_args=(--class "${E2E_ENVELOPE_CLASS:-E0}")
+    if [ -n "${E2E_ENVELOPE_APPROVAL:-}" ]; then
+      env_args=("${env_args[@]}" --approval "${E2E_ENVELOPE_APPROVAL}")
+    fi
+    kv_out="$(FROB_ENVELOPE_LOG_FILE="${env_log}" frob_envelope_run "${env_args[@]}" -- "${FROB_E2E_TOOL}" "${run_args[@]}" -- "${cmd[@]}")" || rc=$?
+  else
+    kv_out="$("${FROB_E2E_TOOL}" "${run_args[@]}" -- "${cmd[@]}")" || rc=$?
+  fi
   if [ "$rc" -eq 2 ]; then
     _e2e_harness_error "frob-e2e run failed for e2e_tier ${target}"
   fi

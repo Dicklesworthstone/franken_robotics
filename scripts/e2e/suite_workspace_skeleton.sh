@@ -74,6 +74,14 @@ else
   exit 2
 fi
 
+# Source POSIX machine-envelope guard (bead N34-15).
+if [ -f "${REPO_ROOT}/scripts/lib/envelope.sh" ]; then
+  FROB_REPO_ROOT="${REPO_ROOT}"
+  export FROB_REPO_ROOT
+  # shellcheck source=scripts/lib/envelope.sh
+  source "${REPO_ROOT}/scripts/lib/envelope.sh"
+fi
+
 UTC_STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 mkdir -p "${LOG_BASE}"
 if [ -e "${LOG_BASE}/${UTC_STAMP}.ndjson" ]; then
@@ -445,14 +453,10 @@ begin_step "cargo_check" "Run cargo check --workspace --all-targets through offl
 if [ "${SKIP_CARGO_CHECK}" = "1" ]; then
   record_assert "cargo_check_workspace" "exit" "skip" '{"reason":"--skip-cargo-check or --scratch-only"}'
 else
-  SKELETON_TARGET_DIR="${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/frob-skeleton"
-  TIMEOUT_CMD=()
-  if command -v timeout >/dev/null 2>&1; then
-    TIMEOUT_CMD=(timeout 1200)
-  elif command -v gtimeout >/dev/null 2>&1; then
-    TIMEOUT_CMD=(gtimeout 1200)
-  fi
-  run_logged_cmd "cargo_check" "0" env "CARGO_TARGET_DIR=${SKELETON_TARGET_DIR}" ${TIMEOUT_CMD[@]+"${TIMEOUT_CMD[@]}"} cargo check --manifest-path "${TARGET_ROOT}/Cargo.toml" --workspace --all-targets
+  SKELETON_TARGET_DIR="$(frob_target_dir frob-skeleton)"
+  FROB_ENVELOPE_LOG_FILE="${ARTIFACTS_DIR}/cargo_check.envelope.ndjson" \
+    run_logged_cmd "cargo_check" "0" frob_envelope_run --class E0 --wall-s 1200 -- \
+      env "CARGO_TARGET_DIR=${SKELETON_TARGET_DIR}" cargo check --manifest-path "${TARGET_ROOT}/Cargo.toml" --workspace --all-targets
   if [ "${LAST_EXIT}" -eq 0 ]; then
     record_assert "cargo_check_workspace" "exit" "pass" "{\"observed\":0,\"expected\":0,\"wall_ms\":${LAST_WALL_MS}}"
   else
@@ -657,11 +661,14 @@ asupersync = { path = "${ASUP_ABS}" }
 EOF
   printf 'pub fn probe() {}\n' > "${PROBE_DIR}/src/lib.rs"
   cp "${REPO_ROOT}/rust-toolchain.toml" "${PROBE_DIR}/rust-toolchain.toml"
-  PROBE_TARGET="${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/frob-bd001-salt-probe"
+  PROBE_TARGET="$(frob_target_dir frob-bd001-salt-probe)"
   # Run from PROBE_DIR (outside REPO_ROOT) with FRANKENSIM_DEPGRAPH_SALT and
   # FRANKENSIM_DEPGRAPH_RECEIPT unset so Cargo does not inherit REPO_ROOT/.cargo/config.toml.
   # Never modifies ../frankensim (lockfile lives in PROBE_DIR, target in PROBE_TARGET).
-  run_logged_cmd_in_dir "${PROBE_DIR}" "fs_la_salt_removed_probe" "101" env -u FRANKENSIM_DEPGRAPH_SALT -u FRANKENSIM_DEPGRAPH_RECEIPT "CARGO_TARGET_DIR=${PROBE_TARGET}" cargo check --manifest-path "${PROBE_DIR}/Cargo.toml" --offline
+  FROB_ENVELOPE_LOG_FILE="${ARTIFACTS_DIR}/salt_probe.envelope.ndjson" \
+    run_logged_cmd_in_dir "${PROBE_DIR}" "fs_la_salt_removed_probe" "101" \
+      frob_envelope_run --class E0 --wall-s 600 -- \
+      env -u FRANKENSIM_DEPGRAPH_SALT -u FRANKENSIM_DEPGRAPH_RECEIPT "CARGO_TARGET_DIR=${PROBE_TARGET}" cargo check --manifest-path "${PROBE_DIR}/Cargo.toml" --offline
   if [ "${LAST_EXIT}" -ne 0 ] && grep -q "FRANKENSIM_DEPGRAPH_SALT" "${LAST_STDERR}"; then
     record_control "salt_removed_fs_la_probe" "true" '{"plant":"salt-removed"}'
   else

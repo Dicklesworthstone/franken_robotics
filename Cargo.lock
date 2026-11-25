@@ -9,6 +9,9 @@ version = "0.0.1"
 [[package]]
 name = "frob-conformance"
 version = "0.0.1"
+dependencies = [
+ "frob-core",
+]
 
 [[package]]
 name = "frob-core"

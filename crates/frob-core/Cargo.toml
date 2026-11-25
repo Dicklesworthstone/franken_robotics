@@ -6,11 +6,20 @@ license-file = { workspace = true }
 repository = { workspace = true }
 authors = { workspace = true }
 publish = false
-description = "Core foundational types and strict TOML-subset reader for FrankenRobotics (N34p2-01)."
+description = "Core foundational types, strict TOML-subset reader (N34p2-01), and test-support kit (STD-TEST)."
 
 [package.metadata.frob]
 layer = 0
 rank = 1
+
+[features]
+default = []
+test-support = []
+
+[[test]]
+name = "testkit"
+path = "tests/testkit.rs"
+required-features = ["test-support"]
 
 [lints]
 workspace = true

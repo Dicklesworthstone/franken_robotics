@@ -18,6 +18,7 @@ name = "frob-e2e"
 path = "src/bin/frob-e2e.rs"
 
 [dependencies]
+frob-core = { path = "../frob-core", features = ["test-support"] }
 
 [lints]
 workspace = true

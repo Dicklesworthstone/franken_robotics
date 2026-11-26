@@ -980,7 +980,10 @@ decision = {{ outcome = "fired", adr = "{adr_rel}", session = "session:s2", date
     let derived = apply_decisions(&parsed);
     let gy = derived.get("GATE-Y").unwrap();
     assert_eq!(gy.derived_status(), Status::Killed);
-    assert_eq!(gy.parts[0].detail.as_deref(), Some("KILL-X: cpu-fallback"));
+    assert_eq!(
+        gy.parts[0].detail,
+        Some(format!("KILL-X: cpu-fallback ({adr_rel})"))
+    );
     let printed = render_register_printout(&parsed);
     assert!(printed.contains("killed: fallback adopted (cpu-fallback)"));
 

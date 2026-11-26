@@ -220,7 +220,7 @@ raised_by = ["BD-183", "BD-172", "N21b-16", "N17b-05"]
 
 [[refusal]]
 code = "FROB-REF-612"
-meaning = "Kernel cache entry corrupt (digest check failed) and recompilation unavailable (offline or no device compiler); pointer: cache entry; carries fingerprint { device, digest | null } (due M0/M2)"
+meaning = "Kernel cache entry corrupt (digest check failed) and recompilation unavailable (offline or no device compiler); pointer: cache entry; carries fingerprint { device, digest | null } (due M2)"
 defined_in = "§21.21"
 exit = 6
 retry = "after-change"

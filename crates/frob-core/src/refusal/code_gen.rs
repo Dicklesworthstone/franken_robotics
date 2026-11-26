@@ -47,7 +47,7 @@ pub enum RefusalCode {
     FrobRef610 = 610,
     /// FROB-REF-611 (§21.21): A shape change (capacity, grid size, or layout) was requested inside a running resident environment; pointer: environment shape; carries fingerprint { device, digest | null } (due M2)
     FrobRef611 = 611,
-    /// FROB-REF-612 (§21.21): Kernel cache entry corrupt (digest check failed) and recompilation unavailable (offline or no device compiler); pointer: cache entry; carries fingerprint { device, digest | null } (due M0/M2)
+    /// FROB-REF-612 (§21.21): Kernel cache entry corrupt (digest check failed) and recompilation unavailable (offline or no device compiler); pointer: cache entry; carries fingerprint { device, digest | null } (due M2)
     FrobRef612 = 612,
     /// FROB-REF-613 (§21.21): A specialized kernel is not bit-identical to its generic kernel (bit-identity fence found a differing state or normal form, or no current identity row exists); pointer: specialized kernel; carries fingerprint { device, digest | null } (due M4)
     FrobRef613 = 613,

@@ -382,7 +382,10 @@ fn check_compile_options(options: &CompileOptions, findings: &mut Vec<LintFindin
                     || flag == "-use_fast_math"
                     || flag.starts_with("--use_fast_math=")
                     || flag.starts_with("-use_fast_math=")
-                    || matches!(flag, "-ffast-math" | "--fast-math" | "-fapprox-func")
+                    || matches!(
+                        flag,
+                        "-ffast-math" | "--fast-math" | "-fapprox-func" | "-Ofast"
+                    )
                 {
                     findings.push(LintFinding::new(
                         4,
@@ -566,6 +569,19 @@ fn check_compile_options(options: &CompileOptions, findings: &mut Vec<LintFindin
                         flag,
                         "CUDA macro or pre-include compile option is forbidden outside the prelude (rule 1)",
                     ));
+                } else if !flag.split_once('=').is_some_and(|(name, arch)| {
+                    matches!(name, "-arch" | "--gpu-architecture")
+                        && !arch.is_empty()
+                        && arch.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'_')
+                }) {
+                    findings.push(LintFinding::new(
+                        1,
+                        "<options>",
+                        1,
+                        1,
+                        flag,
+                        "CUDA compile option is outside the dialect allowlist (rule 1)",
+                    ));
                 }
                 idx += 1;
             }
@@ -614,6 +630,7 @@ enum TokenKind {
     CharLit,
     DoubleColon,
     DoubleLBracket,
+    TokenPaste,
     Punct(char),
     Directive { name: String, body: String },
 }
@@ -632,7 +649,7 @@ struct SplicedChar {
     col: usize,
 }
 
-/// ISO C/C++ translation phase 2: splice `\` + newline (`\n` or `\r\n`) before
+/// Splice `\` + newline (LF, CRLF, or CR) before
 /// tokenization while keeping the exact 1-based physical `(line, col)` of every
 /// surviving character. Prevents `rsq\\\nrt`, `fm\\\naf`, `whi\\\nle` evasion.
 fn splice_backslash_newlines(src: &str) -> Vec<SplicedChar> {
@@ -643,22 +660,19 @@ fn splice_backslash_newlines(src: &str) -> Vec<SplicedChar> {
 
     while let Some(ch) = chars.next() {
         if ch == '\\' {
-            if chars.peek() == Some(&'\n') {
-                chars.next();
+            // Clang also splices when horizontal whitespace precedes the newline.
+            let mut clone = chars.clone();
+            while matches!(clone.peek(), Some(' ' | '\t' | '\x0b' | '\x0c')) {
+                clone.next();
+            }
+            if matches!(clone.peek(), Some('\n' | '\r')) {
+                if clone.next() == Some('\r') && clone.peek() == Some(&'\n') {
+                    clone.next();
+                }
+                chars = clone;
                 line += 1;
                 col = 1;
                 continue;
-            }
-            if chars.peek() == Some(&'\r') {
-                let mut clone = chars.clone();
-                clone.next();
-                if clone.peek() == Some(&'\n') {
-                    chars.next();
-                    chars.next();
-                    line += 1;
-                    col = 1;
-                    continue;
-                }
             }
         }
         if ch == '\r' {
@@ -687,12 +701,11 @@ fn splice_backslash_newlines(src: &str) -> Vec<SplicedChar> {
     out
 }
 
-fn tokenize(src: &str) -> Vec<Token> {
-    let sc = splice_backslash_newlines(src);
+fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
+    let sc = splice_backslash_newlines(src.strip_prefix('\u{feff}').unwrap_or(src));
     let n = sc.len();
     let mut tokens = Vec::new();
     let mut i = 0usize;
-    let mut at_line_start = true;
 
     while i < n {
         let cur = sc[i];
@@ -730,6 +743,27 @@ fn tokenize(src: &str) -> Vec<Token> {
                 }
                 i += 1;
             }
+            continue;
+        }
+
+        // Token pasting uses the longest match, including the `%:%:` digraph.
+        let starts_with = |text: &str| {
+            let remaining = sc[i..].iter().map(|c| c.ch);
+            remaining.take(text.len()).eq(text.chars())
+        };
+        let paste_width = match ch {
+            '#' if starts_with("##") => 2,
+            '%' if starts_with("%:%:") => 4,
+            _ => 0,
+        };
+        if paste_width != 0 {
+            tokens.push(Token {
+                kind: TokenKind::TokenPaste,
+                line: cur.line,
+                column: cur.col,
+            });
+            i += paste_width;
+            at_line_start = false;
             continue;
         }
 
@@ -850,7 +884,13 @@ fn tokenize(src: &str) -> Vec<Token> {
             let start_line = cur.line;
             let start_col = cur.col;
             let mut num = String::new();
-            while i < n && (sc[i].ch.is_ascii_alphanumeric() || sc[i].ch == '.' || sc[i].ch == '_')
+            while i < n
+                && (sc[i].ch.is_ascii_alphanumeric()
+                    || matches!(sc[i].ch, '.' | '_')
+                    || (sc[i].ch == '\''
+                        && sc
+                            .get(i + 1)
+                            .is_some_and(|next| next.ch.is_ascii_alphanumeric() || next.ch == '_')))
             {
                 if matches!(sc[i].ch, 'e' | 'E' | 'p' | 'P')
                     && i + 1 < n
@@ -1094,7 +1134,7 @@ fn split_directive_head(trimmed: &str) -> (&str, &str) {
 
 /// Shape-class constant block: only simple scalar `#define NAME <int-literal>` is allowed.
 fn lint_shape_constants(file: &SourceFile, findings: &mut Vec<LintFinding>) {
-    for tok in tokenize(&file.contents) {
+    for tok in tokenize(&file.contents, true) {
         match &tok.kind {
             TokenKind::Directive { name, body } if name == "define" => {
                 if !is_valid_shape_constant_define(body) {
@@ -1184,7 +1224,7 @@ fn is_unsigned_or_int_literal(s: &str) -> bool {
 /// Prelude header: exempt from rule 1, but checked for rules 3, 4 (contraction/fast-math
 /// pragmas, `_Pragma`, `fast::`, and explicit FMA), and 6 (spin loops / grid barriers).
 fn lint_prelude(file: &SourceFile, findings: &mut Vec<LintFinding>) {
-    let tokens = tokenize(&file.contents);
+    let tokens = tokenize(&file.contents, true);
     scan_prelude_tokens(&file.name, &tokens, None, findings);
 }
 
@@ -1215,8 +1255,19 @@ fn scan_prelude_tokens(
             }
             TokenKind::Directive { name, body } if name == "define" => {
                 let rhs = skip_define_head(body);
-                let inner = tokenize(rhs);
+                let inner = tokenize(rhs, false);
                 scan_prelude_tokens(file, &inner, Some((line, col)), findings);
+                i += 1;
+            }
+            TokenKind::TokenPaste => {
+                findings.push(LintFinding::new(
+                    4,
+                    file,
+                    line,
+                    col,
+                    "##",
+                    "token pasting can form uninspected pragmas or intrinsics (rule 4)",
+                ));
                 i += 1;
             }
             TokenKind::Ident(id) => {
@@ -1368,7 +1419,7 @@ fn skip_define_head(body: &str) -> &str {
 
 /// Kernel source file (generated body or hand-written skeleton): enforce rules 1, 2, 3, 4, 6.
 fn lint_kernel_source(file: &SourceFile, findings: &mut Vec<LintFinding>) {
-    let tokens = tokenize(&file.contents);
+    let tokens = tokenize(&file.contents, true);
     let len = tokens.len();
     let mut i = 0usize;
 
@@ -1785,7 +1836,7 @@ fn check_source_ident(
 // ============================================================================
 
 fn is_forbidden_fp_pragma(body: &str) -> bool {
-    let lower = body.to_ascii_lowercase();
+    let lower = strip_comments_inline(body).to_ascii_lowercase();
     let compact: String = lower.chars().filter(|c| !c.is_ascii_whitespace()).collect();
     // Explicit contraction-on / fast / default pragmas
     if compact.contains("fp_contracton") || compact.contains("fp_contractdefault") {
@@ -1920,7 +1971,7 @@ fn is_banned_atomic_ident(id: &str) -> bool {
     if ALLOWED_FROB_ATOMICS.contains(&id) || id == "frob_atomic_u32" {
         return false;
     }
-    if id.starts_with("FROB_ATOMIC_") {
+    if id.starts_with("FROB_ATOMIC_") || id == "frob_atomic_u32_ptr" {
         return true;
     }
     // `atomic_thread_fence` is a barrier (rules 1 & 6), not an arithmetic atomic.
@@ -2041,6 +2092,7 @@ fn token_label(kind: &TokenKind) -> String {
         TokenKind::CharLit => "'...'".to_owned(),
         TokenKind::DoubleColon => "::".to_owned(),
         TokenKind::DoubleLBracket => "[[".to_owned(),
+        TokenKind::TokenPaste => "##".to_owned(),
         TokenKind::Punct(c) => c.to_string(),
         TokenKind::Directive { name, .. } => format!("#{name}"),
     }
@@ -2396,21 +2448,25 @@ mod tests {
 
     #[test]
     fn prelude_contraction_pragma_is_rejected_under_rule_4() {
-        let bad_pre = DialectUnit::default()
-            .with_prelude(SourceFile::new(
-                "prelude_bad.h",
-                "#pragma clang fp contract(fast)\n",
-            ))
-            .with_source(SourceFile::new("ok.h", "f32 y = a * b;\n"));
-        let findings = collect_findings(&bad_pre, &CompileOptions::metal_safe());
-        assert_eq!(findings.len(), 1, "got {findings:?}");
-        assert_eq!(findings[0].rule, 4);
-        assert_eq!(
-            lint(&bad_pre, &CompileOptions::metal_safe())
-                .unwrap_err()
-                .code,
-            RefusalCode::FrobRef251
-        );
+        let opts = CompileOptions::metal_safe();
+        let arithmetic = "f32 probe(f32 a, f32 b, f32 c) { return a*b+c; }\n";
+        let unit = DialectUnit::single_source("ok.h", arithmetic);
+        assert!(lint(&unit, &opts).is_ok());
+        for prelude in [
+            "#pragma clang fp contract(fast)\n",
+            "\u{feff}#pragma clang fp contract(on)\n",
+            "_Pragma(\"clang fp contract(/* separator */ on)\")\n",
+            "#define DO_PRAGMA _Pra ## gma\nDO_PRAGMA(\"clang fp contract(on)\")\n",
+            "#define DO_PRAGMA _Pra %:%: gma\nDO_PRAGMA(\"clang fp contract(on)\")\n",
+        ] {
+            let bad = unit
+                .clone()
+                .with_prelude(SourceFile::new("prelude_bad.h", prelude));
+            let findings = collect_findings(&bad, &opts);
+            assert_eq!(findings.len(), 1, "{prelude:?}: {findings:?}");
+            assert_eq!(findings[0].rule, 4);
+            assert_eq!(lint(&bad, &opts).unwrap_err().code, RefusalCode::FrobRef251);
+        }
     }
 
     #[test]
@@ -2419,6 +2475,8 @@ mod tests {
         let cases: &[(&str, &[u8], &str)] = &[
             ("f32 y = rsq\\\nrt(x);\n", &[3], "rsqrt"),
             ("f32 y = fm\\\r\naf(a, b, c);\n", &[4], "fmaf"),
+            ("f32 y = fm\\\raf(a, b, c);\n", &[4], "fmaf"),
+            ("f32 y = fm\\ \t\naf(a, b, c);\n", &[4], "fmaf"),
             (
                 "whi\\\nle (FROB_ATOMIC_MAX_U32(p, 0u) < n) {}\n",
                 &[6],
@@ -2437,6 +2495,34 @@ mod tests {
                     .iter()
                     .all(|f| f.token == expected_tok && f.line == 1),
                 "src={src:?} findings={findings:?}"
+            );
+            assert_eq!(
+                lint(&unit, &opts).unwrap_err().code,
+                RefusalCode::FrobRef251
+            );
+        }
+    }
+
+    #[test]
+    fn lint_keeps_findings_after_cpp_digit_separators() {
+        let opts = CompileOptions::cuda_safe("sm_89");
+        for (src, rule, token) in [
+            (
+                "f32 probe(f32 a, f32 b, f32 c) { return 1'000.0f + __builtin_fmaf(a,b,c); }",
+                1,
+                "__builtin_fmaf",
+            ),
+            (
+                "void probe() { u32 n = 1'000u; while (n) { --n; } }",
+                6,
+                "while",
+            ),
+        ] {
+            let unit = DialectUnit::single_source("digits.h", src);
+            let findings = collect_findings(&unit, &opts);
+            assert!(
+                findings.iter().any(|f| f.rule == rule && f.token == token),
+                "{findings:?}"
             );
             assert_eq!(
                 lint(&unit, &opts).unwrap_err().code,
@@ -2619,6 +2705,7 @@ mod tests {
         for (bad_opts, expected_rule) in [
             (vec!["--fmad=false", "--fmad=True"], 4),
             (vec!["--fmad=false", "-ffast-math"], 4),
+            (vec!["--fmad=false", "-Ofast"], 4),
             (vec!["--fmad=false", "-fapprox-func"], 4),
             (vec!["--fmad=false", "-ffp-contract=fast"], 4),
             (vec!["--fmad=false", "--ftz=True"], 4),
@@ -2628,6 +2715,8 @@ mod tests {
             (vec!["--fmad=false", "-UFROB_SQRT"], 1),
             (vec!["--fmad=false", "-include", "evil.h"], 1),
             (vec!["--fmad=false", "--pre-include=evil.h"], 1),
+            (vec!["--fmad=false", "--include-path=/unreviewed"], 1),
+            (vec!["--fmad=false", "-I/unreviewed"], 1),
         ] {
             let opts = CompileOptions::Cuda {
                 options: bad_opts.into_iter().map(str::to_owned).collect(),

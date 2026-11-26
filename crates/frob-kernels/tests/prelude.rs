@@ -211,6 +211,25 @@ fn cuda_unsigned_atomics_reject_float_pointer() {
         !bad.status.success() && diagnostic.contains("frob_atomic_u32_ptr"),
         "{diagnostic}"
     );
+
+    let overload = assemble_unit(
+        BackendTarget::Cuda,
+        None,
+        vec![SourceFile::new(
+            "atomic_overload.h",
+            "FROB_FN float* frob_atomic_u32_ptr(float* p) { return p; }\n\
+             FROB_FN void probe(FROB_PTR(float) p) { FROB_ATOMIC_ADDW_U32(p, 1u); }\n",
+        )],
+    );
+    let opts = BackendTarget::Cuda.production_options();
+    let findings = collect_findings(&overload, &opts);
+    assert_eq!(findings.len(), 1, "{findings:?}");
+    assert_eq!(findings[0].rule, 2);
+    assert_eq!(findings[0].token, "frob_atomic_u32_ptr");
+    assert_eq!(
+        lint(&overload, &opts).unwrap_err().code,
+        RefusalCode::FrobRef251
+    );
 }
 
 #[test]

@@ -128,8 +128,19 @@ fn contract_toml_validates_against_strict_toml_and_refusal_registry() {
     assert_eq!(c.require_str("determinism").unwrap(), "D0");
     assert_eq!(c.require_str("evidence").unwrap(), "Tested");
     let _gates = c.require_array("gates").unwrap();
-    for sp in c.require_array("refusals").unwrap() {
-        let code = sp.value.as_str().expect("refusal code must be string");
+    let refusals = c.require_array("refusals").unwrap();
+    let codes: Vec<_> = refusals
+        .iter()
+        .map(|sp| sp.value.as_str().expect("refusal code must be string"))
+        .collect();
+    let required = ["FROB-REF-802", "FROB-REF-990"];
+    let missing = |codes: &[&str]| required.into_iter().find(|code| !codes.contains(code));
+    assert_eq!(missing(&codes), None, "missing emitted contract refusal");
+    for code in required {
+        let planted: Vec<_> = codes.iter().copied().filter(|&c| c != code).collect();
+        assert_eq!(missing(&planted), Some(code));
+    }
+    for code in codes {
         reg.lookup(code, "frob-kernels/contract.toml")
             .unwrap_or_else(|e| panic!("contract.toml refusal `{code}` not in registry: {e}"));
     }

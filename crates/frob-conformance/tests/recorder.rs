@@ -446,6 +446,32 @@ fn record_history_directory_refuses_then_retry_repairs_each_effect_once() {
     assert_eq!(fs::read_to_string(&log).unwrap(), saved_log);
     assert_eq!(fs::read(&readme).unwrap(), saved_readme);
     assert!(record_gate(&opts).unwrap().idempotent_noop);
+
+    for (path, complete) in [
+        (&history, saved_history.as_bytes()),
+        (&log, saved_log.as_bytes()),
+    ] {
+        // A complete final JSON record needs no terminating newline. Removing its closing
+        // brace as well models the interrupted append left by the old recorder.
+        fs::write(path, &complete[..complete.len() - 1]).unwrap();
+        assert!(record_gate(&opts).unwrap().idempotent_noop);
+        let torn = &complete[..complete.len() - 2];
+        let offset = torn.iter().rposition(|&byte| byte == b'\n').unwrap() + 1;
+        assert!(json::admit(&torn[offset..], &Limits::default()).is_err());
+        fs::write(path, torn).unwrap();
+        let err = record_gate(&opts).expect_err("an incomplete NDJSON row must refuse");
+        assert_eq!(err.reason, "ndjson-invalid");
+        assert!(
+            err.detail
+                .contains(&format!("`{}` at byte {offset}", path.display())),
+            "{err}"
+        );
+        assert_eq!(fs::read(path).unwrap(), torn);
+        assert_eq!(fs::read(&gates).unwrap(), saved_gates);
+        assert_eq!(fs::read(&readme).unwrap(), saved_readme);
+        fs::write(path, complete).unwrap();
+    }
+    assert!(record_gate(&opts).unwrap().idempotent_noop);
 }
 
 #[test]

@@ -31,7 +31,7 @@ use frob_core::json::{self, Limits};
 use frob_core::stack::build_identity::{GateClass, may_cite_mode_str};
 use frob_core::testkit::registry::{Control, Controls, LastSeen};
 
-use crate::control_runner::{CONTROL_HISTORY_PATH, ControlHistoryEntry};
+use crate::control_runner::{CONTROL_HISTORY_PATH, ControlHistoryEntry, parse_history_ndjson};
 use crate::controls::{CONTROLS_PATH, serialize_controls_file};
 use crate::reasons::HarnessReason;
 use crate::register::print::readme_table;
@@ -557,8 +557,9 @@ pub struct RecordOutput {
 
 /// Execute Steps 1–10 of the gate recorder under the exclusive registry lock (`N38b-19`).
 ///
-/// On any refusal, no file on disk is modified (`registries/gates.toml`, `controls.toml`,
-/// `control_history.ndjson`, `receipts/gates/`, and `docs/delivery/logs/` stay byte-identical).
+/// Preflight refusals leave all outputs unchanged. The registry rename commits the verified
+/// receipts and gate row. A later publication failure returns `recording-incomplete`; retrying
+/// the same record finishes its derived outputs using the committed date.
 pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> {
     let registry_path = opts
         .registry_path
@@ -1072,6 +1073,7 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
     ) {
         writes.push(RecordingWrite::replace(path.clone(), bytes.to_vec())?);
     }
+    let commit_at = writes.len();
     let registry_bytes = if matching_part.is_some() {
         reg_bytes.clone()
     } else {
@@ -1108,7 +1110,11 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
             })
             .collect::<Result<Vec<_>, _>>()?;
         if !history_lines.is_empty() {
-            writes.push(RecordingWrite::append(history_path, &history_lines)?);
+            writes.push(RecordingWrite::append(
+                history_path,
+                &history_lines,
+                |line| parse_history_ndjson(line, "control history").map(|_| ()),
+            )?);
         }
     }
     let bead_log_path = opts.bead_id.as_ref().map(|bead_id| {
@@ -1131,7 +1137,15 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
         let cb = canon::to_canonical(&line).map_err(|e| {
             RecordRefusal::custom("canon-error", e.to_string(), "Fix bead log fields")
         })?;
-        writes.push(RecordingWrite::append(path.clone(), &[cb.as_str()])?);
+        writes.push(RecordingWrite::append(
+            path.clone(),
+            &[cb.as_str()],
+            |line| {
+                json::admit(line.as_bytes(), &Limits::default())
+                    .map(|_| ())
+                    .map_err(|e| e.to_string())
+            },
+        )?);
     }
 
     let mut regenerated_files = Vec::new();
@@ -1150,8 +1164,8 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
         }
         writes.push(write);
     }
-    // Publish the gate row only after its receipts and derived outputs are available.
-    writes.push(registry_write);
+    // Verified receipts precede the commit point. The derived files can be repaired after it.
+    writes.insert(commit_at, registry_write);
     let idempotent_noop = writes.iter().all(|write| !write.changed());
     let output = RecordOutput {
         gate_id: gate.id.clone(),
@@ -1188,7 +1202,7 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
         }
     }
 
-    publish_recording(writes)?;
+    publish_recording(writes, commit_at)?;
     Ok(output)
 }
 
@@ -1753,9 +1767,29 @@ impl RecordingWrite {
         })
     }
 
-    fn append(path: PathBuf, lines: &[impl AsRef<str>]) -> Result<Self, RecordRefusal> {
+    fn append(
+        path: PathBuf,
+        lines: &[impl AsRef<str>],
+        validate_line: impl Fn(&str) -> Result<(), String>,
+    ) -> Result<Self, RecordRefusal> {
         let mut write = Self::replace(path, Vec::new())?;
         write.after = write.before.clone().unwrap_or_default();
+        let invalid = |offset, detail| {
+            RecordRefusal::custom(
+                "ndjson-invalid",
+                format!("`{}` at byte {offset}: {detail}", write.path.display()),
+                "Repair the NDJSON file, then retry the same recording",
+            )
+        };
+        let existing = std::str::from_utf8(&write.after)
+            .map_err(|e| invalid(e.valid_up_to(), e.to_string()))?;
+        let mut offset = 0;
+        for line in existing.split_inclusive('\n') {
+            if !line.trim().is_empty() {
+                validate_line(line.trim()).map_err(|e| invalid(offset, e))?;
+            }
+            offset += line.len();
+        }
         for line in lines {
             let line = line.as_ref().as_bytes();
             if write
@@ -1900,11 +1934,12 @@ impl Drop for StagedRecordingWrite {
     }
 }
 
-fn publish_recording(writes: Vec<RecordingWrite>) -> Result<(), RecordRefusal> {
+fn publish_recording(writes: Vec<RecordingWrite>, commit_at: usize) -> Result<(), RecordRefusal> {
     let mut parents = RecordingParents::default();
     let mut destinations = BTreeSet::new();
     let mut staged = Vec::new();
-    for write in writes {
+    let mut staged_commit = None;
+    for (index, write) in writes.into_iter().enumerate() {
         if read_recording_file(&write.path)? != write.before {
             return Err(recording_io(
                 "preflight",
@@ -1934,11 +1969,33 @@ fn publish_recording(writes: Vec<RecordingWrite>) -> Result<(), RecordRefusal> {
             ));
         }
         if write.changed() {
+            if index == commit_at {
+                staged_commit = Some(staged.len());
+            }
             staged.push(StagedRecordingWrite::new(write)?);
         }
     }
+    publish_staged(&mut staged, staged_commit)?;
+    parents.published = true;
+    Ok(())
+}
+
+fn publish_staged(
+    staged: &mut [StagedRecordingWrite],
+    commit_at: Option<usize>,
+) -> Result<(), RecordRefusal> {
     for index in 0..staged.len() {
         if let Err(e) = staged[index].publish() {
+            if commit_at.is_none_or(|commit| index > commit) {
+                return Err(RecordRefusal::custom(
+                    "recording-incomplete",
+                    format!(
+                        "gate register committed, but publishing `{}` failed: {e}",
+                        staged[index].path.display()
+                    ),
+                    "Correct the destination and retry the same recording to finish publication",
+                ));
+            }
             let mut error = recording_io("publish", &staged[index].path, e);
             for previous in staged[..index].iter_mut().rev() {
                 if let Err(rollback) = previous.restore() {
@@ -1952,8 +2009,60 @@ fn publish_recording(writes: Vec<RecordingWrite>) -> Result<(), RecordRefusal> {
             return Err(error);
         }
     }
-    parents.published = true;
     Ok(())
+}
+
+#[cfg(test)]
+mod publication_tests {
+    use super::*;
+
+    #[test]
+    fn gate_rename_separates_rollback_from_retry_repair() {
+        for (failure, committed) in [(1, false), (3, true)] {
+            let scratch = std::env::temp_dir().join(format!(
+                "frob-n38b19-publication-{}-{failure}",
+                std::process::id()
+            ));
+            fs::create_dir(&scratch).unwrap();
+            let receipt = scratch.join("receipt.json");
+            let gates = scratch.join("gates.toml");
+            let controls = scratch.join("controls.toml");
+            let history = scratch.join("history.ndjson");
+            fs::write(&gates, b"original gate").unwrap();
+            fs::write(&controls, b"original controls").unwrap();
+            let mut staged = [&receipt, &gates, &controls, &history].map(|path| {
+                StagedRecordingWrite::new(
+                    RecordingWrite::replace(path.to_owned(), b"recording".to_vec()).unwrap(),
+                )
+                .unwrap()
+            });
+            // Induce an actual rename failure after every output has been staged.
+            fs::rename(
+                staged[failure].stage.join("pending"),
+                scratch.join("planted"),
+            )
+            .unwrap();
+            let err = publish_staged(&mut staged, Some(1)).unwrap_err();
+            assert_eq!(
+                err.reason,
+                if committed {
+                    "recording-incomplete"
+                } else {
+                    "io-error"
+                }
+            );
+            assert!(!history.exists());
+            if committed {
+                assert_eq!(fs::read(receipt).unwrap(), b"recording");
+                assert_eq!(fs::read(gates).unwrap(), b"recording");
+                assert_eq!(fs::read(controls).unwrap(), b"recording");
+            } else {
+                assert!(!receipt.exists());
+                assert_eq!(fs::read(gates).unwrap(), b"original gate");
+                assert_eq!(fs::read(controls).unwrap(), b"original controls");
+            }
+        }
+    }
 }
 
 fn utc_today_iso() -> String {

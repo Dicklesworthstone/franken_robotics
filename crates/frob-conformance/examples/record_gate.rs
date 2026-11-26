@@ -6,8 +6,10 @@
 //!   cargo run -p frob-conformance --example record_gate -- --gate <id> --receipt <hash> [--receipt <hash> ...] [--part <milestone>]
 //!   cargo run -p frob-conformance --example record_gate -- reaffirm --registry <path> ...
 //!
-//! Exits `0` on success (or idempotent no-op) and `3` on any refusal or unknown mode word,
-//! printing `reason=<id> ...` and leaving `registries/gates.toml` byte-identical.
+//! Exits `0` on success, including an idempotent no-op, and `3` on failure.
+//! Recorder failures print `reason=<id> ...`. Before the commit point the register
+//! remains unchanged. `recording-incomplete` means the gate row committed and
+//! retrying the same inputs will finish its derived files.
 
 use std::collections::BTreeSet;
 use std::env;

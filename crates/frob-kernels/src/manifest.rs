@@ -2080,18 +2080,21 @@ impl KernelRegistry {
                 "expected schema `{KERNEL_REGISTRY_SCHEMA}`, got `{schema}`"
             ))));
         }
-        let mut rows = Vec::new();
-        if let Some(arr) = top
+        let raw_kernels = top
             .opt_array("kernel")
-            .map_err(|e| ManifestError::Registry(e.to_string()))?
-        {
+            .map_err(|e| ManifestError::Registry(e.to_string()))?;
+        top.finish()
+            .map_err(|e| ManifestError::Registry(e.to_string()))?;
+
+        let mut rows = Vec::new();
+        if let Some(arr) = raw_kernels {
             for (idx, sp) in arr.into_iter().enumerate() {
                 let tbl = match sp.value {
                     TVal::Table(t) => t,
                     _ => {
-                        return Err(top.fail(ManifestError::Registry(format!(
+                        return Err(ManifestError::Registry(format!(
                             "kernel[{idx}] must be a table"
-                        ))));
+                        )));
                     }
                 };
                 let ctx = format!("kernel[{idx}]");
@@ -2105,29 +2108,27 @@ impl KernelRegistry {
                 let id_s = f
                     .require_str("id")
                     .map_err(|e| ManifestError::Registry(e.to_string()))?;
-                let id = match KernelId::from_hex(&id_s) {
-                    Ok(id) => id,
-                    Err(e) => return Err(f.fail(e)),
-                };
+                let origin_sp = f.take("origin");
+                let raw_lowers = f
+                    .opt_array("lowers")
+                    .map_err(|e| ManifestError::Registry(e.to_string()))?;
+                f.finish()
+                    .map_err(|e| ManifestError::Registry(e.to_string()))?;
+
+                let id = KernelId::from_hex(&id_s)?;
 
                 // `origin` is required; error must name the kernel.
-                let origin = match parse_origin(&mut f, &name) {
-                    Ok(o) => o,
-                    Err(e) => return Err(f.fail(e)),
-                };
+                let origin = parse_origin_value(origin_sp, &name)?;
 
                 let mut lowers = Vec::new();
-                if let Some(l_arr) = f
-                    .opt_array("lowers")
-                    .map_err(|e| ManifestError::Registry(e.to_string()))?
-                {
+                if let Some(l_arr) = raw_lowers {
                     for (li, lsp) in l_arr.into_iter().enumerate() {
                         let ltbl = match lsp.value {
                             TVal::Table(t) => t,
                             _ => {
-                                return Err(f.fail(ManifestError::Registry(format!(
+                                return Err(ManifestError::Registry(format!(
                                     "kernel `{name}` lowers[{li}] must be table"
-                                ))));
+                                )));
                             }
                         };
                         let mut lf = Fields::new(ltbl, &format!("{name}.lowers[{li}]"));
@@ -2153,8 +2154,6 @@ impl KernelRegistry {
                         });
                     }
                 }
-                f.finish()
-                    .map_err(|e| ManifestError::Registry(e.to_string()))?;
                 rows.push(KernelRegistryRow {
                     name,
                     manifest_path,
@@ -2164,8 +2163,6 @@ impl KernelRegistry {
                 });
             }
         }
-        top.finish()
-            .map_err(|e| ManifestError::Registry(e.to_string()))?;
         Ok(Self {
             digest: hash_blob(bytes),
             rows,
@@ -2173,8 +2170,11 @@ impl KernelRegistry {
     }
 }
 
-fn parse_origin(f: &mut Fields, kernel: &str) -> Result<KernelOrigin, ManifestError> {
-    let Some(sp) = f.take("origin") else {
+fn parse_origin_value(
+    origin_sp: Option<toml::Spanned<TVal>>,
+    kernel: &str,
+) -> Result<KernelOrigin, ManifestError> {
+    let Some(sp) = origin_sp else {
         return Err(ManifestError::Registry(format!(
             "kernel `{kernel}` is missing required `origin` provenance field"
         )));

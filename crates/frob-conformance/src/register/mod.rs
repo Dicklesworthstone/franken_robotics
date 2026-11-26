@@ -9,6 +9,7 @@
 
 pub mod counts;
 pub mod kill;
+pub mod print;
 pub mod record;
 pub mod row;
 pub mod validate;

@@ -3843,6 +3843,7 @@ dependencies = [
 name = "xtask"
 version = "0.0.1"
 dependencies = [
+ "frob-conformance",
  "frob-core",
  "fs-blake3",
  "regex-lite",

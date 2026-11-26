@@ -107,7 +107,10 @@ fn stance_lp_farkas_object_builds() {
 
     assert_eq!(obj.kind(), ProofKind::LpFarkas);
     assert_eq!(obj.expects(), Expected::excluded_certified());
-    let b0 = &obj.establishes().cell().bounds()[0];
+    let cell = obj.establishes().cell();
+    let b0 = &cell.bounds()[0];
+    assert_eq!(b0.var().as_str(), "v");
+    assert_eq!(cell.units(), &[Unit::new("m^-1").unwrap()]);
     assert_eq!(b0.lower(), Ratio::new(14, 3).unwrap());
     assert_eq!(b0.lower_end(), BoundEnd::Open);
     assert_eq!(b0.upper(), Ratio::from_int(6));
@@ -166,6 +169,47 @@ fn stance_lp_farkas_object_builds() {
         assert_eq!(project(&p.rhs_w, v), expected);
         assert_ne!(project(&frozen_rhs, v), expected);
     }
+}
+
+#[test]
+fn farkas_rhs_variables_match_cell_bindings() {
+    let obj = build_stance_lp_farkas();
+    let ProofPayload::LpFarkas(farkas) = obj.payload() else {
+        panic!("stance payload");
+    };
+    let with_rhs = |rhs| {
+        let mut changed = farkas.clone();
+        changed.rhs_w[2] = rhs;
+        ProofObject::new(
+            obj.id().clone(),
+            obj.kind(),
+            obj.cell().clone(),
+            obj.establishes().clone(),
+            ProofPayload::LpFarkas(changed),
+            obj.side_conditions().to_vec(),
+            obj.primitive_equations().to_vec(),
+            obj.assumptions().to_vec(),
+            obj.support().clone(),
+            obj.expects(),
+        )
+    };
+    for (name, unit) in [("v", Unit::seconds()), ("q", Unit::new("m^-1").unwrap())] {
+        let mut builder = ExprBuilder::new();
+        let scale = builder.constant(Ratio::from_int(30));
+        let var = builder.var(name, unit);
+        let root = builder.product(vec![scale, var]);
+        assert!(matches!(
+            with_rhs(builder.build(root).unwrap()),
+            Err(ProofError::InvalidPayload { kind: "lp-farkas", detail }) if detail.contains(&format!("rhs_w[2] variable `{name}`"))
+        ));
+    }
+    let rhs = &farkas.rhs_w[2];
+    let mut nodes = rhs.nodes().to_vec();
+    nodes.push(ExprNode::Var {
+        name: "q".to_owned(),
+        unit: Unit::seconds(),
+    });
+    assert!(with_rhs(ExprDag::new(nodes, rhs.root()).unwrap()).is_ok());
 }
 
 #[test]
@@ -230,26 +274,79 @@ fn first_moment_is_not_a_torque() {
 fn port_order_is_identity() {
     let a = build_stance_lp_primal(false);
     let b = build_stance_lp_primal(true);
-    for (obj, numerator) in [(&a, 180), (&b, 140)] {
+    let contacts = [
+        ("foot.pp", [(1, 3), (3, 14)]),
+        ("foot.pm", [(1, 3), (-3, 14)]),
+        ("foot.mp", [(-1, 3), (3, 14)]),
+        ("foot.mm", [(-1, 3), (-3, 14)]),
+    ]
+    .map(|(id, xy)| (id, xy.map(|(n, d)| Ratio::new(n, d).unwrap())));
+    for (obj, order, numerators) in [
+        (&a, [0, 1, 2, 3], [180, 420]),
+        (&b, [0, 2, 1, 3], [140, 540]),
+    ] {
         let ProofPayload::LpPrimal(p) = obj.payload() else {
             panic!("stance payload");
         };
+        let actual: Vec<_> = p
+            .ports
+            .as_slice()
+            .iter()
+            .zip(&p.contact_coords)
+            .map(|(port, [x, y])| (port.as_str(), [x.value(), y.value()]))
+            .collect();
+        assert_eq!(
+            actual,
+            order.map(|i| contacts[i]),
+            "ordered port coordinates"
+        );
         let forces = vertex_force_values(&p.vertices[0]);
         assert_eq!(forces, &[160, 130, 110, 0].map(Ratio::from_int));
         assert_eq!(forces.iter().map(|f| f.numer()).sum::<i128>(), 400);
-        let moment_x: i128 = p
-            .contact_coords
-            .iter()
-            .zip(forces)
-            .map(|([x, _], f)| {
-                assert_eq!(x.value().denom(), 3);
-                x.value().numer() * f.numer()
-            })
-            .sum();
-        assert_eq!(
-            Ratio::new(moment_x, 3).unwrap(),
-            Ratio::new(numerator, 3).unwrap()
-        );
+
+        let [_, eq_x, eq_y] = obj.primitive_equations() else {
+            panic!("expected balance and both moment equations");
+        };
+        for (axis, (eq, name, text, denom)) in [
+            (eq_x, "P_x", "(f_pp + f_pm − f_mp − f_mm)/3 − P_x = 0", 3),
+            (eq_y, "P_y", "3(f_pp − f_pm + f_mp − f_mm)/14 − P_y = 0", 14),
+        ]
+        .into_iter()
+        .enumerate()
+        {
+            let moment: i128 = actual
+                .iter()
+                .zip(forces)
+                .map(|((_, xy), f)| {
+                    assert_eq!(xy[axis].denom(), denom);
+                    xy[axis].numer() * f.numer()
+                })
+                .sum();
+            assert_eq!(
+                moment, numerators[axis],
+                "{name} for the exported port order"
+            );
+
+            let mut dag = ExprBuilder::new();
+            let mut terms: Vec<_> = contacts
+                .iter()
+                .zip(["f_pp", "f_pm", "f_mp", "f_mm"])
+                .map(|((_, xy), force)| {
+                    let arm = dag.constant(xy[axis]);
+                    let force = dag.var(force, Unit::newtons());
+                    dag.product(vec![arm, force])
+                })
+                .collect();
+            let variable = dag.var(name, Unit::newton_meters());
+            terms.push(dag.neg(variable));
+            let root = dag.sum(terms);
+            assert_eq!(eq.text(), text);
+            assert_eq!(
+                eq.dag_digest(),
+                dag.build(root).unwrap().digest(),
+                "{name} equation"
+            );
+        }
     }
     assert_ne!(a.canonical_bytes(), b.canonical_bytes());
     assert_ne!(a.canonical_digest(), b.canonical_digest());

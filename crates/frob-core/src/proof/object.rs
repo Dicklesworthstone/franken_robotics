@@ -2,7 +2,7 @@
 
 use crate::id::Blake3;
 use crate::proof::establishes::{CellRef, Establishes, ProofRef};
-use crate::proof::expr::Equation;
+use crate::proof::expr::{Equation, ExprNode};
 use crate::proof::kinds::{Expected, ProofKind};
 use crate::proof::num::{CanonicalEncoder, ProofError};
 use crate::proof::payload::ProofPayload;
@@ -49,6 +49,57 @@ impl ProofObject {
             });
         }
         payload.validate_shape()?;
+        if let ProofPayload::LpFarkas(farkas) = &payload {
+            let cell = establishes.cell();
+            for (row, rhs) in farkas.rhs_w.iter().enumerate() {
+                let mut reachable = vec![false; rhs.root().0 + 1];
+                reachable[rhs.root().0] = true;
+                for (idx, node) in rhs.nodes()[..reachable.len()].iter().enumerate().rev() {
+                    if !reachable[idx] {
+                        continue;
+                    }
+                    match node {
+                        ExprNode::Var { name, unit } => {
+                            let mut bindings = cell
+                                .bounds()
+                                .iter()
+                                .zip(cell.units())
+                                .filter(|(bound, _)| bound.var().as_str() == name);
+                            if bindings
+                                .next()
+                                .is_none_or(|(_, bound_unit)| bound_unit != unit)
+                                || bindings.any(|(_, bound_unit)| bound_unit != unit)
+                            {
+                                return Err(ProofError::InvalidPayload {
+                                    kind: "lp-farkas",
+                                    detail: format!(
+                                        "rhs_w[{row}] variable `{name}` has no consistent cell binding in `{}`",
+                                        unit.as_str()
+                                    ),
+                                });
+                            }
+                        }
+                        ExprNode::Sum(children)
+                        | ExprNode::Product(children)
+                        | ExprNode::Min(children)
+                        | ExprNode::Max(children) => {
+                            for child in children {
+                                reachable[child.0] = true;
+                            }
+                        }
+                        ExprNode::Neg(child)
+                        | ExprNode::Pow(child, _)
+                        | ExprNode::Sqrt(child)
+                        | ExprNode::Abs(child) => reachable[child.0] = true,
+                        ExprNode::Quotient(a, b) => {
+                            reachable[a.0] = true;
+                            reachable[b.0] = true;
+                        }
+                        ExprNode::Const(_) => {}
+                    }
+                }
+            }
+        }
 
         if !kind.allows_polarity(expects.polarity) {
             return Err(ProofError::VerdictKindMismatch {

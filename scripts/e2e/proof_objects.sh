@@ -26,11 +26,27 @@ export CARGO_TARGET_DIR="${CARGO_TARGET_DIR:-${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}
 
 caught_named_failure() {
   local status="$1" output="$2" name="$3" assertion="$4"
-  [ "$status" = 101 ] && [ -f "$output" ] &&
-    grep -Fxq 'running 1 test' "$output" &&
-    grep -Fxq "test ${name} ... FAILED" "$output" &&
-    grep -Fq -- "$assertion" "$output" &&
-    grep -q '^test result: FAILED\. 0 passed; 1 failed; 0 ignored;' "$output"
+  [ "$status" = 101 ] && [ -f "$output" ] || return 1
+  awk -v name="$name" -v assertion="$assertion" '
+    /^running [0-9]+ tests?$/ { runs++; one = ($0 == "running 1 test") }
+    /^test .* \.\.\. / { results++; failed = one && ($0 == "test " name " ... FAILED") }
+    /^failures:$/ { named = 0 }
+    /^---- .* stdout ----$/ { named = failed && ($0 == "---- " name " stdout ----") }
+    {
+      if (panic) {
+        message = $0
+        sub(/^assertion .* failed: /, "", message)
+        if (index(message, assertion) == 1) matches++
+      }
+      panic = named && index($0, "thread \047" name "\047") == 1 && $0 ~ / panicked at .+:$/
+    }
+    /^test result:/ {
+      summaries++
+      matching_summary = (matches == 1) && /^test result: FAILED\. 0 passed; 1 failed; 0 ignored; 0 measured;/
+      named = 0
+    }
+    END { exit !(runs == 1 && results == 1 && summaries == 1 && matching_summary) }
+  ' "$output"
 }
 
 run_mutant() {
@@ -160,18 +176,31 @@ torque_mutant
 support_mutant
 
 if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
-  for bad in build-error unrelated-failure; do
+  name=first_moment_is_not_a_torque
+  assertion='FirstMoment and TorqueVec must be distinct Rust types'
+  for bad in build-error unrelated-failure captured-marker multiple-runs expected-failure; do
     transcript="${E2E_WORK_DIR}/${bad}.txt"
-    if [ "$bad" = build-error ]; then
-      printf 'error: could not compile frob-core\n' > "$transcript"
-    else
-      printf '\nrunning 1 test\ntest first_moment_is_not_a_torque ... FAILED\n%s\n%s\n' \
-        'thread panicked: unrelated assertion' \
-        'test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured' > "$transcript"
-    fi
+    expected=0
+    if [ "$bad" = expected-failure ]; then expected=1; fi
+    {
+      if [ "$bad" = build-error ]; then
+        printf 'error: could not compile frob-core\n'
+      else
+        if [ "$bad" = multiple-runs ]; then
+          printf '%s\n' 'running 1 test' "test $name ... ok" 'test result: ok. 1 passed; 0 failed;'
+        fi
+        printf '%s\n' 'running 1 test' "test $name ... FAILED" '' 'failures:' '' "---- $name stdout ----"
+        if [ "$bad" = captured-marker ]; then printf 'checking: %s\n' "$assertion"; fi
+        message='unrelated assertion'
+        if [ "$bad" = expected-failure ] || [ "$bad" = multiple-runs ]; then
+          message="assertion \`left != right\` failed: $assertion"
+        fi
+        printf '%s\n' "thread '$name' panicked at proof_objects.rs:1:1:" "$message" '' \
+          'failures:' "    $name" 'test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out;'
+      fi
+    } > "$transcript"
     caught=0
-    if caught_named_failure 101 "$transcript" first_moment_is_not_a_torque \
-        'FirstMoment and TorqueVec must be distinct Rust types'; then caught=1; fi
-    e2e_assert_eq "${bad}_not_caught" "$caught" "0"
+    if caught_named_failure 101 "$transcript" "$name" "$assertion"; then caught=1; fi
+    e2e_assert_eq "matcher_${bad}" "$caught" "$expected"
   done
 fi

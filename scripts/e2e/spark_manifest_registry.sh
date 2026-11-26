@@ -17,6 +17,17 @@ source "${SCRIPT_DIR}/lib.sh"
 
 e2e_init "spark_manifest_registry" "N21b-01" "$@"
 
+MANIFEST="${E2E_REPO_ROOT}/Cargo.toml"
+
+# Cargo and its offload shim discover toolchain and config from their cwd.
+_in_workspace() {
+  local work_dir="$PWD" status=0
+  cd "${E2E_REPO_ROOT}" || return
+  "$@" || status=$?
+  cd "${work_dir}" || return
+  return "${status}"
+}
+
 TARGET_BASE="${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/frob-spark-manifest-${E2E_RUN_ID}"
 mkdir -p "${TARGET_BASE}"
 
@@ -30,9 +41,9 @@ e2e_assert_eq "kernels_registry_exists" "$(test -f "${REG_FILE}" && echo yes || 
 
 e2e_step "manifest_suite" "Run frob-kernels manifest static, binding, KA-532/CX-218, and doctor-section tests"
 
-e2e_cmd --name "cargo_test_frob_kernels_manifest" -- \
+_in_workspace e2e_cmd --name "cargo_test_frob_kernels_manifest" -- \
   env "CARGO_TARGET_DIR=${TARGET_BASE}/frob-kernels" \
-  cargo test --offline -j 1 -p frob-kernels --test manifest --test conformance
+  cargo test --manifest-path "${MANIFEST}" --offline -j 1 -p frob-kernels --test manifest --test conformance
 e2e_assert_eq "cargo_test_frob_kernels_manifest_exit" "${E2E_LAST_EXIT}" "0"
 
 e2e_step "doctor_cli_check" "Check frob doctor --section kernels when linked"

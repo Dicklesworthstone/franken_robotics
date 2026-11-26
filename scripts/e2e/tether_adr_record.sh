@@ -18,6 +18,17 @@ source "${SCRIPT_DIR}/lib.sh"
 
 e2e_init "tether_adr_record" "N32a-01" "$@"
 
+MANIFEST="${E2E_REPO_ROOT}/Cargo.toml"
+
+# Cargo and its offload shim discover toolchain and config from their cwd.
+_in_workspace() {
+  local work_dir="$PWD" status=0
+  cd "${E2E_REPO_ROOT}" || return
+  "$@" || status=$?
+  cd "${work_dir}" || return
+  return "${status}"
+}
+
 TARGET_DIR="${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/frob-tether-adr-${E2E_RUN_ID}"
 mkdir -p "${TARGET_DIR}"
 
@@ -60,9 +71,9 @@ e2e_metric "principle_lints" "${PRINCIPLE_LINTS}" "count" "==" "4"
 # ---------------------------------------------------------------------------
 e2e_step "conformance_clean" "Run cargo test -p frob-conformance --test adr_tether on the clean tree"
 
-e2e_cmd --name "cargo_test_adr_tether" -- \
+_in_workspace e2e_cmd --name "cargo_test_adr_tether" -- \
   env "CARGO_TARGET_DIR=${TARGET_DIR}" \
-  cargo test -p frob-conformance --test adr_tether --locked
+  cargo test --manifest-path "${MANIFEST}" -p frob-conformance --test adr_tether --locked
 e2e_assert_eq "cargo_test_adr_tether_exit" "${E2E_LAST_EXIT}" "0"
 
 # Log one assert per ADR naming its active check or pending milestone from tether.toml.
@@ -125,9 +136,9 @@ awk '
   { print }
 ' "${E2E_REPO_ROOT}/registries/adr/tether.toml" > "${SCRATCH_EMPTY}/registries/adr/tether.toml"
 
-e2e_cmd --name "nc_empty_enforced_by" --expect-exit "101" -- \
+_in_workspace e2e_cmd --name "nc_empty_enforced_by" --expect-exit "101" -- \
   env "CARGO_TARGET_DIR=${TARGET_DIR}" "FROB_CONFORMANCE_ROOT=${SCRATCH_EMPTY}" \
-  cargo test -p frob-conformance --test adr_tether --locked -- adr_enforced_by_resolves
+  cargo test --manifest-path "${MANIFEST}" -p frob-conformance --test adr_tether --locked -- adr_enforced_by_resolves
 if [ "${E2E_LAST_EXIT}" -ne 0 ] && printf '%s\n%s\n' "${E2E_LAST_STDOUT}" "${E2E_LAST_STDERR}" | grep -Fq "ADR-TETHER-02"; then
   e2e_assert_eq "nc_empty_enforced_by_caught" "caught" "caught"
 else
@@ -142,9 +153,9 @@ awk '
   { print }
 ' "${E2E_REPO_ROOT}/registries/adr/tether.toml" > "${SCRATCH_PAST}/registries/adr/tether.toml"
 
-e2e_cmd --name "nc_pending_beyond_milestone" --expect-exit "101" -- \
+_in_workspace e2e_cmd --name "nc_pending_beyond_milestone" --expect-exit "101" -- \
   env "CARGO_TARGET_DIR=${TARGET_DIR}" "FROB_CONFORMANCE_ROOT=${SCRATCH_PAST}" \
-  cargo test -p frob-conformance --test adr_tether --locked -- adr_enforced_by_resolves
+  cargo test --manifest-path "${MANIFEST}" -p frob-conformance --test adr_tether --locked -- adr_enforced_by_resolves
 if [ "${E2E_LAST_EXIT}" -ne 0 ] && printf '%s\n%s\n' "${E2E_LAST_STDOUT}" "${E2E_LAST_STDERR}" | grep -Fq "ADR-TETHER-03"; then
   e2e_assert_eq "nc_pending_beyond_milestone_caught" "caught" "caught"
 else

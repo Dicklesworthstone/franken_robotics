@@ -37,7 +37,7 @@ pub enum RefusalCode {
     FrobRef605 = 605,
     /// FROB-REF-606 (§21.21): Fingerprint missing or changed since admission: no stored fingerprint for the device or its identity differs from the live machine at admission, chunk commit, or emission; pointer: device and differing field; carries fingerprint { device, digest | null } (null digest allowed here only) (due M0)
     FrobRef606 = 606,
-    /// FROB-REF-607 (§21.21): A launch or command buffer failed after bounded retries (at most four attempts with growing waits; every retry counted in the receipt); pointer: launch or command buffer; carries fingerprint { device, digest | null } (due M0/M2)
+    /// FROB-REF-607 (§21.21): A launch or command buffer failed after bounded retries (at most four attempts with growing waits; every retry counted in the receipt); pointer: launch or command buffer; carries fingerprint { device, digest | null } (due M2)
     FrobRef607 = 607,
     /// FROB-REF-608 (§21.21): Worlds marked Faulted (frozen by a non-finite sentinel) exceed the caller's threshold; observed count, required threshold; carries fingerprint { device, digest | null } (due M2)
     FrobRef608 = 608,

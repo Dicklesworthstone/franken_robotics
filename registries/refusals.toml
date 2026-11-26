@@ -174,7 +174,7 @@ raised_by = ["N21c-05", "BD-014"]
 
 [[refusal]]
 code = "FROB-REF-607"
-meaning = "A launch or command buffer failed after bounded retries (at most four attempts with growing waits; every retry counted in the receipt); pointer: launch or command buffer; carries fingerprint { device, digest | null } (due M0/M2)"
+meaning = "A launch or command buffer failed after bounded retries (at most four attempts with growing waits; every retry counted in the receipt); pointer: launch or command buffer; carries fingerprint { device, digest | null } (due M2)"
 defined_in = "§21.21"
 exit = 6
 retry = "backoff"

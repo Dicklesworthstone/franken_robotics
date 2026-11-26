@@ -491,16 +491,47 @@ mod tests {
 
     #[test]
     fn generator_keeps_first_commit_header() {
+        // Preamble from 47e0ffa9:DEPENDENCY_ADMISSION.md, before the separator.
+        let historical_header = "\
+# Dependency Admission Ledger (`DEPENDENCY_ADMISSION.md`)
+
+A foundation (a sibling library or external crate consumed by FrankenRobotics) is not used above the airlock crate until its admission gate has a record in this file.
+
+## Admission Rules
+
+1. **Validity rule.** An admission record is valid only if it cites a commit of this repository whose tracked `Cargo.lock` contains the foundation, together with the exact command, its output (and content-addressed output hash), and the stack resolution receipt hash.
+2. **One record per admission gate run, passing or failing.** Every gate attempt is recorded honestly; a failing or blocked observation is a record, and no gate `PASS` is recorded while any sibling checkout or the repository working tree is dirty (such observations are recorded as `development build`).
+3. **Fields shown by each record.** Gate identifier, foundation identifier, the commit of this repository whose tracked `Cargo.lock` contains the foundation (or core skeleton for bootstrap), the command, its exit code and output excerpt/hash, the resolution receipt hash, measured values against `TARGET` thresholds, and date.
+4. **Never inherited.** An admission is never inherited: a crate or feature group first used at a later milestone gets its own record then, at the pin of that day.
+";
+        assert_eq!(FIRST_COMMIT_HEADER, historical_header);
         let rendered = render_from_records(&[]);
         let (before, _after) = rendered
             .split_once(STATUS_TABLE_HEADING)
             .expect("status table heading present");
-        let expected_prefix = format!("{FIRST_COMMIT_HEADER}\n");
+        let expected_prefix = format!("{historical_header}\n");
         assert_eq!(
             before.as_bytes(),
             expected_prefix.as_bytes(),
             "bytes before the status table must equal the BD-002 first-commit header"
         );
+    }
+
+    #[test]
+    fn nested_admission_record_is_discovered() {
+        let root = fresh_dir("nested-record");
+        let stored = sample_record("INT-FSIM-01", AdmissionStatus::Pass);
+        let path = root.join(&stored.rel_path);
+        fs::create_dir_all(path.parent().expect("record parent")).expect("mkdir record parent");
+        let bytes = stored
+            .record
+            .to_canonical_bytes()
+            .expect("canonical record");
+        fs::write(&path, bytes.as_bytes()).expect("write nested record");
+        let (records, findings) = load_all_records(&root);
+        assert!(findings.is_empty(), "{findings:?}");
+        assert_eq!(records.len(), 1);
+        assert_eq!(records[0].rel_path, stored.rel_path);
     }
 
     #[test]

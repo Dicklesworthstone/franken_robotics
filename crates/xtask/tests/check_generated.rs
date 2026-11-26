@@ -811,5 +811,46 @@ encoding = \"canonical\"
                 "out-of-root symlink must not be replaced by a root stub (write_mode={write_mode})"
             );
         }
+
+        // 6. In-repo symlink escaping `schemas/verbs/` must also refuse without creating a root stub.
+        let dir4 = fresh_dir("verb-schema-escape-verbs-dir");
+        fs::create_dir_all(dir4.join("registries")).expect("mkdir registries");
+        fs::create_dir_all(dir4.join("schemas/verbs")).expect("mkdir schemas/verbs");
+        fs::create_dir_all(dir4.join("schemas/other")).expect("mkdir schemas/other");
+        fs::write(dir4.join("registries/formats.toml"), MINIMAL_FORMATS_TOML)
+            .expect("write formats");
+        fs::write(
+            dir4.join("registries/verbs.toml"),
+            "schema = \"frob.verbs/1\"\n\n[[verb]]\nname = \"alpha\"\ninput_schema = \"frob.alpha.in/1\"\n",
+        )
+        .expect("write verbs");
+        let in_repo_other = dir4.join("schemas/other/frob.alpha.in.1.json");
+        fs::write(
+            &in_repo_other,
+            "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$id\":\"frob.alpha.in/1\",\"type\":\"object\"}\n",
+        )
+        .expect("write in-repo outside-verbs schema");
+        std::os::unix::fs::symlink(
+            "../other/frob.alpha.in.1.json",
+            dir4.join("schemas/verbs/frob.alpha.in.1.json"),
+        )
+        .expect("create in-repo escape symlink");
+
+        for write_mode in [false, true] {
+            let esc_out = run_check(&dir4, rows, write_mode).expect("check in-repo escape symlink");
+            assert!(
+                esc_out.findings.iter().any(|f| {
+                    f.rule == RULE_DIFFERS
+                        && f.path == "schemas/verbs/frob.alpha.in.1.json"
+                        && f.message.contains("outside `schemas/verbs/`")
+                }),
+                "in-repo symlink escaping schemas/verbs/ (write_mode={write_mode}) must refuse: {:?}",
+                esc_out.findings
+            );
+            assert!(
+                !dir4.join("schemas/frob.alpha.in.1.json").exists(),
+                "in-repo escape symlink must not be replaced by a root stub (write_mode={write_mode})"
+            );
+        }
     }
 }

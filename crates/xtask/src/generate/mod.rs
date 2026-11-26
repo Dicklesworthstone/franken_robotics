@@ -406,8 +406,8 @@ fn run_format_and_verb_schemas(
             }
             // Authored verb payload schemas under `schemas/verbs/<dot-id>.json`
             // (owned by `N32a-02` / `VERBS-*`) take precedence over stub generation,
-            // provided the path resolves inside `repo_root` to a regular file that
-            // passes JSON admission and declares the matching `$id`.
+            // provided the path resolves inside `repo_root/schemas/verbs` to a regular
+            // file that passes JSON admission and declares the matching `$id`.
             let authored_verb_rel = format!("schemas/verbs/{}.json", schema_id.replace('/', "."));
             let authored_verb_abs = repo_root.join(&authored_verb_rel);
             let authored_present = match fs::symlink_metadata(&authored_verb_abs) {
@@ -433,6 +433,33 @@ fn run_format_and_verb_schemas(
                     message: format!("failed to canonicalize repository root: {e}"),
                     repair: "ensure repository root is accessible".to_owned(),
                 })?;
+                let canon_verbs_dir =
+                    fs::canonicalize(repo_root.join("schemas/verbs")).map_err(|e| {
+                        GeneratorError {
+                            rule: RULE_DIFFERS,
+                            subject: schema_id.clone(),
+                            path: authored_verb_rel.clone(),
+                            message: format!(
+                                "failed to canonicalize `schemas/verbs` directory: {e}"
+                            ),
+                            repair:
+                                "replace schemas/verbs with a real directory inside the repository"
+                                    .to_owned(),
+                        }
+                    })?;
+                if !canon_verbs_dir.starts_with(&canon_root) {
+                    return Err(GeneratorError {
+                        rule: RULE_DIFFERS,
+                        subject: schema_id.clone(),
+                        path: authored_verb_rel,
+                        message: format!(
+                            "authored verb schema directory resolves outside repository root (`{}`)",
+                            canon_verbs_dir.display()
+                        ),
+                        repair: "replace schemas/verbs with a real directory inside the repository"
+                            .to_owned(),
+                    });
+                }
                 let canon_authored =
                     fs::canonicalize(&authored_verb_abs).map_err(|e| GeneratorError {
                         rule: RULE_DIFFERS,
@@ -457,6 +484,19 @@ fn run_format_and_verb_schemas(
                         repair:
                             "replace the out-of-tree symlink with a regular in-tree file under schemas/verbs/"
                                 .to_owned(),
+                    });
+                }
+                if !canon_authored.starts_with(&canon_verbs_dir) {
+                    return Err(GeneratorError {
+                        rule: RULE_DIFFERS,
+                        subject: schema_id.clone(),
+                        path: authored_verb_rel,
+                        message: format!(
+                            "authored verb schema resolves outside `schemas/verbs/` (`{}`)",
+                            canon_authored.display()
+                        ),
+                        repair: "replace the symlink with a regular file inside schemas/verbs/"
+                            .to_owned(),
                     });
                 }
                 if !canon_authored.is_file() {

@@ -31,12 +31,17 @@ use xtask::cli::{
     self, CheckContext, CheckError, CheckFn, CheckOutcome, EXIT_FINDINGS, EXIT_OK, EXIT_USAGE,
 };
 use xtask::generate::RULE_DIFFERS;
+use xtask::generate::admission_doc;
 use xtask::metadata::normalize_rel_path;
 use xtask::report::validate_report_json;
+use xtask::stack::admission::{
+    ADMISSION_SCHEMA, AdmissionCovers, AdmissionRecord, AdmissionStatus, ControlResult, HostInfo,
+    RecordedBy,
+};
+use xtask::stack::lock::{self as stack_lock, Blake3Hex, GitRev};
 use xtask::stack::verify::{self as stack_verify, RULE_LOCKFILE, RULE_PIN, VerifyOptions};
 
 static COUNTER: AtomicU64 = AtomicU64::new(0);
-const SAMPLE_RECEIPT: &str = "d3b0885b1d5bfbe09039a84ae190c40fce4ad3b0b81b5c28bf946201987462d4";
 
 fn repo_root() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
@@ -153,6 +158,94 @@ fn generate_lockfile_offline(ws_dir: &Path) {
         ws_dir.display(),
         String::from_utf8_lossy(&out.stderr)
     );
+}
+
+fn refresh_miniature_stack_receipt(repo: &Path) {
+    let result = stack_verify::run_write_receipt(repo, &VerifyOptions::default())
+        .expect("write miniature stack receipt");
+    assert!(
+        result.findings.is_empty(),
+        "miniature stack receipt findings: {:?}",
+        result.findings
+    );
+}
+
+/// Give new fixture foundations admission records tied to a clean, committed dependency graph.
+fn seed_miniature_admissions(repo: &Path, repo_rev: &str) {
+    refresh_miniature_stack_receipt(repo);
+    let head = fs::read_to_string(repo.join("receipts/HEAD")).expect("read miniature receipt hash");
+    let receipt_hash = head.trim();
+    let lock_path = repo.join("franken-stack.lock");
+    let mut lock = stack_lock::load(&lock_path).expect("load miniature stack lock");
+    let output = "Synthetic BD-004 miniature admission fixture\n";
+    let output_hash = fs_blake3::hash_bytes(output.as_bytes()).to_hex();
+    write_file(
+        &repo.join(format!("receipts/outputs/{output_hash}.txt")),
+        output,
+    );
+
+    for row in lock
+        .foundations
+        .iter_mut()
+        .filter(|row| row.receipt.is_none())
+    {
+        let record = AdmissionRecord {
+            schema: ADMISSION_SCHEMA.to_owned(),
+            gate: row.admission_gate.as_str().to_owned(),
+            foundation: row.id.as_str().to_owned(),
+            covers: AdmissionCovers {
+                crates: vec![row.name.clone()],
+                groups: Vec::new(),
+                tool: None,
+            },
+            repo_rev: repo_rev.to_owned(),
+            workspace: "core".to_owned(),
+            stack_receipt: format!("sr:{receipt_hash}"),
+            sibling_rev: match &row.git_rev {
+                Some(GitRev::Commit(rev)) => Some(rev.clone()),
+                _ => None,
+            },
+            toolchain: lock.toolchain.as_str().to_owned(),
+            harness_receipt: None,
+            command: vec!["bd004-miniature-fixture".to_owned()],
+            exit: 0,
+            output_hash: output_hash.clone(),
+            output_excerpt: output.to_owned(),
+            measured: Vec::new(),
+            controls: vec![ControlResult {
+                id: "NC-BD004-FIXTURE".to_owned(),
+                caught: true,
+            }],
+            facts_reread: Vec::new(),
+            status: AdmissionStatus::Pass,
+            host: HostInfo {
+                class: "trj".to_owned(),
+                fingerprint: None,
+            },
+            recorded: RecordedBy {
+                date: "2026-11-24T00:00:00Z".to_owned(),
+                session: "miniature-fixture-reviewer".to_owned(),
+                implemented_by: "miniature-fixture-author".to_owned(),
+            },
+        };
+        let bytes = record
+            .to_canonical_bytes()
+            .expect("serialize fixture admission");
+        let hash = fs_blake3::hash_bytes(bytes.as_bytes()).to_hex();
+        write_file(
+            &repo.join(format!("receipts/admissions/{}/{hash}.json", record.gate)),
+            bytes.as_str(),
+        );
+        row.receipt = Some(
+            Blake3Hex::parse(receipt_hash, row.id.as_str(), "receipt")
+                .expect("parse miniature receipt hash"),
+        );
+    }
+
+    fs::write(lock_path, lock.canonical_bytes()).expect("write admitted miniature stack lock");
+    admission_doc::check_or_bless(repo, true).expect("regenerate miniature admission document");
+    git_commit_all(repo, "record miniature fixture admissions");
+    refresh_miniature_stack_receipt(repo);
 }
 
 fn write_valid_contract(repo: &Path, rel_dir: &str, name: &str, layer_toml: &str, rank: u8) {
@@ -299,7 +392,7 @@ impl MiniatureEnv {
         write_file(&sib_demo.join("src/lib.rs"), "// sib-demo rev 2\n");
         let sib_rev2 = git_commit_all(&sib_demo, "advance sib-demo to rev2");
 
-        // Second `asupersync` by path (0.7.0) behind sibling `../dummy-sib` (used only by Plant 3).
+        // Plant 3 enables the sibling's optional second asupersync after admitting the sibling.
         let asup_alt = base.join("asup-alt");
         write_file(
             &asup_alt.join("Cargo.toml"),
@@ -313,7 +406,8 @@ impl MiniatureEnv {
         write_file(
             &dummy_sib.join("Cargo.toml"),
             "[package]\nname = \"dummy-sib\"\nversion = \"0.1.0\"\nedition = \"2021\"\n\n\
-             [dependencies]\nasupersync = { path = \"../asup-alt\" }\n",
+             [features]\nalternate-asup = [\"dep:asupersync\"]\n\n\
+             [dependencies]\nasupersync = { path = \"../asup-alt\", optional = true }\n",
         );
         write_file(
             &dummy_sib.join("src/lib.rs"),
@@ -512,6 +606,10 @@ impl MiniatureEnv {
             &repo.join("README.md"),
             "# Synthetic Miniature Workspace\n\n<!-- status:begin -->\n<!-- status:end -->\n",
         );
+        write_file(
+            &repo.join(".gitignore"),
+            "/receipts/HEAD\n/receipts/LOCK_DIGEST\n",
+        );
 
         // Stack lock pinning `FD-ASUP` (=0.6.2) and `FD-SIBDEMO` (sib_rev2).
         let lock_toml = format!(
@@ -524,7 +622,6 @@ impl MiniatureEnv {
              version = \"=0.6.2\"\n\
              confined_to = [\"any\"]\n\
              admission_gate = \"INT-ASUP-01\"\n\
-             receipt = \"{SAMPLE_RECEIPT}\"\n\
              fallback = \"synthetic fallback\"\n\n\
              [[foundation]]\n\
              id = \"FD-SIBDEMO\"\n\
@@ -535,7 +632,6 @@ impl MiniatureEnv {
              toolchain = \"nightly-2026-08-31\"\n\
              confined_to = [\"frob-algebra\"]\n\
              admission_gate = \"INT-SIBDEMO-01\"\n\
-             receipt = \"{SAMPLE_RECEIPT}\"\n\
              fallback = \"synthetic fallback\"\n"
         );
         write_file(&repo.join("franken-stack.lock"), &lock_toml);
@@ -554,15 +650,8 @@ impl MiniatureEnv {
         generate_lockfile_offline(&repo);
         generate_lockfile_offline(&repo.join("spark/frob-spark-cuda"));
 
-        // Commit git repo and write clean initial stack receipt.
-        let _rev = git_init_repo(&repo);
-        let receipt_out = stack_verify::run_write_receipt(&repo, &VerifyOptions::default())
-            .expect("seed stack receipt");
-        assert!(
-            receipt_out.findings.is_empty(),
-            "seed stack receipt must be clean, got {:?}",
-            receipt_out.findings
-        );
+        let repo_rev = git_init_repo(&repo);
+        seed_miniature_admissions(&repo, &repo_rev);
 
         Self {
             repo,
@@ -576,13 +665,7 @@ impl MiniatureEnv {
     /// `Cargo.lock` offline and refresh `receipts/HEAD` so only the planted defect remains.
     fn normalize_manifest_change(&self) {
         generate_lockfile_offline(&self.repo);
-        let res = stack_verify::run_write_receipt(&self.repo, &VerifyOptions::default())
-            .expect("refresh scratch stack receipt");
-        assert!(
-            res.findings.is_empty(),
-            "normalization receipt write must succeed cleanly, got {:?}",
-            res.findings
-        );
+        refresh_miniature_stack_receipt(&self.repo);
     }
 
     /// Run all six `xtask` checks in process via `cli::run(COMMANDS, ...)` and return
@@ -850,40 +933,26 @@ fn plant_matrix_diagonal() {
     // Plant 3: second `asupersync` package pulled into binary `frob` via admitted sibling path dep, normalized.
     {
         let env = MiniatureEnv::build("plant-3-asup-dup");
-        write_file(
-            &env.repo.join("crates/frob-algebra/Cargo.toml"),
-            "[package]\nname = \"frob-algebra\"\nversion = \"0.0.1\"\nedition = \"2024\"\n\n\
-             [package.metadata.frob]\nlayer = 1\nrank = 2\n\n\
-             [[bin]]\nname = \"frob\"\npath = \"src/main.rs\"\n\n\
-             [dependencies]\n\
-             frob-core = { path = \"../frob-core\" }\n\
-             sib-demo = { path = \"../../../sib-demo\", default-features = false }\n\
-             dummy-sib = { path = \"../../../dummy-sib\", default-features = false }\n\n\
-             [lints]\nworkspace = true\n",
-        );
+        let write_manifest = |features: &str| {
+            write_file(
+                &env.repo.join("crates/frob-algebra/Cargo.toml"),
+                &format!(
+                    "[package]\nname = \"frob-algebra\"\nversion = \"0.0.1\"\nedition = \"2024\"\n\n\
+                     [package.metadata.frob]\nlayer = 1\nrank = 2\n\n\
+                     [[bin]]\nname = \"frob\"\npath = \"src/main.rs\"\n\n\
+                     [dependencies]\n\
+                     frob-core = {{ path = \"../frob-core\" }}\n\
+                     sib-demo = {{ path = \"../../../sib-demo\", default-features = false }}\n\
+                     dummy-sib = {{ path = \"../../../dummy-sib\", default-features = false{features} }}\n\n\
+                     [lints]\nworkspace = true\n"
+                ),
+            );
+        };
+        write_manifest("");
+        let lock_path = env.repo.join("franken-stack.lock");
+        let original_lock = fs::read_to_string(&lock_path).expect("read miniature stack lock");
         let lock_with_dummy = format!(
-            "# synthetic franken-stack.lock with FD-DUMMY admitted\n\
-             toolchain = \"nightly-2026-08-31\"\n\n\
-             [[foundation]]\n\
-             id = \"FD-ASUP\"\n\
-             name = \"asupersync\"\n\
-             posture = \"consume\"\n\
-             version = \"=0.6.2\"\n\
-             confined_to = [\"any\"]\n\
-             admission_gate = \"INT-ASUP-01\"\n\
-             receipt = \"{SAMPLE_RECEIPT}\"\n\
-             fallback = \"synthetic fallback\"\n\n\
-             [[foundation]]\n\
-             id = \"FD-SIBDEMO\"\n\
-             name = \"sib-demo\"\n\
-             posture = \"consume-path\"\n\
-             path = \"../sib-demo\"\n\
-             git_rev = \"{}\"\n\
-             toolchain = \"nightly-2026-08-31\"\n\
-             confined_to = [\"frob-algebra\"]\n\
-             admission_gate = \"INT-SIBDEMO-01\"\n\
-             receipt = \"{SAMPLE_RECEIPT}\"\n\
-             fallback = \"synthetic fallback\"\n\n\
+            "{original_lock}\n\
              [[foundation]]\n\
              id = \"FD-DUMMY\"\n\
              name = \"dummy-sib\"\n\
@@ -893,11 +962,15 @@ fn plant_matrix_diagonal() {
              toolchain = \"nightly-2026-08-31\"\n\
              confined_to = [\"frob-algebra\"]\n\
              admission_gate = \"INT-DUMMY-01\"\n\
-             receipt = \"{SAMPLE_RECEIPT}\"\n\
              fallback = \"synthetic fallback\"\n",
-            env.sib_rev2, env.dummy_sib_rev
+            env.dummy_sib_rev
         );
-        write_file(&env.repo.join("franken-stack.lock"), &lock_with_dummy);
+        write_file(&lock_path, &lock_with_dummy);
+        generate_lockfile_offline(&env.repo);
+        let repo_rev = git_commit_all(&env.repo, "add dummy sibling without alternate asupersync");
+        seed_miniature_admissions(&env.repo, &repo_rev);
+
+        write_manifest(", features = [\"alternate-asup\"]");
         env.normalize_manifest_change();
         assert_plant_row(
             "plant-3-second-asupersync",

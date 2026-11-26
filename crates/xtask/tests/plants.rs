@@ -17,7 +17,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 use frob_core::json::{Limits, admit};
 use xtask::assembly::{
-    CHECK_OWNERS, COMMANDS, CommandTableError, EXPECTED_SUBCOMMANDS, GATE_WS_01_PLANTS,
+    CHECK_OWNERS, COMMANDS, CliJsonRun, CommandTableError, EXPECTED_SUBCOMMANDS, GATE_WS_01_PLANTS,
     GATE_WS_04_LAYERS_AND_DEPS_BUDGET_MS, GATE_WS_04_LAYERS_AND_DEPS_SUBSHARES, GATE_WS_04_SHARES,
     GATE_WS_04_TOTAL_BUDGET_MS, OwnershipError, evaluate_gate_ws_04_timing,
     normalize_report_json_for_determinism, run_check_cli_json, verify_command_table,
@@ -196,9 +196,19 @@ struct ParsedFinding {
     line: Option<i64>,
 }
 
-fn parse_report_findings_and_elapsed(json_text: &str) -> (bool, u64, Vec<ParsedFinding>) {
-    validate_report_json(json_text.as_bytes()).expect("valid frob.xtask.report/1 JSON");
-    let admitted = admit(json_text.as_bytes(), &Limits::default()).expect("admit report JSON");
+fn parse_report_findings_and_elapsed(run: &CliJsonRun) -> (bool, u64, Vec<ParsedFinding>) {
+    validate_report_json(run.stdout.as_bytes()).unwrap_or_else(|err| {
+        panic!(
+            "check `{}` did not emit valid frob.xtask.report/1 JSON (exit={:?}, stderr={:?}, stdout={:?}): {err}",
+            run.check, run.exit_code, run.stderr, run.stdout
+        )
+    });
+    let admitted = admit(run.stdout.as_bytes(), &Limits::default()).unwrap_or_else(|err| {
+        panic!(
+            "check `{}` report JSON failed admission (exit={:?}, stderr={:?}): {err}",
+            run.check, run.exit_code, run.stderr
+        )
+    });
     let root = admitted.value();
     let ok = root.get("ok").and_then(|v| v.as_bool()).expect("ok bool");
     let elapsed_i64 = root
@@ -331,7 +341,7 @@ impl MiniatureEnv {
             &repo.join("crates/frob-core/Cargo.toml"),
             "[package]\nname = \"frob-core\"\nversion = \"0.0.1\"\nedition = \"2024\"\n\n\
              [package.metadata.frob]\nlayer = 0\nrank = 1\n\n\
-             [dependencies]\nasupersync = \"=0.6.2\"\n\n\
+             [dependencies]\nasupersync = { version = \"=0.6.2\", default-features = false }\n\n\
              [lints]\nworkspace = true\n",
         );
         write_file(
@@ -361,7 +371,7 @@ impl MiniatureEnv {
              [[bin]]\nname = \"frob\"\npath = \"src/main.rs\"\n\n\
              [dependencies]\n\
              frob-core = { path = \"../frob-core\" }\n\
-             sib-demo = { path = \"../../../sib-demo\" }\n\n\
+             sib-demo = { path = \"../../../sib-demo\", default-features = false }\n\n\
              [lints]\nworkspace = true\n",
         );
         write_file(
@@ -593,7 +603,7 @@ impl MiniatureEnv {
                 "check `{check}` wrote unexpected stderr: {}",
                 run.stderr
             );
-            let (ok, _elapsed_ms, findings) = parse_report_findings_and_elapsed(&run.stdout);
+            let (ok, _elapsed_ms, findings) = parse_report_findings_and_elapsed(&run);
             assert_eq!(
                 ok,
                 run.exit_code == ExitCode::from(EXIT_OK),
@@ -813,7 +823,7 @@ fn plant_matrix_diagonal() {
             "[package]\nname = \"frob-core\"\nversion = \"0.0.1\"\nedition = \"2024\"\n\n\
              [package.metadata.frob]\nlayer = 0\nrank = 1\n\n\
              [dependencies]\n\
-             asupersync = \"=0.6.2\"\n\
+             asupersync = { version = \"=0.6.2\", default-features = false }\n\
              frob-lie = { path = \"../frob-lie\" }\n\n\
              [lints]\nworkspace = true\n",
         );
@@ -846,8 +856,8 @@ fn plant_matrix_diagonal() {
              [[bin]]\nname = \"frob\"\npath = \"src/main.rs\"\n\n\
              [dependencies]\n\
              frob-core = { path = \"../frob-core\" }\n\
-             sib-demo = { path = \"../../../sib-demo\" }\n\
-             dummy-sib = { path = \"../../../dummy-sib\" }\n\n\
+             sib-demo = { path = \"../../../sib-demo\", default-features = false }\n\
+             dummy-sib = { path = \"../../../dummy-sib\", default-features = false }\n\n\
              [lints]\nworkspace = true\n",
         );
         let lock_with_dummy = format!(
@@ -978,7 +988,7 @@ fn plant_matrix_diagonal() {
             "[package]\nname = \"frob-core\"\nversion = \"0.0.1\"\nedition = \"2024\"\n\n\
              [package.metadata.frob]\nlayer = 0\nrank = 1\n\n\
              [dependencies]\n\
-             asupersync = \"=0.6.2\"\n\
+             asupersync = { version = \"=0.6.2\", default-features = false }\n\
              frob-lie = { path = \"../frob-lie\" }\n\n\
              [lints]\nworkspace = true\n",
         );
@@ -1061,7 +1071,10 @@ fn build_real_tree_scratch_copy(label: &str) -> PathBuf {
     }
     for dir in [
         ".cargo",
+        "assets",
         "crates",
+        "demos",
+        "docs/adr",
         "registries",
         "schemas",
         "receipts",
@@ -1086,7 +1099,7 @@ fn plant_5_on_real_tree_scratch_copy() {
     // 1. Baseline all six checks on the unedited scratch copy: every check must exit 0 with zero findings.
     for &check in &EXPECTED_SUBCOMMANDS {
         let run = run_check_cli_json(&scratch_repo, check, &[]);
-        let (_, _, findings) = parse_report_findings_and_elapsed(&run.stdout);
+        let (_, _, findings) = parse_report_findings_and_elapsed(&run);
         assert_eq!(
             run.exit_code,
             ExitCode::from(EXIT_OK),
@@ -1115,7 +1128,7 @@ fn plant_5_on_real_tree_scratch_copy() {
     // all five non-owning checks must exit 0 with zero findings (BD-004 AC2).
     for &check in &EXPECTED_SUBCOMMANDS {
         let run = run_check_cli_json(&scratch_repo, check, &[]);
-        let (_, _, after_findings) = parse_report_findings_and_elapsed(&run.stdout);
+        let (_, _, after_findings) = parse_report_findings_and_elapsed(&run);
 
         if check == "check-generated" {
             assert_eq!(
@@ -1202,7 +1215,7 @@ fn in_process_timing() {
     let real = repo_root();
     for &check in &EXPECTED_SUBCOMMANDS {
         let warm = run_check_cli_json(&real, check, &[]);
-        let (_, _, warm_findings) = parse_report_findings_and_elapsed(&warm.stdout);
+        let (_, _, warm_findings) = parse_report_findings_and_elapsed(&warm);
         assert_eq!(
             warm.exit_code,
             ExitCode::from(EXIT_OK),
@@ -1218,7 +1231,7 @@ fn in_process_timing() {
     let mut measured: BTreeMap<String, u64> = BTreeMap::new();
     for &check in &EXPECTED_SUBCOMMANDS {
         let run = run_check_cli_json(&real, check, &[]);
-        let (_, elapsed_ms, findings) = parse_report_findings_and_elapsed(&run.stdout);
+        let (_, elapsed_ms, findings) = parse_report_findings_and_elapsed(&run);
         assert_eq!(
             run.exit_code,
             ExitCode::from(EXIT_OK),

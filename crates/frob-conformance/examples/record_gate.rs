@@ -60,6 +60,7 @@ fn main() {
         ("record", 0usize)
     } else {
         match args[0].as_str() {
+            "record" => ("record", 1usize),
             "reaffirm" => ("reaffirm", 1usize),
             other => {
                 eprintln!("record_gate: unknown mode `{other}`\n{}", usage());

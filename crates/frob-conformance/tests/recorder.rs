@@ -1551,3 +1551,223 @@ recorded = {{ date = "", session = "", implemented_by = "" }}
     assert_eq!(err.reason, "pilot-part-not-recordable");
     assert_eq!(fs::read(&gates_path).unwrap(), orig);
 }
+
+#[test]
+fn readme_splice_preserves_prose_and_updates_status() {
+    let repo = ScratchRepo::new("readme_splice", &["session:s1"]);
+    repo.write_gates(&std_gate_toml(
+        "GATE-TEST-01",
+        "known-answer",
+        CLAIM_A,
+        "\"NC-0001\", \"NC-0002\"",
+    ));
+    repo.write_controls(std_controls_two());
+
+    // Existing README lacking markers or with inline markers is refused atomically without clobbering.
+    let rec1 = make_receipt(
+        &repo.head,
+        Tier::G1KnownAnswers,
+        "GATE-TEST-01",
+        "pass",
+        vec![
+            ctrl("NC-0001", "GATE-TEST-01", ControlRunOutcome::Caught),
+            ctrl("NC-0002", "GATE-TEST-01", ControlRunOutcome::Caught),
+        ],
+        vec![entry_ok("ka:wheel", "0.9207", "1")],
+    );
+    let (_, hash1) = repo.write_receipt(&rec1);
+    let gates_before = fs::read(repo.root.join("registries/gates.toml")).unwrap();
+    for (name, bad_prose) in [
+        (
+            "README_NO_MARKERS.md",
+            "# Hand-written prose\n\nNever overwrite me.\n",
+        ),
+        (
+            "README_INLINE_MARKERS.md",
+            "# Prose\n<!-- status:begin -->inline<!-- status:end -->\n",
+        ),
+    ] {
+        let bad_readme = repo.root.join(name);
+        fs::write(&bad_readme, bad_prose).unwrap();
+        let mut bad_opts = base_opts(&repo, "GATE-TEST-01", hash1.clone(), "session:s2");
+        bad_opts.readme_path = Some(bad_readme.clone());
+        let err = record_gate(&bad_opts).unwrap_err();
+        assert_eq!(err.reason, "readme-marker-missing");
+        assert_eq!(fs::read_to_string(&bad_readme).unwrap(), bad_prose);
+        assert_eq!(
+            fs::read(repo.root.join("registries/gates.toml")).unwrap(),
+            gates_before
+        );
+        assert!(
+            !repo
+                .root
+                .join(format!("receipts/gates/{hash1}.json"))
+                .exists()
+        );
+    }
+
+    // Valid README with status markers preserves header and footer prose verbatim.
+    let readme_path = repo.root.join("README.md");
+    fs::write(
+        &readme_path,
+        "# FrankenRobotics\n\nIntro prose.\n\n<!-- status:begin -->\nold\n<!-- status:end -->\n\nFooter prose.\n",
+    )
+    .unwrap();
+    let mut opts1 = base_opts(&repo, "GATE-TEST-01", hash1, "session:s2");
+    opts1.readme_path = Some(readme_path.clone());
+    let out1 = record_gate(&opts1).expect("records pass and splices README");
+    assert_eq!(out1.regenerated_files, vec![readme_path.clone()]);
+    let after1 = fs::read_to_string(&readme_path).unwrap();
+    assert!(after1.starts_with("# FrankenRobotics\n\nIntro prose.\n\n<!-- status:begin -->\n"));
+    assert!(after1.ends_with("<!-- status:end -->\n\nFooter prose.\n"));
+    assert!(after1.contains("| `GATE-TEST-01` | GATE-TEST-01 | pass | — |"));
+    assert!(!after1.contains("\nold\n"));
+
+    // Second recording with a failing receipt updates the status row without duplicating markers or touching prose.
+    let mut fail_entry = entry_ok("ka:wheel", "0.9800", "1");
+    fail_entry.outcome = "fail".to_owned();
+    fail_entry.first_diff = Some("0.9800 > 0.95".to_owned());
+    let mut rec2 = make_receipt(
+        &repo.head,
+        Tier::G1KnownAnswers,
+        "GATE-TEST-01",
+        "fail",
+        vec![
+            ctrl("NC-0001", "GATE-TEST-01", ControlRunOutcome::Caught),
+            ctrl("NC-0002", "GATE-TEST-01", ControlRunOutcome::Caught),
+        ],
+        vec![fail_entry],
+    );
+    rec2.counts.pass = 0;
+    rec2.counts.fail = 1;
+    let (_, hash2) = repo.write_receipt(&rec2);
+    let mut opts2 = base_opts(&repo, "GATE-TEST-01", hash2, "session:s2");
+    opts2.readme_path = Some(readme_path.clone());
+    let out2 = record_gate(&opts2).expect("updates README status block on re-record");
+    assert_eq!(out2.part.status, Status::Fail);
+    let after2 = fs::read_to_string(&readme_path).unwrap();
+    assert!(after2.starts_with("# FrankenRobotics\n\nIntro prose.\n\n<!-- status:begin -->\n"));
+    assert!(after2.ends_with("<!-- status:end -->\n\nFooter prose.\n"));
+    assert_eq!(after2.matches("<!-- status:begin -->").count(), 1);
+    assert_eq!(after2.matches("<!-- status:end -->").count(), 1);
+    assert!(after2.contains("| `GATE-TEST-01` | GATE-TEST-01 | fail | — |"));
+    assert!(!after2.contains("| pass |"));
+}
+
+#[test]
+fn refusal_on_disk_validation_leaves_controls_and_receipts_untouched() {
+    let repo = ScratchRepo::new("atomic_refusal", &["session:s1"]);
+    let missing_hex = "9999999999999999999999999999999999999999999999999999999999999999";
+    let two_gates = format!(
+        r#"schema = "frob.gates/1"
+
+[[gate]]
+id = "GATE-TEST-01"
+kind = "convergence"
+claim = "known-answer"
+claim_id = "{CLAIM_A}"
+section = "38.15"
+threshold = "spectral radius <= 0.95"
+milestone = "M0"
+tier = ["G1:host"]
+controls = ["NC-0001", "NC-0002"]
+
+[[gate.part]]
+milestone = "M0"
+status = "not-run"
+measured = ""
+evidence = []
+recorded = {{ date = "", session = "", implemented_by = "" }}
+
+[[gate]]
+id = "GATE-BROKEN-02"
+kind = "convergence"
+claim = "known-answer"
+claim_id = "{CLAIM_B}"
+section = "38.15"
+threshold = "err <= 0.01"
+milestone = "M0"
+tier = ["G1:host"]
+controls = ["NC-0001"]
+
+[[gate.part]]
+milestone = "M0"
+status = "pass"
+measured = "0.005"
+commit = "{}"
+command = "g1 -- gate:GATE-BROKEN-02"
+receipt = "{missing_hex}"
+fingerprint = "host"
+seed = "1"
+evidence = ["{missing_hex}"]
+recorded = {{ date = "2026-11-25", session = "session:s2", implemented_by = "session:s1" }}
+"#,
+        repo.head
+    );
+    let gates_path = repo.write_gates(&two_gates);
+    let controls_path = repo.write_controls(std_controls_two());
+    let orig_gates = fs::read(&gates_path).unwrap();
+    let orig_controls = fs::read(&controls_path).unwrap();
+
+    let rec = make_receipt(
+        &repo.head,
+        Tier::G1KnownAnswers,
+        "GATE-TEST-01",
+        "pass",
+        vec![
+            ctrl("NC-0001", "GATE-TEST-01", ControlRunOutcome::Caught),
+            ctrl("NC-0002", "GATE-TEST-01", ControlRunOutcome::Caught),
+        ],
+        vec![entry_ok("ka:wheel", "0.9207", "1")],
+    );
+    let (_, hash) = repo.write_receipt(&rec);
+    let err = record_gate(&base_opts(
+        &repo,
+        "GATE-TEST-01",
+        hash.clone(),
+        "session:s2",
+    ))
+    .expect_err("broken existing receipt on disk must refuse before any write");
+    assert_eq!(err.harness_reason, Some(HarnessReason::EvidenceUnresolved));
+    assert_eq!(fs::read(&gates_path).unwrap(), orig_gates);
+    assert_eq!(fs::read(&controls_path).unwrap(), orig_controls);
+    assert!(!repo.root.join(CONTROL_HISTORY_PATH).exists());
+    assert!(
+        !repo
+            .root
+            .join(format!("receipts/gates/{hash}.json"))
+            .exists()
+    );
+}
+
+#[test]
+fn bare_and_comma_trailer_sessions_caught_by_self_certified() {
+    let repo = ScratchRepo::new("comma_trailer", &["s1, session:s3"]);
+    repo.write_gates(&std_gate_toml(
+        "GATE-TEST-01",
+        "known-answer",
+        CLAIM_A,
+        "\"NC-0001\", \"NC-0002\"",
+    ));
+    repo.write_controls(std_controls_two());
+    let rec = make_receipt(
+        &repo.head,
+        Tier::G1KnownAnswers,
+        "GATE-TEST-01",
+        "pass",
+        vec![
+            ctrl("NC-0001", "GATE-TEST-01", ControlRunOutcome::Caught),
+            ctrl("NC-0002", "GATE-TEST-01", ControlRunOutcome::Caught),
+        ],
+        vec![entry_ok("ka:wheel", "0.9207", "1")],
+    );
+    let (_, hash) = repo.write_receipt(&rec);
+    for bad in ["s1", "session:s1", "s3", "session:s3"] {
+        let err = record_gate(&base_opts(&repo, "GATE-TEST-01", hash.clone(), bad))
+            .expect_err("bare or comma-trailer implementer must be refused");
+        assert_eq!(err.harness_reason, Some(HarnessReason::SelfCertified));
+    }
+    let ok = record_gate(&base_opts(&repo, "GATE-TEST-01", hash, "session:s2"))
+        .expect("distinct reviewer succeeds");
+    assert_eq!(ok.part.recorded.implemented_by, "session:s1, session:s3");
+}

@@ -210,8 +210,10 @@ impl RegistryLock {
                 .open(&lock_path)
             {
                 Ok(mut f) => {
-                    let payload =
-                        format!("pid={my_pid}\nsession={session}\nstarted_unix={started_unix}\n");
+                    let clean_session = session.replace(['\r', '\n'], " ");
+                    let payload = format!(
+                        "pid={my_pid}\nsession={clean_session}\nstarted_unix={started_unix}\n"
+                    );
                     let _ = f.write_all(payload.as_bytes()).and_then(|()| f.sync_all());
                     return Ok(Self {
                         path: lock_path,
@@ -606,7 +608,7 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
         )
     })?;
     let current_reg = parse_register_bytes(&reg_bytes, &registry_path.to_string_lossy())
-        .map_err(|vs| violation_to_refusal(&vs[0]))?;
+        .map_err(|vs| first_violation_refusal(&vs))?;
     let gate = current_reg
         .get(&opts.gate_id)
         .ok_or_else(|| {
@@ -1070,8 +1072,11 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
         }
     });
 
-    // Step 7a: Run N40-01 register validator in memory (repo_root = None so disk receipt check runs
-    // after Steps 1-7 succeed; all receipt bytes were already BLAKE3-verified in Step 1).
+    // Step 7a: Run N40-01 register validator BEFORE any disk writes:
+    // (1) validate candidate_reg in memory (new receipt bytes were already BLAKE3-verified in Step 1),
+    // (2) validate current_reg with repo_root=Some so any broken pre-existing committed receipt or
+    //     ADR on disk refuses atomically before touching receipts/gates/, controls.toml, or gates.toml,
+    // (3) pre-render and validate README status-block markers if readme_path is configured.
     let in_mem_ctx = ValidationContext {
         repo_root: None,
         controls: projected_controls.clone(),
@@ -1083,6 +1088,24 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
     if let Some(first) = violations.first() {
         return Err(violation_to_refusal(first));
     }
+    let pre_disk_ctx = ValidationContext {
+        repo_root: Some(opts.repo_root.clone()),
+        controls: projected_controls.clone(),
+        live_claims: opts.live_claims.clone(),
+        live_evidence: opts.live_evidence.clone(),
+        ..ValidationContext::default()
+    };
+    let pre_disk_violations = validate(&current_reg, &pre_disk_ctx);
+    if let Some(first) = pre_disk_violations.first() {
+        return Err(violation_to_refusal(first));
+    }
+    let prepared_readme = if let Some(ref readme_path) = opts.readme_path {
+        let table = render_readme_status_table(&candidate_reg);
+        let content = prepare_readme_bytes(readme_path, &table)?;
+        Some((readme_path.clone(), content))
+    } else {
+        None
+    };
 
     // Step 7b: Run every Step-7 hook in registration order; first refusal stops without writing.
     let hook_ctx = RecordHookContext {
@@ -1106,8 +1129,9 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
         }
     }
 
-    // Steps 8 & 9: All checks passed — commit receipts, update controls & history, write gates.toml,
-    // append bead log line, and regenerate status views.
+    // Steps 8 & 9: All checks passed — commit receipts and gates.toml first (write::record uses
+    // projected_controls in memory), then update controls.toml, control_history.ndjson, bead log,
+    // and README status view.
     let gates_receipts_dir = opts.repo_root.join("receipts/gates");
     fs::create_dir_all(&gates_receipts_dir).map_err(|e| {
         RecordRefusal::custom(
@@ -1127,6 +1151,18 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
         write_bytes_atomic(&set_dest, set_bytes)?;
         committed_receipts.push(set_dest);
     }
+
+    // Write gates.toml atomically via register::write::record with full on-disk ValidationContext
+    // BEFORE mutating controls.toml or appending control_history.ndjson.
+    let final_ctx = ValidationContext {
+        repo_root: Some(opts.repo_root.clone()),
+        controls: projected_controls,
+        live_claims: opts.live_claims.clone(),
+        live_evidence: opts.live_evidence.clone(),
+        ..ValidationContext::default()
+    };
+    let _updated_reg = write::record(&registry_path, &gate.id, candidate_part.clone(), &final_ctx)
+        .map_err(|vs| first_violation_refusal(&vs))?;
 
     // Update controls.toml last_seen and append control_history.ndjson on pass.
     if status == Status::Pass
@@ -1150,17 +1186,6 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
             })?;
         }
     }
-
-    // Write gates.toml atomically via register::write::record with full on-disk ValidationContext.
-    let final_ctx = ValidationContext {
-        repo_root: Some(opts.repo_root.clone()),
-        controls: projected_controls,
-        live_claims: opts.live_claims.clone(),
-        live_evidence: opts.live_evidence.clone(),
-        ..ValidationContext::default()
-    };
-    let updated_reg = write::record(&registry_path, &gate.id, candidate_part.clone(), &final_ctx)
-        .map_err(|vs| violation_to_refusal(&vs[0]))?;
 
     // Append `gate-record` line (`frob.beadlog/1`) to delivering bead log when configured.
     let bead_log_path = if let Some(ref bead_id) = opts.bead_id {
@@ -1188,12 +1213,11 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
         None
     };
 
-    // Regenerate README status view if requested.
+    // Regenerate README status view if requested (spliced strictly between status markers).
     let mut regenerated_files = Vec::new();
-    if let Some(ref readme_path) = opts.readme_path {
-        let table = render_readme_status_table(&updated_reg);
-        write_bytes_atomic(readme_path, table.as_bytes())?;
-        regenerated_files.push(readme_path.clone());
+    if let Some((readme_path, content)) = prepared_readme {
+        write_bytes_atomic(&readme_path, content.as_bytes())?;
+        regenerated_files.push(readme_path);
     }
 
     Ok(RecordOutput {
@@ -1501,9 +1525,11 @@ fn compute_implemented_by(
         && out.status.success()
     {
         for line in String::from_utf8_lossy(&out.stdout).lines() {
-            let trimmed = line.trim();
-            if !trimmed.is_empty() {
-                sessions.insert(normalize_session(trimmed));
+            for tok in line.split(',') {
+                let trimmed = tok.trim();
+                if !trimmed.is_empty() {
+                    sessions.insert(normalize_session(trimmed));
+                }
             }
         }
     }
@@ -1547,9 +1573,82 @@ fn normalize_session(s: &str) -> String {
 }
 
 fn session_in_implementers(session: &str, implemented_by: &str) -> bool {
-    let norm_rec = normalize_session(session);
-    is_session_implementer(session, implemented_by)
-        || is_session_implementer(&norm_rec, implemented_by)
+    let s = session.trim();
+    if s.is_empty() {
+        return false;
+    }
+    let norm_rec = normalize_session(s);
+    is_session_implementer(s, implemented_by)
+        || implemented_by
+            .split(',')
+            .map(str::trim)
+            .any(|m| !m.is_empty() && normalize_session(m) == norm_rec)
+}
+
+const README_STATUS_BEGIN: &str = "<!-- status:begin -->";
+const README_STATUS_END: &str = "<!-- status:end -->";
+
+fn prepare_readme_bytes(readme_path: &Path, table: &str) -> Result<String, RecordRefusal> {
+    let block = if table.ends_with('\n') {
+        table.to_owned()
+    } else {
+        format!("{table}\n")
+    };
+    if !readme_path.exists() {
+        return Ok(format!(
+            "{README_STATUS_BEGIN}\n{block}{README_STATUS_END}\n"
+        ));
+    }
+    let existing = fs::read_to_string(readme_path).map_err(|e| {
+        RecordRefusal::custom(
+            "io-error",
+            format!("failed reading README `{}`: {e}", readme_path.display()),
+            "Check README path permissions and UTF-8 encoding",
+        )
+    })?;
+    let begin_count = existing.matches(README_STATUS_BEGIN).count();
+    let end_count = existing.matches(README_STATUS_END).count();
+    let (Some(b), Some(e)) = (
+        existing.find(README_STATUS_BEGIN),
+        existing.find(README_STATUS_END),
+    ) else {
+        return Err(RecordRefusal::custom(
+            "readme-marker-missing",
+            format!(
+                "README `{}` lacks `{README_STATUS_BEGIN}` / `{README_STATUS_END}` markers",
+                readme_path.display()
+            ),
+            "Restore the status markers in README.md before regenerating the status block",
+        ));
+    };
+    let after_begin = b + README_STATUS_BEGIN.len();
+    let inner_start = if existing[after_begin..].starts_with('\n') {
+        after_begin + 1
+    } else if existing[after_begin..].starts_with("\r\n") {
+        after_begin + 2
+    } else {
+        return Err(RecordRefusal::custom(
+            "readme-marker-missing",
+            format!(
+                "README `{}` must have a newline immediately after `{README_STATUS_BEGIN}`",
+                readme_path.display()
+            ),
+            "Put `<!-- status:begin -->` on its own line before `<!-- status:end -->`",
+        ));
+    };
+    if begin_count != 1 || end_count != 1 || e < inner_start {
+        return Err(RecordRefusal::custom(
+            "readme-marker-missing",
+            format!(
+                "README `{}` has duplicate or out-of-order status markers",
+                readme_path.display()
+            ),
+            "Keep exactly one `<!-- status:begin -->` before one `<!-- status:end -->`",
+        ));
+    }
+    let prefix = &existing[..inner_start];
+    let suffix = &existing[e..];
+    Ok(format!("{prefix}{block}{suffix}"))
 }
 
 fn claim_to_gate_class(c: Claim) -> GateClass {
@@ -1639,6 +1738,19 @@ fn committed_receipt_paths(
         out.push(dir.join(format!("{part_receipt_hash}.json")));
     }
     out
+}
+
+fn first_violation_refusal(vs: &[Violation]) -> RecordRefusal {
+    vs.first().map_or_else(
+        || {
+            RecordRefusal::custom(
+                "register-invalid",
+                "register validation failed",
+                "Fix registries/gates.toml",
+            )
+        },
+        violation_to_refusal,
+    )
 }
 
 fn violation_to_refusal(v: &Violation) -> RecordRefusal {

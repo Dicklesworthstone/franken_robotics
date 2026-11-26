@@ -16,7 +16,7 @@ use std::collections::BTreeSet;
 use std::env;
 use std::fmt;
 use std::fs::{self, OpenOptions};
-use std::io::Write as _;
+use std::io::{self, Write as _};
 use std::path::{Path, PathBuf};
 use std::process::{Command, Stdio};
 use std::sync::Mutex;
@@ -31,7 +31,7 @@ use frob_core::json::{self, Limits};
 use frob_core::stack::build_identity::{GateClass, may_cite_mode_str};
 use frob_core::testkit::registry::{Control, Controls, LastSeen};
 
-use crate::control_runner::{CONTROL_HISTORY_PATH, ControlHistoryEntry, append_history_entry};
+use crate::control_runner::{CONTROL_HISTORY_PATH, ControlHistoryEntry};
 use crate::controls::{CONTROLS_PATH, serialize_controls_file};
 use crate::reasons::HarnessReason;
 use crate::register::kill::render_readme_status_table;
@@ -600,13 +600,8 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
         })?;
 
     // Parse current registries/gates.toml.
-    let reg_bytes = fs::read(&registry_path).map_err(|e| {
-        RecordRefusal::custom(
-            "io-error",
-            format!("failed reading `{}`: {e}", registry_path.display()),
-            "Ensure registries/gates.toml exists",
-        )
-    })?;
+    let reg_bytes = read_recording_file(&registry_path)?
+        .ok_or_else(|| recording_io("read", &registry_path, "registry does not exist"))?;
     let current_reg = parse_register_bytes(&reg_bytes, &registry_path.to_string_lossy())
         .map_err(|vs| first_violation_refusal(&vs))?;
     let gate = current_reg
@@ -798,22 +793,15 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
     }
 
     // Load controls.toml if present.
-    let loaded_controls: Option<Controls> = if controls_path.is_file() {
-        let bytes = fs::read(&controls_path).map_err(|e| {
-            RecordRefusal::custom(
-                "io-error",
-                format!("failed reading `{}`: {e}", controls_path.display()),
-                "Check controls.toml path",
-            )
-        })?;
-        Some(
-            Controls::parse_bytes(&bytes, &controls_path.to_string_lossy()).map_err(|e| {
+    let controls_before = read_recording_file(&controls_path)?;
+    let loaded_controls = controls_before
+        .as_deref()
+        .map(|bytes| {
+            Controls::parse_bytes(bytes, &controls_path.to_string_lossy()).map_err(|e| {
                 RecordRefusal::custom("controls-parse-error", e.to_string(), "Fix controls.toml")
-            })?,
-        )
-    } else {
-        None
-    };
+            })
+        })
+        .transpose()?;
 
     // Step 4: Same-run negative-control rule (applies to `pass`; not to `no-claim` or `fail`).
     let mut due_controls: Vec<String> = Vec::new();
@@ -1018,59 +1006,30 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
         open_question: None,
     };
 
-    // Idempotent no-op check: same receipt, status, measured, evidence, and session already committed.
-    if let Some(prev) = existing_part
-        && parts_match_except_date(prev, &candidate_part)
-        && receipts_already_committed(
-            &opts.repo_root,
-            &loaded,
-            &part_receipt_hash,
-            receipt_set_bytes.as_deref(),
-        )
+    // A repair of an existing record uses its original date in all derived outputs.
+    let matching_part = existing_part.filter(|prev| parts_match_except_date(prev, &candidate_part));
+    let candidate_part = matching_part.cloned().unwrap_or(candidate_part);
+    let date = &candidate_part.recorded.date;
+    let mut projected_controls = loaded_controls.clone();
+    let mut controls_bytes = None;
+    if status == Status::Pass
+        && let Some(ref ctrls) = loaded_controls
     {
-        return Ok(RecordOutput {
-            gate_id: gate.id,
-            part: prev.clone(),
-            committed_receipts: committed_receipt_paths(
-                &opts.repo_root,
-                &loaded,
-                &part_receipt_hash,
-                receipt_set_bytes.is_some(),
-            ),
-            not_yet_due_controls,
-            regenerated_files: Vec::new(),
-            bead_log_path: opts.bead_id.as_ref().map(|b| {
-                opts.repo_root
-                    .join(format!("docs/delivery/logs/{b}.ndjson"))
-            }),
-            idempotent_noop: true,
-        });
-    }
-
-    // Build candidate register in memory and projected controls for Step 7 validation (ZERO disk writes yet).
-    let mut candidate_reg = current_reg.clone();
-    if let Some(g) = candidate_reg.get_mut(&gate.id) {
-        if let Some(slot) = g
-            .parts
-            .iter_mut()
-            .find(|p| p.milestone == candidate_part.milestone)
-        {
-            *slot = candidate_part.clone();
-        } else {
-            g.parts.push(candidate_part.clone());
+        let updated_rows = update_controls_last_seen(
+            ctrls.all(),
+            &due_controls,
+            &session,
+            date,
+            matching_part.is_some(),
+        );
+        if matching_part.is_none() || updated_rows.as_slice() != ctrls.all() {
+            let serialized = serialize_controls_file(&updated_rows);
+            projected_controls = Some(Controls::parse_str(&serialized, "controls.toml").map_err(
+                |e| RecordRefusal::custom("controls-invalid", e.to_string(), "Fix controls.toml"),
+            )?);
+            controls_bytes = Some(serialized.into_bytes());
         }
     }
-
-    let projected_controls = loaded_controls.as_ref().map(|ctrls| {
-        if status == Status::Pass {
-            let updated_rows =
-                update_controls_last_seen(ctrls.all(), &due_controls, &session, &date);
-            Controls::parse_str(&serialize_controls_file(&updated_rows), "controls.toml")
-                .unwrap_or_else(|_| ctrls.clone())
-        } else {
-            ctrls.clone()
-        }
-    });
 
     // Step 7a: Run N40-01 register validator BEFORE any disk writes:
     // (1) validate candidate_reg in memory (new receipt bytes were already BLAKE3-verified in Step 1),
@@ -1084,10 +1043,9 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
         live_evidence: opts.live_evidence.clone(),
         ..ValidationContext::default()
     };
-    let violations = validate(&candidate_reg, &in_mem_ctx);
-    if let Some(first) = violations.first() {
-        return Err(violation_to_refusal(first));
-    }
+    let candidate_reg =
+        write::record_in_memory(&current_reg, &gate.id, candidate_part.clone(), &in_mem_ctx)
+            .map_err(|vs| first_violation_refusal(&vs))?;
     let pre_disk_ctx = ValidationContext {
         repo_root: Some(opts.repo_root.clone()),
         controls: projected_controls.clone(),
@@ -1099,13 +1057,108 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
     if let Some(first) = pre_disk_violations.first() {
         return Err(violation_to_refusal(first));
     }
-    let prepared_readme = if let Some(ref readme_path) = opts.readme_path {
-        let table = render_readme_status_table(&candidate_reg);
-        let content = prepare_readme_bytes(readme_path, &table)?;
-        Some((readme_path.clone(), content))
+    let committed_receipts = committed_receipt_paths(
+        &opts.repo_root,
+        &loaded,
+        &part_receipt_hash,
+        receipt_set_bytes.is_some(),
+    );
+    let mut writes = Vec::new();
+    for (path, bytes) in committed_receipts.iter().zip(
+        loaded
+            .iter()
+            .map(|r| r.raw_bytes.as_slice())
+            .chain(receipt_set_bytes.as_deref()),
+    ) {
+        writes.push(RecordingWrite::replace(path.clone(), bytes.to_vec())?);
+    }
+    let registry_bytes = if matching_part.is_some() {
+        reg_bytes.clone()
     } else {
-        None
+        candidate_reg.print_toml().into_bytes()
     };
+    let registry_write = RecordingWrite {
+        path: registry_path,
+        before: Some(reg_bytes),
+        after: registry_bytes,
+    };
+    if status == Status::Pass
+        && let Some(before) = controls_before
+    {
+        let after = controls_bytes.unwrap_or_else(|| before.clone());
+        writes.push(RecordingWrite {
+            path: controls_path,
+            before: Some(before),
+            after,
+        });
+        let history_lines = due_controls
+            .iter()
+            .map(|id| {
+                ControlHistoryEntry {
+                    id: id.clone(),
+                    gate: gate.id.clone(),
+                    receipt: part_receipt_hash.clone(),
+                    outcome: "caught".to_owned(),
+                    commit: common_commit.clone(),
+                    session: session.clone(),
+                    date: date.clone(),
+                }
+                .to_canonical_line()
+                .map_err(|e| RecordRefusal::custom("canon-error", e, "Fix control history fields"))
+            })
+            .collect::<Result<Vec<_>, _>>()?;
+        if !history_lines.is_empty() {
+            writes.push(RecordingWrite::append(history_path, &history_lines)?);
+        }
+    }
+    let bead_log_path = opts.bead_id.as_ref().map(|bead_id| {
+        opts.repo_root
+            .join(format!("docs/delivery/logs/{bead_id}.ndjson"))
+    });
+    if let Some(path) = &bead_log_path {
+        let line = BeadLogGateRecord {
+            schema: BEADLOG_SCHEMA.to_owned(),
+            kind: "gate-record".to_owned(),
+            gate: gate.id.clone(),
+            part: part_milestone,
+            verdict: status.as_str().to_owned(),
+            claim_ids: gate.claim_id.iter().cloned().collect(),
+            evidence: evidence.clone(),
+            receipt: part_receipt_hash,
+            recorded_by: session,
+            date: date.clone(),
+        };
+        let cb = canon::to_canonical(&line).map_err(|e| {
+            RecordRefusal::custom("canon-error", e.to_string(), "Fix bead log fields")
+        })?;
+        writes.push(RecordingWrite::append(path.clone(), &[cb.as_str()])?);
+    }
+
+    let mut regenerated_files = Vec::new();
+    if let Some(path) = &opts.readme_path {
+        let table = render_readme_status_table(&candidate_reg);
+        let mut write = RecordingWrite::replace(path.clone(), Vec::new())?;
+        write.after = prepare_readme_bytes(path, write.before.as_deref(), &table)?.into_bytes();
+        if write.changed() {
+            regenerated_files.push(path.clone());
+        }
+        writes.push(write);
+    }
+    // Publish the gate row only after its receipts and derived outputs are available.
+    writes.push(registry_write);
+    let idempotent_noop = writes.iter().all(|write| !write.changed());
+    let output = RecordOutput {
+        gate_id: gate.id.clone(),
+        part: candidate_part.clone(),
+        committed_receipts,
+        not_yet_due_controls,
+        regenerated_files,
+        bead_log_path,
+        idempotent_noop,
+    };
+    if idempotent_noop {
+        return Ok(output);
+    }
 
     // Step 7b: Run every Step-7 hook in registration order; first refusal stops without writing.
     let hook_ctx = RecordHookContext {
@@ -1129,106 +1182,8 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
         }
     }
 
-    // Steps 8 & 9: All checks passed — commit receipts and gates.toml first (write::record uses
-    // projected_controls in memory), then update controls.toml, control_history.ndjson, bead log,
-    // and README status view.
-    let gates_receipts_dir = opts.repo_root.join("receipts/gates");
-    fs::create_dir_all(&gates_receipts_dir).map_err(|e| {
-        RecordRefusal::custom(
-            "io-error",
-            format!("create `{}`: {e}", gates_receipts_dir.display()),
-            "Check directory permissions",
-        )
-    })?;
-    let mut committed_receipts = Vec::new();
-    for item in &loaded {
-        let dest = gates_receipts_dir.join(format!("{}.json", item.hash));
-        write_bytes_atomic(&dest, &item.raw_bytes)?;
-        committed_receipts.push(dest);
-    }
-    if let Some(ref set_bytes) = receipt_set_bytes {
-        let set_dest = gates_receipts_dir.join(format!("{part_receipt_hash}.json"));
-        write_bytes_atomic(&set_dest, set_bytes)?;
-        committed_receipts.push(set_dest);
-    }
-
-    // Write gates.toml atomically via register::write::record with full on-disk ValidationContext
-    // BEFORE mutating controls.toml or appending control_history.ndjson.
-    let final_ctx = ValidationContext {
-        repo_root: Some(opts.repo_root.clone()),
-        controls: projected_controls,
-        live_claims: opts.live_claims.clone(),
-        live_evidence: opts.live_evidence.clone(),
-        ..ValidationContext::default()
-    };
-    let _updated_reg = write::record(&registry_path, &gate.id, candidate_part.clone(), &final_ctx)
-        .map_err(|vs| first_violation_refusal(&vs))?;
-
-    // Update controls.toml last_seen and append control_history.ndjson on pass.
-    if status == Status::Pass
-        && let Some(ref ctrls) = loaded_controls
-    {
-        let updated_rows = update_controls_last_seen(ctrls.all(), &due_controls, &session, &date);
-        let serialized = serialize_controls_file(&updated_rows);
-        write_bytes_atomic(&controls_path, serialized.as_bytes())?;
-        for cid in &due_controls {
-            let entry = ControlHistoryEntry {
-                id: cid.clone(),
-                gate: gate.id.clone(),
-                receipt: part_receipt_hash.clone(),
-                outcome: "caught".to_owned(),
-                commit: common_commit.clone(),
-                session: session.clone(),
-                date: date.clone(),
-            };
-            append_history_entry(&history_path, &entry).map_err(|e| {
-                RecordRefusal::custom("io-error", e, "Check control_history.ndjson permissions")
-            })?;
-        }
-    }
-
-    // Append `gate-record` line (`frob.beadlog/1`) to delivering bead log when configured.
-    let bead_log_path = if let Some(ref bead_id) = opts.bead_id {
-        let path = opts
-            .repo_root
-            .join(format!("docs/delivery/logs/{bead_id}.ndjson"));
-        let line = BeadLogGateRecord {
-            schema: BEADLOG_SCHEMA.to_owned(),
-            kind: "gate-record".to_owned(),
-            gate: gate.id.clone(),
-            part: part_milestone,
-            verdict: status.as_str().to_owned(),
-            claim_ids: gate.claim_id.iter().cloned().collect(),
-            evidence,
-            receipt: part_receipt_hash,
-            recorded_by: session,
-            date,
-        };
-        let cb = canon::to_canonical(&line).map_err(|e| {
-            RecordRefusal::custom("canon-error", e.to_string(), "Fix bead log fields")
-        })?;
-        append_line(&path, cb.as_str())?;
-        Some(path)
-    } else {
-        None
-    };
-
-    // Regenerate README status view if requested (spliced strictly between status markers).
-    let mut regenerated_files = Vec::new();
-    if let Some((readme_path, content)) = prepared_readme {
-        write_bytes_atomic(&readme_path, content.as_bytes())?;
-        regenerated_files.push(readme_path);
-    }
-
-    Ok(RecordOutput {
-        gate_id: gate.id,
-        part: candidate_part,
-        committed_receipts,
-        not_yet_due_controls,
-        regenerated_files,
-        bead_log_path,
-        idempotent_noop: false,
-    })
+    publish_recording(writes)?;
+    Ok(output)
 }
 
 /// Shared-lock dispatch entrypoint for `record_gate -- reaffirm ...` (`N29bp1-01`).
@@ -1588,24 +1543,23 @@ fn session_in_implementers(session: &str, implemented_by: &str) -> bool {
 const README_STATUS_BEGIN: &str = "<!-- status:begin -->";
 const README_STATUS_END: &str = "<!-- status:end -->";
 
-fn prepare_readme_bytes(readme_path: &Path, table: &str) -> Result<String, RecordRefusal> {
+fn prepare_readme_bytes(
+    readme_path: &Path,
+    before: Option<&[u8]>,
+    table: &str,
+) -> Result<String, RecordRefusal> {
     let block = if table.ends_with('\n') {
         table.to_owned()
     } else {
         format!("{table}\n")
     };
-    if !readme_path.exists() {
+    let Some(before) = before else {
         return Ok(format!(
             "{README_STATUS_BEGIN}\n{block}{README_STATUS_END}\n"
         ));
-    }
-    let existing = fs::read_to_string(readme_path).map_err(|e| {
-        RecordRefusal::custom(
-            "io-error",
-            format!("failed reading README `{}`: {e}", readme_path.display()),
-            "Check README path permissions and UTF-8 encoding",
-        )
-    })?;
+    };
+    let existing =
+        std::str::from_utf8(before).map_err(|e| recording_io("decode README", readme_path, e))?;
     let begin_count = existing.matches(README_STATUS_BEGIN).count();
     let end_count = existing.matches(README_STATUS_END).count();
     let (Some(b), Some(e)) = (
@@ -1668,13 +1622,19 @@ fn update_controls_last_seen(
     due_ids: &[String],
     session: &str,
     date: &str,
+    repairing: bool,
 ) -> Vec<Control> {
     let due_set: BTreeSet<&str> = due_ids.iter().map(String::as_str).collect();
     controls
         .iter()
         .map(|c| {
             let mut copy = c.clone();
-            if due_set.contains(c.id.as_str()) {
+            if due_set.contains(c.id.as_str())
+                && (!repairing
+                    || c.last_seen
+                        .as_ref()
+                        .is_none_or(|seen| !seen.caught || seen.date.as_str() < date))
+            {
                 copy.last_seen = Some(LastSeen {
                     caught: true,
                     session: session.to_owned(),
@@ -1699,28 +1659,6 @@ fn parts_match_except_date(a: &Part, b: &Part) -> bool {
         && a.detail == b.detail
         && a.recorded.session == b.recorded.session
         && a.recorded.implemented_by == b.recorded.implemented_by
-}
-
-fn receipts_already_committed(
-    repo_root: &Path,
-    loaded: &[LoadedReceipt],
-    part_receipt_hash: &str,
-    set_bytes: Option<&[u8]>,
-) -> bool {
-    let dir = repo_root.join("receipts/gates");
-    for item in loaded {
-        let p = dir.join(format!("{}.json", item.hash));
-        if fs::read(&p).ok().as_deref() != Some(item.raw_bytes.as_slice()) {
-            return false;
-        }
-    }
-    if let Some(sb) = set_bytes {
-        let p = dir.join(format!("{part_receipt_hash}.json"));
-        if fs::read(&p).ok().as_deref() != Some(sb) {
-            return false;
-        }
-    }
-    true
 }
 
 fn committed_receipt_paths(
@@ -1762,81 +1700,223 @@ fn violation_to_refusal(v: &Violation) -> RecordRefusal {
     }
 }
 
-fn write_bytes_atomic(path: &Path, bytes: &[u8]) -> Result<(), RecordRefusal> {
-    if let Some(parent) = path.parent() {
-        fs::create_dir_all(parent).map_err(|e| {
-            RecordRefusal::custom(
-                "io-error",
-                format!("create dir `{}`: {e}", parent.display()),
-                "Check directory permissions",
-            )
-        })?;
-    }
-    if path.is_file() && fs::read(path).ok().as_deref() == Some(bytes) {
-        return Ok(());
-    }
-    static SEQ: AtomicU64 = AtomicU64::new(0);
-    let n = SEQ.fetch_add(1, Ordering::Relaxed);
-    let pid = std::process::id();
-    let parent = path.parent().unwrap_or_else(|| Path::new("."));
-    let fname = path.file_name().and_then(|s| s.to_str()).unwrap_or("file");
-    let tmp = parent.join(format!(".{fname}.rec.{pid}.{n}.tmp"));
-    let mut f = fs::File::create(&tmp).map_err(|e| {
-        RecordRefusal::custom(
-            "io-error",
-            format!("create temp `{}`: {e}", tmp.display()),
-            "Check filesystem permissions",
-        )
-    })?;
-    f.write_all(bytes)
-        .and_then(|()| f.sync_all())
-        .map_err(|e| {
-            RecordRefusal::custom(
-                "io-error",
-                format!("write temp `{}`: {e}", tmp.display()),
-                "Check disk space and permissions",
-            )
-        })?;
-    drop(f);
-    fs::rename(&tmp, path).map_err(|e| {
-        RecordRefusal::custom(
-            "io-error",
-            format!("rename `{}` -> `{}`: {e}", tmp.display(), path.display()),
-            "Check directory permissions",
-        )
-    })
+struct RecordingWrite {
+    path: PathBuf,
+    before: Option<Vec<u8>>,
+    after: Vec<u8>,
 }
 
-fn append_line(path: &Path, line: &str) -> Result<(), RecordRefusal> {
-    if let Some(parent) = path.parent() {
-        fs::create_dir_all(parent).map_err(|e| {
-            RecordRefusal::custom(
-                "io-error",
-                format!("create dir `{}`: {e}", parent.display()),
-                "Check directory permissions",
-            )
-        })?;
-    }
-    let mut f = OpenOptions::new()
-        .create(true)
-        .append(true)
-        .open(path)
-        .map_err(|e| {
-            RecordRefusal::custom(
-                "io-error",
-                format!("open `{}`: {e}", path.display()),
-                "Check permissions",
-            )
-        })?;
-    writeln!(f, "{line}")
-        .and_then(|()| f.sync_all())
-        .map_err(|e| {
-            RecordRefusal::custom(
-                "io-error",
-                format!("append `{}`: {e}", path.display()),
-                "Check disk space",
-            )
+impl RecordingWrite {
+    fn replace(path: PathBuf, after: Vec<u8>) -> Result<Self, RecordRefusal> {
+        let before = read_recording_file(&path)?;
+        Ok(Self {
+            path,
+            before,
+            after,
         })
+    }
+
+    fn append(path: PathBuf, lines: &[impl AsRef<str>]) -> Result<Self, RecordRefusal> {
+        let mut write = Self::replace(path, Vec::new())?;
+        write.after = write.before.clone().unwrap_or_default();
+        for line in lines {
+            let line = line.as_ref().as_bytes();
+            if write
+                .after
+                .split(|&b| b == b'\n')
+                .any(|existing| existing.strip_suffix(b"\r").unwrap_or(existing) == line)
+            {
+                continue;
+            }
+            if !write.after.is_empty() && !write.after.ends_with(b"\n") {
+                write.after.push(b'\n');
+            }
+            write.after.extend_from_slice(line);
+            write.after.push(b'\n');
+        }
+        Ok(write)
+    }
+
+    fn changed(&self) -> bool {
+        self.before.as_deref() != Some(self.after.as_slice())
+    }
+}
+
+fn recording_io(action: &str, path: &Path, error: impl fmt::Display) -> RecordRefusal {
+    RecordRefusal::custom(
+        "io-error",
+        format!("{action} `{}`: {error}", path.display()),
+        "Check recording destinations, filesystem permissions and disk space",
+    )
+}
+
+fn read_recording_file(path: &Path) -> Result<Option<Vec<u8>>, RecordRefusal> {
+    match fs::symlink_metadata(path) {
+        Ok(meta) if meta.is_file() => fs::read(path)
+            .map(Some)
+            .map_err(|e| recording_io("read", path, e)),
+        Ok(_) => Err(recording_io(
+            "preflight",
+            path,
+            "destination must be a regular file",
+        )),
+        Err(e) if e.kind() == io::ErrorKind::NotFound => Ok(None),
+        Err(e) => Err(recording_io("preflight", path, e)),
+    }
+}
+
+#[derive(Default)]
+struct RecordingParents {
+    created: Vec<PathBuf>,
+    published: bool,
+}
+
+impl RecordingParents {
+    fn ensure(&mut self, path: &Path) -> io::Result<()> {
+        if path.is_dir() {
+            return Ok(());
+        }
+        if let Some(parent) = path.parent().filter(|p| !p.as_os_str().is_empty()) {
+            self.ensure(parent)?;
+        }
+        match fs::create_dir(path) {
+            Ok(()) => self.created.push(path.to_owned()),
+            Err(e) if e.kind() == io::ErrorKind::AlreadyExists && path.is_dir() => {}
+            Err(e) => return Err(e),
+        }
+        Ok(())
+    }
+}
+
+impl Drop for RecordingParents {
+    fn drop(&mut self) {
+        if !self.published {
+            for path in self.created.iter().rev() {
+                let _ = fs::remove_dir(path);
+            }
+        }
+    }
+}
+
+struct StagedRecordingWrite {
+    path: PathBuf,
+    stage: PathBuf,
+    had_original: bool,
+    keep_backup: bool,
+}
+
+impl StagedRecordingWrite {
+    fn new(write: RecordingWrite) -> Result<Self, RecordRefusal> {
+        static SEQ: AtomicU64 = AtomicU64::new(0);
+        let seq = SEQ.fetch_add(1, Ordering::Relaxed);
+        let stage = write
+            .path
+            .with_file_name(format!(".frob-record-{}-{seq}", std::process::id()));
+        fs::create_dir(&stage).map_err(|e| recording_io("create staging directory", &stage, e))?;
+        let staged = Self {
+            path: write.path,
+            stage,
+            had_original: write.before.is_some(),
+            keep_backup: false,
+        };
+        let pending = staged.stage.join("pending");
+        let mut file = fs::File::create_new(&pending)
+            .map_err(|e| recording_io("create staged output", &pending, e))?;
+        if staged.had_original {
+            let original = staged.stage.join("original");
+            fs::hard_link(&staged.path, &original)
+                .map_err(|e| recording_io("save original", &staged.path, e))?;
+            let permissions = fs::metadata(&original)
+                .map_err(|e| recording_io("read permissions", &original, e))?
+                .permissions();
+            file.set_permissions(permissions)
+                .map_err(|e| recording_io("set staged permissions", &pending, e))?;
+        }
+        file.write_all(&write.after)
+            .and_then(|()| file.sync_all())
+            .map_err(|e| recording_io("write staged output", &pending, e))?;
+        Ok(staged)
+    }
+
+    fn publish(&self) -> io::Result<()> {
+        fs::rename(self.stage.join("pending"), &self.path)
+    }
+
+    fn restore(&mut self) -> io::Result<()> {
+        if self.had_original {
+            let result = fs::rename(self.stage.join("original"), &self.path);
+            self.keep_backup = result.is_err();
+            result
+        } else {
+            fs::remove_file(&self.path)
+        }
+    }
+}
+
+impl Drop for StagedRecordingWrite {
+    fn drop(&mut self) {
+        let _ = fs::remove_file(self.stage.join("pending"));
+        if !self.keep_backup {
+            let _ = fs::remove_file(self.stage.join("original"));
+            let _ = fs::remove_dir(&self.stage);
+        }
+    }
+}
+
+fn publish_recording(writes: Vec<RecordingWrite>) -> Result<(), RecordRefusal> {
+    let mut parents = RecordingParents::default();
+    let mut destinations = BTreeSet::new();
+    let mut staged = Vec::new();
+    for write in writes {
+        if read_recording_file(&write.path)? != write.before {
+            return Err(recording_io(
+                "preflight",
+                &write.path,
+                "destination changed during recording",
+            ));
+        }
+        let parent = write
+            .path
+            .parent()
+            .filter(|p| !p.as_os_str().is_empty())
+            .unwrap_or_else(|| Path::new("."));
+        let name = write.path.file_name().ok_or_else(|| {
+            recording_io("preflight", &write.path, "destination needs a file name")
+        })?;
+        parents
+            .ensure(parent)
+            .map_err(|e| recording_io("create parent", parent, e))?;
+        let resolved = fs::canonicalize(parent)
+            .map_err(|e| recording_io("resolve parent", parent, e))?
+            .join(name);
+        if !destinations.insert(resolved) {
+            return Err(recording_io(
+                "preflight",
+                &write.path,
+                "duplicate recording destination",
+            ));
+        }
+        if write.changed() {
+            staged.push(StagedRecordingWrite::new(write)?);
+        }
+    }
+    for index in 0..staged.len() {
+        if let Err(e) = staged[index].publish() {
+            let mut error = recording_io("publish", &staged[index].path, e);
+            for previous in staged[..index].iter_mut().rev() {
+                if let Err(rollback) = previous.restore() {
+                    error.detail.push_str(&format!(
+                        ", failed to restore `{}` from `{}`: {rollback}",
+                        previous.path.display(),
+                        previous.stage.display()
+                    ));
+                }
+            }
+            return Err(error);
+        }
+    }
+    parents.published = true;
+    Ok(())
 }
 
 fn utc_today_iso() -> String {

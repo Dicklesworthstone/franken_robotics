@@ -349,6 +349,105 @@ fn record_idempotent() {
 }
 
 #[test]
+fn record_history_directory_refuses_then_retry_repairs_each_effect_once() {
+    let repo = ScratchRepo::new("history_directory", &["session:s1"]);
+    let gates = repo.write_gates(&std_gate_toml(
+        "GATE-TEST-01",
+        "known-answer",
+        CLAIM_A,
+        "\"NC-0001\", \"NC-0002\"",
+    ));
+    let controls = repo.write_controls(std_controls_two());
+    let receipt = make_receipt(
+        &repo.head,
+        Tier::G1KnownAnswers,
+        "GATE-TEST-01",
+        "pass",
+        vec![
+            ctrl("NC-0001", "GATE-TEST-01", ControlRunOutcome::Caught),
+            ctrl("NC-0002", "GATE-TEST-01", ControlRunOutcome::Caught),
+        ],
+        vec![entry_ok("ka:wheel", "0.9207", "1")],
+    );
+    let (source_receipt, hash) = repo.write_receipt(&receipt);
+    let receipt_dir = repo.root.join("receipts/gates");
+    let committed = receipt_dir.join(format!("{hash}.json"));
+    let readme = repo.root.join("README.md");
+    let initial_readme = b"# Gates\n\n<!-- status:begin -->\n<!-- status:end -->\n";
+    fs::write(&readme, initial_readme).unwrap();
+    let log = repo.root.join("docs/delivery/logs/BD-TEST.ndjson");
+    let initial_log = b"{\"kind\":\"implemented\"}\n";
+    fs::write(&log, initial_log).unwrap();
+    let mut opts = base_opts(&repo, "GATE-TEST-01", hash, "session:s2");
+    let history = repo.root.join("configured-history.ndjson");
+    opts.control_history_path = Some(history.clone());
+    opts.readme_path = Some(readme.clone());
+    fs::create_dir(&history).unwrap();
+    let sentinel = history.join("keep");
+    fs::write(&sentinel, b"unchanged history directory").unwrap();
+    let before_gates = fs::read(&gates).unwrap();
+    let before_controls = fs::read(&controls).unwrap();
+
+    let err = record_gate(&opts).expect_err("history directory must refuse the entire recording");
+    assert_eq!(err.reason, "io-error");
+    assert!(err.detail.contains("configured-history.ndjson"), "{err}");
+    assert_eq!(fs::read(&gates).unwrap(), before_gates);
+    assert_eq!(fs::read(&controls).unwrap(), before_controls);
+    assert_eq!(fs::read_dir(&receipt_dir).unwrap().count(), 0);
+    assert_eq!(fs::read(&sentinel).unwrap(), b"unchanged history directory");
+    assert_eq!(fs::read_dir(&history).unwrap().count(), 1);
+    assert_eq!(fs::read(&log).unwrap(), initial_log);
+    assert_eq!(fs::read(&readme).unwrap(), initial_readme);
+
+    fs::rename(&history, repo.root.join("planted-history-directory")).unwrap();
+    let first = record_gate(&opts).expect("usable history destination allows recording");
+    assert_eq!(first.part.status, Status::Pass);
+    assert!(!first.idempotent_noop);
+    assert_eq!(
+        fs::read(committed).unwrap(),
+        fs::read(source_receipt).unwrap()
+    );
+    assert_eq!(fs::read_dir(&receipt_dir).unwrap().count(), 1);
+    let saved_gates = fs::read(&gates).unwrap();
+    let register = parse_register_bytes(&saved_gates, "gates.toml").unwrap();
+    let parts = &register.get("GATE-TEST-01").unwrap().parts;
+    assert_eq!(parts.len(), 1);
+    assert_eq!(parts[0].receipt, first.part.receipt);
+    let saved_history = fs::read_to_string(&history).unwrap();
+    let entries =
+        frob_conformance::control_runner::parse_history_ndjson(&saved_history, "history").unwrap();
+    assert_eq!(
+        entries
+            .iter()
+            .map(|entry| entry.id.as_str())
+            .collect::<Vec<_>>(),
+        ["NC-0001", "NC-0002"]
+    );
+    let saved_log = fs::read_to_string(&log).unwrap();
+    assert_eq!(saved_log.matches("\"kind\":\"gate-record\"").count(), 1);
+    let saved_readme = fs::read(&readme).unwrap();
+    assert_ne!(saved_readme, initial_readme);
+
+    // Model a previously published pass with only one history row and stale derived files.
+    fs::write(
+        &history,
+        format!("{}\n", saved_history.lines().next().unwrap()),
+    )
+    .unwrap();
+    fs::write(&log, initial_log).unwrap();
+    fs::write(&readme, initial_readme).unwrap();
+    opts.date = Some("2026-11-26".to_owned());
+    let repaired = record_gate(&opts).expect("retry fills missing effects");
+    assert!(!repaired.idempotent_noop);
+    assert_eq!(repaired.part.recorded.date, first.part.recorded.date);
+    assert_eq!(fs::read(&gates).unwrap(), saved_gates);
+    assert_eq!(fs::read_to_string(&history).unwrap(), saved_history);
+    assert_eq!(fs::read_to_string(&log).unwrap(), saved_log);
+    assert_eq!(fs::read(&readme).unwrap(), saved_readme);
+    assert!(record_gate(&opts).unwrap().idempotent_noop);
+}
+
+#[test]
 fn refuse_self_certified() {
     let repo = ScratchRepo::new("selfcert", &["session:s1", "session:s3"]);
     let gates_path = repo.write_gates(&std_gate_toml(
@@ -1120,6 +1219,17 @@ fn receipt_set_two_tiers() {
     // Pass G4 before G1; recorder sorts members into tier order (G1, G4).
     let mut opts = base_opts(&repo, "GATE-TEST-01", h_g4.clone(), "session:s2");
     opts.receipt_hashes = vec![h_g4.clone(), h_g1.clone()];
+    let committed_dir = repo.root.join("receipts/gates");
+    let blocked = committed_dir.join(format!("{h_g4}.json"));
+    fs::create_dir(&blocked).unwrap();
+    let err = record_gate(&opts).expect_err("second member destination is a directory");
+    assert_eq!(err.reason, "io-error");
+    assert!(err.detail.contains(&h_g4), "{err}");
+    assert!(blocked.is_dir());
+    assert!(!committed_dir.join(format!("{h_g1}.json")).exists());
+    assert_eq!(fs::read_dir(&committed_dir).unwrap().count(), 1);
+    fs::rename(&blocked, repo.root.join("planted-receipt-directory")).unwrap();
+
     let out = record_gate(&opts).expect("two-tier receipt set records");
     assert_eq!(out.part.status, Status::Pass);
     assert_eq!(out.part.measured, "0.9207 (1); 0.002 (m)");

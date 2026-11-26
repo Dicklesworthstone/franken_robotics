@@ -169,6 +169,47 @@ fn prelude_f32_bits_evaluates_0_25_and_neg_zero() {
 }
 
 #[test]
+fn expanded_sources_use_only_the_inlined_target_prelude() {
+    for target in [BackendTarget::Cuda, BackendTarget::Metal] {
+        let name = target.prelude_name();
+        let source = format!(
+            "#include \"{name}\"\n/* café\n*/ %:inc\\\r\nlude \"{name}\" // redundant\nf32 probe(f32 x) {{ return x; }}\n"
+        );
+        let (expanded, digest, _) =
+            assemble_and_lint(target, None, vec![SourceFile::new("probe.h", source)]).unwrap();
+        assert!(expanded.starts_with(target.prelude_source()));
+        let body = body_after_prelude(&expanded).unwrap();
+        assert_eq!(body, "\n/* café\n*/ \r\n\nf32 probe(f32 x) { return x; }\n");
+        assert_eq!(digest, hash_blob(body.as_bytes()));
+    }
+    for (target, path, prefix) in [
+        (BackendTarget::Cuda, "x/prelude_cuda.h", ""),
+        (BackendTarget::Metal, "../prelude_metal.h", ""),
+        (BackendTarget::Cuda, "prelude_metal.h", ""),
+        (BackendTarget::Metal, "prelude_cuda.h", ""),
+        (
+            BackendTarget::Cuda,
+            "x/prelude_cuda.h",
+            "const char* text = R\"tag(\n/* raw text\n)tag\";\n",
+        ),
+    ] {
+        let source = SourceFile::new("probe.h", format!("{prefix}#include \"{path}\"\n"));
+        let options = target.production_options();
+        let unit = assemble_unit(target, None, vec![source.clone()]);
+        let findings = collect_findings(&unit, &options);
+        assert_eq!(findings.len(), 1, "{findings:?}");
+        assert_eq!(findings[0].rule, 1);
+        assert_eq!(findings[0].token, format!("#include \"{path}\""));
+        assert_eq!(
+            assemble_and_lint(target, None, vec![source])
+                .unwrap_err()
+                .code,
+            RefusalCode::FrobRef251
+        );
+    }
+}
+
+#[test]
 fn cuda_unsigned_atomics_reject_float_pointer() {
     // Host C++ syntax check with CUDA's relevant overloads. This launches no kernel.
     let compile = |body: &str| {

@@ -6,6 +6,7 @@
 
 use std::collections::BTreeSet;
 use std::fmt;
+use std::ops::Range;
 
 use frob_core::id::{Blake3, hash_blob};
 use frob_core::refusal::{Refusal, RefusalCode, Repair, RetryPolicy};
@@ -129,6 +130,7 @@ impl DialectUnit {
 
     /// Assemble the complete unit text fed to a backend compiler:
     /// shape constants, prelude, [`PRELUDE_BOUNDARY_MARKER`], then all sources.
+    /// Source includes naming the inlined prelude are removed before compilation.
     #[must_use]
     pub fn expand(&self) -> String {
         let mut out = String::new();
@@ -147,7 +149,22 @@ impl DialectUnit {
         out.push_str(PRELUDE_BOUNDARY_MARKER);
         out.push('\n');
         for src in &self.sources {
-            out.push_str(&src.contents);
+            let mut start = 0;
+            if let Some(pre) = &self.prelude {
+                for tok in tokenize(&src.contents, true) {
+                    if let TokenKind::Directive { name, body, span } = tok.kind
+                        && name == "include"
+                        && is_prelude_include(&body, Some(&pre.name))
+                    {
+                        out.push_str(&src.contents[start..span.start]);
+                        // Retain physical line endings so compiler line numbers stay stable.
+                        let removed = &src.contents[span.clone()];
+                        out.extend(removed.chars().filter(|c| matches!(c, '\r' | '\n')));
+                        start = span.end;
+                    }
+                }
+            }
+            out.push_str(&src.contents[start..]);
             if !out.ends_with('\n') {
                 out.push('\n');
             }
@@ -278,8 +295,16 @@ pub fn collect_findings(unit: &DialectUnit, options: &CompileOptions) -> Vec<Lin
     if let Some(pre) = &unit.prelude {
         lint_prelude(pre, &mut findings);
     }
+    let expected_prelude = match options {
+        CompileOptions::Cuda { .. } => "prelude_cuda.h",
+        CompileOptions::Metal { .. } => "prelude_metal.h",
+    };
+    let inlined_prelude = unit
+        .prelude
+        .as_ref()
+        .and_then(|pre| (pre.name == expected_prelude).then_some(expected_prelude));
     for src in &unit.sources {
-        lint_kernel_source(src, &mut findings);
+        lint_kernel_source(src, inlined_prelude, &mut findings);
     }
 
     findings.sort();
@@ -632,7 +657,11 @@ enum TokenKind {
     DoubleLBracket,
     TokenPaste,
     Punct(char),
-    Directive { name: String, body: String },
+    Directive {
+        name: String,
+        body: String,
+        span: Range<usize>,
+    },
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -647,6 +676,7 @@ struct SplicedChar {
     ch: char,
     line: usize,
     col: usize,
+    offset: usize,
 }
 
 /// Splice `\` + newline (LF, CRLF, or CR) before
@@ -654,19 +684,24 @@ struct SplicedChar {
 /// surviving character. Prevents `rsq\\\nrt`, `fm\\\naf`, `whi\\\nle` evasion.
 fn splice_backslash_newlines(src: &str) -> Vec<SplicedChar> {
     let mut out = Vec::with_capacity(src.len());
-    let mut chars = src.chars().peekable();
+    let mut chars = src.char_indices().peekable();
+    if matches!(chars.peek(), Some((0, '\u{feff}'))) {
+        chars.next();
+    }
     let mut line = 1usize;
     let mut col = 1usize;
 
-    while let Some(ch) = chars.next() {
+    while let Some((offset, ch)) = chars.next() {
         if ch == '\\' {
             // Clang also splices when horizontal whitespace precedes the newline.
             let mut clone = chars.clone();
-            while matches!(clone.peek(), Some(' ' | '\t' | '\x0b' | '\x0c')) {
+            while matches!(clone.peek(), Some((_, ' ' | '\t' | '\x0b' | '\x0c'))) {
                 clone.next();
             }
-            if matches!(clone.peek(), Some('\n' | '\r')) {
-                if clone.next() == Some('\r') && clone.peek() == Some(&'\n') {
+            if matches!(clone.peek(), Some((_, '\n' | '\r'))) {
+                if matches!(clone.next(), Some((_, '\r')))
+                    && matches!(clone.peek(), Some((_, '\n')))
+                {
                     clone.next();
                 }
                 chars = clone;
@@ -675,34 +710,40 @@ fn splice_backslash_newlines(src: &str) -> Vec<SplicedChar> {
                 continue;
             }
         }
-        if ch == '\r' {
-            if chars.peek() == Some(&'\n') {
-                chars.next();
-            }
-            out.push(SplicedChar {
-                ch: '\n',
-                line,
-                col,
-            });
-            line += 1;
-            col = 1;
-            continue;
+        if ch == '\r' && matches!(chars.peek(), Some((_, '\n'))) {
+            chars.next();
         }
+        let ch = if ch == '\r' { '\n' } else { ch };
+        out.push(SplicedChar {
+            ch,
+            line,
+            col,
+            offset,
+        });
         if ch == '\n' {
-            out.push(SplicedChar { ch, line, col });
             line += 1;
             col = 1;
-            continue;
+        } else {
+            col += 1;
         }
-        out.push(SplicedChar { ch, line, col });
-        col += 1;
     }
 
     out
 }
 
+fn raw_string_end(src: &str, quote: usize) -> Option<usize> {
+    // Raw string contents retain their original bytes, including escaped newlines.
+    let (delimiter, contents) = src[quote + 1..].split_once('(')?;
+    let valid = |b: u8| b.is_ascii_graphic() && !matches!(b, b')' | b'\\');
+    if delimiter.len() > 16 || !delimiter.bytes().all(valid) {
+        return None;
+    }
+    let close = format!("){delimiter}\"");
+    Some(src.len() - contents.len() + contents.find(&close)? + close.len())
+}
+
 fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
-    let sc = splice_backslash_newlines(src.strip_prefix('\u{feff}').unwrap_or(src));
+    let sc = splice_backslash_newlines(src);
     let n = sc.len();
     let mut tokens = Vec::new();
     let mut i = 0usize;
@@ -785,6 +826,7 @@ fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
                 kind: TokenKind::Directive {
                     name: name.to_owned(),
                     body: body.to_owned(),
+                    span: cur.offset..sc.get(i).map_or(src.len(), |next| next.offset),
                 },
                 line: start_line,
                 column: start_col,
@@ -870,6 +912,12 @@ fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
             while i < n && (sc[i].ch.is_ascii_alphanumeric() || sc[i].ch == '_') {
                 ident.push(sc[i].ch);
                 i += 1;
+            }
+            if matches!(ident.as_str(), "R" | "u8R" | "uR" | "UR" | "LR")
+                && let Some(quote) = sc.get(i).filter(|next| next.ch == '"')
+                && let Some(end) = raw_string_end(src, quote.offset)
+            {
+                i += sc[i..].partition_point(|next| next.offset < end);
             }
             tokens.push(Token {
                 kind: TokenKind::Ident(ident),
@@ -1136,7 +1184,7 @@ fn split_directive_head(trimmed: &str) -> (&str, &str) {
 fn lint_shape_constants(file: &SourceFile, findings: &mut Vec<LintFinding>) {
     for tok in tokenize(&file.contents, true) {
         match &tok.kind {
-            TokenKind::Directive { name, body } if name == "define" => {
+            TokenKind::Directive { name, body, .. } if name == "define" => {
                 if !is_valid_shape_constant_define(body) {
                     findings.push(LintFinding::new(
                         1,
@@ -1240,7 +1288,7 @@ fn scan_prelude_tokens(
         let tok = &tokens[i];
         let (line, col) = override_pos.unwrap_or((tok.line, tok.column));
         match &tok.kind {
-            TokenKind::Directive { name, body } if name == "pragma" => {
+            TokenKind::Directive { name, body, .. } if name == "pragma" => {
                 if is_forbidden_fp_pragma(body) {
                     findings.push(LintFinding::new(
                         4,
@@ -1253,7 +1301,7 @@ fn scan_prelude_tokens(
                 }
                 i += 1;
             }
-            TokenKind::Directive { name, body } if name == "define" => {
+            TokenKind::Directive { name, body, .. } if name == "define" => {
                 let rhs = skip_define_head(body);
                 let inner = tokenize(rhs, false);
                 scan_prelude_tokens(file, &inner, Some((line, col)), findings);
@@ -1418,7 +1466,11 @@ fn skip_define_head(body: &str) -> &str {
 }
 
 /// Kernel source file (generated body or hand-written skeleton): enforce rules 1, 2, 3, 4, 6.
-fn lint_kernel_source(file: &SourceFile, findings: &mut Vec<LintFinding>) {
+fn lint_kernel_source(
+    file: &SourceFile,
+    inlined_prelude: Option<&str>,
+    findings: &mut Vec<LintFinding>,
+) {
     let tokens = tokenize(&file.contents, true);
     let len = tokens.len();
     let mut i = 0usize;
@@ -1426,8 +1478,10 @@ fn lint_kernel_source(file: &SourceFile, findings: &mut Vec<LintFinding>) {
     while i < len {
         let tok = &tokens[i];
         match &tok.kind {
-            TokenKind::Directive { name, body } => {
-                check_source_directive(&file.name, tok.line, tok.column, name, body, findings);
+            TokenKind::Directive { name, body, .. } => {
+                if name != "include" || !is_prelude_include(body, inlined_prelude) {
+                    check_source_directive(&file.name, tok.line, tok.column, name, body, findings);
+                }
                 i += 1;
             }
             TokenKind::DoubleLBracket => {
@@ -1523,16 +1577,14 @@ fn check_source_directive(
 ) {
     match name {
         "include" => {
-            if !is_prelude_include(body) {
-                findings.push(LintFinding::new(
-                    1,
-                    file,
-                    line,
-                    column,
-                    format!("#include {body}"),
-                    "only `#include` of the backend prelude is allowed in dialect sources (rule 1)",
-                ));
-            }
+            findings.push(LintFinding::new(
+                1,
+                file,
+                line,
+                column,
+                format!("#include {body}"),
+                "only the bare name of the inlined backend prelude may be included (rule 1)",
+            ));
         }
         "define" => {
             findings.push(LintFinding::new(
@@ -1577,22 +1629,9 @@ fn check_source_directive(
     }
 }
 
-fn is_prelude_include(body: &str) -> bool {
-    let trimmed = body.trim();
-    let Some(path) = trimmed.strip_prefix('"').and_then(|s| s.strip_suffix('"')) else {
-        return false;
-    };
-    if path.contains('"')
-        || path.contains('\\')
-        || path.starts_with('/')
-        || path.split('/').any(|seg| seg == "..")
-    {
-        return false;
-    }
-    path == "prelude_cuda.h"
-        || path == "prelude_metal.h"
-        || path.ends_with("/prelude_cuda.h")
-        || path.ends_with("/prelude_metal.h")
+fn is_prelude_include(body: &str, inlined_prelude: Option<&str>) -> bool {
+    inlined_prelude
+        .is_some_and(|name| body.strip_prefix('"').and_then(|s| s.strip_suffix('"')) == Some(name))
 }
 
 fn collect_attribute_text_and_end(tokens: &[Token], start: usize) -> (String, usize) {
@@ -2658,7 +2697,8 @@ mod tests {
             "bypass.h",
             "#include \"prelude_cuda.h\" // /*\n\
              void k(f32 x) { f32 y = fmaf(sinf(x), x, x); while (1) {} }\n",
-        );
+        )
+        .with_prelude(SourceFile::new("prelude_cuda.h", ""));
         let bf = collect_findings(&bypass_unit, &safe_cuda);
         let brules: BTreeSet<u8> = bf.iter().map(|f| f.rule).collect();
         assert_eq!(brules, BTreeSet::from([3, 4, 6]), "got {bf:?}");

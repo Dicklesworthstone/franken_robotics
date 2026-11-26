@@ -17,6 +17,17 @@ source "${SCRIPT_DIR}/lib.sh"
 
 e2e_init "qty_confinement" "N33c-03" "$@"
 
+MANIFEST="${E2E_REPO_ROOT}/Cargo.toml"
+
+# Cargo and its offload shim discover toolchain and config from their cwd.
+_in_workspace() {
+  local work_dir="$PWD" status=0
+  cd "${E2E_REPO_ROOT}" || return
+  "$@" || status=$?
+  cd "${work_dir}" || return
+  return "${status}"
+}
+
 TARGET_BASE="${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/frob-qty-confinement-${E2E_RUN_ID}"
 mkdir -p "${TARGET_BASE}"
 
@@ -25,26 +36,26 @@ e2e_step "qty_unit_and_compile_fail" "Run frob-core qty registry, compile-fail, 
 e2e_metric "alias_count" "36" "aliases"
 e2e_metric "equal_dimension_pairs" "9" "pairs"
 
-e2e_cmd --name "cargo_test_frob_core_qty" -- \
+_in_workspace e2e_cmd --name "cargo_test_frob_core_qty" -- \
   env "CARGO_TARGET_DIR=${TARGET_BASE}/frob-core" \
-  cargo test --offline -j 1 -p frob-core --test qty
+  cargo test --manifest-path "${MANIFEST}" --offline -j 1 -p frob-core --test qty
 e2e_assert_eq "cargo_test_frob_core_qty_exit" "${E2E_LAST_EXIT}" "0"
 
-e2e_cmd --name "cargo_test_frob_core_qty_doc" -- \
+_in_workspace e2e_cmd --name "cargo_test_frob_core_qty_doc" -- \
   env "CARGO_TARGET_DIR=${TARGET_BASE}/frob-core" \
-  cargo test --offline -j 1 -p frob-core --doc qty
+  cargo test --manifest-path "${MANIFEST}" --offline -j 1 -p frob-core --doc qty
 e2e_assert_eq "cargo_test_frob_core_qty_doc_exit" "${E2E_LAST_EXIT}" "0"
 
 e2e_step "xtask_qty_confinement_and_generated" "Run xtask qty_confinement and check_generated suites (including planted L-2.fs-qty-direct and gen.differs controls)"
 
-e2e_cmd --name "cargo_test_xtask_qty" -- \
+_in_workspace e2e_cmd --name "cargo_test_xtask_qty" -- \
   env "CARGO_TARGET_DIR=${TARGET_BASE}/xtask" \
-  cargo test --offline -j 1 -p xtask --test qty_confinement
+  cargo test --manifest-path "${MANIFEST}" --offline -j 1 -p xtask --test qty_confinement
 e2e_assert_eq "cargo_test_xtask_qty_exit" "${E2E_LAST_EXIT}" "0"
 
-e2e_cmd --name "xtask_check_generated_real" -- \
+_in_workspace e2e_cmd --name "xtask_check_generated_real" -- \
   env "CARGO_TARGET_DIR=${TARGET_BASE}/xtask" \
-  cargo run --offline -j 1 -p xtask -- check-generated --generator quantity-aliases-and-products --json
+  cargo run --manifest-path "${MANIFEST}" --offline -j 1 -p xtask -- check-generated --generator quantity-aliases-and-products --json
 e2e_assert_eq "xtask_check_generated_real_exit" "${E2E_LAST_EXIT}" "0"
 
 _caught_finding() {
@@ -87,12 +98,12 @@ rank = 1
 fs-qty = { path = "${E2E_REPO_ROOT}/../frankensim/crates/fs-qty", default-features = false }
 EOF
 printf '// Scratch crate for the confinement check.\n' > "${deps_root}/crates/frob-lie/src/lib.rs"
-e2e_cmd --name "qty_plant_lockfile" -- \
+_in_workspace e2e_cmd --name "qty_plant_lockfile" -- \
   cargo generate-lockfile --offline --manifest-path "${deps_root}/Cargo.toml"
 e2e_assert_eq "qty_plant_lockfile_exit" "${E2E_LAST_EXIT}" "0"
-e2e_cmd --name "check_direct_qty_dependency" --expect-exit 2 -- \
+_in_workspace e2e_cmd --name "check_direct_qty_dependency" --expect-exit 2 -- \
   env "CARGO_TARGET_DIR=${TARGET_BASE}/xtask" \
-  cargo run --offline -j 1 -p xtask -- check-deps --root "${deps_root}" --json
+  cargo run --manifest-path "${MANIFEST}" --offline -j 1 -p xtask -- check-deps --root "${deps_root}" --json
 fs_qty_caught=0
 if _caught_finding "L-2.fs-qty-direct" "crates/frob-lie/Cargo.toml" "frob-lie -> fs-qty"; then fs_qty_caught=1; fi
 e2e_assert_eq "planted_fs_qty_import_caught" "${fs_qty_caught}" "1"
@@ -109,18 +120,25 @@ for path in registries/qty_aliases.toml registries/qty_products.toml crates/frob
 done
 python3 - "${gen_root}/crates/frob-core/src/qty_gen.rs" <<'PY'
 from pathlib import Path
+import re
 import sys
 
 path = Path(sys.argv[1])
 source = path.read_bytes()
-old = b"ALIAS_COUNT: usize = 36;"
-if source.count(old) != 1:
-    raise SystemExit("expected one starter alias count declaration")
-path.write_bytes(source.replace(old, b"ALIAS_COUNT: usize = 37;"))
+pattern = re.compile(rb"(pub const ALIAS_COUNT: usize = )(\d+)(;)")
+matches = list(pattern.finditer(source))
+if len(matches) != 1:
+    raise SystemExit("expected one ALIAS_COUNT declaration in qty_gen.rs")
+match = matches[0]
+bumped = str(int(match.group(2)) + 1).encode("ascii")
+mutated = source[: match.start(2)] + bumped + source[match.end(2) :]
+if mutated == source:
+    raise SystemExit("failed to mutate ALIAS_COUNT in qty_gen.rs")
+path.write_bytes(mutated)
 PY
-e2e_cmd --name "check_generated_qty_byte" --expect-exit 2 -- \
+_in_workspace e2e_cmd --name "check_generated_qty_byte" --expect-exit 2 -- \
   env "CARGO_TARGET_DIR=${TARGET_BASE}/xtask" \
-  cargo run --offline -j 1 -p xtask -- check-generated --generator quantity-aliases-and-products --root "${gen_root}" --json
+  cargo run --manifest-path "${MANIFEST}" --offline -j 1 -p xtask -- check-generated --generator quantity-aliases-and-products --root "${gen_root}" --json
 qty_byte_caught=0
 if [ "${E2E_LAST_EXIT}" = 2 ] && [ -f "${E2E_LAST_STDOUT}" ] && python3 - "${E2E_LAST_STDOUT}" <<'PY'
 import json

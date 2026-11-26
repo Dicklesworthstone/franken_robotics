@@ -2,10 +2,13 @@
 
 //! Closed SI quantity surface tests (`N33c-03`, `KA-779`, `CX-354`, `OPEN-SUITE-4`).
 
+use std::cmp::Reverse;
 use std::collections::{BTreeMap, BTreeSet};
+use std::env;
 use std::fs;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::Command;
+use std::time::SystemTime;
 
 use frob_core::qty::{
     ALIAS_COUNT, ALIAS_NAMES, Checked, Length, MAX_ALIASES, QuantityAlias, Velocity,
@@ -271,6 +274,113 @@ fn alias_count_at_most_64() {
     assert!(65 > MAX_ALIASES);
 }
 
+fn collect_artifact_dep_dirs(exe_dir: &Path) -> (PathBuf, Vec<PathBuf>) {
+    // Locate `<target>/<profile>` from either `.../deps/<exe>` (classic Cargo layout)
+    // or `.../build/<crate>/<unit>/out/<exe>` (nightly Cargo build-dir layout).
+    let mut profile_dir = exe_dir.to_path_buf();
+    for anc in exe_dir.ancestors() {
+        let name = anc.file_name().and_then(|s| s.to_str()).unwrap_or("");
+        if name == "deps" || name == "build" {
+            if let Some(parent) = anc.parent() {
+                profile_dir = parent.to_path_buf();
+            }
+            break;
+        }
+    }
+
+    let mut dep_dirs: Vec<PathBuf> = Vec::new();
+    let mut push_if_has_artifacts = |dir: PathBuf| {
+        if let Ok(rd) = fs::read_dir(&dir) {
+            let has_lib = rd.flatten().any(|e| {
+                let p = e.path();
+                matches!(
+                    p.extension().and_then(|s| s.to_str()),
+                    Some("rlib" | "rmeta" | "so" | "dylib")
+                )
+            });
+            if has_lib {
+                dep_dirs.push(dir);
+            }
+        }
+    };
+
+    push_if_has_artifacts(exe_dir.to_path_buf());
+    push_if_has_artifacts(profile_dir.clone());
+    push_if_has_artifacts(profile_dir.join("deps"));
+
+    let build_root = profile_dir.join("build");
+    if build_root.is_dir()
+        && let Ok(entries) = fs::read_dir(&build_root)
+    {
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if !path.is_dir() {
+                continue;
+            }
+            let direct_out = path.join("out");
+            if direct_out.is_dir() {
+                push_if_has_artifacts(direct_out);
+            }
+            if let Ok(units) = fs::read_dir(&path) {
+                for unit in units.flatten() {
+                    let unit_path = unit.path();
+                    if !unit_path.is_dir() {
+                        continue;
+                    }
+                    let out_dir = unit_path.join("out");
+                    if out_dir.is_dir() {
+                        push_if_has_artifacts(out_dir);
+                    }
+                    push_if_has_artifacts(unit_path);
+                }
+            }
+        }
+    }
+
+    dep_dirs.sort();
+    dep_dirs.dedup();
+    (profile_dir, dep_dirs)
+}
+
+fn collect_frob_core_candidates(dep_dirs: &[PathBuf]) -> Vec<PathBuf> {
+    // Prefer `.rmeta` first (nightly Cargo pipelined builds emit full metadata in
+    // `.rmeta` and only a metadata stub in `.rlib`), falling back to `.rlib`.
+    let mut rmeta_candidates: Vec<PathBuf> = Vec::new();
+    let mut rlib_candidates: Vec<PathBuf> = Vec::new();
+    for dir in dep_dirs {
+        if let Ok(rd) = fs::read_dir(dir) {
+            for entry in rd.flatten() {
+                let p = entry.path();
+                let fname = p.file_name().and_then(|s| s.to_str()).unwrap_or("");
+                if (fname.starts_with("libfrob_core-") || fname == "libfrob_core.rmeta")
+                    && fname.ends_with(".rmeta")
+                {
+                    rmeta_candidates.push(p);
+                } else if (fname.starts_with("libfrob_core-") || fname == "libfrob_core.rlib")
+                    && fname.ends_with(".rlib")
+                {
+                    rlib_candidates.push(p);
+                }
+            }
+        }
+    }
+    let sort_newest_first = |list: &mut Vec<PathBuf>| {
+        list.sort_by(|a, b| {
+            let ma = fs::metadata(a).and_then(|m| m.modified()).ok();
+            let mb = fs::metadata(b).and_then(|m| m.modified()).ok();
+            Reverse(ma.unwrap_or(SystemTime::UNIX_EPOCH))
+                .cmp(&Reverse(mb.unwrap_or(SystemTime::UNIX_EPOCH)))
+                .then_with(|| a.cmp(b))
+        });
+        list.dedup();
+    };
+    sort_newest_first(&mut rmeta_candidates);
+    sort_newest_first(&mut rlib_candidates);
+    let mut candidates = rmeta_candidates;
+    candidates.extend(rlib_candidates);
+    candidates
+}
+
 #[test]
 fn equal_dimension_pairs_covered() {
     let aliases = parse_aliases(ALIASES_TOML);
@@ -302,24 +412,16 @@ fn equal_dimension_pairs_covered() {
     assert!(missing.iter().any(|m| m.contains("work_done")));
 
     // Real-compiler check on all 10 compile_fail/*.rs files + positive control Length + Length.
-    let deps_dir = std::env::current_exe()
-        .expect("current_exe")
-        .parent()
-        .expect("deps dir")
-        .to_path_buf();
-    let rlib = fs::read_dir(&deps_dir)
-        .expect("read deps dir")
-        .flatten()
-        .map(|e| e.path())
-        .filter(|p| {
-            p.file_name()
-                .and_then(|s| s.to_str())
-                .is_some_and(|n| n.starts_with("libfrob_core-") && n.ends_with(".rlib"))
-        })
-        .max_by_key(|p| fs::metadata(p).and_then(|m| m.modified()).ok())
-        .expect("libfrob_core rlib built in deps dir");
+    let exe = env::current_exe().expect("current_exe");
+    let exe_dir = exe.parent().expect("exe parent dir");
+    let (profile_dir, dep_dirs) = collect_artifact_dep_dirs(exe_dir);
+    let candidates = collect_frob_core_candidates(&dep_dirs);
 
-    let out_dir = std::env::temp_dir().join(format!("frob_qty_cf_{}", std::process::id()));
+    let scratch_base = env::var_os("BIG_SCRATCH")
+        .or_else(|| env::var_os("TMPDIR"))
+        .map(PathBuf::from)
+        .unwrap_or_else(env::temp_dir);
+    let out_dir = scratch_base.join(format!("frob_qty_cf_{}", std::process::id()));
     fs::create_dir_all(&out_dir).expect("mkdir cf temp");
 
     // Positive control: Length + Length MUST compile cleanly with these exact rustc flags.
@@ -329,27 +431,55 @@ fn equal_dimension_pairs_covered() {
         "use frob_core::qty::Length;\nfn main() { let _ = Length::new(1.0) + Length::new(2.0); }\n",
     )
     .expect("write positive control");
-    let pos = Command::new("rustc")
-        .args(["--edition=2024", "--crate-type=bin", "--emit=metadata"])
-        .arg(format!("--extern=frob_core={}", rlib.display()))
-        .arg(format!("-Ldependency={}", deps_dir.display()))
-        .arg("-o")
-        .arg(out_dir.join("positive.rmeta"))
-        .arg(&pos_src)
-        .output()
-        .expect("run rustc on positive control");
-    assert!(
-        pos.status.success(),
-        "positive control failed to compile: {}",
-        String::from_utf8_lossy(&pos.stderr)
-    );
+
+    let rustc = env::var("RUSTC").unwrap_or_else(|_| "rustc".to_owned());
+    let mut matched_lib: Option<PathBuf> = None;
+    let mut probe_diags = Vec::new();
+    for (idx, candidate) in candidates.iter().enumerate() {
+        let mut cmd = Command::new(&rustc);
+        cmd.current_dir(env!("CARGO_MANIFEST_DIR"))
+            .args(["--edition=2024", "--crate-type=bin", "--emit=metadata"])
+            .arg(format!("--extern=frob_core={}", candidate.display()));
+        for d in &dep_dirs {
+            cmd.arg(format!("-Ldependency={}", d.display()));
+        }
+        let pos = cmd
+            .arg("-o")
+            .arg(out_dir.join(format!("positive_{idx}.rmeta")))
+            .arg(&pos_src)
+            .output()
+            .expect("run rustc on positive control");
+        if pos.status.success() {
+            matched_lib = Some(candidate.clone());
+            break;
+        }
+        probe_diags.push(format!(
+            "{} (exit {:?}): {}",
+            candidate.display(),
+            pos.status.code(),
+            String::from_utf8_lossy(&pos.stderr).trim()
+        ));
+    }
+    let frob_core_lib = matched_lib.unwrap_or_else(|| {
+        panic!(
+            "must find compiled libfrob_core-*.rmeta/.rlib under {} (exe={}; rustc={rustc}; dep_dirs={}; candidates={}; tried={probe_diags:?})",
+            profile_dir.display(),
+            exe.display(),
+            dep_dirs.len(),
+            candidates.len()
+        )
+    });
 
     for name in &files {
         let src = cf_dir.join(name);
-        let out = Command::new("rustc")
+        let mut cmd = Command::new(&rustc);
+        cmd.current_dir(env!("CARGO_MANIFEST_DIR"))
             .args(["--edition=2024", "--crate-type=bin", "--emit=metadata"])
-            .arg(format!("--extern=frob_core={}", rlib.display()))
-            .arg(format!("-Ldependency={}", deps_dir.display()))
+            .arg(format!("--extern=frob_core={}", frob_core_lib.display()));
+        for d in &dep_dirs {
+            cmd.arg(format!("-Ldependency={}", d.display()));
+        }
+        let out = cmd
             .arg("-o")
             .arg(out_dir.join(format!("{name}.rmeta")))
             .arg(&src)

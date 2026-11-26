@@ -148,6 +148,11 @@ impl DialectUnit {
         }
         out.push_str(PRELUDE_BOUNDARY_MARKER);
         out.push('\n');
+        self.append_sources(&mut out);
+        out
+    }
+
+    fn append_sources(&self, out: &mut String) {
         for src in &self.sources {
             let mut start = 0;
             if let Some(pre) = &self.prelude {
@@ -165,11 +170,10 @@ impl DialectUnit {
                 }
             }
             out.push_str(&src.contents[start..]);
-            if !out.ends_with('\n') {
+            if !out.is_empty() && !out.ends_with('\n') {
                 out.push('\n');
             }
         }
-        out
     }
 
     /// Extract the kernel text strictly after [`PRELUDE_BOUNDARY_MARKER`].
@@ -305,6 +309,13 @@ pub fn collect_findings(unit: &DialectUnit, options: &CompileOptions) -> Vec<Lin
         .and_then(|pre| (pre.name == expected_prelude).then_some(expected_prelude));
     for src in &unit.sources {
         lint_kernel_source(src, inlined_prelude, &mut findings);
+    }
+    // Joining independently accepted files can form new tokens across their boundary.
+    // The composed body has already had its admitted prelude includes removed.
+    if findings.is_empty() && unit.sources.len() > 1 {
+        let mut composed = SourceFile::new("<assembled source>", "");
+        unit.append_sources(&mut composed.contents);
+        lint_kernel_source(&composed, None, &mut findings);
     }
 
     findings.sort();

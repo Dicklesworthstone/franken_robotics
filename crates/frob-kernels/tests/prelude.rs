@@ -19,7 +19,8 @@ use frob_kernels::dialect::{
     planted_contraction_options,
 };
 use frob_kir::dialect_lint::{
-    CompileOptions, DialectUnit, MetalMathMode, SourceFile, collect_findings, lint,
+    CompileOptions, DialectUnit, MetalMathMode, PRELUDE_BOUNDARY_MARKER, SourceFile,
+    collect_findings, lint,
 };
 
 fn dialect_root() -> PathBuf {
@@ -206,6 +207,49 @@ fn expanded_sources_use_only_the_inlined_target_prelude() {
                 .code,
             RefusalCode::FrobRef251
         );
+    }
+}
+
+#[test]
+fn composed_source_lint_checks_file_boundaries() {
+    for target in [BackendTarget::Cuda, BackendTarget::Metal] {
+        for (left, right) in [
+            ("%\\", ":include \"nonexistent.h\"\n"),
+            (
+                "const char* text = R\"tag(\n",
+                "/* raw text\n)tag\";\n#include \"nonexistent.h\"\n",
+            ),
+        ] {
+            let sources = vec![
+                SourceFile::new("left.h", left),
+                SourceFile::new("right.h", right),
+            ];
+            let unit = assemble_unit(target, None, sources.clone());
+            let findings = collect_findings(&unit, &target.production_options());
+            assert_eq!(findings.len(), 1, "{target:?}: {findings:?}");
+            assert_eq!(findings[0].rule, 1);
+            assert_eq!(findings[0].token, "#include \"nonexistent.h\"");
+            assert_eq!(
+                assemble_and_lint(target, None, sources).unwrap_err().code,
+                RefusalCode::FrobRef251
+            );
+        }
+
+        let first = "f32 first(f32 x) { return x; }\n";
+        let second = "f32 second(f32 x) { return first(x); }\n";
+        let sources = vec![
+            SourceFile::new("left.h", first),
+            SourceFile::new("right.h", second),
+        ];
+        let (expanded, digest, _) = assemble_and_lint(target, None, sources).unwrap();
+        assert_eq!(
+            expanded,
+            format!(
+                "{}{PRELUDE_BOUNDARY_MARKER}\n{first}{second}",
+                target.prelude_source()
+            )
+        );
+        assert_eq!(digest, hash_blob(format!("{first}{second}").as_bytes()));
     }
 }
 

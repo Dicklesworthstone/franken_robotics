@@ -1036,6 +1036,9 @@ pub fn allocate_round(input: &AllocationInput) -> Result<AllocationOutcome, Allo
 
         if let Some(num) = chosen {
             taken.insert(num);
+            if !norm_cond.is_empty() {
+                condition_to_code.insert(norm_cond, num);
+            }
             req.assigned = Some(format_refusal_code(num));
             req.status = AllocationStatus::Assigned;
             req.reason = None;
@@ -1419,6 +1422,16 @@ pub fn render_refusals_markdown(reg: &RefusalRegistry, ledger: &AllocationLedger
     out.push_str("Sorted by family (`1xx`..`9xx`), then numerically; codes are compared as whole tokens (`FROB-REF-[1-9][0-9]{2,3}`).\n\n");
 
     // Family capacity table (ADR-NUM-refusal-8xx).
+    let mut occupied = ledger.retired_numbers();
+    occupied.extend(printed_plan_codes().keys().copied());
+    occupied.extend(reg.rows().iter().map(|row| row.number));
+    occupied.extend(
+        ledger
+            .requests
+            .iter()
+            .filter(|req| req.status == AllocationStatus::Assigned)
+            .filter_map(AllocationRequest::assigned_number),
+    );
     out.push_str("## Family Capacity Table\n\n");
     out.push_str(
         "| Family | Scope | Default Exit | Printed (Plan) | Live Rows | Open Requests | Status |\n",
@@ -1428,11 +1441,6 @@ pub fn render_refusals_markdown(reg: &RefusalRegistry, ledger: &AllocationLedger
         let printed_in_fam = printed_plan_codes()
             .keys()
             .filter(|&&n| code_family(n) == fam)
-            .count();
-        let retired_in_fam = ledger
-            .retired
-            .iter()
-            .filter(|r| code_family(r.number) == fam)
             .count();
         let live_in_fam = reg
             .rows()
@@ -1450,7 +1458,8 @@ pub fn render_refusals_markdown(reg: &RefusalRegistry, ledger: &AllocationLedger
                     )
             })
             .count();
-        let free_3digit = 99usize.saturating_sub(printed_in_fam + retired_in_fam);
+        let base = u16::from(fam) * 100;
+        let free_3digit = 99 - occupied.range(base + 1..=base + 99).count();
         let status = if fam == 8 || open_in_fam > free_3digit {
             format!(
                 "over capacity ({free_3digit} free 3-digit; continues at FROB-REF-{fam}100 per ADR-NUM-refusal-8xx)"

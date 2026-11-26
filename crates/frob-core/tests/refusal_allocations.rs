@@ -280,6 +280,46 @@ fn alloc_merges_duplicate_condition() {
 }
 
 #[test]
+fn alloc_merges_duplicate_condition_in_same_round() {
+    let input = AllocationInput {
+        existing: vec![],
+        reserved_blocks: vec![],
+        retired: BTreeSet::new(),
+        holds: BTreeSet::new(),
+        allow_8xx_allocation: false,
+        requests: vec![
+            req(
+                "later",
+                "N23-REF",
+                "§23.19",
+                5,
+                None,
+                Some(551),
+                " metric   NOT smooth ",
+            ),
+            req(
+                "earlier",
+                "N16-REF",
+                "§16.12",
+                5,
+                None,
+                Some(550),
+                "Metric not smooth",
+            ),
+        ],
+    };
+
+    let out = allocate_round(&input).unwrap();
+    let earlier = out.by_slug("earlier").unwrap();
+    let later = out.by_slug("later").unwrap();
+    assert_eq!(earlier.status, AllocationStatus::Assigned);
+    assert_eq!(earlier.assigned.as_deref(), Some("FROB-REF-550"));
+    assert_eq!(later.status, AllocationStatus::Merged);
+    assert_eq!(later.assigned, None);
+    assert_eq!(later.merged_into, ["FROB-REF-550"]);
+}
+
+#[test]
 fn alloc_never_reuses_retired() {
     let input = AllocationInput {
         existing: vec![ExistingCode {
@@ -1076,6 +1116,62 @@ fn printout_is_generated() {
         reason: String::new(),
         ruling: None,
     };
+}
+
+#[test]
+fn printout_capacity_counts_each_occupied_three_digit_code_once() {
+    let rows = reg_row("FROB-REF-837", 3, "§35.11", "")
+        + &reg_row("FROB-REF-838", 3, "§35.11", "")
+        + &reg_row("FROB-REF-8100", 3, "§35.11", "");
+    let reg = RefusalRegistry::from_bytes(
+        synthetic_registry(
+            "\"81xx\" = 3\nconflict = []\nintegrity = []\ncapability = []",
+            &rows,
+        )
+        .as_bytes(),
+    )
+    .unwrap();
+    let mut ledger = AllocationLedger::from_bytes(
+        br#"schema = "frob.refalloc/1"
+[[retired]]
+code = "FROB-REF-801"
+replaced_by = "FROB-REF-838"
+reason = "Printed and subsequently retired"
+[[retired]]
+code = "FROB-REF-882"
+replaced_by = "FROB-REF-582"
+reason = "Retired before Appendix O"
+"#,
+    )
+    .unwrap();
+    ledger.requests = [836, 837, 8100]
+        .into_iter()
+        .map(|code| AllocationRequest {
+            status: AllocationStatus::Assigned,
+            assigned: Some(format_refusal_code(code)),
+            ..req(
+                &format!("request-{code}"),
+                "N35-REF",
+                "§35.11",
+                8,
+                None,
+                None,
+                "example",
+            )
+        })
+        .collect();
+
+    let rendered = render_refusals_markdown(&reg, &ledger);
+    let family = rendered
+        .lines()
+        .find(|line| line.starts_with("| `8xx`"))
+        .unwrap();
+    // 801 is printed and retired; 837 is assigned and live. The four-digit code
+    // consumes no three-digit slot. Of the four 8xx vacancies only 839 remains.
+    assert!(
+        family.contains("over capacity (1 free 3-digit;"),
+        "{family}"
+    );
 }
 
 #[test]

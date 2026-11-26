@@ -9,15 +9,15 @@ Sorted by family (`1xx`..`9xx`), then numerically; codes are compared as whole t
 
 | Family | Scope | Default Exit | Printed (Plan) | Live Rows | Open Requests | Status |
 |---|---|---:|---:|---:|---:|---|
-| `1xx` | Design and model | 3 | 42 | 0 | 0 | ok (57 free 3-digit) |
-| `2xx` | Numerics and integrator admission | 3 | 26 | 6 | 0 | ok (73 free 3-digit) |
+| `1xx` | Design and model | 3 | 42 | 0 | 0 | ok (55 free 3-digit) |
+| `2xx` | Numerics and integrator admission | 3 | 26 | 6 | 0 | ok (72 free 3-digit) |
 | `3xx` | Scene | 3 | 22 | 0 | 0 | ok (77 free 3-digit) |
 | `4xx` | Control and estimation | 3 | 17 | 0 | 0 | ok (82 free 3-digit) |
-| `5xx` | Learning and evaluation protocol | 3 | 56 | 2 | 0 | ok (43 free 3-digit) |
-| `6xx` | Backend and device | 6 | 18 | 18 | 0 | ok (81 free 3-digit) |
-| `7xx` | Budget and capability | 4 | 19 | 11 | 0 | ok (79 free 3-digit) |
+| `5xx` | Learning and evaluation protocol | 3 | 56 | 2 | 0 | ok (20 free 3-digit) |
+| `6xx` | Backend and device | 6 | 18 | 18 | 0 | ok (80 free 3-digit) |
+| `7xx` | Budget and capability | 4 | 19 | 11 | 0 | ok (78 free 3-digit) |
 | `8xx` | Evidence and protocol | 3 | 94 | 22 | 8 | over capacity (4 free 3-digit; continues at FROB-REF-8100 per ADR-NUM-refusal-8xx) |
-| `9xx` | Internal | 9 | 0 | 1 | 0 | ok (99 free 3-digit) |
+| `9xx` | Internal | 9 | 0 | 1 | 0 | ok (97 free 3-digit) |
 
 ## Family `1xx` — Design and model
 

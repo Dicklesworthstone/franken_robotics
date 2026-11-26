@@ -42,19 +42,89 @@ e2e_cmd --name "cargo_test_xtask_qty" -- \
   cargo test --offline -j 1 -p xtask --test qty_confinement --test check_generated
 e2e_assert_eq "cargo_test_xtask_qty_exit" "${E2E_LAST_EXIT}" "0"
 
-fs_qty_caught="no"
-if printf '%s\n' "${E2E_LAST_STDOUT}" | grep -q "check_deps_rejects_fs_qty_outside_allowed ... ok"; then
-  fs_qty_caught="yes"
-fi
-e2e_assert_eq "planted_fs_qty_import_caught" "${fs_qty_caught}" "yes"
-
-qty_byte_caught="no"
-if printf '%s\n' "${E2E_LAST_STDOUT}" | grep -q "qty_generator_row ... ok"; then
-  qty_byte_caught="yes"
-fi
-e2e_assert_eq "planted_qty_generated_byte_caught" "${qty_byte_caught}" "yes"
-
 e2e_cmd --name "xtask_check_generated_real" -- \
   env "CARGO_TARGET_DIR=${TARGET_BASE}/xtask" \
   cargo run --offline -j 1 -p xtask -- check-generated --json
 e2e_assert_eq "xtask_check_generated_real_exit" "${E2E_LAST_EXIT}" "0"
+
+_caught_finding() {
+  [ "${E2E_LAST_EXIT}" = 2 ] && [ -f "${E2E_LAST_STDOUT}" ] &&
+    python3 - "${E2E_LAST_STDOUT}" "$@" <<'PY'
+import json
+import sys
+
+report, rule, path, subject = sys.argv[1:]
+with open(report, encoding="utf-8") as source:
+    findings = json.load(source)["findings"]
+sys.exit(not any(
+    row["rule"] == rule and row["path"] == path
+    and (not subject or row["subject"] == subject)
+    for row in findings
+))
+PY
+}
+
+e2e_step "plant_direct_dependency" "Check a scratch frob-lie manifest with a direct fs-qty dependency"
+deps_root="${E2E_WORK_DIR}/qty_deps"
+mkdir -p "${deps_root}/crates/frob-lie/src"
+cp "${E2E_REPO_ROOT}/franken-stack.lock" "${deps_root}/franken-stack.lock"
+cat > "${deps_root}/Cargo.toml" <<'EOF'
+[workspace]
+resolver = "3"
+members = ["crates/frob-lie"]
+EOF
+cat > "${deps_root}/crates/frob-lie/Cargo.toml" <<EOF
+[package]
+name = "frob-lie"
+version = "0.0.1"
+edition = "2024"
+
+[package.metadata.frob]
+layer = 1
+rank = 1
+
+[dependencies]
+fs-qty = { path = "${E2E_REPO_ROOT}/../frankensim/crates/fs-qty", default-features = false }
+EOF
+printf '// Scratch crate for the confinement check.\n' > "${deps_root}/crates/frob-lie/src/lib.rs"
+e2e_cmd --name "qty_plant_lockfile" -- \
+  cargo generate-lockfile --offline --manifest-path "${deps_root}/Cargo.toml"
+e2e_assert_eq "qty_plant_lockfile_exit" "${E2E_LAST_EXIT}" "0"
+e2e_cmd --name "check_direct_qty_dependency" --expect-exit 2 -- \
+  env "CARGO_TARGET_DIR=${TARGET_BASE}/xtask" \
+  cargo run --offline -j 1 -p xtask -- check-deps --root "${deps_root}" --json
+fs_qty_caught=0
+if _caught_finding "L-2.fs-qty-direct" "crates/frob-lie/Cargo.toml" "frob-lie -> fs-qty"; then fs_qty_caught=1; fi
+e2e_assert_eq "planted_fs_qty_import_caught" "${fs_qty_caught}" "1"
+expected=1
+if e2e_plant "fs-qty-direct"; then expected=0; fi
+e2e_assert_eq "fs-qty-direct" "${fs_qty_caught}" "${expected}"
+
+e2e_step "plant_generated_byte" "Check a one-byte mutation of generated quantities in scratch"
+gen_root="${E2E_WORK_DIR}/qty_generated"
+mkdir -p "${gen_root}"
+for path in README.md DEPENDENCY_ADMISSION.md registries schemas receipts/admissions kernels \
+  crates/xtask/src/stack/lock.rs crates/frob-core/src/refusal/code_gen.rs crates/frob-core/src/qty_gen.rs; do
+  mkdir -p "${gen_root}/$(dirname "${path}")"
+  cp -R "${E2E_REPO_ROOT}/${path}" "${gen_root}/${path}"
+done
+python3 - "${gen_root}/crates/frob-core/src/qty_gen.rs" <<'PY'
+from pathlib import Path
+import sys
+
+path = Path(sys.argv[1])
+source = path.read_bytes()
+old = b"ALIAS_COUNT: usize = 36;"
+if source.count(old) != 1:
+    raise SystemExit("expected one starter alias count declaration")
+path.write_bytes(source.replace(old, b"ALIAS_COUNT: usize = 37;"))
+PY
+e2e_cmd --name "check_generated_qty_byte" --expect-exit 2 -- \
+  env "CARGO_TARGET_DIR=${TARGET_BASE}/xtask" \
+  cargo run --offline -j 1 -p xtask -- check-generated --root "${gen_root}" --json
+qty_byte_caught=0
+if _caught_finding "gen.differs" "crates/frob-core/src/qty_gen.rs" ""; then qty_byte_caught=1; fi
+e2e_assert_eq "planted_qty_generated_byte_caught" "${qty_byte_caught}" "1"
+expected=1
+if e2e_plant "qty-generated-byte"; then expected=0; fi
+e2e_assert_eq "qty-generated-byte" "${qty_byte_caught}" "${expected}"

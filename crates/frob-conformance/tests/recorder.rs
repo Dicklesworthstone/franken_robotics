@@ -458,7 +458,8 @@ fn refuse_self_certified() {
         "\"NC-0001\", \"NC-0002\"",
     ));
     let orig = fs::read(&gates_path).unwrap();
-    repo.write_controls(std_controls_two());
+    let controls_path = repo.write_controls(std_controls_two());
+    let original_controls = fs::read(&controls_path).unwrap();
     let rec = make_receipt(
         &repo.head,
         Tier::G1KnownAnswers,
@@ -477,6 +478,37 @@ fn refuse_self_certified() {
             .expect_err("implementer must be refused");
         assert_eq!(err.harness_reason, Some(HarnessReason::SelfCertified));
         assert_eq!(fs::read(&gates_path).unwrap(), orig);
+    }
+    let mut unavailable_scope = base_opts(&repo, "GATE-TEST-01", hash.clone(), "session:s1");
+    unavailable_scope
+        .delivering_paths
+        .push(repo.root.with_extension("outside"));
+    let mut unreadable_log = base_opts(&repo, "GATE-TEST-01", hash.clone(), "session:s1");
+    unreadable_log
+        .bead_logs
+        .push(repo.root.join("docs/delivery/logs"));
+    for (opts, source) in [
+        (unavailable_scope, "git log failed"),
+        (unreadable_log, "bead log"),
+    ] {
+        let err = record_gate(&opts).expect_err("failed provenance must refuse recording");
+        assert_eq!(err.reason, "provenance-unavailable");
+        assert!(err.detail.contains(source), "{err}");
+        assert_eq!(fs::read(&gates_path).unwrap(), orig);
+        assert_eq!(fs::read(&controls_path).unwrap(), original_controls);
+        assert_eq!(
+            fs::read_dir(repo.root.join("receipts/gates"))
+                .unwrap()
+                .count(),
+            0
+        );
+        assert_eq!(
+            fs::read_dir(repo.root.join("docs/delivery/logs"))
+                .unwrap()
+                .count(),
+            0
+        );
+        assert!(!repo.root.join(CONTROL_HISTORY_PATH).exists());
     }
     let ok = record_gate(&base_opts(&repo, "GATE-TEST-01", hash, "session:s2"))
         .expect("non-implementer s2 succeeds");
@@ -1672,7 +1704,8 @@ fn readme_splice_preserves_prose_and_updates_status() {
         CLAIM_A,
         "\"NC-0001\", \"NC-0002\"",
     ));
-    repo.write_controls(std_controls_two());
+    let controls = repo.write_controls(std_controls_two());
+    let controls_before = fs::read(&controls).unwrap();
 
     // Existing README lacking markers or with inline markers is refused atomically without clobbering.
     let rec1 = make_receipt(
@@ -1697,6 +1730,14 @@ fn readme_splice_preserves_prose_and_updates_status() {
             "README_INLINE_MARKERS.md",
             "# Prose\n<!-- status:begin -->inline<!-- status:end -->\n",
         ),
+        (
+            "README_INLINE_END.md",
+            "# Prose\n<!-- status:begin -->\nKeep this text. <!-- status:end -->\n",
+        ),
+        (
+            "README_INLINE_BEGIN.md",
+            "# Prose <!-- status:begin -->\n<!-- status:end -->\n",
+        ),
     ] {
         let bad_readme = repo.root.join(name);
         fs::write(&bad_readme, bad_prose).unwrap();
@@ -1708,6 +1749,14 @@ fn readme_splice_preserves_prose_and_updates_status() {
         assert_eq!(
             fs::read(repo.root.join("registries/gates.toml")).unwrap(),
             gates_before
+        );
+        assert_eq!(fs::read(&controls).unwrap(), controls_before);
+        assert!(!repo.root.join(CONTROL_HISTORY_PATH).exists());
+        assert_eq!(
+            fs::read_dir(repo.root.join("docs/delivery/logs"))
+                .unwrap()
+                .count(),
+            0
         );
         assert!(
             !repo

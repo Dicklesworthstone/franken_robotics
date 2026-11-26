@@ -884,7 +884,7 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
         &common_commit,
         &opts.delivering_paths,
         &opts.bead_logs,
-    );
+    )?;
     if status == Status::Pass && session_in_implementers(&session, &implemented_by) {
         return Err(RecordRefusal::harness(
             HarnessReason::SelfCertified,
@@ -1466,8 +1466,15 @@ fn compute_implemented_by(
     commit: &str,
     delivering_paths: &[PathBuf],
     bead_logs: &[PathBuf],
-) -> String {
+) -> Result<String, RecordRefusal> {
     let mut sessions = BTreeSet::new();
+    let provenance_refusal = |detail| {
+        RecordRefusal::custom(
+            "provenance-unavailable",
+            detail,
+            "Check the Git commit and delivering paths and make all supplied bead logs readable",
+        )
+    };
 
     // 1. Collect `Frob-Session:` trailers from git commits up to `commit`.
     let mut cmd = Command::new("git");
@@ -1482,38 +1489,48 @@ fn compute_implemented_by(
             cmd.arg(p);
         }
     }
-    if let Ok(out) = cmd.output()
-        && out.status.success()
-    {
-        for line in String::from_utf8_lossy(&out.stdout).lines() {
-            for tok in line.split(',') {
-                let trimmed = tok.trim();
-                if !trimmed.is_empty() {
-                    sessions.insert(normalize_session(trimmed));
-                }
+    let out = cmd
+        .output()
+        .map_err(|e| provenance_refusal(format!("could not run git log: {e}")))?;
+    if !out.status.success() {
+        return Err(provenance_refusal(format!(
+            "git log failed with {}: {}",
+            out.status,
+            String::from_utf8_lossy(&out.stderr).trim()
+        )));
+    }
+    for line in String::from_utf8_lossy(&out.stdout).lines() {
+        for tok in line.split(',') {
+            let trimmed = tok.trim();
+            if !trimmed.is_empty() {
+                sessions.insert(normalize_session(trimmed));
             }
         }
     }
 
     // 2. Collect sessions from `implement` lines in delivering bead logs.
     for log_path in bead_logs {
-        if let Ok(raw) = fs::read_to_string(log_path) {
-            for line in raw.lines() {
-                let t = line.trim();
-                if t.is_empty() {
-                    continue;
-                }
-                if let Ok(doc) = json::admit(t.as_bytes(), &Limits::default()) {
-                    let v = doc.value();
-                    let is_impl = v.get("kind").and_then(|x| x.as_str()) == Some("implement")
-                        || v.get("action").and_then(|x| x.as_str()) == Some("implement");
-                    if is_impl {
-                        for key in ["session", "recorded_by", "actor"] {
-                            if let Some(s) = v.get(key).and_then(|x| x.as_str())
-                                && !s.trim().is_empty()
-                            {
-                                sessions.insert(normalize_session(s.trim()));
-                            }
+        let raw = fs::read_to_string(log_path).map_err(|e| {
+            provenance_refusal(format!(
+                "could not read bead log `{}`: {e}",
+                log_path.display()
+            ))
+        })?;
+        for line in raw.lines() {
+            let t = line.trim();
+            if t.is_empty() {
+                continue;
+            }
+            if let Ok(doc) = json::admit(t.as_bytes(), &Limits::default()) {
+                let v = doc.value();
+                let is_impl = v.get("kind").and_then(|x| x.as_str()) == Some("implement")
+                    || v.get("action").and_then(|x| x.as_str()) == Some("implement");
+                if is_impl {
+                    for key in ["session", "recorded_by", "actor"] {
+                        if let Some(s) = v.get(key).and_then(|x| x.as_str())
+                            && !s.trim().is_empty()
+                        {
+                            sessions.insert(normalize_session(s.trim()));
                         }
                     }
                 }
@@ -1521,7 +1538,7 @@ fn compute_implemented_by(
         }
     }
 
-    sessions.into_iter().collect::<Vec<_>>().join(", ")
+    Ok(sessions.into_iter().collect::<Vec<_>>().join(", "))
 }
 
 fn normalize_session(s: &str) -> String {
@@ -1604,6 +1621,20 @@ fn prepare_readme_bytes(
                 readme_path.display()
             ),
             "Keep exactly one `<!-- status:begin -->` before one `<!-- status:end -->`",
+        ));
+    }
+    let after_end = &existing[e + README_STATUS_END.len()..];
+    if (b != 0 && !existing[..b].ends_with('\n'))
+        || !existing[..e].ends_with('\n')
+        || !(after_end.is_empty() || after_end.starts_with('\n') || after_end.starts_with("\r\n"))
+    {
+        return Err(RecordRefusal::custom(
+            "readme-marker-missing",
+            format!(
+                "README `{}` must put each status marker on its own line",
+                readme_path.display()
+            ),
+            "Put each README status marker on a line by itself",
         ));
     }
     let prefix = &existing[..inner_start];

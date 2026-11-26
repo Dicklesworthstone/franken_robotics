@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# e2e: bead=N38b-19 milestone=M0 labels=gauntlet,gate gates=GATE-GAUNT-10 plants=self-certify,missed-control,tampered-receipt seed=0 timeout_s=600 needs=cpu
+# e2e: bead=N38b-19 milestone=M0 labels=gauntlet,gate gates=GATE-GAUNT-10 plants=self-certify,missed-control,tampered-receipt,unknown-mode seed=0 timeout_s=600 needs=cpu
 #
 # End-to-end verification of the gate recorder (bead N38b-19, GATE-GAUNT-10).
 # Operates strictly inside an isolated scratch repository under ${E2E_WORK_DIR}
@@ -30,6 +30,19 @@ hash_file() {
   fi
 }
 
+recorded_scratch_digests() {
+  local artifact
+  for artifact in \
+    registries/gates.toml \
+    crates/frob-conformance/registry/controls.toml \
+    crates/frob-conformance/registry/control_history.ndjson \
+    "receipts/gates/${GOOD_HASH}.json" \
+    docs/delivery/logs/N38b-19.ndjson \
+    README.md; do
+    hash_file "${SCRATCH}/${artifact}" || return
+  done
+}
+
 e2e_step "checkout_digest_before" "Record digest of checkout registries/gates.toml before running recorder"
 BEFORE_CHECKOUT_DIGEST="$(hash_file "${CHECKOUT_GATES}")"
 e2e_assert_file "checkout_gates_exists" "${CHECKOUT_GATES}"
@@ -40,7 +53,7 @@ e2e_cmd --name "cargo_test_recorder" -- \
   cargo test --offline -j 1 -p frob-conformance --test recorder
 e2e_assert_eq "cargo_test_recorder_exit" "${E2E_LAST_EXIT}" "0"
 
-e2e_step "scratch_cli_recording_and_plants" "Exercise record_gate example CLI on scratch Git repo with happy path and three plants"
+e2e_step "scratch_cli_recording_and_plants" "Exercise both record modes and the refusal plants in a scratch Git repo"
 if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
   SCRATCH="${E2E_WORK_DIR}/scratch-repo"
   mkdir -p "${SCRATCH}/registries" \
@@ -159,7 +172,7 @@ EOF
   e2e_cmd --name "record_happy_path" -- \
     env "CARGO_TARGET_DIR=${TARGET_BASE}/conformance" "FROB_SESSION=session:reviewer-e2e" \
     cargo run --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p frob-conformance --example record_gate -- \
-      --repo-root "${SCRATCH}" --gate GATE-GAUNT-10 --receipt "${GOOD_HASH}" --bead N38b-19 --date 2026-11-25 \
+      record --repo-root "${SCRATCH}" --gate GATE-GAUNT-10 --receipt "${GOOD_HASH}" --bead N38b-19 --date 2026-11-25 \
       --readme "${SCRATCH}/README.md"
   e2e_assert_eq "record_happy_path_exit" "${E2E_LAST_EXIT}" "0"
   e2e_assert_file "committed_receipt_exists" "${SCRATCH}/receipts/gates/${GOOD_HASH}.json"
@@ -178,15 +191,33 @@ EOF
   e2e_assert_eq "recorded_readme_measured_and_recorded" "${status_cells}" \
     "0.9207 (1) / 2026-11-25 (session:reviewer-e2e)"
 
-  # Unknown mode word refuses without altering scratch gates.toml.
-  SCRATCH_GATES_BEFORE_BADMODE="$(hash_file "${SCRATCH}/registries/gates.toml")"
+  scratch_recording="$(recorded_scratch_digests)"
+  e2e_cmd --name "implicit_record_mode_is_idempotent" -- \
+    env "CARGO_TARGET_DIR=${TARGET_BASE}/conformance" "FROB_SESSION=session:reviewer-e2e" \
+    cargo run --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p frob-conformance --example record_gate -- \
+      --repo-root "${SCRATCH}" --gate GATE-GAUNT-10 --receipt "${GOOD_HASH}" --bead N38b-19 --date 2026-11-25 \
+      --readme "${SCRATCH}/README.md"
+  e2e_assert_eq "implicit_record_mode_exit" "${E2E_LAST_EXIT}" "0"
+  if grep -Eq '^recorded .* idempotent=true$' "${E2E_LAST_STDOUT}"; then got="ok"; else got="missing"; fi
+  e2e_assert_eq "implicit_record_mode_noop" "${got}" "ok"
+  e2e_assert_eq "implicit_record_mode_unchanged" "$(recorded_scratch_digests)" "${scratch_recording}"
+
+  # Unknown mode refuses before changing any recorded artifact.
   e2e_cmd --name "unknown_mode_word" --expect-exit 3 -- \
     env "CARGO_TARGET_DIR=${TARGET_BASE}/conformance" \
-    cargo run --offline -j 1 -p frob-conformance --example record_gate -- \
-      frobnicate --gate GATE-GAUNT-10 --registry "${SCRATCH}/registries/gates.toml"
+    cargo run --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p frob-conformance --example record_gate -- \
+      frobnicate --repo-root "${SCRATCH}" --gate GATE-GAUNT-10 --receipt "${GOOD_HASH}"
   e2e_assert_eq "unknown_mode_word_exit" "${E2E_LAST_EXIT}" "3"
-  SCRATCH_GATES_AFTER_BADMODE="$(hash_file "${SCRATCH}/registries/gates.toml")"
-  e2e_assert_digest_eq "unknown_mode_word_unchanged" "${SCRATCH_GATES_BEFORE_BADMODE}" "${SCRATCH_GATES_AFTER_BADMODE}"
+  if grep -Fxq "record_gate: unknown mode \`frobnicate\`" "${E2E_LAST_STDERR}"; then
+    got="ok"
+  else
+    got="missing"
+  fi
+  e2e_assert_eq "unknown_mode_word_reason" "${got}" "ok"
+  e2e_assert_eq "unknown_mode_word_unchanged" "$(recorded_scratch_digests)" "${scratch_recording}"
+  expected="ok"
+  if e2e_plant "unknown-mode"; then expected="missing"; fi
+  e2e_assert_eq "unknown-mode" "${got}" "${expected}"
 fi
 
 e2e_step "checkout_digest_after" "Verify checkout registries/gates.toml is byte-identical"

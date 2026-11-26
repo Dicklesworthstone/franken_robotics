@@ -140,6 +140,7 @@ fn fnv1a_64_pair(a: &[u8], b: &[u8]) -> u64 {
 }
 
 /// Locate the `<!-- status:begin -->` and `<!-- status:end -->` markers in `readme`.
+/// Each marker must occupy its own line.
 ///
 /// Returns `(before_including_begin_newline, inner_block, end_marker_and_after, first_inner_line_1based)`.
 pub fn split_readme_status_block(
@@ -194,6 +195,19 @@ pub fn split_readme_status_block(
         return Err(StatusTableError::new(
             "README.md",
             format!("`{STATUS_END}` must be on a line after `{STATUS_BEGIN}`"),
+        ));
+    }
+
+    let after_end_marker = &readme[e_pos + STATUS_END.len()..];
+    if (b_pos != 0 && !readme[..b_pos].ends_with('\n'))
+        || !readme[..e_pos].ends_with('\n')
+        || !(after_end_marker.is_empty()
+            || after_end_marker.starts_with('\n')
+            || after_end_marker.starts_with("\r\n"))
+    {
+        return Err(StatusTableError::new(
+            "README.md",
+            "each status marker must be on its own line",
         ));
     }
 

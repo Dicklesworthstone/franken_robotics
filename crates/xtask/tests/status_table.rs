@@ -313,6 +313,44 @@ fn readme_hand_edit_fails_naming_first_diff_line() {
 }
 
 #[test]
+fn inline_readme_markers_are_refused_without_writing() {
+    let scratch = env::temp_dir().join(format!("frob-bd002-inline-markers-{}", std::process::id()));
+    fs::create_dir_all(&scratch).expect("create scratch dir");
+    let gates_path = scratch.join("gates.toml");
+    let readme_path = scratch.join("README.md");
+    let gates = b"schema = \"frob.gates/1\"\n";
+    fs::write(&gates_path, gates).expect("write gates");
+    let block = generate_from_toml(gates).expect("generate status block");
+
+    for (case, readme) in [
+        (
+            "prose before opening marker",
+            format!("Prose {STATUS_BEGIN}\n{block}{STATUS_END}\n"),
+        ),
+        (
+            "prose before closing marker",
+            format!("{STATUS_BEGIN}\n{block}Prose {STATUS_END}\n"),
+        ),
+        (
+            "prose after closing marker",
+            format!("{STATUS_BEGIN}\n{block}{STATUS_END} prose\n"),
+        ),
+    ] {
+        fs::write(&readme_path, &readme).expect("write planted README");
+        for bless in [false, true] {
+            let err = check_or_bless_readme(&readme_path, &gates_path, bless)
+                .expect_err("inline marker must be refused");
+            assert!(err.to_string().contains("on its own line"), "{case}: {err}");
+            assert_eq!(
+                fs::read(&readme_path).expect("read planted README after refusal"),
+                readme.as_bytes(),
+                "README must stay byte-identical for {case} with bless={bless}",
+            );
+        }
+    }
+}
+
+#[test]
 fn formats_registry_has_thirteen_unique_rows() {
     let root = repo_root();
     let raw = fs::read(root.join("registries/formats.toml")).expect("read formats.toml");

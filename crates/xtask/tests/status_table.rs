@@ -9,6 +9,8 @@ use std::env;
 use std::fs;
 use std::path::PathBuf;
 
+use frob_core::json::{Limits, admit};
+use xtask::generate::admission_doc::FIRST_COMMIT_HEADER;
 use xtask::status_table::{
     ClaimKind, GatePart, GateRegistry, GateRow, PartStatus, ReadmeCheckOutcome, RecordedMeta,
     STATUS_BEGIN, STATUS_END, check_or_bless_readme, generate_from_toml, parse_formats_toml,
@@ -380,7 +382,45 @@ encoding = "canonical"
     );
     let err = parse_formats_toml(dup.as_bytes())
         .expect_err("14th row with duplicate extension must fail");
-    assert!(err.to_string().contains(".fbot"), "{err}");
+    assert!(
+        err.message.contains("duplicate format extension `.fbot`"),
+        "{err}"
+    );
+    assert!(err.message.contains("FMT-FEXTRA"), "{err}");
+}
+
+#[test]
+fn formats_registry_names_rows_with_invalid_schema_fields() {
+    let valid = r#"
+schema = "frob.formats/1"
+[[format]]
+id = "FMT-FTEST"
+extension = ".ftest"
+schema = "frob.test/1"
+owner = "frob-design"
+producers = ["frob-design"]
+consumers = ["frob-design"]
+encoding = "canonical"
+kinds = ["body"]
+"#;
+    assert_eq!(
+        parse_formats_toml(valid.as_bytes()).unwrap().formats.len(),
+        1
+    );
+    for (before, after, row, field) in [
+        ("FMT-FTEST", "FMT-fTEST", "FMT-fTEST", "id"),
+        (".ftest", ".9TEST", "FMT-FTEST", "extension"),
+        ("frob.test/1", "frob.test/", "FMT-FTEST", "schema"),
+        ("[\"body\"]", "[]", "FMT-FTEST", "kinds"),
+    ] {
+        let invalid = valid.replace(before, after);
+        let err = parse_formats_toml(invalid.as_bytes())
+            .expect_err("row violating the formats schema must fail");
+        assert!(
+            err.message.contains(row) && err.message.contains(field),
+            "{err}"
+        );
+    }
 }
 
 #[test]
@@ -638,10 +678,59 @@ fn demo_schema_admits_every_optional_key() {
     assert_eq!(doc.not_evidence_for.as_deref(), Some("numbers"));
     assert_eq!(doc.milestone.as_deref(), Some("M0"));
     assert_eq!(doc.actors, vec!["design-agent".to_owned()]);
+    assert_eq!(doc.title.as_deref(), Some("North-Star 01 quadruped check"));
     assert_eq!(doc.expect_exit.len(), 2);
     assert_eq!(doc.expect_refusal.len(), 1);
     assert_eq!(doc.compare.len(), 1);
     assert_eq!(doc.expect.len(), 1);
+}
+
+#[test]
+fn published_demo_schema_has_closed_key_contract() {
+    let bytes = fs::read(repo_root().join("schemas/demo.schema.json")).expect("read demo schema");
+    let schema = admit(&bytes, &Limits::default()).expect("parse demo schema");
+    let root = &schema.root().value;
+    let expected_required = BTreeSet::from(["demo_id", "claim_ids", "commands", "checksums"]);
+    let required = root.get("required").unwrap().value.as_array().unwrap();
+    let required_keys: BTreeSet<&str> = required
+        .iter()
+        .map(|key| key.value.as_str().unwrap())
+        .collect();
+    assert_eq!(required_keys, expected_required);
+    assert_eq!(
+        required.len(),
+        expected_required.len(),
+        "duplicate required key"
+    );
+
+    let properties = root.get("properties").unwrap().value.as_object().unwrap();
+    let property_keys: BTreeSet<&str> =
+        properties.iter().map(|entry| entry.name.as_ref()).collect();
+    assert_eq!(
+        property_keys
+            .difference(&expected_required)
+            .copied()
+            .collect::<BTreeSet<_>>(),
+        BTreeSet::from([
+            "tier",
+            "expect_exit",
+            "expect_refusal",
+            "compare",
+            "expect",
+            "title",
+            "milestone",
+            "actors",
+            "lane",
+            "fresh_agent",
+            "not_evidence_for",
+        ])
+    );
+    assert!(expected_required.is_subset(&property_keys));
+    assert_eq!(
+        root.get("additionalProperties")
+            .and_then(|node| node.value.as_bool()),
+        Some(false)
+    );
 }
 
 #[test]
@@ -722,6 +811,10 @@ fn first_commit_documents_and_admission_header() {
 
     let adm = fs::read_to_string(root.join("DEPENDENCY_ADMISSION.md"))
         .expect("read DEPENDENCY_ADMISSION.md");
+    assert!(
+        adm.starts_with(FIRST_COMMIT_HEADER),
+        "DEPENDENCY_ADMISSION.md must preserve the exact seed header"
+    );
     for needle in [
         "Validity rule",
         "Cargo.lock",

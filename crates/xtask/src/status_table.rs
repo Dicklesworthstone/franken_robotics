@@ -364,10 +364,15 @@ pub fn parse_formats_toml(bytes: &[u8]) -> Result<FormatRegistry, StatusTableErr
         ff.finish()
             .map_err(|e| StatusTableError::new(&ctx, e.to_string()))?;
 
-        if !id.starts_with("FMT-") || id.len() <= 4 {
+        if !id.strip_prefix("FMT-").is_some_and(|name| {
+            !name.is_empty()
+                && name
+                    .bytes()
+                    .all(|b| b.is_ascii_uppercase() || b.is_ascii_digit() || b == b'-')
+        }) {
             return Err(StatusTableError::new(
                 &ctx,
-                format!("format id `{id}` must start with `FMT-`"),
+                format!("format id `{id}` must match `FMT-[A-Z0-9-]+`"),
             ));
         }
         if !seen_ids.insert(id.clone()) {
@@ -376,10 +381,18 @@ pub fn parse_formats_toml(bytes: &[u8]) -> Result<FormatRegistry, StatusTableErr
                 format!("duplicate format id `{id}`"),
             ));
         }
-        if !extension.starts_with('.') || extension.len() < 2 {
+        if !extension.strip_prefix('.').is_some_and(|suffix| {
+            suffix
+                .as_bytes()
+                .first()
+                .is_some_and(u8::is_ascii_lowercase)
+                && suffix
+                    .bytes()
+                    .all(|b| b.is_ascii_lowercase() || b.is_ascii_digit())
+        }) {
             return Err(StatusTableError::new(
                 &ctx,
-                format!("format `{id}` extension `{extension}` must start with `.`"),
+                format!("format `{id}` extension `{extension}` must match `.[a-z][a-z0-9]*`"),
             ));
         }
         if !seen_exts.insert(extension.clone()) {
@@ -388,7 +401,18 @@ pub fn parse_formats_toml(bytes: &[u8]) -> Result<FormatRegistry, StatusTableErr
                 format!("duplicate format extension `{extension}` on `{id}`"),
             ));
         }
-        if !fschema.starts_with("frob.") || !fschema.contains('/') {
+        if !fschema
+            .strip_prefix("frob.")
+            .and_then(|schema| schema.split_once('/'))
+            .is_some_and(|(name, version)| {
+                !name.is_empty()
+                    && name
+                        .bytes()
+                        .all(|b| b.is_ascii_lowercase() || b.is_ascii_digit() || b == b'.')
+                    && !version.is_empty()
+                    && version.bytes().all(|b| b.is_ascii_digit())
+            })
+        {
             return Err(StatusTableError::new(
                 &ctx,
                 format!("format `{id}` schema `{fschema}` must match `frob.<name>/<ver>`"),
@@ -418,6 +442,12 @@ pub fn parse_formats_toml(bytes: &[u8]) -> Result<FormatRegistry, StatusTableErr
             ));
         }
         let kinds = match raw_kinds {
+            Some(items) if items.is_empty() => {
+                return Err(StatusTableError::new(
+                    &ctx,
+                    format!("format `{id}` kinds must be non-empty when present"),
+                ));
+            }
             Some(items) => extract_str_list(&items, "kinds", &ctx, true)?,
             None => Vec::new(),
         };

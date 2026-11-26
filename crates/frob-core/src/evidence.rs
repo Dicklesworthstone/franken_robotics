@@ -268,7 +268,7 @@ pub struct ReceiptId(pub Blake3);
 /// use frob_core::evidence::{ClaimKind, ClaimProduct, DetClass, Evidence, FlagSet, InputRef, ProofClaim, RealityScope, Scope, TierMeet};
 /// use frob_core::id::hash_blob;
 /// let leaf = ClaimProduct::estimated(ClaimKind::Proof, InputRef::new(hash_blob(b"a"), "/x"), Scope::default(), TierMeet::Static, DetClass::D0Exact, RealityScope::NoClaim, FlagSet::new());
-/// let _: Evidence<ProofClaim> = Evidence::from(leaf);
+/// let _: Evidence<ProofClaim> = leaf.into();
 /// ```
 ///
 /// ```compile_fail,E0616

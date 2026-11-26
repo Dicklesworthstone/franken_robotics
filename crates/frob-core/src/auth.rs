@@ -8,7 +8,7 @@ use crate::refusal::{Refusal, RefusalCode, Repair, RetryPolicy, mini_json};
 ///
 /// ```compile_fail,E0277
 /// use frob_core::auth::False;
-/// let _ = False::from(true);
+/// let _: False = true.into();
 /// ```
 ///
 /// ```compile_fail,E0308

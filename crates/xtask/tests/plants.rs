@@ -18,16 +18,18 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use frob_core::json::{Limits, admit};
 use xtask::assembly::{
     CHECK_OWNERS, COMMANDS, CommandTableError, EXPECTED_SUBCOMMANDS, GATE_WS_01_PLANTS,
-    GATE_WS_04_LAYERS_AND_DEPS_BUDGET_MS, GATE_WS_04_LAYERS_AND_DEPS_SUBSHARES,
-    GATE_WS_04_SHARES, GATE_WS_04_TOTAL_BUDGET_MS, OwnershipError, evaluate_gate_ws_04_timing,
+    GATE_WS_04_LAYERS_AND_DEPS_BUDGET_MS, GATE_WS_04_LAYERS_AND_DEPS_SUBSHARES, GATE_WS_04_SHARES,
+    GATE_WS_04_TOTAL_BUDGET_MS, OwnershipError, evaluate_gate_ws_04_timing,
     normalize_report_json_for_determinism, run_check_cli_json, verify_command_table,
     verify_finding_id_ownership,
 };
-use xtask::check_contracts::{REQUIRED_CONTRACT_SECTIONS, RULE_CAP_OVER_115, RULE_CONTRACT_SECTION_MISSING};
+use xtask::check_contracts::{REQUIRED_CONTRACT_SECTIONS, RULE_CONTRACT_SECTION_MISSING};
 use xtask::check_deps::RULE_ASUP_DUPLICATE;
 use xtask::check_layers::{RULE_L1_RANK, RULE_L1_UPWARD};
 use xtask::check_unsafe::RULE_CAPSULE_UNREGISTERED;
-use xtask::cli::{self, CheckContext, CheckError, CheckFn, CheckOutcome, EXIT_FINDINGS, EXIT_OK, EXIT_USAGE};
+use xtask::cli::{
+    self, CheckContext, CheckError, CheckFn, CheckOutcome, EXIT_FINDINGS, EXIT_OK, EXIT_USAGE,
+};
 use xtask::generate::RULE_DIFFERS;
 use xtask::metadata::normalize_rel_path;
 use xtask::report::validate_report_json;
@@ -153,13 +155,7 @@ fn generate_lockfile_offline(ws_dir: &Path) {
     );
 }
 
-fn write_valid_contract(
-    repo: &Path,
-    rel_dir: &str,
-    name: &str,
-    layer_toml: &str,
-    rank: u8,
-) {
+fn write_valid_contract(repo: &Path, rel_dir: &str, name: &str, layer_toml: &str, rank: u8) {
     let dir = repo.join(rel_dir);
     let mut md = format!("# Contract: {name}\n\n");
     for sec in REQUIRED_CONTRACT_SECTIONS {
@@ -266,7 +262,10 @@ impl MiniatureEnv {
             &asup_dir.join("Cargo.toml"),
             "[package]\nname = \"asupersync\"\nversion = \"0.6.2\"\nedition = \"2021\"\n",
         );
-        write_file(&asup_dir.join("src/lib.rs"), "// synthetic asupersync 0.6.2\n");
+        write_file(
+            &asup_dir.join("src/lib.rs"),
+            "// synthetic asupersync 0.6.2\n",
+        );
         write_file(&asup_dir.join(".cargo-checksum.json"), "{\"files\":{}}\n");
 
         // Offline `.cargo/config.toml` at `base` inherited by `repo` and annexes.
@@ -296,14 +295,20 @@ impl MiniatureEnv {
             &asup_alt.join("Cargo.toml"),
             "[package]\nname = \"asupersync\"\nversion = \"0.7.0\"\nedition = \"2021\"\n",
         );
-        write_file(&asup_alt.join("src/lib.rs"), "// synthetic asupersync 0.7.0\n");
+        write_file(
+            &asup_alt.join("src/lib.rs"),
+            "// synthetic asupersync 0.7.0\n",
+        );
         let dummy_sib = base.join("dummy-sib");
         write_file(
             &dummy_sib.join("Cargo.toml"),
             "[package]\nname = \"dummy-sib\"\nversion = \"0.1.0\"\nedition = \"2021\"\n\n\
              [dependencies]\nasupersync = { path = \"../asup-alt\" }\n",
         );
-        write_file(&dummy_sib.join("src/lib.rs"), "// dummy sibling pulling second asupersync\n");
+        write_file(
+            &dummy_sib.join("src/lib.rs"),
+            "// dummy sibling pulling second asupersync\n",
+        );
         let dummy_sib_rev = git_init_repo(&dummy_sib);
 
         // Root core workspace manifest (with core unsafe_code = "deny" lint).
@@ -329,7 +334,10 @@ impl MiniatureEnv {
              [dependencies]\nasupersync = \"=0.6.2\"\n\n\
              [lints]\nworkspace = true\n",
         );
-        write_file(&repo.join("crates/frob-core/src/lib.rs"), "pub fn core_ready() -> bool { true }\n");
+        write_file(
+            &repo.join("crates/frob-core/src/lib.rs"),
+            "pub fn core_ready() -> bool { true }\n",
+        );
         write_valid_contract(&repo, "crates/frob-core", "frob-core", "0", 1);
 
         // Core crate 2: frob-lie (L1, R1).
@@ -339,7 +347,10 @@ impl MiniatureEnv {
              [package.metadata.frob]\nlayer = 1\nrank = 1\n\n\
              [lints]\nworkspace = true\n",
         );
-        write_file(&repo.join("crates/frob-lie/src/lib.rs"), "pub fn lie_ready() -> bool { true }\n");
+        write_file(
+            &repo.join("crates/frob-lie/src/lib.rs"),
+            "pub fn lie_ready() -> bool { true }\n",
+        );
         write_valid_contract(&repo, "crates/frob-lie", "frob-lie", "1", 1);
 
         // Core crate 3: frob-algebra (L1, R2) with binary `frob`, depends on frob-core + sib-demo.
@@ -353,8 +364,14 @@ impl MiniatureEnv {
              sib-demo = { path = \"../../../sib-demo\" }\n\n\
              [lints]\nworkspace = true\n",
         );
-        write_file(&repo.join("crates/frob-algebra/src/lib.rs"), "pub fn alg_ready() -> bool { true }\n");
-        write_file(&repo.join("crates/frob-algebra/src/main.rs"), "fn main() {}\n");
+        write_file(
+            &repo.join("crates/frob-algebra/src/lib.rs"),
+            "pub fn alg_ready() -> bool { true }\n",
+        );
+        write_file(
+            &repo.join("crates/frob-algebra/src/main.rs"),
+            "fn main() {}\n",
+        );
         write_valid_contract(&repo, "crates/frob-algebra", "frob-algebra", "1", 2);
 
         // Annex crate: spark/frob-spark-cuda (own workspace + Cargo.lock, zero unsafe initially).
@@ -394,7 +411,10 @@ impl MiniatureEnv {
              consumers = [\"frob-design\"]\n\
              encoding = \"canonical\"\n",
         );
-        write_file(&repo.join("registries/verbs.toml"), "schema = \"frob.verbs/1\"\n");
+        write_file(
+            &repo.join("registries/verbs.toml"),
+            "schema = \"frob.verbs/1\"\n",
+        );
         write_file(
             &repo.join("registries/refusals.toml"),
             "schema = \"frob.refusals/1\"\n\n\
@@ -442,9 +462,41 @@ impl MiniatureEnv {
              evidence = []\n\
              recorded = { date = \"\", session = \"\", implemented_by = \"\" }\n",
         );
-        write_file(&repo.join("registries/kernels.toml"), "schema = \"frob.kernels/1\"\n");
-        write_file(&repo.join("registries/capsules.toml"), "schema = \"frob.capsules/1\"\n");
-        write_file(&repo.join("registries/lifts.toml"), "schema = \"frob.lifts/1\"\n");
+        write_file(
+            &repo.join("registries/kernels.toml"),
+            "schema = \"frob.kernels/1\"\n",
+        );
+        write_file(
+            &repo.join("registries/capsules.toml"),
+            "schema = \"frob.capsules/1\"\n",
+        );
+        write_file(
+            &repo.join("registries/lifts.toml"),
+            "schema = \"frob.lifts/1\"\n",
+        );
+        write_file(
+            &repo.join("registries/qty_aliases.toml"),
+            "schema = \"frob.qty_aliases/1\"\n\n\
+             [[alias]]\n\
+             name = \"Length\"\n\
+             dimension = [1, 0, 0, 0, 0, 0]\n\
+             kind = \"length\"\n\
+             unit = \"m\"\n\n\
+             [[alias]]\n\
+             name = \"Area\"\n\
+             dimension = [2, 0, 0, 0, 0, 0]\n\
+             kind = \"area\"\n\
+             unit = \"m^2\"\n",
+        );
+        write_file(
+            &repo.join("registries/qty_products.toml"),
+            "schema = \"frob.qty_products/1\"\n\n\
+             [[product]]\n\
+             lhs = \"Length\"\n\
+             op = \"mul\"\n\
+             rhs = \"Length\"\n\
+             out = \"Area\"\n",
+        );
         write_file(
             &repo.join("README.md"),
             "# Synthetic Miniature Workspace\n\n<!-- status:begin -->\n<!-- status:end -->\n",
@@ -836,14 +888,20 @@ fn plant_matrix_diagonal() {
         );
         write_file(&env.repo.join("franken-stack.lock"), &lock_with_dummy);
         env.normalize_manifest_change();
-        assert_plant_row("plant-3-second-asupersync", "check-deps", RULE_ASUP_DUPLICATE, &env);
+        assert_plant_row(
+            "plant-3-second-asupersync",
+            "check-deps",
+            RULE_ASUP_DUPLICATE,
+            &env,
+        );
     }
 
     // Plant 4: unregistered unsafe capsule inside annex `spark/frob-spark-cuda`.
     {
         let env = MiniatureEnv::build("plant-4-capsule");
         write_file(
-            &env.repo.join("spark/frob-spark-cuda/src/unregistered_capsule.rs"),
+            &env.repo
+                .join("spark/frob-spark-cuda/src/unregistered_capsule.rs"),
             "pub fn raw_ptr_len(ptr: *const u8) -> usize {\n    unsafe { ptr as usize }\n}\n",
         );
         assert_plant_row(
@@ -901,8 +959,14 @@ fn plant_matrix_diagonal() {
         assert_plant_row("plant-7-stale-stack-lock", "check-stack", RULE_PIN, &env);
     }
 
-    assert_eq!(total_failures, 7, "7 x 6 diagonal must have exactly 7 failures");
-    assert_eq!(total_passes, 35, "7 x 6 diagonal must have exactly 35 passes");
+    assert_eq!(
+        total_failures, 7,
+        "7 x 6 diagonal must have exactly 7 failures"
+    );
+    assert_eq!(
+        total_passes, 35,
+        "7 x 6 diagonal must have exactly 35 passes"
+    );
 
     // Harness negative control: Plant 1 applied WITHOUT receipt normalization MUST be
     // reported by TWO checks (`check-layers` L-1.upward AND `check-stack` stack.lockfile),
@@ -932,7 +996,12 @@ fn plant_matrix_diagonal() {
             vec!["check-layers", "check-stack"],
             "unnormalized manifest plant must be reported by both check-layers and check-stack, got {failing_checks:?}"
         );
-        assert!(res["check-layers"].1.iter().any(|f| f.rule == RULE_L1_UPWARD));
+        assert!(
+            res["check-layers"]
+                .1
+                .iter()
+                .any(|f| f.rule == RULE_L1_UPWARD)
+        );
         assert!(res["check-stack"].1.iter().any(|f| f.rule == RULE_LOCKFILE));
     }
 }
@@ -983,13 +1052,21 @@ fn build_real_tree_scratch_copy(label: &str) -> PathBuf {
         "DEPENDENCY_ADMISSION.md",
         "rust-toolchain.toml",
         "franken-stack.lock",
+        "docs/generated/refusals.md",
     ] {
         let src = real.join(file);
         if src.is_file() {
             copy_file(&src, &dst.join(file));
         }
     }
-    for dir in [".cargo", "crates", "registries", "schemas", "receipts", "kernels"] {
+    for dir in [
+        ".cargo",
+        "crates",
+        "registries",
+        "schemas",
+        "receipts",
+        "kernels",
+    ] {
         let src = real.join(dir);
         if src.is_dir() {
             copy_dir_recursive_skipping(&src, &dst.join(dir), &["target", ".git"]);
@@ -1006,67 +1083,46 @@ fn build_real_tree_scratch_copy(label: &str) -> PathBuf {
 fn plant_5_on_real_tree_scratch_copy() {
     let scratch_repo = build_real_tree_scratch_copy("real-plant5");
 
-    // 1. Baseline all six checks on the unedited scratch copy of the real tree.
-    let mut baseline: BTreeMap<&str, (ExitCode, Vec<ParsedFinding>)> = BTreeMap::new();
+    // 1. Baseline all six checks on the unedited scratch copy: every check must exit 0 with zero findings.
     for &check in &EXPECTED_SUBCOMMANDS {
         let run = run_check_cli_json(&scratch_repo, check, &[]);
-        assert!(
-            run.exit_code == ExitCode::from(EXIT_OK)
-                || run.exit_code == ExitCode::from(EXIT_FINDINGS),
-            "baseline `{check}` on real-tree scratch copy failed unexpectedly ({:?}): stderr={}",
+        let (_, _, findings) = parse_report_findings_and_elapsed(&run.stdout);
+        assert_eq!(
             run.exit_code,
+            ExitCode::from(EXIT_OK),
+            "baseline `{check}` on real-tree scratch copy must exit 0; findings={findings:?}\nstderr={}",
             run.stderr
         );
-        let (_, _, findings) = parse_report_findings_and_elapsed(&run.stdout);
-        baseline.insert(check, (run.exit_code, findings));
-    }
-
-    // Core clean-tree invariants on the baseline copy before planting.
-    for clean_check in ["check-layers", "check-deps", "check-unsafe", "check-generated"] {
-        assert_eq!(
-            baseline[clean_check].0,
-            ExitCode::from(EXIT_OK),
-            "baseline real-tree scratch copy must pass `{clean_check}`, got {:?}",
-            baseline[clean_check].1
+        assert!(
+            findings.is_empty(),
+            "baseline `{check}` on real-tree scratch copy must report zero findings, got {findings:?}"
         );
     }
-    // Under ADR-WS-05, check-contracts may report only `cap.over-115` on crates past ADR-WS-04 caps.
-    let non_cap_contract_findings: Vec<&ParsedFinding> = baseline["check-contracts"]
-        .1
-        .iter()
-        .filter(|f| f.rule != RULE_CAP_OVER_115)
-        .collect();
-    assert!(
-        non_cap_contract_findings.is_empty(),
-        "baseline check-contracts on real-tree scratch copy must have no non-cap findings, got {non_cap_contract_findings:?}"
-    );
 
     // 2. Apply Plant 5: flip one byte on line 6 of the real generated `schemas/frob.design.1.json`.
     let target_rel = "schemas/frob.design.1.json";
     let target_path = scratch_repo.join(target_rel);
     let orig = fs::read_to_string(&target_path).expect("read real generated schema");
     let mut lines: Vec<String> = orig.split('\n').map(ToOwned::to_owned).collect();
-    assert!(lines.len() >= 8, "real frob.design.1.json must have >= 8 lines");
+    assert!(
+        lines.len() >= 8,
+        "real frob.design.1.json must have >= 8 lines"
+    );
     lines[5].push(' ');
     write_file(&target_path, &lines.join("\n"));
 
-    // 3. Re-run all six checks: ONLY `check-generated` reports Plant 5 (`gen.differs` on line 6).
+    // 3. Re-run all six checks: ONLY `check-generated` reports Plant 5 (`gen.differs` on line 6);
+    // all five non-owning checks must exit 0 with zero findings (BD-004 AC2).
     for &check in &EXPECTED_SUBCOMMANDS {
         let run = run_check_cli_json(&scratch_repo, check, &[]);
-        assert!(
-            run.exit_code == ExitCode::from(EXIT_OK)
-                || run.exit_code == ExitCode::from(EXIT_FINDINGS),
-            "planted `{check}` failed unexpectedly ({:?}): stderr={}",
-            run.exit_code,
-            run.stderr
-        );
         let (_, _, after_findings) = parse_report_findings_and_elapsed(&run.stdout);
 
         if check == "check-generated" {
             assert_eq!(
                 run.exit_code,
                 ExitCode::from(EXIT_FINDINGS),
-                "Plant 5 on real-tree scratch copy must cause check-generated to exit 2"
+                "Plant 5 on real-tree scratch copy must cause check-generated to exit 2; stderr={}",
+                run.stderr
             );
             assert!(
                 after_findings
@@ -1076,12 +1132,15 @@ fn plant_5_on_real_tree_scratch_copy() {
             );
         } else {
             assert_eq!(
-                after_findings, baseline[check].1,
-                "Plant 5 must produce ZERO findings delta in non-owning check `{check}`"
+                run.exit_code,
+                ExitCode::from(EXIT_OK),
+                "Plant 5 must leave non-owning check `{check}` clean (exit 0), got findings={after_findings:?}\nstderr={}",
+                run.stderr
             );
-            if matches!(check, "check-layers" | "check-deps" | "check-unsafe") {
-                assert_eq!(run.exit_code, ExitCode::from(EXIT_OK));
-            }
+            assert!(
+                after_findings.is_empty(),
+                "Plant 5 must produce zero findings in non-owning check `{check}`, got {after_findings:?}"
+            );
         }
     }
 }
@@ -1109,9 +1168,13 @@ fn in_process_timing() {
     synthetic_overrun.insert("check-generated".to_owned(), 1_000);
     synthetic_overrun.insert("check-contracts".to_owned(), 1_000);
     synthetic_overrun.insert("check-stack".to_owned(), 1_000);
-    let eval_over = evaluate_gate_ws_04_timing(&synthetic_overrun).expect("evaluate synthetic timing");
+    let eval_over =
+        evaluate_gate_ws_04_timing(&synthetic_overrun).expect("evaluate synthetic timing");
     assert!(eval_over.within_total_budget, "total 12 s is <= 60 s");
-    assert!(!eval_over.passed(), "single-share overrun must fail evaluation");
+    assert!(
+        !eval_over.passed(),
+        "single-share overrun must fail evaluation"
+    );
     assert_eq!(eval_over.overruns.len(), 1);
     assert_eq!(eval_over.overruns[0].name, "check-unsafe");
     assert!(eval_over.format_summary().contains("check-unsafe"));
@@ -1121,7 +1184,8 @@ fn in_process_timing() {
     combined_overrun.insert("check-unsafe".to_owned(), 1_000);
     combined_overrun.insert("check-layers".to_owned(), 9_000);
     combined_overrun.insert("check-deps".to_owned(), 17_000); // combined 26_000 > 25_000
-    let eval_comb = evaluate_gate_ws_04_timing(&combined_overrun).expect("evaluate combined timing");
+    let eval_comb =
+        evaluate_gate_ws_04_timing(&combined_overrun).expect("evaluate combined timing");
     assert!(eval_comb.within_total_budget);
     assert!(!eval_comb.passed());
     assert!(
@@ -1133,27 +1197,46 @@ fn in_process_timing() {
         eval_comb.overruns
     );
 
-    // Measure all six checks in process on the real tree, extracting `elapsed_ms` from each
-    // canonical `frob.xtask.report/1` JSON report.
+    // Warm all six checks on the real tree first, then measure six clean warmed passes and
+    // retain all six `elapsed_ms` values from canonical `frob.xtask.report/1` JSON reports.
     let real = repo_root();
+    for &check in &EXPECTED_SUBCOMMANDS {
+        let warm = run_check_cli_json(&real, check, &[]);
+        let (_, _, warm_findings) = parse_report_findings_and_elapsed(&warm.stdout);
+        assert_eq!(
+            warm.exit_code,
+            ExitCode::from(EXIT_OK),
+            "warmup `{check}` on real tree must exit 0; findings={warm_findings:?}\nstderr={}",
+            warm.stderr
+        );
+        assert!(
+            warm_findings.is_empty(),
+            "warmup `{check}` on real tree must report zero findings, got {warm_findings:?}"
+        );
+    }
+
     let mut measured: BTreeMap<String, u64> = BTreeMap::new();
     for &check in &EXPECTED_SUBCOMMANDS {
         let run = run_check_cli_json(&real, check, &[]);
-        assert!(
-            run.exit_code == ExitCode::from(EXIT_OK)
-                || run.exit_code == ExitCode::from(EXIT_FINDINGS),
-            "in-process `{check}` returned unexpected exit {:?}: stderr={}",
+        let (_, elapsed_ms, findings) = parse_report_findings_and_elapsed(&run.stdout);
+        assert_eq!(
             run.exit_code,
+            ExitCode::from(EXIT_OK),
+            "warmed `{check}` on real tree must exit 0; findings={findings:?}\nstderr={}",
             run.stderr
         );
-        let (_, elapsed_ms, _) = parse_report_findings_and_elapsed(&run.stdout);
+        assert!(
+            findings.is_empty(),
+            "warmed `{check}` on real tree must report zero findings, got {findings:?}"
+        );
         measured.insert(check.to_owned(), elapsed_ms);
     }
+    assert_eq!(measured.len(), EXPECTED_SUBCOMMANDS.len());
 
     let eval = evaluate_gate_ws_04_timing(&measured).expect("evaluate GATE-WS-04 timing");
     assert!(
         eval.passed(),
-        "GATE-WS-04 warm-tree timing budget exceeded:\n{}",
+        "GATE-WS-04 warm-tree timing budget exceeded (measured={measured:?}):\n{}",
         eval.format_summary()
     );
 }

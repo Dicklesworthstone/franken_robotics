@@ -398,6 +398,12 @@ fn run_format_and_verb_schemas(
             if files_by_path.contains_key(&rel_path) {
                 continue;
             }
+            // Authored verb payload schemas under `schemas/verbs/<dot-id>.json`
+            // (owned by `N32a-02` / `VERBS-*`) take precedence over stub generation.
+            let authored_verb_rel = format!("schemas/verbs/{}.json", schema_id.replace('/', "."));
+            if repo_root.join(&authored_verb_rel).is_file() {
+                continue;
+            }
             let bytes = render_verb_schema(&schema_id, &verb_names)?;
             files_by_path.insert(
                 rel_path.clone(),

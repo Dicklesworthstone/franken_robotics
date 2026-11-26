@@ -38,23 +38,30 @@ pub const OWNED_RULES: &[&str] = &[
 
 /// CLI handler registered in `src/main.rs`'s static `COMMANDS` array.
 pub fn run_command(ctx: &CheckContext) -> Result<CheckOutcome, CheckError> {
-    let write_mode = parse_args(&ctx.extra_args).map_err(CheckError::Usage)?;
-    run_check(&ctx.repo_root, BUILTIN_GENERATORS, write_mode)
+    let (write_mode, rows) = parse_args(&ctx.extra_args).map_err(CheckError::Usage)?;
+    run_check(&ctx.repo_root, rows, write_mode)
 }
 
-/// Parse `check-generated`-specific flags (`--write` only).
-pub fn parse_args(extra: &[String]) -> Result<bool, String> {
+/// Parse `--write` and optional `--generator <name>` for an isolated check.
+fn parse_args(extra: &[String]) -> Result<(bool, &'static [GeneratorRow]), String> {
     let mut write_mode = false;
-    for arg in extra {
-        if arg == "--write" {
-            write_mode = true;
-        } else {
-            return Err(format!(
-                "unknown check-generated flag `{arg}` (supported: `--write`)"
-            ));
+    let mut rows = BUILTIN_GENERATORS;
+    let mut args = extra.iter();
+    while let Some(arg) = args.next() {
+        match arg.as_str() {
+            "--write" => write_mode = true,
+            "--generator" => {
+                let name = args.next().ok_or("--generator requires a generator name")?;
+                let selected = BUILTIN_GENERATORS
+                    .iter()
+                    .find(|row| row.name == name)
+                    .ok_or_else(|| format!("unknown check-generated generator `{name}`"))?;
+                rows = std::slice::from_ref(selected);
+            }
+            _ => return Err(format!("unknown check-generated flag `{arg}`")),
         }
     }
-    Ok(write_mode)
+    Ok((write_mode, rows))
 }
 
 /// Execute `check-generated` over `rows` on `repo_root`.
@@ -76,9 +83,21 @@ pub fn run_check(
     for row in rows {
         let inputs = expand_globs(repo_root, row.input_globs);
         let mut produced_paths: Vec<String> = Vec::new();
+        let mut rf = BTreeMap::new();
 
         match (row.run)(repo_root, &inputs) {
-            Ok(GeneratorOutput::Regenerated(files)) => {
+            Ok(
+                output @ (GeneratorOutput::Regenerated(_)
+                | GeneratorOutput::RegeneratedWithFacts(..)),
+            ) => {
+                let files = match output {
+                    GeneratorOutput::Regenerated(files) => files,
+                    GeneratorOutput::RegeneratedWithFacts(files, facts) => {
+                        rf = facts;
+                        files
+                    }
+                    GeneratorOutput::Digests(_) => unreachable!(),
+                };
                 for gf in files {
                     expected_outputs.insert(gf.rel_path.clone());
                     produced_paths.push(gf.rel_path.clone());
@@ -197,8 +216,8 @@ pub fn run_check(
                                 written_files.push(gf.rel_path.clone());
                             } else if actual_block != expected_block {
                                 let offset = first_diff_offset_str(actual_block, &expected_block);
-                                let line_no = u32::try_from(first_inner_line + offset)
-                                    .unwrap_or(u32::MAX);
+                                let line_no =
+                                    u32::try_from(first_inner_line + offset).unwrap_or(u32::MAX);
                                 findings.push(Finding {
                                     rule: RULE_DIFFERS,
                                     subject: row.name.to_owned(),
@@ -281,7 +300,6 @@ pub fn run_check(
             }
         }
 
-        let mut rf = BTreeMap::new();
         rf.insert("name".to_owned(), FactValue::str(row.name));
         rf.insert("mode".to_owned(), FactValue::str(row.mode.as_str()));
         rf.insert(
@@ -328,10 +346,16 @@ pub fn run_check(
     let _ = GeneratorMode::Regenerate;
 
     let mut facts = BTreeMap::new();
-    facts.insert("schema".to_owned(), FactValue::str(CHECK_GENERATED_FACTS_SCHEMA));
+    facts.insert(
+        "schema".to_owned(),
+        FactValue::str(CHECK_GENERATED_FACTS_SCHEMA),
+    );
     facts.insert("write_mode".to_owned(), FactValue::Bool(write_mode));
     facts.insert("rows".to_owned(), FactValue::Array(row_facts));
-    facts.insert("checked_files".to_owned(), FactValue::int_usize(checked_files));
+    facts.insert(
+        "checked_files".to_owned(),
+        FactValue::int_usize(checked_files),
+    );
     facts.insert(
         "digest_files_checked".to_owned(),
         FactValue::int_usize(digest_files_checked),
@@ -353,7 +377,9 @@ fn has_expected_marker(bytes: &[u8], marker: &ExpectedMarker) -> bool {
         return false;
     };
     match marker {
-        ExpectedMarker::LinePrefix(prefix) => text.lines().next().is_some_and(|l| l.starts_with(prefix)),
+        ExpectedMarker::LinePrefix(prefix) => {
+            text.lines().next().is_some_and(|l| l.starts_with(prefix))
+        }
         ExpectedMarker::JsonGeneratedComment => text.lines().take(8).any(|l| {
             (l.contains("\"$comment\"") && l.contains("@generated"))
                 || (l.contains("\"description\"") && l.contains("Generated from "))

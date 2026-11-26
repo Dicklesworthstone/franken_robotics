@@ -466,6 +466,49 @@ determinism = \"D0\"\nsource_digest = \"b3:{kernel_hex}\"\ntargets = [\"cpu\"]\n
 }
 
 #[test]
+fn refusal_printout_scoped_check_detects_hand_edit() {
+    let real = repo_root();
+    let dir = fresh_dir("refusal-printout");
+    let printout = "docs/generated/refusals.md";
+    for rel in [
+        "registries/refusals.toml",
+        "registries/refusal_allocations.toml",
+        printout,
+    ] {
+        copy_file(&real.join(rel), &dir.join(rel));
+    }
+    let args = ["--generator", "refusal-printout"];
+    let (exit, out, err) = run_cli_json(&dir, &args);
+    assert_eq!(exit, ExitCode::from(EXIT_OK), "{out}\n{err}");
+    let path = dir.join(printout);
+    let mut edited = fs::read_to_string(&path).unwrap();
+    edited.push_str("<!-- planted hand edit -->\n");
+    fs::write(path, edited).unwrap();
+    let (exit, out, err) = run_cli_json(&dir, &args);
+    assert_eq!(exit, ExitCode::from(EXIT_FINDINGS), "{out}\n{err}");
+    let accepted = admit(out.as_bytes(), &Limits::default()).expect("xtask report JSON");
+    let findings = accepted
+        .value()
+        .get("findings")
+        .unwrap()
+        .as_array()
+        .unwrap();
+    assert_eq!(findings.len(), 1, "{out}");
+    let finding = &findings[0];
+    for (key, value) in [
+        ("rule", RULE_DIFFERS),
+        ("subject", "refusal-printout"),
+        ("path", printout),
+    ] {
+        assert_eq!(
+            finding.get(key).and_then(|field| field.as_str()),
+            Some(value),
+            "{out}"
+        );
+    }
+}
+
+#[test]
 fn write_mode_does_not_rewrite_digests() {
     let dir = build_scratch_repo("write_no_digest");
     let orig_kernel =

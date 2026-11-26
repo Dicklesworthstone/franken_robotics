@@ -7,6 +7,7 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::fmt;
+use std::sync::OnceLock;
 
 use crate::registry::refusals::{Milestone, RefusalRegistry, RefusalRow};
 use crate::registry::toml::{self, Fields, Spanned, Table, TomlError, Value};
@@ -20,88 +21,46 @@ pub const REFUSALS_MD_MARKER: &str = "<!-- @generated from registries/refusals.t
 /// numbers minus retired `FROB-REF-730` and `FROB-REF-882`).
 pub const PRINTED_ACTIVE_CODE_COUNT: usize = 294;
 
-/// All 294 active printed refusal code numbers extracted verbatim from
-/// `COMPREHENSIVE_PLAN_FOR_FRANKEN_ROBOTICS.md` (excluding retired 730 and 882).
-pub const PRINTED_PLAN_CODES: &[u16] = &[
-    // 1xx (42)
-    101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 118, 119, 120,
-    121, 122, 123, 124, 125, 126, 130, 131, 132, 133, 134, 135, 136, 160, 161, 162, 163, 164, 165,
-    166, 167, 168, 169, // 2xx (26)
-    212, 213, 214, 215, 220, 221, 222, 223, 224, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249,
-    250, 251, 252, 260, 261, 262, 263, // 3xx (22)
-    301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 320, 321,
-    360, 361, 362, // 4xx (17)
-    421, 424, 431, 440, 441, 442, 443, 444, 445, 446, 447, 448, 451, 454, 457, 461, 464,
-    // 5xx (56)
-    502, 520, 521, 522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 534, 535, 536, 537,
-    538, 539, 540, 541, 542, 543, 544, 545, 546, 547, 548, 549, 550, 551, 552, 553, 554, 555, 556,
-    557, 560, 561, 562, 563, 564, 565, 566, 567, 568, 569, 580, 581, 582, 583, 584, 586, 587,
-    // 6xx (18)
-    601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615, 616, 617, 618,
-    // 7xx (19 active; 730 retired)
-    701, 702, 703, 704, 720, 721, 722, 723, 724, 725, 731, 733, 734, 740, 741, 760, 761, 790, 791,
-    // 8xx (94 active; 882 retired)
-    801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814, 815, 816, 817, 818, 819,
-    820, 821, 822, 823, 824, 825, 826, 827, 828, 829, 830, 831, 832, 833, 834, 835, 840, 841, 842,
-    843, 844, 845, 846, 847, 848, 849, 850, 851, 852, 853, 854, 855, 856, 857, 858, 859, 860, 861,
-    862, 863, 864, 865, 866, 867, 868, 869, 870, 871, 872, 873, 874, 875, 876, 877, 878, 879, 880,
-    881, 883, 884, 885, 886, 887, 888, 889, 890, 891, 892, 893, 894, 895, 896, 897, 898, 899,
-];
+/// Code to defining chapter from the plan's Appendix O source.
+#[must_use]
+pub fn printed_plan_codes() -> &'static BTreeMap<u16, u32> {
+    static CODES: OnceLock<BTreeMap<u16, u32>> = OnceLock::new();
+    CODES.get_or_init(|| {
+        let mut codes = BTreeMap::new();
+        for line in include_str!("../../../../planning/fable/blend/APPENDIX_O_REFUSALS.md").lines()
+        {
+            if !line.starts_with("| FROB-REF-") {
+                continue;
+            }
+            let code = line.split('|').nth(1).expect("Appendix O code").trim();
+            let section = line.rsplit('|').nth(1).expect("Appendix O section");
+            let chapter = parse_defined_in_key(section).0;
+            let number = parse_refusal_number(code).expect("valid Appendix O code");
+            assert!(codes.insert(number, chapter).is_none(), "duplicate {code}");
+        }
+        assert_eq!(codes.len(), PRINTED_ACTIVE_CODE_COUNT);
+        codes
+    })
+}
 
-/// Plan-stated chapter blocks protected from Rule 4 fallback spillovers
-/// (Review Note 6: §14 design language 101..=129, §15 Sinew 130..=139, plus
-/// Appendix O printed blocks).
-pub const PLAN_RESERVED_BLOCKS: &[(u32, u16, u16)] = &[
-    (14, 101, 129),
-    (15, 130, 139),
-    (16, 160, 169),
-    (13, 212, 215),
-    (16, 220, 224),
-    (35, 240, 252),
-    (26, 260, 263),
-    (15, 301, 321),
-    (26, 360, 362),
-    (18, 421, 464),
-    (24, 502, 552),
-    (23, 540, 557),
-    (35, 560, 569),
-    (28, 580, 587),
-    (21, 601, 618),
-    (32, 701, 704),
-    (32, 720, 725),
-    (37, 730, 734),
-    (26, 740, 741),
-    (26, 760, 761),
-    (33, 790, 791),
-    (32, 801, 810),
-    (37, 811, 819),
-    (35, 820, 835),
-    (24, 840, 849),
-    (36, 850, 869),
-    (28, 870, 889),
-    (33, 890, 890),
-    (34, 891, 899),
-];
+/// Chapter bands explicitly reserved by the plan (§14/§15, review note 6).
+pub const PLAN_RESERVED_BLOCKS: &[(u32, u16, u16)] = &[(14, 101, 129), (15, 130, 139)];
 
-/// Chapter registry completion milestones for Check 6 (`pending: <registry bead>`).
-pub const CHAPTER_REGISTRY_MILESTONES: &[(&str, &str, Milestone, usize)] = &[
-    ("N13-REF", "Marrow (§13)", Milestone::M1, 4),
-    ("N14-REF", "Design (§14)", Milestone::M1, 25),
-    ("N15-REF", "Sinew & Scene (§15)", Milestone::M1, 29),
-    ("N16-REF", "Kinesis (§16)", Milestone::M1, 15),
-    ("N18-REF", "Control & Estimation (§18)", Milestone::M2, 17),
-    ("N21-REF", "Spark (§21)", Milestone::M0, 18),
-    ("N23-REF", "Cortex (§23)", Milestone::M2, 18),
-    ("N24-REF", "Arena (§24)", Milestone::M2, 21),
-    ("N26-REF", "Adversarial & Budgets (§26)", Milestone::M2, 11),
-    ("N28-REF", "Causal & Provenance (§28)", Milestone::M3, 27),
-    ("N32-REF", "Surface & Tether (§32)", Milestone::M0, 18),
-    ("N33-REF", "Stack (§33)", Milestone::M0, 2),
-    ("N34-REF", "Workspace (§34)", Milestone::M0, 9),
-    ("N35-REF", "Numerics (§35)", Milestone::M1, 39),
-    ("N36-REF", "Performance (§36)", Milestone::M2, 20),
-    ("N37-REF", "Safety (§37)", Milestone::M2, 21),
-];
+// Milestones from the N<chapter>-REF bead definitions. Membership and counts
+// come from Appendix O, independently of which registry rows have landed.
+fn registry_due(chapter: u32) -> Result<Milestone, AllocationError> {
+    match chapter {
+        12 | 13 | 16 | 21 | 32..=35 | 37..=39 | 41 => Ok(Milestone::M0),
+        14 | 15 | 18 | 20 | 22 | 24 | 25 | 28..=30 => Ok(Milestone::M1),
+        17 | 19 | 23 | 27 | 36 => Ok(Milestone::M2),
+        26 => Ok(Milestone::M3),
+        31 => Ok(Milestone::M5),
+        _ => Err(AllocationError::InvalidField {
+            context: format!("chapter {chapter}"),
+            detail: "missing refusal registry milestone".into(),
+        }),
+    }
+}
 
 const FAMILY_LABELS: &[(u8, &str, u8)] = &[
     (1, "Design and model", 3),
@@ -797,11 +756,7 @@ impl AllocationInput {
     #[must_use]
     pub fn from_plan_and_ledger(reg: &RefusalRegistry, ledger: &AllocationLedger) -> Self {
         let mut by_num: BTreeMap<u16, ExistingCode> = BTreeMap::new();
-        for &num in PRINTED_PLAN_CODES {
-            let chapter = PLAN_RESERVED_BLOCKS
-                .iter()
-                .find(|&&(_, lo, hi)| (lo..=hi).contains(&num))
-                .map_or(0, |&(ch, _, _)| ch);
+        for (&num, &chapter) in printed_plan_codes() {
             by_num.insert(
                 num,
                 ExistingCode {
@@ -812,17 +767,24 @@ impl AllocationInput {
             );
         }
         for row in reg.rows() {
-            // Do not pre-seed non-printed codes that are themselves being allocated in this round.
-            if PRINTED_PLAN_CODES.contains(&row.number) {
-                let ch = parse_defined_in_key(&row.defined_in).0;
-                by_num.insert(
-                    row.number,
-                    ExistingCode {
-                        number: row.number,
-                        chapter: ch,
-                        condition: row.meaning.clone(),
-                    },
-                );
+            by_num
+                .entry(row.number)
+                .and_modify(|code| code.condition.clone_from(&row.meaning))
+                .or_insert_with(|| ExistingCode {
+                    number: row.number,
+                    chapter: parse_defined_in_key(&row.defined_in).0,
+                    condition: row.meaning.clone(),
+                });
+        }
+        for req in &ledger.requests {
+            if req.status == AllocationStatus::Assigned
+                && let Some(number) = req.assigned_number()
+            {
+                by_num.entry(number).or_insert_with(|| ExistingCode {
+                    number,
+                    chapter: parse_defined_in_key(&req.defined_in).0,
+                    condition: String::new(),
+                });
             }
         }
         Self {
@@ -859,6 +821,13 @@ fn normalize_condition(s: &str) -> String {
 pub fn allocate_round(input: &AllocationInput) -> Result<AllocationOutcome, AllocationError> {
     let mut taken: BTreeSet<u16> = input.existing.iter().map(|e| e.number).collect();
     let retired = &input.retired;
+    taken.extend(
+        input
+            .requests
+            .iter()
+            .filter(|req| req.status == AllocationStatus::Assigned)
+            .filter_map(AllocationRequest::assigned_number),
+    );
 
     // Build chapter blocks per family/subfamily from existing codes + reserved blocks.
     let mut chapter_spans: BTreeMap<(u32, u8), (u16, u16)> = BTreeMap::new();
@@ -916,12 +885,20 @@ pub fn allocate_round(input: &AllocationInput) -> Result<AllocationOutcome, Allo
             .then_with(|| a.order_hint.cmp(&b.order_hint))
             .then_with(|| a.request.cmp(&b.request))
     });
+    let in_other_block = |n, chapter, family| {
+        chapter_spans.iter().any(|(&(owner, fam), &(lo, hi))| {
+            fam == family && owner != chapter && (lo..=hi).contains(&n)
+        })
+    };
 
     // Rule 5 DESIGN: collect all valid in-range proposals of eligible requests so Rule 4
     // never offers another request's proposed number during this run.
     let mut round_proposals: BTreeSet<u16> = BTreeSet::new();
     for req in &sorted {
-        if req.status == AllocationStatus::Merged || req.status == AllocationStatus::Withdrawn {
+        if matches!(
+            req.status,
+            AllocationStatus::Assigned | AllocationStatus::Merged | AllocationStatus::Withdrawn
+        ) {
             continue;
         }
         if req.family == 8 && !input.allow_8xx_allocation {
@@ -932,6 +909,7 @@ pub fn allocate_round(input: &AllocationInput) -> Result<AllocationOutcome, Allo
             && (lo..=hi).contains(&p)
             && !taken.contains(&p)
             && !retired.contains(&p)
+            && !in_other_block(p, parse_defined_in_key(&req.defined_in).0, req.family)
         {
             round_proposals.insert(p);
         }
@@ -939,6 +917,10 @@ pub fn allocate_round(input: &AllocationInput) -> Result<AllocationOutcome, Allo
 
     let mut out = Vec::with_capacity(sorted.len());
     for mut req in sorted {
+        if req.status == AllocationStatus::Assigned {
+            out.push(req);
+            continue;
+        }
         // Pre-recorded withdrawals stay withdrawn.
         if req.status == AllocationStatus::Withdrawn {
             req.assigned = None;
@@ -999,6 +981,7 @@ pub fn allocate_round(input: &AllocationInput) -> Result<AllocationOutcome, Allo
             && (lo..=hi).contains(&p)
             && !taken.contains(&p)
             && !retired.contains(&p)
+            && !in_other_block(p, req_chapter, req.family)
         {
             chosen = Some(p);
         }
@@ -1015,10 +998,7 @@ pub fn allocate_round(input: &AllocationInput) -> Result<AllocationOutcome, Allo
                 .max();
             if let Some(ch_max) = chapter_hi {
                 for candidate in ch_max.saturating_add(1)..=hi {
-                    let in_other_block = chapter_spans.iter().any(|(&(ch, fam), &(blo, bhi))| {
-                        fam == req.family && ch != req_chapter && (blo..=bhi).contains(&candidate)
-                    });
-                    if in_other_block {
+                    if in_other_block(candidate, req_chapter, req.family) {
                         break;
                     }
                     if !taken.contains(&candidate)
@@ -1110,6 +1090,12 @@ pub fn validate_ledger_and_interims(
     let mut interims = Vec::new();
 
     for req in &ledger.requests {
+        if req.status == AllocationStatus::Assigned && req.assigned.is_none() {
+            return Err(AllocationError::InvalidField {
+                context: format!("request `{}`.assigned", req.request),
+                detail: "assigned request requires a code".into(),
+            });
+        }
         if let Some(num) = req.assigned_number() {
             let code = format_refusal_code(num);
             if retired_nums.contains(&num) {
@@ -1192,27 +1178,23 @@ pub struct CrossChapterReport {
     pub printed_target: usize,
     pub assigned_count: usize,
     pub merged_count: usize,
-    pub pending_chapters: Vec<(String, Milestone)>,
+    pub pending_chapters: Vec<(String, Milestone, usize)>,
     pub pending_assigned: Vec<(String, String)>,
     pub interims: Vec<InterimEntry>,
 }
 
 /// Run all six N35-33 cross-chapter checks on `(reg, ledger)`.
 ///
-/// When `strict_all_assigned` is `true`, Check 4 fails if ANY assigned ledger row
-/// lacks a corresponding `[[refusal]]` row in `reg`. When `false` (M0 partial-tree
-/// mode), assigned rows whose owning chapter bead has not yet landed are reported
-/// in `pending_assigned` while rows already in `reg` outside the printed 294 MUST
-/// still have a matching ledger row.
+/// During development (`None`), missing rows are reported as pending.
+/// At a milestone exit, a missing row is an error once its registry is due.
 pub fn run_cross_chapter_checks(
     reg: &RefusalRegistry,
     ledger: &AllocationLedger,
-    current_milestone: Milestone,
-    strict_all_assigned: bool,
+    milestone_exit: Option<Milestone>,
 ) -> Result<CrossChapterReport, AllocationError> {
     let interims = validate_ledger_and_interims(reg, ledger)?;
     let retired_nums = ledger.retired_numbers();
-    let printed_set: BTreeSet<u16> = PRINTED_PLAN_CODES.iter().copied().collect();
+    let printed = printed_plan_codes();
 
     // Check 1: Codes unique, sorted numerically by family then number, none retired.
     let mut prev_sort_key: Option<(u8, u16)> = None;
@@ -1301,16 +1283,19 @@ pub fn run_cross_chapter_checks(
                 if let Some(num) = req.assigned_number() {
                     assigned_nums.insert(num, req);
                     if !seen_nums.contains(&num) {
-                        if strict_all_assigned {
+                        let chapter = parse_defined_in_key(&req.defined_in).0;
+                        let owner = format!("N{chapter}-REF");
+                        let due = registry_due(chapter)?;
+                        if milestone_exit.is_some_and(|current| current >= due) {
                             return Err(AllocationError::LedgerRegistryMismatch {
                                 code: format_refusal_code(num),
                                 detail: format!(
-                                    "assigned ledger row `{}` has no row in registries/refusals.toml",
+                                    "assigned ledger row `{}` is missing from {owner}, due {due}",
                                     req.request
                                 ),
                             });
                         }
-                        pending_assigned.push((format_refusal_code(num), req.requested_by.clone()));
+                        pending_assigned.push((format_refusal_code(num), owner));
                     }
                 }
             }
@@ -1319,7 +1304,7 @@ pub fn run_cross_chapter_checks(
         }
     }
     for row in reg.rows() {
-        if !printed_set.contains(&row.number) && !assigned_nums.contains_key(&row.number) {
+        if !printed.contains_key(&row.number) && !assigned_nums.contains_key(&row.number) {
             return Err(AllocationError::LedgerRegistryMismatch {
                 code: row.code.clone(),
                 detail: "registry row outside the printed 294 has no assigned row in registries/refusal_allocations.toml".into(),
@@ -1350,6 +1335,17 @@ pub fn run_cross_chapter_checks(
         }
     }
     for pair in &ledger.neighbour_pairs {
+        if let (Some(left), Some(right)) = (
+            rows_by_code.get(pair.left.as_str()),
+            rows_by_code.get(pair.right.as_str()),
+        ) && !(left.related.contains(&pair.right) && right.related.contains(&pair.left))
+        {
+            return Err(AllocationError::NeighbourPairError {
+                left: pair.left.clone(),
+                right: pair.right.clone(),
+                detail: "both registered codes must list the other in `related`".into(),
+            });
+        }
         let ls = pair.left_site.trim();
         let rs = pair.right_site.trim();
         if ls.is_empty() || rs.is_empty() {
@@ -1370,11 +1366,26 @@ pub fn run_cross_chapter_checks(
     }
 
     // Check 6: Printed-294 count check by chapter, staged by milestone.
-    let mut pending_chapters = Vec::new();
-    for &(bead, _label, due, _expected_rows) in CHAPTER_REGISTRY_MILESTONES {
-        if due > current_milestone {
-            pending_chapters.push((bead.to_owned(), due));
+    let mut missing_by_chapter: BTreeMap<u32, Vec<String>> = BTreeMap::new();
+    for (&number, &chapter) in printed {
+        if !seen_nums.contains(&number) {
+            missing_by_chapter
+                .entry(chapter)
+                .or_default()
+                .push(format_refusal_code(number));
         }
+    }
+    let mut pending_chapters = Vec::new();
+    for (chapter, missing) in missing_by_chapter {
+        let bead = format!("N{chapter}-REF");
+        let due = registry_due(chapter)?;
+        if milestone_exit.is_some_and(|current| current >= due) {
+            return Err(AllocationError::MilestoneCountShortfall {
+                bead,
+                detail: format!("due {due}, missing {}", missing.join(", ")),
+            });
+        }
+        pending_chapters.push((bead, due, missing.len()));
     }
 
     Ok(CrossChapterReport {
@@ -1414,8 +1425,8 @@ pub fn render_refusals_markdown(reg: &RefusalRegistry, ledger: &AllocationLedger
     );
     out.push_str("|---|---|---:|---:|---:|---:|---|\n");
     for &(fam, label, def_exit) in FAMILY_LABELS {
-        let printed_in_fam = PRINTED_PLAN_CODES
-            .iter()
+        let printed_in_fam = printed_plan_codes()
+            .keys()
             .filter(|&&n| code_family(n) == fam)
             .count();
         let retired_in_fam = ledger

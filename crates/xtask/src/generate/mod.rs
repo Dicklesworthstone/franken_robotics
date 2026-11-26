@@ -24,6 +24,7 @@ use frob_core::registry::refusals::{
 };
 use frob_core::registry::toml::{self, Value as TomlValue};
 
+use crate::report::FactValue;
 use crate::stack::lock;
 use crate::status_table::{self, FormatRow};
 
@@ -99,6 +100,7 @@ pub struct DigestExpectation {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum GeneratorOutput {
     Regenerated(Vec<GeneratedFile>),
+    RegeneratedWithFacts(Vec<GeneratedFile>, BTreeMap<String, FactValue>),
     Digests(Vec<DigestExpectation>),
 }
 
@@ -1007,7 +1009,7 @@ fn run_refusal_printout(
 ) -> Result<GeneratorOutput, GeneratorError> {
     let alloc_rel = "registries/refusal_allocations.toml";
     let alloc_path = repo_root.join(alloc_rel);
-    if !alloc_path.is_file() {
+    if !alloc_path.is_file() && !repo_root.join("docs/generated/refusals.md").exists() {
         return Ok(GeneratorOutput::Regenerated(Vec::new()));
     }
     let reg_rel = "registries/refusals.toml";
@@ -1047,7 +1049,18 @@ fn run_refusal_printout(
             "Fix registries/refusal_allocations.toml so it passes frob.refalloc/1 validation.",
         )
     })?;
-    run_cross_chapter_checks(&reg, &ledger, Milestone::M0, false).map_err(|e| {
+    let milestone = std::env::var_os("FROB_MILESTONE")
+        .map(|raw| {
+            Milestone::parse(&raw.to_string_lossy()).ok_or_else(|| {
+                mk_err(
+                    alloc_rel,
+                    format!("invalid FROB_MILESTONE {:?}", raw),
+                    "Set FROB_MILESTONE to the milestone under review (M0 through M6).",
+                )
+            })
+        })
+        .transpose()?;
+    let report = run_cross_chapter_checks(&reg, &ledger, milestone).map_err(|e| {
         mk_err(
             alloc_rel,
             format!("cross-chapter refusal check failed: {e}"),
@@ -1056,10 +1069,79 @@ fn run_refusal_printout(
     })?;
 
     let md = render_refusals_markdown(&reg, &ledger);
-    Ok(GeneratorOutput::Regenerated(vec![GeneratedFile {
-        rel_path: "docs/generated/refusals.md".to_owned(),
-        kind: OutputKind::WholeFile,
-        marker: ExpectedMarker::LinePrefix("<!-- @generated"),
-        bytes: md.into_bytes(),
-    }]))
+    let mut facts = BTreeMap::new();
+    facts.insert(
+        "codes".into(),
+        FactValue::str_array(reg.rows().iter().map(|row| &row.code)),
+    );
+    for (key, value) in [
+        ("registry_rows", report.registry_rows),
+        ("printed_rows_target", report.printed_target),
+        ("assigned", report.assigned_count),
+        ("merged", report.merged_count),
+        ("interim_unsettled", report.interims.len()),
+    ] {
+        facts.insert(key.into(), FactValue::int_usize(value));
+    }
+    facts.insert(
+        "pending_chapters".into(),
+        FactValue::Object(
+            report
+                .pending_chapters
+                .into_iter()
+                .map(|(owner, due, missing)| {
+                    (
+                        owner,
+                        FactValue::Object(BTreeMap::from([
+                            ("due".into(), FactValue::str(due.as_str())),
+                            ("missing".into(), FactValue::int_usize(missing)),
+                        ])),
+                    )
+                })
+                .collect(),
+        ),
+    );
+    facts.insert(
+        "pending_assigned".into(),
+        FactValue::Object(
+            report
+                .pending_assigned
+                .into_iter()
+                .map(|(code, owner)| (code, FactValue::str(owner)))
+                .collect(),
+        ),
+    );
+    facts.insert(
+        "interims".into(),
+        FactValue::Array(
+            report
+                .interims
+                .into_iter()
+                .map(|entry| {
+                    let interim = match entry.codes.as_slice() {
+                        [] => FactValue::str("none"),
+                        [code] => FactValue::str(code),
+                        codes => FactValue::str_array(codes),
+                    };
+                    FactValue::Object(BTreeMap::from([
+                        ("request".into(), FactValue::str(entry.slug)),
+                        ("interim".into(), interim),
+                        ("detail".into(), FactValue::str(entry.detail)),
+                        ("pointer".into(), FactValue::str(entry.pointer)),
+                        ("owner".into(), FactValue::str(entry.owner)),
+                        ("status".into(), FactValue::str(entry.status.as_str())),
+                    ]))
+                })
+                .collect(),
+        ),
+    );
+    Ok(GeneratorOutput::RegeneratedWithFacts(
+        vec![GeneratedFile {
+            rel_path: "docs/generated/refusals.md".to_owned(),
+            kind: OutputKind::WholeFile,
+            marker: ExpectedMarker::LinePrefix("<!-- @generated"),
+            bytes: md.into_bytes(),
+        }],
+        facts,
+    ))
 }

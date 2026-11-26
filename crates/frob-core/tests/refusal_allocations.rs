@@ -8,8 +8,8 @@ use std::collections::{BTreeMap, BTreeSet};
 use frob_core::registry::refusal_allocations::{
     AllocationError, AllocationInput, AllocationLedger, AllocationRequest, AllocationStatus,
     EMBEDDED_REFUSAL_ALLOCATIONS_TOML, ExistingCode, HoldEntry, InterimSpec, NeighbourPair,
-    PLAN_RESERVED_BLOCKS, PRINTED_ACTIVE_CODE_COUNT, PRINTED_PLAN_CODES, allocate_round,
-    format_refusal_code, refusal_code_token_eq, render_refusals_markdown, run_cross_chapter_checks,
+    PLAN_RESERVED_BLOCKS, PRINTED_ACTIVE_CODE_COUNT, allocate_round, format_refusal_code,
+    printed_plan_codes, refusal_code_token_eq, render_refusals_markdown, run_cross_chapter_checks,
     text_contains_refusal_token, validate_ledger_and_interims,
 };
 use frob_core::registry::refusals::{
@@ -102,10 +102,19 @@ fn lcg_shuffle<T>(items: &mut [T], mut seed: u64) {
 fn alloc_order_independent() {
     let reg = RefusalRegistry::load().expect("live refusals.toml loads");
     let ledger = AllocationLedger::load().expect("live refusal_allocations.toml loads");
-    assert_eq!(PRINTED_PLAN_CODES.len(), PRINTED_ACTIVE_CODE_COUNT);
+    assert_eq!(printed_plan_codes().len(), PRINTED_ACTIVE_CODE_COUNT);
 
-    // Strip pre-recorded assignments from non-merged rows so the allocator computes them fresh.
-    let mut fresh_input = AllocationInput::from_plan_and_ledger(&reg, &ledger);
+    let input = AllocationInput::from_plan_and_ledger(&reg, &ledger);
+    let settled = allocate_round(&input).expect("existing round remains intact");
+    for request in &ledger.requests {
+        assert_eq!(settled.by_slug(&request.request), Some(request));
+    }
+
+    // A run on previously unallocated requests must also be order independent.
+    let mut fresh_input = input;
+    fresh_input
+        .existing
+        .retain(|code| printed_plan_codes().contains_key(&code.number));
     for r in &mut fresh_input.requests {
         if r.status != AllocationStatus::Merged {
             r.assigned = None;
@@ -114,27 +123,6 @@ fn alloc_order_independent() {
         }
     }
     let baseline = allocate_round(&fresh_input).expect("baseline allocation succeeds");
-
-    // Verify committed ledger matches the pure allocator output on every single row.
-    let committed: BTreeMap<&str, (&AllocationStatus, Option<&str>, Option<&str>)> = ledger
-        .requests
-        .iter()
-        .map(|r| {
-            (
-                r.request.as_str(),
-                (&r.status, r.assigned.as_deref(), r.reason.as_deref()),
-            )
-        })
-        .collect();
-    for res in &baseline.results {
-        let &(st, asg, rsn) = committed.get(res.request.as_str()).expect("slug present");
-        assert_eq!(
-            (&res.status, res.assigned.as_deref(), res.reason.as_deref()),
-            (st, asg, rsn),
-            "committed ledger diverged from pure allocator on `{}`",
-            res.request
-        );
-    }
 
     // 100 seeded shuffles produce the exact same assignment every time.
     for seed in 1u64..=100 {
@@ -149,7 +137,7 @@ fn alloc_order_independent() {
 
     // Acceptance item 1: Marrow 128 assigned, no first-round row takes 127.
     assert_eq!(
-        baseline
+        settled
             .by_slug("lifted-law-without-turn-state")
             .unwrap()
             .assigned
@@ -157,19 +145,84 @@ fn alloc_order_independent() {
         Some("FROB-REF-128")
     );
     assert!(
-        baseline
+        settled
             .results
             .iter()
             .all(|r| r.assigned.as_deref() != Some("FROB-REF-127")),
         "no first-round row may take 127 (reserved for N14-REF second round)"
     );
     assert_eq!(
-        baseline
+        settled
             .by_slug("stream-entity-hash-collision")
             .unwrap()
             .assigned
             .as_deref(),
         Some("FROB-REF-253")
+    );
+}
+
+#[test]
+fn later_round_reserves_settled_and_live_codes() {
+    let reg = RefusalRegistry::load().unwrap();
+    let mut ledger = AllocationLedger::load().unwrap();
+    let settled = ledger
+        .requests
+        .iter()
+        .find(|r| r.request == "device-receipt-incomplete")
+        .unwrap()
+        .clone();
+    // 990 is already live, independently of what requests the caller submits.
+    ledger.requests.retain(|r| r.request != "internal-fault");
+    let mut input = AllocationInput::from_plan_and_ledger(&reg, &ledger);
+    input.requests.extend([
+        req(
+            "new-before-spark",
+            "N12-REF",
+            "§12.7",
+            9,
+            None,
+            Some(901),
+            "new fault",
+        ),
+        req(
+            "new-before-tether",
+            "N12-REF",
+            "§12.7",
+            9,
+            None,
+            Some(990),
+            "another fault",
+        ),
+        req(
+            "wrong-chapter-proposal",
+            "N14-REF",
+            "§14.13",
+            1,
+            None,
+            Some(137),
+            "new design refusal",
+        ),
+    ]);
+    let out = allocate_round(&input).unwrap();
+    assert_eq!(out.by_slug(&settled.request), Some(&settled));
+    for (slug, occupied) in [
+        ("new-before-spark", 901),
+        ("new-before-tether", 990),
+        ("wrong-chapter-proposal", 137),
+    ] {
+        assert_ne!(
+            out.by_slug(slug).unwrap().assigned_number().unwrap(),
+            occupied
+        );
+    }
+    assert_eq!(
+        input
+            .existing
+            .iter()
+            .find(|code| code.number == 540)
+            .unwrap()
+            .chapter,
+        17
     );
 }
 
@@ -810,8 +863,8 @@ status = "held"
 fn neighbour_pairs_symmetric() {
     let reg = RefusalRegistry::load().expect("live reg");
     let ledger = AllocationLedger::load().expect("live ledger");
-    let report = run_cross_chapter_checks(&reg, &ledger, Milestone::M0, false)
-        .expect("live cross-chapter checks pass");
+    let report =
+        run_cross_chapter_checks(&reg, &ledger, None).expect("live cross-chapter checks pass");
     assert_eq!(report.printed_target, 294);
 
     // All 5 named pairs from N35-33 Background are present with distinct sites.
@@ -849,7 +902,30 @@ fn neighbour_pairs_symmetric() {
         requests: vec![],
     };
     assert!(matches!(
-        run_cross_chapter_checks(&asym_reg, &empty_ledger, Milestone::M0, false),
+        run_cross_chapter_checks(&asym_reg, &empty_ledger, None),
+        Err(AllocationError::NeighbourPairError { .. })
+    ));
+    let no_edges = RefusalRegistry::from_bytes(
+        synthetic_registry(
+            "conflict = []\nintegrity = []\ncapability = []",
+            &(reg_row("FROB-REF-605", 6, "§21.21", "") + &reg_row("FROB-REF-864", 3, "§35.11", "")),
+        )
+        .as_bytes(),
+    )
+    .unwrap();
+    let declared = AllocationLedger {
+        neighbour_pairs: vec![
+            ledger
+                .neighbour_pairs
+                .iter()
+                .find(|p| p.left == "FROB-REF-605")
+                .unwrap()
+                .clone(),
+        ],
+        ..empty_ledger
+    };
+    assert!(matches!(
+        run_cross_chapter_checks(&no_edges, &declared, None),
         Err(AllocationError::NeighbourPairError { .. })
     ));
 }
@@ -865,14 +941,14 @@ fn neighbour_pair_same_site_fails() {
         right_site: "same raising site".into(),
     });
     assert!(matches!(
-        run_cross_chapter_checks(&reg, &ledger, Milestone::M0, false),
+        run_cross_chapter_checks(&reg, &ledger, None),
         Err(AllocationError::NeighbourPairError { .. })
     ));
 }
 
 #[test]
 fn ledger_matches_registry() {
-    // 1. Planted assigned ledger row with no registry row fails strict Check 4.
+    // 1. The same assignment is pending before the gate and fatal at its owner's exit.
     let reg = RefusalRegistry::from_bytes(
         synthetic_registry(
             "conflict = []\nintegrity = []\ncapability = []",
@@ -892,9 +968,14 @@ fn ledger_matches_registry() {
             ..req("mech", "N32-REF", "§32.4", 7, Some("72x"), Some(726), "m")
         }],
     };
+    let report = run_cross_chapter_checks(&reg, &missing_row_ledger, None).unwrap();
+    assert_eq!(
+        report.pending_assigned,
+        [("FROB-REF-726".into(), "N32-REF".into())]
+    );
     assert!(matches!(
-        run_cross_chapter_checks(&reg, &missing_row_ledger, Milestone::M0, true),
-        Err(AllocationError::LedgerRegistryMismatch { .. })
+        run_cross_chapter_checks(&reg, &missing_row_ledger, Some(Milestone::M0)),
+        Err(AllocationError::LedgerRegistryMismatch { code, .. }) if code == "FROB-REF-726"
     ));
 
     // 2. Planted registry row beyond the printed 294 with no ledger row fails Check 4.
@@ -908,7 +989,7 @@ fn ledger_matches_registry() {
     )
     .expect("extra reg");
     assert!(matches!(
-        run_cross_chapter_checks(&extra_reg, &missing_row_ledger, Milestone::M0, false),
+        run_cross_chapter_checks(&extra_reg, &missing_row_ledger, None),
         Err(AllocationError::LedgerRegistryMismatch { .. })
     ));
 
@@ -923,8 +1004,50 @@ fn ledger_matches_registry() {
     .expect("retired reg");
     let live_ledger = AllocationLedger::load().expect("live ledger");
     assert!(matches!(
-        run_cross_chapter_checks(&retired_reg, &live_ledger, Milestone::M0, false),
+        run_cross_chapter_checks(&retired_reg, &live_ledger, None),
         Err(AllocationError::RetiredCodeReused { .. })
+    ));
+}
+
+#[test]
+fn milestone_gate_checks_printed_membership() {
+    let header = "conflict = []\nintegrity = []\ncapability = []";
+    let empty = RefusalRegistry::from_bytes(synthetic_registry(header, "").as_bytes()).unwrap();
+    let ledger = AllocationLedger::from_bytes(b"schema = \"frob.refalloc/1\"\n").unwrap();
+    let rows = |omit| {
+        let rows: String = printed_plan_codes()
+            .iter()
+            .filter(|&(&number, &chapter)| {
+                number != omit && matches!(chapter, 12 | 13 | 16 | 21 | 32..=35 | 37)
+            })
+            .map(|(&number, &chapter)| {
+                reg_row(
+                    &format_refusal_code(number),
+                    empty.exit_rule().expected_exit(number).unwrap().0,
+                    &format!("§{chapter}"),
+                    "",
+                )
+            })
+            .collect();
+        RefusalRegistry::from_bytes(synthetic_registry(header, &rows).as_bytes()).unwrap()
+    };
+
+    let clean = run_cross_chapter_checks(&rows(0), &ledger, Some(Milestone::M0)).unwrap();
+    assert!(
+        clean
+            .pending_chapters
+            .contains(&("N17-REF".into(), Milestone::M2, 7))
+    );
+    assert!(
+        !clean
+            .pending_chapters
+            .iter()
+            .any(|(bead, _, _)| bead == "N12-REF")
+    );
+    assert!(matches!(
+        run_cross_chapter_checks(&rows(168), &ledger, Some(Milestone::M0)),
+        Err(AllocationError::MilestoneCountShortfall { bead, detail })
+            if bead == "N12-REF" && detail.contains("FROB-REF-168")
     ));
 }
 

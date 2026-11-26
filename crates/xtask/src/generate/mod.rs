@@ -152,7 +152,11 @@ pub const RULE_STATUS_INVALID: &str = "gen.status-invalid";
 pub const BUILTIN_GENERATORS: &[GeneratorRow] = &[
     GeneratorRow {
         name: "format-and-verb-schemas",
-        input_globs: &["registries/formats.toml", "registries/verbs.toml"],
+        input_globs: &[
+            "registries/formats.toml",
+            "registries/verbs.toml",
+            "schemas/verbs/*.json",
+        ],
         output_globs: &["schemas/frob.*.json"],
         mode: GeneratorMode::Regenerate,
         run: run_format_and_verb_schemas,
@@ -402,11 +406,70 @@ fn run_format_and_verb_schemas(
             }
             // Authored verb payload schemas under `schemas/verbs/<dot-id>.json`
             // (owned by `N32a-02` / `VERBS-*`) take precedence over stub generation,
-            // provided the file is valid JSON declaring the matching `$id`.
+            // provided the path resolves inside `repo_root` to a regular file that
+            // passes JSON admission and declares the matching `$id`.
             let authored_verb_rel = format!("schemas/verbs/{}.json", schema_id.replace('/', "."));
             let authored_verb_abs = repo_root.join(&authored_verb_rel);
-            if authored_verb_abs.is_file() {
-                let authored_bytes = fs::read(&authored_verb_abs).map_err(|e| GeneratorError {
+            let authored_present = match fs::symlink_metadata(&authored_verb_abs) {
+                Ok(_) => true,
+                Err(e) if e.kind() == std::io::ErrorKind::NotFound => false,
+                Err(e) => {
+                    return Err(GeneratorError {
+                        rule: RULE_DIFFERS,
+                        subject: schema_id.clone(),
+                        path: authored_verb_rel,
+                        message: format!("failed to inspect authored verb schema: {e}"),
+                        repair:
+                            "replace the authored verb schema with a regular in-tree file under schemas/verbs/"
+                                .to_owned(),
+                    });
+                }
+            };
+            if authored_present {
+                let canon_root = fs::canonicalize(repo_root).map_err(|e| GeneratorError {
+                    rule: RULE_DIFFERS,
+                    subject: schema_id.clone(),
+                    path: authored_verb_rel.clone(),
+                    message: format!("failed to canonicalize repository root: {e}"),
+                    repair: "ensure repository root is accessible".to_owned(),
+                })?;
+                let canon_authored =
+                    fs::canonicalize(&authored_verb_abs).map_err(|e| GeneratorError {
+                        rule: RULE_DIFFERS,
+                        subject: schema_id.clone(),
+                        path: authored_verb_rel.clone(),
+                        message: format!(
+                            "authored verb schema resolves outside repository or is dangling: {e}"
+                        ),
+                        repair:
+                            "replace the symlink with a regular in-tree file under schemas/verbs/"
+                                .to_owned(),
+                    })?;
+                if !canon_authored.starts_with(&canon_root) {
+                    return Err(GeneratorError {
+                        rule: RULE_DIFFERS,
+                        subject: schema_id.clone(),
+                        path: authored_verb_rel,
+                        message: format!(
+                            "authored verb schema resolves outside repository root (`{}`)",
+                            canon_authored.display()
+                        ),
+                        repair:
+                            "replace the out-of-tree symlink with a regular in-tree file under schemas/verbs/"
+                                .to_owned(),
+                    });
+                }
+                if !canon_authored.is_file() {
+                    return Err(GeneratorError {
+                        rule: RULE_DIFFERS,
+                        subject: schema_id.clone(),
+                        path: authored_verb_rel,
+                        message: "authored verb schema is not a regular file".to_owned(),
+                        repair: "replace the path with a regular JSON file under schemas/verbs/"
+                            .to_owned(),
+                    });
+                }
+                let authored_bytes = fs::read(&canon_authored).map_err(|e| GeneratorError {
                     rule: RULE_DIFFERS,
                     subject: schema_id.clone(),
                     path: authored_verb_rel.clone(),

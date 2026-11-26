@@ -658,14 +658,23 @@ fn json_report_is_deterministic_excluding_elapsed_ms() {
 
 #[test]
 fn authored_verb_schema_ownership_boundary() {
+    const MINIMAL_FORMATS_TOML: &str = "\
+schema = \"frob.formats/1\"
+
+[[format]]
+id = \"FMT-FBOT\"
+extension = \".fbot\"
+schema = \"frob.design/1\"
+owner = \"frob-design\"
+producers = [\"frob-design\"]
+consumers = [\"frob-design\"]
+encoding = \"canonical\"
+";
+
     let dir = fresh_dir("verb-schema-boundary");
     fs::create_dir_all(dir.join("registries")).expect("mkdir registries");
     fs::create_dir_all(dir.join("schemas/verbs")).expect("mkdir schemas/verbs");
-    fs::write(
-        dir.join("registries/formats.toml"),
-        "schema = \"frob.formats/1\"\n",
-    )
-    .expect("write formats");
+    fs::write(dir.join("registries/formats.toml"), MINIMAL_FORMATS_TOML).expect("write formats");
     fs::write(
         dir.join("registries/verbs.toml"),
         "schema = \"frob.verbs/1\"\n\n\
@@ -683,11 +692,17 @@ fn authored_verb_schema_ownership_boundary() {
         .iter()
         .find(|r| r.name == "format-and-verb-schemas")
         .expect("format-and-verb-schemas row");
+    assert!(
+        row.input_globs.contains(&"schemas/verbs/*.json"),
+        "format-and-verb-schemas must declare schemas/verbs/*.json in input_globs: {:?}",
+        row.input_globs
+    );
     let rows = std::slice::from_ref(row);
 
-    // 1. `--write` generates ONLY `schemas/frob.alpha.out.1.json`, never a duplicate root stub for `alpha.in`.
+    // 1. `--write` generates `frob.design.1.json` and `frob.alpha.out.1.json`, never a duplicate root stub for `alpha.in`.
     let w = run_check(&dir, rows, true).expect("write");
     assert!(w.findings.is_empty(), "{:?}", w.findings);
+    assert!(dir.join("schemas/frob.design.1.json").is_file());
     assert!(dir.join("schemas/frob.alpha.out.1.json").is_file());
     assert!(!dir.join("schemas/frob.alpha.in.1.json").exists());
     assert!(
@@ -714,11 +729,7 @@ fn authored_verb_schema_ownership_boundary() {
     let dir2 = fresh_dir("verb-schema-bad-id");
     fs::create_dir_all(dir2.join("registries")).expect("mkdir registries");
     fs::create_dir_all(dir2.join("schemas/verbs")).expect("mkdir schemas/verbs");
-    fs::write(
-        dir2.join("registries/formats.toml"),
-        "schema = \"frob.formats/1\"\n",
-    )
-    .expect("write formats");
+    fs::write(dir2.join("registries/formats.toml"), MINIMAL_FORMATS_TOML).expect("write formats");
     fs::write(
         dir2.join("registries/verbs.toml"),
         "schema = \"frob.verbs/1\"\n\n[[verb]]\nname = \"alpha\"\ninput_schema = \"frob.alpha.in/1\"\n",
@@ -739,4 +750,66 @@ fn authored_verb_schema_ownership_boundary() {
         "mismatched $id must fail instead of skipping: {:?}",
         bad_id.findings
     );
+
+    // 4. Malformed JSON inside `schemas/verbs/<dot-id>.json` fails JSON admission instead of skipping.
+    fs::write(
+        dir2.join("schemas/verbs/frob.alpha.in.1.json"),
+        "{not-valid-json\n",
+    )
+    .expect("write malformed schema");
+    let bad_json = run_check(&dir2, rows, false).expect("check malformed json");
+    assert!(
+        bad_json.findings.iter().any(|f| {
+            f.rule == RULE_DIFFERS
+                && f.path == "schemas/verbs/frob.alpha.in.1.json"
+                && f.message.contains("JSON admission")
+        }),
+        "malformed authored schema must fail JSON admission: {:?}",
+        bad_json.findings
+    );
+
+    // 5. Out-of-root symlink to a valid matching-`$id` file must refuse, and no root stub may replace it.
+    #[cfg(unix)]
+    {
+        let outside = fresh_dir("verb-schema-outside");
+        let outside_file = outside.join("frob.alpha.in.1.json");
+        fs::write(
+            &outside_file,
+            "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$id\":\"frob.alpha.in/1\",\"type\":\"object\"}\n",
+        )
+        .expect("write outside matching-$id schema");
+
+        let dir3 = fresh_dir("verb-schema-symlink");
+        fs::create_dir_all(dir3.join("registries")).expect("mkdir registries");
+        fs::create_dir_all(dir3.join("schemas/verbs")).expect("mkdir schemas/verbs");
+        fs::write(dir3.join("registries/formats.toml"), MINIMAL_FORMATS_TOML)
+            .expect("write formats");
+        fs::write(
+            dir3.join("registries/verbs.toml"),
+            "schema = \"frob.verbs/1\"\n\n[[verb]]\nname = \"alpha\"\ninput_schema = \"frob.alpha.in/1\"\n",
+        )
+        .expect("write verbs");
+        std::os::unix::fs::symlink(
+            &outside_file,
+            dir3.join("schemas/verbs/frob.alpha.in.1.json"),
+        )
+        .expect("create out-of-root symlink");
+
+        for write_mode in [false, true] {
+            let sym_out = run_check(&dir3, rows, write_mode).expect("check out-of-root symlink");
+            assert!(
+                sym_out.findings.iter().any(|f| {
+                    f.rule == RULE_DIFFERS
+                        && f.path == "schemas/verbs/frob.alpha.in.1.json"
+                        && f.message.contains("outside repository")
+                }),
+                "out-of-root symlink (write_mode={write_mode}) must refuse: {:?}",
+                sym_out.findings
+            );
+            assert!(
+                !dir3.join("schemas/frob.alpha.in.1.json").exists(),
+                "out-of-root symlink must not be replaced by a root stub (write_mode={write_mode})"
+            );
+        }
+    }
 }

@@ -133,6 +133,10 @@ impl DialectUnit {
     /// Source includes naming the inlined prelude are removed before compilation.
     #[must_use]
     pub fn expand(&self) -> String {
+        self.expand_with_boundaries().0
+    }
+
+    fn expand_with_boundaries(&self) -> (String, usize, usize) {
         let mut out = String::new();
         if let Some(sc) = &self.shape_constants {
             out.push_str(&sc.contents);
@@ -140,6 +144,7 @@ impl DialectUnit {
                 out.push('\n');
             }
         }
+        let prelude_start = out.len();
         if let Some(pre) = &self.prelude {
             out.push_str(&pre.contents);
             if !out.ends_with('\n') {
@@ -148,8 +153,9 @@ impl DialectUnit {
         }
         out.push_str(PRELUDE_BOUNDARY_MARKER);
         out.push('\n');
+        let source_start = out.len();
         self.append_sources(&mut out);
-        out
+        (out, prelude_start, source_start)
     }
 
     fn append_sources(&self, out: &mut String) {
@@ -294,7 +300,7 @@ pub fn collect_findings(unit: &DialectUnit, options: &CompileOptions) -> Vec<Lin
     check_compile_options(options, &mut findings);
 
     if let Some(sc) = &unit.shape_constants {
-        lint_shape_constants(sc, &mut findings);
+        scan_shape_constant_tokens(&sc.name, &tokenize(&sc.contents, true), &mut findings);
     }
     if let Some(pre) = &unit.prelude {
         lint_prelude(pre, &mut findings);
@@ -308,14 +314,24 @@ pub fn collect_findings(unit: &DialectUnit, options: &CompileOptions) -> Vec<Lin
         .as_ref()
         .and_then(|pre| (pre.name == expected_prelude).then_some(expected_prelude));
     for src in &unit.sources {
-        lint_kernel_source(src, inlined_prelude, &mut findings);
+        scan_kernel_tokens(
+            &src.name,
+            &tokenize(&src.contents, true),
+            inlined_prelude,
+            &mut findings,
+        );
     }
-    // Joining independently accepted files can form new tokens across their boundary.
-    // The composed body has already had its admitted prelude includes removed.
-    if findings.is_empty() && unit.sources.len() > 1 {
-        let mut composed = SourceFile::new("<assembled source>", "");
-        unit.append_sources(&mut composed.contents);
-        lint_kernel_source(&composed, None, &mut findings);
+    // Every otherwise admissible unit must pass with the compiler's lexical
+    // state, including across the prelude boundary and after include removal.
+    if findings.is_empty() {
+        let (expanded, prelude_start, source_start) = unit.expand_with_boundaries();
+        let tokens = tokenize(&expanded, true);
+        let prelude = tokens.partition_point(|tok| tok.offset < prelude_start);
+        let sources = tokens.partition_point(|tok| tok.offset < source_start);
+        let name = "<assembled source>";
+        scan_shape_constant_tokens(name, &tokens[..prelude], &mut findings);
+        scan_prelude_tokens(name, &tokens[prelude..sources], None, &mut findings);
+        scan_kernel_tokens(name, &tokens[sources..], None, &mut findings);
     }
 
     findings.sort();
@@ -680,6 +696,7 @@ struct Token {
     kind: TokenKind,
     line: usize,
     column: usize,
+    offset: usize,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -813,6 +830,7 @@ fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
                 kind: TokenKind::TokenPaste,
                 line: cur.line,
                 column: cur.col,
+                offset: cur.offset,
             });
             i += paste_width;
             at_line_start = false;
@@ -841,6 +859,7 @@ fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
                 },
                 line: start_line,
                 column: start_col,
+                offset: cur.offset,
             });
             at_line_start = true;
             continue;
@@ -884,6 +903,7 @@ fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
                 kind: TokenKind::StringLit(decoded),
                 line: start_line,
                 column: start_col,
+                offset: cur.offset,
             });
             continue;
         }
@@ -911,6 +931,7 @@ fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
                 kind: TokenKind::CharLit,
                 line: start_line,
                 column: start_col,
+                offset: cur.offset,
             });
             continue;
         }
@@ -934,6 +955,7 @@ fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
                 kind: TokenKind::Ident(ident),
                 line: start_line,
                 column: start_col,
+                offset: cur.offset,
             });
             continue;
         }
@@ -967,6 +989,7 @@ fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
                 kind: TokenKind::Number(num),
                 line: start_line,
                 column: start_col,
+                offset: cur.offset,
             });
             continue;
         }
@@ -977,6 +1000,7 @@ fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
                 kind: TokenKind::DoubleColon,
                 line: cur.line,
                 column: cur.col,
+                offset: cur.offset,
             });
             i += 2;
             continue;
@@ -986,6 +1010,7 @@ fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
                 kind: TokenKind::DoubleLBracket,
                 line: cur.line,
                 column: cur.col,
+                offset: cur.offset,
             });
             i += 2;
             continue;
@@ -995,6 +1020,7 @@ fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
             kind: TokenKind::Punct(ch),
             line: cur.line,
             column: cur.col,
+            offset: cur.offset,
         });
         i += 1;
     }
@@ -1192,14 +1218,14 @@ fn split_directive_head(trimmed: &str) -> (&str, &str) {
 // ============================================================================
 
 /// Shape-class constant block: only simple scalar `#define NAME <int-literal>` is allowed.
-fn lint_shape_constants(file: &SourceFile, findings: &mut Vec<LintFinding>) {
-    for tok in tokenize(&file.contents, true) {
+fn scan_shape_constant_tokens(file: &str, tokens: &[Token], findings: &mut Vec<LintFinding>) {
+    for tok in tokens {
         match &tok.kind {
             TokenKind::Directive { name, body, .. } if name == "define" => {
                 if !is_valid_shape_constant_define(body) {
                     findings.push(LintFinding::new(
                         1,
-                        &file.name,
+                        file,
                         tok.line,
                         tok.column,
                         format!("#define {}", body.split_whitespace().next().unwrap_or("")),
@@ -1210,7 +1236,7 @@ fn lint_shape_constants(file: &SourceFile, findings: &mut Vec<LintFinding>) {
             TokenKind::Directive { name, .. } => {
                 findings.push(LintFinding::new(
                     1,
-                    &file.name,
+                    file,
                     tok.line,
                     tok.column,
                     format!("#{name}"),
@@ -1220,7 +1246,7 @@ fn lint_shape_constants(file: &SourceFile, findings: &mut Vec<LintFinding>) {
             other => {
                 findings.push(LintFinding::new(
                     1,
-                    &file.name,
+                    file,
                     tok.line,
                     tok.column,
                     token_label(other),
@@ -1477,12 +1503,12 @@ fn skip_define_head(body: &str) -> &str {
 }
 
 /// Kernel source file (generated body or hand-written skeleton): enforce rules 1, 2, 3, 4, 6.
-fn lint_kernel_source(
-    file: &SourceFile,
+fn scan_kernel_tokens(
+    file: &str,
+    tokens: &[Token],
     inlined_prelude: Option<&str>,
     findings: &mut Vec<LintFinding>,
 ) {
-    let tokens = tokenize(&file.contents, true);
     let len = tokens.len();
     let mut i = 0usize;
 
@@ -1491,15 +1517,15 @@ fn lint_kernel_source(
         match &tok.kind {
             TokenKind::Directive { name, body, .. } => {
                 if name != "include" || !is_prelude_include(body, inlined_prelude) {
-                    check_source_directive(&file.name, tok.line, tok.column, name, body, findings);
+                    check_source_directive(file, tok.line, tok.column, name, body, findings);
                 }
                 i += 1;
             }
             TokenKind::DoubleLBracket => {
-                let (attr, next_i) = collect_attribute_text_and_end(&tokens, i);
+                let (attr, next_i) = collect_attribute_text_and_end(tokens, i);
                 findings.push(LintFinding::new(
                     1,
-                    &file.name,
+                    file,
                     tok.line,
                     tok.column,
                     attr,
@@ -1519,9 +1545,7 @@ fn lint_kernel_source(
                     } else {
                         None
                     };
-                    if handle_qualified_ident(
-                        &file.name, tok.line, tok.column, id, member, findings,
-                    ) {
+                    if handle_qualified_ident(file, tok.line, tok.column, id, member, findings) {
                         // Preserve nested namespace heads like `metal::fast::divide` so
                         // `fast::` / `precise::` is also inspected on the next iteration.
                         let nested_ns = matches!(member, Some("fast" | "precise"))
@@ -1534,10 +1558,10 @@ fn lint_kernel_source(
 
                 // `_Pragma(...)` operator outside prelude (also rule 4 if contraction/fast-math)
                 if id == "_Pragma" {
-                    if let Some((pragma_body, next_i)) = extract_underscore_pragma_arg(&tokens, i) {
+                    if let Some((pragma_body, next_i)) = extract_underscore_pragma_arg(tokens, i) {
                         findings.push(LintFinding::new(
                             1,
-                            &file.name,
+                            file,
                             tok.line,
                             tok.column,
                             format!("_Pragma(\"{pragma_body}\")"),
@@ -1546,7 +1570,7 @@ fn lint_kernel_source(
                         if is_forbidden_fp_pragma(&pragma_body) {
                             findings.push(LintFinding::new(
                                 4,
-                                &file.name,
+                                file,
                                 tok.line,
                                 tok.column,
                                 format!("_Pragma(\"{pragma_body}\")"),
@@ -1557,7 +1581,7 @@ fn lint_kernel_source(
                     } else {
                         findings.push(LintFinding::new(
                             1,
-                            &file.name,
+                            file,
                             tok.line,
                             tok.column,
                             "_Pragma",
@@ -1568,7 +1592,7 @@ fn lint_kernel_source(
                     continue;
                 }
 
-                check_source_ident(&file.name, tok.line, tok.column, id, findings);
+                check_source_ident(file, tok.line, tok.column, id, findings);
                 i += 1;
             }
             _ => {

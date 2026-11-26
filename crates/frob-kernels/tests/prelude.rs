@@ -254,6 +254,47 @@ fn composed_source_lint_checks_file_boundaries() {
 }
 
 #[test]
+fn composed_source_lint_checks_prelude_boundary() {
+    for target in [BackendTarget::Cuda, BackendTarget::Metal] {
+        let options = target.production_options();
+        let unit = DialectUnit::single_source(
+            "probe.h",
+            "/* raw text\n)tag\";\n#include \"nonexistent.h\"\n",
+        )
+        .with_prelude(SourceFile::new(
+            target.prelude_name(),
+            "const char* text = R\"tag(\n",
+        ));
+        let findings = collect_findings(&unit, &options);
+        assert_eq!(findings.len(), 1, "{target:?}: {findings:?}");
+        assert_eq!(findings[0].rule, 1);
+        assert_eq!(findings[0].token, "#include \"nonexistent.h\"");
+        assert_eq!(
+            lint(&unit, &options).unwrap_err().code,
+            RefusalCode::FrobRef251
+        );
+
+        let shape = "#define CAPACITY 4\n";
+        let body = "f32 probe(f32 x) { return x; }\n";
+        let source = format!("#include \"{}\"\n{body}", target.prelude_name());
+        let (expanded, digest, _) = assemble_and_lint(
+            target,
+            Some(SourceFile::new("shape.h", shape)),
+            vec![SourceFile::new("probe.h", source)],
+        )
+        .unwrap();
+        assert_eq!(
+            expanded,
+            format!(
+                "{shape}{}{PRELUDE_BOUNDARY_MARKER}\n\n{body}",
+                target.prelude_source()
+            )
+        );
+        assert_eq!(digest, hash_blob(format!("\n{body}").as_bytes()));
+    }
+}
+
+#[test]
 fn cuda_unsigned_atomics_reject_float_pointer() {
     // Host C++ syntax check with CUDA's relevant overloads. This launches no kernel.
     let compile = |body: &str| {

@@ -321,7 +321,7 @@ impl MiniatureEnv {
         );
         let dummy_sib_rev = git_init_repo(&dummy_sib);
 
-        // Root core workspace manifest (with core unsafe_code = "deny" lint).
+        // Root core workspace manifest with the inherited Rust lints.
         write_file(
             &repo.join("Cargo.toml"),
             "[workspace]\n\
@@ -329,7 +329,8 @@ impl MiniatureEnv {
              members = [\"crates/frob-core\", \"crates/frob-lie\", \"crates/frob-algebra\"]\n\
              exclude = [\"spark/frob-spark-cuda\"]\n\n\
              [workspace.lints.rust]\n\
-             unsafe_code = \"deny\"\n",
+             unsafe_code = \"deny\"\n\
+             deprecated = \"deny\"\n",
         );
         write_file(
             &repo.join("rust-toolchain.toml"),

@@ -1,0 +1,542 @@
+# FrankenRobotics refusal code allocation ledger (schema frob.refalloc/1, bead N35-33).
+#
+# Append-only ledger governing first-round refusal allocations across chapters,
+# retired codes (never reused), documented neighbour pairs, and optional family
+# holds (N35x-01). Every assignment is the deterministic output of
+# `frob_core::registry::refusal_allocations::allocate_round`.
+#
+# Under N35-33 Rule 8 and ADR-NUM-refusal-8xx, no 8xx number is assigned in the
+# first round: all 8xx requests remain `requested` with reason `owner-decision`
+# (836..839 stay free for N35x-02, which then continues at FROB-REF-8100).
+
+schema = "frob.refalloc/1"
+
+[[retired]]
+code = "FROB-REF-730"
+replaced_by = "FROB-REF-840"
+reason = "Plan-time safety/Arena scope refusal moved to FROB-REF-840 (exit 5 via exit_rule.capability)"
+
+[[retired]]
+code = "FROB-REF-882"
+replaced_by = "FROB-REF-582"
+reason = "Plan-time retirement replaced by FROB-REF-582"
+
+# Five cross-chapter neighbour pairs named in N35-33 plus live M0 pairs (check 5).
+[[neighbour_pair]]
+left = "FROB-REF-244"
+right = "FROB-REF-248"
+left_site = "Admission-time interface-card stiffness estimate prior to simulation launch"
+right_site = "Run-time solve ill-conditioning measurement (kappa_hat * u > limit)"
+
+[[neighbour_pair]]
+left = "FROB-REF-561"
+right = "FROB-REF-825"
+left_site = "Numerics licence check (licence::check) at study or comparison admission"
+right_site = "Stored-result evidence boundary on study.compare and eval.promote"
+
+[[neighbour_pair]]
+left = "FROB-REF-562"
+right = "FROB-REF-584"
+left_site = "Attribution or counterfactual fork admission when source determinism is below D2"
+right_site = "Attribution-time fork-set execution failure during counterfactual rollout"
+
+[[neighbour_pair]]
+left = "FROB-REF-605"
+right = "FROB-REF-864"
+left_site = "Run-time device execution boundary refusing to launch without a current CPU-versus-device check"
+right_site = "Evidence citation boundary refusing to cite a device result without a current CPU-versus-device check"
+
+[[neighbour_pair]]
+left = "FROB-REF-861"
+right = "FROB-REF-867"
+left_site = "Performance figure admissibility check at report publication"
+right_site = "Telemetry summary and benchmark envelope admission boundary"
+
+[[neighbour_pair]]
+left = "FROB-REF-704"
+right = "FROB-REF-761"
+left_site = "Tether surface resource or wall-time budget admission check"
+right_site = "Numerics and study step/wall budget enforcement at runtime"
+
+[[neighbour_pair]]
+left = "FROB-REF-724"
+right = "FROB-REF-726"
+left_site = "Capability absent because optional subsystem or specialized kernel is not linked in this build"
+right_site = "Mechanism present in plan but not yet admitted at the current build milestone"
+
+[[neighbour_pair]]
+left = "FROB-REF-808"
+right = "FROB-REF-990"
+left_site = "Input validation rejecting an integer outside +/-(2^53 - 1) on an int53 input field"
+right_site = "Internal serializer fault when an emitted value overflows the int53 wire bound"
+
+# ============================================================================
+# First-round requests (ordered by defined_in)
+# ============================================================================
+
+[[request]]
+request = "lifted-law-without-turn-state"
+requested_by = "N13-REF"
+defined_in = "§13.11"
+order_hint = 1
+condition = "A lifted law is evaluated on a joint whose state omits the turn counter"
+family = 1
+proposed = 128
+interim = "none"
+assigned = "FROB-REF-128"
+status = "assigned"
+
+[[request]]
+request = "adjoint-metric-not-smooth"
+requested_by = "N16-REF"
+defined_in = "§16.12"
+order_hint = 1
+condition = "Adjoint optimization requested on a non-smooth objective metric"
+family = 5
+interim = "none"
+merged_into = ["FROB-REF-540"]
+status = "merged"
+
+[[request]]
+request = "adjoint-store-over-budget"
+requested_by = "N16-REF"
+defined_in = "§16.12"
+order_hint = 2
+condition = "Adjoint step-buffer store of K control intervals exceeds device memory budget at admission"
+family = 6
+interim = "none"
+merged_into = ["FROB-REF-602"]
+status = "merged"
+
+[[request]]
+request = "decoupled-fleet-over-capacity"
+requested_by = "N16-REF"
+defined_in = "§16.12"
+order_hint = 3
+condition = "Decoupled fleet trajectory rollout exceeds workspace or worker capacity"
+family = 7
+subfamily = "72x"
+interim = "none"
+merged_into = ["FROB-REF-721", "FROB-REF-722"]
+status = "merged"
+
+[[request]]
+request = "loop-elimination-inadmissible"
+requested_by = "N16-REF"
+defined_in = "§16.12"
+order_hint = 4
+condition = "Kinematic loop elimination violates admissibility constraints for the articulated mechanism"
+family = 1
+interim = "none"
+assigned = "FROB-REF-170"
+status = "assigned"
+
+[[request]]
+request = "refinement-study-changes-clock"
+requested_by = "N16-REF"
+defined_in = "§16.12"
+order_hint = 5
+condition = "A refinement study alters the requirement or control clock across compared arms"
+family = 5
+interim = "none"
+assigned = "FROB-REF-501"
+status = "assigned"
+
+[[request]]
+request = "solve-path-mixed-study"
+requested_by = "N16-REF"
+defined_in = "§16.12"
+order_hint = 6
+condition = "A study mixes incompatible solve paths across paired comparison arms"
+family = 5
+interim = "FROB-REF-561"
+assigned = "FROB-REF-573"
+status = "assigned"
+
+[[request]]
+request = "ancestor-path-after-kill"
+requested_by = "N16-REF"
+defined_in = "§16.12"
+order_hint = 7
+condition = "Ancestor-path replay or continuation requested after KILL-ANCESTOR fallback"
+family = 8
+interim = "FROB-REF-802"
+status = "requested"
+reason = "owner-decision"
+
+# Note: N16-REF planned interim FROB-REF-820 once N35-REF registers 820; stays `none` at M0 so every interim resolves in registries/refusals.toml.
+[[request]]
+request = "solve-queues-unqualified"
+requested_by = "N16-REF"
+defined_in = "§16.12"
+order_hint = 8
+condition = "Solve-queue result cited as qualified without a qualifying receipt"
+family = 8
+interim = "none"
+status = "requested"
+reason = "owner-decision"
+
+[[request]]
+request = "device-count-wrap"
+requested_by = "N21-REF"
+defined_in = "§21.21"
+order_hint = 1
+condition = "A 32-bit device counter or world count could wrap within a batched chunk"
+family = 6
+proposed = 619
+interim = "none"
+assigned = "FROB-REF-619"
+status = "assigned"
+
+[[request]]
+request = "device-receipt-incomplete"
+requested_by = "N21-REF"
+defined_in = "§21.21"
+order_hint = 2
+condition = "A device launch result fails its own twelve-field receipt schema"
+family = 9
+interim = "none"
+assigned = "FROB-REF-901"
+status = "assigned"
+
+[[request]]
+request = "sampler-unqualified"
+requested_by = "N23-REF"
+defined_in = "§23.10"
+order_hint = 1
+condition = "Learner sampler invoked without required qualification or determinism guarantees"
+family = 5
+proposed = 558
+interim = "none"
+assigned = "FROB-REF-558"
+status = "assigned"
+
+[[request]]
+request = "actor-read-undeclared"
+requested_by = "N23-REF"
+defined_in = "§23.10"
+order_hint = 2
+condition = "Policy actor reads an observation channel not declared in its interface contract"
+family = 5
+proposed = 559
+interim = "none"
+assigned = "FROB-REF-559"
+status = "assigned"
+
+[[request]]
+request = "distilled-student-on-teacher-states"
+requested_by = "N23-REF"
+defined_in = "§23.10"
+order_hint = 3
+condition = "Distilled student policy evaluated on privileged teacher-only state observations"
+family = 5
+interim = "none"
+assigned = "FROB-REF-574"
+status = "assigned"
+
+[[request]]
+request = "term-contract-unmet"
+requested_by = "N23-REF"
+defined_in = "§23.12"
+order_hint = 1
+condition = "Reward or termination term violates its declared boundedness or smoothness contract"
+family = 5
+interim = "none"
+assigned = "FROB-REF-575"
+status = "assigned"
+
+[[request]]
+request = "selection-below-containment"
+requested_by = "N23-REF"
+defined_in = "§23.14"
+order_hint = 1
+condition = "Candidate selection proposes a policy whose safety containment falls below threshold"
+family = 5
+proposed = 570
+interim = "none"
+assigned = "FROB-REF-570"
+status = "assigned"
+
+[[request]]
+request = "randomize-no-interval"
+requested_by = "N23bx-03"
+defined_in = "§23.15"
+order_hint = 1
+condition = "Domain randomization declared on a parameter without an explicit bounded interval"
+family = 5
+proposed = 571
+interim = "none"
+assigned = "FROB-REF-571"
+status = "assigned"
+
+[[request]]
+request = "randomize-numerical-parameter"
+requested_by = "N23-REF"
+defined_in = "§23.15"
+order_hint = 2
+condition = "Domain randomization attempts to perturb a numerical solver parameter rather than a physical one"
+family = 5
+proposed = 572
+interim = "none"
+assigned = "FROB-REF-572"
+status = "assigned"
+
+[[request]]
+request = "evaluation-under-adaptive-law"
+requested_by = "N23-REF"
+defined_in = "§23.17"
+order_hint = 1
+condition = "Evaluation campaign runs under an adaptive law that mutates policy state across episodes"
+family = 5
+interim = "none"
+assigned = "FROB-REF-576"
+status = "assigned"
+
+[[request]]
+request = "task-structure-invalid"
+requested_by = "N24-REF"
+defined_in = "§24.4"
+order_hint = 1
+condition = "Task file structure fails load (missing section, duplicate name, dangling reference, invalid verdict count, or non-unit rational thermal_start weights)"
+family = 5
+interim = "none"
+assigned = "FROB-REF-577"
+status = "assigned"
+
+[[request]]
+request = "verdict-task-mismatch"
+requested_by = "N24-REF"
+defined_in = "§24.5"
+order_hint = 1
+condition = "task.verdict asked to evaluate a run under a task other than the recorded task without --re-evaluate"
+family = 5
+interim = "none"
+assigned = "FROB-REF-578"
+status = "assigned"
+
+[[request]]
+request = "stage-concatenation"
+requested_by = "N24-REF"
+defined_in = "§24.5"
+order_hint = 2
+condition = "Mission verdict assembled by concatenating separately recorded stage episodes"
+family = 5
+interim = "none"
+assigned = "FROB-REF-579"
+status = "assigned"
+
+[[request]]
+request = "battery-manifest-invalid"
+requested_by = "N24-REF"
+defined_in = "§24.8"
+order_hint = 1
+condition = "Battery manifest fails recorded-event lineage, identity chain, or schema checks at load"
+family = 5
+interim = "none"
+assigned = "FROB-REF-588"
+status = "assigned"
+
+[[request]]
+request = "metric-moment-free-under-moment-command"
+requested_by = "N24-REF"
+defined_in = "§24.14"
+order_hint = 1
+condition = "Scorecard ranks contact geometries by moment-free capacity when the task commands a moment"
+family = 5
+interim = "none"
+assigned = "FROB-REF-589"
+status = "assigned"
+
+[[request]]
+request = "wrench-command-missing"
+requested_by = "N24-REF"
+defined_in = "§24.14"
+order_hint = 2
+condition = "Task reads a traction metric without declaring either wrench_command or moments: free"
+family = 5
+interim = "none"
+assigned = "FROB-REF-590"
+status = "assigned"
+
+[[request]]
+request = "foil-as-candidate"
+requested_by = "N24-REF"
+defined_in = "§24.14"
+order_hint = 3
+condition = "Foil body offered as a candidate to optimization, comparison, or qualification"
+family = 5
+interim = "none"
+assigned = "FROB-REF-591"
+status = "assigned"
+
+[[request]]
+request = "audit-arm-not-built"
+requested_by = "N24-REF"
+defined_in = "§24.14"
+order_hint = 4
+condition = "task.audit --arms names an arm not present in this build"
+family = 5
+interim = "none"
+assigned = "FROB-REF-592"
+status = "assigned"
+
+[[request]]
+request = "intent-signal-misused"
+requested_by = "N24-REF"
+defined_in = "§24.14"
+order_hint = 5
+condition = "Reward term or termination rule references an :intent monitoring signal"
+family = 5
+interim = "none"
+assigned = "FROB-REF-593"
+status = "assigned"
+
+[[request]]
+request = "item-bank-in-fixed-n"
+requested_by = "N24-REF"
+defined_in = "§24.14"
+order_hint = 6
+condition = "Item-bank sampling requested inside a fixed-n evaluation study"
+family = 5
+interim = "none"
+assigned = "FROB-REF-594"
+status = "assigned"
+
+[[request]]
+request = "item-bank-in-qualification"
+requested_by = "N24-REF"
+defined_in = "§24.14"
+order_hint = 7
+condition = "Item-bank sampling requested inside the blinded qualification lane"
+family = 5
+interim = "none"
+assigned = "FROB-REF-595"
+status = "assigned"
+
+[[request]]
+request = "item-bank-with-tier-correction"
+requested_by = "N24-REF"
+defined_in = "§24.14"
+order_hint = 8
+condition = "Item-bank sampling combined with the tier-correction estimator"
+family = 5
+interim = "none"
+assigned = "FROB-REF-596"
+status = "assigned"
+
+[[request]]
+request = "item-bank-needs-variance-adaptive"
+requested_by = "N24-REF"
+defined_in = "§24.14"
+order_hint = 9
+condition = "Item-bank sampling paired with a range-driven rather than variance-adaptive sequence"
+family = 5
+interim = "none"
+assigned = "FROB-REF-597"
+status = "assigned"
+
+[[request]]
+request = "task-audit-missing"
+requested_by = "N24-REF"
+defined_in = "§24.14"
+order_hint = 10
+condition = "eval.qualify invoked on a task with no audit record for its TaskId"
+family = 8
+interim = "none"
+status = "requested"
+reason = "owner-decision"
+
+[[request]]
+request = "task-audit-unresolved"
+requested_by = "N24-REF"
+defined_in = "§24.14"
+order_hint = 11
+condition = "eval.qualify invoked on a task carrying an unresolved audit finding"
+family = 8
+interim = "none"
+status = "requested"
+reason = "owner-decision"
+
+[[request]]
+request = "wins-outside-intent-unresolved"
+requested_by = "N24-REF"
+defined_in = "§24.14"
+order_hint = 12
+condition = "Promotion or qualification requested for a design whose winning episodes violate an adopted intent invariant"
+family = 8
+interim = "none"
+status = "requested"
+reason = "owner-decision"
+
+[[request]]
+request = "mechanism-not-admitted"
+requested_by = "N32-REF"
+defined_in = "§32.4"
+order_hint = 1
+condition = "Verb or feature belongs to a mechanism not yet admitted at the current build milestone"
+family = 7
+subfamily = "72x"
+proposed = 726
+interim = "none"
+assigned = "FROB-REF-726"
+status = "assigned"
+
+[[request]]
+request = "internal-fault"
+requested_by = "N32-REF"
+defined_in = "§32.4"
+order_hint = 2
+condition = "Handler panicked, returned an unmapped internal error, or serializer hit an out-of-range int53"
+family = 9
+proposed = 990
+interim = "none"
+assigned = "FROB-REF-990"
+status = "assigned"
+
+[[request]]
+request = "packet-over-byte-cap"
+requested_by = "N32-REF"
+defined_in = "§32.18"
+order_hint = 1
+condition = "RPC packet or envelope payload exceeds the transport byte cap"
+family = 8
+proposed = 836
+interim = "none"
+status = "requested"
+reason = "owner-decision"
+
+[[request]]
+request = "packet-frames-not-retained"
+requested_by = "N32-REF"
+defined_in = "§32.18"
+order_hint = 2
+condition = "Requested progress packet frames are no longer retained by the daemon ring buffer"
+family = 8
+proposed = 837
+interim = "none"
+status = "requested"
+reason = "owner-decision"
+
+[[request]]
+request = "stream-entity-hash-collision"
+requested_by = "N35-23"
+defined_in = "§35.11"
+order_hint = 1
+condition = "Two distinct stream entities hash to the same key inside one design or task"
+family = 2
+proposed = 253
+interim = "none"
+assigned = "FROB-REF-253"
+status = "assigned"
+
+[[request]]
+request = "rates-violate-unit-ordering"
+requested_by = "N36-REF"
+defined_in = "§36.13"
+order_hint = 1
+condition = "Performance report states throughput rates that violate unit ordering"
+family = 8
+interim = "FROB-REF-862"
+interim_pointer = "rates.ordering"
+status = "requested"
+reason = "owner-decision"

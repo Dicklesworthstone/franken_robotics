@@ -84,6 +84,7 @@ fn build_scratch_repo(tag: &str) -> PathBuf {
         "crates/frob-core/src/refusal/code_gen.rs",
         "crates/frob-core/src/qty_gen.rs",
         "crates/xtask/src/stack/lock.rs",
+        "docs/generated/refusals.md",
     ] {
         copy_file(&real.join(rel), &dst.join(rel));
     }
@@ -436,6 +437,11 @@ determinism = \"D0\"\nsource_digest = \"b3:{kernel_hex}\"\ntargets = [\"cpu\"]\n
             "FrobRef802 = 803,",
         ),
         ("README.md", "Summary: ", "Summary: X"),
+        (
+            "docs/generated/refusals.md",
+            "FROB-REF-8100",
+            "FROB-REF-810X",
+        ),
     ];
     for &(rel, from, to) in targets {
         let p = dir.join(rel);

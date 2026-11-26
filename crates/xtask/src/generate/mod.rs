@@ -16,7 +16,12 @@ use std::path::{Path, PathBuf};
 
 use frob_core::canon::{self, Canonical, Value as CanonValue};
 use frob_core::json::{Limits, admit};
-use frob_core::registry::refusals::{CODE_GEN_MARKER, RefusalRegistry, render_refusal_code_enum};
+use frob_core::registry::refusal_allocations::{
+    AllocationLedger, render_refusals_markdown, run_cross_chapter_checks,
+};
+use frob_core::registry::refusals::{
+    CODE_GEN_MARKER, Milestone, RefusalRegistry, render_refusal_code_enum,
+};
 use frob_core::registry::toml::{self, Value as TomlValue};
 
 use crate::stack::lock;
@@ -194,6 +199,16 @@ pub const BUILTIN_GENERATORS: &[GeneratorRow] = &[
         output_globs: &["crates/frob-core/src/qty_gen.rs"],
         mode: GeneratorMode::Regenerate,
         run: run_quantity_aliases_and_products,
+    },
+    GeneratorRow {
+        name: "refusal-printout",
+        input_globs: &[
+            "registries/refusals.toml",
+            "registries/refusal_allocations.toml",
+        ],
+        output_globs: &["docs/generated/refusals.md"],
+        mode: GeneratorMode::Regenerate,
+        run: run_refusal_printout,
     },
 ];
 
@@ -973,5 +988,72 @@ fn run_quantity_aliases_and_products(
         kind: OutputKind::WholeFile,
         marker: ExpectedMarker::LinePrefix("// @generated"),
         bytes: out.into_bytes(),
+    }]))
+}
+
+// ============================================================================
+// Row 8: refusal-printout (`N35-33`, `ADR-NUM-refusal-8xx`)
+// ============================================================================
+
+fn run_refusal_printout(
+    repo_root: &Path,
+    _inputs: &[PathBuf],
+) -> Result<GeneratorOutput, GeneratorError> {
+    let alloc_rel = "registries/refusal_allocations.toml";
+    let alloc_path = repo_root.join(alloc_rel);
+    if !alloc_path.is_file() {
+        return Ok(GeneratorOutput::Regenerated(Vec::new()));
+    }
+    let reg_rel = "registries/refusals.toml";
+    let reg_path = repo_root.join(reg_rel);
+    let mk_err = |path: &str, message: String, repair: &str| GeneratorError {
+        rule: RULE_DIFFERS,
+        subject: "refusal-printout".to_owned(),
+        path: path.to_owned(),
+        message,
+        repair: repair.to_owned(),
+    };
+    let reg_bytes = fs::read(&reg_path).map_err(|e| {
+        mk_err(
+            reg_rel,
+            format!("cannot read `{reg_rel}`: {e}"),
+            "Restore registries/refusals.toml and re-run `cargo xtask check-generated --write`.",
+        )
+    })?;
+    let alloc_bytes = fs::read(&alloc_path).map_err(|e| {
+        mk_err(
+            alloc_rel,
+            format!("cannot read `{alloc_rel}`: {e}"),
+            "Restore registries/refusal_allocations.toml and re-run `cargo xtask check-generated --write`.",
+        )
+    })?;
+    let reg = RefusalRegistry::from_bytes(&reg_bytes).map_err(|e| {
+        mk_err(
+            reg_rel,
+            format!("invalid refusal registry: {e}"),
+            "Fix registries/refusals.toml so it passes frob.refusals/1 validation.",
+        )
+    })?;
+    let ledger = AllocationLedger::from_bytes(&alloc_bytes).map_err(|e| {
+        mk_err(
+            alloc_rel,
+            format!("invalid refusal allocation ledger: {e}"),
+            "Fix registries/refusal_allocations.toml so it passes frob.refalloc/1 validation.",
+        )
+    })?;
+    run_cross_chapter_checks(&reg, &ledger, Milestone::M0, false).map_err(|e| {
+        mk_err(
+            alloc_rel,
+            format!("cross-chapter refusal check failed: {e}"),
+            "Resolve the refusal registry/ledger inconsistency reported above and re-run `cargo xtask check-generated --write`.",
+        )
+    })?;
+
+    let md = render_refusals_markdown(&reg, &ledger);
+    Ok(GeneratorOutput::Regenerated(vec![GeneratedFile {
+        rel_path: "docs/generated/refusals.md".to_owned(),
+        kind: OutputKind::WholeFile,
+        marker: ExpectedMarker::LinePrefix("<!-- @generated"),
+        bytes: md.into_bytes(),
     }]))
 }

@@ -26,6 +26,7 @@ schema = "frob.refusals/1"
 "70x" = 4
 "72x" = 5
 "73x" = 5
+"74x" = 4
 "76x" = 4
 "79x" = 5
 "8xx" = 3
@@ -595,6 +596,7 @@ exit = 9
 retry = "never"
 repairs = ["frob job find --verb <verb> --key <key>", "frob doctor"]
 raised_by = ["N32a-03", "BD-022", "BD-023", "N32a-07"]
+related = ["FROB-REF-808"]
 
 # Interim detail mappings for uncoded workspace admission and fixture-resolution faults (N34-REF; N35x-01/N35x-02).
 [[detail]]

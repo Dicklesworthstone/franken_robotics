@@ -1288,14 +1288,30 @@ fn write_path_refuses_self_certified_and_uncaught_leaving_file_unchanged() {
         enforce_recurring_flags: false,
         ..ValidationContext::default()
     };
-    let errs_self = record(&gates_path, "GATE-KIN-01", make_part("s1", "s1,s3"), &ctx_caught)
-        .expect_err("self-certified write must be refused");
-    assert!(has_harness_reason(&errs_self, HarnessReason::SelfCertified));
-    assert_eq!(
-        hash_blob(&fs::read(&gates_path).expect("read after self-cert")),
-        before_hash,
-        "gates.toml digest must be unchanged after self-certified refusal"
-    );
+    for (session, implemented_by) in [
+        ("s1", "s1,s3"),
+        ("s1", "session:s1"),
+        ("session:s1", "s1"),
+        ("s1", "session:s3, session:s1"),
+        (" s1 ", " , session:s1, "),
+    ] {
+        let errs_self = record(
+            &gates_path,
+            "GATE-KIN-01",
+            make_part(session, implemented_by),
+            &ctx_caught,
+        )
+        .unwrap_err();
+        assert!(
+            errs_self.len() == 1 && has_harness_reason(&errs_self, HarnessReason::SelfCertified),
+            "expected only self-certified for {session:?} in {implemented_by:?}, got {errs_self:?}"
+        );
+        assert_eq!(
+            hash_blob(&fs::read(&gates_path).expect("read after self-cert")),
+            before_hash,
+            "gates.toml digest must be unchanged after self-certified refusal"
+        );
+    }
 
     // 2. Uncaught control write refused; gates.toml bytes and BLAKE3 digest untouched.
     let ctx_uncaught = ValidationContext {
@@ -1329,7 +1345,7 @@ fn write_path_refuses_self_certified_and_uncaught_leaving_file_unchanged() {
     let updated = record(
         &gates_path,
         "GATE-KIN-01",
-        make_part("s2", "s1"),
+        make_part("s2", "session:s1"),
         &ctx_caught,
     )
     .expect("valid write must succeed");

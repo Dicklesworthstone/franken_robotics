@@ -1419,16 +1419,18 @@ fn verify_receipt(
 }
 
 /// True iff `session` appears in the comma-separated `implemented_by` list (`INV-GAUNT-05`).
+/// Bare IDs and IDs prefixed with `session:` identify the same session.
 #[must_use]
 pub fn is_session_implementer(session: &str, implemented_by: &str) -> bool {
-    let s = session.trim();
-    if s.is_empty() {
+    let session = session.trim();
+    if session.is_empty() {
         return false;
     }
+    let id = session.strip_prefix("session:").unwrap_or(session);
     implemented_by
         .split(',')
         .map(str::trim)
-        .any(|m| !m.is_empty() && m == s)
+        .any(|member| !member.is_empty() && member.strip_prefix("session:").unwrap_or(member) == id)
 }
 
 /// True iff `id` is one of the 9 rule-8 recurring gates (4 compiled + 5 late).

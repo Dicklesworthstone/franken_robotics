@@ -75,8 +75,13 @@ capability = []
         codes.push((828, 3));
     }
     for (num, exit) in codes {
+        let retry = if matches!(num, 900..=999 | 9000..=9999) {
+            "never"
+        } else {
+            "after-change"
+        };
         doc.push_str(&format!(
-            "\n[[refusal]]\ncode = \"FROB-REF-{num}\"\nmeaning = \"synthetic {num}\"\ndefined_in = \"§32\"\nexit = {exit}\nretry = \"after-change\"\nrepairs = [\"fix\"]\nraised_by = [\"NJL-01\"]\n"
+            "\n[[refusal]]\ncode = \"FROB-REF-{num}\"\nmeaning = \"synthetic {num}\"\ndefined_in = \"§32\"\nexit = {exit}\nretry = \"{retry}\"\nrepairs = [\"fix\"]\nraised_by = [\"NJL-01\"]\n"
         ));
     }
     RefusalRegistry::from_bytes(doc.as_bytes()).expect("synthetic refusal registry loads")

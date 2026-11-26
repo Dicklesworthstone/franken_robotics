@@ -53,7 +53,7 @@ Hold the shared C-dialect kernel data (`dialect/prelude_cuda.h`, `dialect/prelud
   9. Padding trails active lanes and holds the neutral element of its consumer (`-0.0` for sums, `1.0` for products, `+inf` / `-inf` for min / max; enforced in N21a-10).
 - **CX-221 FACT re-read record (for N21-CX `rerun` and `rerun_receipt`):**
   - Repository: `../frankensim` (pattern reference only; zero dependency per INT-FSIM-11).
-  - Pinned commit (from `franken-stack.lock`): `d02ad9c170d5932667d15359cd362d3198ac4806`.
+  - Pinned commit (from `franken-stack.lock`): `08e9195c6faea3363377b7fdfb6d6b07f5b552f3`.
   - File path: `apps/instrument-lab/render-gpu-piano/src/metal.rs`.
   - Lines: `68-71`.
   - Exact verbatim quote:

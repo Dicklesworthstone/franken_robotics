@@ -65,12 +65,14 @@ fn contract_md_documents_ten_sections_nine_rules_and_cx221_reread() {
         );
     }
     // CX-221 pinned FrankenSim commit, path, line range, and verbatim stall quote.
-    assert!(invariants.contains("d02ad9c170d5932667d15359cd362d3198ac4806"));
+    assert!(invariants.contains("08e9195c6faea3363377b7fdfb6d6b07f5b552f3"));
     assert!(invariants.contains("apps/instrument-lab/render-gpu-piano/src/metal.rs"));
     assert!(invariants.contains("68-71"));
-    assert!(invariants.contains(
-        "Metal does not promise that all threadgroups of a dispatch run concurrently"
-    ));
+    assert!(
+        invariants.contains(
+            "Metal does not promise that all threadgroups of a dispatch run concurrently"
+        )
+    );
     assert!(invariants.contains("about once per few hundred launches here"));
 }
 
@@ -102,7 +104,10 @@ fn contract_toml_validates_against_strict_toml_and_refusal_registry() {
 
     let mut safe = Fields::new(top.require_table("safe_mode").unwrap(), "safe_mode");
     assert_eq!(safe.require_str("on_budget").unwrap(), "reference-path");
-    assert_eq!(safe.require_str("on_calibration").unwrap(), "reference-path");
+    assert_eq!(
+        safe.require_str("on_calibration").unwrap(),
+        "reference-path"
+    );
     safe.finish().unwrap();
     top.finish().unwrap();
 }

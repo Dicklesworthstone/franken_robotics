@@ -20,7 +20,7 @@ Provide the static shared-dialect lint (`dialect_lint`, BD-013) that inspects CU
 
 - `Ok(LintReport)` carrying `lint_version`, `files_linted`, `rules_checked` (`[1, 2, 3, 4, 6]` in BD-013), and empty `findings` when the unit and options are clean.
 - `Err(frob_core::refusal::Refusal)` with code `FROB-REF-251` (exit code 3, `retry = "after-change"`), ranked repairs naming the admitted replacement for each triggered rule, pointer to the first finding (`<file>:<line>:<column>` or `/options`), and deterministic canonical JSON findings array (`{rule, file, line, column, token, message}`) in `detail`.
-- Deterministic expanded source assembly (`DialectUnit::expand`) and post-prelude BLAKE3 body digest (`DialectUnit::body_digest_after_prelude`) via `frob_core::id::hash_blob`.
+- Deterministic expanded source assembly (`DialectUnit::expand`) and post-prelude BLAKE3 body digest (`DialectUnit::body_digest`) via `frob_core::id::hash_blob`.
 
 ## Invariants
 

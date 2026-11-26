@@ -5,7 +5,9 @@
 
 use std::collections::BTreeSet;
 use std::fs;
+use std::io::Write;
 use std::path::{Path, PathBuf};
+use std::process::{Command, Stdio};
 
 use frob_core::id::hash_blob;
 use frob_core::refusal::{RefusalCode, RetryPolicy};
@@ -164,6 +166,51 @@ fn prelude_f32_bits_evaluates_0_25_and_neg_zero() {
 
     // Signed zero is bit-distinct from +0.0.
     assert_ne!(frob_f32_bits(0x8000_0000).to_bits(), 0.0_f32.to_bits());
+}
+
+#[test]
+fn cuda_unsigned_atomics_reject_float_pointer() {
+    // Host C++ syntax check with CUDA's relevant overloads. This launches no kernel.
+    let compile = |body: &str| {
+        let source = format!(
+            "#define __device__\n\
+             unsigned atomicAdd(unsigned*, unsigned);\n\
+             float atomicAdd(float*, float);\n\
+             unsigned atomicMax(unsigned*, unsigned);\n\
+             unsigned atomicMin(unsigned*, unsigned);\n\
+             unsigned atomicOr(unsigned*, unsigned);\n\
+             {PRELUDE_CUDA}\n{body}"
+        );
+        let mut compiler = Command::new("c++")
+            .args(["-std=c++17", "-x", "c++", "-fsyntax-only", "-"])
+            .stdin(Stdio::piped())
+            .stderr(Stdio::piped())
+            .spawn()
+            .expect("start host C++ compiler");
+        compiler
+            .stdin
+            .take()
+            .expect("compiler stdin")
+            .write_all(source.as_bytes())
+            .expect("send CUDA prelude and pointer probe");
+        compiler.wait_with_output().expect("C++ syntax result")
+    };
+    let good = compile(
+        "void k(frob_atomic_u32* p) {\
+         FROB_ATOMIC_ADDW_U32(p, 1u); FROB_ATOMIC_MAX_U32(p, 1u);\
+         FROB_ATOMIC_MIN_U32(p, 1u); FROB_ATOMIC_OR_U32(p, 1u); }",
+    );
+    assert!(
+        good.status.success(),
+        "{}",
+        String::from_utf8_lossy(&good.stderr)
+    );
+    let bad = compile("void k(float* p) { FROB_ATOMIC_ADDW_U32(p, 1u); }");
+    let diagnostic = String::from_utf8_lossy(&bad.stderr);
+    assert!(
+        !bad.status.success() && diagnostic.contains("frob_atomic_u32_ptr"),
+        "{diagnostic}"
+    );
 }
 
 #[test]

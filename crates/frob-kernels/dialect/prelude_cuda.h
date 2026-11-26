@@ -34,10 +34,11 @@ typedef unsigned int frob_atomic_u32;
 #define FROB_GROUP_BARRIER() __syncthreads()
 
 /* Order-independent unsigned 32-bit integer atomics only (rule 2). */
-#define FROB_ATOMIC_ADDW_U32(ptr, v) atomicAdd((ptr), (u32)(v))
-#define FROB_ATOMIC_MAX_U32(ptr, v) atomicMax((ptr), (u32)(v))
-#define FROB_ATOMIC_MIN_U32(ptr, v) atomicMin((ptr), (u32)(v))
-#define FROB_ATOMIC_OR_U32(ptr, v) atomicOr((ptr), (u32)(v))
+FROB_FN frob_atomic_u32* frob_atomic_u32_ptr(frob_atomic_u32* ptr) { return ptr; }
+#define FROB_ATOMIC_ADDW_U32(ptr, v) atomicAdd(frob_atomic_u32_ptr(ptr), (u32)(v))
+#define FROB_ATOMIC_MAX_U32(ptr, v) atomicMax(frob_atomic_u32_ptr(ptr), (u32)(v))
+#define FROB_ATOMIC_MIN_U32(ptr, v) atomicMin(frob_atomic_u32_ptr(ptr), (u32)(v))
+#define FROB_ATOMIC_OR_U32(ptr, v) atomicOr(frob_atomic_u32_ptr(ptr), (u32)(v))
 
 /* IEEE 754 correctly rounded square root (verified per device by BD-017). */
 #define FROB_SQRT(x) sqrtf((f32)(x))

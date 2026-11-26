@@ -3,7 +3,7 @@
 //! Crate-level conformance checks for `frob-kernels` (BD-013, N34-08).
 
 use frob_core::registry::refusals::RefusalRegistry;
-use frob_core::registry::toml::{self, Fields};
+use frob_core::registry::toml::{self, Fields, Value};
 
 const CONTRACT_MD: &str = include_str!("../CONTRACT.md");
 const CONTRACT_TOML: &str = include_str!("../contract.toml");
@@ -65,7 +65,45 @@ fn contract_md_documents_ten_sections_nine_rules_and_cx221_reread() {
         );
     }
     // CX-221 pinned FrankenSim commit, path, line range, and verbatim stall quote.
-    assert!(invariants.contains("08e9195c6faea3363377b7fdfb6d6b07f5b552f3"));
+    let record_pin = invariants
+        .lines()
+        .find_map(|line| {
+            line.strip_prefix("  - Pinned commit (from `franken-stack.lock`): `")?
+                .strip_suffix("`.")
+        })
+        .expect("CX-221 pinned commit line");
+    let matches_lock = |text: &str| {
+        let lock = toml::parse(text.as_bytes()).expect("stack lock parses");
+        let pin = lock
+            .get("foundation")
+            .and_then(Value::as_array)
+            .expect("foundation rows")
+            .iter()
+            .find_map(|entry| {
+                let row = entry.value.as_table()?;
+                if row.get("id").and_then(Value::as_str) == Some("FD-FSIM") {
+                    row.get("git_rev").and_then(Value::as_str)
+                } else {
+                    None
+                }
+            })
+            .expect("FD-FSIM lock pin");
+        pin == record_pin
+    };
+    let stack_lock = include_str!("../../../franken-stack.lock");
+    assert!(
+        matches_lock(stack_lock),
+        "CX-221 pin {record_pin} must match the FD-FSIM lock pin"
+    );
+    let moved_lock = stack_lock.replacen(
+        &format!("git_rev = \"{record_pin}\""),
+        "git_rev = \"0000000000000000000000000000000000000000\"",
+        1,
+    );
+    assert!(
+        !matches_lock(&moved_lock),
+        "CX-221 must reject a stale record when the FD-FSIM lock pin changes"
+    );
     assert!(invariants.contains("apps/instrument-lab/render-gpu-piano/src/metal.rs"));
     assert!(invariants.contains("68-71"));
     assert!(

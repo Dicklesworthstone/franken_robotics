@@ -733,11 +733,16 @@ fn tokenize(src: &str) -> Vec<Token> {
             continue;
         }
 
-        // Preprocessor directive at start of logical line
-        if ch == '#' && at_line_start {
+        // Preprocessor directive at the start of a logical line (`#` or `%:`).
+        let directive_width = match ch {
+            '#' => 1,
+            '%' if sc.get(i + 1).is_some_and(|next| next.ch == ':') => 2,
+            _ => 0,
+        };
+        if at_line_start && directive_width != 0 {
             let start_line = cur.line;
             let start_col = cur.col;
-            i += 1;
+            i += directive_width;
             let raw = consume_preprocessor_rest(&sc, &mut i);
             let clean = strip_comments_inline(&raw);
             let trimmed = clean.trim();
@@ -2269,25 +2274,28 @@ mod tests {
     #[test]
     fn lint_rejects_define_outside_prelude() {
         let opts = CompileOptions::cuda_safe("sm_89");
-        let bad = DialectUnit::single_source("skel.h", "#define F fmaf\n");
-        let findings = collect_findings(&bad, &opts);
-        assert_eq!(findings.len(), 1, "got {findings:?}");
-        assert_eq!(findings[0].rule, 1);
-        assert_eq!(findings[0].token, "#define");
-        assert_eq!(lint(&bad, &opts).unwrap_err().code, RefusalCode::FrobRef251);
+        for marker in ["#", "%:"] {
+            let shape_define = format!("{marker}define NV_CAP 64u\n");
+            let bad = DialectUnit::single_source("skel.h", shape_define.clone());
+            let findings = collect_findings(&bad, &opts);
+            assert_eq!(findings.len(), 1, "{marker}: got {findings:?}");
+            assert_eq!(findings[0].rule, 1);
+            assert_eq!(findings[0].token, "#define");
+            assert_eq!(lint(&bad, &opts).unwrap_err().code, RefusalCode::FrobRef251);
 
-        // `#define NV_CAP 64u` in shape-class constant block is accepted.
-        let good = DialectUnit::default()
-            .with_shape_constants(SourceFile::new("shape.h", "#define NV_CAP 64u\n"))
-            .with_source(SourceFile::new("skel.h", "const u32 n = NV_CAP;\n"));
-        assert!(lint(&good, &opts).is_ok());
+            let good = DialectUnit::default()
+                .with_shape_constants(SourceFile::new("shape.h", shape_define))
+                .with_source(SourceFile::new("skel.h", "const u32 n = NV_CAP;\n"));
+            assert!(lint(&good, &opts).is_ok());
 
-        // Smuggling `#define F fmaf` into shape_constants is still rejected under rule 1.
-        let smuggle = DialectUnit::default()
-            .with_shape_constants(SourceFile::new("shape.h", "#define F fmaf\n"));
-        let sf = collect_findings(&smuggle, &opts);
-        assert_eq!(sf.len(), 1);
-        assert_eq!(sf[0].rule, 1);
+            let smuggle = DialectUnit::default().with_shape_constants(SourceFile::new(
+                "shape.h",
+                format!("{marker}define F fmaf\n"),
+            ));
+            let sf = collect_findings(&smuggle, &opts);
+            assert_eq!(sf.len(), 1);
+            assert_eq!(sf[0].rule, 1);
+        }
     }
 
     #[test]

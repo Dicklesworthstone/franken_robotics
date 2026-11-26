@@ -5,7 +5,8 @@
 
 use std::env;
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::io;
+use std::path::{Component, Path, PathBuf};
 use std::process::{Command, Output};
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::thread;
@@ -65,6 +66,115 @@ fn copy_dir_recursive(src: &Path, dst: &Path) {
     }
 }
 
+fn copy_embedded_inputs(
+    source_dir: &Path,
+    core: &Path,
+    repo: &Path,
+    scratch: &Path,
+) -> Result<(), String> {
+    for entry in fs::read_dir(source_dir).expect("read frob-core source directory") {
+        let entry = entry.expect("read frob-core source entry");
+        let source = entry.path();
+        if entry.file_type().expect("read source file type").is_dir() {
+            copy_embedded_inputs(&source, core, repo, scratch)?;
+        } else if source.extension().is_some_and(|ext| ext == "rs") {
+            let contents = fs::read_to_string(&source).expect("read frob-core Rust source");
+            for name in ["include_str", "include_bytes"] {
+                for (offset, _) in contents.match_indices(name) {
+                    if contents[..offset].ends_with(|c: char| c.is_alphanumeric() || c == '_') {
+                        continue;
+                    }
+                    let Some(call) = contents[offset + name.len()..]
+                        .trim_start()
+                        .strip_prefix('!')
+                    else {
+                        continue;
+                    };
+                    let call = call.trim_start();
+                    let path = embedded_path(call).ok_or_else(|| {
+                        let start = call.lines().take(3).collect::<Vec<_>>().join(" ");
+                        format!("{}: cannot copy {name}! argument {start}", source.display())
+                    })?;
+                    copy_embedded_input(Path::new(path), &source, core, repo, scratch).map_err(
+                        |err| format!("{}: cannot copy embedded {path:?}: {err}", source.display()),
+                    )?;
+                }
+            }
+        }
+    }
+    Ok(())
+}
+
+fn copy_embedded_input(
+    path: &Path,
+    source: &Path,
+    core: &Path,
+    repo: &Path,
+    scratch: &Path,
+) -> io::Result<()> {
+    let source_dir = source.parent().expect("embedded path base");
+    let source_subdir = source_dir
+        .strip_prefix(repo)
+        .expect("frob-core source within the workspace");
+    let mut relative = source_subdir.to_path_buf();
+    for component in path.components() {
+        match component {
+            Component::Normal(name) => relative.push(name),
+            Component::CurDir => {}
+            Component::ParentDir if relative.pop() => {}
+            _ => {
+                return Err(io::Error::other(
+                    "path must be relative and within the workspace",
+                ));
+            }
+        }
+    }
+    let input = repo.join(&relative);
+    if source_dir.join(path).canonicalize()? != input {
+        return Err(io::Error::other("path resolves through a symlink"));
+    }
+    // The crate's own source tree is already copied as a unit.
+    if input.starts_with(core) {
+        return Ok(());
+    }
+    let destination = scratch.join(source_subdir).join(path);
+    fs::create_dir_all(destination.parent().expect("embedded input parent"))?;
+    fs::copy(&input, &destination)?;
+    Ok(())
+}
+
+// Accept literal file paths, including raw strings. Reject computed and
+// escaped arguments so a new spelling cannot silently omit an input.
+fn embedded_path(call: &str) -> Option<&str> {
+    let (args, close) = match call.as_bytes().first()? {
+        b'(' => (&call[1..], ')'),
+        b'[' => (&call[1..], ']'),
+        b'{' => (&call[1..], '}'),
+        _ => return None,
+    };
+    let args = args.trim_start();
+    let (prefix, rest) = args.split_once('"')?;
+    let (path, tail) = if prefix.is_empty() {
+        let (path, tail) = rest.split_once('"')?;
+        if path.contains('\\') {
+            return None;
+        }
+        (path, tail)
+    } else {
+        let hashes = prefix.strip_prefix('r')?;
+        if !hashes.bytes().all(|byte| byte == b'#') {
+            return None;
+        }
+        rest.split_once(&format!("\"{hashes}"))?
+    };
+    let tail = tail.trim_start();
+    tail.strip_prefix(',')
+        .unwrap_or(tail)
+        .trim_start()
+        .starts_with(close)
+        .then_some(path)
+}
+
 fn write_file(path: &Path, content: &str) {
     if let Some(parent) = path.parent() {
         fs::create_dir_all(parent).expect("create parent dirs");
@@ -73,7 +183,7 @@ fn write_file(path: &Path, content: &str) {
 }
 
 /// Self-contained offline Cargo workspace containing a fresh copy of `frob-core`, its
-/// two zero-external-dep sibling crates (`fs-blake3`, `fs-qty`), `registries/refusals.toml`,
+/// two zero-external-dep sibling crates (`fs-blake3`, `fs-qty`), embedded workspace inputs,
 /// `franken-stack.lock`, and a tiny `probe` binary crate.
 struct ScratchWorkspace {
     root: PathBuf,
@@ -82,7 +192,7 @@ struct ScratchWorkspace {
 
 impl ScratchWorkspace {
     fn new(label: &str, probe_main_rs: &str) -> Self {
-        let real_root = repo_root();
+        let real_root = repo_root().canonicalize().expect("resolve repo root");
         let real_core = real_root.join("crates/frob-core");
         let real_frankensim = real_root
             .parent()
@@ -109,11 +219,7 @@ impl ScratchWorkspace {
         );
         write_file(&root.join("LICENSE"), "Test fixture license\n");
 
-        // Copy registries/refusals.toml (embedded by frob-core) and franken-stack.lock.
-        let refusals = fs::read_to_string(real_root.join("registries/refusals.toml"))
-            .expect("read registries/refusals.toml");
-        write_file(&root.join("registries/refusals.toml"), &refusals);
-
+        // The build script reads the stack lock at runtime rather than embedding it.
         let stack_lock = fs::read_to_string(real_root.join("franken-stack.lock"))
             .expect("read franken-stack.lock");
         write_file(&root.join("franken-stack.lock"), &stack_lock);
@@ -150,6 +256,8 @@ impl ScratchWorkspace {
 
         // Copy frob-core src, build.rs, and manifest rewritten to vendored sibling paths.
         copy_dir_recursive(&real_core.join("src"), &root.join("crates/frob-core/src"));
+        copy_embedded_inputs(&real_core.join("src"), &real_core, &real_root, &root)
+            .expect("copy frob-core embedded inputs");
         let build_rs = fs::read_to_string(real_core.join("build.rs")).expect("read build.rs");
         write_file(&root.join("crates/frob-core/build.rs"), &build_rs);
 

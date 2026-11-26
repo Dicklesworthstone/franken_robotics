@@ -868,7 +868,7 @@ impl ParsedRegistry {
         let mut top = Fields::new(root, "<root>");
         let schema = top.require_str("schema")?;
         if schema != VERBS_REGISTRY_SCHEMA {
-            return Err(ParseError::InvalidSchema { observed: schema });
+            return Err(top.fail(ParseError::InvalidSchema { observed: schema }));
         }
 
         let raw_verbs = top.opt_array("verb")?.unwrap_or_default();
@@ -981,31 +981,20 @@ fn parse_verb_entry(tbl: Table, idx: usize) -> Result<OwnedVerbEntry, ParseError
     let cluster = f.require_str("cluster")?;
     let kind_raw = f.require_str("kind")?;
     let tier_raw = f.require_str("tier")?;
-    let capabilities = extract_str_vec("capabilities", f.require_array("capabilities")?)?;
+    let raw_capabilities = f.require_array("capabilities")?;
     let input_schema = f.require_str("input_schema")?;
     let output_schema = f.require_str("output_schema")?;
-    let refusals = extract_str_vec("refusals", f.require_array("refusals")?)?;
+    let raw_refusals = f.require_array("refusals")?;
     let idempotent = f.require_bool("idempotent")?;
     let cost_model = f.require_str("cost_model")?;
     let first_milestone_raw = f.require_str("first_milestone")?;
-    let task_clusters = extract_str_vec("task_clusters", f.require_array("task_clusters")?)?;
-    let examples = extract_str_vec("examples", f.require_array("examples")?)?;
+    let raw_task_clusters = f.require_array("task_clusters")?;
+    let raw_examples = f.require_array("examples")?;
     let purpose = f.require_str("purpose")?;
     let use_when = f.require_str("use_when")?;
     let owner = f.require_str("owner")?;
-
-    let wait = f
-        .opt_table("wait")?
-        .map(|wt| parse_wait(wt, &label))
-        .transpose()?;
-
+    let raw_wait = f.opt_table("wait")?;
     let raw_actions = f.opt_array("actions")?.unwrap_or_default();
-    let mut actions = Vec::with_capacity(raw_actions.len());
-    for (aidx, asp) in raw_actions.into_iter().enumerate() {
-        let atbl = expect_table(asp, "actions", aidx)?;
-        actions.push(parse_action(atbl, &label, aidx)?);
-    }
-
     let schema_version = f.opt_int("schema_version")?.unwrap_or(1);
     let paginated = f.opt_bool("paginated")?.unwrap_or(false);
     let exports = f.opt_bool("exports")?.unwrap_or(false);
@@ -1013,9 +1002,28 @@ fn parse_verb_entry(tbl: Table, idx: usize) -> Result<OwnedVerbEntry, ParseError
     let destructive_explicit = f.opt_bool("destructive")?;
     let public = f.opt_bool("public")?.unwrap_or(false);
     let key_optional = f.opt_bool("key_optional")?.unwrap_or(false);
+    let raw_option_capabilities = f.opt_table("option_capabilities")?;
+    let spends_physics = f.opt_bool("spends_physics")?;
+    let released = f.opt_bool("released")?.unwrap_or(false);
+    let raw_params = f.opt_table("params")?;
+    let raw_conformance_only = f.opt_array("conformance_only")?;
+
+    finish_for_entry(f, &label)?;
+
+    let capabilities = extract_str_vec("capabilities", raw_capabilities)?;
+    let refusals = extract_str_vec("refusals", raw_refusals)?;
+    let task_clusters = extract_str_vec("task_clusters", raw_task_clusters)?;
+    let examples = extract_str_vec("examples", raw_examples)?;
+    let wait = raw_wait.map(|wt| parse_wait(wt, &label)).transpose()?;
+
+    let mut actions = Vec::with_capacity(raw_actions.len());
+    for (aidx, asp) in raw_actions.into_iter().enumerate() {
+        let atbl = expect_table(asp, "actions", aidx)?;
+        actions.push(parse_action(atbl, &label, aidx)?);
+    }
 
     let mut option_capabilities = BTreeMap::new();
-    if let Some(opt_tbl) = f.opt_table("option_capabilities")? {
+    if let Some(opt_tbl) = raw_option_capabilities {
         for (opt_name, sp) in opt_tbl.into_inner() {
             let Value::Array(items) = sp.value else {
                 return Err(ParseError::Toml(TomlError::new(
@@ -1033,11 +1041,8 @@ fn parse_verb_entry(tbl: Table, idx: usize) -> Result<OwnedVerbEntry, ParseError
         }
     }
 
-    let spends_physics = f.opt_bool("spends_physics")?;
-    let released = f.opt_bool("released")?.unwrap_or(false);
-
     let mut params = BTreeMap::new();
-    if let Some(params_tbl) = f.opt_table("params")? {
+    if let Some(params_tbl) = raw_params {
         for (param_name, sp) in params_tbl.into_inner() {
             let Value::Str(kind_s) = sp.value else {
                 return Err(ParseError::Toml(TomlError::new(
@@ -1061,13 +1066,10 @@ fn parse_verb_entry(tbl: Table, idx: usize) -> Result<OwnedVerbEntry, ParseError
         }
     }
 
-    let conformance_only = f
-        .opt_array("conformance_only")?
+    let conformance_only = raw_conformance_only
         .map(|items| extract_str_vec("conformance_only", items))
         .transpose()?
         .unwrap_or_default();
-
-    finish_for_entry(f, &label)?;
 
     Ok(OwnedVerbEntry {
         name,
@@ -1120,10 +1122,11 @@ fn parse_action(tbl: Table, entry: &str, idx: usize) -> Result<OwnedAction, Pars
     let mut f = Fields::new(tbl, format!("{entry}.actions[{idx}]"));
     let name = f.require_str("name")?;
     let kind_raw = f.require_str("kind")?;
-    let capabilities = extract_str_vec("capabilities", f.require_array("capabilities")?)?;
+    let raw_capabilities = f.require_array("capabilities")?;
     let paginated = f.opt_bool("paginated")?.unwrap_or(false);
     let destructive_explicit = f.opt_bool("destructive")?;
     finish_for_entry(f, entry)?;
+    let capabilities = extract_str_vec("capabilities", raw_capabilities)?;
     Ok(OwnedAction {
         name,
         kind_raw,
@@ -1139,12 +1142,12 @@ fn parse_task_cluster(tbl: Table, idx: usize) -> Result<OwnedTaskCluster, ParseE
     let name = f.require_str("name")?;
     let activity = f.require_str("activity")?;
     let default = f.opt_bool("default")?.unwrap_or(false);
-    let tools = f
-        .opt_array("tools")?
+    let raw_tools = f.opt_array("tools")?;
+    finish_for_entry(f, &label)?;
+    let tools = raw_tools
         .map(|items| extract_str_vec("tools", items))
         .transpose()?
         .unwrap_or_default();
-    finish_for_entry(f, &label)?;
     Ok(OwnedTaskCluster {
         name,
         activity,
@@ -1157,9 +1160,10 @@ fn parse_retired_name(tbl: Table, idx: usize) -> Result<RetiredName, ParseError>
     let label = format!("retired_name[{idx}]");
     let mut f = Fields::new(tbl, label.clone());
     let name = f.require_str("name")?;
-    let use_instead = extract_str_vec("use", f.require_array("use")?)?;
+    let raw_use = f.require_array("use")?;
     let reason = f.require_str("reason")?;
     finish_for_entry(f, &label)?;
+    let use_instead = extract_str_vec("use", raw_use)?;
     Ok(RetiredName {
         name,
         use_instead,
@@ -1185,8 +1189,10 @@ fn parse_counts(tbl: Table) -> Result<CountsRecord, ParseError> {
     let mut f = Fields::new(tbl, "counts");
     let total = f.require_int("total")?;
     let clusters = f.require_int("clusters")?;
+    let raw_by_kind = f.opt_table("by_kind")?;
+    finish_for_entry(f, "counts")?;
     let mut by_kind = BTreeMap::new();
-    if let Some(bk) = f.opt_table("by_kind")? {
+    if let Some(bk) = raw_by_kind {
         for (k, sp) in bk.into_inner() {
             let Value::Int(n) = sp.value else {
                 return Err(ParseError::Toml(TomlError::new(
@@ -1202,7 +1208,6 @@ fn parse_counts(tbl: Table) -> Result<CountsRecord, ParseError> {
             by_kind.insert(k, n);
         }
     }
-    finish_for_entry(f, "counts")?;
     Ok(CountsRecord {
         total,
         clusters,

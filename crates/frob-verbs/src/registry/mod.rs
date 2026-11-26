@@ -1618,4 +1618,256 @@ actions = [{ name = "stats", kind = "read", capabilities = ["spark:read"], destr
         assert_eq!(gen1.source, gen2.source);
         assert_eq!(gen1.source, gen3.source);
     }
+
+    #[test]
+    fn malformed_registry_inputs_return_err_without_fields_drop_panic() {
+        use frob_core::registry::toml::TomlErrorKind;
+
+        let base = specimen_design_check_toml();
+
+        // 1. ParsedRegistry::parse_toml: wrong schema header while `top` is live.
+        let bad_schema = base.replace(r#"schema = "frob.verbs/1""#, r#"schema = "frob.verbs/99""#);
+        let err = ParsedRegistry::parse_toml(bad_schema.as_bytes())
+            .expect_err("wrong schema must return Err without Fields drop panic");
+        assert!(matches!(
+            err,
+            ParseError::InvalidSchema { ref observed } if observed == "frob.verbs/99"
+        ));
+
+        // 2-5. parse_verb_entry: non-string elements in required string-array fields.
+        for (needle, replacement, expected_key) in [
+            (
+                r#"capabilities = ["design:read"]"#,
+                "capabilities = [1]",
+                "capabilities",
+            ),
+            (
+                r#"refusals = ["FROB-REF-101", "FROB-REF-104", "FROB-REF-107", "FROB-REF-110"]"#,
+                "refusals = [101]",
+                "refusals",
+            ),
+            (
+                r#"task_clusters = ["author", "places"]"#,
+                "task_clusters = [1]",
+                "task_clusters",
+            ),
+            (
+                r#"examples = ["frob design check quad-a --json"]"#,
+                "examples = [1]",
+                "examples",
+            ),
+        ] {
+            assert!(
+                base.contains(needle),
+                "specimen_design_check_toml must contain `{needle}`"
+            );
+            let bad = base.replace(needle, replacement);
+            let err = ParsedRegistry::parse_toml(bad.as_bytes())
+                .expect_err("non-string array element must return Err without Fields drop panic");
+            assert!(
+                matches!(
+                    err,
+                    ParseError::Toml(ref te)
+                        if matches!(
+                            te.kind,
+                            TomlErrorKind::TypeMismatch { ref key, expected: "string", .. }
+                                if key == expected_key
+                        )
+                ),
+                "unexpected error for `{expected_key}`: {err:?}"
+            );
+        }
+
+        // 6. parse_verb_entry: nested `wait` table errors (missing key & unknown key).
+        let bad_wait_missing = format!("{base}wait = {{ cli = \"to-completion\" }}\n");
+        let err = ParsedRegistry::parse_toml(bad_wait_missing.as_bytes())
+            .expect_err("incomplete wait table must return Err");
+        assert!(matches!(
+            err,
+            ParseError::Toml(ref te)
+                if matches!(te.kind, TomlErrorKind::MissingKey { ref key, .. } if key == "mcp_ms")
+        ));
+
+        let bad_wait_unknown = format!(
+            "{base}wait = {{ cli = \"to-completion\", mcp_ms = 1000, mcp_max_ms = 5000, extra = 1 }}\n"
+        );
+        let err = ParsedRegistry::parse_toml(bad_wait_unknown.as_bytes())
+            .expect_err("unknown key in wait table must return Err");
+        assert!(matches!(
+            err,
+            ParseError::UnknownField { ref key, .. } if key == "extra"
+        ));
+
+        // 7-8. parse_verb_entry: `actions` non-table element, missing field, and unknown field.
+        let bad_action_type = format!("{base}actions = [\"list\"]\n");
+        let err = ParsedRegistry::parse_toml(bad_action_type.as_bytes())
+            .expect_err("non-table action must return Err");
+        assert!(matches!(
+            err,
+            ParseError::Toml(ref te)
+                if matches!(
+                    te.kind,
+                    TomlErrorKind::TypeMismatch { ref key, expected: "table", .. }
+                        if key == "actions[0]"
+                )
+        ));
+
+        let bad_action_missing =
+            format!("{base}actions = [{{ name = \"list\", kind = \"read\" }}]\n");
+        let err = ParsedRegistry::parse_toml(bad_action_missing.as_bytes())
+            .expect_err("incomplete action table must return Err");
+        assert!(matches!(
+            err,
+            ParseError::Toml(ref te)
+                if matches!(te.kind, TomlErrorKind::MissingKey { ref key, .. } if key == "capabilities")
+        ));
+
+        let bad_action_unknown = format!(
+            "{base}actions = [{{ name = \"list\", kind = \"read\", capabilities = [\"design:read\"], bogus = true }}]\n"
+        );
+        let err = ParsedRegistry::parse_toml(bad_action_unknown.as_bytes())
+            .expect_err("unknown key in action table must return Err");
+        assert!(matches!(
+            err,
+            ParseError::UnknownField { ref key, .. } if key == "bogus"
+        ));
+
+        // 9-10. parse_verb_entry: `option_capabilities` non-array and non-string item.
+        let bad_opt_cap_type =
+            format!("{base}option_capabilities = {{ fast = \"design:read\" }}\n");
+        let err = ParsedRegistry::parse_toml(bad_opt_cap_type.as_bytes())
+            .expect_err("non-array option_capabilities entry must return Err");
+        assert!(matches!(
+            err,
+            ParseError::Toml(ref te)
+                if matches!(
+                    te.kind,
+                    TomlErrorKind::TypeMismatch { ref key, expected: "array", .. }
+                        if key == "option_capabilities.fast"
+                )
+        ));
+
+        let bad_opt_cap_elem = format!("{base}option_capabilities = {{ fast = [42] }}\n");
+        let err = ParsedRegistry::parse_toml(bad_opt_cap_elem.as_bytes())
+            .expect_err("non-string option_capabilities scope must return Err");
+        assert!(matches!(
+            err,
+            ParseError::Toml(ref te)
+                if matches!(
+                    te.kind,
+                    TomlErrorKind::TypeMismatch { ref key, expected: "string", .. }
+                        if key == "option_capabilities.fast"
+                )
+        ));
+
+        // 11-12. parse_verb_entry: `params` non-string value and invalid OwnedParamKind.
+        let bad_param_type = format!("{base}params = {{ design = 7 }}\n");
+        let err = ParsedRegistry::parse_toml(bad_param_type.as_bytes())
+            .expect_err("non-string param value must return Err");
+        assert!(matches!(
+            err,
+            ParseError::Toml(ref te)
+                if matches!(
+                    te.kind,
+                    TomlErrorKind::TypeMismatch { ref key, expected: "string", .. }
+                        if key == "params.design"
+                )
+        ));
+
+        let bad_param_kind = format!("{base}params = {{ design = \"not-a-param-kind\" }}\n");
+        let err = ParsedRegistry::parse_toml(bad_param_kind.as_bytes())
+            .expect_err("invalid param kind must return Err");
+        assert!(matches!(
+            err,
+            ParseError::InvalidParamKind { ref param, ref value, .. }
+                if param == "design" && value == "not-a-param-kind"
+        ));
+
+        // 13. parse_verb_entry: `conformance_only` non-string element.
+        let bad_conf_only = format!("{base}conformance_only = [true]\n");
+        let err = ParsedRegistry::parse_toml(bad_conf_only.as_bytes())
+            .expect_err("non-string conformance_only element must return Err");
+        assert!(matches!(
+            err,
+            ParseError::Toml(ref te)
+                if matches!(
+                    te.kind,
+                    TomlErrorKind::TypeMismatch { ref key, expected: "string", .. }
+                        if key == "conformance_only"
+                )
+        ));
+
+        // 14. parse_action: non-string element in action `capabilities`.
+        let bad_action_cap = format!(
+            "{base}actions = [{{ name = \"list\", kind = \"read\", capabilities = [1] }}]\n"
+        );
+        let err = ParsedRegistry::parse_toml(bad_action_cap.as_bytes())
+            .expect_err("non-string action capability must return Err");
+        assert!(matches!(
+            err,
+            ParseError::Toml(ref te)
+                if matches!(
+                    te.kind,
+                    TomlErrorKind::TypeMismatch { ref key, expected: "string", .. }
+                        if key == "capabilities"
+                )
+        ));
+
+        // 15. parse_task_cluster: non-string element in `tools`.
+        let bad_cluster = r#"schema = "frob.verbs/1"
+[[task_cluster]]
+name = "orient"
+activity = "orientation"
+tools = [1]
+"#;
+        let err = ParsedRegistry::parse_toml(bad_cluster.as_bytes())
+            .expect_err("non-string task_cluster.tools element must return Err");
+        assert!(matches!(
+            err,
+            ParseError::Toml(ref te)
+                if matches!(
+                    te.kind,
+                    TomlErrorKind::TypeMismatch { ref key, expected: "string", .. }
+                        if key == "tools"
+                )
+        ));
+
+        // 16. parse_retired_name: non-string element in `use`.
+        let bad_retired = r#"schema = "frob.verbs/1"
+[[retired_name]]
+name = "old.verb"
+use = [1]
+reason = "retired"
+"#;
+        let err = ParsedRegistry::parse_toml(bad_retired.as_bytes())
+            .expect_err("non-string retired_name.use element must return Err");
+        assert!(matches!(
+            err,
+            ParseError::Toml(ref te)
+                if matches!(
+                    te.kind,
+                    TomlErrorKind::TypeMismatch { ref key, expected: "string", .. }
+                        if key == "use"
+                )
+        ));
+
+        // 17. parse_counts: non-integer value in `by_kind`.
+        let bad_counts = r#"schema = "frob.verbs/1"
+[counts]
+total = 0
+clusters = 0
+by_kind = { read = "zero" }
+"#;
+        let err = ParsedRegistry::parse_toml(bad_counts.as_bytes())
+            .expect_err("non-int counts.by_kind entry must return Err");
+        assert!(matches!(
+            err,
+            ParseError::Toml(ref te)
+                if matches!(
+                    te.kind,
+                    TomlErrorKind::TypeMismatch { ref key, expected: "integer", .. }
+                        if key == "counts.by_kind.read"
+                )
+        ));
+    }
 }

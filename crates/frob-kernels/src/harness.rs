@@ -69,9 +69,15 @@ impl Harness {
         };
         let compiled = backend.compile(&lib)?;
         let kernel_id = compiled.id_for(&kernel_name).ok_or_else(|| {
-            crate::backend::refusal_603(
-                &kernel_name,
+            Refusal::new(
+                RefusalCode::FrobRef990,
                 "compiled library missing entry for submitted kernel",
+                "/compile/kernel",
+                &kernel_name,
+                "compiled kernel ID",
+                "kernel",
+                RetryPolicy::Never,
+                vec![Repair::new("frob doctor")],
             )
         })?;
 

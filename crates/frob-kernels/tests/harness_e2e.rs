@@ -7,6 +7,7 @@
 use std::fs::{self, File, OpenOptions};
 use std::io::Write;
 use std::path::{Path, PathBuf};
+use std::process::Command;
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::time::{Instant, SystemTime, UNIX_EPOCH};
 
@@ -145,6 +146,26 @@ impl E2eLog {
         self.file.write_all(b"\n").expect("write newline");
     }
 
+    fn path(&self) -> PathBuf {
+        self.dir.join(format!("{}.ndjson", self.run_id))
+    }
+
+    fn body_sha256(&self) -> String {
+        let mut command = if cfg!(target_os = "macos") {
+            let mut shasum = Command::new("shasum");
+            shasum.args(["-a", "256"]);
+            shasum
+        } else {
+            Command::new("sha256sum")
+        };
+        let output = command.arg(self.path()).output().expect("hash log body");
+        assert!(output.status.success(), "{output:?}");
+        let text = String::from_utf8(output.stdout).expect("SHA-256 output");
+        let digest = text.split_whitespace().next().expect("body digest");
+        assert_eq!(digest.len(), 64);
+        digest.to_owned()
+    }
+
     fn dump_mismatch(
         &self,
         workers: usize,
@@ -216,6 +237,15 @@ fn emit_assert(
 
 #[test]
 fn spark_harness_selftest_e2e() {
+    run_harness_selftest(None);
+}
+
+#[test]
+fn spark_harness_logs_refusal_as_failed_assertion() {
+    run_harness_selftest(Some(2));
+}
+
+fn run_harness_selftest(refusal_workers: Option<usize>) {
     let lanes = 4_096usize;
     let inputs = k_selftest_seeded_inputs(lanes, 0, 1);
     let expected = k_selftest_scalar_reference(&inputs);
@@ -242,7 +272,14 @@ fn spark_harness_selftest_e2e() {
         o.str("toolchain", "rust-toolchain.toml")?;
         o.str("frob_version", env!("CARGO_PKG_VERSION"))?;
         o.str("scale", "full")?;
-        o.str("plant", "")?;
+        o.str(
+            "plant",
+            if refusal_workers.is_some() {
+                "unavailable-backend"
+            } else {
+                ""
+            },
+        )?;
         o.member("devices", |v| {
             v.array(|a| {
                 a.push(|s| {
@@ -299,7 +336,7 @@ fn spark_harness_selftest_e2e() {
             )
         });
 
-        let mut cpu = BatchCpu::new(workers);
+        let mut cpu = BatchCpu::new(workers).with_unavailable(refusal_workers == Some(workers));
         match Harness::run(
             &mut cpu,
             k_selftest_entry(),
@@ -330,6 +367,16 @@ fn spark_harness_selftest_e2e() {
                     o.int53("exit", exit_code)?;
                     o.bool("expected", false)
                 });
+                emit_assert(
+                    &mut log,
+                    &step,
+                    "harness.run",
+                    "refusal",
+                    false,
+                    refusal.code.as_str(),
+                    "successful harness run",
+                    None,
+                );
             }
             Ok(res) => {
                 let wall_ms = t0.elapsed().as_millis() as i64;
@@ -446,7 +493,9 @@ fn spark_harness_selftest_e2e() {
     }
 
     // Always emit the summary record before asserting so failure evidence is never lost.
+    let body_sha256 = log.body_sha256();
     log.emit("", "summary", |o| {
+        o.str("body_sha256", &body_sha256)?;
         o.int53("asserts_passed", passed as i64)?;
         o.int53("asserts_failed", failed as i64)?;
         o.int53("asserts_skipped", 0)?;
@@ -459,9 +508,30 @@ fn spark_harness_selftest_e2e() {
         o.member("gates", |v| v.array(|_| Ok(())))
     });
 
-    assert!(
-        failures.is_empty() && failed == 0 && refusals_unexpected == 0,
-        "spark_harness_selftest_e2e failed: {failures:?}"
+    let path = log.path();
+    println!("BD-014 harness log: {}", path.display());
+    let log_text = fs::read_to_string(&path).expect("read completed harness log");
+    let mut lines = log_text.lines();
+    let summary = lines.next_back().expect("summary");
+    assert!(summary.contains(&format!("\"body_sha256\":\"{body_sha256}\"")));
+    let refusal_asserts = lines
+        .filter(|line| {
+            line.contains("\"event\":\"assert\"")
+                && line.contains("\"name\":\"harness.run\"")
+                && line.contains("\"status\":\"fail\"")
+                && line.contains("\"observed\":\"FROB-REF-601\"")
+        })
+        .count();
+    let expected_refusals = u64::from(refusal_workers.is_some());
+    assert_eq!(refusal_asserts as u64, expected_refusals);
+    assert_eq!(
+        (passed, failed, refusals_unexpected, failures.len() as u64),
+        (
+            16 - 4 * expected_refusals,
+            expected_refusals,
+            expected_refusals,
+            expected_refusals
+        ),
+        "unexpected harness results: {failures:?}"
     );
-    assert_eq!(passed, 16);
 }

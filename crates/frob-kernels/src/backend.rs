@@ -45,8 +45,18 @@
 //!     bufs.clone()
 //! }
 //! ```
+//!
+//! A caller cannot inspect a host slab directly:
+//!
+//! ```compile_fail,E0624
+//! use frob_kernels::backend::{BufferSet, SlabId};
+//! fn unchecked_read(bufs: &BufferSet) -> &[u8] {
+//!     bufs.cpu_slab(SlabId(0)).unwrap().as_bytes()
+//! }
+//! ```
 
 use std::collections::BTreeMap;
+use std::fmt;
 use std::ops::Range;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool, AtomicU64, Ordering};
@@ -150,8 +160,7 @@ pub struct BufferLayout {
 ///
 /// Intentionally not `Clone` and with private metadata so alignment offsets and
 /// validated element types cannot be invalidated after allocation.
-#[derive(Debug)]
-pub struct AlignedSlab {
+pub(crate) struct AlignedSlab {
     spec: SlabSpec,
     raw: Vec<u8>,
     offset: usize,
@@ -182,7 +191,7 @@ impl AlignedSlab {
     }
 
     #[must_use]
-    pub fn as_bytes(&self) -> &[u8] {
+    pub(crate) fn as_bytes(&self) -> &[u8] {
         &self.raw[self.offset..self.offset + self.byte_len]
     }
 
@@ -206,12 +215,21 @@ impl AlignedSlab {
 /// GPU annex backends (`BD-015` CUDA, `BD-016` Metal) construct a device-backed
 /// handle set with [`BufferSet::for_device`] (zero host slab allocation) and
 /// index their native device buffers by [`BufferSet::allocation_id`].
-#[derive(Debug)]
 pub struct BufferSet {
     allocation_id: u64,
     specs: Vec<SlabSpec>,
     written: Vec<bool>,
     cpu_slabs: Option<Vec<AlignedSlab>>,
+}
+
+impl fmt::Debug for BufferSet {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("BufferSet")
+            .field("allocation_id", &self.allocation_id)
+            .field("specs", &self.specs)
+            .field("written", &self.written)
+            .finish_non_exhaustive()
+    }
 }
 
 impl BufferSet {
@@ -269,8 +287,19 @@ impl BufferSet {
         self.written.get(id.0).copied().unwrap_or(false)
     }
 
-    /// Mark `id` written after a backend upload or completed producer launch.
+    /// Mark a device slab written after an upload or completed producer launch.
     pub fn mark_written(&mut self, id: SlabId) -> Result<(), Refusal> {
+        if self.cpu_slabs.is_some() {
+            return Err(refusal_802(
+                format!("/slab/{}", id.0),
+                "CPU slab completion is owned by BatchCpu",
+                "completed BatchCpu upload or launch",
+            ));
+        }
+        self.record_completion(id)
+    }
+
+    pub(crate) fn record_completion(&mut self, id: SlabId) -> Result<(), Refusal> {
         let slot = self.written.get_mut(id.0).ok_or_else(|| {
             refusal_802(
                 format!("/slab/{}", id.0),
@@ -284,13 +313,19 @@ impl BufferSet {
 
     /// Read-only view of an aligned host slab when this set belongs to `batch-cpu`.
     #[must_use]
-    pub fn cpu_slab(&self, id: SlabId) -> Option<&AlignedSlab> {
+    pub(crate) fn cpu_slab(&self, id: SlabId) -> Option<&AlignedSlab> {
         self.cpu_slabs.as_deref()?.get(id.0)
     }
 
     pub(crate) fn cpu_slabs_mut(&mut self) -> Option<&mut [AlignedSlab]> {
         self.cpu_slabs.as_deref_mut()
     }
+}
+
+#[test]
+fn host_slab_storage_is_aligned() {
+    let slab = AlignedSlab::new(SlabSpec::new("x", ElemType::F32, 32));
+    assert!((slab.as_bytes().as_ptr() as usize).is_multiple_of(SLAB_ALIGNMENT_BYTES));
 }
 
 /// Safe, non-allocating argument view passed to a `batch-cpu` kernel chunk.

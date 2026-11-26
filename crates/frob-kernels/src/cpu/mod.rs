@@ -13,7 +13,7 @@ use frob_core::refusal::Refusal;
 use crate::backend::{
     BackendIdentity, BufferLayout, BufferSet, CompiledLibrary, CpuKernelFn, Cx, ExpectedSlab,
     KernelArgs, KernelBackend, KernelLibrary, PlannedLaunch, SlabId, SlabSpec, Stage, StepPlan,
-    next_backend_tag, refusal_601, refusal_603, refusal_802,
+    next_backend_tag, refusal_601, refusal_802,
 };
 use crate::manifest::{
     BackendLimits, DeclaredOutput, KernelClass, KernelId, KernelManifest, ShapeClassCaps,
@@ -22,6 +22,22 @@ use crate::manifest::{
 use crate::receipt::{CancelOutcome, PhaseTimes, Receipt};
 
 type BoundaryHook = Box<dyn FnMut(usize, &Cx) + Send>;
+
+fn registration_refusal(kernel: &str, message: impl std::fmt::Display) -> Refusal {
+    refusal_802(
+        format!("/kernel/{kernel}"),
+        format!("kernel `{kernel}` registration refused: {message}"),
+        "valid manifest, footprint, bindings and CPU symbol",
+    )
+}
+
+fn stage_refusal(stage: &str, message: impl Into<String>) -> Refusal {
+    refusal_802(
+        format!("/stage/{stage}"),
+        message,
+        "compiled kernel and valid stage bindings",
+    )
+}
 
 struct CompiledCpuKernel {
     manifest: KernelManifest,
@@ -151,8 +167,8 @@ impl BatchCpu {
             launch.input_bindings().iter().map(|(_, id)| *id).collect();
 
         if !input_ids.is_disjoint(&output_ids) {
-            return Err(refusal_603(
-                &kernel.manifest.name,
+            return Err(stage_refusal(
+                launch.stage_name(),
                 "batch-cpu requires disjoint input and output slabs per stage",
             ));
         }
@@ -195,8 +211,8 @@ impl BatchCpu {
             (0..eff_workers).map(|_| BTreeMap::new()).collect();
         for (arg, id) in launch.output_bindings() {
             let (mut rest, elem_bytes) = raw_outputs.remove(id).ok_or_else(|| {
-                refusal_603(
-                    &kernel.manifest.name,
+                stage_refusal(
+                    launch.stage_name(),
                     format!("duplicate output binding on slab {}", id.0),
                 )
             })?;
@@ -227,7 +243,7 @@ impl BatchCpu {
         }
 
         for &sid in &output_ids {
-            bufs.mark_written(sid)?;
+            bufs.record_completion(sid)?;
         }
         Ok(eff_workers)
     }
@@ -248,7 +264,7 @@ impl KernelBackend for BatchCpu {
                     entry.program_footprint.as_ref(),
                     false,
                 )
-                .map_err(|e| refusal_603(&entry.manifest.name, e.to_string()))?;
+                .map_err(|e| registration_refusal(&entry.manifest.name, e))?;
             if !entry.compile_bindings.is_empty() {
                 entry
                     .manifest
@@ -259,10 +275,10 @@ impl KernelBackend for BatchCpu {
                         &lib.declared_outputs,
                         &[],
                     )
-                    .map_err(|e| refusal_603(&entry.manifest.name, e.to_string()))?;
+                    .map_err(|e| registration_refusal(&entry.manifest.name, e))?;
             }
             let Some(sym) = &entry.cpu_symbol else {
-                return Err(refusal_603(
+                return Err(registration_refusal(
                     &entry.manifest.name,
                     "batch-cpu requires KernelEntry.cpu_symbol",
                 ));
@@ -334,7 +350,7 @@ impl KernelBackend for BatchCpu {
             ));
         }
         target.as_bytes_mut().copy_from_slice(bytes);
-        bufs.mark_written(slab)?;
+        bufs.record_completion(slab)?;
         self.last_upload_s += t0.elapsed().as_secs_f64();
         Ok(())
     }
@@ -354,7 +370,7 @@ impl KernelBackend for BatchCpu {
 
         for stage in stages {
             let ck = self.compiled.get(&stage.kernel_id).ok_or_else(|| {
-                refusal_603(
+                stage_refusal(
                     &stage.name,
                     format!("uncompiled kernel id {}", stage.kernel_id),
                 )
@@ -400,8 +416,8 @@ impl KernelBackend for BatchCpu {
                     .iter()
                     .find(|l| l.arg == sb.arg)
                     .ok_or_else(|| {
-                        refusal_603(
-                            &ck.manifest.name,
+                        stage_refusal(
+                            &stage.name,
                             format!(
                                 "stage `{}` binds undeclared arg `{}` on kernel `{}`",
                                 stage.name, sb.arg, ck.manifest.name
@@ -409,8 +425,8 @@ impl KernelBackend for BatchCpu {
                         )
                     })?;
                 let req_elems = lay.alloc_extent.eval(class).ok_or_else(|| {
-                    refusal_603(
-                        &ck.manifest.name,
+                    stage_refusal(
+                        &stage.name,
                         format!(
                             "arg `{}` alloc_extent overflowed for class `{}`",
                             sb.arg, class.name
@@ -418,8 +434,8 @@ impl KernelBackend for BatchCpu {
                     )
                 })?;
                 if (spec.len as u64) < req_elems {
-                    return Err(refusal_603(
-                        &ck.manifest.name,
+                    return Err(stage_refusal(
+                        &stage.name,
                         format!(
                             "slab `{}` for arg `{}` has len {} < required alloc_extent {}",
                             spec.name, sb.arg, spec.len, req_elems
@@ -446,8 +462,8 @@ impl KernelBackend for BatchCpu {
                 }
                 if write_args.contains(sb.arg.as_str()) {
                     if !seen_out_slabs.insert(sb.slab) {
-                        return Err(refusal_603(
-                            &ck.manifest.name,
+                        return Err(stage_refusal(
+                            &stage.name,
                             format!(
                                 "stage `{}` binds multiple outputs to slab {}",
                                 stage.name, sb.slab.0
@@ -470,8 +486,8 @@ impl KernelBackend for BatchCpu {
             }
 
             if !seen_in_slabs.is_disjoint(&seen_out_slabs) {
-                return Err(refusal_603(
-                    &ck.manifest.name,
+                return Err(stage_refusal(
+                    &stage.name,
                     format!(
                         "stage `{}` aliases an input and output slab (disjoint slabs required on batch-cpu)",
                         stage.name
@@ -487,11 +503,11 @@ impl KernelBackend for BatchCpu {
                     &declared_outputs,
                     &[],
                 )
-                .map_err(|e| refusal_603(&ck.manifest.name, e.to_string()))?;
+                .map_err(|e| stage_refusal(&stage.name, e.to_string()))?;
 
             let lanes = u32::try_from(class.worlds).map_err(|_| {
-                refusal_603(
-                    &ck.manifest.name,
+                stage_refusal(
+                    &stage.name,
                     format!("world count {} exceeds u32::MAX", class.worlds),
                 )
             })?;
@@ -547,7 +563,7 @@ impl KernelBackend for BatchCpu {
                 break;
             }
             let Some(ck) = self.compiled.get(&step.kernel_id()) else {
-                launch_err = Some(refusal_603(
+                launch_err = Some(stage_refusal(
                     step.stage_name(),
                     format!("missing compiled kernel {}", step.kernel_id()),
                 ));

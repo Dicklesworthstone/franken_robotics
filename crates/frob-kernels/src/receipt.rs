@@ -221,11 +221,10 @@ impl Receipt {
 
     /// Fail-closed M0 agent-boundary guard (`INV-SPARK-02`, `FROB-REF-606`).
     ///
-    /// Rejects missing doctrine fields with `FROB-REF-990`, missing fingerprint
-    /// digests with `FROB-REF-606` (`digest: null`), and any M0 receipt before
-    /// live fingerprint currency (`BD-029` / `N21c-05`) and placement
-    /// attestation (`N21b-28`) are wired — never silently admitting an arbitrary
-    /// non-blank digest, unplaced receipt, or `citable = false` receipt.
+    /// Rejects missing doctrine fields with `FROB-REF-990` and missing or
+    /// unverified fingerprints with `FROB-REF-606` (`digest: null`). Live
+    /// fingerprint currency (`BD-029` / `N21c-05`) and placement attestation
+    /// (`N21b-28`) are required for admission.
     pub fn validate_agent_boundary(&self, device: &str) -> Result<(), Refusal> {
         if let Err(err) = self.validate() {
             return Err(Refusal::new(
@@ -282,6 +281,6 @@ impl Receipt {
                 Repair::new("Run on batch-cpu"),
             ],
         )
-        .with_fingerprint(RefusalFingerprint::new(device, digest)))
+        .with_fingerprint(RefusalFingerprint::missing(device)))
     }
 }

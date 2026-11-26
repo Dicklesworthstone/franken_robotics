@@ -66,10 +66,10 @@ Hold the shared C-dialect kernel data (`dialect/prelude_cuda.h`, `dialect/prelud
 
 - `FROB-REF-251` (exit 3, `after-change`): raised by `frob_kir::dialect_lint::lint` whenever any dialect source or compile-option set violates rules 1, 2, 3, 4, or 6.
 - `FROB-REF-601` (exit 6, `backoff`, carries `RefusalFingerprint`): raised by `KernelBackend` (`BatchCpu`) only when the backend/device is unavailable or lost.
-- `FROB-REF-603` (exit 6, `after-change`, carries `RefusalFingerprint`): raised by `KernelBackend::compile` / `plan` with verbatim diagnostics when a manifest fails `N21b-01` static/KIR-footprint/alias/binding validation, aliases input/output slabs on `BatchCpu`, or lacks a backend source.
+- `FROB-REF-603` (exit 6, `after-change`, carries `RefusalFingerprint`): reserved for a device compiler rejection with verbatim diagnostics.
 - `FROB-REF-606` (exit 6, `after-change`, carries `RefusalFingerprint`): raised fail-closed by `Receipt::validate_agent_boundary` when a device result lacks a hardware fingerprint digest (`digest: null`) or cannot yet be verified as current and citable (first repair: `frob spark fingerprint`).
-- `FROB-REF-802` (exit 3, `after-change`, non-`6xx`): raised for caller API contract violations (out-of-range slab ID, `upload`/`read_back` slice length mismatch, reading an unwritten slab before producer completion, mismatched `StepPlan`/`BufferSet` allocation or descriptor, or re-entrant launch/upload/read_back).
-- `FROB-REF-990` (exit 9, `never`): raised when a receipt fails `Receipt::validate()` (`AE-01`..`AE-12` missing).
+- `FROB-REF-802` (exit 3, `after-change`, non-`6xx`): raised for invalid kernel registrations and stage bindings, out-of-range slab IDs, `upload`/`read_back` size mismatches, premature readback or caller-marked CPU completion, mismatched `StepPlan`/`BufferSet`, or re-entrant host calls.
+- `FROB-REF-990` (exit 9, `never`): raised when a receipt fails `Receipt::validate()` or the backend's compiled library omits the submitted kernel.
 
 ## Determinism class
 

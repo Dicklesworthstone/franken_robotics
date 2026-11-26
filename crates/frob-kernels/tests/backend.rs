@@ -9,11 +9,11 @@ use std::sync::{Arc, mpsc};
 
 use frob_core::evidence::DetClass;
 use frob_core::id::{Blake3, hash_blob};
-use frob_core::refusal::RefusalCode;
+use frob_core::refusal::{Refusal, RefusalCode};
 use frob_core::registry::toml::{self, Fields};
 use frob_kernels::backend::{
-    BufferLayout, CpuKernelSymbol, Cx, KernelArgs, KernelBackend, KernelEntry, KernelLibrary,
-    SLAB_ALIGNMENT_BYTES, SlabId, SlabSpec, Stage, StageBinding,
+    BufferLayout, BufferSet, CpuKernelSymbol, Cx, KernelArgs, KernelBackend, KernelEntry,
+    KernelLibrary, SlabId, SlabSpec, Stage, StageBinding,
 };
 use frob_kernels::cpu::BatchCpu;
 use frob_kernels::dialect::{BackendTarget, assemble_and_lint};
@@ -221,12 +221,12 @@ fn receipt_missing_field_rejected() {
         .validate_agent_boundary("batch-cpu")
         .expect_err("missing fingerprint must refuse at agent boundary");
     assert_eq!(err606.code, RefusalCode::FrobRef606);
+    let wire = Refusal::from_json(&err606.to_json()).expect("606 with a valid fingerprint block");
     assert_eq!(
-        err606
-            .fingerprint
+        wire.fingerprint
             .as_ref()
-            .and_then(|fp| fp.digest.as_deref()),
-        None
+            .map(|fp| (fp.device.as_str(), fp.digest.as_deref())),
+        Some(("batch-cpu", None))
     );
     assert!(err606.repairs[0].action.contains("frob spark fingerprint"));
 
@@ -242,9 +242,10 @@ fn receipt_missing_field_rejected() {
         err_stale
             .fingerprint
             .as_ref()
-            .and_then(|fp| fp.digest.as_deref()),
-        Some("deadbeef")
+            .map(|fp| (fp.device.as_str(), fp.digest.as_deref())),
+        Some(("batch-cpu", None))
     );
+    assert_eq!(err_stale.observed, "deadbeef");
 }
 
 #[test]
@@ -296,7 +297,7 @@ fn undeclared_alias_refused() {
     let err = cpu
         .compile(&lib)
         .expect_err("undeclared write alias on `a` must refuse at compile");
-    assert_eq!(err.code, RefusalCode::FrobRef603);
+    assert_eq!(err.code, RefusalCode::FrobRef802);
     assert!(err.message.contains("K-selftest"));
     assert!(err.message.contains("slab-shared") && err.message.contains("out_f"));
 }
@@ -323,7 +324,7 @@ fn kir_program_footprint_evidence_admitted_and_required() {
             declared_outputs: Vec::new(),
         })
         .expect_err("KirProgram manifest without ProgramFootprint must fail compile");
-    assert_eq!(err.code, RefusalCode::FrobRef603);
+    assert_eq!(err.code, RefusalCode::FrobRef802);
     assert!(err.message.contains("K-selftest-kir"));
 
     // Positive control: supplying matching ProgramFootprint compiles cleanly.
@@ -358,7 +359,7 @@ fn plan_rejects_bad_binding() {
         .expect("compile succeeds");
     let kid = compiled.id_for("K-selftest").unwrap();
 
-    let bufs = cpu
+    let _bufs = cpu
         .allocate(&BufferLayout {
             slabs: vec![
                 SlabSpec::new("a", ElemType::F32, 32),
@@ -370,11 +371,6 @@ fn plan_rejects_bad_binding() {
             ],
         })
         .expect("allocate succeeds");
-    assert_eq!(
-        (bufs.cpu_slab(SlabId(0)).unwrap().as_bytes().as_ptr() as usize) % SLAB_ALIGNMENT_BYTES,
-        0
-    );
-
     let stage = Stage {
         name: "bad-stage".into(),
         kernel_id: kid,
@@ -383,7 +379,7 @@ fn plan_rejects_bad_binding() {
     let err = cpu
         .plan(&[stage], &class)
         .expect_err("binding f32 slab to u32 arg must fail in plan");
-    assert_eq!(err.code, RefusalCode::FrobRef603);
+    assert_eq!(err.code, RefusalCode::FrobRef802);
     let lower = err.message.to_ascii_lowercase();
     assert!(
         err.message.contains("x"),
@@ -454,15 +450,10 @@ fn launch_rejects_mismatched_buffer_set() {
         !bufs_b.is_written(SlabId(4)) && !bufs_b.is_written(SlabId(5)),
         "mismatched BufferSet outputs must remain unwritten"
     );
-    assert!(
-        bufs_b
-            .cpu_slab(SlabId(4))
-            .unwrap()
-            .as_bytes()
-            .iter()
-            .all(|&b| b == 0),
-        "no bytes written to output slab on refused launch"
-    );
+    let mut readback = [0xa5; 32 * 4];
+    cpu.read_back(&bufs_b, SlabId(4), &mut readback)
+        .expect_err("refused launch exposes no output bytes");
+    assert_eq!(readback, [0xa5; 32 * 4]);
 }
 
 #[test]
@@ -684,16 +675,29 @@ fn cancelled_before_launch_withholds_output() {
 
 #[test]
 fn read_back_only_after_completion() {
-    // Compile-time exclusive borrow enforcement lives in the doctest on `backend.rs`;
-    // at runtime, reading an allocated output slab before its producer completes is refused.
     let mut cpu = BatchCpu::new(1);
-    let bufs = cpu.allocate(&selftest_layout(16)).expect("allocate");
-    let mut out = vec![0u8; 16 * 4];
+    let layout = selftest_layout(16);
+    let mut bufs = cpu.allocate(&layout).expect("allocate");
+    let output = SlabId(4);
+    let err = bufs
+        .mark_written(output)
+        .expect_err("callers cannot mark CPU output complete");
+    assert_eq!(err.code, RefusalCode::FrobRef802);
+    assert!(!bufs.is_written(output));
+    assert!(!format!("{bufs:?}").contains("raw:"));
+    let mut out = [0xa5; 16 * 4];
     let err = cpu
-        .read_back(&bufs, SlabId(4), &mut out)
+        .read_back(&bufs, output, &mut out)
         .expect_err("read_back of unwritten output slab before launch must refuse");
     assert_eq!(err.code, RefusalCode::FrobRef802);
     assert!(err.message.contains("out_f"));
+    assert_eq!(out, [0xa5; 16 * 4]);
+
+    let mut device_bufs = BufferSet::for_device(&layout);
+    device_bufs
+        .mark_written(output)
+        .expect("record device completion");
+    assert!(device_bufs.is_written(output));
 }
 
 #[test]

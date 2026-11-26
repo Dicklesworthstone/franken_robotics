@@ -47,22 +47,33 @@ case "${BACKEND}" in
   *) _e2e_harness_error "unknown Spark backend: ${BACKEND}" ;;
 esac
 
+MANIFEST="${E2E_REPO_ROOT}/Cargo.toml"
+
+# Cargo and its offload shim discover toolchain and config from their cwd.
+_in_workspace() {
+  local work_dir="$PWD" status=0
+  cd "${E2E_REPO_ROOT}" || return
+  "$@" || status=$?
+  cd "${work_dir}" || return
+  return "${status}"
+}
+
 TARGET_BASE="${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/frob-spark-refusals-${E2E_RUN_ID}"
 mkdir -p "${TARGET_BASE}"
 
 e2e_step "registry_suite" "Verify FROB-REF-601..618 registry rows, exit code 6, repairs, and code_gen parity"
 
 REG_FILE="${E2E_REPO_ROOT}/registries/refusals.toml"
-e2e_cmd --name "cargo_test_frob_core_spark_refusals" -- \
+_in_workspace e2e_cmd --name "cargo_test_frob_core_spark_refusals" -- \
   env "CARGO_TARGET_DIR=${TARGET_BASE}/frob-core" \
-  cargo test --offline -j 1 -p frob-core --test refusal_registry_spark --test refusal_registry_numerics
+  cargo test --manifest-path "${MANIFEST}" --offline -j 1 -p frob-core --test refusal_registry_spark --test refusal_registry_numerics
 e2e_assert_eq "cargo_test_frob_core_spark_refusals_exit" "${E2E_LAST_EXIT}" "0"
 
 e2e_step "refusal_601_no_daemon" "Submit a device-tier run to the in-process dispatcher without a daemon"
 # The example supplies a fixture verb and executes the real dispatch path.
-e2e_expect_refusal FROB-REF-601 6 -- \
+_in_workspace e2e_expect_refusal FROB-REF-601 6 -- \
   env "CARGO_TARGET_DIR=${TARGET_BASE}/dispatch" \
-  cargo run --offline -j 1 -p frob-verbs --example frob_rpc_call -- \
+  cargo run --manifest-path "${MANIFEST}" --offline -j 1 -p frob-verbs --example frob_rpc_call -- \
     --backend in-process --verb sim.gpu --args '{"design":"quad-a","duration_s":1.0,"tier":"device"}'
 if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
   e2e_assert_eq "refusal_601_exit" "${E2E_LAST_EXIT}" "6"
@@ -72,9 +83,9 @@ if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
 fi
 
 e2e_step "refusal_606_receipt" "Check the missing-fingerprint refusal at the receipt boundary"
-e2e_cmd --name "cargo_test_missing_fingerprint" -- \
+_in_workspace e2e_cmd --name "cargo_test_missing_fingerprint" -- \
   env "CARGO_TARGET_DIR=${TARGET_BASE}/frob-kernels" \
-  cargo test --offline -j 1 -p frob-kernels --test backend -- receipt_missing_field_rejected --exact
+  cargo test --manifest-path "${MANIFEST}" --offline -j 1 -p frob-kernels --test backend -- receipt_missing_field_rejected --exact
 e2e_assert_eq "refusal_606_receipt_test_exit" "${E2E_LAST_EXIT}" "0"
 if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
   receipt_test_count="$(awk '/^test receipt_missing_field_rejected \.\.\. ok$/ { count++ } END { print count+0 }' "${E2E_LAST_STDOUT}")"

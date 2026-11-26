@@ -444,6 +444,23 @@ fn schema(req: &ResolvedRequest, reg: &RefusalRegistry) -> Result<Tree, HandlerF
                 PROGRESS_SCHEMA_ID => Some(PROGRESS_SCHEMA_JSON),
                 _ => lookup_schema(name),
             };
+            if raw.is_none() {
+                let repairs: Vec<_> = VERBS
+                    .iter()
+                    .filter(|entry| entry.input_schema.as_str() == name)
+                    .map(|entry| Repair::new(format!("frob schema --verb {} --in", entry.name)))
+                    .collect();
+                if !repairs.is_empty() {
+                    let mut fields = argument_fields("id", "ambiguous input schema identifier");
+                    fields.observed = name.to_owned();
+                    fields.required = "a verb-qualified input schema selection".into();
+                    fields.repairs = repairs;
+                    return Err(HandlerFault::Refused {
+                        code: "FROB-REF-802".into(),
+                        fields,
+                    });
+                }
+            }
             return schema_with_example(schema_tree(
                 raw.ok_or_else(|| unknown_schema_name("id", name))?,
             )?);

@@ -13,12 +13,25 @@ pub fn locate<'a>(entries: &'a [VerbEntry], args: &[String]) -> Option<(&'a Verb
 }
 
 pub fn parse(entry: &VerbEntry, schema: &Tree, args: &[String]) -> Result<Tree, ArgumentError> {
-    let positionals = schema
-        .get("x-frob-cli")
-        .and_then(|cli| cli.get("positional"))
-        .and_then(Tree::as_array)
-        .unwrap_or_default()
-        .iter()
-        .filter_map(Tree::as_str);
-    parse_arguments(schema, &entry.common_properties(), positionals, args)
+    parse_arguments(schema, &entry.common_properties(), args)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use frob_verbs::registry::lookup;
+
+    #[test]
+    fn cli_parses_all_registered_positional_forms() {
+        let entry = lookup("doctor").unwrap();
+        for schema in [
+            r#"{"x-frob-cli":{"positional":["section"]},"properties":{"section":{"type":"string","x-frob-positional":true}}}"#,
+            r#"{"x-frob-positionals":["section"],"properties":{"section":{"type":"string"}}}"#,
+            r#"{"properties":{"section":{"type":"string","x-frob-positional":true}}}"#,
+        ] {
+            let doc = Tree::parse(schema.as_bytes()).unwrap();
+            let parsed = parse(entry, &doc, &["stack".into()]).unwrap();
+            assert_eq!(parsed.get("section").and_then(Tree::as_str), Some("stack"));
+        }
+    }
 }

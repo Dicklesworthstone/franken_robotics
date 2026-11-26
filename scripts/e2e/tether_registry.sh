@@ -289,3 +289,32 @@ run_plant "eight_tools" "${PLANTS_DIR}/eight_tools.toml" "design.op8" "RL-04" "e
 run_plant "wait_range" "${PLANTS_DIR}/wait_range.toml" "sim.run" "RL-09" "mcp-wait-out-of-range"
 
 e2e_skip "plant_bare_int" "RL-INT integer-type lint activates at M1 when N32a-07 lands"
+
+e2e_step "ambiguous_input_id" "An input-only schema with different served forms needs a verb"
+SHARED_REGISTRY="${PLANTS_DIR}/shared_input.toml"
+cp "${E2E_REPO_ROOT}/registries/verbs.toml" "${SHARED_REGISTRY}"
+cat >> "${SHARED_REGISTRY}" <<'EOF'
+
+[[verb]]
+name = "sim.schema-probe"
+cluster = "sim"
+kind = "read"
+tier = "S"
+capabilities = ["sim:read"]
+input_schema = "frob.sim.run.in/1"
+output_schema = "frob.sim.estimate.out/1"
+refusals = ["FROB-REF-802"]
+idempotent = true
+cost_model = "static"
+first_milestone = "M0"
+task_clusters = ["simulate"]
+examples = ["frob sim schema-probe g1 --tier referee --json"]
+purpose = "Exercise a second served form of a shared input schema."
+use_when = "Testing the schema operator."
+owner = "frob-arena"
+EOF
+e2e_expect_refusal FROB-REF-802 3 -- +  env "CARGO_TARGET_DIR=${TARGET_BASE}/shared-input" "FROB_VERBS_REGISTRY=${SHARED_REGISTRY}" +  cargo run --locked -p frob-cli --bin frob -- schema --id frob.sim.run.in/1 --json --no-daemon
+if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
+  e2e_assert_eq "ambiguous_input_diagnostic" "$(e2e_get /refusal/message)" "ambiguous input schema identifier"
+  e2e_assert_eq "ambiguous_input_repair" "$(e2e_get /refusal/repairs/0/action)" "frob schema --verb sim.run --in"
+fi

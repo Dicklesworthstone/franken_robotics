@@ -181,6 +181,8 @@ mod tests {
     use frob_core::registry::refusals::RefusalRegistry;
 
     use super::*;
+    use crate::dispatch::{InputSchema, Pipeline, Request};
+    use crate::envelope::{Tree, embedded_registry};
     use crate::registry::codegen::{compile_registry, compile_registry_bytes};
 
     const SYNTH_REFUSALS_TOML: &str = r#"schema = "frob.refusals/1"
@@ -1288,6 +1290,50 @@ conformance_only = ["mutant"]
     }
 
     #[test]
+    fn stripped_open_schema_rejects_typed_request() {
+        let entry = *lookup("sim.run").unwrap();
+        let registry = embedded_registry().unwrap();
+        for conformance in [false, true] {
+            let (_, report) =
+                parse_and_lint(sim_run_specimen().as_bytes(), &synth_ctx(conformance)).unwrap();
+            let raw = &report.embedded_inputs[entry.name];
+            let merged = entry.input_schema_with_common_fields_json(raw).unwrap();
+            let schema = InputSchema::compile_for(&entry, &merged, registry).unwrap();
+            let pipeline = Pipeline::new(
+                vec![entry],
+                [(entry.name.into(), schema)].into(),
+                registry.clone(),
+            );
+            let request =
+                |json: &str| Request::new(entry.name, Tree::parse(json.as_bytes()).unwrap());
+            assert!(
+                pipeline
+                    .validate_request(&request(r#"{"design":"g1","ordinary_extra":true}"#))
+                    .unwrap()
+                    .is_ok()
+            );
+            let result = pipeline
+                .validate_request(&request(r#"{"design":"g1","mutant":"plant"}"#))
+                .unwrap();
+            if conformance {
+                assert!(result.is_ok());
+            } else {
+                let refusal = result.unwrap_err();
+                assert_eq!(refusal.refusal_code(), Some("FROB-REF-802"));
+                assert_eq!(
+                    refusal
+                        .tree()
+                        .get("refusal")
+                        .unwrap()
+                        .get("pointer")
+                        .and_then(Tree::as_str),
+                    Some("/mutant")
+                );
+            }
+        }
+    }
+
+    #[test]
     fn shared_schema_strips_are_per_use() {
         let mut reg = ParsedRegistry::parse_toml(sim_run_specimen().as_bytes()).unwrap();
         let mut other = reg.verbs[0].clone();
@@ -1298,12 +1344,19 @@ conformance_only = ["mutant"]
         reg.verbs.push(other);
 
         let report = lint_registry(&reg, &synth_ctx(false)).unwrap();
-        let run = &report.embedded_inputs["sim.run"];
-        let other = &report.embedded_inputs["sim.other"];
-        let output = &report.embedded_schemas["frob.sim.run.in/1"];
-        assert!(!run.contains("\"mutant\"") && run.contains("\"steps\""));
-        assert!(other.contains("\"mutant\"") && !other.contains("\"steps\""));
-        assert!(output.contains("\"mutant\"") && output.contains("\"steps\""));
+        let properties = |schema: &str| {
+            Tree::parse(schema.as_bytes())
+                .unwrap()
+                .get("properties")
+                .unwrap()
+                .clone()
+        };
+        let run = properties(&report.embedded_inputs["sim.run"]);
+        let other = properties(&report.embedded_inputs["sim.other"]);
+        let output = properties(&report.embedded_schemas["frob.sim.run.in/1"]);
+        assert!(run.get("mutant").is_none() && run.get("steps").is_some());
+        assert!(other.get("mutant").is_some() && other.get("steps").is_none());
+        assert!(output.get("mutant").is_some() && output.get("steps").is_some());
     }
 
     #[test]

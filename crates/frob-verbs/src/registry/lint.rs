@@ -13,7 +13,7 @@ use frob_core::registry::refusals::RefusalRegistry;
 
 use crate::envelope::{Schema, Tree};
 
-use super::arguments::parse_arguments;
+use super::arguments::{parse_arguments, positional_names};
 use super::entry::{Kind, Milestone, OwnedVerbEntry, ParseError, ParsedRegistry, Tier};
 use super::names::{base_tool_owner, is_base_verb, tool_name, validate_verb_name};
 use super::schema_id::OwnedSchemaId;
@@ -789,10 +789,12 @@ pub fn lint_registry(reg: &ParsedRegistry, ctx: &LintContext) -> Result<LintRepo
         }
 
         // RL-24: every name in conformance_only must be an optional, non-positional input property.
+        let input = Tree::from_json(in_admitted.value());
+        let positionals = positional_names(&input);
         for prop_name in &entry.conformance_only {
             let is_prop = in_info.properties.contains_key(prop_name);
             let is_req = in_info.required.contains(prop_name);
-            let is_pos = in_info.positionals.contains(prop_name);
+            let is_pos = positionals.contains(&prop_name.as_str());
             if !is_prop || is_req || is_pos {
                 let reason = if !is_prop {
                     "is not a property of the input schema"
@@ -1002,7 +1004,6 @@ struct PropMeta {
 struct InputSchemaInfo {
     properties: BTreeMap<String, PropMeta>,
     required: BTreeSet<String>,
-    positionals: Vec<String>,
 }
 
 fn extract_input_schema_info(root: &Json<'_>) -> InputSchemaInfo {
@@ -1011,17 +1012,6 @@ fn extract_input_schema_info(root: &Json<'_>) -> InputSchemaInfo {
         for item in req_arr {
             if let Some(s) = item.as_str() {
                 info.required.insert(s.to_owned());
-            }
-        }
-    }
-    let declared_positionals = root
-        .get("x-frob-cli")
-        .and_then(|cli| cli.get("positional"))
-        .or_else(|| root.get("x-frob-positionals"));
-    if let Some(pos_arr) = declared_positionals.and_then(|value| value.as_array()) {
-        for item in pos_arr {
-            if let Some(s) = item.as_str() {
-                info.positionals.push(s.to_owned());
             }
         }
     }
@@ -1041,15 +1031,6 @@ fn extract_input_schema_info(root: &Json<'_>) -> InputSchemaInfo {
                 && prefix.bytes().all(|b| b.is_ascii_lowercase())
             {
                 meta.identity_prefix = Some(prefix.to_owned());
-            }
-            if member
-                .value
-                .get("x-frob-positional")
-                .and_then(|v| v.as_bool())
-                == Some(true)
-                && !info.positionals.contains(&member.name)
-            {
-                info.positionals.push(member.name.clone());
             }
             info.properties.insert(member.name.clone(), meta);
         }
@@ -1145,13 +1126,8 @@ fn validate_example(
     }
 
     let common = entry.common_properties();
-    let mut instance = parse_arguments(
-        raw,
-        &common,
-        info.positionals.iter().map(String::as_str),
-        &args,
-    )
-    .map_err(|(name, reason)| error(name, reason.to_owned()))?;
+    let mut instance = parse_arguments(raw, &common, &args)
+        .map_err(|(name, reason)| error(name, reason.to_owned()))?;
     if let Tree::Obj(fields) = &mut instance {
         for (name, value) in fields {
             if let Tree::Str(raw) = value {
@@ -1288,8 +1264,7 @@ fn shell_split(input: &str) -> Result<Vec<String>, &'static str> {
     Ok(tokens)
 }
 
-/// Canonicalize a JSON schema object while removing every named property from top-level
-/// `properties` (used when building without `feature = "conformance"`).
+/// Remove and forbid the named root properties in production, including on open schemas.
 fn canonical_json_strip_properties(
     root: &Json<'_>,
     strip: &BTreeSet<String>,
@@ -1320,9 +1295,28 @@ fn write_stripped_root(
                     }
                     Ok(())
                 })?;
-            } else {
+            } else if member.name != "propertyNames" || strip.is_empty() {
                 o.member_term(&member.name, &member.value)?;
             }
+        }
+        if !strip.is_empty() {
+            o.object("propertyNames", |names| {
+                names.array("allOf", |rules| {
+                    if let Some(existing) = node.get("propertyNames") {
+                        rules.push_term(existing)?;
+                    }
+                    rules.push_object(|rule| {
+                        rule.object("not", |not| {
+                            not.array("enum", |keys| {
+                                for name in strip {
+                                    keys.push_str(name);
+                                }
+                                Ok(())
+                            })
+                        })
+                    })
+                })
+            })?;
         }
         Ok(())
     })

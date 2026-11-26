@@ -4,14 +4,38 @@ use crate::envelope::Tree;
 
 use super::derive::CommonProperty;
 
+pub(super) fn positional_names(schema: &Tree) -> Vec<&str> {
+    let mut names: Vec<_> = schema
+        .get("x-frob-cli")
+        .and_then(|cli| cli.get("positional"))
+        .or_else(|| schema.get("x-frob-positionals"))
+        .and_then(Tree::as_array)
+        .unwrap_or_default()
+        .iter()
+        .filter_map(Tree::as_str)
+        .collect();
+    for (name, property) in schema
+        .get("properties")
+        .and_then(Tree::as_object)
+        .unwrap_or_default()
+    {
+        if property.get("x-frob-positional").and_then(Tree::as_bool) == Some(true)
+            && !names.contains(&name.as_str())
+        {
+            names.push(name);
+        }
+    }
+    names
+}
+
 /// Parse verb arguments after the command path and process options have been consumed.
-pub fn parse_arguments<'a>(
+pub fn parse_arguments(
     schema: &Tree,
     common: &[CommonProperty],
-    mut positionals: impl Iterator<Item = &'a str>,
     args: &[String],
 ) -> Result<Tree, (String, &'static str)> {
     let props = schema.get("properties");
+    let mut positionals = positional_names(schema).into_iter();
     let mut args = args.iter().peekable();
     let mut members: Vec<(String, Tree)> = Vec::new();
     let mut flags = true;

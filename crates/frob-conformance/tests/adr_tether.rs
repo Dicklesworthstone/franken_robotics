@@ -212,15 +212,14 @@ fn parse_adr_index(bytes: &[u8]) -> Result<AdrIndex, String> {
     let mut top = Fields::new(root, ADR_INDEX_PATH);
     let schema = top.require_str("schema").map_err(|e| e.to_string())?;
     if schema != ADR_INDEX_SCHEMA {
-        return Err(format!(
+        return Err(top.fail(format!(
             "invalid schema `{schema}`, expected `{ADR_INDEX_SCHEMA}`"
-        ));
+        )));
     }
     let subsystem = top.require_str("subsystem").map_err(|e| e.to_string())?;
     let current_milestone = top
         .require_str("current_milestone")
         .map_err(|e| e.to_string())?;
-    let _ = milestone_order(&current_milestone)?;
     let principles_doc = top
         .require_str("principles_doc")
         .map_err(|e| e.to_string())?;
@@ -232,6 +231,7 @@ fn parse_adr_index(bytes: &[u8]) -> Result<AdrIndex, String> {
         .require_array("principle_lint")
         .map_err(|e| e.to_string())?;
     top.finish().map_err(|e| e.to_string())?;
+    let _ = milestone_order(&current_milestone)?;
 
     let mut records = Vec::with_capacity(raw_records.len());
     for (idx, sp) in raw_records.into_iter().enumerate() {
@@ -686,6 +686,44 @@ fn adr_index_complete() {
 }
 
 #[test]
+fn adr_index_malformed_top_level_returns_err_without_fields_drop_panic() {
+    let root = workspace_root();
+    let base =
+        fs::read_to_string(root.join(ADR_INDEX_PATH)).expect("read registries/adr/tether.toml");
+
+    // 1. Wrong schema header must return Err without panicking in Fields::drop.
+    let bad_schema = base.replace(
+        r#"schema = "frob.adr-index/1""#,
+        r#"schema = "frob.adr-index/99""#,
+    );
+    assert_ne!(
+        bad_schema, base,
+        "fixture must contain expected schema line"
+    );
+    let err_schema = parse_adr_index(bad_schema.as_bytes())
+        .expect_err("wrong schema must return Err without Fields drop panic");
+    assert!(
+        err_schema.contains("invalid schema") && err_schema.contains("frob.adr-index/99"),
+        "unexpected schema error: {err_schema}"
+    );
+
+    // 2. Out-of-range and malformed current_milestone must return Err without Fields::drop panic.
+    for (bad_val, needle) in [("M9", "out of range"), ("bad-ms", "invalid milestone")] {
+        let bad_ms = base.replace(
+            r#"current_milestone = "M0""#,
+            &format!(r#"current_milestone = "{bad_val}""#),
+        );
+        assert_ne!(bad_ms, base, "fixture must contain current_milestone = M0");
+        let err_ms = parse_adr_index(bad_ms.as_bytes())
+            .expect_err("invalid current_milestone must return Err without Fields drop panic");
+        assert!(
+            err_ms.contains(needle) && err_ms.contains(bad_val),
+            "unexpected milestone error for `{bad_val}`: {err_ms}"
+        );
+    }
+}
+
+#[test]
 fn adr_enforced_by_resolves() {
     let root = workspace_root();
     let bytes = fs::read(root.join(ADR_INDEX_PATH)).expect("read registries/adr/tether.toml");
@@ -741,6 +779,103 @@ fn principle_lints_registered() {
     );
 }
 
+fn strip_toml_comment(line: &str) -> &str {
+    let (mut in_double, mut in_single, mut escaped) = (false, false, false);
+    for (idx, ch) in line.char_indices() {
+        if in_double {
+            if escaped {
+                escaped = false;
+            } else if ch == '\\' {
+                escaped = true;
+            } else if ch == '"' {
+                in_double = false;
+            }
+        } else if in_single {
+            if ch == '\'' {
+                in_single = false;
+            }
+        } else if ch == '"' {
+            in_double = true;
+        } else if ch == '\'' {
+            in_single = true;
+        } else if ch == '#' {
+            return &line[..idx];
+        }
+    }
+    line
+}
+
+fn toml_bracket_delta(line: &str) -> i32 {
+    let (mut in_double, mut in_single, mut escaped) = (false, false, false);
+    let mut delta = 0i32;
+    for ch in line.chars() {
+        if in_double {
+            if escaped {
+                escaped = false;
+            } else if ch == '\\' {
+                escaped = true;
+            } else if ch == '"' {
+                in_double = false;
+            }
+        } else if in_single {
+            if ch == '\'' {
+                in_single = false;
+            }
+        } else {
+            match ch {
+                '"' => in_double = true,
+                '\'' => in_single = true,
+                '[' | '{' => delta += 1,
+                ']' | '}' => delta -= 1,
+                _ => {}
+            }
+        }
+    }
+    delta
+}
+
+/// Read `[package].name` from a standard Cargo manifest (`Cargo.toml`).
+///
+/// Cargo manifests may use standard TOML dotted keys (e.g. `version.workspace = true`),
+/// which sit outside `frob_core::registry::toml`'s strict registry subset.
+fn read_cargo_package_name(text: &str) -> Result<Option<String>, String> {
+    let mut in_package = false;
+    let mut bracket_depth = 0i32;
+    let mut found: Option<String> = None;
+
+    for raw_line in text.lines() {
+        let trimmed = strip_toml_comment(raw_line).trim();
+        if trimmed.is_empty() {
+            continue;
+        }
+        if bracket_depth <= 0 && trimmed.starts_with('[') {
+            in_package = trimmed
+                .strip_prefix('[')
+                .and_then(|s| s.strip_suffix(']'))
+                .is_some_and(|inner| inner.trim() == "package");
+            continue;
+        }
+        if in_package
+            && bracket_depth <= 0
+            && let Some((lhs, _)) = trimmed.split_once('=')
+            && lhs.trim() == "name"
+        {
+            if found.is_some() {
+                return Err("duplicate `[package].name` key".to_owned());
+            }
+            let tbl = toml::parse(trimmed.as_bytes()).map_err(|e| e.to_string())?;
+            let name = tbl
+                .get("name")
+                .and_then(Value::as_str)
+                .ok_or_else(|| "`[package].name` must be a string".to_owned())?;
+            found = Some(name.to_owned());
+        }
+        bracket_depth += toml_bracket_delta(trimmed);
+    }
+
+    Ok(found)
+}
+
 #[test]
 fn ownership_map_matches_crate_map() {
     let root = workspace_root();
@@ -774,17 +909,13 @@ fn ownership_map_matches_crate_map() {
         );
         let manifest_path = root.join(manifest_rel);
         if manifest_path.is_file() {
-            let manifest_bytes = fs::read(&manifest_path)
+            let manifest_text = fs::read_to_string(&manifest_path)
                 .unwrap_or_else(|e| panic!("failed to read `{manifest_rel}`: {e}"));
-            let tbl = toml::parse(&manifest_bytes)
-                .unwrap_or_else(|e| panic!("failed to parse `{manifest_rel}`: {e}"));
-            let pkg_name = tbl
-                .get("package")
-                .and_then(Value::as_table)
-                .and_then(|p| p.get("name"))
-                .and_then(Value::as_str);
+            let pkg_name = read_cargo_package_name(&manifest_text).unwrap_or_else(|e| {
+                panic!("failed to read `[package].name` in `{manifest_rel}`: {e}")
+            });
             assert_eq!(
-                pkg_name,
+                pkg_name.as_deref(),
                 Some(crate_name),
                 "manifest `{manifest_rel}` package.name must equal `{crate_name}`"
             );

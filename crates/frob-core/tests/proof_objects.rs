@@ -9,19 +9,24 @@ use std::path::{Path, PathBuf};
 use frob_core::evidence::EvidenceClass;
 use frob_core::id::hash_blob;
 use frob_core::proof::{
-    AliasPairPayload, AliasScope, Assumption, AssumptionValue, Axis, Binder, Bound, BoundEnd,
-    BoxOutcome, Cell, CellEndForces, CellPolarity, CellRef, ChartId, Comparator,
+    AliasPairPayload, AliasScope, Assumption, AssumptionValue, Axis, AxisConvention, Binder, Bound,
+    BoundEnd, BoxOutcome, Cell, CellEndForces, CellPolarity, CellRef, ChartId, Comparator,
     CompositionPayload, ConicFarkasPayload, DualVector, Equation, Establishes, ExactQty, Expected,
-    ExprBuilder, ExprDag, ExprNode, FieldPath, FiniteGamePayload, FirstMoment, FrameSpec, Horizon,
-    ImplicitDep, Interval, IntervalBoxPayload, LedgerEntry, LoadVertexWitness, LpFarkasPayload,
-    LpLaw, LpPrimalPayload, ModeId, MonotoneTransportPayload, NodeId, OrderedPorts, PartitionCell,
-    PartitionPayload, Polarity, PolicyClassDigest, PolicyScope, PopulationId, PortForceVector,
-    PortId, ProductUnreachablePayload, ProofError, ProofKind, ProofObject, ProofPayload, ProofRef,
-    Ratio, SampleCoveragePayload, SosGramPayload, SosMultiplier, StageLink, Support,
-    SymmetryTransportPayload, TaylorBoxPayload, TopologyId, TorqueVec, TraceWitnessPayload, Unit,
-    Var, vertex_force_values,
+    ExprBuilder, ExprDag, ExprNode, FieldPath, FiniteGamePayload, FirstMoment, FrameSpec, Handedness,
+    Horizon, ImplicitDep, Interval, IntervalBoxPayload, LedgerEntry, LoadVertexWitness,
+    LpFarkasPayload, LpLaw, LpPrimalPayload, ModeId, MonotoneTransportPayload, NodeId, OrderedPorts,
+    PartitionCell, PartitionPayload, Polarity, PolicyClassDigest, PolicyScope, PopulationId,
+    PortForceVector, PortId, ProductUnreachablePayload, ProofError, ProofKind, ProofObject,
+    ProofPayload, ProofRef, Ratio, SampleCoveragePayload, SignConvention, SosGramPayload,
+    SosMultiplier, StageLink, Support, SymmetryTransportPayload, TaylorBoxPayload, TopologyId,
+    TorqueVec, TraceWitnessPayload, Unit, Var, vertex_force_values,
 };
 use frob_core::registry::toml as strict_toml;
+
+#[allow(dead_code)] // Reuse the specimen builders without the example's CLI.
+#[path = "../examples/proof_specimens.rs"]
+mod proof_specimens;
+use proof_specimens::{build_stance_lp_farkas, build_stance_lp_primal};
 
 fn workspace_root() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
@@ -42,187 +47,9 @@ fn stance_prefix() -> Vec<Binder> {
     ]
 }
 
-fn build_ka624_lp_primal(port_names: [&str; 4]) -> ProofObject {
-    let frame = FrameSpec::right_handed_z_up("base");
-    let meters = Unit::meters();
-    let newtons = Unit::newtons();
-    let nm = Unit::newton_meters();
-
-    let ports = OrderedPorts::new(
-        port_names
-            .iter()
-            .map(|p| PortId::new(*p).unwrap())
-            .collect(),
-    )
-    .unwrap();
-
-    let x_half = Ratio::new(1, 3).unwrap();
-    let y_half = Ratio::new(3, 14).unwrap();
-    let contact_coords = vec![
-        [
-            ExactQty::new(x_half, meters.clone(), Some(frame.clone())),
-            ExactQty::new(y_half, meters.clone(), Some(frame.clone())),
-        ],
-        [
-            ExactQty::new(x_half, meters.clone(), Some(frame.clone())),
-            ExactQty::new(y_half.neg_exact(), meters.clone(), Some(frame.clone())),
-        ],
-        [
-            ExactQty::new(x_half.neg_exact(), meters.clone(), Some(frame.clone())),
-            ExactQty::new(y_half, meters.clone(), Some(frame.clone())),
-        ],
-        [
-            ExactQty::new(x_half.neg_exact(), meters.clone(), Some(frame.clone())),
-            ExactQty::new(y_half.neg_exact(), meters, Some(frame.clone())),
-        ],
-    ];
-
-    let cap = Ratio::from_int(160);
-    let capacities = PortForceVector::new(
-        ports.clone(),
-        vec![cap, cap, cap, cap],
-        newtons.clone(),
-        frame.clone(),
-    )
-    .unwrap();
-
-    let w_qty = ExactQty::new(Ratio::from_int(400), newtons.clone(), Some(frame.clone()));
-    let vertex_specs: [(i128, i128, [i128; 4]); 4] = [
-        (60, 30, [160, 130, 110, 0]),
-        (60, -30, [130, 160, 0, 110]),
-        (-60, 30, [110, 0, 160, 130]),
-        (-60, -30, [0, 110, 130, 160]),
-    ];
-
-    let vertices = vertex_specs
-        .iter()
-        .map(|&(px, py, fs)| {
-            let fm = FirstMoment::planar(
-                Ratio::from_int(px),
-                Ratio::from_int(py),
-                nm.clone(),
-                frame.clone(),
-            );
-            let torque = fm.to_support_torque_z_up();
-            let forces = PortForceVector::new(
-                ports.clone(),
-                fs.iter().map(|&f| Ratio::from_int(f)).collect(),
-                newtons.clone(),
-                frame.clone(),
-            )
-            .unwrap();
-            LoadVertexWitness {
-                load_weight: w_qty.clone(),
-                first_moment: fm,
-                support_torque: torque,
-                forces,
-            }
-        })
-        .collect();
-
-    let px_bound = Bound::new(
-        Var::new("P_x").unwrap(),
-        Ratio::from_int(-60),
-        BoundEnd::Closed,
-        Ratio::from_int(60),
-        BoundEnd::Closed,
-    )
-    .unwrap();
-    let py_bound = Bound::new(
-        Var::new("P_y").unwrap(),
-        Ratio::from_int(-30),
-        BoundEnd::Closed,
-        Ratio::from_int(30),
-        BoundEnd::Closed,
-    )
-    .unwrap();
-
-    let cell = Cell::new(
-        TopologyId::new("quadruped.stance").unwrap(),
-        ChartId::new("stance.load.moment").unwrap(),
-        vec![px_bound.clone(), py_bound.clone()],
-        vec![nm.clone(), nm],
-    )
-    .unwrap();
-
-    let establishes = Establishes::new(
-        stance_prefix(),
-        Horizon::Static,
-        PolicyClassDigest::new(hash_blob(b"ka-624-stance-adjustable")),
-        cell,
-    )
-    .unwrap();
-
-    let mut eb = ExprBuilder::new();
-    let f0 = eb.var("f_pp", newtons.clone());
-    let f1 = eb.var("f_pm", newtons.clone());
-    let f2 = eb.var("f_mp", newtons.clone());
-    let f3 = eb.var("f_mm", newtons.clone());
-    let sum = eb.sum(vec![f0, f1, f2, f3]);
-    let w = eb.var("W", newtons);
-    let neg_w = eb.neg(w);
-    let root = eb.sum(vec![sum, neg_w]);
-    let eq = Equation::new("Σ f_i − W = 0", eb.build(root).unwrap()).unwrap();
-
-    let payload = LpPrimalPayload {
-        ports,
-        contact_coords,
-        capacities,
-        authority: "independent-normal-force".to_owned(),
-        observed_before_decision: vec!["W".to_owned(), "P".to_owned()],
-        vertices,
-        cell_end_forces: Vec::new(),
-        law_class: "adjustable".to_owned(),
-        law: LpLaw::MultilinearVertex {
-            vars: vec![Var::new("P_x").unwrap(), Var::new("P_y").unwrap()],
-        },
-        bounds_used: vec![px_bound, py_bound],
-        frame: frame.clone(),
-    };
-
-    let assumptions = vec![
-        Assumption::new(
-            "stance.weight",
-            AssumptionValue::Ratio(Ratio::from_int(400)),
-            Axis::World,
-            Polarity::Shrink,
-        )
-        .unwrap(),
-        Assumption::new(
-            "actuator.normal_cap",
-            AssumptionValue::Ratio(cap),
-            Axis::Policy,
-            Polarity::Grow,
-        )
-        .unwrap(),
-    ];
-    let support = Support::new(
-        vec![
-            FieldPath::new("stance.feet.xy").unwrap(),
-            FieldPath::new("actuator.normal_cap").unwrap(),
-        ],
-        vec![ImplicitDep::GravityFrame(frame)],
-    )
-    .unwrap();
-
-    ProofObject::new(
-        ProofRef::new("p0").unwrap(),
-        ProofKind::LpPrimal,
-        CellRef::new("c0").unwrap(),
-        establishes,
-        ProofPayload::LpPrimal(payload),
-        Vec::new(),
-        vec![eq],
-        assumptions,
-        support,
-        Expected::inner_certified(),
-    )
-    .unwrap()
-}
-
 #[test]
 fn stance_lp_primal_object_builds() {
-    let obj = build_ka624_lp_primal(["foot.pp", "foot.pm", "foot.mp", "foot.mm"]);
+    let obj = build_stance_lp_primal(false);
 
     assert_eq!(obj.id().as_str(), "p0");
     assert_eq!(obj.kind(), ProofKind::LpPrimal);
@@ -230,7 +57,7 @@ fn stance_lp_primal_object_builds() {
     assert_eq!(obj.cell().as_str(), "c0");
     assert_eq!(obj.expects(), Expected::inner_certified());
     assert_eq!(obj.establishes().prefix().len(), 3);
-    assert_eq!(obj.primitive_equations().len(), 1);
+    assert_eq!(obj.primitive_equations().len(), 3);
     assert_eq!(obj.assumptions().len(), 2);
     assert_eq!(obj.support().fields().len(), 2);
     assert_eq!(obj.support().implicit().len(), 1);
@@ -240,6 +67,7 @@ fn stance_lp_primal_object_builds() {
     };
     let port_strs: Vec<&str> = p.ports.as_slice().iter().map(PortId::as_str).collect();
     assert_eq!(port_strs, vec!["foot.pp", "foot.pm", "foot.mp", "foot.mm"]);
+    assert_eq!(p.capacities.values(), &[Ratio::from_int(160); 4]);
     assert_eq!(p.authority, "independent-normal-force");
     assert_eq!(p.observed_before_decision, vec!["W", "P"]);
     assert_eq!(p.law_class, "adjustable");
@@ -275,80 +103,7 @@ fn stance_lp_primal_object_builds() {
 
 #[test]
 fn stance_lp_farkas_object_builds() {
-    let frame = FrameSpec::right_handed_z_up("base");
-    let inv_m = Unit::new("m^-1").unwrap();
-    let r1 = Ratio::one();
-    let rm1 = Ratio::from_int(-1);
-    let half = Ratio::new(1, 2).unwrap();
-
-    let mut eb = ExprBuilder::new();
-    let c90 = eb.constant(Ratio::from_int(90));
-    let c15 = eb.constant(Ratio::from_int(15));
-    let v = eb.var("v", inv_m.clone());
-    let prod = eb.product(vec![c15, v]);
-    let sum = eb.sum(vec![c90, prod]);
-    let dag = eb.build(sum).unwrap();
-
-    let bound = Bound::new(
-        Var::new("v").unwrap(),
-        Ratio::new(14, 3).unwrap(),
-        BoundEnd::Open,
-        Ratio::from_int(6),
-        BoundEnd::Closed,
-    )
-    .unwrap();
-    let cell = Cell::new(
-        TopologyId::new("quadruped.stance").unwrap(),
-        ChartId::new("stance.inv_half_width").unwrap(),
-        vec![bound],
-        vec![inv_m],
-    )
-    .unwrap();
-    let establishes = Establishes::new(
-        stance_prefix(),
-        Horizon::Static,
-        PolicyClassDigest::new(hash_blob(b"ka-624-stance-adjustable")),
-        cell,
-    )
-    .unwrap();
-
-    let payload = LpFarkasPayload {
-        matrix_a: vec![
-            vec![r1, r1, r1, r1],
-            vec![r1, r1, rm1, rm1],
-            vec![r1, rm1, r1, rm1],
-        ],
-        rhs_w: vec![
-            Ratio::from_int(400),
-            Ratio::from_int(180),
-            Ratio::from_int(150),
-        ],
-        capacities: vec![Ratio::from_int(160); 4],
-        dual_y: DualVector::Constant(vec![Ratio::zero(), half, half]),
-        sign_proof: "90 + 15·v > 160 for all v > 14/3".to_owned(),
-        sign_proof_dag: Some(dag.clone()),
-        unit: Unit::newtons(),
-        frame: frame.clone(),
-    };
-
-    let support = Support::new(
-        vec![FieldPath::new("stance.inv_half_width").unwrap()],
-        vec![ImplicitDep::GravityFrame(frame)],
-    )
-    .unwrap();
-    let obj = ProofObject::new(
-        ProofRef::new("p1").unwrap(),
-        ProofKind::LpFarkas,
-        CellRef::new("c1").unwrap(),
-        establishes,
-        ProofPayload::LpFarkas(payload),
-        Vec::new(),
-        vec![Equation::new("90 + 15·v > 160", dag).unwrap()],
-        Vec::new(),
-        support,
-        Expected::excluded_certified(),
-    )
-    .unwrap();
+    let obj = build_stance_lp_farkas();
 
     assert_eq!(obj.kind(), ProofKind::LpFarkas);
     assert_eq!(obj.expects(), Expected::excluded_certified());
@@ -361,9 +116,56 @@ fn stance_lp_farkas_object_builds() {
     let ProofPayload::LpFarkas(p) = obj.payload() else {
         panic!("expected LpFarkas payload");
     };
-    assert_eq!(p.matrix_a.len(), 3);
+    assert_eq!(
+        p.matrix_a,
+        [[1, 1, 1, 1], [1, 1, -1, -1], [1, -1, 1, -1]].map(|row| row.map(Ratio::from_int).to_vec())
+    );
+    let half = Ratio::new(1, 2).unwrap();
     assert_eq!(p.dual_y, DualVector::Constant(vec![Ratio::zero(), half, half]));
     assert_eq!(p.sign_proof, "90 + 15·v > 160 for all v > 14/3");
+
+    let project = |rhs: &[ExprDag], v: Ratio| {
+        let [weight, px, py] = rhs else {
+            panic!("expected three RHS rows");
+        };
+        assert_eq!(
+            weight.nodes()[weight.root().0],
+            ExprNode::Const(Ratio::from_int(400))
+        );
+        let ExprNode::Const(px) = px.nodes()[px.root().0] else {
+            panic!("constant x RHS");
+        };
+        assert_eq!(px, Ratio::from_int(180));
+        let den = i128::try_from(v.denom()).unwrap();
+        let py = match &py.nodes()[py.root().0] {
+            ExprNode::Const(value) => value.numer() * den,
+            ExprNode::Product(terms) => {
+                let [scale, var] = terms.as_slice() else {
+                    panic!("scaled chart variable");
+                };
+                let ExprNode::Const(scale) = py.nodes()[scale.0] else {
+                    panic!("constant scale");
+                };
+                assert_eq!(scale, Ratio::from_int(30));
+                assert_eq!(
+                    py.nodes()[var.0],
+                    ExprNode::Var { name: "v".to_owned(), unit: Unit::new("m^-1").unwrap() }
+                );
+                scale.numer() * v.numer()
+            }
+            _ => panic!("unexpected stance RHS"),
+        };
+        Ratio::new(px.numer() * den + py, 2 * den).unwrap()
+    };
+    let mut frozen_rhs = p.rhs_w.clone();
+    frozen_rhs[2] = ExprDag::new(vec![ExprNode::Const(Ratio::from_int(150))], NodeId(0)).unwrap();
+    for (v, expected) in [
+        (Ratio::new(19, 4).unwrap(), Ratio::new(645, 4).unwrap()),
+        (Ratio::from_int(6), Ratio::from_int(180)),
+    ] {
+        assert_eq!(project(&p.rhs_w, v), expected);
+        assert_ne!(project(&frozen_rhs, v), expected);
+    }
 }
 
 #[test]
@@ -384,10 +186,30 @@ fn first_moment_is_not_a_torque() {
         Unit::newton_meters(),
         frame,
     );
-    let tau: TorqueVec = p.to_support_torque_z_up();
+    let tau: TorqueVec = p.to_support_torque_z_up().unwrap();
     assert_eq!(tau.x(), Ratio::from_int(30));
     assert_eq!(tau.y(), Ratio::from_int(-60));
     assert_eq!(tau.z(), Ratio::zero());
+
+    let min = FirstMoment::planar(
+        Ratio::from_int(i128::MIN),
+        Ratio::zero(),
+        p.unit().clone(),
+        p.frame().clone(),
+    );
+    assert_eq!(min.to_support_torque_z_up(), Err(ProofError::RatioOverflow));
+    for (axes, handedness) in [
+        (AxisConvention::YUp, Handedness::RightHanded),
+        (AxisConvention::ZUp, Handedness::LeftHanded),
+    ] {
+        let frame =
+            FrameSpec::new("base", axes, handedness, SignConvention::RightHandScrew).unwrap();
+        let incompatible = FirstMoment::planar(p.x(), p.y(), p.unit().clone(), frame);
+        assert!(matches!(
+            incompatible.to_support_torque_z_up(),
+            Err(ProofError::InvalidPayload { kind: "lp-primal", .. })
+        ));
+    }
 
     // Confirm compile-fail doctests with pinned rustc error codes exist in qty_types.rs.
     let qty_src = fs::read_to_string(
@@ -406,14 +228,34 @@ fn first_moment_is_not_a_torque() {
 
 #[test]
 fn port_order_is_identity() {
-    // CX-108: swapping two ports with identical numeric values yields a distinct canonical encoding.
-    let a = build_ka624_lp_primal(["foot.pp", "foot.pm", "foot.mp", "foot.mm"]);
-    let b = build_ka624_lp_primal(["foot.pm", "foot.pp", "foot.mp", "foot.mm"]);
+    let a = build_stance_lp_primal(false);
+    let b = build_stance_lp_primal(true);
+    for (obj, numerator) in [(&a, 180), (&b, 140)] {
+        let ProofPayload::LpPrimal(p) = obj.payload() else {
+            panic!("stance payload");
+        };
+        let forces = vertex_force_values(&p.vertices[0]);
+        assert_eq!(forces, &[160, 130, 110, 0].map(Ratio::from_int));
+        assert_eq!(forces.iter().map(|f| f.numer()).sum::<i128>(), 400);
+        let moment_x: i128 = p
+            .contact_coords
+            .iter()
+            .zip(forces)
+            .map(|([x, _], f)| {
+                assert_eq!(x.value().denom(), 3);
+                x.value().numer() * f.numer()
+            })
+            .sum();
+        assert_eq!(
+            Ratio::new(moment_x, 3).unwrap(),
+            Ratio::new(numerator, 3).unwrap()
+        );
+    }
     assert_ne!(a.canonical_bytes(), b.canonical_bytes());
     assert_ne!(a.canonical_digest(), b.canonical_digest());
 
     // Rebuilding with identical port order produces byte-identical encodings.
-    let a2 = build_ka624_lp_primal(["foot.pp", "foot.pm", "foot.mp", "foot.mm"]);
+    let a2 = build_stance_lp_primal(false);
     assert_eq!(a.canonical_bytes(), a2.canonical_bytes());
     assert_eq!(a.canonical_digest(), a2.canonical_digest());
 
@@ -434,6 +276,42 @@ fn port_order_is_identity() {
         err,
         ProofError::PortLengthMismatch { expected: 2, observed: 1 }
     );
+}
+
+#[test]
+fn lp_payloads_reject_wrong_units_and_frames() {
+    let obj = build_stance_lp_primal(false);
+    let ProofPayload::LpPrimal(primal) = obj.payload() else {
+        panic!("stance payload");
+    };
+    let obj = build_stance_lp_farkas();
+    let ProofPayload::LpFarkas(farkas) = obj.payload() else {
+        panic!("stance payload");
+    };
+    for (unit, frame) in [
+        (Unit::seconds(), primal.frame.clone()),
+        (Unit::newtons(), FrameSpec::right_handed_z_up("")),
+    ] {
+        let mut primal = primal.clone();
+        let mut farkas = farkas.clone();
+        primal.capacities = PortForceVector::new(
+            primal.ports.clone(),
+            primal.capacities.values().to_vec(),
+            unit.clone(),
+            frame.clone(),
+        )
+        .unwrap();
+        farkas.unit = unit;
+        farkas.frame = frame;
+        assert!(matches!(
+            primal.validate_shape(),
+            Err(ProofError::InvalidPayload { kind: "lp-primal", .. })
+        ));
+        assert!(matches!(
+            farkas.validate_shape(),
+            Err(ProofError::InvalidPayload { kind: "lp-farkas", .. })
+        ));
+    }
 }
 
 #[test]
@@ -508,7 +386,7 @@ fn expr_digest_structural() {
 
 #[test]
 fn support_must_not_be_empty() {
-    let base = build_ka624_lp_primal(["foot.pp", "foot.pm", "foot.mp", "foot.mm"]);
+    let base = build_stance_lp_primal(false);
 
     // Negative-control assertion: under `--features nc-allow-empty-support`, this returns Ok and fails.
     let res = ProofObject::new(
@@ -555,7 +433,7 @@ fn support_must_not_be_empty() {
 
 #[test]
 fn trace_witness_certified_refused_and_verdict_rules_enforced() {
-    let base = build_ka624_lp_primal(["foot.pp", "foot.pm", "foot.mp", "foot.mm"]);
+    let base = build_stance_lp_primal(false);
     let trace_payload = ProofPayload::TraceWitness(TraceWitnessPayload {
         replay_address: "replay://episode/e0".to_owned(),
         trace_digest: hash_blob(b"trace-0"),
@@ -924,7 +802,7 @@ fn random_payload_and_expected(
             let f_a = rng.ratio(100);
             let f_b = rng.ratio(100);
             let fm = FirstMoment::planar(rng.ratio(40), rng.ratio(40), nm_unit, frame.clone());
-            let tau = fm.to_support_torque_z_up();
+            let tau = fm.to_support_torque_z_up().unwrap();
             let vtx = LoadVertexWitness {
                 load_weight: ExactQty::new(rng.ratio(200), n_unit.clone(), Some(frame.clone())),
                 first_moment: fm,
@@ -958,12 +836,12 @@ fn random_payload_and_expected(
                 ports: ports.clone(),
                 contact_coords: vec![
                     [
-                        ExactQty::new(rng.ratio(5), m_unit.clone(), None),
-                        ExactQty::new(rng.ratio(5), m_unit.clone(), None),
+                        ExactQty::new(rng.ratio(5), m_unit.clone(), Some(frame.clone())),
+                        ExactQty::new(rng.ratio(5), m_unit.clone(), Some(frame.clone())),
                     ],
                     [
-                        ExactQty::new(rng.ratio(5), m_unit.clone(), None),
-                        ExactQty::new(rng.ratio(5), m_unit, None),
+                        ExactQty::new(rng.ratio(5), m_unit.clone(), Some(frame.clone())),
+                        ExactQty::new(rng.ratio(5), m_unit, Some(frame.clone())),
                     ],
                 ],
                 capacities: PortForceVector::new(
@@ -987,7 +865,7 @@ fn random_payload_and_expected(
         ProofKind::LpFarkas => {
             let p = LpFarkasPayload {
                 matrix_a: vec![vec![rng.ratio(5), rng.ratio(5)]],
-                rhs_w: vec![rng.ratio(50)],
+                rhs_w: vec![ExprDag::new(vec![ExprNode::Const(rng.ratio(50))], NodeId(0)).unwrap()],
                 capacities: vec![Ratio::from_int(100), Ratio::from_int(100)],
                 dual_y: DualVector::Constant(vec![rng.ratio(5)]),
                 sign_proof: "y^T w > max_f".to_owned(),

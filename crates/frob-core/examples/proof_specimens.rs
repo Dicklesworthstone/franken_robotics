@@ -16,14 +16,14 @@ use frob_core::proof::{
     ProofPayload, ProofRef, Ratio, Support, TopologyId, Unit, Var, vertex_force_values,
 };
 
-fn build_stance_lp_primal(swap_ports: bool) -> ProofObject {
+pub(crate) fn build_stance_lp_primal(swap_ports: bool) -> ProofObject {
     let frame = FrameSpec::right_handed_z_up("base");
     let meters = Unit::meters();
     let newtons = Unit::newtons();
     let nm = Unit::newton_meters();
 
     let port_names: [&str; 4] = if swap_ports {
-        ["foot.pm", "foot.pp", "foot.mp", "foot.mm"]
+        ["foot.pp", "foot.mp", "foot.pm", "foot.mm"]
     } else {
         ["foot.pp", "foot.pm", "foot.mp", "foot.mm"]
     };
@@ -37,24 +37,29 @@ fn build_stance_lp_primal(swap_ports: bool) -> ProofObject {
 
     let x_half = Ratio::new(1, 3).expect("1/3");
     let y_half = Ratio::new(3, 14).expect("3/14");
-    let contact_coords = vec![
+    let neg_x = x_half.neg_exact().expect("-1/3");
+    let neg_y = y_half.neg_exact().expect("-3/14");
+    let mut contact_coords = vec![
         [
             ExactQty::new(x_half, meters.clone(), Some(frame.clone())),
             ExactQty::new(y_half, meters.clone(), Some(frame.clone())),
         ],
         [
             ExactQty::new(x_half, meters.clone(), Some(frame.clone())),
-            ExactQty::new(y_half.neg_exact(), meters.clone(), Some(frame.clone())),
+            ExactQty::new(neg_y, meters.clone(), Some(frame.clone())),
         ],
         [
-            ExactQty::new(x_half.neg_exact(), meters.clone(), Some(frame.clone())),
+            ExactQty::new(neg_x, meters.clone(), Some(frame.clone())),
             ExactQty::new(y_half, meters.clone(), Some(frame.clone())),
         ],
         [
-            ExactQty::new(x_half.neg_exact(), meters.clone(), Some(frame.clone())),
-            ExactQty::new(y_half.neg_exact(), meters, Some(frame.clone())),
+            ExactQty::new(neg_x, meters.clone(), Some(frame.clone())),
+            ExactQty::new(neg_y, meters, Some(frame.clone())),
         ],
     ];
+    if swap_ports {
+        contact_coords.swap(1, 2);
+    }
 
     let cap_160 = Ratio::from_int(160);
     let capacities = PortForceVector::new(
@@ -82,7 +87,7 @@ fn build_stance_lp_primal(swap_ports: bool) -> ProofObject {
                 nm.clone(),
                 frame.clone(),
             );
-            let support_torque = fm.to_support_torque_z_up();
+            let support_torque = fm.to_support_torque_z_up().expect("stance torque");
             let forces = PortForceVector::new(
                 ports.clone(),
                 fs.iter().map(|&f| Ratio::from_int(f)).collect(),
@@ -120,7 +125,7 @@ fn build_stance_lp_primal(swap_ports: bool) -> ProofObject {
         TopologyId::new("quadruped.stance").expect("topology"),
         ChartId::new("stance.load.moment").expect("chart"),
         vec![px_bound.clone(), py_bound.clone()],
-        vec![nm.clone(), nm],
+        vec![nm.clone(), nm.clone()],
     )
     .expect("cell");
 
@@ -151,9 +156,36 @@ fn build_stance_lp_primal(swap_ports: bool) -> ProofObject {
     let balance = eb.sum(vec![sum_f, neg_w]);
     let eq_weight = Equation::new(
         "f_pp + f_pm + f_mp + f_mm − W = 0",
-        eb.build(balance).expect("dag"),
+        eb.clone().build(balance).expect("dag"),
     )
     .expect("equation");
+    let mut equations = vec![eq_weight];
+    for (name, arms, text) in [
+        (
+            "P_x",
+            [x_half, x_half, neg_x, neg_x],
+            "(f_pp + f_pm − f_mp − f_mm)/3 − P_x = 0",
+        ),
+        (
+            "P_y",
+            [y_half, neg_y, y_half, neg_y],
+            "3(f_pp − f_pm + f_mp − f_mm)/14 − P_y = 0",
+        ),
+    ] {
+        let mut terms: Vec<_> = arms
+            .into_iter()
+            .zip([f0, f1, f2, f3])
+            .map(|(arm, force)| {
+                let arm = eb.constant(arm);
+                eb.product(vec![arm, force])
+            })
+            .collect();
+        let moment = eb.var(name, nm.clone());
+        terms.push(eb.neg(moment));
+        let residual = eb.sum(terms);
+        let dag = eb.clone().build(residual).expect("moment DAG");
+        equations.push(Equation::new(text, dag).expect("moment equation"));
+    }
 
     let payload = LpPrimalPayload {
         ports,
@@ -203,7 +235,7 @@ fn build_stance_lp_primal(swap_ports: bool) -> ProofObject {
         establishes,
         ProofPayload::LpPrimal(payload),
         Vec::new(),
-        vec![eq_weight],
+        equations,
         assumptions,
         support,
         Expected::inner_certified(),
@@ -211,7 +243,7 @@ fn build_stance_lp_primal(swap_ports: bool) -> ProofObject {
     .expect("lp-primal proof object")
 }
 
-fn build_stance_lp_farkas() -> ProofObject {
+pub(crate) fn build_stance_lp_farkas() -> ProofObject {
     let frame = FrameSpec::right_handed_z_up("base");
     let newtons = Unit::newtons();
     let inv_m = Unit::new("m^-1").expect("unit");
@@ -223,22 +255,24 @@ fn build_stance_lp_farkas() -> ProofObject {
         vec![r1, r1, rm1, rm1],
         vec![r1, rm1, r1, rm1],
     ];
-    let rhs_w = vec![
-        Ratio::from_int(400),
-        Ratio::from_int(180),
-        Ratio::from_int(150),
-    ];
     let cap_160 = Ratio::from_int(160);
     let capacities = vec![cap_160, cap_160, cap_160, cap_160];
     let half = Ratio::new(1, 2).expect("1/2");
     let dual_y = DualVector::Constant(vec![Ratio::zero(), half, half]);
 
     let mut eb = ExprBuilder::new();
-    let c90 = eb.constant(Ratio::from_int(90));
-    let c15 = eb.constant(Ratio::from_int(15));
+    let weight = eb.constant(Ratio::from_int(400));
+    let px = eb.constant(Ratio::from_int(180));
+    let c30 = eb.constant(Ratio::from_int(30));
     let v = eb.var("v", inv_m.clone());
-    let term = eb.product(vec![c15, v]);
-    let lhs = eb.sum(vec![c90, term]);
+    let py = eb.product(vec![c30, v]);
+    let rhs_w = [weight, px, py]
+        .into_iter()
+        .map(|row| eb.clone().build(row).expect("RHS row"))
+        .collect();
+    let corner_sum = eb.sum(vec![px, py]);
+    let half = eb.constant(half);
+    let lhs = eb.product(vec![half, corner_sum]);
     let c160 = eb.constant(cap_160);
     let neg_160 = eb.neg(c160);
     let margin = eb.sum(vec![lhs, neg_160]);

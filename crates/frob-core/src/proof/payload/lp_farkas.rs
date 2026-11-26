@@ -45,7 +45,8 @@ impl DualVector {
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct LpFarkasPayload {
     pub matrix_a: Vec<Vec<Ratio>>,
-    pub rhs_w: Vec<Ratio>,
+    /// Exact right-hand side, with constant or chart-dependent entries in row order.
+    pub rhs_w: Vec<ExprDag>,
     pub capacities: Vec<Ratio>,
     pub dual_y: DualVector,
     pub sign_proof: String,
@@ -57,6 +58,12 @@ pub struct LpFarkasPayload {
 impl LpFarkasPayload {
     pub fn validate_shape(&self) -> Result<(), ProofError> {
         let kind = "lp-farkas";
+        if self.unit.as_str() != "N" || self.frame.origin().trim().is_empty() {
+            return Err(ProofError::InvalidPayload {
+                kind,
+                detail: "the normalized force relaxation requires newtons and a named frame".to_owned(),
+            });
+        }
         if self.matrix_a.is_empty() {
             return Err(ProofError::InvalidPayload {
                 kind,
@@ -112,7 +119,9 @@ impl LpFarkasPayload {
             for &r in row { r.encode_canonical(enc); }
         }
         enc.usize(self.rhs_w.len());
-        for &r in &self.rhs_w { r.encode_canonical(enc); }
+        for rhs in &self.rhs_w {
+            rhs.encode_canonical(enc);
+        }
         enc.usize(self.capacities.len());
         for &r in &self.capacities { r.encode_canonical(enc); }
         self.dual_y.encode_canonical(enc);

@@ -53,6 +53,10 @@ impl Unit {
         &self.symbol
     }
 
+    pub(super) fn is_newton_meters(&self) -> bool {
+        matches!(self.as_str(), "N·m" | "N*m")
+    }
+
     pub fn encode_canonical(&self, enc: &mut CanonicalEncoder) {
         enc.tag(b"unit");
         enc.str(&self.symbol);
@@ -319,15 +323,26 @@ impl FirstMoment {
     /// into its physical support torque `(P_y, -P_x, 0)` (Rule 2).
     ///
     /// Example: `P = (60, 30) N·m` maps to torque `(30, -60, 0) N·m`.
-    #[must_use]
-    pub fn to_support_torque_z_up(&self) -> TorqueVec {
-        TorqueVec::new(
+    pub fn to_support_torque_z_up(&self) -> Result<TorqueVec, ProofError> {
+        if self.frame.axes != AxisConvention::ZUp
+            || self.frame.handedness != Handedness::RightHanded
+            || self.frame.sign_convention != SignConvention::RightHandScrew
+            || self.frame.origin.trim().is_empty()
+            || !self.unit.is_newton_meters()
+            || !self.z.is_zero()
+        {
+            return Err(ProofError::InvalidPayload {
+                kind: "lp-primal",
+                detail: "support torque requires a planar N·m first moment in a right-handed +z-up frame with the right-hand screw convention".to_owned(),
+            });
+        }
+        Ok(TorqueVec::new(
             self.y,
-            self.x.neg_exact(),
+            self.x.neg_exact()?,
             Ratio::zero(),
             self.unit.clone(),
             self.frame.clone(),
-        )
+        ))
     }
 }
 

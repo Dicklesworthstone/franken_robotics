@@ -19,9 +19,42 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 # shellcheck source=scripts/e2e/lib.sh
 source "${SCRIPT_DIR}/lib.sh"
 
-e2e_init "proof_objects" "N25b-01"
+e2e_init "proof_objects" "N25b-01" "$@"
 
 MANIFEST="${E2E_REPO_ROOT}/Cargo.toml"
+export CARGO_TARGET_DIR="${CARGO_TARGET_DIR:-${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/frob-proof-${E2E_RUN_ID}}"
+
+caught_named_failure() {
+  local status="$1" output="$2" name="$3" assertion="$4"
+  [ "$status" = 101 ] && [ -f "$output" ] &&
+    grep -Fxq 'running 1 test' "$output" &&
+    grep -Fxq "test ${name} ... FAILED" "$output" &&
+    grep -Fq -- "$assertion" "$output" &&
+    grep -q '^test result: FAILED\. 0 passed; 1 failed; 0 ignored;' "$output"
+}
+
+run_mutant() {
+  local plant="$1" feature="$2" name="$3" assertion="$4" caught=0
+  e2e_cmd --name "$name" --expect-exit "0,1,101" -- \
+    cargo test --offline -j 1 --manifest-path "$MANIFEST" -p frob-core \
+      --features "$feature" --test proof_objects "$name" -- --exact
+  if caught_named_failure "$E2E_LAST_EXIT" "$E2E_LAST_STDOUT" "$name" "$assertion"; then caught=1; fi
+  if e2e_plant "$plant"; then
+    e2e_assert_eq "${plant}:${name}" "$caught" "0"
+  else
+    e2e_expect_caught "$feature" -- test "$caught" = 0
+  fi
+}
+
+torque_mutant() {
+  run_mutant torque-alias nc-torque-alias-first-moment first_moment_is_not_a_torque \
+    'FirstMoment and TorqueVec must be distinct Rust types'
+}
+
+support_mutant() {
+  run_mutant empty-support nc-allow-empty-support support_must_not_be_empty \
+    'non-partition proof object with empty Support must be refused'
+}
 
 # ---------------------------------------------------------------------------
 # Step 1: Unit tests (with plant hooks for --verify-plants)
@@ -29,20 +62,14 @@ MANIFEST="${E2E_REPO_ROOT}/Cargo.toml"
 e2e_step "unit_tests" "Run frob-core proof_objects unit test suite"
 
 if e2e_plant "torque-alias"; then
-  e2e_cmd --name "proof_objects_planted_torque_alias" --expect-exit "0,1,101" -- \
-    cargo test --manifest-path "${MANIFEST}" -p frob-core \
-      --features nc-torque-alias-first-moment --test proof_objects
-  e2e_assert_eq "torque-alias:first_moment_is_not_a_torque" "${E2E_LAST_EXIT}" "0"
-  exit 1
+  torque_mutant
+  exit
 elif e2e_plant "empty-support"; then
-  e2e_cmd --name "proof_objects_planted_empty_support" --expect-exit "0,1,101" -- \
-    cargo test --manifest-path "${MANIFEST}" -p frob-core \
-      --features nc-allow-empty-support --test proof_objects
-  e2e_assert_eq "empty-support:support_must_not_be_empty" "${E2E_LAST_EXIT}" "0"
-  exit 1
+  support_mutant
+  exit
 else
   e2e_cmd --name "proof_objects_unit" -- \
-    cargo test --manifest-path "${MANIFEST}" -p frob-core --test proof_objects
+    cargo test --offline -j 1 --manifest-path "${MANIFEST}" -p frob-core --test proof_objects
   e2e_assert_eq "proof_objects_unit_exit" "${E2E_LAST_EXIT}" "0"
 fi
 
@@ -52,7 +79,7 @@ fi
 e2e_step "specimens_debug" "Run proof_specimens example in debug mode and assert KA-624 fields"
 
 e2e_cmd --name "proof_specimens_debug" -- \
-  cargo run --manifest-path "${MANIFEST}" -p frob-core --example proof_specimens -- --json
+  cargo run --offline -j 1 --manifest-path "${MANIFEST}" -p frob-core --example proof_specimens -- --json
 e2e_assert_eq "proof_specimens_debug_exit" "${E2E_LAST_EXIT}" "0" --ka "KA-624"
 
 _DBG_OUT="${E2E_LAST_STDOUT}"
@@ -91,7 +118,7 @@ fi
 e2e_step "specimens_release" "Run proof_specimens in release mode and assert identical bytes and digests"
 
 e2e_cmd --name "proof_specimens_release" -- \
-  cargo run --manifest-path "${MANIFEST}" -p frob-core --release --example proof_specimens -- --json
+  cargo run --offline -j 1 --manifest-path "${MANIFEST}" -p frob-core --release --example proof_specimens -- --json
 e2e_assert_eq "proof_specimens_release_exit" "${E2E_LAST_EXIT}" "0" --ka "KA-624"
 
 if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
@@ -112,7 +139,7 @@ fi
 e2e_step "swap_ports" "Verify swapping ports changes lp-primal canonical encoding digest (CX-108)"
 
 e2e_cmd --name "proof_specimens_swap_ports" -- \
-  cargo run --manifest-path "${MANIFEST}" -p frob-core --example proof_specimens -- --json --swap-ports
+  cargo run --offline -j 1 --manifest-path "${MANIFEST}" -p frob-core --example proof_specimens -- --json --swap-ports
 e2e_assert_eq "proof_specimens_swap_ports_exit" "${E2E_LAST_EXIT}" "0" --cx "CX-108"
 
 if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
@@ -129,10 +156,22 @@ fi
 # ---------------------------------------------------------------------------
 e2e_step "negative_controls" "Verify mutant builds are caught by proof_objects tests"
 
-e2e_expect_caught "nc-torque-alias-first-moment" -- \
-  cargo test --manifest-path "${MANIFEST}" -p frob-core \
-    --features nc-torque-alias-first-moment --test proof_objects
+torque_mutant
+support_mutant
 
-e2e_expect_caught "nc-allow-empty-support" -- \
-  cargo test --manifest-path "${MANIFEST}" -p frob-core \
-    --features nc-allow-empty-support --test proof_objects
+if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
+  for bad in build-error unrelated-failure; do
+    transcript="${E2E_WORK_DIR}/${bad}.txt"
+    if [ "$bad" = build-error ]; then
+      printf 'error: could not compile frob-core\n' > "$transcript"
+    else
+      printf '\nrunning 1 test\ntest first_moment_is_not_a_torque ... FAILED\n%s\n%s\n' \
+        'thread panicked: unrelated assertion' \
+        'test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured' > "$transcript"
+    fi
+    caught=0
+    if caught_named_failure 101 "$transcript" first_moment_is_not_a_torque \
+        'FirstMoment and TorqueVec must be distinct Rust types'; then caught=1; fi
+    e2e_assert_eq "${bad}_not_caught" "$caught" "0"
+  done
+fi

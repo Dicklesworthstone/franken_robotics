@@ -133,6 +133,32 @@ impl LpPrimalPayload {
                 });
             }
         }
+        let force_in_frame =
+            |f: &PortForceVector| f.unit().as_str() == "N" && f.frame() == &self.frame;
+        if self.frame.origin().trim().is_empty()
+            || self.contact_coords.iter().flatten().any(|q| {
+                q.unit().as_str() != "m" || q.frame() != Some(&self.frame)
+            })
+            || !force_in_frame(&self.capacities)
+            || self.vertices.iter().any(|v| {
+                v.load_weight.unit().as_str() != "N"
+                    || v.load_weight.frame() != Some(&self.frame)
+                    || !v.first_moment.unit().is_newton_meters()
+                    || v.first_moment.frame() != &self.frame
+                    || !v.support_torque.unit().is_newton_meters()
+                    || v.support_torque.frame() != &self.frame
+                    || !force_in_frame(&v.forces)
+            })
+            || self.cell_end_forces.iter().any(|c| {
+                !force_in_frame(&c.lower_end_forces) || !force_in_frame(&c.upper_end_forces)
+            })
+        {
+            return Err(ProofError::InvalidPayload {
+                kind,
+                detail: "contact lengths, forces, and moments require their physical units and the payload frame"
+                    .to_owned(),
+            });
+        }
         Ok(())
     }
 

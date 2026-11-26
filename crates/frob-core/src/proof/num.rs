@@ -12,6 +12,7 @@ use crate::id::{Blake3, hash_blob};
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ProofError {
     ZeroDenominator,
+    RatioOverflow,
     InvalidInterval { detail: String },
     EmptyIdentifier { field: &'static str },
     DuplicatePort { port: String },
@@ -30,6 +31,7 @@ impl fmt::Display for ProofError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::ZeroDenominator => f.write_str("rational denominator cannot be zero"),
+            Self::RatioOverflow => f.write_str("exact rational numerator is out of range"),
             Self::InvalidInterval { detail } => write!(f, "invalid interval: {detail}"),
             Self::EmptyIdentifier { field } => write!(f, "identifier field `{field}` cannot be empty"),
             Self::DuplicatePort { port } => write!(f, "duplicate port `{port}` in ordered port list"),
@@ -67,8 +69,7 @@ pub struct Ratio {
 }
 
 impl Ratio {
-    /// Construct a reduced rational `num / den`; returns [`ProofError::ZeroDenominator`]
-    /// if `den == 0` or `num == i128::MIN && den < 0` overflows.
+    /// Construct a reduced rational `num / den` with a representable signed numerator.
     pub fn new(num: i128, den: i128) -> Result<Self, ProofError> {
         if den == 0 {
             return Err(ProofError::ZeroDenominator);
@@ -89,7 +90,7 @@ impl Ratio {
                 -(rn as i128)
             }
         } else {
-            i128::try_from(rn).map_err(|_| ProofError::ZeroDenominator)?
+            i128::try_from(rn).map_err(|_| ProofError::RatioOverflow)?
         };
         Ok(Self { num: signed_num, den: rd })
     }
@@ -129,9 +130,11 @@ impl Ratio {
         self.num < 0
     }
 
-    #[must_use]
-    pub const fn neg_exact(self) -> Self {
-        Self { num: -self.num, den: self.den }
+    pub const fn neg_exact(self) -> Result<Self, ProofError> {
+        match self.num.checked_neg() {
+            Some(num) => Ok(Self { num, den: self.den }),
+            None => Err(ProofError::RatioOverflow),
+        }
     }
 
     pub fn encode_canonical(self, enc: &mut CanonicalEncoder) {

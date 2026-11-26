@@ -114,31 +114,40 @@ EOF
   cp "${GOOD_TMP}" "${SCRATCH}/target/gauntlet/receipts/${TAMPER_HASH}.json"
 
   # Plant 1: self-certify (recorder session matches implementer session:impl-e2e)
-  e2e_cmd --name "plant_self_certify" --allow-fail -- \
+  e2e_cmd --name "plant_self_certify" --expect-exit 3 -- \
     env "CARGO_TARGET_DIR=${TARGET_BASE}/conformance" "FROB_SESSION=session:impl-e2e" \
     cargo run --offline -j 1 -p frob-conformance --example record_gate -- \
       --repo-root "${SCRATCH}" --gate GATE-GAUNT-10 --receipt "${GOOD_HASH}" --bead N38b-19 --date 2026-11-25
   e2e_assert_eq "plant_self_certify_exit" "${E2E_LAST_EXIT}" "3"
-  if grep -q "reason=self-certified" "${E2E_LAST_STDERR}"; then got="ok"; else got="missing"; fi
+  if [ "${E2E_LAST_EXIT}" = 3 ] && grep -Eq '^reason=self-certified( |$)' "${E2E_LAST_STDERR}"; then got="ok"; else got="missing"; fi
   e2e_assert_eq "plant_self_certify_reason" "${got}" "ok"
+  expected="ok"
+  if e2e_plant "self-certify"; then expected="missing"; fi
+  e2e_assert_eq "self-certify" "${got}" "${expected}"
 
   # Plant 2: missed-control
-  e2e_cmd --name "plant_missed_control" --allow-fail -- \
+  e2e_cmd --name "plant_missed_control" --expect-exit 3 -- \
     env "CARGO_TARGET_DIR=${TARGET_BASE}/conformance" "FROB_SESSION=session:reviewer-e2e" \
     cargo run --offline -j 1 -p frob-conformance --example record_gate -- \
       --repo-root "${SCRATCH}" --gate GATE-GAUNT-10 --receipt "${MISSED_HASH}" --bead N38b-19 --date 2026-11-25
   e2e_assert_eq "plant_missed_control_exit" "${E2E_LAST_EXIT}" "3"
-  if grep -q "reason=control-not-caught" "${E2E_LAST_STDERR}"; then got="ok"; else got="missing"; fi
+  if [ "${E2E_LAST_EXIT}" = 3 ] && grep -Eq '^reason=control-not-caught( |$)' "${E2E_LAST_STDERR}"; then got="ok"; else got="missing"; fi
   e2e_assert_eq "plant_missed_control_reason" "${got}" "ok"
+  expected="ok"
+  if e2e_plant "missed-control"; then expected="missing"; fi
+  e2e_assert_eq "missed-control" "${got}" "${expected}"
 
   # Plant 3: tampered-receipt
-  e2e_cmd --name "plant_tampered_receipt" --allow-fail -- \
+  e2e_cmd --name "plant_tampered_receipt" --expect-exit 3 -- \
     env "CARGO_TARGET_DIR=${TARGET_BASE}/conformance" "FROB_SESSION=session:reviewer-e2e" \
     cargo run --offline -j 1 -p frob-conformance --example record_gate -- \
       --repo-root "${SCRATCH}" --gate GATE-GAUNT-10 --receipt "${TAMPER_HASH}" --bead N38b-19 --date 2026-11-25
   e2e_assert_eq "plant_tampered_receipt_exit" "${E2E_LAST_EXIT}" "3"
-  if grep -q "reason=receipt-hash-mismatch" "${E2E_LAST_STDERR}"; then got="ok"; else got="missing"; fi
+  if [ "${E2E_LAST_EXIT}" = 3 ] && grep -Eq '^reason=receipt-hash-mismatch( |$)' "${E2E_LAST_STDERR}"; then got="ok"; else got="missing"; fi
   e2e_assert_eq "plant_tampered_receipt_reason" "${got}" "ok"
+  expected="ok"
+  if e2e_plant "tampered-receipt"; then expected="missing"; fi
+  e2e_assert_eq "tampered-receipt" "${got}" "${expected}"
 
   # Happy path: distinct reviewer session records pass and commits byte-identical receipt.
   e2e_cmd --name "record_happy_path" -- \
@@ -152,7 +161,7 @@ EOF
 
   # Unknown mode word refuses without altering scratch gates.toml.
   SCRATCH_GATES_BEFORE_BADMODE="$(hash_file "${SCRATCH}/registries/gates.toml")"
-  e2e_cmd --name "unknown_mode_word" --allow-fail -- \
+  e2e_cmd --name "unknown_mode_word" --expect-exit 3 -- \
     env "CARGO_TARGET_DIR=${TARGET_BASE}/conformance" \
     cargo run --offline -j 1 -p frob-conformance --example record_gate -- \
       frobnicate --gate GATE-GAUNT-10 --registry "${SCRATCH}/registries/gates.toml"

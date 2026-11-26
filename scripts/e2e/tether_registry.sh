@@ -38,50 +38,49 @@ e2e_assert_eq "build_registry_only_exit" "${E2E_LAST_EXIT}" "0"
 e2e_cmd --name "tree_registry_only" -- \
   cargo tree -p frob-verbs --no-default-features --features registry-only -e normal --locked --offline
 e2e_assert_eq "tree_registry_only_exit" "${E2E_LAST_EXIT}" "0"
-if printf '%s\n' "${E2E_LAST_STDOUT}" | grep -Eq '\bfrob-fsim\b'; then
-  e2e_assert_eq "registry_only_no_frob_fsim" "present" "absent"
-else
-  e2e_assert_eq "registry_only_no_frob_fsim" "absent" "absent"
+physics_edges() {
+  awk '/(^|[[:space:]])frob-fsim([[:space:]]|$)/ { n++ } END { print n+0 }' "$1"
+}
+if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
+  e2e_assert_eq "registry_only_no_frob_fsim" "$(physics_edges "${E2E_LAST_STDOUT}")" "0"
 fi
+printf '%s\n' 'frob-verbs v0.0.1' '└── frob-fsim v0.0.1' > "${E2E_SCRATCH_DIR}/physics-tree.txt"
+e2e_assert_eq "planted_frob_fsim_edge_detected" "$(physics_edges "${E2E_SCRATCH_DIR}/physics-tree.txt")" "1"
 
 e2e_cmd --name "build_default_run1" -- \
   env "CARGO_TARGET_DIR=${TD_DEFAULT_1}" \
-  cargo build -p frob-verbs --locked
+  cargo run -p frob-verbs --locked --example registry_table
 e2e_assert_eq "build_default_run1_exit" "${E2E_LAST_EXIT}" "0"
+GEN_1="${E2E_LAST_STDOUT}"
 
 e2e_cmd --name "build_default_run2" -- \
   env "CARGO_TARGET_DIR=${TD_DEFAULT_2}" \
-  cargo build -p frob-verbs --locked
+  cargo run -p frob-verbs --locked --example registry_table
 e2e_assert_eq "build_default_run2_exit" "${E2E_LAST_EXIT}" "0"
+GEN_2="${E2E_LAST_STDOUT}"
 
 # ---------------------------------------------------------------------------
 # Step 2: Byte-identical verbs_table.rs across two independent builds (D0)
 # ---------------------------------------------------------------------------
 e2e_step "determinism_check" "Compare generated verbs_table.rs byte-for-byte across two builds"
 
-GEN_1="$(find "${TD_DEFAULT_1}/debug/build" -path '*/frob-verbs-*/out/verbs_table.rs' -print | head -n 1 || true)"
-GEN_2="$(find "${TD_DEFAULT_2}/debug/build" -path '*/frob-verbs-*/out/verbs_table.rs' -print | head -n 1 || true)"
-
-if [ -n "${GEN_1}" ] && [ -f "${GEN_1}" ] && [ -n "${GEN_2}" ] && [ -f "${GEN_2}" ]; then
+if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
   if cmp -s "${GEN_1}" "${GEN_2}"; then
     e2e_assert_eq "verbs_table_byte_identical" "equal" "equal"
   else
     e2e_assert_eq "verbs_table_byte_identical" "differs" "equal"
   fi
-  DIGEST_HEX="$(grep '^pub const REGISTRY_DIGEST_HEX:' "${GEN_1}" | sed -E 's/.*"([0-9a-f]{64})".*/\1/' || true)"
-  ENTRY_COUNT="$(grep '^pub static VERBS:' "${GEN_1}" | sed -E 's/.*\[VerbEntry; ([0-9]+)\].*/\1/' || printf '0')"
+  registry_stat() {
+    awk -v name="$1:" '$1 == "pub" && $2 == "const" && $3 == name { sub(/;$/, "", $6); print $6 }' "${GEN_1}"
+  }
+  DIGEST_HEX="$(grep '^pub const REGISTRY_DIGEST_HEX:' "${GEN_1}" | sed -E 's/.*"([0-9a-f]{64})".*/\1/')"
+  ENTRY_COUNT="$(grep '^pub static VERBS:' "${GEN_1}" | sed -E 's/.*\[VerbEntry; ([0-9]+)\].*/\1/')"
   e2e_metric "entry_count" "${ENTRY_COUNT}" "count"
-  e2e_metric "cluster_count" "0" "count"
-  e2e_metric "largest_task_cluster" "0" "count" "<=" "7"
-  if [ -n "${DIGEST_HEX}" ]; then
-    e2e_assert_eq "registry_digest_len" "${#DIGEST_HEX}" "64"
-  fi
-else
-  # Under remote rch builds without OUT_DIR artifact download, determinism is still
-  # verified in-crate by permutation_invariance_and_deterministic_codegen.
-  e2e_skip "verbs_table_out_dir_compare" "remote build did not materialize local OUT_DIR/verbs_table.rs; covered by unit test"
+  e2e_metric "cluster_count" "$(registry_stat REGISTRY_CLUSTER_COUNT)" "count"
+  e2e_metric "largest_task_cluster" "$(registry_stat REGISTRY_LARGEST_TASK_CLUSTER)" "count" "<=" "7"
+  e2e_metric "longest_description" "$(registry_stat REGISTRY_LONGEST_DESCRIPTION)" "count" "<=" "800"
+  e2e_assert_eq "registry_digest_len" "${#DIGEST_HEX}" "64"
 fi
-e2e_skip "longest_description" "RL-11 short_doc length metric activates when NJL-01 derive.rs lands (threshold 800)"
 
 # ---------------------------------------------------------------------------
 # Step 3: Run unit lint suite and conformance tests
@@ -265,8 +264,7 @@ EOF
 run_plant() {
   local plant_name="$1"
   local plant_file="$2"
-  local expect_lint="$3"
-  local expect_slug="$4"
+  local expect_row="$3" expect_lint="$4" expect_slug="$5" diagnostics
   local td="${TARGET_BASE}/plant-${plant_name}"
   mkdir -p "${td}"
 
@@ -277,19 +275,17 @@ run_plant() {
       "FROB_VERBS_SCHEMAS_DIR=${SCHEMAS_SCRATCH}" \
       cargo check -p frob-verbs --locked
 
-  if [ "${E2E_LAST_EXIT}" -ne 0 ] \
-    && printf '%s\n%s\n' "${E2E_LAST_STDOUT}" "${E2E_LAST_STDERR}" | grep -Fq "${expect_lint}" \
-    && printf '%s\n%s\n' "${E2E_LAST_STDOUT}" "${E2E_LAST_STDERR}" | grep -Fq "${expect_slug}"; then
-    e2e_assert_eq "plant_${plant_name}_caught" "caught" "caught"
-  else
-    e2e_assert_eq "plant_${plant_name}_caught" "missed" "caught"
-  fi
+  [ "${E2E_DRY_RUN:-0}" != "1" ] || return 0
+  diagnostics="$(awk -v expected="entry \`${expect_row}\` failed ${expect_lint} (${expect_slug})" \
+    'index($0, expected) { n++ } END { print n+0 }' "${E2E_LAST_STDOUT}" "${E2E_LAST_STDERR}")"
+  e2e_assert_eq "plant_${plant_name}_exit" "${E2E_LAST_EXIT}" "101"
+  e2e_assert_eq "plant_${plant_name}_diagnostic_count" "${diagnostics}" "1"
 }
 
-run_plant "collision" "${PLANTS_DIR}/collision.toml" "RL-02" "tool-name-collision"
-run_plant "unknown_field" "${PLANTS_DIR}/unknown_field.toml" "RL-13" "unknown-field"
-run_plant "underscore" "${PLANTS_DIR}/underscore.toml" "RL-01" "name-grammar"
-run_plant "eight_tools" "${PLANTS_DIR}/eight_tools.toml" "RL-04" "empty-task-clusters"
-run_plant "wait_range" "${PLANTS_DIR}/wait_range.toml" "RL-09" "mcp-wait-out-of-range"
+run_plant "collision" "${PLANTS_DIR}/collision.toml" "robot.docs" "RL-02" "tool-name-collision"
+run_plant "unknown_field" "${PLANTS_DIR}/unknown_field.toml" "doctor" "RL-13" "unknown-field"
+run_plant "underscore" "${PLANTS_DIR}/underscore.toml" "design.check_all" "RL-01" "name-grammar"
+run_plant "eight_tools" "${PLANTS_DIR}/eight_tools.toml" "design.op8" "RL-04" "empty-task-clusters"
+run_plant "wait_range" "${PLANTS_DIR}/wait_range.toml" "sim.run" "RL-09" "mcp-wait-out-of-range"
 
 e2e_skip "plant_bare_int" "RL-INT integer-type lint activates at M1 when N32a-07 lands"

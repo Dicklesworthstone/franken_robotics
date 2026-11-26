@@ -18,6 +18,16 @@ use std::process;
 
 #[path = "src/registry/engine.rs"]
 mod engine;
+#[path = "src/envelope/regex.rs"]
+mod regex;
+#[path = "src/envelope/tree.rs"]
+mod tree;
+#[path = "src/envelope/validate.rs"]
+mod validate;
+
+mod envelope {
+    pub(crate) use super::{tree::Tree, validate::Schema};
+}
 
 use engine::codegen::compile_registry;
 use engine::entry::ParsedRegistry;

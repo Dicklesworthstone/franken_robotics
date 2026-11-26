@@ -3,6 +3,7 @@
 //! `VERBS`, `TASK_CLUSTERS`, `SCHEMAS`, and `REGISTRY_DIGEST` are generated at build time
 //! from `registries/verbs.toml` and `schemas/` into `$OUT_DIR/verbs_table.rs`.
 
+mod arguments;
 pub mod codegen;
 pub mod derive;
 pub mod entry;
@@ -10,6 +11,7 @@ pub mod lint;
 pub mod names;
 pub mod schema_id;
 
+pub use arguments::parse_arguments;
 pub use derive::{
     Annotations, CommonProperty, DeriveError, KeyRule, ListedRefusal, MAX_SHORT_DOC_CHARS,
     PROCESS_OPTIONS, RefusalOrigin, RefusalSource, ShadowError, Source, entry_schema_json,
@@ -75,13 +77,21 @@ pub fn lookup_tool(tool: &str) -> Option<&'static VerbEntry> {
     lookup_tool_in(&VERBS, tool)
 }
 
-/// Look up an embedded canonical JSON schema text by schema identifier (`O(log S)`).
+/// Look up an output schema or an unambiguous input schema by schema identifier.
+/// For a specific verb input use [`lookup_input_schema`].
 #[must_use]
 pub fn lookup_schema(id: &str) -> Option<&'static str> {
     SCHEMAS
         .binary_search_by_key(&id, |(sid, _)| sid.as_str())
         .ok()
         .map(|idx| SCHEMAS[idx].1)
+}
+
+/// Look up the served input schema of a verb, with production stripping applied for that verb.
+#[must_use]
+pub fn lookup_input_schema(name: &str) -> Option<&'static str> {
+    let index = VERBS.binary_search_by_key(&name, |entry| entry.name).ok()?;
+    VERB_INPUT_SCHEMAS.get(index).copied()
 }
 
 /// Binary-search a sorted `VerbEntry` slice by exact verb name.
@@ -105,7 +115,7 @@ impl VerbEntry {
         &self,
     ) -> Result<crate::envelope::Schema, crate::envelope::EnvelopeError> {
         let id = self.input_schema.as_str();
-        let raw = lookup_schema(id).ok_or_else(|| {
+        let raw = lookup_input_schema(self.name).ok_or_else(|| {
             crate::envelope::EnvelopeError::Schema(format!(
                 "input schema `{id}` of `{}` is not embedded",
                 self.name
@@ -144,7 +154,7 @@ impl VerbEntry {
     /// Full refusal list using the embedded input schema and embedded refusal registry.
     #[must_use]
     pub fn all_refusals(&self) -> Vec<ListedRefusal> {
-        let raw = lookup_schema(self.input_schema.as_str()).unwrap_or("{}");
+        let raw = lookup_input_schema(self.name).unwrap_or("{}");
         match crate::envelope::embedded_registry() {
             Ok(reg) => self.all_refusals_with(raw, reg),
             Err(_) => Vec::new(),
@@ -154,7 +164,7 @@ impl VerbEntry {
     /// Generated `short_doc` description (at most 800 characters) using embedded schema and registry.
     #[must_use]
     pub fn short_doc(&self) -> String {
-        let raw = lookup_schema(self.input_schema.as_str()).unwrap_or("{}");
+        let raw = lookup_input_schema(self.name).unwrap_or("{}");
         match crate::envelope::embedded_registry() {
             Ok(reg) => self.short_doc_with(raw, reg),
             Err(_) => String::new(),
@@ -1210,9 +1220,8 @@ conformance_only = ["{prop}"]
         assert!(parse_and_lint(make_doc("mutant").as_bytes(), &synth_ctx(false)).is_ok());
     }
 
-    #[test]
-    fn conformance_only_stripped() {
-        let doc = r#"schema = "frob.verbs/1"
+    fn sim_run_specimen() -> &'static str {
+        r#"schema = "frob.verbs/1"
 
 [[verb]]
 name = "sim.run"
@@ -1233,7 +1242,12 @@ use_when = "Running trajectories."
 owner = "frob-arena"
 wait = { cli = "to-completion", mcp_ms = 5000, mcp_max_ms = 30000 }
 conformance_only = ["mutant"]
-"#;
+"#
+    }
+
+    #[test]
+    fn conformance_only_stripped() {
+        let doc = sim_run_specimen();
         let (reg_prod, rep_prod) =
             parse_and_lint(doc.as_bytes(), &synth_ctx(false)).expect("prod build");
         let (reg_conf, rep_conf) =
@@ -1271,6 +1285,59 @@ conformance_only = ["mutant"]
             reg_conf.registry_digest().unwrap(),
             "REGISTRY_DIGEST must be identical with and without conformance feature"
         );
+    }
+
+    #[test]
+    fn shared_schema_strips_are_per_use() {
+        let mut reg = ParsedRegistry::parse_toml(sim_run_specimen().as_bytes()).unwrap();
+        let mut other = reg.verbs[0].clone();
+        reg.verbs[0].output_schema = other.input_schema.clone();
+        other.name = "sim.other".into();
+        other.examples[0] = other.examples[0].replace("sim run", "sim other");
+        other.conformance_only = vec!["steps".into()];
+        reg.verbs.push(other);
+
+        let report = lint_registry(&reg, &synth_ctx(false)).unwrap();
+        let run = &report.embedded_inputs["sim.run"];
+        let other = &report.embedded_inputs["sim.other"];
+        let output = &report.embedded_schemas["frob.sim.run.in/1"];
+        assert!(!run.contains("\"mutant\"") && run.contains("\"steps\""));
+        assert!(other.contains("\"mutant\"") && !other.contains("\"steps\""));
+        assert!(output.contains("\"mutant\"") && output.contains("\"steps\""));
+    }
+
+    #[test]
+    fn rl07_validates_served_example_schemas() {
+        let mut ctx = synth_ctx(false);
+        ctx.schemas.insert(
+            schema_file_name("frob.sim.run.in/1"),
+            include_bytes!("../../../../schemas/verbs/frob.sim.run.in.1.json").to_vec(),
+        );
+        let mut reg = ParsedRegistry::parse_toml(sim_run_specimen().as_bytes()).unwrap();
+        reg.verbs[0].conformance_only = vec!["perturb_ulp".into()];
+        reg.verbs[0].actions.push(OwnedAction {
+            name: "inspect".into(),
+            kind_raw: "read".into(),
+            capabilities: vec!["sim:read".into()],
+            paginated: true,
+            destructive_explicit: None,
+        });
+        for (args, detail) in [
+            ("--seconds not-a-time --key k1", "/pattern"),
+            ("--limit 2 --key k1", "/then/properties/limit/false"),
+            ("--perturb-ulp q0 --key k1", "unknown flag"),
+        ] {
+            reg.verbs[0].examples[0] = format!("frob sim run g1 --tier referee {args} --json");
+            let err = lint_registry(&reg, &ctx).unwrap_err();
+            assert_eq!((err.entry.as_str(), err.lint), ("sim.run", "RL-07"));
+            assert!(err.detail.contains(detail), "{err}");
+        }
+        ctx.conformance = true;
+        lint_registry(&reg, &ctx).unwrap();
+        reg.verbs[0].examples[0] =
+            "frob sim run g1 --tier referee --action inspect --limit 2".into();
+        ctx.conformance = false;
+        lint_registry(&reg, &ctx).unwrap();
     }
 
     #[test]

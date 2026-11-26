@@ -717,6 +717,7 @@ fn derive_common_properties(v: &EntryView<'_>) -> Vec<CommonProperty> {
 fn derive_input_schema_json(
     v: &EntryView<'_>,
     raw_input_schema: &str,
+    plant_key_required: bool,
 ) -> Result<String, DeriveError> {
     let admitted = admit(raw_input_schema.as_bytes(), &Limits::default())
         .map_err(|e| DeriveError::InvalidSchema(e.to_string()))?;
@@ -756,10 +757,8 @@ fn derive_input_schema_json(
         }
     }
 
-    #[cfg(feature = "nc-key-in-required")]
-    let plant_key_required = common.iter().any(|cp| cp.name == "idempotency_key");
-    #[cfg(not(feature = "nc-key-in-required"))]
-    let plant_key_required = false;
+    let plant_key_required =
+        plant_key_required && common.iter().any(|cp| cp.name == "idempotency_key");
 
     let has_props = members.iter().any(|m| m.name == "properties");
     let has_all_of = members.iter().any(|m| m.name == "allOf");
@@ -1193,7 +1192,11 @@ impl VerbEntry {
         &self,
         raw_input_schema: &str,
     ) -> Result<String, DeriveError> {
-        derive_input_schema_json(&EntryView::from_static(self), raw_input_schema)
+        derive_input_schema_json(
+            &EntryView::from_static(self),
+            raw_input_schema,
+            cfg!(feature = "nc-key-in-required"),
+        )
     }
 
     /// Full refusal list (chapter + appended kind/variation codes), ascending, deduplicated.
@@ -1243,7 +1246,15 @@ impl OwnedVerbEntry {
         &self,
         raw_input_schema: &str,
     ) -> Result<String, DeriveError> {
-        derive_input_schema_json(&EntryView::from_owned(self), raw_input_schema)
+        derive_input_schema_json(
+            &EntryView::from_owned(self),
+            raw_input_schema,
+            cfg!(feature = "nc-key-in-required"),
+        )
+    }
+
+    pub(super) fn input_schema_for_examples(&self, raw: &str) -> Result<String, DeriveError> {
+        derive_input_schema_json(&EntryView::from_owned(self), raw, false)
     }
 
     /// Full refusal list (chapter + appended kind/variation codes), ascending, deduplicated.

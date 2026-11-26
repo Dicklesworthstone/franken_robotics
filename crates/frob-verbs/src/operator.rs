@@ -24,7 +24,7 @@ use crate::{
     handlers,
     registry::{
         REGISTRY_DIGEST_HEX, SCHEMAS, VERBS, VerbEntry, entry_schema_json, lookup,
-        lookup_entry_json, lookup_schema,
+        lookup_entry_json, lookup_input_schema, lookup_schema,
     },
 };
 
@@ -97,7 +97,7 @@ fn schema_tree(raw: &str) -> Result<Tree, HandlerFault> {
 }
 
 fn raw_input(entry: &VerbEntry) -> Result<&'static str, HandlerFault> {
-    lookup_schema(entry.input_schema.as_str()).ok_or_else(|| unmapped("input schema missing"))
+    lookup_input_schema(entry.name).ok_or_else(|| unmapped("input schema missing"))
 }
 
 fn completed(verb: &str, body: &Tree) -> Result<Envelope, HandlerFault> {

@@ -15,7 +15,7 @@ use frob_verbs::{
     envelope::{Cost, Envelope, FaultContext, Tree, embedded_registry},
     handlers::handler_table,
     operator,
-    registry::{VERBS, VerbEntry, lookup_schema},
+    registry::{VERBS, VerbEntry, lookup_input_schema},
 };
 
 type Error = Box<dyn std::error::Error>;
@@ -116,7 +116,7 @@ fn run(
     let mut schemas = std::collections::BTreeMap::new();
     let mut request = Request::new(&fault.verb, Tree::Obj(vec![])).with_session(session);
     if let Some((entry, count)) = located {
-        let raw = lookup_schema(entry.input_schema.as_str()).ok_or("missing input schema")?;
+        let raw = lookup_input_schema(entry.name).ok_or("missing input schema")?;
         if help {
             let answer = operator::help(entry, registry).map_err(|_| "help generation failed")?;
             return Ok(WireEnvelope::from_envelope(&answer, registry)?);

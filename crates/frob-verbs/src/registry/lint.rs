@@ -11,9 +11,12 @@ use frob_core::canon::{CanonWriter, Value as CanonValue, write_json};
 use frob_core::json::{Json, Limits, admit};
 use frob_core::registry::refusals::RefusalRegistry;
 
+use crate::envelope::{Schema, Tree};
+
+use super::arguments::parse_arguments;
 use super::entry::{Kind, Milestone, OwnedVerbEntry, ParseError, ParsedRegistry, Tier};
 use super::names::{base_tool_owner, is_base_verb, tool_name, validate_verb_name};
-use super::schema_id::{OwnedSchemaId, schema_file_name};
+use super::schema_id::OwnedSchemaId;
 
 /// Maximum allowed number of non-base verbs sharing any single task cluster (RL-04).
 pub const MAX_TOOLS_PER_TASK_CLUSTER: usize = 7;
@@ -181,13 +184,16 @@ impl LintContext {
 pub struct LintReport {
     /// Non-fatal warnings (for example RL-15 scope proposals before `registries/scopes.toml` lands at M2).
     pub warnings: Vec<String>,
-    /// Map from schema identifier (`frob.<...>/<major>`) to canonical JSON schema text to embed
-    /// in `SCHEMAS` (with `conformance_only` properties stripped when `!ctx.conformance`).
+    /// Output schemas and inputs with an unambiguous schema ID.
     pub embedded_schemas: BTreeMap<String, String>,
+    /// Served input schema JSON by verb name, with per-verb stripping in production.
+    pub embedded_inputs: BTreeMap<String, String>,
     /// Largest non-base task-cluster tool count observed across entries.
     pub largest_task_cluster: usize,
     /// Distinct registry cluster count.
     pub cluster_count: usize,
+    /// Longest generated description in Unicode code points.
+    pub longest_description: usize,
 }
 
 /// Parse raw `verbs.toml` bytes and run all active registry lints.
@@ -205,6 +211,9 @@ pub fn parse_and_lint(
 pub fn lint_registry(reg: &ParsedRegistry, ctx: &LintContext) -> Result<LintReport, LintError> {
     let mut warnings = Vec::new();
     let mut embedded_schemas: BTreeMap<String, String> = BTreeMap::new();
+    let mut embedded_inputs = BTreeMap::new();
+    let mut input_by_id: BTreeMap<String, Option<String>> = BTreeMap::new();
+    let mut longest_description = 0;
 
     let mut seen_names: BTreeSet<&str> = BTreeSet::new();
     let mut seen_tools: BTreeMap<String, &str> = BTreeMap::new();
@@ -235,7 +244,6 @@ pub fn lint_registry(reg: &ParsedRegistry, ctx: &LintContext) -> Result<LintRepo
     }
 
     // Track which entries strip which `conformance_only` properties from a given input schema.
-    let mut input_schema_strips: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
 
     for entry in &reg.verbs {
         // RL-14: duplicate verb name.
@@ -801,15 +809,35 @@ pub fn lint_registry(reg: &ParsedRegistry, ctx: &LintContext) -> Result<LintRepo
                     format!("`conformance_only` property `{prop_name}` {reason}"),
                 ));
             }
-            if !ctx.conformance {
-                input_schema_strips
-                    .entry(entry.input_schema.clone())
-                    .or_default()
-                    .insert(prop_name.clone());
-            }
         }
 
-        // RL-07 & RL-16: non-empty examples, matching CLI path, valid flags/args/identities.
+        let strips = if ctx.conformance {
+            BTreeSet::new()
+        } else {
+            entry.conformance_only.iter().cloned().collect()
+        };
+        let served_in =
+            canonical_json_strip_properties(in_admitted.value(), &strips).map_err(|e| {
+                LintError::new(
+                    &entry.name,
+                    "RL-05",
+                    "schema-id-form",
+                    &entry.input_schema,
+                    format!("input schema canonicalization failed: {e}"),
+                )
+            })?;
+
+        if let Err(err) = entry.check_shadowing(&served_in) {
+            return Err(LintError::new(
+                &entry.name,
+                "NJL-01",
+                "common-property-shadowed",
+                err.property.clone(),
+                err.to_string(),
+            ));
+        }
+
+        // RL-07 and RL-16 use the same served schema and argument conversion as the CLI.
         if entry.examples.is_empty() {
             return Err(LintError::new(
                 &entry.name,
@@ -819,11 +847,34 @@ pub fn lint_registry(reg: &ParsedRegistry, ctx: &LintContext) -> Result<LintRepo
                 "every verb must provide at least one runnable example",
             ));
         }
+        let example_error = |reason| {
+            LintError::new(
+                &entry.name,
+                "RL-07",
+                "empty-examples",
+                &entry.input_schema,
+                reason,
+            )
+        };
+        let merged = entry
+            .input_schema_for_examples(&served_in)
+            .map_err(|e| example_error(e.to_string()))?;
+        let raw = Tree::parse(served_in.as_bytes()).map_err(|e| example_error(e.to_string()))?;
+        let schema = Schema::compile_json(&merged).map_err(|e| example_error(e.to_string()))?;
         for example in &entry.examples {
-            validate_example(entry, kind, example, &in_info)?;
+            validate_example(entry, example, &in_info, &raw, &schema)?;
         }
+        let short_doc = entry.short_doc_checked_with(&served_in, &ctx.refusals).map_err(|doc_len| {
+            LintError::new(
+                &entry.name,
+                RESERVED_RL11.0,
+                RESERVED_RL11.1,
+                format!("{doc_len} chars"),
+                format!("derived `short_doc` is {doc_len} characters, exceeding {MAX_DESCRIPTION_CHARS}"),
+            )
+        })?;
+        longest_description = longest_description.max(short_doc.chars().count());
 
-        // Record canonical embedded schemas (with conformance_only stripping applied below).
         let out_canon = write_json(out_admitted.value()).map_err(|e| {
             LintError::new(
                 &entry.name,
@@ -835,92 +886,22 @@ pub fn lint_registry(reg: &ParsedRegistry, ctx: &LintContext) -> Result<LintRepo
         })?;
         embedded_schemas.insert(entry.output_schema.clone(), out_canon.as_str().to_owned());
 
-        // Ensure input schema is registered for canonical embedding after collecting strip sets.
-        embedded_schemas
+        // Bare ID lookup remains available when all input uses agree. Output uses keep
+        // the original schema; input consumers always select the exact verb's schema.
+        input_by_id
             .entry(entry.input_schema.clone())
-            .or_default();
+            .and_modify(|candidate| {
+                if candidate.as_ref() != Some(&served_in) {
+                    *candidate = None;
+                }
+            })
+            .or_insert_with(|| Some(served_in.clone()));
+        embedded_inputs.insert(entry.name.clone(), served_in);
     }
 
-    // Populate canonical embedded input schemas (stripping `conformance_only` when !conformance).
-    for (schema_id, slot) in &mut embedded_schemas {
-        if !slot.is_empty() {
-            continue;
-        }
-        let fname = schema_file_name(schema_id);
-        let raw = ctx.schemas.get(&fname).ok_or_else(|| {
-            LintError::new(
-                "<schemas>",
-                "RL-05",
-                "schema-id-form",
-                &fname,
-                "schema disappeared during canonicalization",
-            )
-        })?;
-        let adm = admit(raw, &Limits::default()).map_err(|e| {
-            LintError::new(
-                "<schemas>",
-                "RL-05",
-                "schema-id-form",
-                &fname,
-                format!("schema JSON admission failed: {e}"),
-            )
-        })?;
-        let strips = input_schema_strips.get(schema_id);
-        let rendered = if let Some(to_strip) = strips
-            && !to_strip.is_empty()
-        {
-            canonical_json_strip_properties(adm.value(), to_strip).map_err(|e| {
-                LintError::new(
-                    "<schemas>",
-                    "RL-24",
-                    "conformance-only-not-an-input",
-                    schema_id,
-                    format!("failed stripping conformance_only properties: {e}"),
-                )
-            })?
-        } else {
-            write_json(adm.value())
-                .map_err(|e| {
-                    LintError::new(
-                        "<schemas>",
-                        "RL-05",
-                        "schema-id-form",
-                        schema_id,
-                        format!("schema canonicalization failed: {e}"),
-                    )
-                })?
-                .as_str()
-                .to_owned()
-        };
-        *slot = rendered;
-    }
-
-    // Post-strip NJL-01 lints against the served embedded input schemas:
-    // `common-property-shadowed` and `RL-11` (`description-too-long`).
-    for entry in &reg.verbs {
-        let served_in = embedded_schemas
-            .get(&entry.input_schema)
-            .map(String::as_str)
-            .unwrap_or("{}");
-        if let Err(err) = entry.check_shadowing(served_in) {
-            return Err(LintError::new(
-                &entry.name,
-                "NJL-01",
-                "common-property-shadowed",
-                err.property.clone(),
-                err.to_string(),
-            ));
-        }
-        if let Err(doc_len) = entry.short_doc_checked_with(served_in, &ctx.refusals) {
-            return Err(LintError::new(
-                &entry.name,
-                RESERVED_RL11.0,
-                RESERVED_RL11.1,
-                format!("{doc_len} chars"),
-                format!(
-                    "derived `short_doc` is {doc_len} characters, exceeding {MAX_DESCRIPTION_CHARS}"
-                ),
-            ));
+    for (id, candidate) in input_by_id {
+        if let Some(schema) = candidate {
+            embedded_schemas.entry(id).or_insert(schema);
         }
     }
 
@@ -954,8 +935,10 @@ pub fn lint_registry(reg: &ParsedRegistry, ctx: &LintContext) -> Result<LintRepo
     Ok(LintReport {
         warnings,
         embedded_schemas,
+        embedded_inputs,
         largest_task_cluster,
         cluster_count: clusters.len(),
+        longest_description,
     })
 }
 
@@ -1012,10 +995,7 @@ fn surface_wide_refusal_count(kind: Kind, entry: &OwnedVerbEntry) -> usize {
 
 #[derive(Debug, Default)]
 struct PropMeta {
-    ty: Option<String>,
-    enum_values: Option<Vec<String>>,
     identity_prefix: Option<String>,
-    is_positional: bool,
 }
 
 #[derive(Debug, Default)]
@@ -1048,16 +1028,6 @@ fn extract_input_schema_info(root: &Json<'_>) -> InputSchemaInfo {
     if let Some(props) = root.get("properties").and_then(|v| v.as_object()) {
         for member in props {
             let mut meta = PropMeta::default();
-            if let Some(t) = member.value.get("type").and_then(|v| v.as_str()) {
-                meta.ty = Some(t.to_owned());
-            }
-            if let Some(en) = member.value.get("enum").and_then(|v| v.as_array()) {
-                let vals: Vec<String> = en
-                    .iter()
-                    .filter_map(|v| v.as_str().map(str::to_owned))
-                    .collect();
-                meta.enum_values = Some(vals);
-            }
             if let Some(pref) = member
                 .value
                 .get("x-frob-identity-prefix")
@@ -1077,11 +1047,9 @@ fn extract_input_schema_info(root: &Json<'_>) -> InputSchemaInfo {
                 .get("x-frob-positional")
                 .and_then(|v| v.as_bool())
                 == Some(true)
+                && !info.positionals.contains(&member.name)
             {
-                meta.is_positional = true;
-                if !info.positionals.contains(&member.name) {
-                    info.positionals.push(member.name.clone());
-                }
+                info.positionals.push(member.name.clone());
             }
             info.properties.insert(member.name.clone(), meta);
         }
@@ -1091,9 +1059,10 @@ fn extract_input_schema_info(root: &Json<'_>) -> InputSchemaInfo {
 
 fn validate_example(
     entry: &OwnedVerbEntry,
-    kind: Kind,
     example: &str,
-    schema: &InputSchemaInfo,
+    info: &InputSchemaInfo,
+    raw: &Tree,
+    schema: &Schema,
 ) -> Result<(), LintError> {
     let tokens = shell_split(example).map_err(|reason| {
         LintError::new(&entry.name, "RL-07", "empty-examples", example, reason)
@@ -1137,270 +1106,73 @@ fn validate_example(
         }
     }
 
-    // Build set of common flags allowed by this entry's kind, fields, and actions.
-    let mut common_flags: BTreeMap<&'static str, bool> = BTreeMap::new(); // flag -> takes_value
-    for &(f, takes_val) in PROCESS_FLAGS {
-        common_flags.insert(f, takes_val);
-    }
-    let has_run = kind == Kind::Run
-        || entry
-            .actions
-            .iter()
-            .any(|a| Kind::parse(&a.kind_raw) == Some(Kind::Run));
-    let has_mutate = kind == Kind::Mutate
-        || entry
-            .actions
-            .iter()
-            .any(|a| Kind::parse(&a.kind_raw) == Some(Kind::Mutate));
-    let has_paginated = entry.paginated || entry.actions.iter().any(|a| a.paginated);
-    if has_run {
-        common_flags.insert("key", true);
-        common_flags.insert("budget", true);
-        common_flags.insert("estimate", false);
-        common_flags.insert("sync-wait-ms", true);
-        common_flags.insert("on-cancel", true);
-        common_flags.insert("envelope-scope", true);
-    }
-    if has_mutate {
-        common_flags.insert("key", true);
-        common_flags.insert("expected-parent", true);
-    }
-    if entry.estimable {
-        common_flags.insert("estimate", false);
-    }
-    if has_paginated {
-        common_flags.insert("cursor", true);
-        common_flags.insert("limit", true);
-        common_flags.insert("follow", false);
-    }
-    if !entry.actions.is_empty() {
-        common_flags.insert("action", true);
-    }
-
-    // Map kebab-case CLI flags to schema property names.
-    let mut flag_to_prop: BTreeMap<String, String> = BTreeMap::new();
-    for prop in schema.properties.keys() {
-        flag_to_prop.insert(prop.replace('_', "-"), prop.clone());
-        flag_to_prop.insert(prop.clone(), prop.clone());
-    }
-
-    let mut provided_props: BTreeSet<String> = BTreeSet::new();
-    let mut positionals: Vec<String> = Vec::new();
-
-    let mut idx = 1 + expected_path.len();
-    while idx < tokens.len() {
-        let tok = &tokens[idx];
-        if let Some(flag_raw) = tok.strip_prefix("--") {
-            let (flag_name, inline_val) = match flag_raw.split_once('=') {
-                Some((k, v)) => (k, Some(v)),
-                None => (flag_raw, None),
-            };
-            if let Some(&takes_val) = common_flags.get(flag_name) {
-                let val_opt = if takes_val {
-                    if let Some(v) = inline_val {
-                        Some(v.to_owned())
-                    } else {
-                        idx += 1;
-                        let v = tokens.get(idx).ok_or_else(|| {
-                            LintError::new(
-                                &entry.name,
-                                "RL-07",
-                                "empty-examples",
-                                tok,
-                                format!("flag `{tok}` requires a value"),
-                            )
-                        })?;
-                        Some(v.clone())
-                    }
-                } else {
-                    if inline_val.is_some() {
-                        return Err(LintError::new(
-                            &entry.name,
-                            "RL-07",
-                            "empty-examples",
-                            tok,
-                            format!("boolean flag `--{flag_name}` does not take a value"),
-                        ));
-                    }
-                    None
-                };
-                if flag_name == "action"
-                    && let Some(act_val) = &val_opt
-                    && !entry.actions.iter().any(|a| a.name == *act_val)
-                {
-                    return Err(LintError::new(
-                        &entry.name,
-                        "RL-07",
-                        "empty-examples",
-                        act_val,
-                        format!("unknown action `{act_val}` in example"),
-                    ));
-                }
-                if let Some(val) = val_opt {
-                    check_abbreviated_identity(&entry.name, &val, None)?;
-                }
-            } else if let Some(prop_name) = flag_to_prop.get(flag_name) {
-                let meta = &schema.properties[prop_name];
-                let is_bool = meta.ty.as_deref() == Some("boolean");
-                let val_str = if is_bool && inline_val.is_none() {
-                    "true".to_owned()
-                } else if let Some(v) = inline_val {
-                    v.to_owned()
-                } else {
-                    idx += 1;
-                    tokens
-                        .get(idx)
-                        .ok_or_else(|| {
-                            LintError::new(
-                                &entry.name,
-                                "RL-07",
-                                "empty-examples",
-                                tok,
-                                format!("flag `{tok}` requires a value"),
-                            )
-                        })?
-                        .clone()
-                };
-                validate_prop_value(&entry.name, prop_name, &val_str, meta)?;
-                provided_props.insert(prop_name.clone());
-            } else {
-                return Err(LintError::new(
-                    &entry.name,
-                    "RL-07",
-                    "empty-examples",
-                    tok,
-                    format!("unknown flag `{tok}` not in `{}`", entry.input_schema),
+    let error =
+        |value, reason| LintError::new(&entry.name, "RL-07", "empty-examples", value, reason);
+    let mut remaining = tokens.into_iter().skip(1 + expected_path.len());
+    let mut args = Vec::new();
+    while let Some(token) = remaining.next() {
+        if token == "--" {
+            args.push(token);
+            args.extend(remaining);
+            break;
+        }
+        let flag = token.strip_prefix("--").map(|f| {
+            f.split_once('=')
+                .map_or((f, None), |(name, val)| (name, Some(val)))
+        });
+        if let Some((name, inline)) = flag
+            && let Some(&(_, takes_value)) = PROCESS_FLAGS.iter().find(|(f, _)| *f == name)
+        {
+            if takes_value && inline.is_none() {
+                remaining
+                    .next()
+                    .filter(|val| !val.starts_with("--"))
+                    .ok_or_else(|| {
+                        error(
+                            token.clone(),
+                            format!("process option --{name} requires a value"),
+                        )
+                    })?;
+            } else if !takes_value && inline.is_some() {
+                return Err(error(
+                    token.clone(),
+                    format!("process option --{name} does not take a value"),
                 ));
             }
-        } else if tok.starts_with('-') && tok.len() > 1 {
-            return Err(LintError::new(
-                &entry.name,
-                "RL-07",
-                "empty-examples",
-                tok,
-                format!("short/unknown flag `{tok}` is not part of the generated CLI grammar"),
-            ));
         } else {
-            positionals.push(tok.clone());
-        }
-        idx += 1;
-    }
-
-    // Bind positional arguments against declared positional metadata (or ordered required
-    // properties when no explicit positional metadata is declared).
-    let positional_targets: Vec<String> = if !schema.positionals.is_empty() {
-        schema.positionals.clone()
-    } else {
-        schema
-            .required
-            .iter()
-            .filter(|p| !provided_props.contains(*p))
-            .cloned()
-            .collect()
-    };
-
-    if positionals.len() > positional_targets.len() {
-        return Err(LintError::new(
-            &entry.name,
-            "RL-07",
-            "empty-examples",
-            positionals.join(" "),
-            format!(
-                "example supplies {} positional argument(s), schema accepts at most {}",
-                positionals.len(),
-                positional_targets.len()
-            ),
-        ));
-    }
-
-    for (pos_val, target_prop) in positionals.iter().zip(positional_targets.iter()) {
-        if let Some(meta) = schema.properties.get(target_prop) {
-            validate_prop_value(&entry.name, target_prop, pos_val, meta)?;
-        } else {
-            check_abbreviated_identity(&entry.name, pos_val, None)?;
-        }
-        provided_props.insert(target_prop.clone());
-    }
-
-    for req in &schema.required {
-        if !provided_props.contains(req) {
-            return Err(LintError::new(
-                &entry.name,
-                "RL-07",
-                "empty-examples",
-                example,
-                format!("example omits required input property `{req}`"),
-            ));
+            args.push(token);
         }
     }
 
-    Ok(())
-}
-
-fn validate_prop_value(
-    entry_name: &str,
-    prop_name: &str,
-    raw_val: &str,
-    meta: &PropMeta,
-) -> Result<(), LintError> {
-    let normalized =
-        check_abbreviated_identity(entry_name, raw_val, meta.identity_prefix.as_deref())?;
-    if let Some(ty) = meta.ty.as_deref() {
-        match ty {
-            "integer" => {
-                if normalized.parse::<i64>().is_err() {
-                    return Err(LintError::new(
-                        entry_name,
-                        "RL-07",
-                        "empty-examples",
-                        raw_val,
-                        format!("property `{prop_name}` expects an integer"),
-                    ));
-                }
+    let common = entry.common_properties();
+    let mut instance = parse_arguments(
+        raw,
+        &common,
+        info.positionals.iter().map(String::as_str),
+        &args,
+    )
+    .map_err(|(name, reason)| error(name, reason.to_owned()))?;
+    if let Tree::Obj(fields) = &mut instance {
+        for (name, value) in fields {
+            if let Tree::Str(raw) = value {
+                let prefix = info
+                    .properties
+                    .get(name)
+                    .and_then(|meta| meta.identity_prefix.as_deref());
+                *raw = check_abbreviated_identity(&entry.name, raw, prefix)?;
             }
-            "number" => {
-                if normalized
-                    .parse::<f64>()
-                    .ok()
-                    .filter(|v| v.is_finite())
-                    .is_none()
-                {
-                    return Err(LintError::new(
-                        entry_name,
-                        "RL-07",
-                        "empty-examples",
-                        raw_val,
-                        format!("property `{prop_name}` expects a finite number"),
-                    ));
-                }
-            }
-            "boolean" => {
-                if !matches!(normalized.as_str(), "true" | "false") {
-                    return Err(LintError::new(
-                        entry_name,
-                        "RL-07",
-                        "empty-examples",
-                        raw_val,
-                        format!("property `{prop_name}` expects a boolean"),
-                    ));
-                }
-            }
-            _ => {}
         }
     }
-    if let Some(allowed) = &meta.enum_values
-        && !allowed.is_empty()
-        && !allowed.contains(&normalized)
-    {
-        return Err(LintError::new(
-            entry_name,
-            "RL-07",
-            "empty-examples",
-            raw_val,
-            format!("property `{prop_name}` value must be one of {allowed:?}"),
-        ));
-    }
-    Ok(())
+    schema.validate(&instance).map_err(|violations| {
+        error(
+            example.to_owned(),
+            violations
+                .iter()
+                .map(ToString::to_string)
+                .collect::<Vec<_>>()
+                .join("; "),
+        )
+    })
 }
 
 /// Validate identity-shaped tokens `<prefix>:<hex>` in examples (RL-07).

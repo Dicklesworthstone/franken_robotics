@@ -4,6 +4,7 @@
 //! `crates/frob-verbs/build.rs` via `#[path = "src/registry/engine.rs"]` so the
 //! build script and library execute identical parsing, linting, and codegen logic.
 
+mod arguments;
 pub mod codegen;
 pub mod derive;
 pub mod entry;

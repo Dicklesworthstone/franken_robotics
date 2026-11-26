@@ -160,6 +160,25 @@ fn render_validated_registry(
     }
     out.push_str("];\n\n");
 
+    out.push_str("static VERB_INPUT_SCHEMAS: &[&str] = &[\n");
+    for entry in &sorted_verbs {
+        let _ = writeln!(
+            out,
+            "    {},",
+            rust_str(&report.embedded_inputs[&entry.name])
+        );
+    }
+    out.push_str("];\n\n");
+
+    for (name, value) in [
+        ("REGISTRY_CLUSTER_COUNT", report.cluster_count),
+        ("REGISTRY_LARGEST_TASK_CLUSTER", report.largest_task_cluster),
+        ("REGISTRY_LONGEST_DESCRIPTION", report.longest_description),
+    ] {
+        let _ = writeln!(out, "pub const {name}: usize = {value};");
+    }
+    out.push('\n');
+
     // REGISTRY_DIGEST bytes & hex
     let _ = writeln!(
         out,

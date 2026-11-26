@@ -171,8 +171,34 @@ macro_rules! define_qty_aliases {
 
 macro_rules! define_qty_ops {
     ($($l:ident * $r:ident => $o:ident;)* ; $($dl:ident / $dr:ident => $do:ident;)*) => {
-        $(impl Mul<$r> for $l { type Output = $o; #[inline] fn mul(self, rhs: $r) -> $o { $o::new(self.value() * rhs.value()) } })*
-        $(impl Div<$dr> for $dl { type Output = $do; #[inline] fn div(self, rhs: $dr) -> $do { $do::new(self.value() / rhs.value()) } })*
+        $(
+            const _: () = {
+                let mut i = 0;
+                while i < 6 {
+                    let sum = match $l::DIMENSION[i].checked_add($r::DIMENSION[i]) {
+                        Some(v) => v,
+                        None => panic!("quantity product dimension exponent overflow"),
+                    };
+                    assert!(sum == $o::DIMENSION[i], "quantity product dimension mismatch");
+                    i += 1;
+                }
+            };
+            impl Mul<$r> for $l { type Output = $o; #[inline] fn mul(self, rhs: $r) -> $o { $o::new(self.value() * rhs.value()) } }
+        )*
+        $(
+            const _: () = {
+                let mut i = 0;
+                while i < 6 {
+                    let diff = match $dl::DIMENSION[i].checked_sub($dr::DIMENSION[i]) {
+                        Some(v) => v,
+                        None => panic!("quantity quotient dimension exponent overflow"),
+                    };
+                    assert!(diff == $do::DIMENSION[i], "quantity quotient dimension mismatch");
+                    i += 1;
+                }
+            };
+            impl Div<$dr> for $dl { type Output = $do; #[inline] fn div(self, rhs: $dr) -> $do { $do::new(self.value() / rhs.value()) } }
+        )*
     };
 }
 

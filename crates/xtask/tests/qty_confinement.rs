@@ -56,22 +56,6 @@ fn copy_file(src: &Path, dst: &Path) {
     fs::copy(src, dst).expect("copy file");
 }
 
-fn copy_dir_recursive(src: &Path, dst: &Path) {
-    if !src.is_dir() {
-        return;
-    }
-    fs::create_dir_all(dst).expect("mkdir dst");
-    for ent in fs::read_dir(src).expect("read_dir").flatten() {
-        let p = ent.path();
-        let target = dst.join(ent.file_name());
-        if p.is_dir() {
-            copy_dir_recursive(&p, &target);
-        } else {
-            fs::copy(&p, &target).expect("copy file");
-        }
-    }
-}
-
 fn make_synth_repo(tag: &str, frob_lie_deps: &str, frob_lie_src: &str) -> PathBuf {
     let base = fresh_dir(tag);
     let repo = base.join("repo");
@@ -199,55 +183,47 @@ fn qty_generator_row() {
     let real = repo_root();
     let dir = fresh_dir("gen");
     for rel in [
-        "README.md",
-        "DEPENDENCY_ADMISSION.md",
-        "crates/frob-core/src/refusal/code_gen.rs",
+        "registries/qty_aliases.toml",
+        "registries/qty_products.toml",
         "crates/frob-core/src/qty_gen.rs",
-        "crates/xtask/src/stack/lock.rs",
     ] {
         copy_file(&real.join(rel), &dir.join(rel));
     }
-    copy_dir_recursive(&real.join("registries"), &dir.join("registries"));
-    copy_dir_recursive(&real.join("schemas"), &dir.join("schemas"));
-    copy_dir_recursive(
-        &real.join("receipts/admissions"),
-        &dir.join("receipts/admissions"),
-    );
-    copy_dir_recursive(&real.join("kernels"), &dir.join("kernels"));
+    let qty_row = BUILTIN_GENERATORS
+        .iter()
+        .find(|row| row.name == "quantity-aliases-and-products")
+        .expect("quantity-aliases-and-products generator row registered");
+    let rows = std::slice::from_ref(qty_row);
 
-    // Clean tree passes check-generated.
-    let clean = run_check(&dir, BUILTIN_GENERATORS, false).expect("clean check");
+    // Clean tree passes check-generated on the quantity generator row.
+    let clean = run_check(&dir, rows, false).expect("clean check");
     assert!(
         clean.findings.is_empty(),
         "clean findings: {:?}",
         clean.findings
     );
 
-    // Plant 1: flip one byte in qty_gen.rs -> gen.differs.
+    // Plant 1: flip one byte in qty_gen.rs -> exact single gen.differs finding.
     let gen_path = dir.join("crates/frob-core/src/qty_gen.rs");
     let orig = fs::read_to_string(&gen_path).expect("read qty_gen.rs");
     let mutated = orig.replacen("ALIAS_COUNT: usize = 36;", "ALIAS_COUNT: usize = 37;", 1);
     assert_ne!(mutated, orig);
     fs::write(&gen_path, &mutated).expect("write mutated qty_gen.rs");
-    let bad_byte = run_check(&dir, BUILTIN_GENERATORS, false).expect("check mutated byte");
-    assert!(
-        bad_byte
-            .findings
-            .iter()
-            .any(|f| f.rule == RULE_DIFFERS && f.path == "crates/frob-core/src/qty_gen.rs"),
-        "expected gen.differs on mutated qty_gen.rs, got {:?}",
-        bad_byte.findings
-    );
+    let bad_byte = run_check(&dir, rows, false).expect("check mutated byte");
+    assert_eq!(bad_byte.findings.len(), 1, "{:?}", bad_byte.findings);
+    assert_eq!(bad_byte.findings[0].rule, RULE_DIFFERS);
+    assert_eq!(bad_byte.findings[0].path, "crates/frob-core/src/qty_gen.rs");
 
     // Restore qty_gen.rs, then Plant 2: append an alias to qty_aliases.toml without regeneration -> gen.differs.
     fs::write(&gen_path, &orig).expect("restore qty_gen.rs");
     let aliases_path = dir.join("registries/qty_aliases.toml");
-    let mut aliases = fs::read_to_string(&aliases_path).expect("read aliases");
+    let orig_aliases = fs::read_to_string(&aliases_path).expect("read aliases");
+    let mut aliases = orig_aliases.clone();
     aliases.push_str(
         "\n[[alias]]\nname = \"Jerk\"\ndimension = [1, 0, -3, 0, 0, 0]\nkind = \"jerk\"\nunit = \"m·s^-3\"\n",
     );
     fs::write(&aliases_path, &aliases).expect("append alias");
-    let bad_reg = run_check(&dir, BUILTIN_GENERATORS, false).expect("check unregenerated registry");
+    let bad_reg = run_check(&dir, rows, false).expect("check unregenerated registry");
     assert!(
         bad_reg
             .findings
@@ -255,5 +231,24 @@ fn qty_generator_row() {
             .any(|f| f.rule == RULE_DIFFERS && f.path == "crates/frob-core/src/qty_gen.rs"),
         "expected gen.differs on unregenerated alias, got {:?}",
         bad_reg.findings
+    );
+
+    // Restore qty_aliases.toml, then Plant 3: wrong product dimension -> generator rejects.
+    fs::write(&aliases_path, &orig_aliases).expect("restore aliases");
+    let products_path = dir.join("registries/qty_products.toml");
+    let mut products = fs::read_to_string(&products_path).expect("read products");
+    products.push_str(
+        "\n[[product]]\nlhs = \"Length\"\nop = \"mul\"\nrhs = \"Time\"\nout = \"Area\"\n",
+    );
+    fs::write(&products_path, &products).expect("append bad product");
+    let bad_dim = run_check(&dir, rows, false).expect("check wrong product dimension");
+    assert!(
+        bad_dim.findings.iter().any(|f| {
+            f.rule == RULE_DIFFERS
+                && f.path == "registries/qty_products.toml"
+                && f.message.contains("dimension mismatch")
+        }),
+        "expected dimension mismatch finding on bad product, got {:?}",
+        bad_dim.findings
     );
 }

@@ -39,12 +39,12 @@ e2e_step "xtask_qty_confinement_and_generated" "Run xtask qty_confinement and ch
 
 e2e_cmd --name "cargo_test_xtask_qty" -- \
   env "CARGO_TARGET_DIR=${TARGET_BASE}/xtask" \
-  cargo test --offline -j 1 -p xtask --test qty_confinement --test check_generated
+  cargo test --offline -j 1 -p xtask --test qty_confinement
 e2e_assert_eq "cargo_test_xtask_qty_exit" "${E2E_LAST_EXIT}" "0"
 
 e2e_cmd --name "xtask_check_generated_real" -- \
   env "CARGO_TARGET_DIR=${TARGET_BASE}/xtask" \
-  cargo run --offline -j 1 -p xtask -- check-generated --json
+  cargo run --offline -j 1 -p xtask -- check-generated --generator quantity-aliases-and-products --json
 e2e_assert_eq "xtask_check_generated_real_exit" "${E2E_LAST_EXIT}" "0"
 
 _caught_finding() {
@@ -103,10 +103,9 @@ e2e_assert_eq "fs-qty-direct" "${fs_qty_caught}" "${expected}"
 e2e_step "plant_generated_byte" "Check a one-byte mutation of generated quantities in scratch"
 gen_root="${E2E_WORK_DIR}/qty_generated"
 mkdir -p "${gen_root}"
-for path in README.md DEPENDENCY_ADMISSION.md registries schemas receipts/admissions kernels \
-  crates/xtask/src/stack/lock.rs crates/frob-core/src/refusal/code_gen.rs crates/frob-core/src/qty_gen.rs; do
+for path in registries/qty_aliases.toml registries/qty_products.toml crates/frob-core/src/qty_gen.rs; do
   mkdir -p "${gen_root}/$(dirname "${path}")"
-  cp -R "${E2E_REPO_ROOT}/${path}" "${gen_root}/${path}"
+  cp "${E2E_REPO_ROOT}/${path}" "${gen_root}/${path}"
 done
 python3 - "${gen_root}/crates/frob-core/src/qty_gen.rs" <<'PY'
 from pathlib import Path
@@ -121,9 +120,18 @@ path.write_bytes(source.replace(old, b"ALIAS_COUNT: usize = 37;"))
 PY
 e2e_cmd --name "check_generated_qty_byte" --expect-exit 2 -- \
   env "CARGO_TARGET_DIR=${TARGET_BASE}/xtask" \
-  cargo run --offline -j 1 -p xtask -- check-generated --root "${gen_root}" --json
+  cargo run --offline -j 1 -p xtask -- check-generated --generator quantity-aliases-and-products --root "${gen_root}" --json
 qty_byte_caught=0
-if _caught_finding "gen.differs" "crates/frob-core/src/qty_gen.rs" ""; then qty_byte_caught=1; fi
+if [ "${E2E_LAST_EXIT}" = 2 ] && [ -f "${E2E_LAST_STDOUT}" ] && python3 - "${E2E_LAST_STDOUT}" <<'PY'
+import json
+import sys
+
+with open(sys.argv[1], encoding="utf-8") as source:
+    findings = json.load(source)["findings"]
+actual = [(row["rule"], row["subject"], row["path"]) for row in findings]
+sys.exit(actual != [("gen.differs", "quantity-aliases-and-products", "crates/frob-core/src/qty_gen.rs")])
+PY
+then qty_byte_caught=1; fi
 e2e_assert_eq "planted_qty_generated_byte_caught" "${qty_byte_caught}" "1"
 expected=1
 if e2e_plant "qty-generated-byte"; then expected=0; fi

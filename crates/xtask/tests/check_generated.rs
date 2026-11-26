@@ -655,3 +655,88 @@ fn json_report_is_deterministic_excluding_elapsed_ms() {
     assert_eq!(strip_elapsed(&s1), strip_elapsed(&s2));
     let _ = check_generated::CHECK_GENERATED_FACTS_SCHEMA;
 }
+
+#[test]
+fn authored_verb_schema_ownership_boundary() {
+    let dir = fresh_dir("verb-schema-boundary");
+    fs::create_dir_all(dir.join("registries")).expect("mkdir registries");
+    fs::create_dir_all(dir.join("schemas/verbs")).expect("mkdir schemas/verbs");
+    fs::write(
+        dir.join("registries/formats.toml"),
+        "schema = \"frob.formats/1\"\n",
+    )
+    .expect("write formats");
+    fs::write(
+        dir.join("registries/verbs.toml"),
+        "schema = \"frob.verbs/1\"\n\n\
+[[verb]]\nname = \"alpha\"\ninput_schema = \"frob.alpha.in/1\"\noutput_schema = \"frob.alpha.out/1\"\n",
+    )
+    .expect("write verbs");
+    // Authored schema owns `frob.alpha.in/1` with matching `$id`; `frob.alpha.out/1` has no authored file.
+    fs::write(
+        dir.join("schemas/verbs/frob.alpha.in.1.json"),
+        "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$id\":\"frob.alpha.in/1\",\"type\":\"object\"}\n",
+    )
+    .expect("write authored verb schema");
+
+    let row = BUILTIN_GENERATORS
+        .iter()
+        .find(|r| r.name == "format-and-verb-schemas")
+        .expect("format-and-verb-schemas row");
+    let rows = std::slice::from_ref(row);
+
+    // 1. `--write` generates ONLY `schemas/frob.alpha.out.1.json`, never a duplicate root stub for `alpha.in`.
+    let w = run_check(&dir, rows, true).expect("write");
+    assert!(w.findings.is_empty(), "{:?}", w.findings);
+    assert!(dir.join("schemas/frob.alpha.out.1.json").is_file());
+    assert!(!dir.join("schemas/frob.alpha.in.1.json").exists());
+    assert!(
+        run_check(&dir, rows, false)
+            .expect("clean")
+            .findings
+            .is_empty()
+    );
+
+    // 2. A stale root stub beside the authored schema is flagged `gen.orphan` (single owner).
+    let stale_root = dir.join("schemas/frob.alpha.in.1.json");
+    fs::write(&stale_root, "{\"$comment\":\"@generated\"}\n").expect("write stale root stub");
+    let orphan_out = run_check(&dir, rows, false).expect("check stale root");
+    assert!(
+        orphan_out
+            .findings
+            .iter()
+            .any(|f| f.rule == RULE_ORPHAN && f.path == "schemas/frob.alpha.in.1.json"),
+        "stale root stub must be gen.orphan: {:?}",
+        orphan_out.findings
+    );
+
+    // 3. Mismatched `$id` inside `schemas/verbs/<dot-id>.json` fails instead of silently skipping.
+    let dir2 = fresh_dir("verb-schema-bad-id");
+    fs::create_dir_all(dir2.join("registries")).expect("mkdir registries");
+    fs::create_dir_all(dir2.join("schemas/verbs")).expect("mkdir schemas/verbs");
+    fs::write(
+        dir2.join("registries/formats.toml"),
+        "schema = \"frob.formats/1\"\n",
+    )
+    .expect("write formats");
+    fs::write(
+        dir2.join("registries/verbs.toml"),
+        "schema = \"frob.verbs/1\"\n\n[[verb]]\nname = \"alpha\"\ninput_schema = \"frob.alpha.in/1\"\n",
+    )
+    .expect("write verbs");
+    fs::write(
+        dir2.join("schemas/verbs/frob.alpha.in.1.json"),
+        "{\"$id\":\"frob.wrong.in/1\",\"type\":\"object\"}\n",
+    )
+    .expect("write wrong $id schema");
+    let bad_id = run_check(&dir2, rows, false).expect("check wrong $id");
+    assert!(
+        bad_id.findings.iter().any(|f| {
+            f.rule == RULE_DIFFERS
+                && f.path == "schemas/verbs/frob.alpha.in.1.json"
+                && f.message.contains("does not match")
+        }),
+        "mismatched $id must fail instead of skipping: {:?}",
+        bad_id.findings
+    );
+}

@@ -401,9 +401,45 @@ fn run_format_and_verb_schemas(
                 continue;
             }
             // Authored verb payload schemas under `schemas/verbs/<dot-id>.json`
-            // (owned by `N32a-02` / `VERBS-*`) take precedence over stub generation.
+            // (owned by `N32a-02` / `VERBS-*`) take precedence over stub generation,
+            // provided the file is valid JSON declaring the matching `$id`.
             let authored_verb_rel = format!("schemas/verbs/{}.json", schema_id.replace('/', "."));
-            if repo_root.join(&authored_verb_rel).is_file() {
+            let authored_verb_abs = repo_root.join(&authored_verb_rel);
+            if authored_verb_abs.is_file() {
+                let authored_bytes = fs::read(&authored_verb_abs).map_err(|e| GeneratorError {
+                    rule: RULE_DIFFERS,
+                    subject: schema_id.clone(),
+                    path: authored_verb_rel.clone(),
+                    message: format!("failed to read authored verb schema: {e}"),
+                    repair: "restore the authored verb schema under schemas/verbs/".to_owned(),
+                })?;
+                let admitted =
+                    admit(&authored_bytes, &Limits::default()).map_err(|e| GeneratorError {
+                        rule: RULE_DIFFERS,
+                        subject: schema_id.clone(),
+                        path: authored_verb_rel.clone(),
+                        message: format!("authored verb schema failed JSON admission: {e}"),
+                        repair: "fix invalid JSON in authored verb schema under schemas/verbs/"
+                            .to_owned(),
+                    })?;
+                let declared_id = admitted
+                    .value()
+                    .get("$id")
+                    .and_then(|v| v.as_str())
+                    .unwrap_or("");
+                if declared_id != schema_id {
+                    return Err(GeneratorError {
+                        rule: RULE_DIFFERS,
+                        subject: schema_id.clone(),
+                        path: authored_verb_rel,
+                        message: format!(
+                            "authored verb schema `$id` `{declared_id}` does not match `{schema_id}`"
+                        ),
+                        repair:
+                            "set `$id` in the authored verb schema to match registries/verbs.toml"
+                                .to_owned(),
+                    });
+                }
                 continue;
             }
             let bytes = render_verb_schema(&schema_id, &verb_names)?;
@@ -872,7 +908,7 @@ fn run_quantity_aliases_and_products(
         .ok_or_else(|| qty_gen_err(aliases_rel, "missing [[alias]] array"))?;
 
     let mut aliases: Vec<(String, [i8; 6], String, String)> = Vec::with_capacity(alias_items.len());
-    let mut seen_names: BTreeSet<String> = BTreeSet::new();
+    let mut alias_dims: BTreeMap<String, [i8; 6]> = BTreeMap::new();
     for (idx, sp) in alias_items.iter().enumerate() {
         let row = sp
             .value
@@ -883,7 +919,7 @@ fn run_quantity_aliases_and_products(
             .and_then(TomlValue::as_str)
             .filter(|s| !s.is_empty())
             .ok_or_else(|| qty_gen_err(aliases_rel, format!("alias[{idx}] missing `name`")))?;
-        if !seen_names.insert(name.to_owned()) {
+        if alias_dims.contains_key(name) {
             return Err(qty_gen_err(
                 aliases_rel,
                 format!("duplicate alias `{name}`"),
@@ -920,7 +956,17 @@ fn run_quantity_aliases_and_products(
             .and_then(TomlValue::as_str)
             .filter(|s| !s.is_empty())
             .ok_or_else(|| qty_gen_err(aliases_rel, format!("alias `{name}` missing `unit`")))?;
+        alias_dims.insert(name.to_owned(), dim);
         aliases.push((name.to_owned(), dim, kind.to_owned(), unit.to_owned()));
+    }
+    if aliases.len() > 64 {
+        return Err(qty_gen_err(
+            aliases_rel,
+            format!(
+                "alias count {} exceeds cap 64 (OPEN-SUITE-4)",
+                aliases.len()
+            ),
+        ));
     }
 
     let p_tbl = toml::parse(&products_bytes)
@@ -938,6 +984,7 @@ fn run_quantity_aliases_and_products(
 
     let mut muls: Vec<(String, String, String)> = Vec::new();
     let mut divs: Vec<(String, String, String)> = Vec::new();
+    let mut seen_ops: BTreeSet<(String, String, String)> = BTreeSet::new();
     for (idx, sp) in prod_items.iter().enumerate() {
         let row = sp
             .value
@@ -946,6 +993,7 @@ fn run_quantity_aliases_and_products(
         let lhs = row
             .get("lhs")
             .and_then(TomlValue::as_str)
+            .filter(|s| !s.is_empty())
             .ok_or_else(|| qty_gen_err(products_rel, format!("product[{idx}] missing `lhs`")))?;
         let op = row
             .get("op")
@@ -954,20 +1002,69 @@ fn run_quantity_aliases_and_products(
         let rhs = row
             .get("rhs")
             .and_then(TomlValue::as_str)
+            .filter(|s| !s.is_empty())
             .ok_or_else(|| qty_gen_err(products_rel, format!("product[{idx}] missing `rhs`")))?;
         let out = row
             .get("out")
             .and_then(TomlValue::as_str)
+            .filter(|s| !s.is_empty())
             .ok_or_else(|| qty_gen_err(products_rel, format!("product[{idx}] missing `out`")))?;
+        let dl = *alias_dims.get(lhs).ok_or_else(|| {
+            qty_gen_err(products_rel, format!("product[{idx}] unknown lhs `{lhs}`"))
+        })?;
+        let dr = *alias_dims.get(rhs).ok_or_else(|| {
+            qty_gen_err(products_rel, format!("product[{idx}] unknown rhs `{rhs}`"))
+        })?;
+        let dout = *alias_dims.get(out).ok_or_else(|| {
+            qty_gen_err(products_rel, format!("product[{idx}] unknown out `{out}`"))
+        })?;
+        if !seen_ops.insert((lhs.to_owned(), op.to_owned(), rhs.to_owned())) {
+            return Err(qty_gen_err(
+                products_rel,
+                format!("product[{idx}] duplicate ({lhs}, {op}, {rhs})"),
+            ));
+        }
+        let mut expected = [0i8; 6];
+        for i in 0..6 {
+            expected[i] = match op {
+                "mul" => dl[i].checked_add(dr[i]),
+                "div" => dl[i].checked_sub(dr[i]),
+                other => {
+                    return Err(qty_gen_err(
+                        products_rel,
+                        format!("product[{idx}] invalid op `{other}` (expected `mul` or `div`)"),
+                    ));
+                }
+            }
+            .ok_or_else(|| {
+                qty_gen_err(
+                    products_rel,
+                    format!("product[{idx}] ({lhs} {op} {rhs}) dimension exponent overflow"),
+                )
+            })?;
+        }
+        if expected != dout {
+            return Err(qty_gen_err(
+                products_rel,
+                format!(
+                    "product[{idx}] `{lhs} {op} {rhs} => {out}` dimension mismatch: expected {expected:?}, got {dout:?}"
+                ),
+            ));
+        }
         match op {
             "mul" => muls.push((lhs.to_owned(), rhs.to_owned(), out.to_owned())),
-            "div" => divs.push((lhs.to_owned(), rhs.to_owned(), out.to_owned())),
-            other => {
-                return Err(qty_gen_err(
-                    products_rel,
-                    format!("product[{idx}] invalid op `{other}` (expected `mul` or `div`)"),
-                ));
+            "div" => {
+                if lhs == rhs {
+                    return Err(qty_gen_err(
+                        products_rel,
+                        format!(
+                            "product[{idx}] `{lhs} / {rhs}` duplicates blanket self-division into Ratio"
+                        ),
+                    ));
+                }
+                divs.push((lhs.to_owned(), rhs.to_owned(), out.to_owned()));
             }
+            _ => unreachable!(),
         }
     }
 

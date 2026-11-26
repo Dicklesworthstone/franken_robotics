@@ -454,6 +454,12 @@ impl AllocationLedger {
 
     pub fn from_bytes(bytes: &[u8]) -> Result<Self, AllocationError> {
         let mut root = Fields::new(toml::parse(bytes)?, "<refalloc>");
+        let ledger = Self::parse_fields(&mut root).map_err(|err| root.fail(err))?;
+        root.finish()?;
+        Ok(ledger)
+    }
+
+    fn parse_fields(root: &mut Fields) -> Result<Self, AllocationError> {
         let schema = root.require_str("schema")?;
         if schema != "frob.refalloc/1" {
             return Err(AllocationError::InvalidSchema { observed: schema });
@@ -470,10 +476,10 @@ impl AllocationLedger {
             let mut hf = Fields::new(tbl, format!("hold[{idx}]"));
             let fam = hf.require_int("family")?;
             if !(1..=9).contains(&fam) {
-                return Err(AllocationError::InvalidField {
+                return Err(hf.fail(AllocationError::InvalidField {
                     context: format!("hold[{idx}].family"),
                     detail: format!("family must be 1..=9, got {fam}"),
-                });
+                }));
             }
             let reason = hf.require_str("reason")?;
             let ruling = hf.opt_str("ruling")?;
@@ -495,17 +501,18 @@ impl AllocationLedger {
             let tbl = expect_table(sp, &format!("retired[{idx}]"))?;
             let mut rf = Fields::new(tbl, format!("retired[{idx}]"));
             let code = rf.require_str("code")?;
-            let number =
-                parse_refusal_number(&code).ok_or_else(|| AllocationError::InvalidField {
+            let number = parse_refusal_number(&code).ok_or_else(|| {
+                rf.fail(AllocationError::InvalidField {
                     context: format!("retired[{idx}].code"),
                     detail: format!("invalid refusal code `{code}`"),
-                })?;
+                })
+            })?;
             let replaced_by = rf.require_str("replaced_by")?;
             if parse_refusal_number(&replaced_by).is_none() {
-                return Err(AllocationError::InvalidField {
+                return Err(rf.fail(AllocationError::InvalidField {
                     context: format!("retired[{idx}].replaced_by"),
                     detail: format!("invalid replacement code `{replaced_by}`"),
-                });
+                }));
             }
             let reason = rf.require_str("reason")?;
             rf.finish()?;
@@ -551,7 +558,7 @@ impl AllocationLedger {
             let mut qf = Fields::new(tbl, format!("request[{idx}]"));
             let slug = qf.require_str("request")?;
             if !seen_slugs.insert(slug.clone()) {
-                return Err(AllocationError::DuplicateRequest { slug });
+                return Err(qf.fail(AllocationError::DuplicateRequest { slug }));
             }
             let requested_by = qf.require_str("requested_by")?;
             let defined_in = qf.require_str("defined_in")?;
@@ -562,54 +569,57 @@ impl AllocationLedger {
             let condition = qf.require_str("condition")?;
             let fam_i = qf.require_int("family")?;
             if !(1..=9).contains(&fam_i) {
-                return Err(AllocationError::InvalidField {
+                return Err(qf.fail(AllocationError::InvalidField {
                     context: format!("request `{slug}`.family"),
                     detail: format!("family must be 1..=9, got {fam_i}"),
-                });
+                }));
             }
             let family = fam_i as u8;
             let subfamily = qf.opt_str("subfamily")?;
             if family == 7 && subfamily.is_none() {
-                return Err(AllocationError::MissingSubfamily { slug });
+                return Err(qf.fail(AllocationError::MissingSubfamily { slug }));
             }
             if parse_subfamily_range(family, subfamily.as_deref()).is_none() {
-                return Err(AllocationError::InvalidSubfamily {
+                return Err(qf.fail(AllocationError::InvalidSubfamily {
                     slug,
                     subfamily: subfamily.unwrap_or_default(),
-                });
+                }));
             }
             let proposed = match qf.opt_int("proposed")? {
                 Some(n) => {
-                    let u = u16::try_from(n).map_err(|_| AllocationError::InvalidField {
-                        context: format!("request `{slug}`.proposed"),
-                        detail: format!("out-of-range proposed number {n}"),
+                    let u = u16::try_from(n).map_err(|_| {
+                        qf.fail(AllocationError::InvalidField {
+                            context: format!("request `{slug}`.proposed"),
+                            detail: format!("out-of-range proposed number {n}"),
+                        })
                     })?;
                     Some(u)
                 }
                 None => None,
             };
-            let interim = parse_interim_field(&mut qf, &slug)?;
+            let interim = parse_interim_field(&mut qf, &slug).map_err(|err| qf.fail(err))?;
             let interim_detail = qf.opt_str("interim_detail")?;
             let interim_pointer = qf.opt_str("interim_pointer")?;
             let assigned = qf.opt_str("assigned")?;
             if let Some(ref code) = assigned
                 && parse_refusal_number(code).is_none()
             {
-                return Err(AllocationError::InvalidField {
+                return Err(qf.fail(AllocationError::InvalidField {
                     context: format!("request `{slug}`.assigned"),
                     detail: format!("invalid refusal code `{code}`"),
-                });
+                }));
             }
             let merged_into = match qf.opt_array("merged_into")? {
-                Some(arr) => extract_str_vec(&format!("request `{slug}`.merged_into"), arr)?,
+                Some(arr) => extract_str_vec(&format!("request `{slug}`.merged_into"), arr)
+                    .map_err(|err| qf.fail(err))?,
                 None => Vec::new(),
             };
             let status_str = qf.require_str("status")?;
             let status = AllocationStatus::parse(&status_str).ok_or_else(|| {
-                AllocationError::InvalidField {
+                qf.fail(AllocationError::InvalidField {
                     context: format!("request `{slug}`.status"),
                     detail: format!("unknown status `{status_str}`"),
-                }
+                })
             })?;
             let reason = qf.opt_str("reason")?;
             qf.finish()?;
@@ -632,8 +642,6 @@ impl AllocationLedger {
                 reason,
             });
         }
-        root.finish()?;
-
         Ok(Self {
             schema,
             holds,

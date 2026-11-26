@@ -73,13 +73,18 @@ fn synthetic_registry(extra_exit_rules: &str, rows_toml: &str) -> String {
 }
 
 fn reg_row(code: &str, exit: u8, defined_in: &str, related: &str) -> String {
+    let retry = if code.starts_with("FROB-REF-9") {
+        "never"
+    } else {
+        "after-change"
+    };
     format!(
         r#"[[refusal]]
 code = "{code}"
 meaning = "Synthetic test refusal {code}"
 defined_in = "{defined_in}"
 exit = {exit}
-retry = "after-change"
+retry = "{retry}"
 repairs = ["First repair for {code}", "Second repair for {code}"]
 raised_by = ["N35-33"]
 {related}
@@ -641,6 +646,11 @@ status = "requested"
         AllocationLedger::from_bytes(bad_838.as_bytes()),
         Err(AllocationError::InvalidInterim { .. })
     ));
+    let bad_array = bad_838.replace("interim = 838", "interim = [838]");
+    assert!(matches!(
+        AllocationLedger::from_bytes(bad_array.as_bytes()),
+        Err(AllocationError::InvalidField { context, .. }) if context == "request `bad-num`.interim[0]"
+    ));
 
     // 2. Unregistered code `interim = "FROB-REF-726"` fails validation against `reg`.
     let bad_726 = r#"schema = "frob.refalloc/1"
@@ -1030,7 +1040,7 @@ fn ledger_matches_registry() {
     .expect("extra reg");
     assert!(matches!(
         run_cross_chapter_checks(&extra_reg, &missing_row_ledger, None),
-        Err(AllocationError::LedgerRegistryMismatch { .. })
+        Err(AllocationError::LedgerRegistryMismatch { code, .. }) if code == "FROB-REF-995"
     ));
 
     // 3. Planted retired code reused in registry fails Check 1.
@@ -1042,10 +1052,14 @@ fn ledger_matches_registry() {
         .as_bytes(),
     )
     .expect("retired reg");
-    let live_ledger = AllocationLedger::load().expect("live ledger");
+    let retired_ledger = AllocationLedger {
+        retired: AllocationLedger::load().expect("live ledger").retired,
+        ..missing_row_ledger
+    };
     assert!(matches!(
-        run_cross_chapter_checks(&retired_reg, &live_ledger, None),
-        Err(AllocationError::RetiredCodeReused { .. })
+        run_cross_chapter_checks(&retired_reg, &retired_ledger, None),
+        Err(AllocationError::RetiredCodeReused { code, context })
+            if code == "FROB-REF-730" && context == "registries/refusals.toml"
     ));
 }
 

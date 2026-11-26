@@ -377,7 +377,11 @@ fn record_history_directory_refuses_then_retry_repairs_each_effect_once() {
     let initial_readme = b"# Gates\n\n<!-- status:begin -->\n<!-- status:end -->\n";
     fs::write(&readme, initial_readme).unwrap();
     let log = repo.root.join("docs/delivery/logs/BD-TEST.ndjson");
-    let initial_log = b"{\"kind\":\"implemented\"}\n";
+    let initial_log = concat!(
+        r#"{"claim_ids":[],"date":"2026-11-24","evidence":[],"gate":"GATE-PRIOR-01","kind":"gate-record","part":"M0","#,
+        r#""receipt":"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb","recorded_by":"session:prior","#,
+        "\"schema\":\"frob.beadlog/1\",\"verdict\":\"fail\"}\n",
+    );
     fs::write(&log, initial_log).unwrap();
     let mut opts = base_opts(&repo, "GATE-TEST-01", hash, "session:s2");
     let history = repo.root.join("configured-history.ndjson");
@@ -397,7 +401,7 @@ fn record_history_directory_refuses_then_retry_repairs_each_effect_once() {
     assert_eq!(fs::read_dir(&receipt_dir).unwrap().count(), 0);
     assert_eq!(fs::read(&sentinel).unwrap(), b"unchanged history directory");
     assert_eq!(fs::read_dir(&history).unwrap().count(), 1);
-    assert_eq!(fs::read(&log).unwrap(), initial_log);
+    assert_eq!(fs::read(&log).unwrap(), initial_log.as_bytes());
     assert_eq!(fs::read(&readme).unwrap(), initial_readme);
 
     fs::rename(&history, repo.root.join("planted-history-directory")).unwrap();
@@ -425,7 +429,14 @@ fn record_history_directory_refuses_then_retry_repairs_each_effect_once() {
         ["NC-0001", "NC-0002"]
     );
     let saved_log = fs::read_to_string(&log).unwrap();
-    assert_eq!(saved_log.matches("\"kind\":\"gate-record\"").count(), 1);
+    assert_eq!(
+        saved_log
+            .strip_prefix(initial_log)
+            .expect("preserve previous bead-log row byte-for-byte")
+            .matches("\"kind\":\"gate-record\"")
+            .count(),
+        1,
+    );
     let saved_readme = fs::read(&readme).unwrap();
     assert_ne!(saved_readme, initial_readme);
 
@@ -471,6 +482,27 @@ fn record_history_directory_refuses_then_retry_repairs_each_effect_once() {
         assert_eq!(fs::read(&readme).unwrap(), saved_readme);
         fs::write(path, complete).unwrap();
     }
+    assert!(record_gate(&opts).unwrap().idempotent_noop);
+
+    for tail in [
+        "null",
+        r#"{"kind":"gate-record","schema":"frob.beadlog/1"}"#,
+    ] {
+        assert!(json::admit(tail.as_bytes(), &Limits::default()).is_ok());
+        let malformed = format!("{saved_log}{tail}");
+        fs::write(&log, &malformed).unwrap();
+        let err = record_gate(&opts).expect_err("invalid bead-log row must refuse a retry");
+        assert_eq!(err.reason, "ndjson-invalid");
+        assert!(
+            err.detail
+                .contains(&format!("`{}` at byte {}", log.display(), saved_log.len())),
+            "{err}"
+        );
+        assert_eq!(fs::read_to_string(&log).unwrap(), malformed);
+        assert_eq!(fs::read(&gates).unwrap(), saved_gates);
+        assert_eq!(fs::read(&readme).unwrap(), saved_readme);
+    }
+    fs::write(&log, saved_log).unwrap();
     assert!(record_gate(&opts).unwrap().idempotent_noop);
 }
 
@@ -914,7 +946,7 @@ fallback = "cpu-fallback"
 decided = "M2"
 mode = "exit"
 reads = ["GATE-Y"]
-decision = {{ milestone = "M2", outcome = "fired", adr = "{adr_rel}", session = "session:s2", date = "2026-11-25", recorded_by = "session:s2" }}
+decision = {{ outcome = "fired", adr = "{adr_rel}", session = "session:s2", date = "2026-11-25", receipts = [] }}
 "#
     );
     let gates_path = repo.write_gates(&reg_toml);
@@ -1185,14 +1217,19 @@ state = "runnable"
         ("GATE-PAR", Tier::G2Parity),
         ("GATE-KA", Tier::G1KnownAnswers),
     ] {
-        let rec = make_receipt(
+        let mut entries = vec![entry_ok("e:2", "0.4", "1")];
+        if gid == "GATE-KA" {
+            entries.insert(0, entry_ok("e:1", "0.5", "1"));
+        }
+        let mut rec = make_receipt(
             &repo.head,
             tier,
             gid,
             "pass",
             vec![ctrl("NC-0001", gid, ControlRunOutcome::Caught)],
-            vec![entry_ok("e:2", "0.4", "1")],
+            entries,
         );
+        rec.counts.pass = rec.entries.len() as u64;
         let (_, hash) = repo.write_receipt(&rec);
         let out = record_gate(&base_opts(&repo, gid, hash, "session:s2"))
             .expect("depgraph-receipt allows all three");

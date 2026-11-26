@@ -561,6 +561,13 @@ pub struct RecordOutput {
 /// receipts and gate row. A later publication failure returns `recording-incomplete`; retrying
 /// the same record finishes its derived outputs using the committed date.
 pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> {
+    record_gate_with_staging(opts, |_| {})
+}
+
+fn record_gate_with_staging(
+    opts: &RecordOptions,
+    after_staging: impl FnOnce(&[StagedRecordingWrite]),
+) -> Result<RecordOutput, RecordRefusal> {
     let registry_path = opts
         .registry_path
         .clone()
@@ -1011,6 +1018,29 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
     let matching_part = existing_part.filter(|prev| parts_match_except_date(prev, &candidate_part));
     let candidate_part = matching_part.cloned().unwrap_or(candidate_part);
     let date = &candidate_part.recorded.date;
+    let history_write = if status == Status::Pass && controls_before.is_some() {
+        let lines = due_controls
+            .iter()
+            .map(|id| {
+                ControlHistoryEntry {
+                    id: id.clone(),
+                    gate: gate.id.clone(),
+                    receipt: part_receipt_hash.clone(),
+                    outcome: "caught".to_owned(),
+                    commit: common_commit.clone(),
+                    session: session.clone(),
+                    date: date.clone(),
+                }
+                .to_canonical_line()
+                .map_err(|e| RecordRefusal::custom("canon-error", e, "Fix control history fields"))
+            })
+            .collect::<Result<Vec<_>, _>>()?;
+        Some(RecordingWrite::append(history_path, &lines, |line| {
+            parse_history_ndjson(line, "control history").map(|_| ())
+        })?)
+    } else {
+        None
+    };
     let mut projected_controls = loaded_controls.clone();
     let mut controls_bytes = None;
     if status == Status::Pass
@@ -1022,6 +1052,7 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
             &session,
             date,
             matching_part.is_some(),
+            history_write.as_ref().is_some_and(RecordingWrite::changed),
         );
         if matching_part.is_none() || updated_rows.as_slice() != ctrls.all() {
             let serialized = serialize_controls_file(&updated_rows);
@@ -1093,30 +1124,8 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
             before: Some(before),
             after,
         });
-        let history_lines = due_controls
-            .iter()
-            .map(|id| {
-                ControlHistoryEntry {
-                    id: id.clone(),
-                    gate: gate.id.clone(),
-                    receipt: part_receipt_hash.clone(),
-                    outcome: "caught".to_owned(),
-                    commit: common_commit.clone(),
-                    session: session.clone(),
-                    date: date.clone(),
-                }
-                .to_canonical_line()
-                .map_err(|e| RecordRefusal::custom("canon-error", e, "Fix control history fields"))
-            })
-            .collect::<Result<Vec<_>, _>>()?;
-        if !history_lines.is_empty() {
-            writes.push(RecordingWrite::append(
-                history_path,
-                &history_lines,
-                |line| parse_history_ndjson(line, "control history").map(|_| ()),
-            )?);
-        }
     }
+    writes.extend(history_write);
     let bead_log_path = opts.bead_id.as_ref().map(|bead_id| {
         opts.repo_root
             .join(format!("docs/delivery/logs/{bead_id}.ndjson"))
@@ -1140,11 +1149,7 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
         writes.push(RecordingWrite::append(
             path.clone(),
             &[cb.as_str()],
-            |line| {
-                json::admit(line.as_bytes(), &Limits::default())
-                    .map(|_| ())
-                    .map_err(|e| e.to_string())
-            },
+            validate_bead_log_line,
         )?);
     }
 
@@ -1202,7 +1207,7 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
         }
     }
 
-    publish_recording(writes, commit_at)?;
+    publish_recording(writes, commit_at, after_staging)?;
     Ok(output)
 }
 
@@ -1674,23 +1679,30 @@ fn update_controls_last_seen(
     session: &str,
     date: &str,
     repairing: bool,
+    history_pending: bool,
 ) -> Vec<Control> {
     let due_set: BTreeSet<&str> = due_ids.iter().map(String::as_str).collect();
+    let prepared = LastSeen {
+        caught: true,
+        session: session.to_owned(),
+        date: date.to_owned(),
+    };
     controls
         .iter()
         .map(|c| {
             let mut copy = c.clone();
             if due_set.contains(c.id.as_str())
                 && (!repairing
-                    || c.last_seen
-                        .as_ref()
-                        .is_none_or(|seen| !seen.caught || seen.date.as_str() < date))
+                    || c.last_seen.as_ref().is_none_or(|seen| {
+                        // History publishes after controls. Existing history for this record means
+                        // another recording may have already superseded its same-day control row.
+                        seen != &prepared
+                            && (!seen.caught
+                                || seen.date.as_str() < date
+                                || (seen.date == date && history_pending))
+                    }))
             {
-                copy.last_seen = Some(LastSeen {
-                    caught: true,
-                    session: session.to_owned(),
-                    date: date.to_owned(),
-                });
+                copy.last_seen = Some(prepared.clone());
             }
             copy
         })
@@ -1755,6 +1767,33 @@ struct RecordingWrite {
     path: PathBuf,
     before: Option<Vec<u8>>,
     after: Vec<u8>,
+}
+
+fn validate_bead_log_line(line: &str) -> Result<(), String> {
+    let document = json::admit(line.as_bytes(), &Limits::default()).map_err(|e| e.to_string())?;
+    let row = document.value();
+    if row.as_object().is_none() {
+        return Err("expected a bead-log object".to_owned());
+    }
+    let text = |key| row.get(key).and_then(|field| field.as_str());
+    if text("schema") != Some(BEADLOG_SCHEMA) || text("kind") != Some("gate-record") {
+        return Err(format!("expected a `{BEADLOG_SCHEMA}` `gate-record`"));
+    }
+    for key in ["date", "gate", "part", "receipt", "recorded_by", "verdict"] {
+        if text(key).is_none_or(str::is_empty) {
+            return Err(format!("expected a nonempty bead-log string `{key}`"));
+        }
+    }
+    for key in ["claim_ids", "evidence"] {
+        if row
+            .get(key)
+            .and_then(|field| field.as_array())
+            .is_none_or(|items| items.iter().any(|item| item.as_str().is_none()))
+        {
+            return Err(format!("expected a bead-log string array `{key}`"));
+        }
+    }
+    Ok(())
 }
 
 impl RecordingWrite {
@@ -1934,7 +1973,11 @@ impl Drop for StagedRecordingWrite {
     }
 }
 
-fn publish_recording(writes: Vec<RecordingWrite>, commit_at: usize) -> Result<(), RecordRefusal> {
+fn publish_recording(
+    writes: Vec<RecordingWrite>,
+    commit_at: usize,
+    after_staging: impl FnOnce(&[StagedRecordingWrite]),
+) -> Result<(), RecordRefusal> {
     let mut parents = RecordingParents::default();
     let mut destinations = BTreeSet::new();
     let mut staged = Vec::new();
@@ -1975,6 +2018,7 @@ fn publish_recording(writes: Vec<RecordingWrite>, commit_at: usize) -> Result<()
             staged.push(StagedRecordingWrite::new(write)?);
         }
     }
+    after_staging(&staged);
     publish_staged(&mut staged, staged_commit)?;
     parents.published = true;
     Ok(())
@@ -2015,6 +2059,192 @@ fn publish_staged(
 #[cfg(test)]
 mod publication_tests {
     use super::*;
+    use crate::tiers::{
+        ReceiptControl, ReceiptCounts, ReceiptEntry, ReceiptGate, ReceiptMeasured, Site,
+        write_receipt,
+    };
+
+    #[test]
+    fn same_day_retry_repairs_controls_after_rename_failure() {
+        let root = env::temp_dir().join(format!("frob-control-repair-{}", std::process::id()));
+        fs::create_dir_all(root.join("registries")).unwrap();
+        let git = |args: &[&str]| {
+            let output = Command::new("git")
+                .current_dir(&root)
+                .args(args)
+                .output()
+                .unwrap();
+            assert!(
+                output.status.success(),
+                "git {args:?}: {}",
+                String::from_utf8_lossy(&output.stderr)
+            );
+            String::from_utf8(output.stdout).unwrap().trim().to_owned()
+        };
+        git(&["init", "-q"]);
+        git(&[
+            "-c",
+            "user.name=Recorder Test",
+            "-c",
+            "user.email=test@franken.invalid",
+            "-c",
+            "commit.gpgsign=false",
+            "commit",
+            "--allow-empty",
+            "-qm",
+            "implement\n\nFrob-Session: session:implementer",
+        ]);
+        let gates = root.join("registries/gates.toml");
+        fs::write(
+            &gates,
+            r#"schema = "frob.gates/1"
+
+[[gate]]
+id = "GATE-REPAIR-01"
+kind = "convergence"
+claim = "known-answer"
+claim_id = "clm:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+section = "38.15"
+threshold = "<= 0.95"
+milestone = "M0"
+tier = ["G1:host"]
+controls = ["NC-0001"]
+
+[[gate.part]]
+milestone = "M0"
+status = "not-run"
+measured = ""
+evidence = []
+recorded = { date = "", session = "", implemented_by = "" }
+"#,
+        )
+        .unwrap();
+        let controls = root.join(CONTROLS_PATH);
+        fs::create_dir_all(controls.parent().unwrap()).unwrap();
+        fs::write(
+            &controls,
+            r#"schema = "frob.gauntlet.controls/1"
+
+[[control]]
+id = "NC-0001"
+seed = "GATE-REPAIR-01"
+gate = ["GATE-REPAIR-01"]
+kind = "planted-input"
+target = "frob-conformance::test::a"
+defect = "planted input"
+expect = "fails with code 1"
+fixture = "fixtures/a.toml"
+due = "M0"
+state = "runnable"
+"#,
+        )
+        .unwrap();
+        let mut receipt = GauntletReceipt {
+            schema: "frob.gauntlet.receipt/1".to_owned(),
+            tier: Tier::G1KnownAnswers,
+            filter: "gate:GATE-REPAIR-01".to_owned(),
+            commit: git(&["rev-parse", "HEAD"]),
+            dirty: false,
+            toolchain: "rustc-nightly-2026-07-06".to_owned(),
+            fingerprint: "host-cpu-fp".to_owned(),
+            seed: 42,
+            profile: "dev".to_owned(),
+            started: "2026-11-25T12:00:00Z".to_owned(),
+            wall_ms: 12,
+            entries: vec![ReceiptEntry {
+                id: "ka:repair".to_owned(),
+                site: Site::Host,
+                outcome: "pass".to_owned(),
+                measured: Some(ReceiptMeasured {
+                    name: "rho".to_owned(),
+                    value: "0.9".to_owned(),
+                    unit: "1".to_owned(),
+                    threshold: "<= 0.95".to_owned(),
+                }),
+                first_diff: None,
+                determinism: Some(frob_core::evidence::DetClass::D0Exact),
+                synthetic: false,
+                reduced: None,
+            }],
+            controls: vec![ReceiptControl {
+                id: "NC-0001".to_owned(),
+                gate: "GATE-REPAIR-01".to_owned(),
+                outcome: ControlRunOutcome::Caught,
+            }],
+            gates: vec![ReceiptGate {
+                id: "GATE-REPAIR-01".to_owned(),
+                line: "pass".to_owned(),
+                reduced: None,
+            }],
+            counts: ReceiptCounts {
+                pass: 1,
+                ..ReceiptCounts::default()
+            },
+            session: "session:runner".to_owned(),
+            stack_receipt: frob_core::stack::BUILT_UNDER.receipt.to_string(),
+            stack_dev: false,
+            build_identity: "depgraph-receipt".to_owned(),
+        };
+        let receipts = root.join("target/gauntlet/receipts");
+        let (_, hash) = write_receipt(&receipts, &receipt).unwrap();
+        let mut options = RecordOptions::new(&root, "GATE-REPAIR-01", vec![hash]);
+        options.session = Some("session:a".to_owned());
+        options.date = Some("2026-11-25".to_owned());
+        options.skip_global_checks = true;
+        record_gate(&options).unwrap();
+        let last_seen = || {
+            let raw = fs::read_to_string(&controls).unwrap();
+            Controls::parse_str(&raw, "controls.toml")
+                .unwrap()
+                .get("NC-0001")
+                .unwrap()
+                .last_seen
+                .clone()
+                .unwrap()
+        };
+        let original = last_seen();
+        assert!(original.caught);
+        assert_eq!(original.session, "session:a");
+
+        receipt.seed += 1;
+        let (_, hash) = write_receipt(&receipts, &receipt).unwrap();
+        options.receipt_hashes = vec![hash.clone()];
+        options.session = Some("session:b".to_owned());
+        let err = record_gate_with_staging(&options, |staged| {
+            let control = staged.iter().find(|write| write.path == controls).unwrap();
+            fs::rename(control.stage.join("pending"), root.join("planted-controls")).unwrap();
+        })
+        .expect_err("controls rename must fail after the gate commits");
+        assert_eq!(err.reason, "recording-incomplete");
+        assert!(
+            err.detail.contains(&controls.display().to_string()),
+            "{err}"
+        );
+        assert_eq!(last_seen(), original);
+        let committed = fs::read(&gates).unwrap();
+        let registry = parse_register_bytes(&committed, "gates.toml").unwrap();
+        let part = &registry.get("GATE-REPAIR-01").unwrap().parts[0];
+        assert_eq!(part.receipt, hash);
+        assert_eq!(part.recorded.session, "session:b");
+        assert_eq!(part.recorded.date, original.date);
+
+        let repaired = record_gate(&options).expect("retry publishes the session change");
+        assert!(!repaired.idempotent_noop);
+        let seen = last_seen();
+        assert!(seen.caught);
+        assert_eq!(seen.date, original.date);
+        assert_eq!(seen.session, "session:b");
+        assert_eq!(fs::read(&gates).unwrap(), committed);
+        let history = crate::control_runner::load_history(&root).unwrap();
+        assert_eq!(
+            history
+                .iter()
+                .map(|entry| entry.session.as_str())
+                .collect::<Vec<_>>(),
+            ["session:a", "session:b"]
+        );
+        assert!(record_gate(&options).unwrap().idempotent_noop);
+    }
 
     #[test]
     fn gate_rename_separates_rollback_from_retry_repair() {

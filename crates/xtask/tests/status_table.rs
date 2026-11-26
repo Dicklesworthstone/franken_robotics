@@ -9,8 +9,9 @@ use std::env;
 use std::fs;
 use std::path::PathBuf;
 
-use frob_core::json::{Limits, admit};
+use frob_core::json::{Json, Limits, admit};
 use xtask::generate::admission_doc::FIRST_COMMIT_HEADER;
+use xtask::stack::admission::load_all_records;
 use xtask::status_table::{
     ClaimKind, GatePart, GateRegistry, GateRow, PartStatus, ReadmeCheckOutcome, RecordedMeta,
     STATUS_BEGIN, STATUS_END, check_or_bless_readme, generate_from_toml, parse_formats_toml,
@@ -522,12 +523,20 @@ recorded = {{ date = "2026-11-24", session = "{session}", implemented_by = "{imp
     let err1 = parse_gates_toml(co_impl.as_bytes())
         .expect_err("co-implementer self-certification must fail");
     assert!(err1.to_string().contains("GATE-SELF-01"), "{err1}");
+    assert!(
+        err1.message.contains("self-certified pass refused"),
+        "{err1}"
+    );
 
     // Sole implementer must fail.
     let sole_impl = make_toml("session:b", "session:b");
     let err2 = parse_gates_toml(sole_impl.as_bytes())
         .expect_err("sole-implementer self-certification must fail");
     assert!(err2.to_string().contains("GATE-SELF-01"), "{err2}");
+    assert!(
+        err2.message.contains("self-certified pass refused"),
+        "{err2}"
+    );
 
     // Independent session:c must validate.
     let indep = make_toml("session:c", "session:a,session:b");
@@ -560,6 +569,7 @@ recorded = { date = "2026-11-24", session = "session:c", implemented_by = "sessi
     let err =
         parse_gates_toml(toml.as_bytes()).expect_err("pass with empty controls must fail");
     assert!(err.to_string().contains("GATE-NOCTRL-01"), "{err}");
+    assert!(err.message.contains("`controls` is empty"), "{err}");
 }
 
 #[test]
@@ -685,6 +695,106 @@ fn demo_schema_admits_every_optional_key() {
     assert_eq!(doc.expect.len(), 1);
 }
 
+// Evaluate the demo schema's supported keywords. Visit sub-schemas even when
+// no instance value is present so an unused property cannot hide an unknown keyword.
+fn evaluate_demo_schema(
+    schema: &Json<'_>,
+    value: Option<&Json<'_>>,
+    path: &str,
+) -> Result<(), String> {
+    if let Some(allowed) = schema.as_bool() {
+        return if allowed || value.is_none() {
+            Ok(())
+        } else {
+            Err(format!("{path}: property not allowed"))
+        };
+    }
+    let keywords = schema
+        .as_object()
+        .expect("schema must be an object or boolean");
+    let text = value.and_then(Json::as_str);
+    let array = value.and_then(Json::as_array);
+    let number = value.and_then(|v| v.as_f64_lexeme().ok().map(|(_, n)| n));
+    for keyword in keywords {
+        let rule = &keyword.value.value;
+        let valid = match keyword.name.as_str() {
+            "$schema" | "$id" | "title" | "description" => true,
+            "type" => {
+                let check: fn(&Json<'_>) -> bool = match rule.as_str() {
+                    Some("object") => |v| v.as_object().is_some(),
+                    Some("array") => |v| v.as_array().is_some(),
+                    Some("string") => |v| v.as_str().is_some(),
+                    Some("boolean") => |v| v.as_bool().is_some(),
+                    Some("integer") => |v| v.as_f64_lexeme().is_ok_and(|(_, n)| n.fract() == 0.0),
+                    other => return Err(format!("{path}: unsupported type {other:?}")),
+                };
+                value.is_none_or(check)
+            }
+            "enum" => value.is_none_or(|v| {
+                rule.as_array().unwrap().iter().any(|item| {
+                    item.value == *v || item.as_f64_lexeme().is_ok_and(|(_, n)| Some(n) == number)
+                })
+            }),
+            "const" => value.is_none_or(|v| v == rule),
+            "minLength" | "minItems" => {
+                let min = usize::try_from(rule.as_int53().unwrap()).unwrap();
+                let length = match keyword.name.as_str() {
+                    "minLength" => text.map(|s| s.chars().count()),
+                    _ => array.map(<[_]>::len),
+                };
+                length.is_none_or(|len| len >= min)
+            }
+            "pattern" => {
+                let pattern = regex_lite::Regex::new(rule.as_str().unwrap())
+                    .map_err(|err| format!("{path}: unsupported pattern: {err}"))?;
+                text.is_none_or(|s| pattern.is_match(s))
+            }
+            "required" => {
+                if let Some(obj) = value.filter(|v| v.as_object().is_some()) {
+                    for key in rule.as_array().unwrap() {
+                        let name = key.as_str().unwrap();
+                        if obj.get(name).is_none() {
+                            return Err(format!("{path}/{name}: required property"));
+                        }
+                    }
+                }
+                true
+            }
+            "properties" => {
+                for property in rule.as_object().unwrap() {
+                    let child = format!("{path}/{}", property.name);
+                    let member = value.and_then(|v| v.get(&property.name));
+                    evaluate_demo_schema(&property.value, member.map(|v| &v.value), &child)?;
+                }
+                true
+            }
+            "additionalProperties" => {
+                evaluate_demo_schema(rule, None, path)?;
+                let properties = schema.get("properties");
+                for entry in value.and_then(Json::as_object).unwrap_or_default() {
+                    if properties.and_then(|p| p.get(&entry.name)).is_none() {
+                        let child = format!("{path}/{}", entry.name);
+                        evaluate_demo_schema(rule, Some(&entry.value), &child)?;
+                    }
+                }
+                true
+            }
+            "items" => {
+                evaluate_demo_schema(rule, None, path)?;
+                for (index, item) in array.unwrap_or_default().iter().enumerate() {
+                    evaluate_demo_schema(rule, Some(item), &format!("{path}/{index}"))?;
+                }
+                true
+            }
+            other => return Err(format!("{path}: unsupported schema keyword `{other}`")),
+        };
+        if !valid {
+            return Err(format!("{path}: failed `{}`", keyword.name));
+        }
+    }
+    Ok(())
+}
+
 #[test]
 fn published_demo_schema_has_closed_key_contract() {
     let bytes = fs::read(repo_root().join("schemas/demo.schema.json")).expect("read demo schema");
@@ -730,6 +840,56 @@ fn published_demo_schema_has_closed_key_contract() {
         root.get("additionalProperties")
             .and_then(|node| node.value.as_bool()),
         Some(false)
+    );
+
+    // JSON instance of ns01_full_demo_yaml for the published schema.
+    let demo = admit(br#"{
+        "demo_id": "ns-01",
+        "claim_ids": ["clm:GATE-DEMO-01"],
+        "commands": ["frob design check quad-a --json", "frob sim run quad-a --tier batch-cpu --json"],
+        "checksums": {"frob design check quad-a --json": "b3:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"},
+        "tier": "cpu",
+        "expect_exit": {"frob design check quad-a --json": 0, "frob sim run quad-a --tier batch-cpu --json": 3},
+        "expect_refusal": {"frob sim run quad-a --tier batch-cpu --json": "FROB-REF-802"},
+        "compare": {"frob design check quad-a --json": ["/result/mass_kg"]},
+        "expect": {"frob design check quad-a --json": "expected/check.json"},
+        "title": "North-Star 01 quadruped check",
+        "milestone": "M0",
+        "actors": ["design-agent"],
+        "lane": "cpu",
+        "fresh_agent": true,
+        "not_evidence_for": "numbers"
+    }"#, &Limits::default()).unwrap();
+    let instance = &demo.root().value;
+    evaluate_demo_schema(root, Some(instance), "")
+        .expect("valid demo must pass the published schema");
+
+    let members = instance.as_object().unwrap();
+    let extra = admit(br#"{"colour":"red"}"#, &Limits::default()).unwrap();
+    let mut with_unknown = members.to_vec();
+    with_unknown.extend_from_slice(extra.root().as_object().unwrap());
+    assert_eq!(
+        evaluate_demo_schema(root, Some(&Json::Obj(with_unknown)), "").unwrap_err(),
+        "/colour: property not allowed"
+    );
+    for key in expected_required {
+        let mut without = members.to_vec();
+        without.retain(|entry| entry.name != key);
+        assert_eq!(
+            evaluate_demo_schema(root, Some(&Json::Obj(without)), "").unwrap_err(),
+            format!("/{key}: required property")
+        );
+    }
+
+    let properties = root.get("properties").unwrap();
+    let expect_exit = properties.get("expect_exit").unwrap();
+    let span = expect_exit.get("type").unwrap().span;
+    let mut planted = bytes.clone();
+    planted.splice(span.start..span.end, b"\"integer\"".iter().copied());
+    let planted = admit(&planted, &Limits::default()).unwrap();
+    assert_eq!(
+        evaluate_demo_schema(&planted.root().value, Some(instance), "").unwrap_err(),
+        "/expect_exit: failed `type`"
     );
 }
 
@@ -829,13 +989,14 @@ fn first_commit_documents_and_admission_header() {
             "DEPENDENCY_ADMISSION.md missing required header rule `{needle}`"
         );
     }
-    let records_dir = root.join("receipts/admissions");
-    if records_dir.is_dir() {
-        let json_count = fs::read_dir(&records_dir)
-            .expect("read receipts/admissions")
-            .flatten()
-            .filter(|e| e.path().extension().and_then(|s| s.to_str()) == Some("json"))
-            .count();
-        assert_eq!(json_count, 0, "expected zero committed admission records at M0");
-    }
+    let (records, findings) = load_all_records(&root);
+    assert!(
+        findings.is_empty(),
+        "invalid admission records: {findings:?}"
+    );
+    assert_eq!(
+        records.len(),
+        0,
+        "expected zero committed admission records at M0"
+    );
 }

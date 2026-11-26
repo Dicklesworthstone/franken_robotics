@@ -17,6 +17,17 @@ source "${SCRIPT_DIR}/lib.sh"
 
 e2e_init "tether_registry" "N32a-02" "$@"
 
+MANIFEST="${E2E_REPO_ROOT}/Cargo.toml"
+
+# Cargo and its offload shim discover toolchain and config from their cwd.
+_in_workspace() {
+  local work_dir="$PWD" status=0
+  cd "${E2E_REPO_ROOT}" || return
+  "$@" || status=$?
+  cd "${work_dir}" || return
+  return "${status}"
+}
+
 TARGET_BASE="${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/frob-tether-registry-${E2E_RUN_ID}"
 mkdir -p "${TARGET_BASE}"
 
@@ -30,13 +41,13 @@ TD_DEFAULT_1="${TARGET_BASE}/default-run1"
 TD_DEFAULT_2="${TARGET_BASE}/default-run2"
 mkdir -p "${TD_REGONLY}" "${TD_DEFAULT_1}" "${TD_DEFAULT_2}"
 
-e2e_cmd --name "build_registry_only" -- \
+_in_workspace e2e_cmd --name "build_registry_only" -- \
   env "CARGO_TARGET_DIR=${TD_REGONLY}" \
-  cargo build -p frob-verbs --no-default-features --features registry-only --locked
+  cargo build --manifest-path "${MANIFEST}" -p frob-verbs --no-default-features --features registry-only --locked
 e2e_assert_eq "build_registry_only_exit" "${E2E_LAST_EXIT}" "0"
 
-e2e_cmd --name "tree_registry_only" -- \
-  cargo tree -p frob-verbs --no-default-features --features registry-only -e normal --locked --offline
+_in_workspace e2e_cmd --name "tree_registry_only" -- \
+  cargo tree --manifest-path "${MANIFEST}" -p frob-verbs --no-default-features --features registry-only -e normal --locked --offline
 e2e_assert_eq "tree_registry_only_exit" "${E2E_LAST_EXIT}" "0"
 physics_edges() {
   awk '/(^|[[:space:]])frob-fsim([[:space:]]|$)/ { n++ } END { print n+0 }' "$1"
@@ -47,15 +58,15 @@ fi
 printf '%s\n' 'frob-verbs v0.0.1' '└── frob-fsim v0.0.1' > "${E2E_SCRATCH_DIR}/physics-tree.txt"
 e2e_assert_eq "planted_frob_fsim_edge_detected" "$(physics_edges "${E2E_SCRATCH_DIR}/physics-tree.txt")" "1"
 
-e2e_cmd --name "build_default_run1" -- \
+_in_workspace e2e_cmd --name "build_default_run1" -- \
   env "CARGO_TARGET_DIR=${TD_DEFAULT_1}" \
-  cargo run -p frob-verbs --locked --example registry_table
+  cargo run --manifest-path "${MANIFEST}" -p frob-verbs --locked --example registry_table
 e2e_assert_eq "build_default_run1_exit" "${E2E_LAST_EXIT}" "0"
 GEN_1="${E2E_LAST_STDOUT}"
 
-e2e_cmd --name "build_default_run2" -- \
+_in_workspace e2e_cmd --name "build_default_run2" -- \
   env "CARGO_TARGET_DIR=${TD_DEFAULT_2}" \
-  cargo run -p frob-verbs --locked --example registry_table
+  cargo run --manifest-path "${MANIFEST}" -p frob-verbs --locked --example registry_table
 e2e_assert_eq "build_default_run2_exit" "${E2E_LAST_EXIT}" "0"
 GEN_2="${E2E_LAST_STDOUT}"
 
@@ -87,14 +98,14 @@ fi
 # ---------------------------------------------------------------------------
 e2e_step "unit_and_conformance_tests" "Run frob-verbs registry unit lints and crate conformance checks"
 
-e2e_cmd --name "cargo_test_registry" -- \
+_in_workspace e2e_cmd --name "cargo_test_registry" -- \
   env "CARGO_TARGET_DIR=${TD_DEFAULT_1}" \
-  cargo test -p frob-verbs --locked -- registry
+  cargo test --manifest-path "${MANIFEST}" -p frob-verbs --locked -- registry
 e2e_assert_eq "cargo_test_registry_exit" "${E2E_LAST_EXIT}" "0"
 
-e2e_cmd --name "cargo_test_conformance" -- \
+_in_workspace e2e_cmd --name "cargo_test_conformance" -- \
   env "CARGO_TARGET_DIR=${TD_DEFAULT_1}" \
-  cargo test -p frob-verbs --test conformance --locked
+  cargo test --manifest-path "${MANIFEST}" -p frob-verbs --test conformance --locked
 e2e_assert_eq "cargo_test_conformance_exit" "${E2E_LAST_EXIT}" "0"
 
 # ---------------------------------------------------------------------------
@@ -268,12 +279,12 @@ run_plant() {
   local td="${TARGET_BASE}/plant-${plant_name}"
   mkdir -p "${td}"
 
-  e2e_cmd --name "plant_${plant_name}" --expect-exit "101" -- \
+  _in_workspace e2e_cmd --name "plant_${plant_name}" --expect-exit "101" -- \
     env \
       "CARGO_TARGET_DIR=${td}" \
       "FROB_VERBS_REGISTRY=${plant_file}" \
       "FROB_VERBS_SCHEMAS_DIR=${SCHEMAS_SCRATCH}" \
-      cargo check -p frob-verbs --locked
+      cargo check --manifest-path "${MANIFEST}" -p frob-verbs --locked
 
   [ "${E2E_DRY_RUN:-0}" != "1" ] || return 0
   diagnostics="$(awk -v expected="entry \`${expect_row}\` failed ${expect_lint} (${expect_slug})" \
@@ -288,7 +299,7 @@ run_plant "underscore" "${PLANTS_DIR}/underscore.toml" "design.check_all" "RL-01
 run_plant "eight_tools" "${PLANTS_DIR}/eight_tools.toml" "design.op8" "RL-04" "empty-task-clusters"
 run_plant "wait_range" "${PLANTS_DIR}/wait_range.toml" "sim.run" "RL-09" "mcp-wait-out-of-range"
 
-e2e_skip "plant_bare_int" "RL-INT integer-type lint activates at M1 when N32a-07 lands"
+e2e_skip "plant_bare_int: RL-INT integer-type lint activates at M1 when N32a-07 lands"
 
 e2e_step "ambiguous_input_id" "An input-only schema with different served forms needs a verb"
 SHARED_REGISTRY="${PLANTS_DIR}/shared_input.toml"
@@ -313,7 +324,9 @@ purpose = "Exercise a second served form of a shared input schema."
 use_when = "Testing the schema operator."
 owner = "frob-arena"
 EOF
-e2e_expect_refusal FROB-REF-802 3 -- +  env "CARGO_TARGET_DIR=${TARGET_BASE}/shared-input" "FROB_VERBS_REGISTRY=${SHARED_REGISTRY}" +  cargo run --locked -p frob-cli --bin frob -- schema --id frob.sim.run.in/1 --json --no-daemon
+_in_workspace e2e_expect_refusal FROB-REF-802 3 -- \
+  env "CARGO_TARGET_DIR=${TARGET_BASE}/shared-input" "FROB_VERBS_REGISTRY=${SHARED_REGISTRY}" \
+  cargo run --manifest-path "${MANIFEST}" --locked -p frob-cli --bin frob -- schema --id frob.sim.run.in/1 --json --no-daemon
 if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
   e2e_assert_eq "ambiguous_input_diagnostic" "$(e2e_get /refusal/message)" "ambiguous input schema identifier"
   e2e_assert_eq "ambiguous_input_repair" "$(e2e_get /refusal/repairs/0/action)" "frob schema --verb sim.run --in"

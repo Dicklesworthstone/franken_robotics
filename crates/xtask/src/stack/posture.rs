@@ -2,9 +2,8 @@
 //! rules for FrankenRobotics (bead `N33a-01`, ADR-SUITE-01, rule L-4).
 //!
 //! Shared with the `franken-stack.lock` strict parser (`N33a-03`) and
-//! `xtask check-deps` (`BD-003`). Uses only the Rust standard library and
-//! `frob_core::registry::toml`. Pure, deterministic (class D0), zero `unsafe`,
-//! prints nothing (rule L-7).
+//! `xtask check-deps` (`BD-003`). Uses `frob_core::registry::toml` for TOML and
+//! Cargo's `semver` grammar for exact pins. Pure and deterministic (class D0).
 
 use std::fmt;
 use std::str::FromStr;
@@ -567,37 +566,8 @@ impl EdgeDecision {
 /// partial versions (`=0.6`).
 #[must_use]
 pub fn is_exact_semver(raw: &str) -> bool {
-    let Some(rest) = raw.strip_prefix('=') else {
-        return false;
-    };
-    if rest.is_empty()
-        || rest.contains(',')
-        || rest.bytes().any(|b| b.is_ascii_whitespace())
-    {
-        return false;
-    }
-    let core = rest.split(['-', '+']).next().unwrap_or("");
-    let mut parts = core.split('.');
-    let Some(maj) = parts.next() else {
-        return false;
-    };
-    let Some(min) = parts.next() else {
-        return false;
-    };
-    let Some(pat) = parts.next() else {
-        return false;
-    };
-    if parts.next().is_some() {
-        return false;
-    }
-    is_semver_num(maj) && is_semver_num(min) && is_semver_num(pat)
-}
-
-fn is_semver_num(seg: &str) -> bool {
-    if seg.is_empty() || !seg.bytes().all(|b| b.is_ascii_digit()) {
-        return false;
-    }
-    seg.len() == 1 || !seg.starts_with('0')
+    raw.strip_prefix('=')
+        .is_some_and(|version| semver::Version::parse(version).is_ok())
 }
 
 /// Return `true` when `from` names a crate inside one of the annex workspaces

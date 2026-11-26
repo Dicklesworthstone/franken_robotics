@@ -3,10 +3,9 @@
 //! (`fs-blake3`), admission checks, and Draft 2020-12 JSON Schema emitter
 //! (bead `N33a-03`).
 //!
-//! Uses only `std`, `frob_core::registry::toml` (single TOML reader, `N34p2-01`),
-//! `fs_blake3`, and `crate::stack::posture` (`N33a-01`). Pure (D0), zero
-//! `unsafe`, prints nothing (rule L-7), and `load`/`parse_bytes` never read any
-//! admission record or directory.
+//! Uses `frob_core::registry::toml` (`N34p2-01`) for TOML, the posture module
+//! (`N33a-01`) for exact pins, `unicode_normalization` for NFC, and `fs_blake3`
+//! for hashing. Pure (D0), with no admission-record I/O in `load`/`parse_bytes`.
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::fmt;
@@ -14,6 +13,7 @@ use std::fs;
 use std::path::Path;
 
 use frob_core::registry::toml::{self, Fields, Spanned, Table, TomlError, TomlErrorKind, Value};
+use unicode_normalization::UnicodeNormalization;
 
 use crate::stack::posture::{Milestone, Posture, Tier, Use, is_exact_semver};
 
@@ -205,7 +205,7 @@ impl fmt::Display for GitRev {
 
 impl ExactVersion {
     pub fn parse(raw: &str, row: &str) -> Result<Self, LockError> {
-        if is_exact_semver(raw) && semver_suffix_valid(raw) {
+        if is_exact_semver(raw) {
             Ok(Self(raw.to_owned()))
         } else {
             Err(LockError::new(6, "invalid-version", row, "version",
@@ -392,7 +392,7 @@ pub fn parse_bytes(bytes: &[u8]) -> Result<StackLock, LockError> {
                 return Err(LockError::new(2, "duplicate-id", row.id.as_str(), "id",
                     format!("duplicate foundation id `{}`", row.id)));
             }
-            if !seen_names.insert(row.name.clone()) {
+            if !seen_names.insert(row.name.nfc().collect::<String>()) {
                 return Err(LockError::new(2, "duplicate-name", row.id.as_str(), "name",
                     format!("duplicate foundation name `{}`", row.name)));
             }
@@ -419,7 +419,7 @@ impl StackLock {
     }
 
     /// Deterministically serialize this lock (fixed key order, rows sorted by `id`,
-    /// no comments, LF line ends, strict `frob_core::registry::toml` subset, D0).
+    /// NFC strings, no comments, LF line ends, strict `frob_core::registry::toml` subset, D0).
     #[must_use]
     pub fn canonical_bytes(&self) -> Vec<u8> {
         let mut out = String::new();
@@ -565,6 +565,9 @@ pub fn json_schema() -> Vec<u8> {
     let tiers = join_quoted(&Tier::ALL.map(Tier::as_str));
     let milestones = join_quoted(&Milestone::ALL.map(Milestone::as_str));
     let fsim_groups = join_quoted(FSIM_AIRLOCK_FEATURE_GROUPS);
+    let version = exact_version_pattern();
+    let segment = r"(?:[^./\\\x00-\x1f\x7f]|\.[^./\\\x00-\x1f\x7f]|\.\.[^/\\\x00-\x1f\x7f])[^/\\\x00-\x1f\x7f]*";
+    let path = format!(r"^\.\./{segment}(?:/{segment})*$");
 
     const TEMPLATE: &str = r##"{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -588,9 +591,9 @@ pub fn json_schema() -> Vec<u8> {
     "channel": { "type": "string", "pattern": "^(nightly-[0-9]{4}-[0-9]{2}-[0-9]{2}|(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(\\.(0|[1-9][0-9]*))?)$" },
     "stable_channel": { "type": "string", "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(\\.(0|[1-9][0-9]*))?$" },
     "fd_id": { "type": "string", "pattern": "^FD-[A-Z0-9]+$" },
-    "rel_path": { "type": "string", "pattern": "^\\.\\./[^/\\\\]+(?:/[^/\\\\]+)*$" },
+    "rel_path": { "type": "string", "pattern": "__REL_PATH__" },
     "git_rev": { "type": "string", "pattern": "^([0-9a-f]{40}|unadmitted)$" },
-    "exact_version": { "type": "string", "pattern": "^=(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$" },
+    "exact_version": { "type": "string", "pattern": "__EXACT_VERSION__" },
     "gate_ref": { "type": "string", "pattern": "^(none|INT-[A-Z0-9]+(?:-[A-Z0-9]+)*-[0-9]+(?:\\.\\.[0-9]+)?)$" },
     "blake3_hex": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
     "use_entry": {
@@ -647,6 +650,20 @@ pub fn json_schema() -> Vec<u8> {
         {
           "if": { "properties": { "id": { "const": "FD-FSIM" } }, "required": ["id"] },
           "then": { "properties": { "features": { "type": "array", "items": { "type": "string", "enum": [__FSIM_GROUPS__] } } } }
+        },
+        {
+          "if": { "anyOf": [
+            { "required": ["posture"], "properties": { "posture": { "enum": ["consume-path", "build-time"] } } },
+            { "required": ["uses"], "properties": { "uses": { "contains": { "required": ["posture"], "properties": { "posture": { "enum": ["consume-path", "build-time"] } } } } } }
+          ] },
+          "then": { "required": ["path"] }
+        },
+        {
+          "if": { "anyOf": [
+            { "required": ["posture"], "properties": { "posture": { "const": "consume" } } },
+            { "required": ["uses"], "properties": { "uses": { "contains": { "required": ["posture"], "properties": { "posture": { "const": "consume" } } } } } }
+          ] },
+          "then": { "required": ["version"] }
         }
       ]
     },
@@ -691,7 +708,33 @@ pub fn json_schema() -> Vec<u8> {
         .replace("__TIERS__", &tiers)
         .replace("__MILESTONES__", &milestones)
         .replace("__FSIM_GROUPS__", &fsim_groups)
+        .replace("__REL_PATH__", &path.replace('\\', "\\\\"))
+        .replace("__EXACT_VERSION__", &version.replace('\\', "\\\\"))
         .into_bytes()
+}
+
+fn exact_version_pattern() -> String {
+    // Match the u64 core components Cargo's SemVer parser accepts. For each
+    // prefix of u64::MAX, allow a smaller next digit and any remaining digits.
+    let max = u64::MAX.to_string();
+    let mut alternatives = vec!["0".to_owned(), "[1-9][0-9]{0,18}".to_owned(), max.clone()];
+    for (i, digit) in max.bytes().enumerate() {
+        let min = if i == 0 { b'1' } else { b'0' };
+        if digit > min {
+            let (lo, hi) = (char::from(min), char::from(digit - 1));
+            alternatives.push(format!(
+                "{}[{lo}-{hi}][0-9]{{{}}}",
+                &max[..i],
+                max.len() - i - 1
+            ));
+        }
+    }
+    let component = format!("(?:{})", alternatives.join("|"));
+    let pre = r"(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)";
+    let build = r"[0-9A-Za-z-]+";
+    format!(
+        r"^={component}\.{component}\.{component}(?:-{pre}(?:\.{pre})*)?(?:\+{build}(?:\.{build})*)?$"
+    )
 }
 
 // ============================================================================
@@ -748,7 +791,16 @@ fn parse_json_library_table(table: Table) -> Result<JsonLibraryTable, LockError>
             return Err(LockError::new(1, "invalid-field-type", "json_library.features", &bin,
                 format!("expected array of feature names, found {}", sp.value.type_name())));
         };
-        features.insert(bin.clone(), parse_non_empty_str_vec(arr, "json_library.features", &bin, 1)?);
+        let values = parse_non_empty_str_vec(arr, "json_library.features", &bin, 1)?;
+        if features.insert(bin.nfc().collect(), values).is_some() {
+            return Err(LockError::new(
+                1,
+                "duplicate-name",
+                "json_library.features",
+                &bin,
+                "binary name duplicates an NFC-equivalent key",
+            ));
+        }
     }
     Ok(JsonLibraryTable { package, version, allowed_in, features })
 }
@@ -1026,6 +1078,12 @@ fn is_valid_nightly_channel(s: &str) -> bool {
         return false;
     };
     if ys.len() != 4 || ms.len() != 2 || ds.len() != 2 { return false; }
+    if ![ys, ms, ds]
+        .iter()
+        .all(|part| part.bytes().all(|b| b.is_ascii_digit()))
+    {
+        return false;
+    }
     let (Ok(y), Ok(m), Ok(d)) = (ys.parse::<u32>(), ms.parse::<u32>(), ds.parse::<u32>()) else { return false; };
     if y < 1970 || !(1..=12).contains(&m) { return false; }
     let max_d = match m {
@@ -1042,13 +1100,6 @@ fn is_valid_stable_channel(s: &str) -> bool {
     let (Some(a), Some(b), c, None) = (p.next(), p.next(), p.next(), p.next()) else { return false; };
     let dec = |x: &str| !x.is_empty() && x.bytes().all(|ch| ch.is_ascii_digit()) && (x.len() == 1 || !x.starts_with('0'));
     dec(a) && dec(b) && c.is_none_or(dec)
-}
-
-fn semver_suffix_valid(raw: &str) -> bool {
-    let rest = raw.strip_prefix('=').unwrap_or(raw);
-    let Some(pos) = rest.find(['-', '+']) else { return true; };
-    let suf = &rest[pos + 1..];
-    !suf.is_empty() && suf.bytes().all(|b| b.is_ascii_alphanumeric() || matches!(b, b'.' | b'-' | b'+'))
 }
 
 fn is_valid_int_gate_ref(raw: &str) -> bool {
@@ -1076,7 +1127,7 @@ fn push_toml_key(out: &mut String, key: &str) {
 
 fn push_toml_str(out: &mut String, s: &str) {
     out.push('"');
-    for ch in s.chars() {
+    for ch in s.nfc() {
         match ch {
             '"' => out.push_str("\\\""),
             '\\' => out.push_str("\\\\"),
@@ -1358,6 +1409,22 @@ uses = [\n\
     }
 
     #[test]
+    fn lock_canonical_normalizes_unicode() {
+        let composed = template_toml().replace("KILL-MCP fallback 1.", "caf\u{e9}");
+        let decomposed = composed.replace("caf\u{e9}", "cafe\u{301}");
+        let a = parse_bytes(composed.as_bytes()).expect("composed lock");
+        let b = parse_bytes(decomposed.as_bytes()).expect("decomposed lock");
+        let canonical = b.canonical_bytes();
+        assert_eq!(canonical, a.canonical_bytes());
+        assert_eq!(b.digest(), a.digest());
+        assert!(
+            std::str::from_utf8(&canonical)
+                .unwrap()
+                .contains("caf\u{e9}")
+        );
+    }
+
+    #[test]
     fn lock_roundtrip_canonical() {
         let rich = format!(
             "{}\n[auditor]\nstable = \"1.85.0\"\n\n\
@@ -1404,6 +1471,60 @@ uses = [\n\
     }
 
     #[test]
+    fn lock_schema_and_parser_agree_on_path_and_version() {
+        let schema = mini_json::parse(std::str::from_utf8(&json_schema()).unwrap()).unwrap();
+        for (tail, expected) in [
+            ("posture = \"consume\"", Some((6, "missing-version"))),
+            (
+                "uses = [{ posture = \"build-time\" }]",
+                Some((5, "missing-path")),
+            ),
+            (
+                "posture = \"consume-path\"\npath = \"../x/../y\"",
+                Some((4, "invalid-path")),
+            ),
+            (
+                "uses = [{ posture = \"build-time\" }]\npath = \"../x/.src\"",
+                None,
+            ),
+            (
+                "posture = \"consume\"\nversion = \"=1.2.3-rc.1+local.007\"",
+                None,
+            ),
+            (
+                "posture = \"consume\"\nversion = \"=1.2.3-rc..1\"",
+                Some((6, "invalid-version")),
+            ),
+            (
+                "posture = \"consume\"\nversion = \"=1.2.3-01\"",
+                Some((6, "invalid-version")),
+            ),
+            (
+                "posture = \"consume\"\nversion = \"=18446744073709551615.2.3\"",
+                None,
+            ),
+            (
+                "posture = \"consume\"\nversion = \"=18446744073709551616.2.3\"",
+                Some((6, "invalid-version")),
+            ),
+        ] {
+            let doc = format!(
+                "toolchain = \"1.85.0\"\n[[foundation]]\nid = \"FD-TEST\"\nname = \"test\"\n\
+                 admission_gate = \"none\"\nfallback = \"offline\"\n{tail}\n"
+            );
+            let parsed = parse_bytes(doc.as_bytes());
+            assert_eq!(parsed.err().map(|e| (e.rule, e.kind)), expected, "{tail}");
+            let data =
+                toml_table_to_json(&toml::parse(doc.as_bytes()).expect("plant is valid TOML"));
+            assert_eq!(
+                mini_json::validate(&data, &schema, &schema).is_ok(),
+                expected.is_none(),
+                "{tail}"
+            );
+        }
+    }
+
+    #[test]
     fn lock_unadmitted_rev_depends_on_admitted_set() {
         let lock = parse_bytes(template_toml().replace(SAMPLE_REV, "unadmitted").as_bytes()).expect("unadmitted loads");
         let dir = fresh_scratch_dir("unadmitted");
@@ -1432,9 +1553,14 @@ uses = [\n\
         admitted.insert(GateRef::parse("INT-TOOLCHAIN-01", "<root>").expect("gate"));
         assert!(lock.check_admitted(&admitted, &dir).is_empty());
 
-        let bad = template_toml().replace("toolchain = \"nightly-2026-08-31\"\nfeatures =", "toolchain = \"nightly-2026-8-31\"\nfeatures =");
-        let err = parse_bytes(bad.as_bytes()).expect_err("nightly-2026-8-31 fails rule 9");
-        assert_eq!((err.rule, err.key.as_str()), (9, "toolchain"));
+        for bad in ["nightly-2026-8-31", "nightly-2026-+8-01"] {
+            let doc = template_toml().replace(
+                "toolchain = \"nightly-2026-08-31\"\nfeatures =",
+                &format!("toolchain = \"{bad}\"\nfeatures ="),
+            );
+            let err = parse_bytes(doc.as_bytes()).expect_err("invalid nightly date");
+            assert_eq!((err.rule, err.key.as_str()), (9, "toolchain"));
+        }
     }
 
     #[test]
@@ -1686,6 +1812,14 @@ uses = [\n\
             if let Some(Val::Int(n)) = obj.get("minLength") && let Val::Str(s) = inst && s.chars().count() < (*n as usize) {
                 return Err("below minLength".into());
             }
+            if let Some(pattern) = obj.get("pattern").and_then(Val::as_str)
+                && let Val::Str(s) = inst
+                && !regex_lite::Regex::new(pattern)
+                    .expect("schema pattern compiles")
+                    .is_match(s)
+            {
+                return Err(format!("{s:?} does not match {pattern}"));
+            }
             if let Val::Obj(map) = inst {
                 if let Some(reqs) = obj.get("required").and_then(Val::as_arr) {
                     for r in reqs { if let Some(k) = r.as_str() && !map.contains_key(k) { return Err(format!("missing `{k}`")); } }
@@ -1701,6 +1835,11 @@ uses = [\n\
             if let Val::Arr(items) = inst {
                 if let Some(Val::Int(n)) = obj.get("minItems") && items.len() < (*n as usize) { return Err("below minItems".into()); }
                 if let Some(it) = obj.get("items") { for x in items { validate(x, it, root)?; } }
+                if let Some(rule) = obj.get("contains")
+                    && !items.iter().any(|item| validate(item, rule, root).is_ok())
+                {
+                    return Err("no item matches contains".into());
+                }
             }
             if let Some(ns) = obj.get("not") && validate(inst, ns, root).is_ok() { return Err("matched `not`".into()); }
             if let Some(ao) = obj.get("anyOf").and_then(Val::as_arr) && !ao.iter().any(|s| validate(inst, s, root).is_ok()) {

@@ -669,6 +669,29 @@ fn golden_built_forms_match_bytes() {
 }
 
 #[test]
+fn nested_envelope_refuses_inexact_numbers() {
+    let envelope = |number: &str| {
+        Envelope::completed(
+            "design.check",
+            body(&format!(r#"{{"nested":[{{"number":{number}}}]}}"#)),
+            evidence(),
+            Cost::ZERO,
+        )
+        .unwrap()
+    };
+    let exact = envelope("9007199254740992").to_canonical().unwrap();
+    let read = read_envelope(exact.as_bytes()).unwrap();
+    assert!(read.tree().same_value(&tree(exact.as_str())));
+    for inexact in ["9007199254740993", "0.10000000000000000000000001"] {
+        assert_eq!(
+            envelope(inexact).to_canonical(),
+            Err(frob_core::canon::CanonError::InexactUntypedNumber),
+            "{inexact} must not serialize as a different number"
+        );
+    }
+}
+
+#[test]
 fn golden_files_validate_and_roundtrip() {
     let mut all: Vec<(&str, &str)> = built_goldens()
         .into_iter()

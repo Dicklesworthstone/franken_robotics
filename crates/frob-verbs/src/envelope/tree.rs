@@ -2,11 +2,86 @@
 //!
 //! Built only from bytes admitted by `frob_core::json::admit` (strict RFC 8259, duplicate
 //! members refused) and written back only through `frob_core::canon` (sorted members,
-//! minimal escapes, numbers as `int53` when exact and as shortest binary64 otherwise).
+//! minimal escapes, and refusal when canonicalizing an untyped number would change its value).
 //! Number lexemes are kept verbatim until they are written. Determinism D0; prints nothing.
+
+use std::cmp::Ordering;
 
 use frob_core::canon::{self, CanonError, Canonical, CanonicalBytes, Value};
 use frob_core::json::{AdmissionFault, Json, Limits, admit};
+
+/// Exact decimal comparison without expanding a potentially very large exponent.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(super) struct ExactNumber {
+    sign: i8,
+    digits: String,
+    exponent: Vec<i8>,
+    point: i64,
+}
+
+impl ExactNumber {
+    pub(super) fn parse(lexeme: &str) -> Option<Self> {
+        let (sign, body) = lexeme.strip_prefix('-').map_or((1, lexeme), |s| (-1, s));
+        let (mantissa, exponent) = body.split_once(['e', 'E']).unwrap_or((body, "0"));
+        let exponent_sign = if exponent.starts_with('-') { -1 } else { 1 };
+        let exponent = exponent.strip_prefix(['-', '+']).unwrap_or(exponent);
+        let (integer, fraction) = match mantissa.split_once('.') {
+            Some((_, "")) => return None,
+            Some(parts) => parts,
+            None => (mantissa, ""),
+        };
+        if integer.is_empty()
+            || (integer.len() > 1 && integer.starts_with('0'))
+            || exponent.is_empty()
+            || !integer
+                .bytes()
+                .chain(fraction.bytes())
+                .chain(exponent.bytes())
+                .all(|b| b.is_ascii_digit())
+        {
+            return None;
+        }
+        let mantissa = format!("{integer}{fraction}");
+        let significant = mantissa.trim_start_matches('0');
+        Some(Self {
+            sign: if significant.is_empty() { 0 } else { sign },
+            digits: significant.trim_end_matches('0').to_owned(),
+            exponent: exponent
+                .bytes()
+                .map(|b| exponent_sign * (b - b'0') as i8)
+                .collect(),
+            point: i64::try_from(integer.len()).ok()?
+                - i64::try_from(mantissa.len() - significant.len()).ok()?,
+        })
+    }
+
+    pub(super) fn compare(&self, other: &Self) -> Ordering {
+        if self.sign == 0 || self.sign != other.sign {
+            return self.sign.cmp(&other.sign);
+        }
+        let width = self.exponent.len().max(other.exponent.len());
+        // Subtract aligned exponent digits. Saturation cannot affect the ordering:
+        // once the difference is that large, a mantissa's point offset cannot reverse it.
+        let delta = self
+            .padded_exponent(width)
+            .zip(other.padded_exponent(width))
+            .fold(0i64, |delta, (a, b)| {
+                delta.saturating_mul(10).saturating_add(i64::from(a - b))
+            });
+        let magnitude = delta
+            .cmp(&other.point.saturating_sub(self.point))
+            .then_with(|| self.digits.cmp(&other.digits));
+        if self.sign < 0 {
+            magnitude.reverse()
+        } else {
+            magnitude
+        }
+    }
+
+    fn padded_exponent(&self, width: usize) -> impl Iterator<Item = i8> + '_ {
+        std::iter::repeat_n(0, width - self.exponent.len()).chain(self.exponent.iter().copied())
+    }
+}
 
 /// Owned JSON value. Object members keep their source order; the canonical writer sorts
 /// them when the tree is serialized.
@@ -121,10 +196,9 @@ impl Tree {
         match (self, other) {
             (Self::Null, Self::Null) => true,
             (Self::Bool(a), Self::Bool(b)) => a == b,
-            (Self::Num(_), Self::Num(_)) => match (self.as_f64(), other.as_f64()) {
-                (Some(a), Some(b)) => a == b,
-                _ => false,
-            },
+            (Self::Num(a), Self::Num(b)) => ExactNumber::parse(a)
+                .zip(ExactNumber::parse(b))
+                .is_some_and(|(a, b)| a.compare(&b).is_eq()),
             (Self::Str(a), Self::Str(b)) => a == b,
             (Self::Arr(a), Self::Arr(b)) => {
                 a.len() == b.len() && a.iter().zip(b).all(|(x, y)| x.same_value(y))
@@ -163,17 +237,7 @@ impl Canonical for Tree {
                 w.bool(*b);
                 Ok(())
             }
-            Self::Num(lexeme) => {
-                let node = Json::Num(lexeme.as_str());
-                if let Ok(n) = node.as_int53() {
-                    w.int53(n)
-                } else {
-                    let (_, x) = node
-                        .as_f64_lexeme()
-                        .map_err(|_| CanonError::NonFiniteFloat)?;
-                    w.f64_shortest(x)
-                }
-            }
+            Self::Num(lexeme) => w.term(&Json::Num(lexeme)),
             Self::Str(s) => {
                 w.str(s);
                 Ok(())

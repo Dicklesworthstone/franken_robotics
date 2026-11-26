@@ -16,7 +16,7 @@ use std::collections::BTreeMap;
 use std::fmt;
 
 use super::regex::{Pattern, PatternError};
-use super::tree::Tree;
+use super::tree::{ExactNumber, Tree};
 
 const ANNOTATIONS: &[&str] = &[
     "$schema",
@@ -140,8 +140,8 @@ struct Rules {
     pattern: Option<Pattern>,
     min_length: Option<usize>,
     max_length: Option<usize>,
-    minimum: Option<f64>,
-    maximum: Option<f64>,
+    minimum: Option<ExactNumber>,
+    maximum: Option<ExactNumber>,
     all_of: Vec<Node>,
     any_of: Vec<Node>,
     one_of: Vec<Node>,
@@ -425,13 +425,13 @@ impl Schema {
                     );
                 }
             }
-            Tree::Num(_) => {
-                if let Some(x) = v.as_f64() {
-                    if r.minimum.is_some_and(|m| x < m) {
-                        fail(out, "minimum", format!("{x} is below the minimum"));
+            Tree::Num(lexeme) => {
+                if let Some(x) = ExactNumber::parse(lexeme).filter(|_| v.as_f64().is_some()) {
+                    if r.minimum.as_ref().is_some_and(|m| x.compare(m).is_lt()) {
+                        fail(out, "minimum", format!("{lexeme} is below the minimum"));
                     }
-                    if r.maximum.is_some_and(|m| x > m) {
-                        fail(out, "maximum", format!("{x} is above the maximum"));
+                    if r.maximum.as_ref().is_some_and(|m| x.compare(m).is_gt()) {
+                        fail(out, "maximum", format!("{lexeme} is above the maximum"));
                     }
                 } else {
                     fail(out, "type", "number is not a finite binary64".into());
@@ -531,8 +531,13 @@ fn as_count(v: &Tree, at: &str) -> Result<usize, SchemaError> {
         .ok_or_else(|| err(at, "expected a non-negative integer"))
 }
 
-fn as_number(v: &Tree, at: &str) -> Result<f64, SchemaError> {
-    v.as_f64().ok_or_else(|| err(at, "expected a number"))
+fn as_number(v: &Tree, at: &str) -> Result<ExactNumber, SchemaError> {
+    if let Tree::Num(lexeme) = v
+        && let Some(number) = ExactNumber::parse(lexeme).filter(|_| v.as_f64().is_some())
+    {
+        return Ok(number);
+    }
+    Err(err(at, "expected a number"))
 }
 
 fn as_string_list(v: &Tree, at: &str) -> Result<Vec<String>, SchemaError> {
@@ -730,6 +735,59 @@ mod tests {
         assert!(s.validate(&tree(r#"{"a":2}"#)).is_err(), "if/then");
         let v = s.validate(&tree(r#"{"a":1,"z":0}"#)).unwrap_err();
         assert_eq!(v[0].instance, "/z");
+    }
+
+    #[test]
+    fn validator_compares_numbers_exactly() {
+        for (schema, value, violation) in [
+            (
+                r#"{"const":{"n":9007199254740992}}"#,
+                r#"{"n":9007199254740993}"#,
+                Some("/const"),
+            ),
+            (
+                r#"{"enum":[0.1]}"#,
+                "0.10000000000000000000000001",
+                Some("/enum"),
+            ),
+            (
+                r#"{"uniqueItems":true}"#,
+                "[9007199254740992,9007199254740993]",
+                None,
+            ),
+            (
+                r#"{"uniqueItems":true}"#,
+                "[1.0,10e-1]",
+                Some("/uniqueItems"),
+            ),
+            (
+                r#"{"minimum":9007199254740993}"#,
+                "9007199254740992",
+                Some("/minimum"),
+            ),
+            (
+                r#"{"maximum":-9007199254740993}"#,
+                "-9007199254740992",
+                Some("/maximum"),
+            ),
+            (
+                r#"{"maximum":0}"#,
+                "1e-999999999999999999999",
+                Some("/maximum"),
+            ),
+            (
+                r#"{"const":10e-999999999999999999999}"#,
+                "1e-999999999999999999998",
+                None,
+            ),
+        ] {
+            let result = Schema::compile_json(schema).unwrap().validate(&tree(value));
+            if let Some(keyword) = violation {
+                assert_eq!(result.unwrap_err()[0].keyword, keyword, "{schema} {value}");
+            } else {
+                assert!(result.is_ok(), "{schema} {value}");
+            }
+        }
     }
 
     #[test]

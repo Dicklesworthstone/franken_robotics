@@ -16,8 +16,8 @@
 # mechanism has not landed (`exercised = false`), step 3 records "not exercised" (a skip with
 # the reason), never a pass, and GATE-TETHER-03 is not claimed.
 #
-# Plants: E2E_PLANT_FAILURE=nc-bare-unknown-verb or nc-second-envelope builds step 1 with
-# that planted defect; the script must then fail.
+# Plants: E2E_PLANT_FAILURE=nc-bare-unknown-verb or nc-second-envelope runs only the
+# selected defect's tests. The script fails when a named test observes the defect.
 #
 # Compatible with bash 3.2 (macOS) and Linux. Never deletes files or directories (COMMON.md 9b).
 
@@ -41,23 +41,20 @@ elif e2e_plant "nc-second-envelope"; then
 fi
 
 # ---------------------------------------------------------------------------
-# Step 1: envelope unit tests (under a plant, built with the planted defect)
+# Step 1: envelope unit tests and doctests
 # ---------------------------------------------------------------------------
-e2e_step "envelope_unit_tests" "Run the frob-verbs envelope unit tests and compile-fail doctests"
-
 # The envelope's tests are the library's unit tests (`envelope::tests`, `envelope::regex`,
 # `envelope::validate`) and its doctests (the compile-fail checks); `--lib` and `--doc` select
 # exactly those, so an unrelated integration-test target of the crate cannot decide this step.
-FEATURE_ARGS=()
-if [ -n "${PLANT_FEATURE}" ]; then
-  FEATURE_ARGS=(--features "${PLANT_FEATURE}")
+if [ -z "${PLANT_FEATURE}" ]; then
+  e2e_step "envelope_unit_tests" "Run the frob-verbs envelope unit tests and compile-fail doctests"
+  e2e_cmd --name "envelope_unit_tests" -- \
+    cargo test --offline -j 1 --manifest-path "${MANIFEST}" -p frob-verbs --lib -- envelope
+  e2e_assert_eq "envelope_unit_tests_exit" "${E2E_LAST_EXIT}" "0"
+  e2e_cmd --name "envelope_doctests" -- \
+    cargo test --offline -j 1 --manifest-path "${MANIFEST}" -p frob-verbs --doc -- envelope
+  e2e_assert_eq "envelope_doctests_exit" "${E2E_LAST_EXIT}" "0"
 fi
-e2e_cmd --name "envelope_unit_tests${PLANT_FEATURE:+_planted_${PLANT_FEATURE}}" -- \
-  cargo test --offline -j 1 --manifest-path "${MANIFEST}" -p frob-verbs ${FEATURE_ARGS[@]+"${FEATURE_ARGS[@]}"} --lib -- envelope
-e2e_assert_eq "envelope_unit_tests_exit" "${E2E_LAST_EXIT}" "0"
-e2e_cmd --name "envelope_doctests${PLANT_FEATURE:+_planted_${PLANT_FEATURE}}" -- \
-  cargo test --offline -j 1 --manifest-path "${MANIFEST}" -p frob-verbs ${FEATURE_ARGS[@]+"${FEATURE_ARGS[@]}"} --doc -- envelope
-e2e_assert_eq "envelope_doctests_exit" "${E2E_LAST_EXIT}" "0"
 
 # ---------------------------------------------------------------------------
 # Step 2: negative controls (each planted build must fail the named test, not the build)
@@ -65,24 +62,41 @@ e2e_assert_eq "envelope_doctests_exit" "${E2E_LAST_EXIT}" "0"
 e2e_step "negative_controls" "Planted bare error and second envelope must fail the one-envelope tests"
 
 run_control() {
-  local feature="$1" test_name="$2" observed="not-observed"
-  e2e_expect_caught "${feature}" --gate GATE-TETHER-03 --nc "${feature}" -- \
+  local feature="$1" test_name="$2" caught status name
+  [ -z "${PLANT_FEATURE}" ] || [ "${PLANT_FEATURE}" = "${feature}" ] || return 0
+  name="${feature}_fails_${test_name##*::}"
+  e2e_cmd --name "control_${test_name##*::}" --expect-exit "0,101" -- \
     cargo test --offline -j 1 --manifest-path "${MANIFEST}" -p frob-verbs --features "${feature}" --lib -- \
-    --exact "${test_name}"
+    "${test_name}" --exact
   if [ "${E2E_DRY_RUN:-0}" = "1" ]; then
     return 0
   fi
-  if [ -n "${E2E_LAST_STDOUT:-}" ] && [ -f "${E2E_LAST_STDOUT}" ] &&
-    grep -Fq "test ${test_name} ... FAILED" "${E2E_LAST_STDOUT}"; then
-    observed="failed"
+  if [ "${E2E_LAST_EXIT}" = "101" ] && grep -Fxq "test ${test_name} ... FAILED" "${E2E_LAST_STDOUT}"; then
+    caught=true
+    status=pass
+  elif [ "${E2E_LAST_EXIT}" = "0" ] && grep -Fxq "test ${test_name} ... ok" "${E2E_LAST_STDOUT}"; then
+    caught=false
+    status=fail
+  else
+    _e2e_harness_error "no exact libtest result for ${test_name} (exit ${E2E_LAST_EXIT})"
   fi
-  e2e_assert_eq "${feature}_fails_${test_name##*::}" "${observed}" "failed" --nc "${feature}"
+  if [ -n "${PLANT_FEATURE}" ]; then
+    e2e_assert_eq "${name}" "${caught}" "false" --nc "${feature}"
+  else
+    _e2e_extract_tags --gate GATE-TETHER-03 --nc "${feature}"
+    _e2e_emit_assert "${name}" negative-control "${status}" --caught "${caught}" \
+      --observed "${caught}" --expected true --diff-path "${test_name}" \
+      ${_E2E_TAG_ARGS[@]+"${_E2E_TAG_ARGS[@]}"}
+  fi
 }
 
 run_control "nc-bare-unknown-verb" "envelope::tests::control_bare_error_unknown_verb"
 run_control "nc-bare-unknown-verb" "envelope::tests::one_envelope_always"
 run_control "nc-second-envelope" "envelope::tests::control_second_envelope_serve"
 run_control "nc-second-envelope" "envelope::tests::one_envelope_always"
+if [ -n "${PLANT_FEATURE}" ]; then
+  exit 0
+fi
 
 # ---------------------------------------------------------------------------
 # Step 3: the fixture rows through the real binary
@@ -135,7 +149,11 @@ while IFS="$(printf '\t')" read -r id want_ok want_exit want_code exercised mech
   ARGV=()
   IFS="$(printf '\037')" read -r -a ARGV <<< "${argv_joined}"
 
-  e2e_cmd --name "row_${id}" --expect-exit "${want_exit}" -- "${FROB_BIN}" "${ARGV[@]}"
+  if [ "${want_ok}" = "false" ]; then
+    e2e_expect_refusal "${want_code}" "${want_exit}" -- "${FROB_BIN}" "${ARGV[@]}"
+  else
+    e2e_cmd --name "row_${id}" --expect-exit "${want_exit}" -- "${FROB_BIN}" "${ARGV[@]}"
+  fi
   e2e_assert_eq "row_${id}_exit" "${E2E_LAST_EXIT}" "${want_exit}" --gate GATE-TETHER-03 --ka KA-755
   if [ "${E2E_DRY_RUN:-0}" = "1" ]; then
     continue

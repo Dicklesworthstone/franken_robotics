@@ -1056,6 +1056,26 @@ mod tests {
     }
 
     #[test]
+    fn request_digest_refuses_inexact_numbers() {
+        let digest = |number| {
+            let args = Tree::parse(format!(r#"{{"nested":[{number}]}}"#).as_bytes()).unwrap();
+            compute_request_digest("design.check", &args, &Bound::new(), &CommonArgs::default())
+        };
+        assert_eq!(
+            digest("9007199254740992").unwrap(),
+            digest("9007199254740992.0").unwrap()
+        );
+        for inexact in ["9007199254740993", "0.10000000000000000000000001"] {
+            assert!(matches!(
+                digest(inexact),
+                Err(DispatchError::Canon(
+                    canon::CanonError::InexactUntypedNumber
+                ))
+            ));
+        }
+    }
+
+    #[test]
     fn resolution_echoed_and_fixture_digest_enters_request_digest() {
         let pipe1 = fixture::synthetic_pipeline()
             .with_name_resolver(Arc::new(QuadAResolver))

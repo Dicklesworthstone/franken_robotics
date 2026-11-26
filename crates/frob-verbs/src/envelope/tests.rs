@@ -17,7 +17,7 @@ use frob_core::evidence::{
     ClaimKind, ClaimProduct, DetClass, FlagSet, InputRef, RealityScope, Scope, TierMeet,
 };
 use frob_core::id::Blake3;
-use frob_core::refusal::{Refusal, RefusalCode, Repair, RetryPolicy};
+use frob_core::refusal::{Refusal, RefusalCode, RefusalFingerprint, Repair, RetryPolicy};
 use frob_core::registry::refusals::{RefusalRegistry, RefusalRegistryError};
 use frob_core::registry::toml::{self, Fields};
 use frob_core::stack::{BUILT_UNDER, StackIdentity, StackLockDigest, StackReceiptHash};
@@ -792,7 +792,10 @@ fn from_refusal_reads_the_embedded_row() {
     let reg = embedded_registry().expect("embedded registry");
     for row in reg.rows() {
         let code = RefusalCode::parse(&row.code).expect("generated enum covers every row");
-        let r = Refusal::new(code, "m", "/p", "o", "q", "", row.retry, vec![]);
+        let mut r = Refusal::new(code, "m", "/p", "o", "q", "", row.retry, vec![]);
+        if code.family() == 6 {
+            r = r.with_fingerprint(RefusalFingerprint::new("cuda:0", "test-digest"));
+        }
         let env = Envelope::from_refusal("design.check", &r, Cost::ZERO).expect("refused");
         assert_eq!(env.exit().code(), row.exit, "{}", row.code);
         assert_eq!(

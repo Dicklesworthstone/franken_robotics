@@ -150,14 +150,33 @@ EOF
   e2e_assert_eq "tampered-receipt" "${got}" "${expected}"
 
   # Happy path: distinct reviewer session records pass and commits byte-identical receipt.
+  cat > "${SCRATCH}/README.md" <<'EOF'
+# Scratch gate status
+
+<!-- status:begin -->
+<!-- status:end -->
+EOF
   e2e_cmd --name "record_happy_path" -- \
     env "CARGO_TARGET_DIR=${TARGET_BASE}/conformance" "FROB_SESSION=session:reviewer-e2e" \
-    cargo run --offline -j 1 -p frob-conformance --example record_gate -- \
-      --repo-root "${SCRATCH}" --gate GATE-GAUNT-10 --receipt "${GOOD_HASH}" --bead N38b-19 --date 2026-11-25
+    cargo run --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p frob-conformance --example record_gate -- \
+      --repo-root "${SCRATCH}" --gate GATE-GAUNT-10 --receipt "${GOOD_HASH}" --bead N38b-19 --date 2026-11-25 \
+      --readme "${SCRATCH}/README.md"
   e2e_assert_eq "record_happy_path_exit" "${E2E_LAST_EXIT}" "0"
   e2e_assert_file "committed_receipt_exists" "${SCRATCH}/receipts/gates/${GOOD_HASH}.json"
   e2e_assert_digest_eq "committed_receipt_matches" \
     "$(b3sum --no-names "${SCRATCH}/receipts/gates/${GOOD_HASH}.json")" "${GOOD_HASH}"
+  e2e_cmd --name "recorded_readme_matches_honest_status_table" -- \
+    env "CARGO_TARGET_DIR=${TARGET_BASE}/conformance" \
+    cargo run --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline --locked -j 1 -p xtask -- \
+      check-generated --root "${SCRATCH}" --generator honest-status-table
+  e2e_assert_eq "recorded_readme_checker_exit" "${E2E_LAST_EXIT}" "0"
+  status_cells="$(awk -F '|' '$2 ~ /^ *GATE-GAUNT-10 *$/ {
+    gsub(/^ +| +$/, "", $6)
+    gsub(/^ +| +$/, "", $7)
+    print $6 " / " $7
+  }' "${SCRATCH}/README.md")"
+  e2e_assert_eq "recorded_readme_measured_and_recorded" "${status_cells}" \
+    "0.9207 (1) / 2026-11-25 (session:reviewer-e2e)"
 
   # Unknown mode word refuses without altering scratch gates.toml.
   SCRATCH_GATES_BEFORE_BADMODE="$(hash_file "${SCRATCH}/registries/gates.toml")"

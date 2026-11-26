@@ -34,7 +34,7 @@ use frob_core::testkit::registry::{Control, Controls, LastSeen};
 use crate::control_runner::{CONTROL_HISTORY_PATH, ControlHistoryEntry};
 use crate::controls::{CONTROLS_PATH, serialize_controls_file};
 use crate::reasons::HarnessReason;
-use crate::register::kill::render_readme_status_table;
+use crate::register::print::readme_table;
 use crate::register::row::{Claim, Recorded, Status, parse_milestone_ord};
 use crate::register::validate::{
     GateRow, Part, Register, ValidationContext, Violation, is_session_implementer,
@@ -1136,7 +1136,13 @@ pub fn record_gate(opts: &RecordOptions) -> Result<RecordOutput, RecordRefusal> 
 
     let mut regenerated_files = Vec::new();
     if let Some(path) = &opts.readme_path {
-        let table = render_readme_status_table(&candidate_reg);
+        let table = readme_table(&registry_write.after).map_err(|e| {
+            RecordRefusal::custom(
+                "register-invalid",
+                e.to_string(),
+                "Fix registered gates before generating the README status table",
+            )
+        })?;
         let mut write = RecordingWrite::replace(path.clone(), Vec::new())?;
         write.after = prepare_readme_bytes(path, write.before.as_deref(), &table)?.into_bytes();
         if write.changed() {

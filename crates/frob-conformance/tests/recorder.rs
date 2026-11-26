@@ -18,6 +18,7 @@ use frob_conformance::control_runner::{CONTROL_HISTORY_PATH, load_history};
 use frob_conformance::controls::CONTROLS_PATH;
 use frob_conformance::reasons::HarnessReason;
 use frob_conformance::register::kill::{apply_decisions, render_register_printout};
+use frob_conformance::register::print::readme_table;
 use frob_conformance::register::record::{
     RECEIPT_SET_SCHEMA, RecordHookContext, RecordHookRefusal, RecordOptions, RegistryLock,
     record_gate, register_check, unregister_check,
@@ -1723,6 +1724,28 @@ fn readme_splice_preserves_prose_and_updates_status() {
         "# FrankenRobotics\n\nIntro prose.\n\n<!-- status:begin -->\nold\n<!-- status:end -->\n\nFooter prose.\n",
     )
     .unwrap();
+    let assert_status_view = |text: &str, status: &str, measured: &str| {
+        let gates = fs::read(repo.root.join("registries/gates.toml")).unwrap();
+        let (_, after_begin) = text.split_once("<!-- status:begin -->\n").unwrap();
+        let (actual, _) = after_begin.split_once("<!-- status:end -->").unwrap();
+        assert_eq!(actual, readme_table(&gates).unwrap());
+        let row = actual
+            .lines()
+            .find(|line| line.starts_with("| GATE-TEST-01 "))
+            .expect("status row for the recorded gate");
+        let cells: Vec<_> = row.split('|').skip(1).take(6).map(str::trim).collect();
+        assert_eq!(
+            cells,
+            [
+                "GATE-TEST-01",
+                "known-answer",
+                "M0",
+                status,
+                measured,
+                "2026-11-25 (session:s2)",
+            ]
+        );
+    };
     let mut opts1 = base_opts(&repo, "GATE-TEST-01", hash1, "session:s2");
     opts1.readme_path = Some(readme_path.clone());
     let out1 = record_gate(&opts1).expect("records pass and splices README");
@@ -1730,7 +1753,7 @@ fn readme_splice_preserves_prose_and_updates_status() {
     let after1 = fs::read_to_string(&readme_path).unwrap();
     assert!(after1.starts_with("# FrankenRobotics\n\nIntro prose.\n\n<!-- status:begin -->\n"));
     assert!(after1.ends_with("<!-- status:end -->\n\nFooter prose.\n"));
-    assert!(after1.contains("| `GATE-TEST-01` | GATE-TEST-01 | pass | — |"));
+    assert_status_view(&after1, "pass", "0.9207 (1)");
     assert!(!after1.contains("\nold\n"));
 
     // Second recording with a failing receipt updates the status row without duplicating markers or touching prose.
@@ -1760,7 +1783,7 @@ fn readme_splice_preserves_prose_and_updates_status() {
     assert!(after2.ends_with("<!-- status:end -->\n\nFooter prose.\n"));
     assert_eq!(after2.matches("<!-- status:begin -->").count(), 1);
     assert_eq!(after2.matches("<!-- status:end -->").count(), 1);
-    assert!(after2.contains("| `GATE-TEST-01` | GATE-TEST-01 | fail | — |"));
+    assert_status_view(&after2, "fail", "0.9800 > 0.95");
     assert!(!after2.contains("| pass |"));
 }
 

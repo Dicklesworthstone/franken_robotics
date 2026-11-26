@@ -566,14 +566,35 @@ recorded = { date = \"2026-11-24\", session = \"s:rev\", implemented_by = \"s:im
     )
     .expect("write bad gates.toml");
 
-    let (code, stdout, _) = run_cli_json(&dir, &[]);
-    assert_eq!(code, ExitCode::from(EXIT_FINDINGS));
-    let out = run_check(&dir, BUILTIN_GENERATORS, false).expect("check");
-    assert!(
-        out.findings.iter().any(|f| f.rule == RULE_STATUS_INVALID),
-        "expected gen.status-invalid, got {:?}\nstdout={stdout}",
-        out.findings
-    );
+    let readme = dir.join("README.md");
+    let before = fs::read(&readme).expect("read original README");
+    for extra in [&[][..], &["--write"][..]] {
+        let (code, stdout, _) = run_cli_json(&dir, extra);
+        assert_eq!(code, ExitCode::from(EXIT_FINDINGS), "{stdout}");
+        let report = admit(stdout.as_bytes(), &Limits::default()).expect("parse findings");
+        let findings = report
+            .root()
+            .value
+            .get("findings")
+            .unwrap()
+            .value
+            .as_array()
+            .unwrap();
+        assert!(
+            findings.iter().any(|f| {
+                let field = |key| f.value.get(key).and_then(|value| value.value.as_str());
+                field("rule") == Some(RULE_STATUS_INVALID)
+                    && field("path") == Some("registries/gates.toml")
+                    && field("subject").is_some_and(|s| s.contains("GATE-BAD-01"))
+                    && field("message").is_some_and(|s| s.contains("measured"))
+            }),
+            "{stdout}"
+        );
+        assert_eq!(
+            before,
+            fs::read(&readme).expect("read README after refusal")
+        );
+    }
 }
 
 #[test]

@@ -295,6 +295,78 @@ fn composed_source_lint_checks_prelude_boundary() {
 }
 
 #[test]
+fn raw_literals_in_directives_preserve_following_include_findings() {
+    let tail = "/* raw text\n)tag\"\n#include \"bd013-review-missing-header.h\"\n";
+    for target in [BackendTarget::Cuda, BackendTarget::Metal] {
+        let options = target.production_options();
+        for prefix in ["R", "u8R", "uR", "UR", "LR"] {
+            let head = format!("#define FROB_PROBE_TEXT {prefix}\"tag(\n");
+            let split = DialectUnit::single_source("probe.h", tail)
+                .with_prelude(SourceFile::new(target.prelude_name(), &head));
+            let single = assemble_unit(
+                target,
+                None,
+                vec![SourceFile::new("probe.h", format!("{head}{tail}"))],
+            );
+            for unit in [split, single] {
+                assert_rule_1(
+                    &unit,
+                    &options,
+                    "#include \"bd013-review-missing-header.h\"",
+                );
+            }
+            let open = DialectUnit::single_source("probe.h", head);
+            assert_rule_1(&open, &options, "raw string literal");
+        }
+    }
+}
+
+#[test]
+fn prelude_exemption_requires_checked_in_bytes() {
+    for target in [BackendTarget::Cuda, BackendTarget::Metal] {
+        let options = target.production_options();
+        let original = target.prelude_source();
+        let altered = original.replacen("FrankenRobotics", "frankenRobotics", 1);
+        assert_eq!(original.len(), altered.len());
+        let changed = original
+            .bytes()
+            .zip(altered.bytes())
+            .filter(|(a, b)| a != b);
+        assert_eq!(changed.count(), 1);
+        let expected = match target {
+            BackendTarget::Cuda => "#ifndef",
+            BackendTarget::Metal => "#include <metal_stdlib>",
+        };
+        let check = |text, token| {
+            let unit =
+                DialectUnit::default().with_prelude(SourceFile::new(target.prelude_name(), text));
+            assert_rule_1(&unit, &options, token);
+        };
+        check(altered.clone(), expected);
+
+        // The checked-in CUDA header has no include to retain in the one-byte plant.
+        if target == BackendTarget::Cuda {
+            check(
+                format!("{altered}\n#include <unexpected.h>\n"),
+                "#include <unexpected.h>",
+            );
+        }
+    }
+}
+
+fn assert_rule_1(unit: &DialectUnit, options: &CompileOptions, token: &str) {
+    let findings = collect_findings(unit, options);
+    assert!(
+        findings.iter().any(|f| f.rule == 1 && f.token == token),
+        "{options:?} {token}: {findings:?}"
+    );
+    assert_eq!(
+        lint(unit, options).unwrap_err().code,
+        RefusalCode::FrobRef251
+    );
+}
+
+#[test]
 fn cuda_unsigned_atomics_reject_float_pointer() {
     // Host C++ syntax check with CUDA's relevant overloads. This launches no kernel.
     let compile = |body: &str| {

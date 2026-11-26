@@ -90,7 +90,7 @@ impl SourceFile {
 pub struct DialectUnit {
     /// Optional shape-class capacity `#define` block (only `#define IDENT <int>`).
     pub shape_constants: Option<SourceFile>,
-    /// Optional backend prelude (`prelude_cuda.h` or `prelude_metal.h`); exempt from rule 1.
+    /// Optional backend prelude. Only the checked-in target prelude is exempt from rule 1.
     pub prelude: Option<SourceFile>,
     /// Shared-dialect kernel sources (generated bodies and skeletons); all rules apply.
     pub sources: Vec<SourceFile>,
@@ -302,13 +302,28 @@ pub fn collect_findings(unit: &DialectUnit, options: &CompileOptions) -> Vec<Lin
     if let Some(sc) = &unit.shape_constants {
         scan_shape_constant_tokens(&sc.name, &tokenize(&sc.contents, true), &mut findings);
     }
-    if let Some(pre) = &unit.prelude {
-        lint_prelude(pre, &mut findings);
-    }
-    let expected_prelude = match options {
-        CompileOptions::Cuda { .. } => "prelude_cuda.h",
-        CompileOptions::Metal { .. } => "prelude_metal.h",
+    let (expected_prelude, checked_in) = match options {
+        CompileOptions::Cuda { .. } => (
+            "prelude_cuda.h",
+            include_str!("../../frob-kernels/dialect/prelude_cuda.h"),
+        ),
+        CompileOptions::Metal { .. } => (
+            "prelude_metal.h",
+            include_str!("../../frob-kernels/dialect/prelude_metal.h"),
+        ),
     };
+    let trusted = unit
+        .prelude
+        .as_ref()
+        .is_some_and(|pre| pre.name == expected_prelude && pre.contents == checked_in);
+    if let Some(pre) = &unit.prelude {
+        scan_prelude_zone(
+            &pre.name,
+            &tokenize(&pre.contents, true),
+            trusted,
+            &mut findings,
+        );
+    }
     let inlined_prelude = unit
         .prelude
         .as_ref()
@@ -323,15 +338,29 @@ pub fn collect_findings(unit: &DialectUnit, options: &CompileOptions) -> Vec<Lin
     }
     // Every otherwise admissible unit must pass with the compiler's lexical
     // state, including across the prelude boundary and after include removal.
+    let (expanded, prelude_start, source_start) = unit.expand_with_boundaries();
+    let tokens = tokenize(&expanded, true);
+    let name = "<assembled source>";
     if findings.is_empty() {
-        let (expanded, prelude_start, source_start) = unit.expand_with_boundaries();
-        let tokens = tokenize(&expanded, true);
         let prelude = tokens.partition_point(|tok| tok.offset < prelude_start);
         let sources = tokens.partition_point(|tok| tok.offset < source_start);
-        let name = "<assembled source>";
         scan_shape_constant_tokens(name, &tokens[..prelude], &mut findings);
-        scan_prelude_tokens(name, &tokens[prelude..sources], None, &mut findings);
+        scan_prelude_zone(name, &tokens[prelude..sources], trusted, &mut findings);
         scan_kernel_tokens(name, &tokens[sources..], None, &mut findings);
+    }
+    // A raw literal may close in a later file. Report it only in the assembled input.
+    for tok in tokens
+        .iter()
+        .filter(|tok| tok.kind == TokenKind::InvalidRawString)
+    {
+        findings.push(LintFinding::new(
+            1,
+            name,
+            tok.line,
+            tok.column,
+            "raw string literal",
+            "invalid or unterminated raw string literal in compiler input",
+        ));
     }
 
     findings.sort();
@@ -679,6 +708,7 @@ enum TokenKind {
     Ident(String),
     Number(String),
     StringLit(String),
+    InvalidRawString,
     CharLit,
     DoubleColon,
     DoubleLBracket,
@@ -770,6 +800,10 @@ fn raw_string_end(src: &str, quote: usize) -> Option<usize> {
     Some(src.len() - contents.len() + contents.find(&close)? + close.len())
 }
 
+fn raw_string_prefix(ident: &str) -> bool {
+    matches!(ident, "R" | "u8R" | "uR" | "UR" | "LR")
+}
+
 fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
     let sc = splice_backslash_newlines(src);
     let n = sc.len();
@@ -844,11 +878,19 @@ fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
             _ => 0,
         };
         if at_line_start && directive_width != 0 {
-            let start_line = cur.line;
-            let start_col = cur.col;
             i += directive_width;
-            let raw = consume_preprocessor_rest(&sc, &mut i);
-            let clean = strip_comments_inline(&raw);
+            let clean = match consume_preprocessor_rest(src, &sc, &mut i) {
+                Ok(clean) => clean,
+                Err(open) => {
+                    tokens.push(Token {
+                        kind: TokenKind::InvalidRawString,
+                        line: open.line,
+                        column: open.col,
+                        offset: open.offset,
+                    });
+                    break;
+                }
+            };
             let trimmed = clean.trim();
             let (name, body) = split_directive_head(trimmed);
             tokens.push(Token {
@@ -857,8 +899,8 @@ fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
                     body: body.to_owned(),
                     span: cur.offset..sc.get(i).map_or(src.len(), |next| next.offset),
                 },
-                line: start_line,
-                column: start_col,
+                line: cur.line,
+                column: cur.col,
                 offset: cur.offset,
             });
             at_line_start = true;
@@ -945,14 +987,21 @@ fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
                 ident.push(sc[i].ch);
                 i += 1;
             }
-            if matches!(ident.as_str(), "R" | "u8R" | "uR" | "UR" | "LR")
+            let kind = if raw_string_prefix(&ident)
                 && let Some(quote) = sc.get(i).filter(|next| next.ch == '"')
-                && let Some(end) = raw_string_end(src, quote.offset)
             {
-                i += sc[i..].partition_point(|next| next.offset < end);
-            }
+                if let Some(end) = raw_string_end(src, quote.offset) {
+                    i += sc[i..].partition_point(|next| next.offset < end);
+                    TokenKind::Ident(ident)
+                } else {
+                    i = n;
+                    TokenKind::InvalidRawString
+                }
+            } else {
+                TokenKind::Ident(ident)
+            };
             tokens.push(Token {
-                kind: TokenKind::Ident(ident),
+                kind,
                 line: start_line,
                 column: start_col,
                 offset: cur.offset,
@@ -1032,36 +1081,26 @@ fn tokenize(src: &str, mut at_line_start: bool) -> Vec<Token> {
 /// `/* ... */` block comments inside the directive instead of truncating it,
 /// while ending immediately at `//` line comments so `// /*` cannot swallow
 /// subsequent source lines into the directive.
-fn consume_preprocessor_rest(sc: &[SplicedChar], i: &mut usize) -> String {
+fn consume_preprocessor_rest(
+    src: &str,
+    sc: &[SplicedChar],
+    i: &mut usize,
+) -> Result<String, SplicedChar> {
     let n = sc.len();
     let mut out = String::new();
-    let mut in_block_comment = false;
-    let mut in_str = false;
-    let mut in_char = false;
+    let mut quote = None;
 
     while *i < n {
         let ch = sc[*i].ch;
-        if in_block_comment {
-            if ch == '*' && *i + 1 < n && sc[*i + 1].ch == '/' {
-                out.push('*');
-                out.push('/');
-                *i += 2;
-                in_block_comment = false;
-            } else {
-                out.push(if ch == '\n' { ' ' } else { ch });
-                *i += 1;
-            }
-            continue;
-        }
-        if in_str {
+        if let Some(delimiter) = quote {
             if ch == '\\' && *i + 1 < n {
                 out.push('\\');
                 out.push(sc[*i + 1].ch);
                 *i += 2;
                 continue;
             }
-            if ch == '"' {
-                in_str = false;
+            if ch == delimiter {
+                quote = None;
             }
             if ch == '\n' {
                 *i += 1;
@@ -1071,33 +1110,9 @@ fn consume_preprocessor_rest(sc: &[SplicedChar], i: &mut usize) -> String {
             *i += 1;
             continue;
         }
-        if in_char {
-            if ch == '\\' && *i + 1 < n {
-                out.push('\\');
-                out.push(sc[*i + 1].ch);
-                *i += 2;
-                continue;
-            }
-            if ch == '\'' {
-                in_char = false;
-            }
-            if ch == '\n' {
-                *i += 1;
-                break;
-            }
+        if matches!(ch, '"' | '\'') {
+            quote = Some(ch);
             out.push(ch);
-            *i += 1;
-            continue;
-        }
-        if ch == '"' {
-            in_str = true;
-            out.push('"');
-            *i += 1;
-            continue;
-        }
-        if ch == '\'' {
-            in_char = true;
-            out.push('\'');
             *i += 1;
             continue;
         }
@@ -1112,20 +1127,41 @@ fn consume_preprocessor_rest(sc: &[SplicedChar], i: &mut usize) -> String {
             break;
         }
         if ch == '/' && *i + 1 < n && sc[*i + 1].ch == '*' {
-            out.push('/');
-            out.push('*');
+            out.push(' ');
             *i += 2;
-            in_block_comment = true;
+            while *i < n {
+                if sc[*i].ch == '*' && sc.get(*i + 1).is_some_and(|next| next.ch == '/') {
+                    *i += 2;
+                    break;
+                }
+                *i += 1;
+            }
             continue;
         }
         if ch == '\n' {
             *i += 1;
             break;
         }
+        if ch.is_ascii_alphanumeric() || ch == '_' {
+            let start = *i;
+            let start_out = out.len();
+            while *i < n && (sc[*i].ch.is_ascii_alphanumeric() || sc[*i].ch == '_') {
+                out.push(sc[*i].ch);
+                *i += 1;
+            }
+            if raw_string_prefix(&out[start_out..])
+                && let Some(open) = sc.get(*i).filter(|next| next.ch == '"')
+            {
+                let end = raw_string_end(src, open.offset).ok_or(sc[start])?;
+                out.push_str(&src[open.offset..end]);
+                *i += sc[*i..].partition_point(|next| next.offset < end);
+            }
+            continue;
+        }
         out.push(ch);
         *i += 1;
     }
-    out
+    Ok(out)
 }
 
 fn next_char(s: &str, idx: usize) -> char {
@@ -1306,11 +1342,12 @@ fn is_unsigned_or_int_literal(s: &str) -> bool {
     }
 }
 
-/// Prelude header: exempt from rule 1, but checked for rules 3, 4 (contraction/fast-math
-/// pragmas, `_Pragma`, `fast::`, and explicit FMA), and 6 (spin loops / grid barriers).
-fn lint_prelude(file: &SourceFile, findings: &mut Vec<LintFinding>) {
-    let tokens = tokenize(&file.contents, true);
-    scan_prelude_tokens(&file.name, &tokens, None, findings);
+fn scan_prelude_zone(file: &str, tokens: &[Token], trusted: bool, findings: &mut Vec<LintFinding>) {
+    if trusted {
+        scan_prelude_tokens(file, tokens, None, findings);
+    } else {
+        scan_kernel_tokens(file, tokens, None, findings);
+    }
 }
 
 fn scan_prelude_tokens(
@@ -2163,6 +2200,7 @@ fn token_label(kind: &TokenKind) -> String {
     match kind {
         TokenKind::Ident(s) | TokenKind::Number(s) => s.clone(),
         TokenKind::StringLit(_) => "\"...\"".to_owned(),
+        TokenKind::InvalidRawString => "raw string literal".to_owned(),
         TokenKind::CharLit => "'...'".to_owned(),
         TokenKind::DoubleColon => "::".to_owned(),
         TokenKind::DoubleLBracket => "[[".to_owned(),
@@ -2387,11 +2425,11 @@ mod tests {
         assert_eq!(findings[0].token, "__syncthreads");
         assert_eq!(lint(&bad, &opts).unwrap_err().code, RefusalCode::FrobRef251);
 
-        // Same token inside prelude text is accepted.
+        // The checked-in prelude provides the wrapper around this intrinsic.
         let good = DialectUnit::default()
             .with_prelude(SourceFile::new(
                 "prelude_cuda.h",
-                "#define FROB_GROUP_BARRIER() __syncthreads()\n",
+                read_dialect("prelude_cuda.h"),
             ))
             .with_source(SourceFile::new("skel.h", "FROB_GROUP_BARRIER();\n"));
         assert!(lint(&good, &opts).is_ok());
@@ -2536,7 +2574,7 @@ mod tests {
             let bad = unit
                 .clone()
                 .with_prelude(SourceFile::new("prelude_bad.h", prelude));
-            let findings = collect_findings(&bad, &opts);
+            let findings = trusted_prelude_findings(&bad);
             assert_eq!(findings.len(), 1, "{prelude:?}: {findings:?}");
             assert_eq!(findings[0].rule, 4);
             assert_eq!(lint(&bad, &opts).unwrap_err().code, RefusalCode::FrobRef251);
@@ -2625,7 +2663,7 @@ mod tests {
                 "_Pragma(\"clang fp \" \"contract(fast)\")\n",
             ))
             .with_source(SourceFile::new("ok.h", "f32 y = a * b;\n"));
-        let pf = collect_findings(&bad_pre_pragma, &opts);
+        let pf = trusted_prelude_findings(&bad_pre_pragma);
         assert_eq!(pf.len(), 1, "got {pf:?}");
         assert_eq!(pf[0].rule, 4);
 
@@ -2645,7 +2683,7 @@ mod tests {
                 "#define MY_DIV(a, b) fast::divide((a), (b))\n",
             ))
             .with_source(SourceFile::new("ok.h", "f32 y = a * b;\n"));
-        let ff = collect_findings(&bad_pre_fast, &opts);
+        let ff = trusted_prelude_findings(&bad_pre_fast);
         assert_eq!(ff.len(), 1, "got {ff:?}");
         assert_eq!(ff[0].rule, 4);
     }
@@ -2755,14 +2793,14 @@ mod tests {
                 "_Pragma(L\"clang fp contract(fast)\")\n",
             ))
             .with_source(SourceFile::new("ok.h", "f32 y = a * b;\n"));
-        let wf = collect_findings(&wide_pragma, &safe_metal);
+        let wf = trusted_prelude_findings(&wide_pragma);
         assert_eq!(wf.len(), 1, "got {wf:?}");
         assert_eq!(wf[0].rule, 4);
 
         let macro_pragma = DialectUnit::default()
             .with_prelude(SourceFile::new("pre_macro.h", "_Pragma(EVIL_PRAGMA)\n"))
             .with_source(SourceFile::new("ok.h", "f32 y = a * b;\n"));
-        let mf = collect_findings(&macro_pragma, &safe_metal);
+        let mf = trusted_prelude_findings(&macro_pragma);
         assert_eq!(mf.len(), 1, "got {mf:?}");
         assert_eq!(mf[0].rule, 4);
 
@@ -2772,7 +2810,11 @@ mod tests {
                 "_Pragma(L\"STDC FP_CONTRACT OFF\")\n",
             ))
             .with_source(SourceFile::new("ok.h", "f32 y = a * b;\n"));
-        assert!(collect_findings(&benign_pragma, &safe_metal).is_empty());
+        assert!(trusted_prelude_findings(&benign_pragma).is_empty());
+        assert_eq!(
+            lint(&benign_pragma, &safe_metal).unwrap_err().code,
+            RefusalCode::FrobRef251
+        );
 
         // CUDA compile-option edge cases: non-false `--fmad=...`, Clang/NVCC fast-math flags,
         // and macro/pre-include injection flags must be refused.
@@ -2814,5 +2856,17 @@ mod tests {
             ],
         };
         assert!(collect_findings(&clean, &explicit_safe).is_empty());
+    }
+
+    fn trusted_prelude_findings(unit: &DialectUnit) -> Vec<LintFinding> {
+        let pre = unit.prelude.as_ref().expect("prelude fixture");
+        let mut findings = Vec::new();
+        scan_prelude_tokens(
+            &pre.name,
+            &tokenize(&pre.contents, true),
+            None,
+            &mut findings,
+        );
+        findings
     }
 }

@@ -3,8 +3,8 @@
 //! kernels) under rule L-8 and INV-SPARK-08 (bead `N34p4-03`, GATE-WS-01 plant 5).
 //!
 //! Pure in check mode (writes nothing); `--write` atomically rewrites only
-//! `Regenerate`-mode outputs in the outputs column and never touches `Digest`
-//! files or files outside the outputs column. Determinism class D0, zero
+//! `Regenerate`-mode outputs in the outputs column. `Digest` and `Authored`
+//! files are read-only. Determinism class D0, zero
 //! `unsafe`, prints nothing (rule L-7), never deletes files (COMMON.md 9b).
 
 use std::collections::{BTreeMap, BTreeSet};
@@ -16,8 +16,8 @@ use std::sync::atomic::{AtomicU64, Ordering};
 use crate::cli::{CheckContext, CheckError, CheckOutcome};
 use crate::crate_map::Finding;
 use crate::generate::{
-    BUILTIN_GENERATORS, ExpectedMarker, GeneratorMode, GeneratorOutput, GeneratorRow, OutputKind,
-    RULE_DIFFERS, RULE_DIGEST, RULE_MARKER_MISSING, RULE_MISSING, RULE_ORPHAN, RULE_STATUS_INVALID,
+    BUILTIN_GENERATORS, ExpectedMarker, GeneratorOutput, GeneratorRow, OutputKind, RULE_DIFFERS,
+    RULE_DIGEST, RULE_MARKER_MISSING, RULE_MISSING, RULE_ORPHAN, RULE_STATUS_INVALID,
     admission_doc, expand_globs,
 };
 use crate::report::FactValue;
@@ -66,7 +66,7 @@ fn parse_args(extra: &[String]) -> Result<(bool, &'static [GeneratorRow]), Strin
 
 /// Execute `check-generated` over `rows` on `repo_root`.
 ///
-/// Parameterized by `rows` so both the six built-in rows and synthetic
+/// Parameterized by `rows` so both the built-in rows and synthetic
 /// multi-glob test rows execute through the exact same code path.
 pub fn run_check(
     repo_root: &Path,
@@ -74,7 +74,7 @@ pub fn run_check(
     write_mode: bool,
 ) -> Result<CheckOutcome, CheckError> {
     let mut findings: Vec<Finding> = Vec::new();
-    let mut expected_outputs: BTreeSet<String> = BTreeSet::new();
+    let mut registered_paths: BTreeSet<String> = BTreeSet::new();
     let mut written_files: Vec<String> = Vec::new();
     let mut row_facts: Vec<FactValue> = Vec::with_capacity(rows.len());
     let mut checked_files: usize = 0;
@@ -96,10 +96,10 @@ pub fn run_check(
                         rf = facts;
                         files
                     }
-                    GeneratorOutput::Digests(_) => unreachable!(),
+                    GeneratorOutput::Digests(_) | GeneratorOutput::Authored(_) => unreachable!(),
                 };
                 for gf in files {
-                    expected_outputs.insert(gf.rel_path.clone());
+                    registered_paths.insert(gf.rel_path.clone());
                     produced_paths.push(gf.rel_path.clone());
                     checked_files += 1;
 
@@ -237,7 +237,7 @@ pub fn run_check(
             Ok(GeneratorOutput::Digests(expectations)) => {
                 // Digest mode NEVER rewrites files, even under `--write`.
                 for exp in expectations {
-                    expected_outputs.insert(exp.rel_path.clone());
+                    registered_paths.insert(exp.rel_path.clone());
                     produced_paths.push(exp.rel_path.clone());
                     digest_files_checked += 1;
 
@@ -288,6 +288,14 @@ pub fn run_check(
                     }
                 }
             }
+            Ok(GeneratorOutput::Authored(paths)) => {
+                checked_files += paths.len();
+                rf.insert(
+                    "authored".to_owned(),
+                    FactValue::str_array(paths.iter().cloned()),
+                );
+                registered_paths.extend(paths);
+            }
             Err(err) => {
                 findings.push(Finding {
                     rule: err.rule,
@@ -326,16 +334,16 @@ pub fn run_check(
     }
     for rel_pb in expand_globs(repo_root, &wildcard_globs) {
         let rel = rel_pb.to_string_lossy().replace('\\', "/");
-        if !expected_outputs.contains(&rel) {
+        if !registered_paths.contains(&rel) {
             findings.push(Finding {
                 rule: RULE_ORPHAN,
                 subject: rel.clone(),
                 path: rel.clone(),
                 line: None,
                 message: format!(
-                    "generated-directory file `{rel}` is not produced by any registered generator row"
+                    "file `{rel}` in a generated directory has no registered owner"
                 ),
-                repair: "add a registry entry producing this output or remove the stale generated file with owner approval".to_owned(),
+                repair: "register the file's producer or authored owner, or remove the stale file with owner approval".to_owned(),
             });
         }
     }
@@ -343,7 +351,6 @@ pub fn run_check(
     // Ensure rows in facts are deterministically ordered and written_files sorted.
     written_files.sort();
     written_files.dedup();
-    let _ = GeneratorMode::Regenerate;
 
     let mut facts = BTreeMap::new();
     facts.insert(

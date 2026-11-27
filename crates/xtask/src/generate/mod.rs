@@ -2,7 +2,8 @@
 //! (`N33a-07`, `N34p4-03`, rule L-8).
 //!
 //! Each generator row is a pure function from repository input globs to output
-//! files (`Regenerate` mode) or manifest digests (`Digest` mode). Uses
+//! files (`Regenerate` mode), manifest digests (`Digest` mode), or validated
+//! authored files (`Authored` mode). Uses
 //! `frob-core`'s strict TOML and JSON readers, `frob_core::canon` for canonical
 //! JSON string escaping, and `fs_blake3` for BLAKE3 digests. Determinism class
 //! D0, zero `unsafe`, prints nothing (rule L-7), never deletes files.
@@ -28,7 +29,7 @@ use crate::report::FactValue;
 use crate::stack::lock;
 use crate::status_table::{self, FormatRow};
 
-/// Marker embedded in `$comment` of every generated `schemas/frob.*.json` file.
+/// Marker embedded in `$comment` of generated format and verb payload schemas.
 pub const FORMAT_SCHEMA_MARKER: &str = "@generated from registries/formats.toml, registries/verbs.toml by xtask::generate::format_and_verb_schemas; do not edit by hand.";
 
 /// First-line marker on `crates/frob-core/src/qty_gen.rs` (`N33c-03`).
@@ -41,6 +42,8 @@ pub enum GeneratorMode {
     Regenerate,
     /// Compare BLAKE3 digests of committed files against their manifest; `--write` never rewrites them.
     Digest,
+    /// Validate authored files in place. `--write` never rewrites them.
+    Authored,
 }
 
 impl GeneratorMode {
@@ -49,6 +52,7 @@ impl GeneratorMode {
         match self {
             Self::Regenerate => "regenerate",
             Self::Digest => "digest",
+            Self::Authored => "authored",
         }
     }
 }
@@ -102,6 +106,7 @@ pub enum GeneratorOutput {
     Regenerated(Vec<GeneratedFile>),
     RegeneratedWithFacts(Vec<GeneratedFile>, BTreeMap<String, FactValue>),
     Digests(Vec<DigestExpectation>),
+    Authored(Vec<String>),
 }
 
 /// Structured error raised by a generator when an input registry is invalid or missing.
@@ -148,7 +153,7 @@ pub const RULE_DIGEST: &str = "gen.digest";
 pub const RULE_MARKER_MISSING: &str = "gen.marker-missing";
 pub const RULE_STATUS_INVALID: &str = "gen.status-invalid";
 
-/// The six built-in generator rows of `cargo xtask check-generated` (`N34p4-03`).
+/// The built-in rows of `cargo xtask check-generated` (`N34p4-03`).
 pub const BUILTIN_GENERATORS: &[GeneratorRow] = &[
     GeneratorRow {
         name: "format-and-verb-schemas",
@@ -160,6 +165,20 @@ pub const BUILTIN_GENERATORS: &[GeneratorRow] = &[
         output_globs: &["schemas/frob.*.json"],
         mode: GeneratorMode::Regenerate,
         run: run_format_and_verb_schemas,
+    },
+    GeneratorRow {
+        name: "verb-entry-schema",
+        input_globs: &["crates/frob-verbs/src/registry/derive.rs"],
+        output_globs: &["schemas/frob.verbs.entry.1.json"],
+        mode: GeneratorMode::Regenerate,
+        run: run_verb_entry_schema,
+    },
+    GeneratorRow {
+        name: "authored-kernel-schema",
+        input_globs: &["schemas/frob.kernel.1.json"],
+        output_globs: &[],
+        mode: GeneratorMode::Authored,
+        run: run_authored_kernel_schema,
     },
     GeneratorRow {
         name: "stack-lock-schema",
@@ -561,6 +580,82 @@ fn run_format_and_verb_schemas(
     Ok(GeneratorOutput::Regenerated(
         files_by_path.into_values().collect(),
     ))
+}
+
+fn run_verb_entry_schema(
+    _repo_root: &Path,
+    _inputs: &[PathBuf],
+) -> Result<GeneratorOutput, GeneratorError> {
+    Ok(GeneratorOutput::Regenerated(vec![GeneratedFile {
+        rel_path: "schemas/frob.verbs.entry.1.json".to_owned(),
+        kind: OutputKind::WholeFile,
+        // The canonical producer emits the schema ID first.
+        marker: ExpectedMarker::LinePrefix("{\"$id\":\"frob.verbs.entry/1\","),
+        bytes: frob_verbs::registry::entry_schema_json().into_bytes(),
+    }]))
+}
+
+fn run_authored_kernel_schema(
+    repo_root: &Path,
+    _inputs: &[PathBuf],
+) -> Result<GeneratorOutput, GeneratorError> {
+    let schema_id = "frob.kernel/1";
+    let rel_path = schema_id_to_rel_path(schema_id);
+    let error = |rule, message| GeneratorError {
+        rule,
+        subject: schema_id.to_owned(),
+        path: rel_path.clone(),
+        message,
+        repair: "restore the authored kernel schema under schemas/ with its matching `$id`"
+            .to_owned(),
+    };
+    let root = fs::canonicalize(repo_root).map_err(|e| {
+        error(
+            RULE_DIFFERS,
+            format!("failed to canonicalize repository root: {e}"),
+        )
+    })?;
+    let path = fs::canonicalize(root.join(&rel_path)).map_err(|e| {
+        let rule = if e.kind() == std::io::ErrorKind::NotFound {
+            RULE_MISSING
+        } else {
+            RULE_DIFFERS
+        };
+        error(
+            rule,
+            format!("failed to locate authored kernel schema: {e}"),
+        )
+    })?;
+    if !path.starts_with(root.join("schemas")) || !path.is_file() {
+        return Err(error(
+            RULE_DIFFERS,
+            "authored kernel schema must resolve to a regular file inside schemas/".to_owned(),
+        ));
+    }
+    let bytes = fs::read(path).map_err(|e| {
+        error(
+            RULE_DIFFERS,
+            format!("failed to read authored kernel schema: {e}"),
+        )
+    })?;
+    let admitted = admit(&bytes, &Limits::default()).map_err(|e| {
+        error(
+            RULE_DIFFERS,
+            format!("authored kernel schema failed JSON admission: {e}"),
+        )
+    })?;
+    let declared_id = admitted
+        .value()
+        .get("$id")
+        .and_then(|v| v.as_str())
+        .unwrap_or("");
+    if declared_id != schema_id {
+        return Err(error(
+            RULE_DIFFERS,
+            format!("authored kernel schema `$id` `{declared_id}` does not match `{schema_id}`"),
+        ));
+    }
+    Ok(GeneratorOutput::Authored(vec![rel_path]))
 }
 
 fn parse_verb_schema_ids(

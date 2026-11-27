@@ -351,6 +351,7 @@ fn write_mode_touches_only_outputs() {
         }
     }
     assert!(!outputs.is_empty());
+    assert!(!outputs.contains("schemas/frob.kernel.1.json"));
 
     let outside_before = digest_tree_excluding(&dir, &outputs);
     // Corrupt one output so --write actually rewrites files.
@@ -414,7 +415,7 @@ determinism = \"D0\"\nsource_digest = \"b3:{kernel_hex}\"\ntargets = [\"cpu\"]\n
     // Restore kernel for individual regenerable-output edit tests.
     fs::write(dir.join("kernels/K-cay-step.rs"), kernel_src).expect("restore kernel");
 
-    // (c) One byte changed in EACH of the five regenerable output kinds -> gen.differs + line.
+    // (c) One byte changed in each regenerable output below -> gen.differs + line.
     let targets: &[(&str, &str, &str)] = &[
         (
             "schemas/frob.design.1.json",
@@ -425,6 +426,11 @@ determinism = \"D0\"\nsource_digest = \"b3:{kernel_hex}\"\ntargets = [\"cpu\"]\n
             "schemas/frob.stack-lock.1.json",
             "\"required\": [\"toolchain\"]",
             "\"required\": [\"toolchaiX\"]",
+        ),
+        (
+            "schemas/frob.verbs.entry.1.json",
+            "Closed schema of one [[verb]] entry",
+            "Closed schema of one [[verb]] entrX",
         ),
         (
             "DEPENDENCY_ADMISSION.md",

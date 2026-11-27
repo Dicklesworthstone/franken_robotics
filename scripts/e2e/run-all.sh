@@ -51,7 +51,7 @@ Options:
   --small                    Run with E2E_SMALL=1
   --devices <csv>            Run with E2E_DEVICES=<csv>
   --fail-fast                Stop after the first failing script
-  --verify-plants            Run each script once per declared plant and assert exit 1
+  --verify-plants            Run each script once per declared plant and assert exit 1 with only plant-named failed asserts
   --approved-envelope <id>   Required when any selected script declares timeout_s > 3600
   -h, --help                 Show this help and exit 0
 EOF
@@ -208,6 +208,63 @@ if ! (set -C; : > "$RUN_INDEX") 2>/dev/null; then
   done
 fi
 
+# Inspect failed `assert` events in an NDJSON log for `--verify-plants`.
+# Sets PLANT_FAILED_ASSERTS and PLANT_UNRELATED_FAILS; a plant is counted as
+# caught only when at least one `assert` event failed AND every failed `assert`
+# event's `name` contains the active plant name.
+audit_plant_failed_asserts() {
+  local log_file="$1" plant="$2"
+  PLANT_FAILED_ASSERTS=0
+  PLANT_UNRELATED_FAILS=0
+  if [ -z "$log_file" ] || [ ! -f "$log_file" ]; then
+    return 0
+  fi
+  if command -v python3 >/dev/null 2>&1; then
+    local counts
+    counts="$(python3 - "$log_file" "$plant" <<'PY'
+import json, sys
+log_path, plant = sys.argv[1], sys.argv[2]
+total = 0
+unrelated = 0
+with open(log_path, "r", encoding="utf-8") as fh:
+    for raw in fh:
+        raw = raw.strip()
+        if not raw:
+            continue
+        try:
+            obj = json.loads(raw)
+        except Exception:
+            print("0 1")
+            sys.exit(0)
+        if not isinstance(obj, dict):
+            print("0 1")
+            sys.exit(0)
+        if obj.get("event") == "assert" and obj.get("status") == "fail":
+            total += 1
+            name = obj.get("name")
+            if not isinstance(name, str) or plant not in name:
+                unrelated += 1
+print(f"{total} {unrelated}")
+PY
+)" || counts="0 1"
+    PLANT_FAILED_ASSERTS="${counts%% *}"
+    PLANT_UNRELATED_FAILS="${counts#* }"
+  else
+    local line name_part
+    while IFS= read -r line; do
+      [ -n "$line" ] || continue
+      if printf '%s\n' "$line" | grep -Eq '"event"[[:space:]]*:[[:space:]]*"assert"' \
+        && printf '%s\n' "$line" | grep -Eq '"status"[[:space:]]*:[[:space:]]*"fail"'; then
+        PLANT_FAILED_ASSERTS=$((PLANT_FAILED_ASSERTS + 1))
+        name_part="$(printf '%s\n' "$line" | sed -nE 's/.*"name"[[:space:]]*:[[:space:]]*"([^"]*)".*/\1/p')"
+        if [ -z "$name_part" ] || ! printf '%s\n' "$name_part" | grep -Fq "$plant"; then
+          PLANT_UNRELATED_FAILS=$((PLANT_UNRELATED_FAILS + 1))
+        fi
+      fi
+    done < "$log_file"
+  fi
+}
+
 append_index_line() {
   local sname="$1" sbead="$2" plant="$3" rc="$4" lint_rc="$5" log_path="$6"
   printf '{"ts":"%s","script":"%s","bead":"%s","plant":"%s","exit":%s,"lint_exit":%s,"log":"%s"}\n' \
@@ -264,19 +321,18 @@ run_one_invocation() {
 
   if [ -n "$plant" ]; then
     PLANTS_RUN=$((PLANTS_RUN + 1))
-    # Planted run MUST exit 1, lint cleanly, and contain a failed assertion naming the plant
+    # Planted run MUST exit 1, lint cleanly, fail at least one assertion, and
+    # every failed `assert` event must name the active plant (no unrelated clean-path failures).
     local plant_named=0
-    if [ -n "$log_path" ] && [ -f "$log_path" ]; then
-      if grep -E '"event"[[:space:]]*:[[:space:]]*"assert"' "$log_path" \
-        | grep -E '"status"[[:space:]]*:[[:space:]]*"fail"' \
-        | grep -Fq "$plant"; then
-        plant_named=1
-      fi
+    audit_plant_failed_asserts "$log_path" "$plant"
+    if [ "$PLANT_FAILED_ASSERTS" -ge 1 ] && [ "$PLANT_UNRELATED_FAILS" -eq 0 ]; then
+      plant_named=1
     fi
     if [ "$rc" -eq 1 ] && [ "$lint_rc" -eq 0 ] && [ "$plant_named" -eq 1 ]; then
       printf 'PASS  %-32s plant=%s exit=1 (plant caught)\n' "$sname" "$plant"
     else
-      printf 'FAIL  %-32s plant=%s exit=%s lint=%s plant_named=%s log=%s\n' "$sname" "$plant" "$rc" "$lint_rc" "$plant_named" "$log_path"
+      printf 'FAIL  %-32s plant=%s exit=%s lint=%s plant_named=%s failed_asserts=%s unrelated_fails=%s log=%s\n' \
+        "$sname" "$plant" "$rc" "$lint_rc" "$plant_named" "$PLANT_FAILED_ASSERTS" "$PLANT_UNRELATED_FAILS" "$log_path"
       OVERALL_RC=1
       [ "$FAIL_FAST" = "1" ] && exit 1
     fi

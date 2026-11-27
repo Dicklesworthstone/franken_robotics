@@ -435,6 +435,33 @@ e2e_expect_caught "verify_plants_catches_unwired_plant" -- \
     --logs-dir "${INNER_LOGS}/unwired_plants" \
     --verify-plants
 
+# Negative control: --verify-plants refuses a planted run when an unrelated clean-path
+# assertion also fails (the old "any failed assert names the plant" rule passed this).
+MASKED_DIR="${E2E_WORK_DIR}/masked_plant_scripts"
+mkdir -p "${MASKED_DIR}"
+cat > "${MASKED_DIR}/st_masked_plant.sh" <<EOF
+#!/usr/bin/env bash
+# e2e: bead=STD-E2E milestone=M0 labels=selftest-fixture seed=1 needs=cpu plants=boundary
+set -euo pipefail
+source "${SCRIPT_DIR}/lib.sh"
+e2e_init "st_masked_plant" "STD-E2E"
+e2e_step "clean_regression" "Unrelated clean-path assertion fails alongside the plant"
+e2e_assert_eq "clean_path_invariant" "broken" "clean"
+e2e_step "plant_check" "Planted assertion also fails naming boundary"
+if e2e_plant "boundary"; then
+  e2e_assert_eq "plant:boundary" "planted-defect" "clean-boundary"
+else
+  e2e_assert_eq "plant:boundary" "clean-boundary" "clean-boundary"
+fi
+EOF
+chmod +x "${MASKED_DIR}/st_masked_plant.sh"
+e2e_expect_caught "verify_plants_refuses_unrelated_failure" -- \
+  env "FROB_E2E_TOOL=${FROB_E2E_TOOL}" "E2E_SCRATCH_ROOT=${INNER_SCRATCH}" \
+  bash "${SCRIPT_DIR}/run-all.sh" \
+    --scripts-dir "${MASKED_DIR}" \
+    --logs-dir "${INNER_LOGS}/masked_plants" \
+    --verify-plants
+
 # Empty selection exits 2.
 e2e_cmd --name run_all_empty_selection --expect-exit 2 -- \
   env "FROB_E2E_TOOL=${FROB_E2E_TOOL}" \

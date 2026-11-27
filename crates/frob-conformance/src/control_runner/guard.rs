@@ -64,13 +64,27 @@ impl MutationGuardReport {
     }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct ParsedDep {
+    /// Dependency key in `[dependencies]` / `[build-dependencies]` / `[target.<cfg>.*]`.
+    key: String,
+    /// Actual package name (`package = "..."` when renamed, otherwise `key`).
+    package: String,
+    /// Whether Cargo enables the dependency's `default` feature (default `true`).
+    default_features: bool,
+    /// Whether the dependency is optional (default `false`).
+    optional: bool,
+    /// Explicit features enabled on this dependency (`features = [...]`).
+    features: Vec<String>,
+}
+
 #[derive(Debug, Clone)]
 struct ParsedCrateManifest {
     name: String,
     dir: PathBuf,
     features: BTreeMap<String, Vec<String>>,
     bins: Vec<String>,
-    dep_features: Vec<(String, Vec<String>)>,
+    deps: Vec<ParsedDep>,
 }
 
 /// Audit all mutation controls, crate `[features]` tables, release-profile
@@ -94,6 +108,9 @@ pub fn check_mutation_guard(
 
     let mut violations: Vec<GuardViolation> = Vec::new();
     let mut controls_checked = 0usize;
+    let mut control_crate_features: BTreeSet<(String, String)> = BTreeSet::new();
+    let mut control_feature_names: BTreeSet<String> = BTreeSet::new();
+    let mut conformance_mutation_features: BTreeSet<(String, String)> = BTreeSet::new();
     let mut all_mutation_features: BTreeSet<String> = BTreeSet::new();
 
     // 1. Check every `mutation` control in `controls.toml`.
@@ -105,10 +122,18 @@ pub fn check_mutation_guard(
             // Annex workspace features are enforced by the annex workspace's own lint (N21c-30).
             continue;
         }
+        if let Some(raw_feat) = ctrl.feature.as_deref().map(str::trim)
+            && !raw_feat.is_empty()
+        {
+            control_feature_names.insert(raw_feat.to_owned());
+            all_mutation_features.insert(raw_feat.to_owned());
+        }
         let Ok((crate_name, feat_name)) = resolve_crate_and_feature(ctrl) else {
             // Unbound placeholder targets (e.g. `N24b-01:...`) belong to future milestones.
             continue;
         };
+        control_crate_features.insert((crate_name.clone(), feat_name.clone()));
+        control_feature_names.insert(feat_name.clone());
         all_mutation_features.insert(feat_name.clone());
 
         let Some(manifest) = by_name.get(&crate_name) else {
@@ -131,8 +156,8 @@ pub fn check_mutation_guard(
             continue;
         }
 
-        // Feature must transitively imply `conformance`.
-        let closure = feature_closure(&manifest.features, &feat_name);
+        // Feature must transitively imply `conformance` within its declaring crate.
+        let closure = local_feature_closure(&manifest.features, &feat_name);
         if !closure.contains("conformance") {
             violations.push(GuardViolation {
                 crate_name: crate_name.clone(),
@@ -146,7 +171,7 @@ pub fn check_mutation_guard(
         }
 
         // Feature must not be enabled by `default`.
-        let default_closure = feature_closure(&manifest.features, "default");
+        let default_closure = local_feature_closure(&manifest.features, "default");
         if default_closure.contains(&feat_name) {
             violations.push(GuardViolation {
                 crate_name: crate_name.clone(),
@@ -175,7 +200,7 @@ pub fn check_mutation_guard(
     // 2. Audit every workspace crate declaring `conformance` or mutation features implying it,
     //    and collect the complete workspace-wide mutation feature set before auditing product binaries.
     for manifest in &manifests {
-        let default_closure = feature_closure(&manifest.features, "default");
+        let default_closure = local_feature_closure(&manifest.features, "default");
         if manifest.features.contains_key("conformance") {
             if default_closure.contains("conformance") {
                 violations.push(GuardViolation {
@@ -195,11 +220,12 @@ pub fn check_mutation_guard(
                 .filter(|k| {
                     k.as_str() != "conformance"
                         && k.as_str() != "default"
-                        && feature_closure(&manifest.features, k).contains("conformance")
+                        && local_feature_closure(&manifest.features, k).contains("conformance")
                 })
                 .collect();
 
             for mf in &implying_conformance {
+                conformance_mutation_features.insert((manifest.name.clone(), (*mf).clone()));
                 all_mutation_features.insert((*mf).clone());
                 if default_closure.contains(mf.as_str()) {
                     violations.push(GuardViolation {
@@ -229,20 +255,12 @@ pub fn check_mutation_guard(
                 });
             }
         }
-
-        if manifest.features.contains_key("gauntlet-mutations") {
-            for k in manifest.features.keys() {
-                if k != "gauntlet-mutations"
-                    && k != "default"
-                    && feature_closure(&manifest.features, k).contains("gauntlet-mutations")
-                {
-                    all_mutation_features.insert(k.clone());
-                }
-            }
-        }
     }
 
-    // 3. Check product binaries (`frob`, `frobd`, `frob-mcp`, `frob-verify`).
+    // 3. Check product binaries (`frob`, `frobd`, `frob-mcp`, `frob-verify`):
+    //    resolve the features each product binary actually builds with (its default
+    //    features and transitive dependency features) and require that its build carries
+    //    neither `conformance` nor any control-named or conformance-implying mutation feature.
     let mut product_binaries_checked = 0usize;
     for manifest in &manifests {
         let matched_bins: Vec<&str> = manifest
@@ -253,69 +271,38 @@ pub fn check_mutation_guard(
             .collect();
         if !matched_bins.is_empty() || PRODUCT_BINARIES.contains(&manifest.name.as_str()) {
             product_binaries_checked += matched_bins.len().max(1);
-            for (feat_name, feat_deps) in &manifest.features {
-                if feat_name == "conformance" {
+            let resolved = resolve_default_build_features(manifest, &by_name);
+            for (owner_crate, feat) in &resolved {
+                let display_feat = if owner_crate == &manifest.name {
+                    feat.clone()
+                } else {
+                    format!("{owner_crate}/{feat}")
+                };
+                if feat == "conformance" {
                     violations.push(GuardViolation {
                         crate_name: manifest.name.clone(),
-                        feature: "conformance".to_owned(),
+                        feature: display_feat,
                         rule: "product-binary-conformance".to_owned(),
                         detail: format!(
-                            "product binary crate `{}` must not declare or carry `conformance`",
+                            "product binary crate `{}` default build carries `conformance` (from `{owner_crate}`)",
                             manifest.name
                         ),
                     });
-                } else if is_mutation_feature_name(feat_name, &all_mutation_features) {
-                    violations.push(GuardViolation {
-                        crate_name: manifest.name.clone(),
-                        feature: feat_name.clone(),
-                        rule: "product-binary-mutation-feature".to_owned(),
-                        detail: format!(
-                            "product binary crate `{}` must not declare mutation feature `{feat_name}`",
-                            manifest.name
-                        ),
-                    });
-                }
-
-                for raw_dep in feat_deps {
-                    let Some((dep_part, dep_feat)) = raw_dep.split_once('/') else {
-                        continue;
-                    };
-                    let dep_name = dep_part.trim_end_matches('?');
-                    if dep_feat == "conformance" {
+                } else {
+                    let is_mutation = control_crate_features
+                        .contains(&(owner_crate.clone(), feat.clone()))
+                        || conformance_mutation_features
+                            .contains(&(owner_crate.clone(), feat.clone()))
+                        || control_feature_names.contains(feat.as_str())
+                        || (!by_name.contains_key(owner_crate)
+                            && all_mutation_features.contains(feat.as_str()));
+                    if is_mutation {
                         violations.push(GuardViolation {
                             crate_name: manifest.name.clone(),
-                            feature: format!("{feat_name}->{dep_name}/{dep_feat}"),
-                            rule: "product-binary-conformance".to_owned(),
-                            detail: format!(
-                                "product binary crate `{}` feature `{feat_name}` forwards `conformance` on dependency `{dep_name}`",
-                                manifest.name
-                            ),
-                        });
-                    } else if is_mutation_feature_name(dep_feat, &all_mutation_features) {
-                        violations.push(GuardViolation {
-                            crate_name: manifest.name.clone(),
-                            feature: format!("{feat_name}->{dep_name}/{dep_feat}"),
+                            feature: display_feat,
                             rule: "product-binary-mutation-feature".to_owned(),
                             detail: format!(
-                                "product binary crate `{}` feature `{feat_name}` forwards forbidden mutation feature `{dep_feat}` on dependency `{dep_name}`",
-                                manifest.name
-                            ),
-                        });
-                    }
-                }
-            }
-            for (dep_name, dep_feats) in &manifest.dep_features {
-                for df in dep_feats {
-                    let bare = df.split_once('/').map_or(df.as_str(), |(_, f)| f);
-                    if bare == "conformance"
-                        || is_mutation_feature_name(bare, &all_mutation_features)
-                    {
-                        violations.push(GuardViolation {
-                            crate_name: manifest.name.clone(),
-                            feature: format!("{dep_name}/{bare}"),
-                            rule: "product-binary-mutation-feature".to_owned(),
-                            detail: format!(
-                                "product binary crate `{}` enables forbidden feature `{bare}` on dependency `{dep_name}`",
+                                "product binary crate `{}` default build carries mutation feature `{feat}` (from `{owner_crate}`)",
                                 manifest.name
                             ),
                         });
@@ -358,7 +345,8 @@ pub fn verify_release_build_fails(
     if offline {
         cmd.arg("--offline");
     }
-    cmd.env("CARGO_TARGET_DIR", target_dir);
+    cmd.env("CARGO_TARGET_DIR", target_dir)
+        .env_remove("CARGO_BUILD_BUILD_DIR");
 
     let output = cmd
         .output()
@@ -377,16 +365,15 @@ pub fn verify_release_build_fails(
     Ok(stderr)
 }
 
-fn is_mutation_feature_name(feat: &str, all_mutation_features: &BTreeSet<String>) -> bool {
-    feat == "gauntlet-mutations"
-        || feat.starts_with("nc-")
-        || feat.starts_with("cx-")
-        || feat.starts_with("mutant-")
-        || all_mutation_features.contains(feat)
-}
-
-fn feature_closure(features: &BTreeMap<String, Vec<String>>, root: &str) -> BTreeSet<String> {
+/// Local transitive feature closure within a single crate's `[features]` table.
+///
+/// Only follows local feature edges (omitting `dep:<key>`, `<key>/<feat>`, and `<key>?/<feat>`),
+/// so forwarding a dependency's feature cannot be mistaken for implying a same-named local feature.
+fn local_feature_closure(features: &BTreeMap<String, Vec<String>>, root: &str) -> BTreeSet<String> {
     let mut visited = BTreeSet::new();
+    if !features.contains_key(root) {
+        return visited;
+    }
     let mut stack = vec![root.to_owned()];
     while let Some(cur) = stack.pop() {
         if !visited.insert(cur.clone()) {
@@ -394,14 +381,153 @@ fn feature_closure(features: &BTreeMap<String, Vec<String>>, root: &str) -> BTre
         }
         if let Some(children) = features.get(&cur) {
             for ch in children {
-                let target = ch.split_once('/').map_or(ch.as_str(), |(_, f)| f);
-                if !visited.contains(target) {
-                    stack.push(target.to_owned());
+                if ch.contains('/') || ch.starts_with("dep:") {
+                    continue;
+                }
+                if !visited.contains(ch.as_str()) {
+                    stack.push(ch.clone());
                 }
             }
         }
     }
     visited
+}
+
+/// Resolve the `(crate_name, feature_name)` set enabled by a product binary crate's
+/// default build across workspace manifests, matching Cargo feature resolution:
+/// `default`, `default-features = false`, `optional = true`, `package = "..."` renames,
+/// `dep:<key>`, `<key>/<feat>`, weak `<key>?/<feat>`, and implicit optional-dep features.
+fn resolve_default_build_features(
+    root: &ParsedCrateManifest,
+    by_name: &BTreeMap<String, &ParsedCrateManifest>,
+) -> BTreeSet<(String, String)> {
+    let mut resolver = FeatureResolver {
+        by_name,
+        active_crates: BTreeSet::new(),
+        active_dep_keys: BTreeSet::new(),
+        enabled_features: BTreeSet::new(),
+        pending_weak: BTreeMap::new(),
+        crate_queue: Vec::new(),
+        feat_queue: Vec::new(),
+    };
+    resolver.activate_crate(&root.name, true);
+    resolver.drain();
+    resolver.enabled_features
+}
+
+struct FeatureResolver<'a> {
+    by_name: &'a BTreeMap<String, &'a ParsedCrateManifest>,
+    active_crates: BTreeSet<String>,
+    active_dep_keys: BTreeSet<(String, String)>,
+    enabled_features: BTreeSet<(String, String)>,
+    pending_weak: BTreeMap<(String, String), BTreeSet<String>>,
+    crate_queue: Vec<String>,
+    feat_queue: Vec<(String, String)>,
+}
+
+impl FeatureResolver<'_> {
+    fn enable_feature(&mut self, crate_name: &str, feat: &str) {
+        let pair = (crate_name.to_owned(), feat.to_owned());
+        if self.enabled_features.insert(pair.clone()) {
+            self.feat_queue.push(pair);
+        }
+    }
+
+    fn activate_crate(&mut self, crate_name: &str, with_default: bool) {
+        if self.active_crates.insert(crate_name.to_owned()) {
+            self.crate_queue.push(crate_name.to_owned());
+        }
+        if with_default
+            && let Some(m) = self.by_name.get(crate_name)
+            && m.features.contains_key("default")
+        {
+            self.enable_feature(crate_name, "default");
+        }
+    }
+
+    fn activate_dep_key(&mut self, parent: &str, dep_key: &str) {
+        let key_pair = (parent.to_owned(), dep_key.to_owned());
+        if !self.active_dep_keys.insert(key_pair.clone()) {
+            return;
+        }
+        let Some(parent_manifest) = self.by_name.get(parent) else {
+            return;
+        };
+        let matching: Vec<&ParsedDep> = parent_manifest
+            .deps
+            .iter()
+            .filter(|d| d.key == dep_key)
+            .collect();
+        for dep in &matching {
+            self.activate_crate(&dep.package, dep.default_features);
+            for f in &dep.features {
+                self.enable_feature(&dep.package, f);
+            }
+        }
+        if let Some(weak_feats) = self.pending_weak.get(&key_pair).cloned() {
+            for dep in &matching {
+                for wf in &weak_feats {
+                    self.enable_feature(&dep.package, wf);
+                }
+            }
+        }
+    }
+
+    fn drain(&mut self) {
+        while !self.crate_queue.is_empty() || !self.feat_queue.is_empty() {
+            while let Some(cname) = self.crate_queue.pop() {
+                if let Some(manifest) = self.by_name.get(&cname).copied() {
+                    for dep in &manifest.deps {
+                        if !dep.optional {
+                            self.activate_dep_key(&cname, &dep.key);
+                        }
+                    }
+                }
+            }
+
+            while let Some((cname, fname)) = self.feat_queue.pop() {
+                let Some(manifest) = self.by_name.get(&cname).copied() else {
+                    continue;
+                };
+                let Some(items) = manifest.features.get(&fname) else {
+                    continue;
+                };
+                for item in items {
+                    if let Some(dep_key) = item.strip_prefix("dep:") {
+                        self.activate_dep_key(&cname, dep_key);
+                    } else if let Some((dep_key, dep_feat)) = item.split_once("?/") {
+                        let key_pair = (cname.clone(), dep_key.to_owned());
+                        self.pending_weak
+                            .entry(key_pair.clone())
+                            .or_default()
+                            .insert(dep_feat.to_owned());
+                        if self.active_dep_keys.contains(&key_pair) {
+                            for dep in manifest.deps.iter().filter(|d| d.key == dep_key) {
+                                self.enable_feature(&dep.package, dep_feat);
+                            }
+                        }
+                    } else if let Some((dep_key, dep_feat)) = item.split_once('/') {
+                        self.activate_dep_key(&cname, dep_key);
+                        let mut matched_any = false;
+                        for dep in manifest.deps.iter().filter(|d| d.key == dep_key) {
+                            matched_any = true;
+                            self.enable_feature(&dep.package, dep_feat);
+                        }
+                        if !matched_any {
+                            self.activate_crate(dep_key, false);
+                            self.enable_feature(dep_key, dep_feat);
+                        }
+                    } else if manifest.features.contains_key(item) {
+                        self.enable_feature(&cname, item);
+                    } else if manifest.deps.iter().any(|d| d.optional && d.key == *item) {
+                        self.activate_dep_key(&cname, item);
+                    } else {
+                        self.enable_feature(&cname, item);
+                    }
+                }
+            }
+        }
+    }
 }
 
 fn crate_has_release_guard(crate_dir: &Path) -> bool {
@@ -504,6 +630,13 @@ fn parse_crate_manifest(
             }
         }
 
+        let autobins = tbl
+            .get("package")
+            .and_then(TomlValue::as_table)
+            .and_then(|p| p.get("autobins"))
+            .and_then(TomlValue::as_bool)
+            .unwrap_or(true);
+
         let mut bins = Vec::new();
         if let Some(barr) = tbl.get("bin").and_then(TomlValue::as_array) {
             for sp in barr {
@@ -517,20 +650,22 @@ fn parse_crate_manifest(
                 }
             }
         }
+        if autobins {
+            collect_autobins(crate_dir, &mut bins);
+        }
 
-        let mut dep_features = Vec::new();
+        let mut deps = Vec::new();
         for dep_sec in ["dependencies", "build-dependencies"] {
             if let Some(dtbl) = tbl.get(dep_sec).and_then(TomlValue::as_table) {
-                for (dep_name, dep_val) in dtbl.iter() {
-                    if let Some(inner) = dep_val.value.as_table()
-                        && let Some(farr) = inner.get("features").and_then(TomlValue::as_array)
-                    {
-                        let fs_list: Vec<String> = farr
-                            .iter()
-                            .filter_map(|sp| sp.value.as_str().map(str::to_owned))
-                            .collect();
-                        if !fs_list.is_empty() {
-                            dep_features.push((dep_name.to_owned(), fs_list));
+                collect_dep_table(dtbl, &mut deps);
+            }
+        }
+        if let Some(targets) = tbl.get("target").and_then(TomlValue::as_table) {
+            for (_, tval) in targets.iter() {
+                if let Some(ttbl) = tval.value.as_table() {
+                    for dep_sec in ["dependencies", "build-dependencies"] {
+                        if let Some(dtbl) = ttbl.get(dep_sec).and_then(TomlValue::as_table) {
+                            collect_dep_table(dtbl, &mut deps);
                         }
                     }
                 }
@@ -542,7 +677,7 @@ fn parse_crate_manifest(
             dir: crate_dir.to_path_buf(),
             features,
             bins,
-            dep_features,
+            deps,
         });
     }
 
@@ -551,15 +686,128 @@ fn parse_crate_manifest(
     Ok(parse_crate_manifest_fallback(&raw, crate_dir))
 }
 
+fn collect_dep_table(dtbl: &toml::Table, deps: &mut Vec<ParsedDep>) {
+    for (dep_name, dep_val) in dtbl.iter() {
+        let mut dep = ParsedDep {
+            key: dep_name.to_owned(),
+            package: dep_name.to_owned(),
+            default_features: true,
+            optional: false,
+            features: Vec::new(),
+        };
+        if let Some(inner) = dep_val.value.as_table() {
+            if let Some(pkg) = inner.get("package").and_then(TomlValue::as_str) {
+                dep.package = pkg.to_owned();
+            }
+            if let Some(df) = inner
+                .get("default-features")
+                .or_else(|| inner.get("default_features"))
+                .and_then(TomlValue::as_bool)
+            {
+                dep.default_features = df;
+            }
+            if let Some(opt) = inner.get("optional").and_then(TomlValue::as_bool) {
+                dep.optional = opt;
+            }
+            if let Some(farr) = inner.get("features").and_then(TomlValue::as_array) {
+                dep.features = farr
+                    .iter()
+                    .filter_map(|sp| sp.value.as_str().map(str::to_owned))
+                    .collect();
+            }
+        }
+        deps.push(dep);
+    }
+}
+
+fn collect_autobins(crate_dir: &Path, bins: &mut Vec<String>) {
+    let bin_dir = crate_dir.join("src/bin");
+    let Ok(rd) = fs::read_dir(&bin_dir) else {
+        return;
+    };
+    let mut entries: Vec<PathBuf> = rd.flatten().map(|e| e.path()).collect();
+    entries.sort();
+    for p in entries {
+        let discovered = if p.is_file() && p.extension().and_then(|s| s.to_str()) == Some("rs") {
+            p.file_stem().and_then(|s| s.to_str()).map(str::to_owned)
+        } else if p.is_dir() && p.join("main.rs").is_file() {
+            p.file_name().and_then(|s| s.to_str()).map(str::to_owned)
+        } else {
+            None
+        };
+        if let Some(bname) = discovered
+            && !bins.iter().any(|existing| existing == &bname)
+        {
+            bins.push(bname);
+        }
+    }
+}
+
+fn parse_dep_section_header(inner: &str) -> Option<Option<String>> {
+    let tail = if let Some(after_target) = inner.strip_prefix("target.") {
+        let bytes = after_target.as_bytes();
+        let (mut in_dq, mut in_sq, mut esc) = (false, false, false);
+        let mut dot_pos = None;
+        for (i, &b) in bytes.iter().enumerate() {
+            if esc {
+                esc = false;
+                continue;
+            }
+            if in_dq {
+                if b == b'\\' {
+                    esc = true;
+                } else if b == b'"' {
+                    in_dq = false;
+                }
+            } else if in_sq {
+                if b == b'\'' {
+                    in_sq = false;
+                }
+            } else if b == b'"' {
+                in_dq = true;
+            } else if b == b'\'' {
+                in_sq = true;
+            } else if b == b'.' {
+                let rest = &after_target[i + 1..];
+                if rest == "dependencies"
+                    || rest == "build-dependencies"
+                    || rest.starts_with("dependencies.")
+                    || rest.starts_with("build-dependencies.")
+                {
+                    dot_pos = Some(i);
+                    break;
+                }
+            }
+        }
+        &after_target[dot_pos? + 1..]
+    } else {
+        inner
+    };
+
+    if tail == "dependencies" || tail == "build-dependencies" {
+        return Some(None);
+    }
+    let dep = tail
+        .strip_prefix("dependencies.")
+        .or_else(|| tail.strip_prefix("build-dependencies."))?;
+    let clean = dep.trim().trim_matches('"').trim_matches('\'');
+    if clean.is_empty() {
+        None
+    } else {
+        Some(Some(clean.to_owned()))
+    }
+}
+
 fn parse_crate_manifest_fallback(raw: &str, crate_dir: &Path) -> ParsedCrateManifest {
     let mut name = crate_dir
         .file_name()
         .and_then(|s| s.to_str())
         .unwrap_or("unknown")
         .to_owned();
+    let mut autobins = true;
     let mut features: BTreeMap<String, Vec<String>> = BTreeMap::new();
     let mut bins = Vec::new();
-    let mut dep_features = Vec::new();
+    let mut deps: Vec<ParsedDep> = Vec::new();
 
     #[derive(Clone, PartialEq, Eq)]
     enum Sec {
@@ -568,11 +816,13 @@ fn parse_crate_manifest_fallback(raw: &str, crate_dir: &Path) -> ParsedCrateMani
         Features,
         Bin,
         Deps,
-        NamedDep(String),
+        NamedDep(usize),
     }
     let mut sec = Sec::None;
     let mut pending_feat: Option<(String, String)> = None;
-    let mut pending_dep_feat: Option<(String, String)> = None;
+    let mut pending_inline_dep: Option<(String, String, i32)> = None;
+    let mut pending_named_dep_feat: Option<(usize, String)> = None;
+    let mut current_dep_section_start: usize = 0;
 
     for raw_line in raw.lines() {
         let line = super::mutation::strip_toml_comment(raw_line).trim();
@@ -588,15 +838,22 @@ fn parse_crate_manifest_fallback(raw: &str, crate_dir: &Path) -> ParsedCrateMani
             }
             continue;
         }
-        if let Some((ref dep, ref mut acc)) = pending_dep_feat {
+        if let Some((ref dep_key, ref mut acc, ref mut depth)) = pending_inline_dep {
+            acc.push(' ');
+            acc.push_str(line);
+            *depth += inline_brace_delta(line);
+            if *depth <= 0 {
+                deps.push(parse_inline_dep(dep_key, acc));
+                pending_inline_dep = None;
+            }
+            continue;
+        }
+        if let Some((dep_idx, ref mut acc)) = pending_named_dep_feat {
             acc.push(' ');
             acc.push_str(line);
             if line.contains(']') {
-                let list = parse_bracket_strings(acc);
-                if !list.is_empty() {
-                    dep_features.push((dep.clone(), list));
-                }
-                pending_dep_feat = None;
+                deps[dep_idx].features = parse_bracket_strings(acc);
+                pending_named_dep_feat = None;
             }
             continue;
         }
@@ -605,16 +862,25 @@ fn parse_crate_manifest_fallback(raw: &str, crate_dir: &Path) -> ParsedCrateMani
                 "[package]" => Sec::Package,
                 "[features]" => Sec::Features,
                 "[[bin]]" => Sec::Bin,
-                "[dependencies]" | "[build-dependencies]" => Sec::Deps,
                 _ => {
-                    let inner = &line[1..line.len() - 1];
-                    if let Some(dep) = inner
-                        .strip_prefix("dependencies.")
-                        .or_else(|| inner.strip_prefix("build-dependencies."))
-                    {
-                        Sec::NamedDep(dep.trim().trim_matches('"').trim_matches('\'').to_owned())
-                    } else {
-                        Sec::None
+                    let inner = line[1..line.len() - 1].trim();
+                    match parse_dep_section_header(inner) {
+                        Some(None) => {
+                            current_dep_section_start = deps.len();
+                            Sec::Deps
+                        }
+                        Some(Some(dep_key)) => {
+                            let idx = deps.len();
+                            deps.push(ParsedDep {
+                                key: dep_key.clone(),
+                                package: dep_key,
+                                default_features: true,
+                                optional: false,
+                                features: Vec::new(),
+                            });
+                            Sec::NamedDep(idx)
+                        }
+                        None => Sec::None,
                     }
                 }
             };
@@ -623,14 +889,17 @@ fn parse_crate_manifest_fallback(raw: &str, crate_dir: &Path) -> ParsedCrateMani
         let Some((k, v)) = line.split_once('=') else {
             continue;
         };
-        let key = k.trim().trim_matches('"').trim_matches('\'');
+        let key = unquote_toml_atom(k);
         let val = v.trim();
         match &sec {
             Sec::Package if key == "name" => {
-                name = val.trim_matches('"').trim_matches('\'').to_owned();
+                name = unquote_toml_atom(val).to_owned();
+            }
+            Sec::Package if key == "autobins" => {
+                autobins = val != "false";
             }
             Sec::Bin if key == "name" => {
-                bins.push(val.trim_matches('"').trim_matches('\'').to_owned());
+                bins.push(unquote_toml_atom(val).to_owned());
             }
             Sec::Features => {
                 if val.contains('[') && !val.contains(']') {
@@ -640,29 +909,61 @@ fn parse_crate_manifest_fallback(raw: &str, crate_dir: &Path) -> ParsedCrateMani
                 }
             }
             Sec::Deps => {
-                if let Some(slice) = find_inline_features_slice(val) {
-                    if !slice.contains(']') {
-                        pending_dep_feat = Some((key.to_owned(), slice.to_owned()));
+                if let Some((dep_part, field_part)) = split_dotted_dep_key(k.trim()) {
+                    let dep_idx = deps[current_dep_section_start..]
+                        .iter()
+                        .position(|d| d.key == dep_part)
+                        .map(|off| current_dep_section_start + off)
+                        .unwrap_or_else(|| {
+                            let idx = deps.len();
+                            deps.push(ParsedDep {
+                                key: dep_part.to_owned(),
+                                package: dep_part.to_owned(),
+                                default_features: true,
+                                optional: false,
+                                features: Vec::new(),
+                            });
+                            idx
+                        });
+                    apply_dep_field(
+                        &mut deps[dep_idx],
+                        dep_idx,
+                        field_part,
+                        val,
+                        &mut pending_named_dep_feat,
+                    );
+                } else if val.starts_with('{') {
+                    let depth = inline_brace_delta(val);
+                    if depth <= 0 {
+                        deps.push(parse_inline_dep(key, val));
                     } else {
-                        let list = parse_bracket_strings(slice);
-                        if !list.is_empty() {
-                            dep_features.push((key.to_owned(), list));
-                        }
+                        pending_inline_dep = Some((key.to_owned(), val.to_owned(), depth));
                     }
+                } else {
+                    deps.push(ParsedDep {
+                        key: key.to_owned(),
+                        package: key.to_owned(),
+                        default_features: true,
+                        optional: false,
+                        features: Vec::new(),
+                    });
                 }
             }
-            Sec::NamedDep(dep) if key == "features" => {
-                if val.contains('[') && !val.contains(']') {
-                    pending_dep_feat = Some((dep.clone(), val.to_owned()));
-                } else {
-                    let list = parse_bracket_strings(val);
-                    if !list.is_empty() {
-                        dep_features.push((dep.clone(), list));
-                    }
-                }
+            &Sec::NamedDep(dep_idx) => {
+                apply_dep_field(
+                    &mut deps[dep_idx],
+                    dep_idx,
+                    key,
+                    val,
+                    &mut pending_named_dep_feat,
+                );
             }
             _ => {}
         }
+    }
+
+    if autobins {
+        collect_autobins(crate_dir, &mut bins);
     }
 
     ParsedCrateManifest {
@@ -670,37 +971,177 @@ fn parse_crate_manifest_fallback(raw: &str, crate_dir: &Path) -> ParsedCrateMani
         dir: crate_dir.to_path_buf(),
         features,
         bins,
-        dep_features,
+        deps,
     }
 }
 
-fn find_inline_features_slice(val: &str) -> Option<&str> {
-    let bytes = val.as_bytes();
-    let needle = b"features";
-    let mut pos = 0;
-    while let Some(rel) = val[pos..].find("features") {
-        let start = pos + rel;
-        let before_ok = start == 0 || {
-            let b = bytes[start - 1];
-            !(b.is_ascii_alphanumeric() || b == b'_' || b == b'-')
-        };
-        let end = start + needle.len();
-        let after_ok = end == bytes.len() || {
-            let b = bytes[end];
-            !(b.is_ascii_alphanumeric() || b == b'_' || b == b'-')
-        };
-        if before_ok && after_ok {
-            let tail = val[end..].trim_start();
-            if let Some(after_eq) = tail.strip_prefix('=') {
-                let after_eq = after_eq.trim_start();
-                if after_eq.starts_with('[') {
-                    return Some(after_eq);
-                }
-            }
+fn unquote_toml_atom(s: &str) -> &str {
+    let trimmed = s.trim();
+    if trimmed.len() >= 2
+        && ((trimmed.starts_with('"') && trimmed.ends_with('"'))
+            || (trimmed.starts_with('\'') && trimmed.ends_with('\'')))
+    {
+        &trimmed[1..trimmed.len() - 1]
+    } else {
+        trimmed
+    }
+}
+
+fn split_dotted_dep_key(raw_key: &str) -> Option<(&str, &str)> {
+    let bytes = raw_key.as_bytes();
+    let (mut in_dq, mut in_sq, mut esc) = (false, false, false);
+    for (i, &b) in bytes.iter().enumerate() {
+        if esc {
+            esc = false;
+            continue;
         }
-        pos = end;
+        if in_dq {
+            if b == b'\\' {
+                esc = true;
+            } else if b == b'"' {
+                in_dq = false;
+            }
+        } else if in_sq {
+            if b == b'\'' {
+                in_sq = false;
+            }
+        } else if b == b'"' {
+            in_dq = true;
+        } else if b == b'\'' {
+            in_sq = true;
+        } else if b == b'.' {
+            let dep = unquote_toml_atom(&raw_key[..i]);
+            let field = unquote_toml_atom(&raw_key[i + 1..]);
+            if !dep.is_empty() && !field.is_empty() {
+                return Some((dep, field));
+            }
+            return None;
+        }
     }
     None
+}
+
+fn apply_dep_field(
+    dep: &mut ParsedDep,
+    dep_idx: usize,
+    field: &str,
+    val: &str,
+    pending_feat: &mut Option<(usize, String)>,
+) {
+    match field {
+        "package" => dep.package = unquote_toml_atom(val).to_owned(),
+        "default-features" | "default_features" => dep.default_features = val != "false",
+        "optional" => dep.optional = val == "true",
+        "features" => {
+            if val.contains('[') && !val.contains(']') {
+                *pending_feat = Some((dep_idx, val.to_owned()));
+            } else {
+                dep.features = parse_bracket_strings(val);
+            }
+        }
+        _ => {}
+    }
+}
+
+fn inline_brace_delta(s: &str) -> i32 {
+    let mut delta = 0i32;
+    let (mut in_dq, mut in_sq, mut esc) = (false, false, false);
+    for b in s.bytes() {
+        if esc {
+            esc = false;
+            continue;
+        }
+        if in_dq {
+            if b == b'\\' {
+                esc = true;
+            } else if b == b'"' {
+                in_dq = false;
+            }
+        } else if in_sq {
+            if b == b'\'' {
+                in_sq = false;
+            }
+        } else if b == b'"' {
+            in_dq = true;
+        } else if b == b'\'' {
+            in_sq = true;
+        } else if b == b'{' {
+            delta += 1;
+        } else if b == b'}' {
+            delta -= 1;
+        }
+    }
+    delta
+}
+
+fn parse_inline_dep(dep_key: &str, raw_table: &str) -> ParsedDep {
+    let mut dep = ParsedDep {
+        key: dep_key.to_owned(),
+        package: dep_key.to_owned(),
+        default_features: true,
+        optional: false,
+        features: Vec::new(),
+    };
+    let trimmed = raw_table.trim();
+    let Some(open) = trimmed.find('{') else {
+        return dep;
+    };
+    let close = trimmed.rfind('}').unwrap_or(trimmed.len());
+    if close <= open + 1 {
+        return dep;
+    }
+    let inner = &trimmed[open + 1..close];
+
+    // Split top-level comma-separated entries respecting strings, brackets, and nested braces.
+    let bytes = inner.as_bytes();
+    let (mut in_dq, mut in_sq, mut esc) = (false, false, false);
+    let (mut bracket_depth, mut brace_depth) = (0usize, 0usize);
+    let mut entry_start = 0usize;
+    let mut entries = Vec::new();
+    for (i, &b) in bytes.iter().enumerate() {
+        if esc {
+            esc = false;
+            continue;
+        }
+        if in_dq {
+            if b == b'\\' {
+                esc = true;
+            } else if b == b'"' {
+                in_dq = false;
+            }
+        } else if in_sq {
+            if b == b'\'' {
+                in_sq = false;
+            }
+        } else {
+            match b {
+                b'"' => in_dq = true,
+                b'\'' => in_sq = true,
+                b'[' => bracket_depth += 1,
+                b']' => bracket_depth = bracket_depth.saturating_sub(1),
+                b'{' => brace_depth += 1,
+                b'}' => brace_depth = brace_depth.saturating_sub(1),
+                b',' if bracket_depth == 0 && brace_depth == 0 => {
+                    entries.push(&inner[entry_start..i]);
+                    entry_start = i + 1;
+                }
+                _ => {}
+            }
+        }
+    }
+    if entry_start < inner.len() {
+        entries.push(&inner[entry_start..]);
+    }
+
+    let mut unused_pending = None;
+    for entry in entries {
+        let Some((k, v)) = entry.split_once('=') else {
+            continue;
+        };
+        let field = unquote_toml_atom(k);
+        apply_dep_field(&mut dep, 0, field, v.trim(), &mut unused_pending);
+    }
+    dep
 }
 
 fn parse_bracket_strings(s: &str) -> Vec<String> {

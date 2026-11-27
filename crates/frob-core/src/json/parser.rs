@@ -526,7 +526,7 @@ impl<'a> Parser<'a> {
     }
 
     fn finalize_object(&mut self, members: Vec<Member<'a>>) -> Vec<Member<'a>> {
-        if members.len() <= 1 || self.duplicate_fault.is_some() {
+        if members.len() <= 1 {
             return members;
         }
         let mut order: Vec<usize> = (0..members.len()).collect();
@@ -584,13 +584,27 @@ impl<'a> Parser<'a> {
             if let Some((fi, si)) = earliest
                 && let (Some(first), Some(second)) = (members.get(fi), members.get(si))
             {
-                // Preserve the first duplicate found while checking the remainder of the document.
-                self.duplicate_fault = Some(AdmissionFault::duplicate_member(
-                    first.name.clone(),
-                    first.name_span.start,
-                    second.name_span.start,
-                    self.pointer(),
-                ));
+                // Keep the document-earliest duplicate by second-key offset (tie-broken by first)
+                // even when an inner object closes before an enclosing object with an earlier duplicate.
+                let replaces = match &self.duplicate_fault {
+                    None => true,
+                    Some(existing) => {
+                        let existing_first = existing
+                            .duplicate
+                            .as_ref()
+                            .map_or(usize::MAX, |d| d.first_offset);
+                        (second.name_span.start, first.name_span.start)
+                            < (existing.offset, existing_first)
+                    }
+                };
+                if replaces {
+                    self.duplicate_fault = Some(AdmissionFault::duplicate_member(
+                        first.name.clone(),
+                        first.name_span.start,
+                        second.name_span.start,
+                        self.pointer(),
+                    ));
+                }
             }
             members
         }

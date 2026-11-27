@@ -176,6 +176,40 @@ mod tests {
     }
 
     #[test]
+    fn dup_reports_earliest_across_nested_objects() {
+        // Outer duplicate `"a"` (offset 7) occurs before nested duplicate `"b"` (offset 18),
+        // even though the inner object closes first.
+        let outer_first = err(br#"{"a":1,"a":{"b":1,"b":2}}"#);
+        let dup = outer_first.duplicate.expect("outer duplicate detail");
+        assert_eq!(outer_first.kind, FaultKind::DuplicateMember);
+        assert_eq!(outer_first.pointer, "");
+        assert_eq!(outer_first.offset, 7);
+        assert_eq!(dup.name, "a");
+        assert_eq!(dup.first_offset, 1);
+        assert_eq!(dup.second_offset, 7);
+
+        // Inner duplicate `"b"` (offset 12) occurs before outer duplicate `"a"` (offset 19).
+        let inner_first = err(br#"{"a":{"b":1,"b":2},"a":3}"#);
+        let dup = inner_first.duplicate.expect("inner duplicate detail");
+        assert_eq!(inner_first.kind, FaultKind::DuplicateMember);
+        assert_eq!(inner_first.pointer, "/a");
+        assert_eq!(inner_first.offset, 12);
+        assert_eq!(dup.name, "b");
+        assert_eq!(dup.first_offset, 6);
+        assert_eq!(dup.second_offset, 12);
+
+        // Earlier sibling object duplicate `"x"` (offset 8) wins over later sibling `"y"` (offset 22).
+        let sibling_first = err(br#"[{"x":1,"x":2},{"y":1,"y":2}]"#);
+        let dup = sibling_first.duplicate.expect("sibling duplicate detail");
+        assert_eq!(sibling_first.kind, FaultKind::DuplicateMember);
+        assert_eq!(sibling_first.pointer, "/0");
+        assert_eq!(sibling_first.offset, 8);
+        assert_eq!(dup.name, "x");
+        assert_eq!(dup.first_offset, 2);
+        assert_eq!(dup.second_offset, 8);
+    }
+
+    #[test]
     fn no_false_duplicate() {
         let case_diff = ok(br#"{"a":1,"A":2}"#);
         assert_eq!(case_diff.value().as_object().map(<[_]>::len), Some(2));

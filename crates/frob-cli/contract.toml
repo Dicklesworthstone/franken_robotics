@@ -18,4 +18,3 @@ on_calibration = "reference-path"
 
 [features]
 referee = { tier = "S" }
-conformance = { tier = "S" }

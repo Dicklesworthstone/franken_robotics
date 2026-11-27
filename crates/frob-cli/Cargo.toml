@@ -22,7 +22,6 @@ frob-verbs = { path = "../frob-verbs", default-features = false, features = ["ha
 [features]
 default = ["referee"]
 referee = ["frob-verbs/referee"]
-conformance = ["frob-verbs/conformance"]
 
 [lints]
 workspace = true

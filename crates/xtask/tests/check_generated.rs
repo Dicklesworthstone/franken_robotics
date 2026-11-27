@@ -245,6 +245,22 @@ fn orphan_schema_file_is_finding() {
 }
 
 #[test]
+fn invalid_authored_kernel_schema_reports_one_finding() {
+    let dir = build_scratch_repo("invalid_authored_kernel");
+    let path = "schemas/frob.kernel.1.json";
+    for invalid in ["{", r#"{"$id":"frob.wrong/1"}"#] {
+        fs::write(dir.join(path), invalid).expect("write invalid authored kernel schema");
+        for write_mode in [false, true] {
+            let out = run_check(&dir, BUILTIN_GENERATORS, write_mode).expect("check schema");
+            assert_eq!(out.findings.len(), 1, "{:?}", out.findings);
+            assert_eq!(out.findings[0].rule, RULE_DIFFERS);
+            assert_eq!(out.findings[0].path, path);
+            assert_eq!(fs::read_to_string(dir.join(path)).unwrap(), invalid);
+        }
+    }
+}
+
+#[test]
 fn missing_generated_file_is_finding() {
     let dir = build_scratch_repo("missing");
     let aside = fresh_dir("missing_aside");

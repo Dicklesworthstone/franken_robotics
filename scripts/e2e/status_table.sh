@@ -15,9 +15,10 @@
 
 set -euo pipefail
 
-# The RCH job wrapper sets these on the worker so its Cargo shim stays there.
+# RCH sets these for remote commands, and the pinned Cargo test passes them through.
 if [ "${RCH_CARGO_WRAPPER_BYPASS:-}" != "1" ] || [ "${RCH_CARGO_WRAPPER_ORIGIN:-}" != "rch" ]; then
-  printf '%s\n' 'Run the full lane on one worker: rch exec --require-remote --job --result-dir target/e2e-logs -- bash scripts/e2e/run-all.sh --script status_table --devices cpu' >&2
+  printf '%s\n' 'Run the pinned status-table lane with the sibling revisions bound in RCH.' \
+    'rch exec --require-remote --base COMMIT --clean-overlay --no-overlay -- cargo test --offline -j 1 -p xtask --test e2e_status_table -- --ignored' >&2
   exit 2
 fi
 

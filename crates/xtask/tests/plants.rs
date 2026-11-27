@@ -498,12 +498,11 @@ impl MiniatureEnv {
             1,
         );
 
-        // One registry of each kind + schema needed by check-contracts and check-generated.
+        // Seed the authored schemas before check-generated materializes the generated ones.
         let real = repo_root();
-        copy_file(
-            &real.join("schemas/contract.schema.json"),
-            &repo.join("schemas/contract.schema.json"),
-        );
+        for path in ["schemas/contract.schema.json", "schemas/frob.kernel.1.json"] {
+            copy_file(&real.join(path), &repo.join(path));
+        }
         write_file(
             &repo.join("registries/formats.toml"),
             "schema = \"frob.formats/1\"\n\n\
@@ -636,7 +635,7 @@ impl MiniatureEnv {
         );
         write_file(&repo.join("franken-stack.lock"), &lock_toml);
 
-        // Materialize all six built-in generated outputs cleanly via `check-generated --write`.
+        // Seed generated outputs, including the verb-entry schema from the compiled producer.
         let gen_write = run_check_cli_json(&repo, "check-generated", &["--write"]);
         assert_eq!(
             gen_write.exit_code,

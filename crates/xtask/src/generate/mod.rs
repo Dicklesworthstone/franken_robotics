@@ -35,6 +35,8 @@ pub const FORMAT_SCHEMA_MARKER: &str = "@generated from registries/formats.toml,
 /// First-line marker on `crates/frob-core/src/qty_gen.rs` (`N33c-03`).
 pub const QTY_GEN_MARKER: &str = "// @generated from registries/qty_aliases.toml, registries/qty_products.toml by xtask::generate::quantity_aliases_and_products (N33c-03); do not edit by hand.";
 
+const KERNEL_SCHEMA_PATH: &str = "schemas/frob.kernel.1.json";
+
 /// Verification mode for a [`GeneratorRow`].
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum GeneratorMode {
@@ -42,7 +44,7 @@ pub enum GeneratorMode {
     Regenerate,
     /// Compare BLAKE3 digests of committed files against their manifest; `--write` never rewrites them.
     Digest,
-    /// Validate authored files in place. `--write` never rewrites them.
+    /// Validate authored files in place. Literal paths in `input_globs` declare ownership.
     Authored,
 }
 
@@ -175,7 +177,7 @@ pub const BUILTIN_GENERATORS: &[GeneratorRow] = &[
     },
     GeneratorRow {
         name: "authored-kernel-schema",
-        input_globs: &["schemas/frob.kernel.1.json"],
+        input_globs: &[KERNEL_SCHEMA_PATH],
         output_globs: &[],
         mode: GeneratorMode::Authored,
         run: run_authored_kernel_schema,
@@ -600,11 +602,10 @@ fn run_authored_kernel_schema(
     _inputs: &[PathBuf],
 ) -> Result<GeneratorOutput, GeneratorError> {
     let schema_id = "frob.kernel/1";
-    let rel_path = schema_id_to_rel_path(schema_id);
     let error = |rule, message| GeneratorError {
         rule,
         subject: schema_id.to_owned(),
-        path: rel_path.clone(),
+        path: KERNEL_SCHEMA_PATH.to_owned(),
         message,
         repair: "restore the authored kernel schema under schemas/ with its matching `$id`"
             .to_owned(),
@@ -615,7 +616,7 @@ fn run_authored_kernel_schema(
             format!("failed to canonicalize repository root: {e}"),
         )
     })?;
-    let path = fs::canonicalize(root.join(&rel_path)).map_err(|e| {
+    let path = fs::canonicalize(root.join(KERNEL_SCHEMA_PATH)).map_err(|e| {
         let rule = if e.kind() == std::io::ErrorKind::NotFound {
             RULE_MISSING
         } else {
@@ -655,7 +656,9 @@ fn run_authored_kernel_schema(
             format!("authored kernel schema `$id` `{declared_id}` does not match `{schema_id}`"),
         ));
     }
-    Ok(GeneratorOutput::Authored(vec![rel_path]))
+    Ok(GeneratorOutput::Authored(vec![
+        KERNEL_SCHEMA_PATH.to_owned(),
+    ]))
 }
 
 fn parse_verb_schema_ids(

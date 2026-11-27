@@ -16,8 +16,8 @@ use std::sync::atomic::{AtomicU64, Ordering};
 use crate::cli::{CheckContext, CheckError, CheckOutcome};
 use crate::crate_map::Finding;
 use crate::generate::{
-    BUILTIN_GENERATORS, ExpectedMarker, GeneratorOutput, GeneratorRow, OutputKind, RULE_DIFFERS,
-    RULE_DIGEST, RULE_MARKER_MISSING, RULE_MISSING, RULE_ORPHAN, RULE_STATUS_INVALID,
+    BUILTIN_GENERATORS, ExpectedMarker, GeneratorMode, GeneratorOutput, GeneratorRow, OutputKind,
+    RULE_DIFFERS, RULE_DIGEST, RULE_MARKER_MISSING, RULE_MISSING, RULE_ORPHAN, RULE_STATUS_INVALID,
     admission_doc, expand_globs,
 };
 use crate::report::FactValue;
@@ -81,6 +81,9 @@ pub fn run_check(
     let mut digest_files_checked: usize = 0;
 
     for row in rows {
+        if row.mode == GeneratorMode::Authored {
+            registered_paths.extend(row.input_globs.iter().map(|&path| path.to_owned()));
+        }
         let inputs = expand_globs(repo_root, row.input_globs);
         let mut produced_paths: Vec<String> = Vec::new();
         let mut rf = BTreeMap::new();
@@ -294,7 +297,6 @@ pub fn run_check(
                     "authored".to_owned(),
                     FactValue::str_array(paths.iter().cloned()),
                 );
-                registered_paths.extend(paths);
             }
             Err(err) => {
                 findings.push(Finding {

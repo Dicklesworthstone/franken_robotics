@@ -22,12 +22,9 @@ TARGET_BASE="${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/frob-record-gate-${E2E_RUN_ID}"
 mkdir -p "${TARGET_BASE}"
 
 CHECKOUT_GATES="${E2E_REPO_ROOT}/registries/gates.toml"
+B3SUM_BIN="$(command -v b3sum 2>/dev/null || true)"
 hash_file() {
-  if command -v b3sum >/dev/null 2>&1; then
-    b3sum --no-names "$1"
-  else
-    shasum -a 256 "$1" | awk '{print $1}'
-  fi
+  "${B3SUM_BIN}" --no-names "$1"
 }
 
 recorded_scratch_digests() {
@@ -43,9 +40,22 @@ recorded_scratch_digests() {
   done
 }
 
+e2e_step "b3sum_required" "Verify b3sum is available for BLAKE3 receipt digests"
+if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
+  if [ -z "${B3SUM_BIN}" ]; then
+    e2e_assert_eq "b3sum_required" "missing" "present"
+    printf 'record_gate: b3sum required to compute BLAKE3 receipt digests (not found on PATH)\n' >&2
+    exit 1
+  fi
+  e2e_assert_eq "b3sum_required" "present" "present"
+fi
+
 e2e_step "checkout_digest_before" "Record digest of checkout registries/gates.toml before running recorder"
-BEFORE_CHECKOUT_DIGEST="$(hash_file "${CHECKOUT_GATES}")"
 e2e_assert_file "checkout_gates_exists" "${CHECKOUT_GATES}"
+BEFORE_CHECKOUT_DIGEST=""
+if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
+  BEFORE_CHECKOUT_DIGEST="$(hash_file "${CHECKOUT_GATES}")"
+fi
 
 e2e_step "recorder_unit_suite" "Run the full N38b-19 recorder test suite in isolated scratch Git repos"
 e2e_cmd --name "cargo_test_recorder" -- \
@@ -83,6 +93,7 @@ claim_id = "clm:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 section = "38.15"
 threshold = "spectral radius <= 0.95"
 milestone = "M0"
+recurring = true
 tier = ["G1:host"]
 controls = ["NC-0001"]
 
@@ -114,13 +125,13 @@ EOF
   GOOD_BODY="{\"build_identity\":\"depgraph-receipt\",\"commit\":\"${SCRATCH_HEAD}\",\"controls\":[{\"gate\":\"GATE-GAUNT-10\",\"id\":\"NC-0001\",\"outcome\":\"caught\"}],\"counts\":{\"fail\":0,\"obligations\":0,\"pass\":1,\"refused\":0,\"skipped\":0},\"dirty\":false,\"entries\":[{\"determinism\":\"D0\",\"id\":\"ka:e2e\",\"measured\":{\"name\":\"rho\",\"threshold\":\"<= 0.95\",\"unit\":\"1\",\"value\":\"0.9207\"},\"outcome\":\"pass\",\"site\":\"host\",\"synthetic\":false}],\"filter\":\"gate:GATE-GAUNT-10\",\"fingerprint\":\"host-e2e\",\"gates\":[{\"id\":\"GATE-GAUNT-10\",\"line\":\"pass\"}],\"profile\":\"dev\",\"schema\":\"frob.gauntlet.receipt/1\",\"seed\":42,\"session\":\"session:runner\",\"stack_dev\":false,\"stack_receipt\":\"sr:${STACK_HEAD}\",\"started\":\"2026-11-25T12:00:00Z\",\"tier\":\"G1\",\"toolchain\":\"rustc-nightly-2026-07-06\",\"wall_ms\":5}"
   GOOD_TMP="${E2E_WORK_DIR}/good_receipt.json"
   printf '%s' "${GOOD_BODY}" > "${GOOD_TMP}"
-  GOOD_HASH="$(b3sum --no-names "${GOOD_TMP}")"
+  GOOD_HASH="$(hash_file "${GOOD_TMP}")"
   cp "${GOOD_TMP}" "${SCRATCH}/target/gauntlet/receipts/${GOOD_HASH}.json"
 
   MISSED_BODY="{\"build_identity\":\"depgraph-receipt\",\"commit\":\"${SCRATCH_HEAD}\",\"controls\":[{\"gate\":\"GATE-GAUNT-10\",\"id\":\"NC-0001\",\"outcome\":\"missed\"}],\"counts\":{\"fail\":0,\"obligations\":0,\"pass\":1,\"refused\":0,\"skipped\":0},\"dirty\":false,\"entries\":[{\"determinism\":\"D0\",\"id\":\"ka:e2e\",\"measured\":{\"name\":\"rho\",\"threshold\":\"<= 0.95\",\"unit\":\"1\",\"value\":\"0.9207\"},\"outcome\":\"pass\",\"site\":\"host\",\"synthetic\":false}],\"filter\":\"gate:GATE-GAUNT-10\",\"fingerprint\":\"host-e2e\",\"gates\":[{\"id\":\"GATE-GAUNT-10\",\"line\":\"pass\"}],\"profile\":\"dev\",\"schema\":\"frob.gauntlet.receipt/1\",\"seed\":42,\"session\":\"session:runner\",\"stack_dev\":false,\"stack_receipt\":\"sr:${STACK_HEAD}\",\"started\":\"2026-11-25T12:00:00Z\",\"tier\":\"G1\",\"toolchain\":\"rustc-nightly-2026-07-06\",\"wall_ms\":5}"
   MISSED_TMP="${E2E_WORK_DIR}/missed_receipt.json"
   printf '%s' "${MISSED_BODY}" > "${MISSED_TMP}"
-  MISSED_HASH="$(b3sum --no-names "${MISSED_TMP}")"
+  MISSED_HASH="$(hash_file "${MISSED_TMP}")"
   cp "${MISSED_TMP}" "${SCRATCH}/target/gauntlet/receipts/${MISSED_HASH}.json"
 
   TAMPER_HASH="1111111111111111111111111111111111111111111111111111111111111111"
@@ -177,7 +188,7 @@ EOF
   e2e_assert_eq "record_happy_path_exit" "${E2E_LAST_EXIT}" "0"
   e2e_assert_file "committed_receipt_exists" "${SCRATCH}/receipts/gates/${GOOD_HASH}.json"
   e2e_assert_digest_eq "committed_receipt_matches" \
-    "$(b3sum --no-names "${SCRATCH}/receipts/gates/${GOOD_HASH}.json")" "${GOOD_HASH}"
+    "$(hash_file "${SCRATCH}/receipts/gates/${GOOD_HASH}.json")" "${GOOD_HASH}"
   e2e_cmd --name "recorded_readme_matches_honest_status_table" -- \
     env "CARGO_TARGET_DIR=${TARGET_BASE}/conformance" \
     cargo run --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline --locked -j 1 -p xtask -- \
@@ -221,5 +232,7 @@ EOF
 fi
 
 e2e_step "checkout_digest_after" "Verify checkout registries/gates.toml is byte-identical"
-AFTER_CHECKOUT_DIGEST="$(hash_file "${CHECKOUT_GATES}")"
-e2e_assert_digest_eq "checkout_gates_unchanged" "${BEFORE_CHECKOUT_DIGEST}" "${AFTER_CHECKOUT_DIGEST}"
+if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
+  AFTER_CHECKOUT_DIGEST="$(hash_file "${CHECKOUT_GATES}")"
+  e2e_assert_digest_eq "checkout_gates_unchanged" "${BEFORE_CHECKOUT_DIGEST}" "${AFTER_CHECKOUT_DIGEST}"
+fi

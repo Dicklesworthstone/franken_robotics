@@ -143,6 +143,214 @@ frob-lie = { path = "../frob-lie", features = ["conformance"] }
 }
 
 #[test]
+fn product_binary_direct_gauntlet_and_nc_features_rejected() {
+    let ws = scratch_dir("prod_bin_direct_nc");
+    let cert_dir = ws.join("crates/frob-cert");
+    fs::create_dir_all(cert_dir.join("src/bin")).expect("mkdir frob-cert src/bin");
+    fs::create_dir_all(ws.join("crates/frob-conformance/registry")).expect("mkdir reg");
+    fs::write(
+        ws.join("crates/frob-conformance/registry/controls.toml"),
+        "schema = \"frob.gauntlet.controls/1\"\n",
+    )
+    .expect("write controls");
+    fs::write(
+        cert_dir.join("Cargo.toml"),
+        r#"[package]
+name = "frob-cert"
+version = "0.0.1"
+edition = "2024"
+
+[package.metadata.frob]
+layer = 6
+rank = 1
+
+[[bin]]
+name = "frob-verify"
+path = "src/bin/frob-verify.rs"
+
+[features]
+gauntlet-mutations = []
+nc-skip-key-order = []
+nc-omit-policy-class = []
+"#,
+    )
+    .expect("write frob-cert Cargo.toml");
+    fs::write(cert_dir.join("src/bin/frob-verify.rs"), "fn main() {}\n")
+        .expect("write frob-verify.rs");
+
+    let rep = check_mutation_guard(&ws, true).expect("check product binary direct nc/gauntlet");
+    assert!(
+        !rep.is_ok(),
+        "product binary declaring gauntlet-mutations or nc-* directly must fail"
+    );
+    for expected in [
+        "gauntlet-mutations",
+        "nc-skip-key-order",
+        "nc-omit-policy-class",
+    ] {
+        assert!(
+            rep.violations.iter().any(|v| {
+                v.crate_name == "frob-cert"
+                    && v.feature == expected
+                    && v.rule == "product-binary-mutation-feature"
+            }),
+            "expected product-binary-mutation-feature violation for `{expected}`, got: {:?}",
+            rep.violations
+        );
+    }
+}
+
+#[test]
+fn product_binary_forwarded_conformance_under_alias_rejected() {
+    let ws = scratch_dir("prod_bin_forwarded_alias");
+    let cli_dir = ws.join("crates/frob-cli");
+    let lie_dir = ws.join("crates/frob-lie");
+    fs::create_dir_all(cli_dir.join("src")).expect("mkdir frob-cli src");
+    fs::create_dir_all(lie_dir.join("src")).expect("mkdir frob-lie src");
+    fs::create_dir_all(ws.join("crates/frob-conformance/registry")).expect("mkdir reg");
+    fs::write(
+        ws.join("crates/frob-conformance/registry/controls.toml"),
+        "schema = \"frob.gauntlet.controls/1\"\n",
+    )
+    .expect("write controls");
+    fs::write(
+        cli_dir.join("Cargo.toml"),
+        r#"[package]
+name = "frob-cli"
+version.workspace = true
+edition.workspace = true
+
+[package.metadata.frob]
+layer = 7
+rank = 2
+
+[[bin]]
+name = "frob"
+path = "src/main.rs"
+
+[dependencies]
+frob-verbs = { path = "../frob-verbs", default-features = false, features = ["registry-only"] }
+frob-lie = { path = "../frob-lie" }
+
+[features]
+default = ["referee"]
+referee = ["frob-verbs/referee"]
+probe-mode = ["frob-verbs/conformance"]
+weak-probe = ["frob-verbs?/conformance"]
+twist-bridge = ["frob-lie/twist-swap"]
+"#,
+    )
+    .expect("write frob-cli Cargo.toml");
+    fs::write(cli_dir.join("src/main.rs"), "fn main() {}\n").expect("write frob-cli main.rs");
+
+    fs::write(
+        lie_dir.join("Cargo.toml"),
+        r#"[package]
+name = "frob-lie"
+version = "0.0.1"
+edition = "2024"
+
+[features]
+default = []
+conformance = []
+twist-swap = ["conformance"]
+"#,
+    )
+    .expect("write frob-lie Cargo.toml");
+    fs::write(
+        lie_dir.join("src/lib.rs"),
+        r#"#[cfg(all(feature = "conformance", not(debug_assertions)))]
+compile_error!("frob-lie: conformance forbidden in release builds");
+"#,
+    )
+    .expect("write frob-lie lib.rs");
+
+    let rep = check_mutation_guard(&ws, true).expect("check product binary forwarded aliases");
+    assert!(
+        !rep.is_ok(),
+        "product binary forwarding dep/conformance or dep/<mutant> under another feature name must fail"
+    );
+    assert!(
+        rep.violations.iter().any(|v| {
+            v.crate_name == "frob-cli"
+                && v.rule == "product-binary-conformance"
+                && v.feature == "probe-mode->frob-verbs/conformance"
+        }),
+        "expected forwarded conformance violation for `probe-mode`, got: {:?}",
+        rep.violations
+    );
+    assert!(
+        rep.violations.iter().any(|v| {
+            v.crate_name == "frob-cli"
+                && v.rule == "product-binary-conformance"
+                && v.feature == "weak-probe->frob-verbs/conformance"
+        }),
+        "expected forwarded weak-dep conformance violation for `weak-probe`, got: {:?}",
+        rep.violations
+    );
+    assert!(
+        rep.violations.iter().any(|v| {
+            v.crate_name == "frob-cli"
+                && v.rule == "product-binary-mutation-feature"
+                && v.feature == "twist-bridge->frob-lie/twist-swap"
+        }),
+        "expected forwarded workspace mutation violation for `twist-bridge`, got: {:?}",
+        rep.violations
+    );
+    assert!(
+        !rep.violations.iter().any(|v| v.feature.contains("referee")),
+        "normal feature `referee` must not be flagged: {:?}",
+        rep.violations
+    );
+}
+
+#[test]
+fn product_binary_clean_with_normal_features_accepted() {
+    let ws = scratch_dir("prod_bin_clean_normal");
+    let cli_dir = ws.join("crates/frob-cli");
+    fs::create_dir_all(cli_dir.join("src")).expect("mkdir frob-cli src");
+    fs::create_dir_all(ws.join("crates/frob-conformance/registry")).expect("mkdir reg");
+    fs::write(
+        ws.join("crates/frob-conformance/registry/controls.toml"),
+        "schema = \"frob.gauntlet.controls/1\"\n",
+    )
+    .expect("write controls");
+    fs::write(
+        cli_dir.join("Cargo.toml"),
+        r#"[package]
+name = "frob-cli"
+version.workspace = true
+edition.workspace = true
+
+[package.metadata.frob]
+layer = 7
+rank = 2
+
+[[bin]]
+name = "frob"
+path = "src/main.rs"
+
+[dependencies]
+frob-verbs = { path = "../frob-verbs", default-features = false, features = ["registry-only"] }
+
+[features]
+default = ["referee"]
+referee = ["frob-verbs/referee"]
+"#,
+    )
+    .expect("write clean frob-cli Cargo.toml");
+    fs::write(cli_dir.join("src/main.rs"), "fn main() {}\n").expect("write clean frob-cli main.rs");
+
+    let rep = check_mutation_guard(&ws, true).expect("check clean product binary");
+    assert!(
+        rep.is_ok(),
+        "clean product binary with normal features must pass, got: {:?}",
+        rep.violations
+    );
+    assert_eq!(rep.product_binaries_checked, 1);
+}
+
+#[test]
 fn scratch_crate_release_feature_fails_to_compile() {
     let ws = scratch_dir("scratch_release_fail");
     fs::create_dir_all(ws.join("src")).expect("mkdir src");

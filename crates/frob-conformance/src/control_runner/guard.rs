@@ -172,8 +172,8 @@ pub fn check_mutation_guard(
         }
     }
 
-    // 2. Audit every workspace crate declaring `conformance` or mutation features implying it.
-    let mut product_binaries_checked = 0usize;
+    // 2. Audit every workspace crate declaring `conformance` or mutation features implying it,
+    //    and collect the complete workspace-wide mutation feature set before auditing product binaries.
     for manifest in &manifests {
         let default_closure = feature_closure(&manifest.features, "default");
         if manifest.features.contains_key("conformance") {
@@ -230,7 +230,21 @@ pub fn check_mutation_guard(
             }
         }
 
-        // 3. Check product binaries (`frob`, `frobd`, `frob-mcp`, `frob-verify`).
+        if manifest.features.contains_key("gauntlet-mutations") {
+            for k in manifest.features.keys() {
+                if k != "gauntlet-mutations"
+                    && k != "default"
+                    && feature_closure(&manifest.features, k).contains("gauntlet-mutations")
+                {
+                    all_mutation_features.insert(k.clone());
+                }
+            }
+        }
+    }
+
+    // 3. Check product binaries (`frob`, `frobd`, `frob-mcp`, `frob-verify`).
+    let mut product_binaries_checked = 0usize;
+    for manifest in &manifests {
         let matched_bins: Vec<&str> = manifest
             .bins
             .iter()
@@ -239,23 +253,62 @@ pub fn check_mutation_guard(
             .collect();
         if !matched_bins.is_empty() || PRODUCT_BINARIES.contains(&manifest.name.as_str()) {
             product_binaries_checked += matched_bins.len().max(1);
-            if manifest.features.contains_key("conformance") {
-                violations.push(GuardViolation {
-                    crate_name: manifest.name.clone(),
-                    feature: "conformance".to_owned(),
-                    rule: "product-binary-conformance".to_owned(),
-                    detail: format!(
-                        "product binary crate `{}` must not declare or carry `conformance`",
-                        manifest.name
-                    ),
-                });
+            for (feat_name, feat_deps) in &manifest.features {
+                if feat_name == "conformance" {
+                    violations.push(GuardViolation {
+                        crate_name: manifest.name.clone(),
+                        feature: "conformance".to_owned(),
+                        rule: "product-binary-conformance".to_owned(),
+                        detail: format!(
+                            "product binary crate `{}` must not declare or carry `conformance`",
+                            manifest.name
+                        ),
+                    });
+                } else if is_mutation_feature_name(feat_name, &all_mutation_features) {
+                    violations.push(GuardViolation {
+                        crate_name: manifest.name.clone(),
+                        feature: feat_name.clone(),
+                        rule: "product-binary-mutation-feature".to_owned(),
+                        detail: format!(
+                            "product binary crate `{}` must not declare mutation feature `{feat_name}`",
+                            manifest.name
+                        ),
+                    });
+                }
+
+                for raw_dep in feat_deps {
+                    let Some((dep_part, dep_feat)) = raw_dep.split_once('/') else {
+                        continue;
+                    };
+                    let dep_name = dep_part.trim_end_matches('?');
+                    if dep_feat == "conformance" {
+                        violations.push(GuardViolation {
+                            crate_name: manifest.name.clone(),
+                            feature: format!("{feat_name}->{dep_name}/{dep_feat}"),
+                            rule: "product-binary-conformance".to_owned(),
+                            detail: format!(
+                                "product binary crate `{}` feature `{feat_name}` forwards `conformance` on dependency `{dep_name}`",
+                                manifest.name
+                            ),
+                        });
+                    } else if is_mutation_feature_name(dep_feat, &all_mutation_features) {
+                        violations.push(GuardViolation {
+                            crate_name: manifest.name.clone(),
+                            feature: format!("{feat_name}->{dep_name}/{dep_feat}"),
+                            rule: "product-binary-mutation-feature".to_owned(),
+                            detail: format!(
+                                "product binary crate `{}` feature `{feat_name}` forwards forbidden mutation feature `{dep_feat}` on dependency `{dep_name}`",
+                                manifest.name
+                            ),
+                        });
+                    }
+                }
             }
             for (dep_name, dep_feats) in &manifest.dep_features {
                 for df in dep_feats {
                     let bare = df.split_once('/').map_or(df.as_str(), |(_, f)| f);
                     if bare == "conformance"
-                        || bare == "gauntlet-mutations"
-                        || all_mutation_features.contains(bare)
+                        || is_mutation_feature_name(bare, &all_mutation_features)
                     {
                         violations.push(GuardViolation {
                             crate_name: manifest.name.clone(),
@@ -322,6 +375,14 @@ pub fn verify_release_build_fails(
         ));
     }
     Ok(stderr)
+}
+
+fn is_mutation_feature_name(feat: &str, all_mutation_features: &BTreeSet<String>) -> bool {
+    feat == "gauntlet-mutations"
+        || feat.starts_with("nc-")
+        || feat.starts_with("cx-")
+        || feat.starts_with("mutant-")
+        || all_mutation_features.contains(feat)
 }
 
 fn feature_closure(features: &BTreeMap<String, Vec<String>>, root: &str) -> BTreeSet<String> {
@@ -500,16 +561,18 @@ fn parse_crate_manifest_fallback(raw: &str, crate_dir: &Path) -> ParsedCrateMani
     let mut bins = Vec::new();
     let mut dep_features = Vec::new();
 
-    #[derive(Clone, Copy, PartialEq, Eq)]
+    #[derive(Clone, PartialEq, Eq)]
     enum Sec {
         None,
         Package,
         Features,
         Bin,
         Deps,
+        NamedDep(String),
     }
     let mut sec = Sec::None;
     let mut pending_feat: Option<(String, String)> = None;
+    let mut pending_dep_feat: Option<(String, String)> = None;
 
     for raw_line in raw.lines() {
         let line = super::mutation::strip_toml_comment(raw_line).trim();
@@ -525,13 +588,35 @@ fn parse_crate_manifest_fallback(raw: &str, crate_dir: &Path) -> ParsedCrateMani
             }
             continue;
         }
+        if let Some((ref dep, ref mut acc)) = pending_dep_feat {
+            acc.push(' ');
+            acc.push_str(line);
+            if line.contains(']') {
+                let list = parse_bracket_strings(acc);
+                if !list.is_empty() {
+                    dep_features.push((dep.clone(), list));
+                }
+                pending_dep_feat = None;
+            }
+            continue;
+        }
         if line.starts_with('[') && line.ends_with(']') {
             sec = match line {
                 "[package]" => Sec::Package,
                 "[features]" => Sec::Features,
                 "[[bin]]" => Sec::Bin,
                 "[dependencies]" | "[build-dependencies]" => Sec::Deps,
-                _ => Sec::None,
+                _ => {
+                    let inner = &line[1..line.len() - 1];
+                    if let Some(dep) = inner
+                        .strip_prefix("dependencies.")
+                        .or_else(|| inner.strip_prefix("build-dependencies."))
+                    {
+                        Sec::NamedDep(dep.trim().trim_matches('"').trim_matches('\'').to_owned())
+                    } else {
+                        Sec::None
+                    }
+                }
             };
             continue;
         }
@@ -540,7 +625,7 @@ fn parse_crate_manifest_fallback(raw: &str, crate_dir: &Path) -> ParsedCrateMani
         };
         let key = k.trim().trim_matches('"').trim_matches('\'');
         let val = v.trim();
-        match sec {
+        match &sec {
             Sec::Package if key == "name" => {
                 name = val.trim_matches('"').trim_matches('\'').to_owned();
             }
@@ -555,13 +640,24 @@ fn parse_crate_manifest_fallback(raw: &str, crate_dir: &Path) -> ParsedCrateMani
                 }
             }
             Sec::Deps => {
-                if let Some(idx) = val.find("features")
-                    && let Some(sub) = val[idx..].find('[')
-                {
-                    let slice = &val[idx + sub..];
-                    let list = parse_bracket_strings(slice);
+                if let Some(slice) = find_inline_features_slice(val) {
+                    if !slice.contains(']') {
+                        pending_dep_feat = Some((key.to_owned(), slice.to_owned()));
+                    } else {
+                        let list = parse_bracket_strings(slice);
+                        if !list.is_empty() {
+                            dep_features.push((key.to_owned(), list));
+                        }
+                    }
+                }
+            }
+            Sec::NamedDep(dep) if key == "features" => {
+                if val.contains('[') && !val.contains(']') {
+                    pending_dep_feat = Some((dep.clone(), val.to_owned()));
+                } else {
+                    let list = parse_bracket_strings(val);
                     if !list.is_empty() {
-                        dep_features.push((key.to_owned(), list));
+                        dep_features.push((dep.clone(), list));
                     }
                 }
             }
@@ -576,6 +672,35 @@ fn parse_crate_manifest_fallback(raw: &str, crate_dir: &Path) -> ParsedCrateMani
         bins,
         dep_features,
     }
+}
+
+fn find_inline_features_slice(val: &str) -> Option<&str> {
+    let bytes = val.as_bytes();
+    let needle = b"features";
+    let mut pos = 0;
+    while let Some(rel) = val[pos..].find("features") {
+        let start = pos + rel;
+        let before_ok = start == 0 || {
+            let b = bytes[start - 1];
+            !(b.is_ascii_alphanumeric() || b == b'_' || b == b'-')
+        };
+        let end = start + needle.len();
+        let after_ok = end == bytes.len() || {
+            let b = bytes[end];
+            !(b.is_ascii_alphanumeric() || b == b'_' || b == b'-')
+        };
+        if before_ok && after_ok {
+            let tail = val[end..].trim_start();
+            if let Some(after_eq) = tail.strip_prefix('=') {
+                let after_eq = after_eq.trim_start();
+                if after_eq.starts_with('[') {
+                    return Some(after_eq);
+                }
+            }
+        }
+        pos = end;
+    }
+    None
 }
 
 fn parse_bracket_strings(s: &str) -> Vec<String> {

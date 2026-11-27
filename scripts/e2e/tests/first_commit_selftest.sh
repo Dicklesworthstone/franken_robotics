@@ -40,13 +40,9 @@ FIRST_RECEIPT_SH="${REPO_ROOT}/scripts/bootstrap/first_receipt.sh"
 # shellcheck source=scripts/lib/envelope.sh
 source "${REPO_ROOT}/scripts/lib/envelope.sh"
 
-B3SUM_BIN=""
-if command -v b3sum >/dev/null 2>&1; then
-  B3SUM_BIN="$(command -v b3sum)"
-elif [ -x /opt/homebrew/bin/b3sum ]; then
-  B3SUM_BIN="/opt/homebrew/bin/b3sum"
-else
-  printf 'first_commit_selftest.sh: b3sum required on PATH or /opt/homebrew/bin/b3sum\n' >&2
+B3SUM_BIN="$(command -v b3sum 2>/dev/null || true)"
+if [ -z "${B3SUM_BIN}" ]; then
+  printf 'first_commit_selftest.sh: b3sum required on PATH\n' >&2
   exit 2
 fi
 
@@ -372,7 +368,6 @@ run_fc() {
   local repo_dir="$2"
   local mode="$3"
   local plant="${4:-}"
-  local state_dir="${5:-}"
   local logs_dir="${WORK_BASE}/logs_${tag}"
   local scratch_dir="${WORK_BASE}/scratch_${tag}"
   mkdir -p "${logs_dir}" "${scratch_dir}"
@@ -386,9 +381,6 @@ run_fc() {
     cmd=("${cmd[@]}" "E2E_PLANT_FAILURE=${plant}")
   fi
   cmd=("${cmd[@]}" bash "${FIRST_COMMIT_SH}" --repo "${repo_dir}" --commit HEAD --mode "${mode}")
-  if [ -n "${state_dir}" ]; then
-    cmd=("${cmd[@]}" --state-dir "${state_dir}")
-  fi
 
   LAST_RC=0
   "${cmd[@]}" >"${WORK_BASE}/out_${tag}.txt" 2>"${WORK_BASE}/err_${tag}.txt" || LAST_RC=$?
@@ -753,8 +745,7 @@ EOF
 git -C "${ST_DIR}/mini_repo" add registries/ README.md schemas/registries/routes_not_taken.schema.json
 git -C "${ST_DIR}/mini_repo" commit -q -m "standing: populated gates, compiling crate, 10th registry with schema"
 
-STATE_DIR="${WORK_BASE}/standing_state"
-run_fc "standing_ok" "${ST_DIR}/mini_repo" "standing" "" "${STATE_DIR}"
+run_fc "standing_ok" "${ST_DIR}/mini_repo" "standing"
 ST_LINT=0
 "${FROB_E2E_TOOL}" lint "${LAST_LOG}" >/dev/null 2>&1 || ST_LINT=$?
 ST_CRATE_LOGGED="$(python3 - "${LAST_LOG}" <<'PY'

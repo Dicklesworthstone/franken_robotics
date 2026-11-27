@@ -8,11 +8,11 @@
 #
 # Usage:
 #   scripts/e2e/first_commit.sh [--commit <rev>] [--mode first|standing]
-#                               [--repo <path>] [--state-dir <dir>]
+#                               [--repo <path>]
 #
-# Never writes outside its scratch directory (except `--state-dir` if passed),
-# never deletes files or directories (COMMON.md 9b), and never touches a sibling
-# checkout. All heavy commands run through `e2e_cmd` / `frob_envelope_run` (E0).
+# Never writes outside its scratch directory, never deletes files or directories
+# (COMMON.md 9b), and never touches a sibling checkout. All heavy commands run
+# through `e2e_cmd` / `frob_envelope_run` (E0).
 # Bash 3.2 (macOS) and Linux compatible.
 
 set -euo pipefail
@@ -27,7 +27,6 @@ Options:
   --commit <rev>           Commit revision to clone and inspect (default: HEAD)
   --mode <first|standing>  Inventory mode: first (default) or standing
   --repo <path>            Source git repository to clone (default: repo root)
-  --state-dir <dir>        Optional dir storing standing-mode last passing commit
   -h, --help               Show this help and exit 0
 EOF
 }
@@ -36,7 +35,6 @@ ORIG_ARGS=("$@")
 COMMIT_REV="${FIRST_COMMIT_REV:-HEAD}"
 MODE="${FIRST_COMMIT_MODE:-first}"
 REPO_SRC="${FIRST_COMMIT_REPO:-}"
-STATE_DIR="${FIRST_COMMIT_STATE_DIR:-}"
 
 while [ "$#" -gt 0 ]; do
   case "$1" in
@@ -53,11 +51,6 @@ while [ "$#" -gt 0 ]; do
     --repo)
       [ "$#" -ge 2 ] || { usage >&2; exit 2; }
       REPO_SRC="$2"
-      shift 2
-      ;;
-    --state-dir)
-      [ "$#" -ge 2 ] || { usage >&2; exit 2; }
-      STATE_DIR="$2"
       shift 2
       ;;
     -h|--help)
@@ -95,12 +88,7 @@ fi
 REPO_SRC="$(cd "${REPO_SRC}" && pwd -P)"
 REPO_PARENT="$(dirname "${REPO_SRC}")"
 
-B3SUM_BIN=""
-if command -v b3sum >/dev/null 2>&1; then
-  B3SUM_BIN="$(command -v b3sum)"
-elif [ -x /opt/homebrew/bin/b3sum ]; then
-  B3SUM_BIN="/opt/homebrew/bin/b3sum"
-fi
+B3SUM_BIN="$(command -v b3sum 2>/dev/null || true)"
 
 hash_b3() {
   "${B3SUM_BIN}" --no-names "$1"
@@ -1710,21 +1698,6 @@ done <<EOF
 $(python3 -c 'import json,sys; [print(x) for x in json.load(open(sys.argv[1]))["fixtures"]]' "${STEP8_DISCOVERY}")
 EOF
 
-# Standing-mode changed-path set (if --state-dir has a valid previous passing commit)
-CHANGED_PATHS_FILE="${E2E_WORK_DIR}/step8_changed_paths.txt"
-: > "${CHANGED_PATHS_FILE}"
-USE_INCREMENTAL="0"
-if [ "${MODE}" = "standing" ] && [ -n "${STATE_DIR}" ] && [ -f "${STATE_DIR}/last_pass_commit" ]; then
-  PREV_PASS_SHA="$(tr -d '[:space:]' < "${STATE_DIR}/last_pass_commit")"
-  if [ -n "${PREV_PASS_SHA}" ] && git --no-optional-locks -C "${CLONE_DIR}" cat-file -e "${PREV_PASS_SHA}^{commit}" 2>/dev/null; then
-    git --no-optional-locks -C "${CLONE_DIR}" diff --name-only "${PREV_PASS_SHA}" "${TARGET_SHA}" > "${CHANGED_PATHS_FILE}" || true
-    # If root Cargo.toml, Cargo.lock, rust-toolchain.toml, or .cargo/config.toml changed, check all crates.
-    if ! grep -Eq '^(Cargo\.toml|Cargo\.lock|rust-toolchain\.toml|\.cargo/config\.toml)$' "${CHANGED_PATHS_FILE}"; then
-      USE_INCREMENTAL="1"
-    fi
-  fi
-fi
-
 STEP8_META_ERRORS=""
 STEP8_CHECK_ERRORS=""
 STEP8_CHECKED_LIST=""
@@ -1769,15 +1742,13 @@ while IFS="$(printf '\t')" read -r ws_manifest ws_rel_dir ws_empty ws_perr; do
   fi
 
   PKGS_TSV="${E2E_WORK_DIR}/step8_pkgs_${ws_slug}.tsv"
-  python3 - "${E2E_LAST_STDOUT}" "${CLONE_DIR}" "${USE_INCREMENTAL}" "${CHANGED_PATHS_FILE}" "${PKGS_TSV}" <<'PY'
+  python3 - "${E2E_LAST_STDOUT}" "${CLONE_DIR}" "${PKGS_TSV}" <<'PY'
 import json, sys
 from pathlib import Path
 
 meta = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
 clone = Path(sys.argv[2]).resolve()
-use_inc = sys.argv[3] == "1"
-changed = [l.strip() for l in Path(sys.argv[4]).read_text(encoding="utf-8").splitlines() if l.strip()]
-out_p = Path(sys.argv[5])
+out_p = Path(sys.argv[3])
 
 members = set(meta.get("workspace_members", []))
 rows = []
@@ -1790,28 +1761,20 @@ for pkg in meta.get("packages", []):
         rel_dir = mp.parent.relative_to(clone).as_posix()
     except ValueError:
         rel_dir = "."
-    check_it = True
-    if use_inc:
-        prefix = "" if rel_dir == "." else rel_dir + "/"
-        check_it = any(c.startswith(prefix) for c in changed)
-    rows.append((name, rel_dir, 1 if check_it else 0))
+    rows.append((name, rel_dir))
 
 rows.sort(key=lambda r: r[0])
 with out_p.open("w", encoding="utf-8") as fh:
-    for name, rdir, chk in rows:
-        fh.write(f"{name}\t{rdir}\t{chk}\n")
+    for name, rdir in rows:
+        fh.write(f"{name}\t{rdir}\n")
 PY
 
   ws_target="${TARGET_BASE}/ws_${ws_slug}"
   mkdir -p "${ws_target}"
 
-  while IFS="$(printf '\t')" read -r pkg_name _pkg_rdir pkg_chk; do
+  while IFS="$(printf '\t')" read -r pkg_name _pkg_rdir; do
     [ -n "${pkg_name}" ] || continue
     pkg_slug="$(printf '%s' "${pkg_name}" | tr '/.-' '___')"
-    if [ "${pkg_chk}" != "1" ]; then
-      e2e_metric "step8_crate_unchanged_skipped_${pkg_slug}" "1" "${pkg_name}"
-      continue
-    fi
 
     STEP8_CHECKED_COUNT=$((STEP8_CHECKED_COUNT + 1))
     STEP8_CHECKED_LIST="${STEP8_CHECKED_LIST:+${STEP8_CHECKED_LIST},}${pkg_name}"
@@ -1819,7 +1782,7 @@ PY
     prev_pwd="${PWD}"
     cd "${ws_abs_dir}" || exit 1
     e2e_cmd --name "cargo_check_${ws_slug}_${pkg_slug}" --expect-exit "0,101" -- \
-      env "CARGO_TARGET_DIR=${ws_target}" \
+      env "CARGO_TARGET_DIR=${ws_target}" "CARGO_BUILD_BUILD_DIR=${ws_target}" \
       cargo check --locked --offline -j 1 -p "${pkg_name}"
     cd "${prev_pwd}" || exit 1
 
@@ -2076,9 +2039,4 @@ if [ -n "${FROB_BIN:-}" ] && [ -x "${FROB_BIN}" ]; then
   e2e_cmd --name "frob_doctor_json" --expect-exit "0,3" -- "${FROB_BIN}" doctor --json
 else
   e2e_metric "frob_doctor_present" "0" "skipped_absent"
-fi
-
-if [ "${MODE}" = "standing" ] && [ -n "${STATE_DIR}" ] && [ "${FAIL_COUNT}" -eq 0 ]; then
-  mkdir -p "${STATE_DIR}"
-  printf '%s\n' "${TARGET_SHA}" > "${STATE_DIR}/last_pass_commit"
 fi

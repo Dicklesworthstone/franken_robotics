@@ -30,9 +30,9 @@ impl GateId {
             other => {
                 if let Some(name) = other.strip_prefix("rehearsal-")
                     && !name.is_empty()
-                    && name
-                        .bytes()
-                        .all(|b| b.is_ascii_lowercase() || b.is_ascii_digit() || matches!(b, b'-' | b'_'))
+                    && name.bytes().all(|b| {
+                        b.is_ascii_lowercase() || b.is_ascii_digit() || matches!(b, b'-' | b'_')
+                    })
                     && name.as_bytes()[0].is_ascii_alphanumeric()
                 {
                     return Ok(Self::Rehearsal(name.to_owned()));
@@ -41,7 +41,10 @@ impl GateId {
                     pointer,
                     format!("{raw:?}"),
                     "one of M0-baseline, M1-baseline, M3-partial, M7-tournament, or rehearsal-<slug>",
-                    vec!["Use a valid gate identifier matching the ten-fold header grammar".to_owned()],
+                    vec![
+                        "Use a valid gate identifier matching the ten-fold header grammar"
+                            .to_owned(),
+                    ],
                 ))
             }
         }
@@ -410,7 +413,10 @@ impl Hash32 {
                 pointer,
                 format!("{raw:?}"),
                 "b3:<64 lowercase hex digits>",
-                vec!["Prefix content addresses with `b3:` followed by 64 lowercase hex digits".to_owned()],
+                vec![
+                    "Prefix content addresses with `b3:` followed by 64 lowercase hex digits"
+                        .to_owned(),
+                ],
             ));
         };
         parse_hex32(hex, pointer).map(Self)
@@ -581,7 +587,9 @@ impl Millis {
                 pointer,
                 format!("{raw:?}"),
                 "canonical seconds string matching ^(0|[1-9][0-9]*)(\\.[0-9]{0,2}[1-9])?$",
-                vec![format!("Rewrite duration as canonical decimal seconds ({detail})")],
+                vec![format!(
+                    "Rewrite duration as canonical decimal seconds ({detail})"
+                )],
             )
         };
 
@@ -620,13 +628,17 @@ impl Millis {
                     return Err(reject("trailing decimal point with no fractional digits"));
                 }
                 if f.len() > 3 {
-                    return Err(reject("at most three fractional digits (millisecond resolution)"));
+                    return Err(reject(
+                        "at most three fractional digits (millisecond resolution)",
+                    ));
                 }
                 if !f.bytes().all(|b| b.is_ascii_digit()) {
                     return Err(reject("fractional part must contain only ASCII digits"));
                 }
                 if f.ends_with('0') {
-                    return Err(reject("trailing zero in fractional seconds is non-canonical"));
+                    return Err(reject(
+                        "trailing zero in fractional seconds is non-canonical",
+                    ));
                 }
                 let val: u64 = f.parse().map_err(|_| reject("invalid fractional digits"))?;
                 match f.len() {

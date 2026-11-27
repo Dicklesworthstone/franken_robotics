@@ -393,9 +393,7 @@ pub fn attribute_exclusive(
                     "/cap_breach_horizon_ms",
                     format!("breach elapsed {} > horizon {}", elapsed_ms, h_ms),
                     "cap_breach_horizon_ms >= (t_stop_ms - t0_ms)",
-                    vec![
-                        "Cap-breach horizon H must be at least breach_ms - t0_ms".to_owned(),
-                    ],
+                    vec!["Cap-breach horizon H must be at least breach_ms - t0_ms".to_owned()],
                 ));
             }
             let rem = h_ms - elapsed_ms;

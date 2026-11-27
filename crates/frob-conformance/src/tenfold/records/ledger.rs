@@ -91,15 +91,27 @@ impl LedgerRecord {
             ));
         }
         JsonValue::Obj(vec![
-            ("arm".to_owned(), JsonValue::Str(self.arm.as_str().to_owned())),
-            ("campaign".to_owned(), JsonValue::Int(i64::from(self.campaign.0))),
+            (
+                "arm".to_owned(),
+                JsonValue::Str(self.arm.as_str().to_owned()),
+            ),
+            (
+                "campaign".to_owned(),
+                JsonValue::Int(i64::from(self.campaign.0)),
+            ),
             (
                 "clock_s".to_owned(),
                 JsonValue::Str(self.clock.to_canonical_seconds()),
             ),
             ("execution_authorized".to_owned(), JsonValue::Bool(false)),
-            ("family_id".to_owned(), JsonValue::Str(self.family_id.as_string())),
-            ("gate".to_owned(), JsonValue::Str(self.header.gate.as_string())),
+            (
+                "family_id".to_owned(),
+                JsonValue::Str(self.family_id.as_string()),
+            ),
+            (
+                "gate".to_owned(),
+                JsonValue::Str(self.header.gate.as_string()),
+            ),
             ("hardware_safety_signoff".to_owned(), JsonValue::Bool(false)),
             ("phases".to_owned(), JsonValue::Obj(phase_entries)),
             ("reality".to_owned(), JsonValue::Str("no-claim".to_owned())),

@@ -236,7 +236,10 @@ pub fn write_once(target: &Path, bytes: &[u8]) -> Result<WriteOutcome, TenfoldRe
         return Err(TenfoldRefusal::store_overwrite(
             target_label,
             format!("b3:{offered_hash} ({} bytes)", bytes.len()),
-            format!("identical bytes matching existing b3:{existing_hash} ({} bytes)", existing.len()),
+            format!(
+                "identical bytes matching existing b3:{existing_hash} ({} bytes)",
+                existing.len()
+            ),
         ));
     }
 

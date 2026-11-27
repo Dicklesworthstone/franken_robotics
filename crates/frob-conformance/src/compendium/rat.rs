@@ -39,7 +39,9 @@ impl BigNat {
         if hi == 0 {
             Self { limbs: vec![lo] }
         } else {
-            Self { limbs: vec![lo, hi] }
+            Self {
+                limbs: vec![lo, hi],
+            }
         }
     }
 
@@ -330,14 +332,22 @@ impl Rat {
     pub fn new(num: i64, den: i64) -> Self {
         assert!(den != 0, "Rat denominator cannot be zero");
         let neg = (num < 0) ^ (den < 0);
-        Self::from_parts(neg, BigNat::from_u64(num.unsigned_abs()), BigNat::from_u64(den.unsigned_abs()))
+        Self::from_parts(
+            neg,
+            BigNat::from_u64(num.unsigned_abs()),
+            BigNat::from_u64(den.unsigned_abs()),
+        )
     }
 
     #[must_use]
     pub fn from_i128(num: i128, den: i128) -> Self {
         assert!(den != 0, "Rat denominator cannot be zero");
         let neg = (num < 0) ^ (den < 0);
-        Self::from_parts(neg, BigNat::from_u128(num.unsigned_abs()), BigNat::from_u128(den.unsigned_abs()))
+        Self::from_parts(
+            neg,
+            BigNat::from_u128(num.unsigned_abs()),
+            BigNat::from_u128(den.unsigned_abs()),
+        )
     }
 
     fn from_parts(neg: bool, num: BigNat, den: BigNat) -> Self {
@@ -351,7 +361,11 @@ impl Rat {
         } else {
             let (rn, _) = num.div_rem(&g);
             let (rd, _) = den.div_rem(&g);
-            Self { neg, num: rn, den: rd }
+            Self {
+                neg,
+                num: rn,
+                den: rd,
+            }
         }
     }
 
@@ -431,8 +445,14 @@ impl Ord for Rat {
         match (self.is_neg(), other.is_neg()) {
             (true, false) => Ordering::Less,
             (false, true) => Ordering::Greater,
-            (false, false) => self.num.mul_nat(&other.den).cmp(&other.num.mul_nat(&self.den)),
-            (true, true) => other.num.mul_nat(&self.den).cmp(&self.num.mul_nat(&other.den)),
+            (false, false) => self
+                .num
+                .mul_nat(&other.den)
+                .cmp(&other.num.mul_nat(&self.den)),
+            (true, true) => other
+                .num
+                .mul_nat(&self.den)
+                .cmp(&self.num.mul_nat(&other.den)),
         }
     }
 }
@@ -669,7 +689,9 @@ pub fn mat3_eye() -> Mat3 {
 
 #[must_use]
 pub fn mat3_diag(d: &Vec3) -> Mat3 {
-    std::array::from_fn(|i| std::array::from_fn(|j| if i == j { d[i].clone() } else { Rat::zero() }))
+    std::array::from_fn(|i| {
+        std::array::from_fn(|j| if i == j { d[i].clone() } else { Rat::zero() })
+    })
 }
 
 #[must_use]
@@ -708,9 +730,7 @@ pub fn mat3_mul(a: &Mat3, b: &Mat3) -> Mat3 {
 
 #[must_use]
 pub fn mat3_vec(a: &Mat3, v: &Vec3) -> Vec3 {
-    std::array::from_fn(|i| {
-        &(&a[i][0] * &v[0]) + &(&(&a[i][1] * &v[1]) + &(&a[i][2] * &v[2]))
-    })
+    std::array::from_fn(|i| &(&a[i][0] * &v[0]) + &(&(&a[i][1] * &v[1]) + &(&a[i][2] * &v[2])))
 }
 
 #[must_use]

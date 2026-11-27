@@ -97,7 +97,13 @@ pub struct ControlFinding {
 
 impl fmt::Display for ControlFinding {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "[{}] {}: {}", self.reason.as_str(), self.record, self.detail)
+        write!(
+            f,
+            "[{}] {}: {}",
+            self.reason.as_str(),
+            self.record,
+            self.detail
+        )
     }
 }
 
@@ -210,9 +216,7 @@ pub fn is_placeholder_target(target: &str) -> bool {
     }
     // Bead key starts with an uppercase letter and contains uppercase/lowercase letters, digits, or hyphens.
     let first_ok = bead.as_bytes()[0].is_ascii_uppercase();
-    let bead_ok = bead
-        .bytes()
-        .all(|b| b.is_ascii_alphanumeric() || b == b'-');
+    let bead_ok = bead.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'-');
     let plant_ok = plant
         .bytes()
         .all(|b| b.is_ascii_alphanumeric() || b == b'-' || b == b'_' || b == b'.');
@@ -346,7 +350,10 @@ pub fn validate(
             None => findings.push(ControlFinding {
                 record: c.id.clone(),
                 reason: ControlReason::OutOfOrder,
-                detail: format!("control id `{}` does not match `NC-nnnn` (four digits)", c.id),
+                detail: format!(
+                    "control id `{}` does not match `NC-nnnn` (four digits)",
+                    c.id
+                ),
             }),
             Some(num) => {
                 if !seen.insert(c.id.as_str()) {
@@ -361,7 +368,10 @@ pub fn validate(
                     findings.push(ControlFinding {
                         record: c.id.clone(),
                         reason: ControlReason::OutOfOrder,
-                        detail: format!("control id `{}` is not strictly greater than NC-{prev:04}", c.id),
+                        detail: format!(
+                            "control id `{}` is not strictly greater than NC-{prev:04}",
+                            c.id
+                        ),
                     });
                 } else {
                     prev_num = Some(num);
@@ -390,7 +400,10 @@ pub fn validate(
                         findings.push(ControlFinding {
                             record: old.id.clone(),
                             reason: ControlReason::Removed,
-                            detail: format!("control `{}` from previous commit was removed", old.id),
+                            detail: format!(
+                                "control `{}` from previous commit was removed",
+                                old.id
+                            ),
                         });
                     }
                 }
@@ -502,7 +515,8 @@ pub fn validate(
                     detail: "mutation control requires a non-empty `feature` field".to_owned(),
                 }),
                 Some(feat) if active_gate => {
-                    if let Err(why) = verify_crate_declares_feature(workspace_root, &c.target, feat) {
+                    if let Err(why) = verify_crate_declares_feature(workspace_root, &c.target, feat)
+                    {
                         findings.push(ControlFinding {
                             record: c.id.clone(),
                             reason: ControlReason::FeatureMissing,
@@ -551,7 +565,9 @@ pub fn validate(
 
         // Rule 5: a control is a defect, not a boundary.
         if c.kind == ControlKind::PlantedInput
-            && c.removed_check.as_deref().is_none_or(|s| s.trim().is_empty())
+            && c.removed_check
+                .as_deref()
+                .is_none_or(|s| s.trim().is_empty())
             && (defect_restates_boundary_refusal(&c.defect)
                 || expect_is_product_boundary_refusal(&c.expect))
         {
@@ -971,9 +987,7 @@ fn verify_crate_declares_feature(
     }
 
     let manifest_path = find_crate_manifest(workspace_root, &crate_name).ok_or_else(|| {
-        format!(
-            "target crate `{crate_name}` manifest not found for mutation feature `{feat_name}`"
-        )
+        format!("target crate `{crate_name}` manifest not found for mutation feature `{feat_name}`")
     })?;
     let content = fs::read_to_string(&manifest_path)
         .map_err(|e| format!("failed to read `{}`: {e}", manifest_path.display()))?;
@@ -989,7 +1003,10 @@ fn verify_crate_declares_feature(
 }
 
 fn find_crate_manifest(workspace_root: &Path, crate_name: &str) -> Option<std::path::PathBuf> {
-    let direct = workspace_root.join("crates").join(crate_name).join("Cargo.toml");
+    let direct = workspace_root
+        .join("crates")
+        .join(crate_name)
+        .join("Cargo.toml");
     if direct.is_file() {
         return Some(direct);
     }
@@ -1082,7 +1099,10 @@ fn strip_toml_comment(line: &str) -> &str {
     line
 }
 
-fn verify_fixture_exists_with_header(workspace_root: &Path, fixture_rel: &str) -> Result<(), String> {
+fn verify_fixture_exists_with_header(
+    workspace_root: &Path,
+    fixture_rel: &str,
+) -> Result<(), String> {
     let rel = Path::new(fixture_rel);
     if rel.is_absolute()
         || rel
@@ -1143,7 +1163,9 @@ mod tests {
         assert!(is_placeholder_target("N16b-15:plant-a"));
         assert!(is_placeholder_target("CX-301"));
         assert!(!is_placeholder_target("frob-actuate::stage::integrate"));
-        assert!(!is_placeholder_target("crates/frob-conformance/tests/registry_check.rs"));
+        assert!(!is_placeholder_target(
+            "crates/frob-conformance/tests/registry_check.rs"
+        ));
         assert!(!is_placeholder_target(""));
     }
 
@@ -1161,12 +1183,25 @@ mod tests {
             "SAFE-X01",
             "GATE-GAUNT-10",
         ] {
-            assert!(is_valid_seed_form(good, false), "expected valid seed `{good}`");
+            assert!(
+                is_valid_seed_form(good, false),
+                "expected valid seed `{good}`"
+            );
         }
         assert!(is_valid_seed_form("", true));
         assert!(!is_valid_seed_form("", false));
-        for bad in ["BUG-7", "cx-262", "MR-X07", "INV-bad-1", "GATE-10", "SAFE-01"] {
-            assert!(!is_valid_seed_form(bad, false), "expected invalid seed `{bad}`");
+        for bad in [
+            "BUG-7",
+            "cx-262",
+            "MR-X07",
+            "INV-bad-1",
+            "GATE-10",
+            "SAFE-01",
+        ] {
+            assert!(
+                !is_valid_seed_form(bad, false),
+                "expected invalid seed `{bad}`"
+            );
         }
     }
 }

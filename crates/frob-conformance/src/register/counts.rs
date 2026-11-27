@@ -166,7 +166,10 @@ impl GateCountsExpectation {
                     return Err(BaseRowError::new(
                         file,
                         None,
-                        format!("revision[{idx}] expected table, found {}", other.type_name()),
+                        format!(
+                            "revision[{idx}] expected table, found {}",
+                            other.type_name()
+                        ),
                     ));
                 }
             };
@@ -189,7 +192,9 @@ impl GateCountsExpectation {
 
     /// Assert `doc` matches the latest dated revision in both per-kind counts and exact ID set.
     pub fn check_latest(&self, doc: &BaseDocument) -> Result<CountReport, CountMismatch> {
-        let rev = self.latest_revision().expect("validated non-empty revisions");
+        let rev = self
+            .latest_revision()
+            .expect("validated non-empty revisions");
         compare_counts_and_ids(doc, rev.expected_counts(), Some(&rev.ids), &rev.date)
     }
 
@@ -257,7 +262,11 @@ fn parse_plan_inventory(tbl: Table, file: &str) -> Result<PlanInventory, BaseRow
     let mut f = Fields::new(tbl, "plan_inventory");
     let err = |e: toml::TomlError| BaseRowError::new(file, None, e.to_string());
 
-    let convergence = non_neg_usize(f.require_int("convergence").map_err(err)?, file, "convergence")?;
+    let convergence = non_neg_usize(
+        f.require_int("convergence").map_err(err)?,
+        file,
+        "convergence",
+    )?;
     let kill = non_neg_usize(f.require_int("kill").map_err(err)?, file, "kill")?;
     let admission = non_neg_usize(f.require_int("admission").map_err(err)?, file, "admission")?;
     let total = non_neg_usize(f.require_int("total").map_err(err)?, file, "total")?;
@@ -308,10 +317,18 @@ fn parse_revision(tbl: Table, idx: usize, file: &str) -> Result<CountRevision, B
 
     let date = f.require_str("date").map_err(err)?;
     if date.trim().is_empty() {
-        return Err(BaseRowError::new(file, None, "revision `date` must be non-empty"));
+        return Err(BaseRowError::new(
+            file,
+            None,
+            "revision `date` must be non-empty",
+        ));
     }
     let note = f.require_str("note").map_err(err)?;
-    let convergence = non_neg_usize(f.require_int("convergence").map_err(err)?, file, "convergence")?;
+    let convergence = non_neg_usize(
+        f.require_int("convergence").map_err(err)?,
+        file,
+        "convergence",
+    )?;
     let kill = non_neg_usize(f.require_int("kill").map_err(err)?, file, "kill")?;
     let admission = non_neg_usize(f.require_int("admission").map_err(err)?, file, "admission")?;
     let program = non_neg_usize(f.require_int("program").map_err(err)?, file, "program")?;
@@ -329,7 +346,10 @@ fn parse_revision(tbl: Table, idx: usize, file: &str) -> Result<CountRevision, B
         return Err(BaseRowError::new(
             file,
             None,
-            format!("revision[{idx}] ids.len()={} does not equal total={total}", ids.len()),
+            format!(
+                "revision[{idx}] ids.len()={} does not equal total={total}",
+                ids.len()
+            ),
         ));
     }
     f.finish().map_err(err)?;
@@ -360,7 +380,10 @@ fn extract_ids(
                 return Err(BaseRowError::new(
                     file,
                     None,
-                    format!("revision[{idx}].ids expected string, found {}", other.type_name()),
+                    format!(
+                        "revision[{idx}].ids expected string, found {}",
+                        other.type_name()
+                    ),
                 ));
             }
         };

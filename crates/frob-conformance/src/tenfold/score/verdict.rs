@@ -61,7 +61,10 @@ pub fn run_scorer_cli(args: &[String]) -> ScorerCliOutput {
         },
         "version" => {
             let obj = JsonValue::Obj(vec![
-                ("binary".to_owned(), JsonValue::Str("frob-tenfold-score".to_owned())),
+                (
+                    "binary".to_owned(),
+                    JsonValue::Str("frob-tenfold-score".to_owned()),
+                ),
                 ("determinism".to_owned(), JsonValue::Str("D0".to_owned())),
                 (
                     "trusted_base".to_owned(),
@@ -142,14 +145,20 @@ fn run_ratio_cmd(args: &[String]) -> ScorerCliOutput {
         return ScorerCliOutput {
             exit_code: EXIT_REFUSAL_INPUT,
             stdout: String::new(),
-            stderr: format!("frob-tenfold-score: invalid integer numerator `{}`\n", args[0]),
+            stderr: format!(
+                "frob-tenfold-score: invalid integer numerator `{}`\n",
+                args[0]
+            ),
         };
     };
     let Ok(den) = args[1].parse::<i64>() else {
         return ScorerCliOutput {
             exit_code: EXIT_REFUSAL_INPUT,
             stdout: String::new(),
-            stderr: format!("frob-tenfold-score: invalid integer denominator `{}`\n", args[1]),
+            stderr: format!(
+                "frob-tenfold-score: invalid integer denominator `{}`\n",
+                args[1]
+            ),
         };
     };
 
@@ -163,7 +172,8 @@ fn run_ratio_cmd(args: &[String]) -> ScorerCliOutput {
                     return ScorerCliOutput {
                         exit_code: EXIT_REFUSAL_INPUT,
                         stdout: String::new(),
-                        stderr: "frob-tenfold-score: --places requires an integer argument\n".to_owned(),
+                        stderr: "frob-tenfold-score: --places requires an integer argument\n"
+                            .to_owned(),
                     };
                 };
                 match v.parse::<usize>() {
@@ -183,7 +193,8 @@ fn run_ratio_cmd(args: &[String]) -> ScorerCliOutput {
                     return ScorerCliOutput {
                         exit_code: EXIT_REFUSAL_INPUT,
                         stdout: String::new(),
-                        stderr: "frob-tenfold-score: --mode requires point|upper|lower\n".to_owned(),
+                        stderr: "frob-tenfold-score: --mode requires point|upper|lower\n"
+                            .to_owned(),
                     };
                 };
                 mode = match v.as_str() {

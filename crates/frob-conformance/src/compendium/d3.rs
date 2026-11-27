@@ -120,11 +120,7 @@ pub fn project_friction_cone_rational(x: &Cone3, mu: &Rat) -> Option<Cone3> {
     let denom = &Rat::one() + &(mu * mu);
     let gamma_n = &(&x.n + &(mu * &norm_t)) / &denom;
     let scale = &(mu * &gamma_n) / &norm_t;
-    Some(Cone3::new(
-        gamma_n,
-        &scale * &x.t[0],
-        &scale * &x.t[1],
-    ))
+    Some(Cone3::new(gamma_n, &scale * &x.t[0], &scale * &x.t[1]))
 }
 
 /// Floating-point Euclidean projection of `(x_n, [x_t1, x_t2])` onto `K_mu` (`mu > 0`).
@@ -325,11 +321,7 @@ pub fn cone4d_hertz_radius_f64(disc_radius_m: f64) -> f64 {
 #[must_use]
 pub fn cone4d_coupled_tangential_fraction(v_t: f64, omega_n: f64, eff_radius: f64) -> f64 {
     let denom = v_t.hypot(eff_radius * omega_n);
-    if denom == 0.0 {
-        0.0
-    } else {
-        v_t.abs() / denom
-    }
+    if denom == 0.0 { 0.0 } else { v_t.abs() / denom }
 }
 
 /// Dimensionless coupled spin-moment fraction `|lambda_s| / (mu * lambda_n * r)`.
@@ -337,11 +329,7 @@ pub fn cone4d_coupled_tangential_fraction(v_t: f64, omega_n: f64, eff_radius: f6
 pub fn cone4d_coupled_spin_fraction(v_t: f64, omega_n: f64, eff_radius: f64) -> f64 {
     let rw = (eff_radius * omega_n).abs();
     let denom = v_t.hypot(rw);
-    if denom == 0.0 {
-        0.0
-    } else {
-        rw / denom
-    }
+    if denom == 0.0 { 0.0 } else { rw / denom }
 }
 
 // =========================================================================
@@ -478,7 +466,8 @@ pub fn squeeze_film_thickness(
     radius_a_m: f64,
     t_s: f64,
 ) -> SqueezeFilmResult {
-    let inv_h2 = (1.0 / (h0_m * h0_m)) + (4.0 * load_n * t_s) / (3.0 * PI * eta_pas * radius_a_m.powi(4));
+    let inv_h2 =
+        (1.0 / (h0_m * h0_m)) + (4.0 * load_n * t_s) / (3.0 * PI * eta_pas * radius_a_m.powi(4));
     let h = 1.0 / inv_h2.sqrt();
     let dh_dt = squeeze_film_dh_dt(h, load_n, eta_pas, radius_a_m);
     SqueezeFilmResult {
@@ -707,7 +696,13 @@ pub struct SoilScalarResult {
 
 /// Bekker–Wong pressure-sinkage formula `p = (k_c / b + k_phi) * z^n` (Pa; `Estimated`).
 #[must_use]
-pub fn bekker_pressure(k_c: f64, k_phi: f64, width_b_m: f64, n: f64, sinkage_z_m: f64) -> SoilScalarResult {
+pub fn bekker_pressure(
+    k_c: f64,
+    k_phi: f64,
+    width_b_m: f64,
+    n: f64,
+    sinkage_z_m: f64,
+) -> SoilScalarResult {
     let value_pa = (k_c / width_b_m + k_phi) * sinkage_z_m.powf(n);
     SoilScalarResult {
         value_pa,
@@ -825,12 +820,18 @@ fn grid_has_path(
 ) -> bool {
     let cols = (2 * nx_half + 1) as usize;
     let rows = (2 * ny_half + 1) as usize;
-    let idx = |ix: i32, iy: i32| -> usize { ((ix + nx_half) as usize) * rows + ((iy + ny_half) as usize) };
+    let idx = |ix: i32, iy: i32| -> usize {
+        ((ix + nx_half) as usize) * rows + ((iy + ny_half) as usize)
+    };
     let cell_ok = |ix: i32, iy: i32| -> bool {
         let c = if block_center_cell && ix == 0 && iy == 0 {
             0.0
         } else {
-            doorway_point_clearance(f64::from(ix) * cell_delta, f64::from(iy) * cell_delta, doorway_width_d)
+            doorway_point_clearance(
+                f64::from(ix) * cell_delta,
+                f64::from(iy) * cell_delta,
+                doorway_width_d,
+            )
         };
         c + band_offset > margin_w
     };
@@ -878,7 +879,13 @@ pub fn doorway_verdict(
     margin_w_m: f64,
     block_center_cell: bool,
 ) -> ClearanceVerdict {
-    let band = clearance_band(cell_delta_m, ref_radius_rho_m, n_heading_bins, eps_field_m, u_reg_m);
+    let band = clearance_band(
+        cell_delta_m,
+        ref_radius_rho_m,
+        n_heading_bins,
+        eps_field_m,
+        u_reg_m,
+    );
     let nx_half = 6;
     let ny_half = ((doorway_width_d_m / cell_delta_m).ceil() as i32).max(4) + 2;
 
@@ -922,7 +929,13 @@ pub fn clearance_sandwich_doorway(
     eps_field_m: f64,
     u_reg_m: f64,
 ) -> DoorwaySandwichReport {
-    let band = clearance_band(cell_delta_m, ref_radius_rho_m, n_heading_bins, eps_field_m, u_reg_m);
+    let band = clearance_band(
+        cell_delta_m,
+        ref_radius_rho_m,
+        n_heading_bins,
+        eps_field_m,
+        u_reg_m,
+    );
     let nx_half = 6;
     let ny_half = ((doorway_width_d_m / cell_delta_m).ceil() as i32).max(4) + 2;
 
@@ -943,7 +956,15 @@ pub fn clearance_sandwich_doorway(
     // Largest candidate c* such that a path exists with every cell clearance >= c* (i.e. > c* - eps).
     let mut bottleneck_c = 0.0_f64;
     for &cand in cands.iter().rev() {
-        if grid_has_path(nx_half, ny_half, cell_delta_m, doorway_width_d_m, 0.0, cand - 1e-12, false) {
+        if grid_has_path(
+            nx_half,
+            ny_half,
+            cell_delta_m,
+            doorway_width_d_m,
+            0.0,
+            cand - 1e-12,
+            false,
+        ) {
             bottleneck_c = cand;
             break;
         }

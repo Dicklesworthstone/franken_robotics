@@ -175,8 +175,8 @@ measured = "40 of 42 full laws"
 evidence = ["ev:0002"]
 recorded = { date = "2026-11-24", session = "FreshReviewer", implemented_by = "BuilderA" }
 "#;
-    let doc = BaseDocument::parse_str(src, "synthetic:two_part.toml")
-        .expect("two-part gate must parse");
+    let doc =
+        BaseDocument::parse_str(src, "synthetic:two_part.toml").expect("two-part gate must parse");
     let g = &doc.gates[0];
     assert_eq!(g.parts().len(), 2);
     assert_eq!(g.derived_status_at("M0"), Status::NotRun);
@@ -185,7 +185,11 @@ recorded = { date = "2026-11-24", session = "FreshReviewer", implemented_by = "B
     assert_eq!(g.derived_status_at("M2"), Status::Pass);
     assert_eq!(g.derived_status_at("M3"), Status::Fail);
     assert_eq!(g.derived_status(), Status::Fail);
-    assert_eq!(doc.print_toml(), src, "two-part roundtrip must be byte-identical");
+    assert_eq!(
+        doc.print_toml(),
+        src,
+        "two-part roundtrip must be byte-identical"
+    );
 
     // A gate with no parts recorded derives NotRun and prints "not run".
     let zero_part = r#"schema = "frob.gates/1"
@@ -223,7 +227,8 @@ fn missing_base_field_names_gate() {
     ];
 
     for (omitted, _) in base_lines {
-        let mut toml = String::from("schema = \"frob.gates/1\"\n\n[[gate]]\nid = \"GATE-MISS-42\"\n");
+        let mut toml =
+            String::from("schema = \"frob.gates/1\"\n\n[[gate]]\nid = \"GATE-MISS-42\"\n");
         for (name, line) in base_lines {
             if name != omitted {
                 toml.push_str(line);
@@ -245,8 +250,8 @@ fn missing_base_field_names_gate() {
 
     // Missing `id` also fails cleanly.
     let no_id = "schema = \"frob.gates/1\"\n\n[[gate]]\nclaim = \"known-answer\"\nclaim_id = \"clm:1\"\nsection = \"38.13\"\nthreshold = \"t\"\nmilestone = \"M0\"\ntier = [\"G0:host\"]\ncontrols = [\"NC-0001\"]\n";
-    let err = BaseDocument::parse_str(no_id, "synthetic:no_id.toml")
-        .expect_err("missing id must fail");
+    let err =
+        BaseDocument::parse_str(no_id, "synthetic:no_id.toml").expect_err("missing id must fail");
     assert!(err.message.contains("id"));
 }
 
@@ -268,7 +273,11 @@ decided = "M2"
     assert_eq!(doc.gates[0].effective_kind(), BaseKind::Kill);
     assert!(doc.gates[0].measured.is_none());
     assert_eq!(doc.gates[0].decided.as_deref(), Some("M2"));
-    assert_eq!(doc.print_toml(), kill_toml, "kill row must roundtrip identically");
+    assert_eq!(
+        doc.print_toml(),
+        kill_toml,
+        "kill row must roundtrip identically"
+    );
 
     // Adding any of the six measurement fields to a kill row fails naming gate and field.
     let forbidden_snippets: [(&str, &str); 6] = [
@@ -307,7 +316,11 @@ fn count_assertion() {
     assert_eq!(exp.plan_inventory.admission, 32);
     assert_eq!(exp.plan_inventory.total, 421);
     assert_eq!(exp.plan_inventory.kill_intro_count, 112);
-    assert!(exp.plan_inventory.kill_count_delta_report().contains("delta=1"));
+    assert!(
+        exp.plan_inventory
+            .kill_count_delta_report()
+            .contains("delta=1")
+    );
     // Round-4 review note #1198 (N40-02 step 5): 40 multi-part convergence gates + 3 admission.
     assert_eq!(exp.plan_inventory.multi_part_convergence, 40);
     assert_eq!(exp.plan_inventory.multi_part_admission, 3);

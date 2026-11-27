@@ -300,7 +300,10 @@ fn str_list(
             other => Err(GateLoadError::new(
                 file,
                 Some(row),
-                format!("`{key}` element expected string, found {}", other.type_name()),
+                format!(
+                    "`{key}` element expected string, found {}",
+                    other.type_name()
+                ),
             )),
         })
         .collect()
@@ -317,7 +320,11 @@ fn parse_gate_row(tbl: Table, idx: usize, file: &str) -> Result<GateRow, GateLoa
 
     let id = f.require_str("id").map_err(err)?;
     if id.trim().is_empty() {
-        return Err(f.fail(GateLoadError::new(file, Some(&label), "`id` must be non-empty")));
+        return Err(f.fail(GateLoadError::new(
+            file,
+            Some(&label),
+            "`id` must be non-empty",
+        )));
     }
     let claim = f.require_str("claim").map_err(err)?;
     if !matches!(

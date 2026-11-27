@@ -43,14 +43,8 @@ use frob_core::registry::toml::{self, Fields, Spanned, Table, Value};
 pub const GATES_SCHEMA: &str = "frob.gates/1";
 
 /// Measurement fields forbidden on `kind = "kill"` rows (`N38b-18`, `N40-01`).
-pub const KILL_FORBIDDEN_FIELDS: &[&str] = &[
-    "claim",
-    "claim_id",
-    "threshold",
-    "tier",
-    "controls",
-    "part",
-];
+pub const KILL_FORBIDDEN_FIELDS: &[&str] =
+    &["claim", "claim_id", "threshold", "tier", "controls", "part"];
 
 /// Closed set of the seven gate claim kinds (`frob.gates/1`, `N38b-18`).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -245,7 +239,9 @@ impl BaseKind {
             other => Err(BaseRowError::new(
                 file,
                 Some(gate_id),
-                format!("unknown gate kind `{other}` (expected: admission, convergence, program, kill)"),
+                format!(
+                    "unknown gate kind `{other}` (expected: admission, convergence, program, kill)"
+                ),
             )),
         }
     }
@@ -348,14 +344,8 @@ impl PartBase {
     #[must_use]
     pub fn printed_status(&self) -> String {
         let context = match self.status {
-            Status::Killed => self
-                .fallback
-                .as_deref()
-                .or(self.detail.as_deref()),
-            Status::Blocked => self
-                .open_question
-                .as_deref()
-                .or(self.detail.as_deref()),
+            Status::Killed => self.fallback.as_deref().or(self.detail.as_deref()),
+            Status::Blocked => self.open_question.as_deref().or(self.detail.as_deref()),
             Status::Superseded => self.detail.as_deref(),
             _ => None,
         };
@@ -394,7 +384,8 @@ impl GateBase {
     /// Effective kind of this row (explicit `kind` if present, otherwise inferred from `id`).
     #[must_use]
     pub fn effective_kind(&self) -> BaseKind {
-        self.kind.unwrap_or_else(|| BaseKind::infer_from_id(&self.id))
+        self.kind
+            .unwrap_or_else(|| BaseKind::infer_from_id(&self.id))
     }
 
     /// True when this row is a kill gate carrying no measurement fields.
@@ -434,7 +425,10 @@ impl GateBase {
             Some(m) => self.latest_due_part(m),
             None => self.latest_part(),
         };
-        part.map_or_else(|| Status::NotRun.printed_form(None), PartBase::printed_status)
+        part.map_or_else(
+            || Status::NotRun.printed_form(None),
+            PartBase::printed_status,
+        )
     }
 
     fn latest_part(&self) -> Option<&PartBase> {
@@ -747,7 +741,10 @@ fn str_list(
             other => Err(BaseRowError::new(
                 file,
                 Some(gate_id),
-                format!("`{field}` elements must be strings, found {}", other.type_name()),
+                format!(
+                    "`{field}` elements must be strings, found {}",
+                    other.type_name()
+                ),
             )),
         })
         .collect()
@@ -969,7 +966,14 @@ fn parse_part_base(
     let open_question = f.opt_str("open_question").map_err(err)?;
 
     // Tolerate additive register-layer part provenance fields owned by N40-01.
-    for additive in ["scope", "commit", "command", "receipt", "fingerprint", "seed"] {
+    for additive in [
+        "scope",
+        "commit",
+        "command",
+        "receipt",
+        "fingerprint",
+        "seed",
+    ] {
         let _ = f.take(additive);
     }
 

@@ -27,7 +27,11 @@ pub struct Spanned<T> {
 impl<T> Spanned<T> {
     #[must_use]
     pub const fn new(value: T, line: u32, column: u32) -> Self {
-        Self { value, line, column }
+        Self {
+            value,
+            line,
+            column,
+        }
     }
 }
 
@@ -143,7 +147,10 @@ impl Table {
 
     #[must_use]
     pub fn from_entries(entries: BTreeMap<String, Spanned<Value>>) -> Self {
-        Self { span: (1, 1), entries }
+        Self {
+            span: (1, 1),
+            entries,
+        }
     }
 
     #[must_use]
@@ -195,9 +202,10 @@ impl Table {
         if self.entries.len() != other.entries.len() {
             return false;
         }
-        self.entries.iter().zip(other.entries.iter()).all(|((ka, va), (kb, vb))| {
-            ka == kb && va.value.eq_values(&vb.value)
-        })
+        self.entries
+            .iter()
+            .zip(other.entries.iter())
+            .all(|((ka, va), (kb, vb))| ka == kb && va.value.eq_values(&vb.value))
     }
 
     fn insert_kv(
@@ -254,9 +262,19 @@ pub enum TomlErrorKind {
     ByteOrderMark,
     TooLarge,
     TooDeep,
-    UnknownKey { table: String, key: String },
-    MissingKey { table: String, key: String },
-    TypeMismatch { key: String, expected: &'static str, found: &'static str },
+    UnknownKey {
+        table: String,
+        key: String,
+    },
+    MissingKey {
+        table: String,
+        key: String,
+    },
+    TypeMismatch {
+        key: String,
+        expected: &'static str,
+        found: &'static str,
+    },
 }
 
 fn subset_fix_hint(construct: &str) -> &'static str {
@@ -266,7 +284,9 @@ fn subset_fix_hint(construct: &str) -> &'static str {
         "multi-line string" => "use a single-line basic string `\"...\"` with `\\n` escapes",
         "float" => "use a decimal integer or quoted string",
         "date" => "quote dates and timestamps as basic strings",
-        "hexadecimal integer" | "octal integer" | "binary integer" => "write the integer in base-10 decimal",
+        "hexadecimal integer" | "octal integer" | "binary integer" => {
+            "write the integer in base-10 decimal"
+        }
         "underscore in integer" => "write decimal digits without underscores",
         "escape \\b" => "use `\\u0008` instead of `\\b`",
         "escape \\f" => "use `\\u000c` instead of `\\f`",
@@ -281,10 +301,16 @@ impl fmt::Display for TomlError {
         match &self.kind {
             TomlErrorKind::Syntax(msg) => write!(f, "syntax error: {msg}"),
             TomlErrorKind::DuplicateKey(key) => {
-                write!(f, "duplicate key `{key}` (remove or merge the repeated key)")
+                write!(
+                    f,
+                    "duplicate key `{key}` (remove or merge the repeated key)"
+                )
             }
             TomlErrorKind::TableRedefined(name) => {
-                write!(f, "table `{name}` redefined or conflicts with an existing value")
+                write!(
+                    f,
+                    "table `{name}` redefined or conflicts with an existing value"
+                )
             }
             TomlErrorKind::OutsideSubset(construct) => write!(
                 f,
@@ -295,23 +321,36 @@ impl fmt::Display for TomlError {
                 f.write_str("integer out of signed 64-bit range (i64::MIN..=i64::MAX)")
             }
             TomlErrorKind::InvalidUtf8 => f.write_str("invalid UTF-8 byte sequence"),
-            TomlErrorKind::ByteOrderMark => {
-                f.write_str("UTF-8 byte-order mark (BOM) is forbidden; re-save as UTF-8 without BOM")
-            }
+            TomlErrorKind::ByteOrderMark => f.write_str(
+                "UTF-8 byte-order mark (BOM) is forbidden; re-save as UTF-8 without BOM",
+            ),
             TomlErrorKind::TooLarge => {
-                write!(f, "input exceeds maximum size of {MAX_INPUT_BYTES} bytes (16 MiB)")
+                write!(
+                    f,
+                    "input exceeds maximum size of {MAX_INPUT_BYTES} bytes (16 MiB)"
+                )
             }
             TomlErrorKind::TooDeep => {
                 write!(f, "nesting exceeds maximum depth of {MAX_NESTING_DEPTH}")
             }
             TomlErrorKind::UnknownKey { table, key } => {
-                write!(f, "unknown key `{key}` in table `{table}` (check spelling or remove)")
+                write!(
+                    f,
+                    "unknown key `{key}` in table `{table}` (check spelling or remove)"
+                )
             }
             TomlErrorKind::MissingKey { table, key } => {
                 write!(f, "missing required key `{key}` in table `{table}`")
             }
-            TomlErrorKind::TypeMismatch { key, expected, found } => {
-                write!(f, "type mismatch for key `{key}`: expected {expected}, found {found}")
+            TomlErrorKind::TypeMismatch {
+                key,
+                expected,
+                found,
+            } => {
+                write!(
+                    f,
+                    "type mismatch for key `{key}`: expected {expected}, found {found}"
+                )
             }
         }
     }
@@ -379,7 +418,12 @@ impl Fields {
         )
     }
 
-    fn mismatch(&mut self, key: &str, spanned: &Spanned<Value>, expected: &'static str) -> TomlError {
+    fn mismatch(
+        &mut self,
+        key: &str,
+        spanned: &Spanned<Value>,
+        expected: &'static str,
+    ) -> TomlError {
         self.failed = true;
         TomlError::new(
             spanned.line,
@@ -393,7 +437,9 @@ impl Fields {
     }
 
     pub fn opt_str(&mut self, key: &str) -> Result<Option<String>, TomlError> {
-        let Some(sp) = self.take(key) else { return Ok(None) };
+        let Some(sp) = self.take(key) else {
+            return Ok(None);
+        };
         match sp.value {
             Value::Str(s) => Ok(Some(s)),
             _ => Err(self.mismatch(key, &sp, "string")),
@@ -405,7 +451,9 @@ impl Fields {
     }
 
     pub fn opt_int(&mut self, key: &str) -> Result<Option<i64>, TomlError> {
-        let Some(sp) = self.take(key) else { return Ok(None) };
+        let Some(sp) = self.take(key) else {
+            return Ok(None);
+        };
         match sp.value {
             Value::Int(v) => Ok(Some(v)),
             _ => Err(self.mismatch(key, &sp, "integer")),
@@ -417,7 +465,9 @@ impl Fields {
     }
 
     pub fn opt_bool(&mut self, key: &str) -> Result<Option<bool>, TomlError> {
-        let Some(sp) = self.take(key) else { return Ok(None) };
+        let Some(sp) = self.take(key) else {
+            return Ok(None);
+        };
         match sp.value {
             Value::Bool(v) => Ok(Some(v)),
             _ => Err(self.mismatch(key, &sp, "boolean")),
@@ -429,7 +479,9 @@ impl Fields {
     }
 
     pub fn opt_array(&mut self, key: &str) -> Result<Option<Vec<Spanned<Value>>>, TomlError> {
-        let Some(sp) = self.take(key) else { return Ok(None) };
+        let Some(sp) = self.take(key) else {
+            return Ok(None);
+        };
         match sp.value {
             Value::Array(v) => Ok(Some(v)),
             _ => Err(self.mismatch(key, &sp, "array")),
@@ -441,7 +493,9 @@ impl Fields {
     }
 
     pub fn opt_table(&mut self, key: &str) -> Result<Option<Table>, TomlError> {
-        let Some(sp) = self.take(key) else { return Ok(None) };
+        let Some(sp) = self.take(key) else {
+            return Ok(None);
+        };
         match sp.value {
             Value::Table(t) => Ok(Some(t)),
             _ => Err(self.mismatch(key, &sp, "table")),
@@ -584,7 +638,11 @@ impl BuildTable {
         column: u32,
     ) -> Result<(), TomlError> {
         if self.headers.contains_key(&key) {
-            return Err(TomlError::new(line, column, TomlErrorKind::DuplicateKey(key)));
+            return Err(TomlError::new(
+                line,
+                column,
+                TomlErrorKind::DuplicateKey(key),
+            ));
         }
         self.table.insert_kv(key, value, line, column)
     }
@@ -879,7 +937,11 @@ impl<'a> Parser<'a> {
                 }
                 let (l, c) = (self.line, self.col);
                 self.scan_literal_string()?;
-                Err(TomlError::new(l, c, TomlErrorKind::OutsideSubset("literal string")))
+                Err(TomlError::new(
+                    l,
+                    c,
+                    TomlErrorKind::OutsideSubset("literal string"),
+                ))
             }
             Some(b) if is_bare_key_byte(b) => Ok(self.parse_bare_key()),
             _ => Err(self.syntax("expected key (bare identifier or double-quoted string)")),
@@ -939,7 +1001,11 @@ impl<'a> Parser<'a> {
                     ));
                 }
                 self.scan_literal_string()?;
-                Err(TomlError::new(l, c, TomlErrorKind::OutsideSubset("literal string")))
+                Err(TomlError::new(
+                    l,
+                    c,
+                    TomlErrorKind::OutsideSubset("literal string"),
+                ))
             }
             Some(b'[') => self.parse_array(depth),
             Some(b'{') => self.parse_inline_table(depth),
@@ -1066,9 +1132,9 @@ impl<'a> Parser<'a> {
                     self.col = self.col.saturating_add(1);
                     self.skip_ws();
                     if self.peek_byte() == Some(b'}') {
-                        return Err(self.syntax(
-                            "trailing comma in inline table is forbidden in TOML 1.0",
-                        ));
+                        return Err(
+                            self.syntax("trailing comma in inline table is forbidden in TOML 1.0")
+                        );
                     }
                 }
                 Some(b'\n' | b'\r') => {
@@ -1308,9 +1374,9 @@ impl<'a> Parser<'a> {
                     if count <= 5 {
                         return Ok(());
                     }
-                    return Err(
-                        self.syntax("six or more consecutive single quotes in multi-line literal string")
-                    );
+                    return Err(self.syntax(
+                        "six or more consecutive single quotes in multi-line literal string",
+                    ));
                 }
                 '\n' | '\r' => {
                     self.consume_newline()?;
@@ -1978,7 +2044,10 @@ version = "=0.7.0"
         // Also parse a synthetic [[gate]] registry row and rust-toolchain.toml.
         let gate_reg = "schema = \"frob.gates/1\"\n[[gate]]\nid = \"GATE-WS-01\"\ntier = \"G0\"\n";
         let gdoc = parse(gate_reg.as_bytes()).expect("parse gate registry");
-        assert_eq!(gdoc.get("gate").and_then(Value::as_array).map(<[_]>::len), Some(1));
+        assert_eq!(
+            gdoc.get("gate").and_then(Value::as_array).map(<[_]>::len),
+            Some(1)
+        );
 
         let tc = "[toolchain]\nchannel = \"nightly-2026-08-31\"\ncomponents = [\"rustfmt\", \"clippy\"]\n";
         let tdoc = parse(tc.as_bytes()).expect("parse rust-toolchain.toml");
@@ -2015,10 +2084,21 @@ dependencies = [
 "#;
         let doc = parse(cargo_lock.as_bytes()).expect("parse Cargo.lock");
         assert_eq!(doc.get("version").and_then(Value::as_int), Some(4));
-        let pkgs = doc.get("package").and_then(Value::as_array).expect("packages");
+        let pkgs = doc
+            .get("package")
+            .and_then(Value::as_array)
+            .expect("packages");
         let names: Vec<&str> = pkgs
             .iter()
-            .map(|p| p.value.as_table().unwrap().get("name").unwrap().as_str().unwrap())
+            .map(|p| {
+                p.value
+                    .as_table()
+                    .unwrap()
+                    .get("name")
+                    .unwrap()
+                    .as_str()
+                    .unwrap()
+            })
             .collect();
         assert_eq!(names, vec!["frob-core", "frob-cert", "xtask"]);
     }
@@ -2071,8 +2151,10 @@ dependencies = [
 
     #[test]
     fn toml_integer_range() {
-        let doc = parse(b"max = 9223372036854775807\nmin = -9223372036854775808\nz1 = 0\nz2 = +0\nz3 = -0\n")
-            .expect("i64 bounds");
+        let doc = parse(
+            b"max = 9223372036854775807\nmin = -9223372036854775808\nz1 = 0\nz2 = +0\nz3 = -0\n",
+        )
+        .expect("i64 bounds");
         assert_eq!(doc.get("max").and_then(Value::as_int), Some(i64::MAX));
         assert_eq!(doc.get("min").and_then(Value::as_int), Some(i64::MIN));
         assert_eq!(doc.get("z1").and_then(Value::as_int), Some(0));
@@ -2086,7 +2168,10 @@ dependencies = [
         assert!(matches!(lz.kind, TomlErrorKind::Syntax(_)), "got {lz:?}");
 
         let us = parse(b"x = 1_000\n").expect_err("underscore");
-        assert_eq!(us.kind, TomlErrorKind::OutsideSubset("underscore in integer"));
+        assert_eq!(
+            us.kind,
+            TomlErrorKind::OutsideSubset("underscore in integer")
+        );
     }
 
     #[test]
@@ -2218,10 +2303,16 @@ dependencies = [
             Ok(a)
         }
         assert_eq!(load(b"a = 3\n"), Ok(3));
-        assert_eq!(load(b"a = -1\n"), Err("`a` must be non-negative, got -1".to_owned()));
+        assert_eq!(
+            load(b"a = -1\n"),
+            Err("`a` must be non-negative, got -1".to_owned())
+        );
         // `finish` still refuses an unknown key on the success path, and names it.
         let unknown = load(b"a = 3\nb = 1\n").expect_err("an unknown key must be refused");
-        assert!(unknown.contains("unknown key `b` in table `demo`"), "{unknown}");
+        assert!(
+            unknown.contains("unknown key `b` in table `demo`"),
+            "{unknown}"
+        );
     }
 
     /// Negative control for `fail`: the same rejection returned WITHOUT `fail` still trips
@@ -2278,7 +2369,11 @@ dependencies = [
     }
 
     fn gen_value(rng: &mut Rng, depth: usize) -> Value {
-        let choice = if depth >= 3 { rng.gen_range(3) } else { rng.gen_range(5) };
+        let choice = if depth >= 3 {
+            rng.gen_range(3)
+        } else {
+            rng.gen_range(5)
+        };
         match choice {
             0 => Value::Str(gen_str(rng)),
             1 => {

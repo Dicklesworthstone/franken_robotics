@@ -91,7 +91,10 @@ impl ReportRecord {
     fn to_json_value_with_hash(&self, hash_str: String) -> JsonValue {
         let mut entries = vec![
             ("execution_authorized".to_owned(), JsonValue::Bool(false)),
-            ("gate".to_owned(), JsonValue::Str(self.header.gate.as_string())),
+            (
+                "gate".to_owned(),
+                JsonValue::Str(self.header.gate.as_string()),
+            ),
             ("hardware_safety_signoff".to_owned(), JsonValue::Bool(false)),
             (
                 "ratio_decimal".to_owned(),
@@ -147,9 +150,17 @@ impl ReportRecord {
             None => (None, None, None, None),
             Some((lo, hi, places)) => (
                 Some(lo.clone()),
-                Some(render_rational_decimal(&lo, places, RoundingMode::OutwardLower)?),
+                Some(render_rational_decimal(
+                    &lo,
+                    places,
+                    RoundingMode::OutwardLower,
+                )?),
                 Some(hi.clone()),
-                Some(render_rational_decimal(&hi, places, RoundingMode::OutwardUpper)?),
+                Some(render_rational_decimal(
+                    &hi,
+                    places,
+                    RoundingMode::OutwardUpper,
+                )?),
             ),
         };
         let draft = Self {
@@ -227,7 +238,9 @@ fn check_optional_bound(
                     d_ptr,
                     format!("{ds:?}"),
                     format!("{expected:?} (outward rounded)"),
-                    vec![format!("Render `{dec_key}` with outward rounding to `{expected}`")],
+                    vec![format!(
+                        "Render `{dec_key}` with outward rounding to `{expected}`"
+                    )],
                 ));
             }
             Ok((Some(r), Some(ds.to_owned())))

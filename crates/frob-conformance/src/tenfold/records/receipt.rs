@@ -47,15 +47,27 @@ pub struct ReceiptRecord {
 impl ReceiptRecord {
     fn to_json_value_with_hash(&self, hash_str: String) -> JsonValue {
         let mut entries = vec![
-            ("arm".to_owned(), JsonValue::Str(self.arm.as_str().to_owned())),
-            ("campaign".to_owned(), JsonValue::Int(i64::from(self.campaign.0))),
+            (
+                "arm".to_owned(),
+                JsonValue::Str(self.arm.as_str().to_owned()),
+            ),
+            (
+                "campaign".to_owned(),
+                JsonValue::Int(i64::from(self.campaign.0)),
+            ),
             (
                 "elapsed_s".to_owned(),
                 JsonValue::Str(self.elapsed.to_canonical_seconds()),
             ),
             ("execution_authorized".to_owned(), JsonValue::Bool(false)),
-            ("family_id".to_owned(), JsonValue::Str(self.family_id.as_string())),
-            ("gate".to_owned(), JsonValue::Str(self.header.gate.as_string())),
+            (
+                "family_id".to_owned(),
+                JsonValue::Str(self.family_id.as_string()),
+            ),
+            (
+                "gate".to_owned(),
+                JsonValue::Str(self.header.gate.as_string()),
+            ),
             ("hardware_safety_signoff".to_owned(), JsonValue::Bool(false)),
             (
                 "mission_hash".to_owned(),
@@ -74,7 +86,10 @@ impl ReceiptRecord {
             ),
         ];
         if let Some(idx) = self.submission_index {
-            entries.push(("submission_index".to_owned(), JsonValue::Int(i64::from(idx))));
+            entries.push((
+                "submission_index".to_owned(),
+                JsonValue::Int(i64::from(idx)),
+            ));
         }
         JsonValue::Obj(entries)
     }

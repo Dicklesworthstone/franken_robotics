@@ -44,10 +44,7 @@ pub const SEED_ORACLE_IDS: &[&str] = &[
 ];
 
 /// The two standing held-out sibling rows (`BD-034`/`FD-FSIM-10`, `BD-033`/`FD-FSIM-11`).
-pub const HELD_OUT_ORACLE_IDS: &[&str] = &[
-    "fs-g1-train-ppo-update",
-    "fs-mbd-planar-drive",
-];
+pub const HELD_OUT_ORACLE_IDS: &[&str] = &["fs-g1-train-ppo-update", "fs-mbd-planar-drive"];
 
 /// The optional development-oracle row id written by `N38b-35`.
 pub const DEVELOPMENT_ORACLE_ID: &str = "development-oracle";
@@ -146,7 +143,13 @@ impl OracleError {
 
 impl fmt::Display for OracleError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "[{}] {}: {}", self.kind.as_str(), self.subject, self.message)
+        write!(
+            f,
+            "[{}] {}: {}",
+            self.kind.as_str(),
+            self.subject,
+            self.message
+        )
     }
 }
 
@@ -171,7 +174,9 @@ impl Posture {
             other => Err(OracleError::new(
                 OracleErrorKind::InvalidPosture,
                 row,
-                format!("unknown posture `{other}` (expected consume | oracle | out-of-process | derivation)"),
+                format!(
+                    "unknown posture `{other}` (expected consume | oracle | out-of-process | derivation)"
+                ),
             )),
         }
     }
@@ -576,7 +581,10 @@ impl OracleRegister {
                 return Err(OracleError::new(
                     OracleErrorKind::PinMoveEdited,
                     &old.id,
-                    format!("oracle `{}` from previous register was removed (register is append-only)", old.id),
+                    format!(
+                        "oracle `{}` from previous register was removed (register is append-only)",
+                        old.id
+                    ),
                 ));
             };
             let pin_changed = curr.pin.value != old.pin.value
@@ -644,9 +652,10 @@ impl OracleRegister {
             ));
         }
         let req_role = parse_role(role_str, &row.id)?;
-        let granted = row.roles.iter().any(|r| {
-            r == &req_role || (req_role.subject.is_none() && r.kind == req_role.kind)
-        });
+        let granted = row
+            .roles
+            .iter()
+            .any(|r| r == &req_role || (req_role.subject.is_none() && r.kind == req_role.kind));
         if !granted {
             return Err(OracleError::new(
                 OracleErrorKind::RoleNotGranted,
@@ -761,10 +770,8 @@ fn parse_oracle_row(tbl: Table, idx: usize) -> Result<OracleRow, OracleError> {
     }
 
     // Validate development-oracle exclusive fields (N38b-35).
-    let has_any_dev = tool.is_some()
-        || dev_label.is_some()
-        || decided.is_some()
-        || decision.is_some();
+    let has_any_dev =
+        tool.is_some() || dev_label.is_some() || decided.is_some() || decision.is_some();
     let dev_meta = if id == DEVELOPMENT_ORACLE_ID {
         let (Some(tool), Some(dev_label), Some(decided), Some(decision)) =
             (tool, dev_label, decided, decision)
@@ -793,7 +800,12 @@ fn parse_oracle_row(tbl: Table, idx: usize) -> Result<OracleRow, OracleError> {
                 "`development-oracle` must have posture = \"out-of-process\"",
             ));
         }
-        if roles != [Role { kind: RoleKind::Pilot, subject: None }] {
+        if roles
+            != [Role {
+                kind: RoleKind::Pilot,
+                subject: None,
+            }]
+        {
             return Err(OracleError::new(
                 OracleErrorKind::InvalidRole,
                 &id,
@@ -957,7 +969,10 @@ fn str_list(row: &str, key: &str, items: Vec<Spanned<Value>>) -> Result<Vec<Stri
             other => Err(OracleError::new(
                 OracleErrorKind::Parse,
                 row,
-                format!("`{key}` element expected string, found {}", other.type_name()),
+                format!(
+                    "`{key}` element expected string, found {}",
+                    other.type_name()
+                ),
             )),
         })
         .collect()
@@ -1050,11 +1065,20 @@ pub fn parse_and_verify_fixture(
     content: &str,
     rel_path: &str,
 ) -> Result<OracleFixture, OracleError> {
-    let root = toml::parse(content.as_bytes())
-        .map_err(|e| OracleError::new(OracleErrorKind::FixtureHeaderMissing, rel_path, e.to_string()))?;
+    let root = toml::parse(content.as_bytes()).map_err(|e| {
+        OracleError::new(
+            OracleErrorKind::FixtureHeaderMissing,
+            rel_path,
+            e.to_string(),
+        )
+    })?;
     let mut f = Fields::new(root, rel_path);
     let miss = |e: toml::TomlError| {
-        OracleError::new(OracleErrorKind::FixtureHeaderMissing, rel_path, e.to_string())
+        OracleError::new(
+            OracleErrorKind::FixtureHeaderMissing,
+            rel_path,
+            e.to_string(),
+        )
     };
 
     let kind = f.require_str("kind").map_err(miss)?;
@@ -1156,7 +1180,11 @@ pub fn parse_and_verify_fixture(
 fn parse_fixture_ref(tbl: Table, rel_path: &str, ctx: &str) -> Result<FixtureRef, OracleError> {
     let mut f = Fields::new(tbl, format!("{rel_path}.{ctx}"));
     let err = |e: toml::TomlError| {
-        OracleError::new(OracleErrorKind::FixtureHeaderMissing, rel_path, e.to_string())
+        OracleError::new(
+            OracleErrorKind::FixtureHeaderMissing,
+            rel_path,
+            e.to_string(),
+        )
     };
     let path = f.require_str("path").map_err(err)?;
     let sha256 = f.require_str("sha256").map_err(err)?;
@@ -1206,7 +1234,10 @@ pub fn is_forbidden_workspace_input(raw_path: &str) -> bool {
 /// Scan a capture script under `tools/oracle/` for declared inputs (lines of the
 /// form `# inputs: ...`, `# input: ...`, or `CAPTURE_INPUTS=...` / `INPUTS=...`)
 /// and reject any path naming a workspace build product or crate.
-pub fn check_capture_script_inputs(script_content: &str, script_rel: &str) -> Result<(), OracleError> {
+pub fn check_capture_script_inputs(
+    script_content: &str,
+    script_rel: &str,
+) -> Result<(), OracleError> {
     for (idx, raw_line) in script_content.lines().enumerate() {
         let line = raw_line.trim();
         let rest = line
@@ -1326,7 +1357,10 @@ pub fn verify_fixture_change_against_baseline(
     let has_move = register.pin_moves.iter().any(|pm| {
         pm.target == fixture.oracle
             && pm.to == fixture.pin
-            && pm.fixtures_recaptured.iter().any(|p| p == &fixture.rel_path)
+            && pm
+                .fixtures_recaptured
+                .iter()
+                .any(|p| p == &fixture.rel_path)
     });
     if has_move {
         Ok(())
@@ -1486,16 +1520,15 @@ pub fn record_disagreement_if_any(
 
 /// True iff the fixture is not marked `disputed` and has no unresolved disputed finding.
 #[must_use]
-pub fn fixture_supports_gate(
-    fixture: &OracleFixture,
-    findings: &[DisagreementFinding],
-) -> bool {
+pub fn fixture_supports_gate(fixture: &OracleFixture, findings: &[DisagreementFinding]) -> bool {
     if fixture.status == FixtureStatus::Disputed {
         return false;
     }
-    !findings
-        .iter()
-        .any(|f| f.fixture == fixture.rel_path && f.status == "disputed" && f.derivation_resolution.is_empty())
+    !findings.iter().any(|f| {
+        f.fixture == fixture.rel_path
+            && f.status == "disputed"
+            && f.derivation_resolution.is_empty()
+    })
 }
 
 /// Load all `[[finding]]` rows from `oracle_findings.toml`.
@@ -1503,12 +1536,20 @@ pub fn load_findings(path: &Path) -> Result<Vec<DisagreementFinding>, OracleErro
     if !path.is_file() {
         return Ok(Vec::new());
     }
-    let bytes = fs::read(path)
-        .map_err(|e| OracleError::new(OracleErrorKind::Io, path.display().to_string(), e.to_string()))?;
+    let bytes = fs::read(path).map_err(|e| {
+        OracleError::new(
+            OracleErrorKind::Io,
+            path.display().to_string(),
+            e.to_string(),
+        )
+    })?;
     parse_findings_bytes(&bytes, &path.display().to_string())
 }
 
-pub fn parse_findings_bytes(bytes: &[u8], file: &str) -> Result<Vec<DisagreementFinding>, OracleError> {
+pub fn parse_findings_bytes(
+    bytes: &[u8],
+    file: &str,
+) -> Result<Vec<DisagreementFinding>, OracleError> {
     let root = toml::parse(bytes)
         .map_err(|e| OracleError::new(OracleErrorKind::Parse, file, e.to_string()))?;
     let mut top = Fields::new(root, "oracle_findings");
@@ -1542,7 +1583,8 @@ pub fn parse_findings_bytes(bytes: &[u8], file: &str) -> Result<Vec<Disagreement
             }
         };
         let mut f = Fields::new(tbl, format!("finding[{idx}]"));
-        let err = |e: toml::TomlError| OracleError::new(OracleErrorKind::Parse, file, e.to_string());
+        let err =
+            |e: toml::TomlError| OracleError::new(OracleErrorKind::Parse, file, e.to_string());
         let item = DisagreementFinding {
             fixture: f.require_str("fixture").map_err(err)?,
             measurement: f.require_str("measurement").map_err(err)?,
@@ -1557,7 +1599,10 @@ pub fn parse_findings_bytes(bytes: &[u8], file: &str) -> Result<Vec<Disagreement
             tighter_tolerance: f.require_str("tighter_tolerance").map_err(err)?,
             delta: f.require_str("delta").map_err(err)?,
             status: f.require_str("status").map_err(err)?,
-            derivation_resolution: f.opt_str("derivation_resolution").map_err(err)?.unwrap_or_default(),
+            derivation_resolution: f
+                .opt_str("derivation_resolution")
+                .map_err(err)?
+                .unwrap_or_default(),
         };
         f.finish().map_err(err)?;
         out.push(item);
@@ -1567,12 +1612,22 @@ pub fn parse_findings_bytes(bytes: &[u8], file: &str) -> Result<Vec<Disagreement
 
 fn append_finding_to_toml(path: &Path, f: &DisagreementFinding) -> Result<(), OracleError> {
     if let Some(parent) = path.parent() {
-        fs::create_dir_all(parent)
-            .map_err(|e| OracleError::new(OracleErrorKind::Io, path.display().to_string(), e.to_string()))?;
+        fs::create_dir_all(parent).map_err(|e| {
+            OracleError::new(
+                OracleErrorKind::Io,
+                path.display().to_string(),
+                e.to_string(),
+            )
+        })?;
     }
     let mut existing = if path.is_file() {
-        fs::read_to_string(path)
-            .map_err(|e| OracleError::new(OracleErrorKind::Io, path.display().to_string(), e.to_string()))?
+        fs::read_to_string(path).map_err(|e| {
+            OracleError::new(
+                OracleErrorKind::Io,
+                path.display().to_string(),
+                e.to_string(),
+            )
+        })?
     } else {
         format!("schema = \"{ORACLE_FINDINGS_SCHEMA}\"\n")
     };
@@ -1609,13 +1664,23 @@ fn append_finding_to_toml(path: &Path, f: &DisagreementFinding) -> Result<(), Or
         }
         existing.push_str("\"\n");
     }
-    fs::write(path, existing)
-        .map_err(|e| OracleError::new(OracleErrorKind::Io, path.display().to_string(), e.to_string()))
+    fs::write(path, existing).map_err(|e| {
+        OracleError::new(
+            OracleErrorKind::Io,
+            path.display().to_string(),
+            e.to_string(),
+        )
+    })
 }
 
 fn mark_fixture_disputed(path: &Path) -> Result<(), OracleError> {
-    let txt = fs::read_to_string(path)
-        .map_err(|e| OracleError::new(OracleErrorKind::Io, path.display().to_string(), e.to_string()))?;
+    let txt = fs::read_to_string(path).map_err(|e| {
+        OracleError::new(
+            OracleErrorKind::Io,
+            path.display().to_string(),
+            e.to_string(),
+        )
+    })?;
     let mut updated = String::with_capacity(txt.len() + 32);
     let mut saw_status = false;
     for chunk in txt.split_inclusive('\n') {
@@ -1639,8 +1704,13 @@ fn mark_fixture_disputed(path: &Path) -> Result<(), OracleError> {
     }
     let new_hash = compute_fixture_bytes_sha256(&updated);
     let signed = replace_bytes_sha256_line(&updated, &new_hash);
-    fs::write(path, signed)
-        .map_err(|e| OracleError::new(OracleErrorKind::Io, path.display().to_string(), e.to_string()))
+    fs::write(path, signed).map_err(|e| {
+        OracleError::new(
+            OracleErrorKind::Io,
+            path.display().to_string(),
+            e.to_string(),
+        )
+    })
 }
 
 /// Rewrite the `bytes_sha256 = "..."` line in fixture text with `digest`.

@@ -21,16 +21,86 @@ pub struct SectionSpec {
 }
 
 pub const COMPENDIUM_SECTIONS: &[SectionSpec] = &[
-    SectionSpec { id: "D.1", slug: "d1", toml_file: "d1.toml", oracle_rel: "crates/frob-conformance/src/compendium/d1.rs", test_rel: "crates/frob-conformance/tests/compendium_d1.rs", expected_rows: 21 },
-    SectionSpec { id: "D.2", slug: "d2", toml_file: "d2.toml", oracle_rel: "crates/frob-conformance/src/compendium/d2.rs", test_rel: "crates/frob-conformance/tests/compendium_d2.rs", expected_rows: 12 },
-    SectionSpec { id: "D.3", slug: "d3", toml_file: "d3.toml", oracle_rel: "crates/frob-conformance/src/compendium/d3.rs", test_rel: "crates/frob-conformance/tests/compendium_d3.rs", expected_rows: 10 },
-    SectionSpec { id: "D.4", slug: "d4", toml_file: "d4.toml", oracle_rel: "crates/frob-conformance/src/compendium/d4.rs", test_rel: "crates/frob-conformance/tests/compendium_d4.rs", expected_rows: 14 },
-    SectionSpec { id: "D.5", slug: "d5", toml_file: "d5.toml", oracle_rel: "crates/frob-conformance/src/compendium/d5.rs", test_rel: "crates/frob-conformance/tests/compendium_d5.rs", expected_rows: 10 },
-    SectionSpec { id: "D.6", slug: "d6", toml_file: "d6.toml", oracle_rel: "crates/frob-conformance/src/compendium/d6.rs", test_rel: "crates/frob-conformance/tests/compendium_d6.rs", expected_rows: 15 },
-    SectionSpec { id: "D.7", slug: "d7", toml_file: "d7.toml", oracle_rel: "crates/frob-conformance/src/compendium/d7.rs", test_rel: "crates/frob-conformance/tests/compendium_d7.rs", expected_rows: 7 },
-    SectionSpec { id: "D.8", slug: "d8", toml_file: "d8.toml", oracle_rel: "crates/frob-conformance/src/compendium/d8.rs", test_rel: "crates/frob-conformance/tests/compendium_d8.rs", expected_rows: 19 },
-    SectionSpec { id: "D.9", slug: "d9", toml_file: "d9.toml", oracle_rel: "crates/frob-conformance/src/compendium/d9.rs", test_rel: "crates/frob-conformance/tests/compendium_d9.rs", expected_rows: 14 },
-    SectionSpec { id: "D.10", slug: "d10", toml_file: "d10.toml", oracle_rel: "crates/frob-conformance/src/compendium/d10.rs", test_rel: "crates/frob-conformance/tests/compendium_d10.rs", expected_rows: 4 },
+    SectionSpec {
+        id: "D.1",
+        slug: "d1",
+        toml_file: "d1.toml",
+        oracle_rel: "crates/frob-conformance/src/compendium/d1.rs",
+        test_rel: "crates/frob-conformance/tests/compendium_d1.rs",
+        expected_rows: 21,
+    },
+    SectionSpec {
+        id: "D.2",
+        slug: "d2",
+        toml_file: "d2.toml",
+        oracle_rel: "crates/frob-conformance/src/compendium/d2.rs",
+        test_rel: "crates/frob-conformance/tests/compendium_d2.rs",
+        expected_rows: 12,
+    },
+    SectionSpec {
+        id: "D.3",
+        slug: "d3",
+        toml_file: "d3.toml",
+        oracle_rel: "crates/frob-conformance/src/compendium/d3.rs",
+        test_rel: "crates/frob-conformance/tests/compendium_d3.rs",
+        expected_rows: 10,
+    },
+    SectionSpec {
+        id: "D.4",
+        slug: "d4",
+        toml_file: "d4.toml",
+        oracle_rel: "crates/frob-conformance/src/compendium/d4.rs",
+        test_rel: "crates/frob-conformance/tests/compendium_d4.rs",
+        expected_rows: 14,
+    },
+    SectionSpec {
+        id: "D.5",
+        slug: "d5",
+        toml_file: "d5.toml",
+        oracle_rel: "crates/frob-conformance/src/compendium/d5.rs",
+        test_rel: "crates/frob-conformance/tests/compendium_d5.rs",
+        expected_rows: 10,
+    },
+    SectionSpec {
+        id: "D.6",
+        slug: "d6",
+        toml_file: "d6.toml",
+        oracle_rel: "crates/frob-conformance/src/compendium/d6.rs",
+        test_rel: "crates/frob-conformance/tests/compendium_d6.rs",
+        expected_rows: 15,
+    },
+    SectionSpec {
+        id: "D.7",
+        slug: "d7",
+        toml_file: "d7.toml",
+        oracle_rel: "crates/frob-conformance/src/compendium/d7.rs",
+        test_rel: "crates/frob-conformance/tests/compendium_d7.rs",
+        expected_rows: 7,
+    },
+    SectionSpec {
+        id: "D.8",
+        slug: "d8",
+        toml_file: "d8.toml",
+        oracle_rel: "crates/frob-conformance/src/compendium/d8.rs",
+        test_rel: "crates/frob-conformance/tests/compendium_d8.rs",
+        expected_rows: 19,
+    },
+    SectionSpec {
+        id: "D.9",
+        slug: "d9",
+        toml_file: "d9.toml",
+        oracle_rel: "crates/frob-conformance/src/compendium/d9.rs",
+        test_rel: "crates/frob-conformance/tests/compendium_d9.rs",
+        expected_rows: 14,
+    },
+    SectionSpec {
+        id: "D.10",
+        slug: "d10",
+        toml_file: "d10.toml",
+        oracle_rel: "crates/frob-conformance/src/compendium/d10.rs",
+        test_rel: "crates/frob-conformance/tests/compendium_d10.rs",
+        expected_rows: 4,
+    },
 ];
 
 pub const COMPENDIUM_DOC_MARKER: &str = "<!-- @generated from registries/compendium/d*.toml by frob-conformance example compendium_doc (N12-41); do not edit by hand. -->";
@@ -71,7 +141,12 @@ fn str_list(key: &str, items: Vec<Spanned<Value>>) -> Result<Vec<String>, String
         .into_iter()
         .map(|sp| match sp.value {
             Value::Str(s) => Ok(s),
-            other => Err(format!("{}:{}: `{key}` element expected string, found {}", sp.line, sp.column, other.type_name())),
+            other => Err(format!(
+                "{}:{}: `{key}` element expected string, found {}",
+                sp.line,
+                sp.column,
+                other.type_name()
+            )),
         })
         .collect()
 }
@@ -82,11 +157,15 @@ pub fn parse_section_bytes(bytes: &[u8]) -> Result<CompendiumSection, String> {
     let mut top = Fields::new(root, "<section>");
     let schema = top.require_str("schema").map_err(|e| e.to_string())?;
     if schema != "frob.compendium.section/1" {
-        return Err(format!("unexpected schema `{schema}`, expected `frob.compendium.section/1`"));
+        return Err(format!(
+            "unexpected schema `{schema}`, expected `frob.compendium.section/1`"
+        ));
     }
     let section = top.require_str("section").map_err(|e| e.to_string())?;
     let title = top.require_str("title").map_err(|e| e.to_string())?;
-    let expected_raw = top.require_int("expected_rows").map_err(|e| e.to_string())?;
+    let expected_raw = top
+        .require_int("expected_rows")
+        .map_err(|e| e.to_string())?;
     let expected_rows = usize::try_from(expected_raw)
         .map_err(|_| format!("invalid expected_rows `{expected_raw}`"))?;
     let row_vals = top.require_array("row").map_err(|e| e.to_string())?;
@@ -95,19 +174,36 @@ pub fn parse_section_bytes(bytes: &[u8]) -> Result<CompendiumSection, String> {
     let mut rows = Vec::with_capacity(row_vals.len());
     for (idx, sp) in row_vals.into_iter().enumerate() {
         let Value::Table(tbl) = sp.value else {
-            return Err(format!("{}:{}: row[{idx}] must be a table", sp.line, sp.column));
+            return Err(format!(
+                "{}:{}: row[{idx}] must be a table",
+                sp.line, sp.column
+            ));
         };
         let mut rf = Fields::new(tbl, format!("row[{idx}]"));
         let name = rf.require_str("name").map_err(|e| e.to_string())?;
         let statement = rf.require_str("statement").map_err(|e| e.to_string())?;
         let validity = rf.require_str("validity").map_err(|e| e.to_string())?;
-        let used_in = str_list("used_in", rf.require_array("used_in").map_err(|e| e.to_string())?)?;
+        let used_in = str_list(
+            "used_in",
+            rf.require_array("used_in").map_err(|e| e.to_string())?,
+        )?;
         let oracle = rf.require_str("oracle").map_err(|e| e.to_string())?;
-        let tests = str_list("tests", rf.require_array("tests").map_err(|e| e.to_string())?)?;
-        let negative_control = rf.require_str("negative_control").map_err(|e| e.to_string())?;
-        let carried_by = str_list("carried_by", rf.require_array("carried_by").map_err(|e| e.to_string())?)?;
+        let tests = str_list(
+            "tests",
+            rf.require_array("tests").map_err(|e| e.to_string())?,
+        )?;
+        let negative_control = rf
+            .require_str("negative_control")
+            .map_err(|e| e.to_string())?;
+        let carried_by = str_list(
+            "carried_by",
+            rf.require_array("carried_by").map_err(|e| e.to_string())?,
+        )?;
         let evidence_class = rf.opt_str("evidence_class").map_err(|e| e.to_string())?;
-        let arithmetic = rf.opt_str("arithmetic").map_err(|e| e.to_string())?.unwrap_or_else(|| "exact-rational".to_owned());
+        let arithmetic = rf
+            .opt_str("arithmetic")
+            .map_err(|e| e.to_string())?
+            .unwrap_or_else(|| "exact-rational".to_owned());
         let tolerance = rf.opt_str("tolerance").map_err(|e| e.to_string())?;
         rf.finish().map_err(|e| e.to_string())?;
 
@@ -125,7 +221,12 @@ pub fn parse_section_bytes(bytes: &[u8]) -> Result<CompendiumSection, String> {
             tolerance,
         });
     }
-    Ok(CompendiumSection { section, title, expected_rows, rows })
+    Ok(CompendiumSection {
+        section,
+        title,
+        expected_rows,
+        rows,
+    })
 }
 
 /// Load all present compendium section files in canonical order (`D.1`..`D.10`).
@@ -136,8 +237,8 @@ pub fn load_present_sections(root: &Path) -> Result<Vec<(SectionSpec, Compendium
         let path = dir.join(spec.toml_file);
         if path.is_file() {
             let bytes = fs::read(&path).map_err(|e| format!("read {}: {e}", path.display()))?;
-            let parsed = parse_section_bytes(&bytes)
-                .map_err(|e| format!("{}: {e}", path.display()))?;
+            let parsed =
+                parse_section_bytes(&bytes).map_err(|e| format!("{}: {e}", path.display()))?;
             out.push((spec, parsed));
         }
     }
@@ -188,7 +289,10 @@ pub fn validate_workspace(root: &Path) -> Result<Vec<RegistryFinding>, String> {
                 section: spec.id.into(),
                 row: String::new(),
                 rule: "compendium.section-id".into(),
-                detail: format!("file {} declares section `{}`, expected `{}`", spec.toml_file, sec.section, spec.id),
+                detail: format!(
+                    "file {} declares section `{}`, expected `{}`",
+                    spec.toml_file, sec.section, spec.id
+                ),
             });
         }
         if sec.rows.len() != spec.expected_rows || sec.expected_rows != spec.expected_rows {
@@ -196,7 +300,11 @@ pub fn validate_workspace(root: &Path) -> Result<Vec<RegistryFinding>, String> {
                 section: spec.id.into(),
                 row: String::new(),
                 rule: "compendium.row-count".into(),
-                detail: format!("found {} rows, expected {}", sec.rows.len(), spec.expected_rows),
+                detail: format!(
+                    "found {} rows, expected {}",
+                    sec.rows.len(),
+                    spec.expected_rows
+                ),
             });
         }
         let oracle_path = root.join(spec.oracle_rel);
@@ -243,7 +351,10 @@ pub fn validate_workspace(root: &Path) -> Result<Vec<RegistryFinding>, String> {
                     section: spec.id.into(),
                     row: row.name.clone(),
                     rule: "compendium.oracle-unresolved".into(),
-                    detail: format!("oracle `{}` does not resolve to a `pub fn` in {}", row.oracle, spec.oracle_rel),
+                    detail: format!(
+                        "oracle `{}` does not resolve to a `pub fn` in {}",
+                        row.oracle, spec.oracle_rel
+                    ),
                 }),
             }
             if row.tests.is_empty() {
@@ -276,7 +387,10 @@ pub fn validate_workspace(root: &Path) -> Result<Vec<RegistryFinding>, String> {
                     section: spec.id.into(),
                     row: row.name.clone(),
                     rule: "compendium.negative-control-unresolved".into(),
-                    detail: format!("negative control `{}` not found in {}", row.negative_control, spec.test_rel),
+                    detail: format!(
+                        "negative control `{}` not found in {}",
+                        row.negative_control, spec.test_rel
+                    ),
                 });
             }
             if row.carried_by.is_empty() {
@@ -284,7 +398,8 @@ pub fn validate_workspace(root: &Path) -> Result<Vec<RegistryFinding>, String> {
                     section: spec.id.into(),
                     row: row.name.clone(),
                     rule: "compendium.carried-by-empty".into(),
-                    detail: "row must list carrying specification beads or `compendium-only`".into(),
+                    detail: "row must list carrying specification beads or `compendium-only`"
+                        .into(),
                 });
             }
             if let Some(ec) = &row.evidence_class
@@ -297,7 +412,9 @@ pub fn validate_workspace(root: &Path) -> Result<Vec<RegistryFinding>, String> {
                     detail: format!("unknown evidence_class `{ec}`"),
                 });
             }
-            if row.arithmetic == "tolerance" && row.tolerance.as_deref().is_none_or(|t| t.trim().is_empty()) {
+            if row.arithmetic == "tolerance"
+                && row.tolerance.as_deref().is_none_or(|t| t.trim().is_empty())
+            {
                 findings.push(RegistryFinding {
                     section: spec.id.into(),
                     row: row.name.clone(),
@@ -328,14 +445,24 @@ pub fn render_compendium_doc(root: &Path) -> Result<String, String> {
     out.push_str("- Exact statements use arbitrary-precision rational arithmetic over `ℚ`; non-rational rows declare explicit dimensioned tolerances.\n\n");
 
     for (spec, sec) in &present {
-        out.push_str(&format!("## {} {} ({} rows)\n\n", spec.id, sec.title, sec.rows.len()));
+        out.push_str(&format!(
+            "## {} {} ({} rows)\n\n",
+            spec.id,
+            sec.title,
+            sec.rows.len()
+        ));
         out.push_str("| Row | Statement | Used in | Validity | Oracle | Tests | Negative control | Carried by | Arithmetic |\n");
         out.push_str("|---|---|---|---|---|---|---|---|---|\n");
         let mut compendium_only = Vec::new();
         let mut estimated_rows = Vec::new();
         for row in &sec.rows {
             let used = row.used_in.join(", ");
-            let tests = row.tests.iter().map(|t| format!("`{t}`")).collect::<Vec<_>>().join(", ");
+            let tests = row
+                .tests
+                .iter()
+                .map(|t| format!("`{t}`"))
+                .collect::<Vec<_>>()
+                .join(", ");
             let carried = row.carried_by.join(", ");
             if row.carried_by.iter().any(|c| c == "compendium-only") {
                 compendium_only.push(row.name.as_str());

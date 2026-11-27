@@ -296,7 +296,9 @@ fn contains_token_boundary(haystack: &str, token: &str) -> bool {
 /// ignoring hypothesis IDs (`H-22b`), ISO dates (`2026-11-21`), and section numbers (`§0.8`).
 fn has_claim_quantity(line: &str) -> bool {
     for raw_tok in line.split_whitespace() {
-        let tok = raw_tok.trim_matches(|c: char| matches!(c, '(' | ')' | ',' | '.' | ';' | ':' | '"' | '\'' | '`'));
+        let tok = raw_tok.trim_matches(|c: char| {
+            matches!(c, '(' | ')' | ',' | '.' | ';' | ':' | '"' | '\'' | '`')
+        });
         if tok.is_empty()
             || tok.starts_with("H-")
             || tok.starts_with("BET-")
@@ -345,7 +347,11 @@ fn has_claim_quantity(line: &str) -> bool {
 enum Matcher {
     Any,
     Char(char),
-    Class { negated: bool, chars: Vec<char>, ranges: Vec<(char, char)> },
+    Class {
+        negated: bool,
+        chars: Vec<char>,
+        ranges: Vec<(char, char)>,
+    },
     Space,
     Word,
     Digit,
@@ -365,8 +371,8 @@ impl Matcher {
                 chars,
                 ranges,
             } => {
-                let hit = chars.contains(&cl)
-                    || ranges.iter().any(|&(lo, hi)| cl >= lo && cl <= hi);
+                let hit =
+                    chars.contains(&cl) || ranges.iter().any(|&(lo, hi)| cl >= lo && cl <= hi);
                 if *negated { !hit } else { hit }
             }
         }
@@ -399,7 +405,10 @@ impl Pattern {
         };
         let (start, outs) = p.parse_alt()?;
         if p.pos != chars.len() {
-            return Err(format!("unexpected trailing `{}` at char {}", chars[p.pos], p.pos));
+            return Err(format!(
+                "unexpected trailing `{}` at char {}",
+                chars[p.pos], p.pos
+            ));
         }
         let match_id = p.push(State::Match);
         p.patch(&outs, match_id);

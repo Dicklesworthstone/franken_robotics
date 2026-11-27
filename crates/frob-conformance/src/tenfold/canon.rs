@@ -10,9 +10,7 @@ use std::collections::BTreeSet;
 
 use frob_cert::bigint::BigInt;
 use frob_cert::blake3;
-use frob_cert::json::{
-    JsonError, JsonValue, parse_non_canonical, serialize_canonical,
-};
+use frob_cert::json::{JsonError, JsonValue, parse_non_canonical, serialize_canonical};
 use frob_cert::limits::{
     COMPILED_LIMITS, RULE_JSON_DUPLICATE_KEY, RULE_NUM_FLOAT_IN_BUNDLE, RULE_NUM_INT_FORM,
     RULE_NUM_INT_RANGE,
@@ -414,7 +412,9 @@ pub fn require_duration(
             ptr,
             format!("{val:?}"),
             "canonical seconds string (JSON numbers are forbidden for quantities)",
-            vec![format!("Encode `{key}` as a canonical decimal string, never a JSON number")],
+            vec![format!(
+                "Encode `{key}` as a canonical decimal string, never a JSON number"
+            )],
         ));
     };
     Millis::parse_canonical_seconds(s, &ptr)
@@ -435,7 +435,9 @@ pub fn opt_duration(
             ptr,
             format!("{val:?}"),
             "canonical seconds string (JSON numbers are forbidden for quantities)",
-            vec![format!("Encode `{key}` as a canonical decimal string, never a JSON number")],
+            vec![format!(
+                "Encode `{key}` as a canonical decimal string, never a JSON number"
+            )],
         ));
     };
     Millis::parse_canonical_seconds(s, &ptr).map(Some)

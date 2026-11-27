@@ -678,9 +678,21 @@ pub fn parse_decision_value(
 
 fn is_empty_decision_placeholder(tbl: &Table) -> bool {
     let outcome_empty = tbl.get("outcome").and_then(Value::as_str) == Some("");
-    let adr_empty = tbl.get("adr").and_then(Value::as_str).unwrap_or("").is_empty();
-    let date_empty = tbl.get("date").and_then(Value::as_str).unwrap_or("").is_empty();
-    let session_empty = tbl.get("session").and_then(Value::as_str).unwrap_or("").is_empty();
+    let adr_empty = tbl
+        .get("adr")
+        .and_then(Value::as_str)
+        .unwrap_or("")
+        .is_empty();
+    let date_empty = tbl
+        .get("date")
+        .and_then(Value::as_str)
+        .unwrap_or("")
+        .is_empty();
+    let session_empty = tbl
+        .get("session")
+        .and_then(Value::as_str)
+        .unwrap_or("")
+        .is_empty();
     let receipts_empty = tbl
         .get("receipts")
         .and_then(Value::as_array)
@@ -810,9 +822,7 @@ fn parse_decision_entry(
                     "decision-reading-invalid",
                     Some(gate_id.to_owned()),
                     Some("decision.reading"),
-                    format!(
-                        "invalid decision `reading` `{raw}` (expected `final` or `reopened`)"
-                    ),
+                    format!("invalid decision `reading` `{raw}` (expected `final` or `reopened`)"),
                     "set reading to `final` or `reopened` on a second entry at one exit",
                 )]));
             }
@@ -900,7 +910,10 @@ pub fn validate_kill_register(
         validate_single_kill_row(
             g,
             register,
-            amds_by_gate.get(g.id.as_str()).map(Vec::as_slice).unwrap_or(&[]),
+            amds_by_gate
+                .get(g.id.as_str())
+                .map(Vec::as_slice)
+                .unwrap_or(&[]),
             ctx,
             out,
         );
@@ -1013,9 +1026,7 @@ fn validate_single_kill_row(
                     "invalid-reread",
                     Some(g.id.clone()),
                     Some("reread"),
-                    format!(
-                        "`reread` milestone `{rr}` is at or before `decided` (`{dec_m}`)"
-                    ),
+                    format!("`reread` milestone `{rr}` is at or before `decided` (`{dec_m}`)"),
                     "every `reread` milestone must be strictly later than `decided`",
                 )),
                 Some(_) => {}
@@ -1124,9 +1135,7 @@ fn validate_single_kill_row(
         // 3. ADR path check (`decision-adr-path`): strictly under `docs/adr/`, canonical name,
         //    and file committed on disk when `repo_root` is provided.
         let expected_adr = entry.expected_adr_path(&g.id, eff_decided.as_deref());
-        let path_matches = expected_adr
-            .as_deref()
-            .is_some_and(|exp| entry.adr == exp);
+        let path_matches = expected_adr.as_deref().is_some_and(|exp| entry.adr == exp);
         if !path_matches || !entry.adr.starts_with("docs/adr/") {
             out.push(Violation::schema(
                 "decision-adr-path",
@@ -1135,7 +1144,9 @@ fn validate_single_kill_row(
                 format!(
                     "decision[{didx}] ADR path `{}` is invalid (expected `{}`)",
                     entry.adr,
-                    expected_adr.as_deref().unwrap_or("docs/adr/ADR-<gate>-<milestone>.md")
+                    expected_adr
+                        .as_deref()
+                        .unwrap_or("docs/adr/ADR-<gate>-<milestone>.md")
                 ),
                 "store decision ADRs under docs/adr/ADR-<gate>-<milestone>[-<reading>].md",
             ));
@@ -1241,7 +1252,9 @@ fn validate_single_kill_row(
                         "decision-deferred-invalid",
                         Some(g.id.clone()),
                         Some("decision.deferred_to"),
-                        format!("decision[{didx}] `deferred_to` is valid only on `deferred` entries"),
+                        format!(
+                            "decision[{didx}] `deferred_to` is valid only on `deferred` entries"
+                        ),
                         "remove `deferred_to` from non-deferred decision entries",
                     ));
                 }
@@ -1252,7 +1265,9 @@ fn validate_single_kill_row(
                         "decision-deferred-invalid",
                         Some(g.id.clone()),
                         Some("decision.deferred_to"),
-                        format!("decision[{didx}] `deferred_to` is valid only on `deferred` entries"),
+                        format!(
+                            "decision[{didx}] `deferred_to` is valid only on `deferred` entries"
+                        ),
                         "remove `deferred_to` from non-deferred decision entries",
                     ));
                 }
@@ -1395,7 +1410,10 @@ fn validate_kill_amendments(
     }
 
     // Determine initial seed state (from ledger seeds or an `introduce` amendment).
-    let intro_amd = amds.iter().copied().find(|a| a.field == AmendmentField::Introduce);
+    let intro_amd = amds
+        .iter()
+        .copied()
+        .find(|a| a.field == AmendmentField::Introduce);
     let seed_state: Option<SeededKillRow> = match &ctx.kill.seeded_kill_rows {
         Some(seed_map) => {
             if let Some(seeded) = seed_map.get(&g.id) {
@@ -2155,15 +2173,13 @@ pub fn due_kill_gates(
             }
             KillMode::Standing => exit_ord >= dec_ord,
             KillMode::PilotBeforeFunding => {
-                exit_ord == dec_ord
-                    || (exit_ord > dec_ord && ctx.funding_requested.contains(&g.id))
+                exit_ord == dec_ord || (exit_ord > dec_ord && ctx.funding_requested.contains(&g.id))
             }
         };
 
         // Check whether a prior `deferred` entry moved this row into `exit_milestone`'s due list.
         let deferred_here_from_earlier = g.kill.decisions.iter().any(|d| {
-            d.outcome == KillOutcome::Deferred
-                && d.deferred_to.as_deref() == Some(exit_milestone)
+            d.outcome == KillOutcome::Deferred && d.deferred_to.as_deref() == Some(exit_milestone)
         });
         if deferred_here_from_earlier {
             scheduled = true;
@@ -2211,8 +2227,7 @@ pub fn due_kill_gates(
             KillDueStatus::Missing
         };
 
-        let requires_reread_line_in_adr =
-            g.kill.mode == KillMode::Rolling && exit_ord > dec_ord;
+        let requires_reread_line_in_adr = g.kill.mode == KillMode::Rolling && exit_ord > dec_ord;
 
         items.push(KillDueItem {
             gate_id: g.id.clone(),
@@ -2252,7 +2267,13 @@ pub fn apply_decisions(register: &Register) -> Register {
         for (scope, dec) in in_force {
             if dec.outcome == KillOutcome::Fired {
                 let fb = effective_fallback_text(g, dec);
-                propagations.push((g.id.clone(), fb, dec.adr.clone(), g.kill.reads.clone(), scope));
+                propagations.push((
+                    g.id.clone(),
+                    fb,
+                    dec.adr.clone(),
+                    g.kill.reads.clone(),
+                    scope,
+                ));
             }
         }
     }
@@ -2494,11 +2515,7 @@ pub fn verify_live_kill_ids(
     expectations: &[LiveIdExpectation],
 ) -> Result<(), String> {
     for exp in expectations {
-        let matches: Vec<&GateRow> = register
-            .gates
-            .iter()
-            .filter(|g| g.id == exp.id)
-            .collect();
+        let matches: Vec<&GateRow> = register.gates.iter().filter(|g| g.id == exp.id).collect();
         if matches.is_empty() {
             return Err(format!("{}: absent from register", exp.id));
         }
@@ -2518,7 +2535,10 @@ pub fn verify_live_kill_ids(
         }
         let trigger = row.kill.trigger.as_deref().unwrap_or("");
         if trigger.trim().is_empty() {
-            return Err(format!("{}: incomplete (missing or empty `trigger`)", exp.id));
+            return Err(format!(
+                "{}: incomplete (missing or empty `trigger`)",
+                exp.id
+            ));
         }
         let fallback = row.kill.fallback.as_deref().unwrap_or("");
         if fallback.trim().is_empty() {
@@ -2531,7 +2551,10 @@ pub fn verify_live_kill_ids(
             return Err(format!("{}: incomplete (missing explicit `mode`)", exp.id));
         }
         if row.kill.decided.is_none() {
-            return Err(format!("{}: incomplete (missing `decided` milestone)", exp.id));
+            return Err(format!(
+                "{}: incomplete (missing `decided` milestone)",
+                exp.id
+            ));
         }
 
         if let Some(ref expected_hex) = exp.combined_hash {
@@ -2728,15 +2751,21 @@ decided = "M2"
 mode = "exit"
 reads = ["GATE-SPARK-04"]
 "#;
-        let errs = parse_and_validate_bytes(bad.as_bytes(), "empty-fb.toml", &ValidationContext::default())
-            .expect_err("empty fallback must fail load");
+        let errs = parse_and_validate_bytes(
+            bad.as_bytes(),
+            "empty-fb.toml",
+            &ValidationContext::default(),
+        )
+        .expect_err("empty fallback must fail load");
         assert!(
-            errs.iter().any(|v| v.gate_id.as_deref() == Some("KILL-EMPTY-FB")
-                && v.field.as_deref() == Some("fallback")),
+            errs.iter()
+                .any(|v| v.gate_id.as_deref() == Some("KILL-EMPTY-FB")
+                    && v.field.as_deref() == Some("fallback")),
             "expected error naming row and fallback, got {errs:?}"
         );
 
-        let bad_trig = bad.replace("trigger = \"GATE-SPARK-04 fails\"", "trigger = \"   \"")
+        let bad_trig = bad
+            .replace("trigger = \"GATE-SPARK-04 fails\"", "trigger = \"   \"")
             .replace("fallback = \"\"", "fallback = \"CPU fallback\"");
         let errs2 = parse_and_validate_bytes(
             bad_trig.as_bytes(),
@@ -2745,8 +2774,10 @@ reads = ["GATE-SPARK-04"]
         )
         .expect_err("empty trigger must fail load");
         assert!(
-            errs2.iter().any(|v| v.gate_id.as_deref() == Some("KILL-EMPTY-FB")
-                && v.field.as_deref() == Some("trigger")),
+            errs2
+                .iter()
+                .any(|v| v.gate_id.as_deref() == Some("KILL-EMPTY-FB")
+                    && v.field.as_deref() == Some("trigger")),
             "expected error naming row and trigger, got {errs2:?}"
         );
     }
@@ -2908,7 +2939,8 @@ commit = "3333333333333333333333333333333333333333"
             ("not-reached", ", receipts = []".to_owned()),
             (
                 "deferred",
-                ", receipts = [], deferred_to = \"M3\", reason = \"second repair cycle\"".to_owned(),
+                ", receipts = [], deferred_to = \"M3\", reason = \"second repair cycle\""
+                    .to_owned(),
             ),
         ] {
             let src = format!(
@@ -2958,7 +2990,11 @@ decision = {{ outcome = "{bad_outcome}", adr = "docs/adr/ADR-KILL-OUT-M2.md", da
     #[test]
     fn fired_propagates() {
         let root = scratch_repo("fired-prop");
-        let rhex = write_receipt(&root, "receipts/gates", "{\"gate\":\"GATE-Y\",\"status\":\"fail\"}\n");
+        let rhex = write_receipt(
+            &root,
+            "receipts/gates",
+            "{\"gate\":\"GATE-Y\",\"status\":\"fail\"}\n",
+        );
         write_adr(&root, "docs/adr/ADR-KILL-X-M2.md");
         let ctx = ctx_with_root(&root);
 
@@ -3005,7 +3041,10 @@ decision = {{ outcome = "fired", adr = "docs/adr/ADR-KILL-X-M2.md", date = "2027
         let gy = propagated.get("GATE-Y").expect("GATE-Y");
         assert_eq!(gy.derived_status(), Status::Killed);
         let detail = gy.parts[0].detail.as_deref().unwrap_or("");
-        assert!(detail.contains("KILL-X"), "detail must name KILL-X: {detail}");
+        assert!(
+            detail.contains("KILL-X"),
+            "detail must name KILL-X: {detail}"
+        );
         assert!(
             detail.contains("batch-cpu training tier"),
             "detail must name fallback: {detail}"
@@ -3013,7 +3052,10 @@ decision = {{ outcome = "fired", adr = "docs/adr/ADR-KILL-X-M2.md", date = "2027
 
         // Propagated register itself remains completely valid.
         let v_after = crate::register::validate::validate(&propagated, &ctx);
-        assert!(v_after.is_empty(), "propagated register must validate cleanly: {v_after:?}");
+        assert!(
+            v_after.is_empty(),
+            "propagated register must validate cleanly: {v_after:?}"
+        );
 
         let readme = render_readme_status_table(&reg);
         let printout = render_register_printout(&reg);
@@ -3043,8 +3085,12 @@ decided = "M1"
 mode = "standing"
 reads = []
 "#;
-        let reg = parse_and_validate_bytes(src.as_bytes(), "standing.toml", &ValidationContext::default())
-            .expect("standing gate must load");
+        let reg = parse_and_validate_bytes(
+            src.as_bytes(),
+            "standing.toml",
+            &ValidationContext::default(),
+        )
+        .expect("standing gate must load");
         let due_ctx = KillDueContext::default();
         assert!(due_kill_gates(&reg, "M0", &due_ctx).is_empty());
         for m in ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8"] {
@@ -3079,8 +3125,9 @@ fallback = "dense solver"
 mode = "exit"
 reads = []
 "#;
-        let reg = parse_and_validate_bytes(src.as_bytes(), "late.toml", &ValidationContext::default())
-            .expect("late kill row without decided must load");
+        let reg =
+            parse_and_validate_bytes(src.as_bytes(), "late.toml", &ValidationContext::default())
+                .expect("late kill row without decided must load");
         assert_eq!(
             effective_decided_milestone(reg.get("KILL-LATE").unwrap(), &reg).as_deref(),
             Some("M4")
@@ -3121,7 +3168,8 @@ decision = {{ outcome = "not-fired", adr = "docs/adr/ADR-KILL-IMP-M2.md", date =
         let errs = parse_and_validate_bytes(src.as_bytes(), "impl.toml", &ctx)
             .expect_err("implementer recording decision ADR must be refused");
         assert!(
-            errs.iter().any(|v| v.harness_reason == Some(HarnessReason::SelfCertified)),
+            errs.iter()
+                .any(|v| v.harness_reason == Some(HarnessReason::SelfCertified)),
             "expected self-certified refusal, got {errs:?}"
         );
     }
@@ -3172,7 +3220,10 @@ decision = {{ outcome = "deferred", adr = "docs/adr/ADR-KILL-DEF-M3.md", date = 
         let reg = parse_and_validate_bytes(ok.as_bytes(), "def-ok.toml", &ctx)
             .expect("valid deferred must load");
         let prop = apply_decisions(&reg);
-        assert_eq!(prop.get("GATE-READ").unwrap().derived_status(), Status::NotRun);
+        assert_eq!(
+            prop.get("GATE-READ").unwrap().derived_status(),
+            Status::NotRun
+        );
 
         for bad_extra in [
             ", deferred_to = \"M3\", reason = \"same exit\"",
@@ -3214,7 +3265,9 @@ decision = { outcome = "not-fired", adr = "docs/adr/ADR-KILL-FLEET-M4.md", date 
         let errs_empty = parse_and_validate_bytes(empty.as_bytes(), "nf-empty.toml", &ctx)
             .expect_err("not-fired with empty receipts must fail (RC-13)");
         assert!(
-            errs_empty.iter().any(|v| v.harness_reason == Some(HarnessReason::EvidenceUnresolved)),
+            errs_empty
+                .iter()
+                .any(|v| v.harness_reason == Some(HarnessReason::EvidenceUnresolved)),
             "got {errs_empty:?}"
         );
 
@@ -3224,7 +3277,9 @@ decision = { outcome = "not-fired", adr = "docs/adr/ADR-KILL-FLEET-M4.md", date 
         let errs_missing = parse_and_validate_bytes(missing.as_bytes(), "nf-missing.toml", &ctx)
             .expect_err("uncommitted receipt hash must fail");
         assert!(
-            errs_missing.iter().any(|v| v.harness_reason == Some(HarnessReason::EvidenceUnresolved)),
+            errs_missing
+                .iter()
+                .any(|v| v.harness_reason == Some(HarnessReason::EvidenceUnresolved)),
             "got {errs_missing:?}"
         );
 
@@ -3248,8 +3303,12 @@ decided = "M4"
 mode = "pilot-before-funding"
 reads = []
 "#;
-        let reg = parse_and_validate_bytes(src.as_bytes(), "pilot-mode.toml", &ValidationContext::default())
-            .expect("pilot-before-funding row must load");
+        let reg = parse_and_validate_bytes(
+            src.as_bytes(),
+            "pilot-mode.toml",
+            &ValidationContext::default(),
+        )
+        .expect("pilot-before-funding row must load");
 
         let unfunded = due_kill_gates(&reg, "M4", &KillDueContext::default());
         assert_eq!(unfunded.len(), 1);
@@ -3289,12 +3348,17 @@ mode = "exit"
 reread = ["M2"]
 reads = []
 "#;
-        let reg = parse_and_validate_bytes(src.as_bytes(), "reread.toml", &ValidationContext::default())
-            .expect("reread rows must load");
+        let reg =
+            parse_and_validate_bytes(src.as_bytes(), "reread.toml", &ValidationContext::default())
+                .expect("reread rows must load");
         let dc = KillDueContext::default();
         let mcp_due: Vec<&str> = ["M0", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8"]
             .into_iter()
-            .filter(|m| due_kill_gates(&reg, m, &dc).iter().any(|i| i.gate_id == "KILL-MCP"))
+            .filter(|m| {
+                due_kill_gates(&reg, m, &dc)
+                    .iter()
+                    .any(|i| i.gate_id == "KILL-MCP")
+            })
             .collect();
         assert_eq!(mcp_due, vec!["M0", "M1"]);
 
@@ -3310,8 +3374,12 @@ reads = []
 
         // `reread` naming an exit at or before `decided` fails load.
         let bad_rr = src.replace("reread = [\"M2\"]", "reread = [\"M1\"]");
-        let errs = parse_and_validate_bytes(bad_rr.as_bytes(), "bad-rr.toml", &ValidationContext::default())
-            .expect_err("reread <= decided must fail");
+        let errs = parse_and_validate_bytes(
+            bad_rr.as_bytes(),
+            "bad-rr.toml",
+            &ValidationContext::default(),
+        )
+        .expect_err("reread <= decided must fail");
         assert!(errs.iter().any(|v| v.reason == "invalid-reread"));
     }
 
@@ -3374,10 +3442,19 @@ decision = [
             .expect("scoped decision array loads");
         let g2 = reg2.get("KILL-TENFOLD-SPEED").unwrap();
         let m3_force = decisions_in_force_at(g2, &reg2, "M3");
-        assert_eq!(m3_force[&Some("cell:wheeled".to_owned())].outcome, KillOutcome::Fired);
-        assert_eq!(m3_force[&Some("cell:tracked".to_owned())].outcome, KillOutcome::NotFired);
+        assert_eq!(
+            m3_force[&Some("cell:wheeled".to_owned())].outcome,
+            KillOutcome::Fired
+        );
+        assert_eq!(
+            m3_force[&Some("cell:tracked".to_owned())].outcome,
+            KillOutcome::NotFired
+        );
         let m7_force = decisions_in_force(g2, &reg2);
-        assert_eq!(m7_force[&Some("cell:wheeled".to_owned())].outcome, KillOutcome::NotFired);
+        assert_eq!(
+            m7_force[&Some("cell:wheeled".to_owned())].outcome,
+            KillOutcome::NotFired
+        );
         assert_eq!(g2.kill.decisions.len(), 3, "earlier M3 entry stays in file");
 
         // Scope on a row with no `scope_kind` fails load.
@@ -3392,11 +3469,16 @@ decision = [
             .kill
             .previous_decisions
             .insert("KILL-TENFOLD-SPEED".to_owned(), g2.kill.decisions.clone());
-        let tampered = arr.replace("date = \"2027-03-01\", session = \"s2\"", "date = \"2027-03-02\", session = \"s2\"");
+        let tampered = arr.replace(
+            "date = \"2027-03-01\", session = \"s2\"",
+            "date = \"2027-03-02\", session = \"s2\"",
+        );
         let errs_rc57 = parse_and_validate_bytes(tampered.as_bytes(), "rc57.toml", &rc57_ctx)
             .expect_err("in-place edit of earlier decision must fail RC-57");
         assert!(
-            errs_rc57.iter().any(|v| v.reason == "decision-entry-edited"),
+            errs_rc57
+                .iter()
+                .any(|v| v.reason == "decision-entry-edited"),
             "expected decision-entry-edited, got {errs_rc57:?}"
         );
     }
@@ -3415,8 +3497,12 @@ decided = "M0"
 mode = "rolling"
 reads = []
 "#;
-        let reg = parse_and_validate_bytes(src.as_bytes(), "rolling.toml", &ValidationContext::default())
-            .expect("rolling row without reread loads");
+        let reg = parse_and_validate_bytes(
+            src.as_bytes(),
+            "rolling.toml",
+            &ValidationContext::default(),
+        )
+        .expect("rolling row without reread loads");
         let dc = KillDueContext::default();
         for m in ["M0", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8"] {
             let due = due_kill_gates(&reg, m, &dc);
@@ -3439,8 +3525,12 @@ decided = "M2"
 mode = "exit"
 reads = []
 "#;
-        let reg = parse_and_validate_bytes(clean.as_bytes(), "clean.toml", &ValidationContext::default())
-            .expect("clean kill row loads");
+        let reg = parse_and_validate_bytes(
+            clean.as_bytes(),
+            "clean.toml",
+            &ValidationContext::default(),
+        )
+        .expect("clean kill row loads");
         assert_eq!(
             kill_row_derived_state(reg.get("KILL-CLEAN").unwrap(), &reg),
             "not-run"
@@ -3455,8 +3545,9 @@ reads = []
             ),
         ] {
             let bad = format!("{clean}{extra}");
-            let errs = parse_and_validate_bytes(bad.as_bytes(), "bad.toml", &ValidationContext::default())
-                .expect_err(&format!("kill row with `{fld}` must fail"));
+            let errs =
+                parse_and_validate_bytes(bad.as_bytes(), "bad.toml", &ValidationContext::default())
+                    .expect_err(&format!("kill row with `{fld}` must fail"));
             assert!(
                 errs.iter().any(|v| v.field.as_deref() == Some(fld)),
                 "must name `{fld}`, got {errs:?}"
@@ -3568,8 +3659,14 @@ decision = [
             .expect("distinct cold/warm regimes on one stratum at M7 must load");
         let force = decisions_in_force(reg.get("KILL-TENFOLD-SPEED").unwrap(), &reg);
         assert_eq!(force.len(), 2);
-        assert_eq!(force[&Some("cell:wheeled:cold".to_owned())].outcome, KillOutcome::Fired);
-        assert_eq!(force[&Some("cell:wheeled:warm".to_owned())].outcome, KillOutcome::NotReached);
+        assert_eq!(
+            force[&Some("cell:wheeled:cold".to_owned())].outcome,
+            KillOutcome::Fired
+        );
+        assert_eq!(
+            force[&Some("cell:wheeled:warm".to_owned())].outcome,
+            KillOutcome::NotReached
+        );
     }
 
     #[test]
@@ -3616,7 +3713,11 @@ decision = [
         );
         let errs1 = parse_and_validate_bytes(non_verbatim.as_bytes(), "nv.toml", &ctx)
             .expect_err("non-verbatim fallback_form must fail");
-        assert!(errs1.iter().any(|v| v.field.as_deref() == Some("fallback_form")));
+        assert!(
+            errs1
+                .iter()
+                .any(|v| v.field.as_deref() == Some("fallback_form"))
+        );
 
         // `fallback_form` on `not-fired` fails naming `fallback_form`.
         let on_nf = format!(
@@ -3639,7 +3740,11 @@ decision = [
         );
         let errs2 = parse_and_validate_bytes(on_nf.as_bytes(), "on-nf.toml", &ctx)
             .expect_err("fallback_form on not-fired must fail");
-        assert!(errs2.iter().any(|v| v.field.as_deref() == Some("fallback_form")));
+        assert!(
+            errs2
+                .iter()
+                .any(|v| v.field.as_deref() == Some("fallback_form"))
+        );
     }
 
     #[test]
@@ -3671,8 +3776,14 @@ decision = [
         let reg = parse_and_validate_bytes(src.as_bytes(), "d1.toml", &ctx)
             .expect("per-backend entries sharing ADR-KILL-D1-M2.md must load");
         let force = decisions_in_force(reg.get("KILL-D1").unwrap(), &reg);
-        assert_eq!(force[&Some("backend:gpu-cuda".to_owned())].outcome, KillOutcome::Fired);
-        assert_eq!(force[&Some("backend:gpu-metal".to_owned())].outcome, KillOutcome::NotFired);
+        assert_eq!(
+            force[&Some("backend:gpu-cuda".to_owned())].outcome,
+            KillOutcome::Fired
+        );
+        assert_eq!(
+            force[&Some("backend:gpu-metal".to_owned())].outcome,
+            KillOutcome::NotFired
+        );
     }
 
     #[test]
@@ -3706,8 +3817,14 @@ decision = [
         let reg = parse_and_validate_bytes(src.as_bytes(), "dressing.toml", &ctx)
             .expect("item scope reread loads");
         let force = decisions_in_force_at(reg.get("KILL-DRESSING").unwrap(), &reg, "M6");
-        assert_eq!(force[&Some("item:assets".to_owned())].outcome, KillOutcome::Fired);
-        assert_eq!(force[&Some("item:actors".to_owned())].outcome, KillOutcome::NotFired);
+        assert_eq!(
+            force[&Some("item:assets".to_owned())].outcome,
+            KillOutcome::Fired
+        );
+        assert_eq!(
+            force[&Some("item:actors".to_owned())].outcome,
+            KillOutcome::NotFired
+        );
     }
 
     #[test]
@@ -3748,7 +3865,11 @@ decision = [
             .replace("ADR-KILL-SHORTGRAD-M6-final.md", "ADR-KILL-SHORTGRAD-M6.md");
         let errs_dup = parse_and_validate_bytes(dup.as_bytes(), "sg-dup.toml", &ctx)
             .expect_err("second entry without reading must fail RC-69");
-        assert!(errs_dup.iter().any(|v| v.reason == "decision-entry-duplicate"));
+        assert!(
+            errs_dup
+                .iter()
+                .any(|v| v.reason == "decision-entry-duplicate")
+        );
 
         // Retired path `docs/delivery/adr/...` -> `decision-adr-path`.
         let bad_adr = ok.replace(
@@ -3912,14 +4033,17 @@ mode = "exit"
 reads = []
 "#
         );
-        let reg = parse_and_validate_bytes(src.as_bytes(), "live.toml", &ValidationContext::default())
-            .expect("register loads");
+        let reg =
+            parse_and_validate_bytes(src.as_bytes(), "live.toml", &ValidationContext::default())
+                .expect("register loads");
 
         let ok_spec = parse_live_ids_file(&format!("KILL-A {h1}\n")).expect("parse ids");
         verify_live_kill_ids(&reg, &ok_spec).expect("matching seed passes");
 
-        let changed_spec = parse_live_ids_file(&format!("KILL-A {h1}\nKILL-B {h2}\n")).expect("parse");
-        let err_changed = verify_live_kill_ids(&reg, &changed_spec).expect_err("changed trigger fails");
+        let changed_spec =
+            parse_live_ids_file(&format!("KILL-A {h1}\nKILL-B {h2}\n")).expect("parse");
+        let err_changed =
+            verify_live_kill_ids(&reg, &changed_spec).expect_err("changed trigger fails");
         assert!(err_changed.contains("KILL-B") && err_changed.contains("text differs"));
 
         let absent_spec = parse_live_ids_file("KILL-MISSING\n").expect("parse");
@@ -3968,7 +4092,10 @@ commit = "9999999999999999999999999999999999999999"
         let r1 = parse_and_validate_bytes(src.as_bytes(), "det.toml", &ctx).expect("run 1");
         let r2 = parse_and_validate_bytes(src.as_bytes(), "det.toml", &ctx).expect("run 2");
         assert_eq!(r1.print_toml(), r2.print_toml());
-        assert_eq!(render_readme_status_table(&r1), render_readme_status_table(&r2));
+        assert_eq!(
+            render_readme_status_table(&r1),
+            render_readme_status_table(&r2)
+        );
         assert_eq!(render_register_printout(&r1), render_register_printout(&r2));
     }
 }

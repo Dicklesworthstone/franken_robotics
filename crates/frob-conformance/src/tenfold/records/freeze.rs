@@ -40,9 +40,15 @@ pub struct FreezeRecord {
 impl FreezeRecord {
     fn to_json_value_with_hash(&self, hash_str: String) -> JsonValue {
         let mut entries = vec![
-            ("arm".to_owned(), JsonValue::Str(self.arm.as_str().to_owned())),
+            (
+                "arm".to_owned(),
+                JsonValue::Str(self.arm.as_str().to_owned()),
+            ),
             ("execution_authorized".to_owned(), JsonValue::Bool(false)),
-            ("gate".to_owned(), JsonValue::Str(self.header.gate.as_string())),
+            (
+                "gate".to_owned(),
+                JsonValue::Str(self.header.gate.as_string()),
+            ),
             ("hardware_safety_signoff".to_owned(), JsonValue::Bool(false)),
             ("manifest_hash".to_owned(), JsonValue::Str(hash_str)),
             ("reality".to_owned(), JsonValue::Str("no-claim".to_owned())),
@@ -84,7 +90,10 @@ impl FreezeRecord {
             regime,
             wall_budget,
         };
-        let (_, addr) = stamp_self_hash(&draft.to_json_value_with_hash(String::new()), SchemaKind::Freeze)?;
+        let (_, addr) = stamp_self_hash(
+            &draft.to_json_value_with_hash(String::new()),
+            SchemaKind::Freeze,
+        )?;
         Ok(Self {
             manifest_hash: addr,
             ..draft

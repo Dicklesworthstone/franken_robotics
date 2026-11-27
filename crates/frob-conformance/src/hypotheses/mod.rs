@@ -22,15 +22,14 @@ pub use report::{
 pub use rules::{
     ChangeRuleViolation, RULE_DISAGREEMENT_REMOVED, RULE_HISTORY_EDITED,
     RULE_NEW_ENTRY_MISSING_RECORD, RULE_PROPOSAL_ONLY_CANNOT_MOVE,
-    RULE_REFUTED_MOVE_WITHOUT_REVERSAL, RULE_REVERSAL_EDITED,
-    RULE_REVERSAL_WITHOUT_OWNER_DECISION, RULE_ROW_REMOVED, RULE_STATE_CHANGE_WITHOUT_ENTRY,
-    RULE_STATE_HISTORY_MISMATCH, check_change_rule, load_base_from_git,
+    RULE_REFUTED_MOVE_WITHOUT_REVERSAL, RULE_REVERSAL_EDITED, RULE_REVERSAL_WITHOUT_OWNER_DECISION,
+    RULE_ROW_REMOVED, RULE_STATE_CHANGE_WITHOUT_ENTRY, RULE_STATE_HISTORY_MISMATCH,
+    check_change_rule, load_base_from_git,
 };
 pub use schema::{
-    DisagreementRow, DisagreementStatus, EMBEDDED_HYPOTHESES_TOML, EvidenceKind,
-    HYPOTHESES_SCHEMA, HistoryEntry, HypothesisRegister, HypothesisRow, RULE_ACTIVE_UNSETTLED,
-    RULE_REFUTED_BOUND, RegisterError, ScopeFinding, StateCounts, VerdictState,
-    scope_with_register,
+    DisagreementRow, DisagreementStatus, EMBEDDED_HYPOTHESES_TOML, EvidenceKind, HYPOTHESES_SCHEMA,
+    HistoryEntry, HypothesisRegister, HypothesisRow, RULE_ACTIVE_UNSETTLED, RULE_REFUTED_BOUND,
+    RegisterError, ScopeFinding, StateCounts, VerdictState, scope_with_register,
 };
 
 static EMBEDDED_REGISTER: OnceLock<HypothesisRegister> = OnceLock::new();

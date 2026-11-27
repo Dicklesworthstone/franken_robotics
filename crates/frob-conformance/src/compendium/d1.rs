@@ -14,10 +14,9 @@
 compile_error!("plant-coadjoint-minus is a test-only mutation feature forbidden in release builds");
 
 use crate::compendium::rat::{
-    Mat3, Mat4, Mat6, Rat, Vec3, Vec6, cross3, dot3, hat3, mat3_add, mat3_det, mat3_diag,
-    mat3_eye, mat3_inv, mat3_mul, mat3_scale, mat3_sub, mat3_trace, mat3_transpose, mat3_vec,
-    mat3_zero, mat4_is_spd, mat4_sub, mat4_zero, mat6_from_blocks, mat6_inv, mat6_mul,
-    mat6_transpose,
+    Mat3, Mat4, Mat6, Rat, Vec3, Vec6, cross3, dot3, hat3, mat3_add, mat3_det, mat3_diag, mat3_eye,
+    mat3_inv, mat3_mul, mat3_scale, mat3_sub, mat3_trace, mat3_transpose, mat3_vec, mat3_zero,
+    mat4_is_spd, mat4_sub, mat4_zero, mat6_from_blocks, mat6_inv, mat6_mul, mat6_transpose,
     mat6_vec, outer3, r, ri, vec3_add, vec3_neg, vec3_scale, vec3_sub, vec3_zero,
 };
 
@@ -411,7 +410,12 @@ pub fn euler_poincare_free_body(xi: &Twist, mu: &Momentum, w: &Wrench) -> Moment
 
 /// Locked-inertia momentum map `μ = 𝕀·(ξ + 𝔸·ṡ)` for a general 1-DOF shape rate `s_dot`.
 #[must_use]
-pub fn momentum_map(locked_inertia: &Mat6, connection_col: &Vec6, xi: &Twist, s_dot: &Rat) -> Momentum {
+pub fn momentum_map(
+    locked_inertia: &Mat6,
+    connection_col: &Vec6,
+    xi: &Twist,
+    s_dot: &Rat,
+) -> Momentum {
     let xi_v = xi.to_vec6();
     let shifted: Vec6 = std::array::from_fn(|i| &xi_v[i] + &(&connection_col[i] * s_dot));
     Momentum::from_vec6(&mat6_vec(locked_inertia, &shifted))
@@ -446,12 +450,7 @@ pub fn reconstruct_body_velocity(
 ///
 /// For a small loop of area `da` in the `(i, j)` plane, holonomy is `exp(-(D𝔸)ᵢⱼ · da)`.
 #[must_use]
-pub fn connection_curvature_so3(
-    d_i_a_j: &Vec3,
-    d_j_a_i: &Vec3,
-    a_i: &Vec3,
-    a_j: &Vec3,
-) -> Vec3 {
+pub fn connection_curvature_so3(d_i_a_j: &Vec3, d_j_a_i: &Vec3, a_i: &Vec3, a_j: &Vec3) -> Vec3 {
     let curl = vec3_sub(d_i_a_j, d_j_a_i);
     let br = cross3(a_i, a_j);
     vec3_sub(&curl, &br)
@@ -561,10 +560,7 @@ pub fn planar_cayley_step(z: &UnitComplex, a: &Rat) -> UnitComplex {
     let denom = &Rat::one() + &a2_over_4;
     let re = &(&Rat::one() - &a2_over_4) / &denom;
     let im = a / &denom;
-    UnitComplex::new(
-        &(&z.c * &re) - &(&z.s * &im),
-        &(&z.c * &im) + &(&z.s * &re),
-    )
+    UnitComplex::new(&(&z.c * &re) - &(&z.s * &im), &(&z.c * &im) + &(&z.s * &re))
 }
 
 // ---- Row 15: Inverse Cayley differential ----
@@ -695,7 +691,13 @@ pub fn mass_support_lhs(com: &Vec3, center: &Vec3, mass: &Rat, i_com: &Mat3) -> 
 
 /// Check `‖c − o‖² + tr(I_C)/(2m) ≤ ρ²` exactly over `ℚ`.
 #[must_use]
-pub fn mass_support_holds(com: &Vec3, center: &Vec3, mass: &Rat, i_com: &Mat3, radius: &Rat) -> bool {
+pub fn mass_support_holds(
+    com: &Vec3,
+    center: &Vec3,
+    mass: &Rat,
+    i_com: &Mat3,
+    radius: &Rat,
+) -> bool {
     let lhs = mass_support_lhs(com, center, mass, i_com);
     lhs <= (radius * radius)
 }

@@ -200,14 +200,38 @@ pub struct HypothesisRegister {
 pub enum RegisterError {
     Io(String),
     Toml(String),
-    WrongSchema { observed: String },
-    DuplicateId { kind: &'static str, id: String },
-    InvalidField { row_id: String, field: String, reason: String },
-    EmptyHistory { row_id: String },
-    StateHistoryMismatch { row_id: String, state: VerdictState, last_history: VerdictState },
-    RefutedMissingReversal { row_id: String },
-    InvalidPattern { row_id: String, index: usize, pattern: String, reason: String },
-    SettledDisagreementMissingRecord { id: String },
+    WrongSchema {
+        observed: String,
+    },
+    DuplicateId {
+        kind: &'static str,
+        id: String,
+    },
+    InvalidField {
+        row_id: String,
+        field: String,
+        reason: String,
+    },
+    EmptyHistory {
+        row_id: String,
+    },
+    StateHistoryMismatch {
+        row_id: String,
+        state: VerdictState,
+        last_history: VerdictState,
+    },
+    RefutedMissingReversal {
+        row_id: String,
+    },
+    InvalidPattern {
+        row_id: String,
+        index: usize,
+        pattern: String,
+        reason: String,
+    },
+    SettledDisagreementMissingRecord {
+        id: String,
+    },
 }
 
 impl fmt::Display for RegisterError {
@@ -219,7 +243,11 @@ impl fmt::Display for RegisterError {
                 write!(f, "expected schema `{HYPOTHESES_SCHEMA}`, got `{observed}`")
             }
             Self::DuplicateId { kind, id } => write!(f, "duplicate {kind} id `{id}`"),
-            Self::InvalidField { row_id, field, reason } => {
+            Self::InvalidField {
+                row_id,
+                field,
+                reason,
+            } => {
                 write!(f, "row `{row_id}` field `{field}`: {reason}")
             }
             Self::EmptyHistory { row_id } => {
@@ -242,12 +270,12 @@ impl fmt::Display for RegisterError {
                 index,
                 pattern,
                 reason,
-            } => write!(
-                f,
-                "row `{row_id}` banned[{index}] (`{pattern}`): {reason}"
-            ),
+            } => write!(f, "row `{row_id}` banned[{index}] (`{pattern}`): {reason}"),
             Self::SettledDisagreementMissingRecord { id } => {
-                write!(f, "settled disagreement `{id}` requires a non-empty `record`")
+                write!(
+                    f,
+                    "settled disagreement `{id}` requires a non-empty `record`"
+                )
             }
         }
     }
@@ -302,8 +330,8 @@ impl HypothesisRegister {
 
     /// Load and validate a register file from disk.
     pub fn from_path(path: &Path) -> Result<Self, RegisterError> {
-        let bytes = fs::read(path)
-            .map_err(|e| RegisterError::Io(format!("{}: {e}", path.display())))?;
+        let bytes =
+            fs::read(path).map_err(|e| RegisterError::Io(format!("{}: {e}", path.display())))?;
         Self::from_bytes(&bytes)
     }
 
@@ -328,16 +356,20 @@ impl HypothesisRegister {
             .opt_array("disagreement")
             .map_err(|e| RegisterError::Toml(e.to_string()))?
             .unwrap_or_default();
-        top.finish().map_err(|e| RegisterError::Toml(e.to_string()))?;
+        top.finish()
+            .map_err(|e| RegisterError::Toml(e.to_string()))?;
 
         let mut hypotheses = Vec::with_capacity(hyp_arr.len());
         let mut seen_hyp = BTreeSet::new();
         for (idx, sp) in hyp_arr.iter().enumerate() {
-            let tbl = sp.value.as_table().ok_or_else(|| RegisterError::InvalidField {
-                row_id: format!("hypothesis[{idx}]"),
-                field: "hypothesis".to_owned(),
-                reason: "expected table".to_owned(),
-            })?;
+            let tbl = sp
+                .value
+                .as_table()
+                .ok_or_else(|| RegisterError::InvalidField {
+                    row_id: format!("hypothesis[{idx}]"),
+                    field: "hypothesis".to_owned(),
+                    reason: "expected table".to_owned(),
+                })?;
             let row = parse_hypothesis_row(tbl.clone(), idx)?;
             if !seen_hyp.insert(row.id.clone()) {
                 return Err(RegisterError::DuplicateId {
@@ -351,11 +383,14 @@ impl HypothesisRegister {
         let mut disagreements = Vec::with_capacity(dis_arr.len());
         let mut seen_dis = BTreeSet::new();
         for (idx, sp) in dis_arr.iter().enumerate() {
-            let tbl = sp.value.as_table().ok_or_else(|| RegisterError::InvalidField {
-                row_id: format!("disagreement[{idx}]"),
-                field: "disagreement".to_owned(),
-                reason: "expected table".to_owned(),
-            })?;
+            let tbl = sp
+                .value
+                .as_table()
+                .ok_or_else(|| RegisterError::InvalidField {
+                    row_id: format!("disagreement[{idx}]"),
+                    field: "disagreement".to_owned(),
+                    reason: "expected table".to_owned(),
+                })?;
             let row = parse_disagreement_row(tbl.clone(), idx)?;
             if !seen_dis.insert(row.id.clone()) {
                 return Err(RegisterError::DuplicateId {
@@ -467,10 +502,7 @@ pub fn scope_with_register(
     findings
 }
 
-fn opt_non_empty_str(
-    fields: &mut Fields,
-    key: &str,
-) -> Result<Option<String>, RegisterError> {
+fn opt_non_empty_str(fields: &mut Fields, key: &str) -> Result<Option<String>, RegisterError> {
     match fields
         .opt_str(key)
         .map_err(|e| RegisterError::Toml(e.to_string()))?
@@ -488,11 +520,14 @@ fn parse_str_array(
 ) -> Result<Vec<String>, RegisterError> {
     let mut out = Vec::with_capacity(items.len());
     for (i, sp) in items.iter().enumerate() {
-        let s = sp.value.as_str().ok_or_else(|| RegisterError::InvalidField {
-            row_id: row_id.to_owned(),
-            field: format!("{field}[{i}]"),
-            reason: "expected string".to_owned(),
-        })?;
+        let s = sp
+            .value
+            .as_str()
+            .ok_or_else(|| RegisterError::InvalidField {
+                row_id: row_id.to_owned(),
+                field: format!("{field}[{i}]"),
+                reason: "expected string".to_owned(),
+            })?;
         if s.trim().is_empty() {
             return Err(RegisterError::InvalidField {
                 row_id: row_id.to_owned(),

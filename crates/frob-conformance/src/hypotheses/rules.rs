@@ -174,10 +174,7 @@ pub fn check_change_rule(
                 // Recorded reversal present (either before or adopted via owner decision):
                 // moving away from REFUTED requires a new entry citing reversal_met = true + record.
                 let has_reversal_entry = new_entries.iter().any(|e| {
-                    e.reversal_met
-                        && e.record
-                            .as_deref()
-                            .is_some_and(|s| !s.trim().is_empty())
+                    e.reversal_met && e.record.as_deref().is_some_and(|s| !s.trim().is_empty())
                 });
                 if !has_reversal_entry {
                     violations.push(ChangeRuleViolation {

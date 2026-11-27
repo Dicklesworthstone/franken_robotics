@@ -204,13 +204,7 @@ impl Interval {
 
     /// Construct a `work` interval with an optional logical job `proc` identity.
     #[must_use]
-    pub fn work(
-        id: u64,
-        phase: Phase,
-        start_ms: u64,
-        end_ms: u64,
-        proc: Option<String>,
-    ) -> Self {
+    pub fn work(id: u64, phase: Phase, start_ms: u64, end_ms: u64, proc: Option<String>) -> Self {
         Self {
             id,
             kind: IntervalKind::Work,
@@ -272,7 +266,9 @@ impl Interval {
                 "/end_ms",
                 format!("end_ms={} < start_ms={}", self.end_ms, self.start_ms),
                 "end_ms >= start_ms",
-                vec!["Ensure every interval has end_ms >= start_ms on the harness clock".to_owned()],
+                vec![
+                    "Ensure every interval has end_ms >= start_ms on the harness clock".to_owned(),
+                ],
             ));
         }
         if let Some(p) = self.phase
@@ -407,7 +403,10 @@ fn parse_canonical_u64_str(val: &JsonValue, pointer: &str) -> Result<u64, Tenfol
             pointer,
             format!("{val:?}"),
             "canonical unsigned integer string matching ^(0|[1-9][0-9]*)$",
-            vec!["Encode millisecond timestamps and token counts as canonical base-10 strings".to_owned()],
+            vec![
+                "Encode millisecond timestamps and token counts as canonical base-10 strings"
+                    .to_owned(),
+            ],
         ));
     };
     if raw.is_empty()
@@ -418,7 +417,9 @@ fn parse_canonical_u64_str(val: &JsonValue, pointer: &str) -> Result<u64, Tenfol
             pointer,
             format!("{raw:?}"),
             "canonical unsigned integer string matching ^(0|[1-9][0-9]*)$",
-            vec!["Use non-negative base-10 integer digits without leading zeros or signs".to_owned()],
+            vec![
+                "Use non-negative base-10 integer digits without leading zeros or signs".to_owned(),
+            ],
         ));
     }
     raw.parse::<u64>().map_err(|_| {
@@ -461,7 +462,10 @@ fn parse_resource_obj(val: &JsonValue) -> Result<ResourceInfo, TenfoldRefusal> {
             "/resource",
             format!("{val:?}"),
             "JSON object for `resource`",
-            vec!["Encode `resource` as a JSON object with devices/cores/cpu_ms/learner_ms".to_owned()],
+            vec![
+                "Encode `resource` as a JSON object with devices/cores/cpu_ms/learner_ms"
+                    .to_owned(),
+            ],
         ));
     };
     let mut info = ResourceInfo::default();
@@ -478,8 +482,10 @@ fn parse_resource_obj(val: &JsonValue) -> Result<ResourceInfo, TenfoldRefusal> {
                 };
                 info.devices.reserve(arr.len());
                 for (i, item) in arr.iter().enumerate() {
-                    info.devices
-                        .push(parse_nonneg_u32_int(item, &format!("/resource/devices/{i}"))?);
+                    info.devices.push(parse_nonneg_u32_int(
+                        item,
+                        &format!("/resource/devices/{i}"),
+                    )?);
                 }
             }
             "cores" => {
@@ -543,7 +549,10 @@ pub fn parse_interval_value(val: &JsonValue) -> Result<Interval, TenfoldRefusal>
                         "/kind",
                         format!("{v:?}"),
                         "interval kind string",
-                        vec!["Encode `kind` as one of turn, block, work, harness, adjudication".to_owned()],
+                        vec![
+                            "Encode `kind` as one of turn, block, work, harness, adjudication"
+                                .to_owned(),
+                        ],
                     ));
                 };
                 kind = Some(IntervalKind::parse(s, "/kind")?);
@@ -569,7 +578,10 @@ pub fn parse_interval_value(val: &JsonValue) -> Result<Interval, TenfoldRefusal>
                             "/awaits",
                             format!("{v:?}"),
                             "array of awaited interval integer ids",
-                            vec!["Encode `awaits` as a JSON array of integer interval ids".to_owned()],
+                            vec![
+                                "Encode `awaits` as a JSON array of integer interval ids"
+                                    .to_owned(),
+                            ],
                         ));
                     };
                     awaits.reserve(arr.len());
@@ -634,10 +646,12 @@ pub fn parse_interval_value(val: &JsonValue) -> Result<Interval, TenfoldRefusal>
 
     let interval = Interval {
         id: id.ok_or_else(|| TenfoldRefusal::missing_field("/id", "required field `id`"))?,
-        kind: kind.ok_or_else(|| TenfoldRefusal::missing_field("/kind", "required field `kind`"))?,
+        kind: kind
+            .ok_or_else(|| TenfoldRefusal::missing_field("/kind", "required field `kind`"))?,
         phase,
-        start_ms: start_ms
-            .ok_or_else(|| TenfoldRefusal::missing_field("/start_ms", "required field `start_ms`"))?,
+        start_ms: start_ms.ok_or_else(|| {
+            TenfoldRefusal::missing_field("/start_ms", "required field `start_ms`")
+        })?,
         end_ms: end_ms
             .ok_or_else(|| TenfoldRefusal::missing_field("/end_ms", "required field `end_ms`"))?,
         awaits,

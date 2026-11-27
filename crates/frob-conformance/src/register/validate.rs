@@ -830,11 +830,16 @@ pub fn validate(register: &Register, ctx: &ValidationContext) -> Vec<Violation> 
         }
     }
 
-    let check_missing_recurring =
-        ctx.enforce_recurring_flags || register.has_register_layer_fields;
+    let check_missing_recurring = ctx.enforce_recurring_flags || register.has_register_layer_fields;
 
     for g in &register.gates {
-        validate_gate_row(g, &all_gate_ids, ctx, check_missing_recurring, &mut violations);
+        validate_gate_row(
+            g,
+            &all_gate_ids,
+            ctx,
+            check_missing_recurring,
+            &mut violations,
+        );
     }
 
     kill::validate_kill_register(register, ctx, &mut violations);
@@ -909,7 +914,9 @@ fn validate_gate_row(
                 "invalid-source-citation",
                 Some(g.id.clone()),
                 Some("sources"),
-                format!("invalid source citation `{src}` (expected `SRC-...` with optional `#figure`)"),
+                format!(
+                    "invalid source citation `{src}` (expected `SRC-...` with optional `#figure`)"
+                ),
                 "cite a registered SRC-... identifier",
             ));
         }
@@ -960,7 +967,10 @@ fn validate_gate_row(
             "recurring-flag-mismatch",
             Some(g.id.clone()),
             Some("recurring"),
-            format!("recurring gate `{}` is missing `recurring = true` (rule 8)", g.id),
+            format!(
+                "recurring gate `{}` is missing `recurring = true` (rule 8)",
+                g.id
+            ),
             "set `recurring = true` on every rule-8 recurring gate",
         ));
     }
@@ -1004,7 +1014,9 @@ fn validate_part(
                 "invalid-pilot-scope",
                 Some(g.id.clone()),
                 Some("scope"),
-                format!("part[{pidx}] pilot scope `{raw_scope}` does not match N38a-09 PILOT-id grammar"),
+                format!(
+                    "part[{pidx}] pilot scope `{raw_scope}` does not match N38a-09 PILOT-id grammar"
+                ),
                 "use `pilot: <PILOT-id>` matching N38a-09 grammar",
             ));
         }
@@ -1030,9 +1042,7 @@ fn validate_part(
                     HarnessReason::TargetAsMeasurement,
                     Some(g.id.clone()),
                     Some("measured"),
-                    format!(
-                        "part[{pidx}] `measured` is empty or byte-equal to `threshold`"
-                    ),
+                    format!("part[{pidx}] `measured` is empty or byte-equal to `threshold`"),
                     "Record the actual measured value",
                 ));
             }
@@ -1226,10 +1236,7 @@ fn validate_part(
             }
         }
         Status::NoClaim => {
-            let detail_ok = part
-                .detail
-                .as_deref()
-                .is_some_and(|d| !d.trim().is_empty());
+            let detail_ok = part.detail.as_deref().is_some_and(|d| !d.trim().is_empty());
             if g.claim != Some(Claim::Reality) || !detail_ok {
                 out.push(Violation::from_harness(
                     HarnessReason::NoClaimOnNonReality,
@@ -1247,7 +1254,11 @@ fn validate_part(
                 .detail
                 .as_deref()
                 .filter(|s| !s.trim().is_empty())
-                .or_else(|| part.open_question.as_deref().filter(|s| !s.trim().is_empty()));
+                .or_else(|| {
+                    part.open_question
+                        .as_deref()
+                        .filter(|s| !s.trim().is_empty())
+                });
             if !candidate.is_some_and(is_valid_blocked_detail) {
                 out.push(Violation::from_harness(
                     HarnessReason::BlockedWithoutQuestion,
@@ -1303,7 +1314,9 @@ fn verify_receipt(
             HarnessReason::EvidenceUnresolved,
             Some(gate_id.to_owned()),
             Some("receipt"),
-            format!("part[{pidx}] receipt `{raw_receipt}` is not a 64 lower-case hex BLAKE3 digest"),
+            format!(
+                "part[{pidx}] receipt `{raw_receipt}` is not a 64 lower-case hex BLAKE3 digest"
+            ),
             "Cite the 64 lower-case hex BLAKE3 digest of receipts/gates/<hash>.json",
         ));
         return;
@@ -1347,8 +1360,7 @@ fn verify_receipt(
         && let Some(members) = admitted.root().value.as_object()
     {
         let is_set = members.iter().any(|m| {
-            m.name == "schema"
-                && m.value.value.as_str() == Some("frob.gauntlet.receipt-set/1")
+            m.name == "schema" && m.value.value.as_str() == Some("frob.gauntlet.receipt-set/1")
         });
         if is_set {
             let member_arr = members
@@ -1444,10 +1456,7 @@ pub fn is_known_recurring_gate(id: &str) -> bool {
 pub fn is_valid_blocked_detail(detail: &str) -> bool {
     let d = detail.trim();
     if let Some(rest) = d.strip_prefix("OPEN-") {
-        return !rest.is_empty()
-            && rest
-                .bytes()
-                .all(|b| b.is_ascii_alphanumeric() || b == b'-');
+        return !rest.is_empty() && rest.bytes().all(|b| b.is_ascii_alphanumeric() || b == b'-');
     }
     if let Some(rest) = d.strip_prefix("claim-reading:") {
         return !rest.trim().is_empty();
@@ -1473,9 +1482,7 @@ pub fn has_valid_killed_decision(g: &GateRow, part: &Part) -> bool {
         .fallback
         .as_deref()
         .is_some_and(|s| !s.trim().is_empty())
-        || detail
-            .to_ascii_lowercase()
-            .contains("fallback")
+        || detail.to_ascii_lowercase().contains("fallback")
         || detail
             .split(|c: char| matches!(c, ';' | ',' | '|'))
             .filter(|seg| !seg.trim().is_empty())
@@ -1554,7 +1561,10 @@ fn parse_str_vec(
                     "schema-invalid",
                     gate_id.map(str::to_owned),
                     Some(field),
-                    format!("`{field}` elements must be strings, got {}", other.type_name()),
+                    format!(
+                        "`{field}` elements must be strings, got {}",
+                        other.type_name()
+                    ),
                     "use string elements",
                 )]);
             }
@@ -1563,11 +1573,7 @@ fn parse_str_vec(
     Ok(out)
 }
 
-fn parse_gate_row(
-    tbl: Table,
-    idx: usize,
-    file: &str,
-) -> Result<(GateRow, bool), Vec<Violation>> {
+fn parse_gate_row(tbl: Table, idx: usize, file: &str) -> Result<(GateRow, bool), Vec<Violation>> {
     let label = tbl
         .get("id")
         .and_then(Value::as_str)
@@ -1657,7 +1663,9 @@ fn parse_gate_row(
                     "invalid-needs",
                     Some(id),
                     Some("needs"),
-                    format!("unknown `needs` value `{raw}` (expected `simulator` or `import-lane`)"),
+                    format!(
+                        "unknown `needs` value `{raw}` (expected `simulator` or `import-lane`)"
+                    ),
                     "use `simulator` or `import-lane`",
                 )]));
             }
@@ -1985,12 +1993,7 @@ fn parse_gate_row(
     ))
 }
 
-fn parse_part(
-    tbl: Table,
-    file: &str,
-    gate_id: &str,
-    pidx: usize,
-) -> Result<Part, Vec<Violation>> {
+fn parse_part(tbl: Table, file: &str, gate_id: &str, pidx: usize) -> Result<Part, Vec<Violation>> {
     let ctx = format!("{gate_id}.part[{pidx}]");
     let mut f = Fields::new(tbl, ctx);
     let toml_err = |fld: &'static str, e: toml::TomlError| {

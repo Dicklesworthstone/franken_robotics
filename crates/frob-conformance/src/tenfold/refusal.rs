@@ -103,15 +103,15 @@ impl TenfoldRefusal {
             pointer,
             observed,
             required,
-            vec!["Remove the unrecognized field or verify its spelling against the record schema".to_owned()],
+            vec![
+                "Remove the unrecognized field or verify its spelling against the record schema"
+                    .to_owned(),
+            ],
         )
     }
 
     #[must_use]
-    pub fn missing_field(
-        pointer: impl Into<String>,
-        required: impl Into<String>,
-    ) -> Self {
+    pub fn missing_field(pointer: impl Into<String>, required: impl Into<String>) -> Self {
         Self::new(
             RefusalReason::RecordMissingField,
             pointer,
@@ -122,10 +122,7 @@ impl TenfoldRefusal {
     }
 
     #[must_use]
-    pub fn duplicate_key(
-        pointer: impl Into<String>,
-        observed: impl Into<String>,
-    ) -> Self {
+    pub fn duplicate_key(pointer: impl Into<String>, observed: impl Into<String>) -> Self {
         Self::new(
             RefusalReason::RecordDuplicateKey,
             pointer,
@@ -193,7 +190,10 @@ impl TenfoldRefusal {
             path,
             observed,
             required,
-            vec!["Never overwrite an existing tenfold store artifact with different bytes".to_owned()],
+            vec![
+                "Never overwrite an existing tenfold store artifact with different bytes"
+                    .to_owned(),
+            ],
         )
     }
 

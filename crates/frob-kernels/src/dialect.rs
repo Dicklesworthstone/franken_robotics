@@ -82,7 +82,10 @@ pub fn assemble_unit(
 ) -> DialectUnit {
     DialectUnit {
         shape_constants,
-        prelude: Some(SourceFile::new(target.prelude_name(), target.prelude_source())),
+        prelude: Some(SourceFile::new(
+            target.prelude_name(),
+            target.prelude_source(),
+        )),
         sources,
     }
 }

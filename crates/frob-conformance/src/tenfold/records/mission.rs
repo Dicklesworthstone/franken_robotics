@@ -45,8 +45,14 @@ impl MissionRecord {
                 JsonValue::Str(self.deadline.to_canonical_seconds()),
             ),
             ("execution_authorized".to_owned(), JsonValue::Bool(false)),
-            ("family_id".to_owned(), JsonValue::Str(self.family_id.as_string())),
-            ("gate".to_owned(), JsonValue::Str(self.header.gate.as_string())),
+            (
+                "family_id".to_owned(),
+                JsonValue::Str(self.family_id.as_string()),
+            ),
+            (
+                "gate".to_owned(),
+                JsonValue::Str(self.header.gate.as_string()),
+            ),
             ("hardware_safety_signoff".to_owned(), JsonValue::Bool(false)),
             ("reality".to_owned(), JsonValue::Str("no-claim".to_owned())),
             (

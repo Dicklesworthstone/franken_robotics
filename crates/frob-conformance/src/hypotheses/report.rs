@@ -38,8 +38,8 @@ impl CertEffectTotals {
     /// Accepts either `{"schema":"frob.prove.effects.out/1","totals":{...}}` or flat
     /// top-level counters, and verifies `consumed == changed + unchanged + unknown`.
     pub fn from_effects_json(bytes: &[u8]) -> Result<Self, String> {
-        let admitted =
-            json::admit(bytes, &Limits::default()).map_err(|e| format!("JSON admission error: {e}"))?;
+        let admitted = json::admit(bytes, &Limits::default())
+            .map_err(|e| format!("JSON admission error: {e}"))?;
         let top = obj_map(admitted.root(), "root")?;
         let schema = top
             .get("schema")

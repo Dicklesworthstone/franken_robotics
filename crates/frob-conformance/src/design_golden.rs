@@ -241,7 +241,11 @@ fn parse_case_row(tbl: Table, idx: usize) -> Result<GoldenCase, String> {
     let expect = match expect_s.as_str() {
         "accept" => CaseExpect::Accept,
         "refuse" => CaseExpect::Refuse,
-        other => return Err(format!("{ctx}: invalid expect `{other}` (must be accept|refuse)")),
+        other => {
+            return Err(format!(
+                "{ctx}: invalid expect `{other}` (must be accept|refuse)"
+            ));
+        }
     };
     if id.is_empty() {
         return Err(format!("{ctx}: empty case id"));
@@ -253,21 +257,29 @@ fn parse_case_row(tbl: Table, idx: usize) -> Result<GoldenCase, String> {
         return Err(format!("{ctx} ({id}): purpose must be non-empty"));
     }
     if !is_hex64(&input_blake3) {
-        return Err(format!("{ctx} ({id}): invalid input_blake3 `{input_blake3}`"));
+        return Err(format!(
+            "{ctx} ({id}): invalid input_blake3 `{input_blake3}`"
+        ));
     }
     match expect {
         CaseExpect::Accept => {
             if canon.is_empty() || !canon.ends_with(".canon") {
-                return Err(format!("{ctx} ({id}): accepted case requires `.canon` path"));
+                return Err(format!(
+                    "{ctx} ({id}): accepted case requires `.canon` path"
+                ));
             }
             if !is_hex64(&canon_blake3) {
-                return Err(format!("{ctx} ({id}): invalid canon_blake3 `{canon_blake3}`"));
+                return Err(format!(
+                    "{ctx} ({id}): invalid canon_blake3 `{canon_blake3}`"
+                ));
             }
             if !is_design_id(&design_id) {
                 return Err(format!("{ctx} ({id}): invalid design_id `{design_id}`"));
             }
             if !reason.is_empty() {
-                return Err(format!("{ctx} ({id}): accepted case must have empty reason"));
+                return Err(format!(
+                    "{ctx} ({id}): accepted case must have empty reason"
+                ));
             }
         }
         CaseExpect::Refuse => {
@@ -277,7 +289,9 @@ fn parse_case_row(tbl: Table, idx: usize) -> Result<GoldenCase, String> {
                 ));
             }
             if reason.trim().is_empty() {
-                return Err(format!("{ctx} ({id}): refusal case must state reason class"));
+                return Err(format!(
+                    "{ctx} ({id}): refusal case must state reason class"
+                ));
             }
         }
     }
@@ -318,7 +332,9 @@ pub fn load_manifest(manifest_path: &Path) -> Result<GoldenManifest, String> {
         ));
     }
     if !is_hex64(&oracle_blake3) {
-        return Err(format!("manifest.toml: invalid oracle_blake3 `{oracle_blake3}`"));
+        return Err(format!(
+            "manifest.toml: invalid oracle_blake3 `{oracle_blake3}`"
+        ));
     }
     if !is_hex64(&manifest_blake3) {
         return Err(format!(
@@ -794,7 +810,9 @@ pub fn invoke_reference(workspace_root: &Path, mode: &str, input: &[u8]) -> Cano
     match json_str_field(&parsed, "status") {
         Some("ok") => {
             let hex = json_str_field(&parsed, "canon_hex").unwrap_or("");
-            let did = json_str_field(&parsed, "design_id").unwrap_or("").to_owned();
+            let did = json_str_field(&parsed, "design_id")
+                .unwrap_or("")
+                .to_owned();
             match decode_hex(hex) {
                 Ok(canonical_bytes) => CanonOutcome::Accepted {
                     canonical_bytes,

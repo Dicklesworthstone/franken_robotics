@@ -50,7 +50,14 @@ struct GateDefault {
 }
 
 const KNOWN_GATES: &[GateDefault] = &[
-    GateDefault { id: "INT-TOOLCHAIN-01", foundation: "WORKSPACE", own_crates: &[], own_groups: &[], own_tool: None, required_thresholds: &[] },
+    GateDefault {
+        id: "INT-TOOLCHAIN-01",
+        foundation: "WORKSPACE",
+        own_crates: &[],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
     GateDefault {
         id: "INT-FSIM-01",
         foundation: "FD-FSIM",
@@ -59,41 +66,286 @@ const KNOWN_GATES: &[GateDefault] = &[
         own_tool: None,
         required_thresholds: &[("cold_check_s", "s")],
     },
-    GateDefault { id: "INT-FSIM-02", foundation: "FD-FSIM", own_crates: &["fs-ga"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSIM-03", foundation: "FD-FSIM", own_crates: &["fs-mbd"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSIM-04", foundation: "FD-FSIM", own_crates: &["fs-contact"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSIM-05", foundation: "FD-FSIM", own_crates: &["fs-mbd"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSIM-06", foundation: "FD-FSIM", own_crates: &["fs-g1-train"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSIM-07", foundation: "FD-FSIM", own_crates: &["fs-contact"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSIM-08", foundation: "FD-FSIM", own_crates: &["fs-time"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSIM-09", foundation: "FD-FSIM", own_crates: &["fs-matdb", "fs-phs", "fs-tribo"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSIM-10", foundation: "FD-FSIM", own_crates: &["fs-query"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSIM-11", foundation: "FD-FSIM", own_crates: &["fs-mbd"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSIM-13", foundation: "FD-FSIM", own_crates: &[], own_groups: &["spectral"], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSIM-14", foundation: "FD-FSIM", own_crates: &[], own_groups: &["stats"], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSIM-15", foundation: "FD-FSIM", own_crates: &[], own_groups: &["structure"], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSIM-16", foundation: "FD-FSIM", own_crates: &["fs-recompute"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSIM-17", foundation: "FD-FSIM", own_crates: &[], own_groups: &["multiphysics"], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSIM-18", foundation: "FD-FSIM", own_crates: &[], own_groups: &[], own_tool: Some("frob-fsim-worker"), required_thresholds: &[] },
-    GateDefault { id: "INT-ASUP-01", foundation: "FD-ASUP", own_crates: &["asupersync"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-ASUP-02", foundation: "FD-ASUP", own_crates: &["asupersync"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSQL-01", foundation: "FD-FSQL", own_crates: &["fsqlite"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSQL-02", foundation: "FD-FSQL", own_crates: &["fsqlite"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FT-01", foundation: "FD-FT", own_crates: &["ft-kernel-metal"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FT-02", foundation: "FD-FT", own_crates: &["ft-kernel-metal"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-CUDA-01", foundation: "FD-CUDA", own_crates: &["cudarc"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSYM-01", foundation: "FD-FSYM", own_crates: &["fsym-core"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FSYM-02", foundation: "FD-FSYM", own_crates: &["fsym-core"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FLN-01", foundation: "FD-FLN", own_crates: &[], own_groups: &[], own_tool: Some("fln"), required_thresholds: &[] },
-    GateDefault { id: "INT-FLN-02", foundation: "FD-FLN", own_crates: &[], own_groups: &[], own_tool: Some("fln"), required_thresholds: &[] },
-    GateDefault { id: "INT-FMCP-01", foundation: "FD-FMCP", own_crates: &["fastmcp"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FNP-01", foundation: "FD-FNP", own_crates: &["fnp-io"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FNP-02", foundation: "FD-FNP", own_crates: &["fnp-io"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FTUI-01", foundation: "FD-FTUI", own_crates: &["ftui"], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-F3D-01", foundation: "FD-F3D", own_crates: &[], own_groups: &[], own_tool: Some("franken_threed"), required_thresholds: &[] },
-    GateDefault { id: "INT-FDGR-01", foundation: "FD-FDGR", own_crates: &[], own_groups: &[], own_tool: Some("fdgr"), required_thresholds: &[] },
-    GateDefault { id: "INT-FJAX-01", foundation: "FD-FJAX", own_crates: &[], own_groups: &[], own_tool: None, required_thresholds: &[] },
-    GateDefault { id: "INT-FTX-01", foundation: "FD-FTX", own_crates: &[], own_groups: &[], own_tool: Some("ftx-drape"), required_thresholds: &[] },
+    GateDefault {
+        id: "INT-FSIM-02",
+        foundation: "FD-FSIM",
+        own_crates: &["fs-ga"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSIM-03",
+        foundation: "FD-FSIM",
+        own_crates: &["fs-mbd"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSIM-04",
+        foundation: "FD-FSIM",
+        own_crates: &["fs-contact"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSIM-05",
+        foundation: "FD-FSIM",
+        own_crates: &["fs-mbd"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSIM-06",
+        foundation: "FD-FSIM",
+        own_crates: &["fs-g1-train"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSIM-07",
+        foundation: "FD-FSIM",
+        own_crates: &["fs-contact"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSIM-08",
+        foundation: "FD-FSIM",
+        own_crates: &["fs-time"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSIM-09",
+        foundation: "FD-FSIM",
+        own_crates: &["fs-matdb", "fs-phs", "fs-tribo"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSIM-10",
+        foundation: "FD-FSIM",
+        own_crates: &["fs-query"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSIM-11",
+        foundation: "FD-FSIM",
+        own_crates: &["fs-mbd"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSIM-13",
+        foundation: "FD-FSIM",
+        own_crates: &[],
+        own_groups: &["spectral"],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSIM-14",
+        foundation: "FD-FSIM",
+        own_crates: &[],
+        own_groups: &["stats"],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSIM-15",
+        foundation: "FD-FSIM",
+        own_crates: &[],
+        own_groups: &["structure"],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSIM-16",
+        foundation: "FD-FSIM",
+        own_crates: &["fs-recompute"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSIM-17",
+        foundation: "FD-FSIM",
+        own_crates: &[],
+        own_groups: &["multiphysics"],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSIM-18",
+        foundation: "FD-FSIM",
+        own_crates: &[],
+        own_groups: &[],
+        own_tool: Some("frob-fsim-worker"),
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-ASUP-01",
+        foundation: "FD-ASUP",
+        own_crates: &["asupersync"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-ASUP-02",
+        foundation: "FD-ASUP",
+        own_crates: &["asupersync"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSQL-01",
+        foundation: "FD-FSQL",
+        own_crates: &["fsqlite"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSQL-02",
+        foundation: "FD-FSQL",
+        own_crates: &["fsqlite"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FT-01",
+        foundation: "FD-FT",
+        own_crates: &["ft-kernel-metal"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FT-02",
+        foundation: "FD-FT",
+        own_crates: &["ft-kernel-metal"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-CUDA-01",
+        foundation: "FD-CUDA",
+        own_crates: &["cudarc"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSYM-01",
+        foundation: "FD-FSYM",
+        own_crates: &["fsym-core"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FSYM-02",
+        foundation: "FD-FSYM",
+        own_crates: &["fsym-core"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FLN-01",
+        foundation: "FD-FLN",
+        own_crates: &[],
+        own_groups: &[],
+        own_tool: Some("fln"),
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FLN-02",
+        foundation: "FD-FLN",
+        own_crates: &[],
+        own_groups: &[],
+        own_tool: Some("fln"),
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FMCP-01",
+        foundation: "FD-FMCP",
+        own_crates: &["fastmcp"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FNP-01",
+        foundation: "FD-FNP",
+        own_crates: &["fnp-io"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FNP-02",
+        foundation: "FD-FNP",
+        own_crates: &["fnp-io"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FTUI-01",
+        foundation: "FD-FTUI",
+        own_crates: &["ftui"],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-F3D-01",
+        foundation: "FD-F3D",
+        own_crates: &[],
+        own_groups: &[],
+        own_tool: Some("franken_threed"),
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FDGR-01",
+        foundation: "FD-FDGR",
+        own_crates: &[],
+        own_groups: &[],
+        own_tool: Some("fdgr"),
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FJAX-01",
+        foundation: "FD-FJAX",
+        own_crates: &[],
+        own_groups: &[],
+        own_tool: None,
+        required_thresholds: &[],
+    },
+    GateDefault {
+        id: "INT-FTX-01",
+        foundation: "FD-FTX",
+        own_crates: &[],
+        own_groups: &[],
+        own_tool: Some("ftx-drape"),
+        required_thresholds: &[],
+    },
 ];
 
 fn lookup_gate(gate_id: &str) -> Option<&'static GateDefault> {
@@ -203,7 +455,10 @@ impl ToolSpec {
     pub fn is_pinned(&self) -> bool {
         !self.name.is_empty()
             && self.rev.as_deref().is_some_and(|r| is_lower_hex(r, 40))
-            && self.binary_hash.as_deref().is_some_and(|h| is_lower_hex(h, 64))
+            && self
+                .binary_hash
+                .as_deref()
+                .is_some_and(|h| is_lower_hex(h, 64))
     }
 }
 
@@ -479,8 +734,7 @@ impl Canonical for AdmissionRecord {
 
 impl AdmissionRecord {
     pub fn to_canonical_bytes(&self) -> Result<CanonicalBytes, AdmissionError> {
-        canon::to_canonical(self)
-            .map_err(|e| AdmissionError::new("canon-error", e.to_string()))
+        canon::to_canonical(self).map_err(|e| AdmissionError::new("canon-error", e.to_string()))
     }
 
     pub fn from_json_bytes(bytes: &[u8]) -> Result<Self, AdmissionError> {
@@ -607,10 +861,7 @@ impl Canonical for RecordOutcome {
 /// Never writes `registries/gates.toml`, refuses to overwrite an existing
 /// record file, and writes NOTHING to `receipts/admissions/` when a `pass`
 /// guard refuses.
-pub fn record(
-    opts: &RecordOptions,
-    input: &RecordInput,
-) -> Result<RecordOutcome, AdmissionError> {
+pub fn record(opts: &RecordOptions, input: &RecordInput) -> Result<RecordOutcome, AdmissionError> {
     if !is_valid_gate_id(&opts.gate) {
         return Err(AdmissionError::new(
             "invalid-gate",
@@ -646,8 +897,11 @@ pub fn record(
         .map(|s| s.rev.clone());
 
     // 2. Run the measuring command through PATH under bounded timeout.
-    let (exit_code, raw_output) =
-        run_command_with_timeout(repo_root, &input.command, Duration::from_secs(opts.timeout_secs))?;
+    let (exit_code, raw_output) = run_command_with_timeout(
+        repo_root,
+        &input.command,
+        Duration::from_secs(opts.timeout_secs),
+    )?;
 
     // 3. Determine target status.
     let all_thresholds_met = input.measured.iter().all(|m| {
@@ -858,7 +1112,10 @@ pub fn record(
         if existing != raw_output {
             return Err(AdmissionError::new(
                 "output-collision",
-                format!("existing output blob `{}` differs in bytes", output_path.display()),
+                format!(
+                    "existing output blob `{}` differs in bytes",
+                    output_path.display()
+                ),
             ));
         }
     } else {
@@ -970,7 +1227,11 @@ pub fn run_cli(args: &[String], stdout: &mut dyn Write, stderr: &mut dyn Write) 
         return if args.is_empty() { Err(3) } else { Ok(()) };
     }
     if args[0] != "record" {
-        let _ = writeln!(stderr, "unknown subcommand `{}` (expected `record`)", args[0]);
+        let _ = writeln!(
+            stderr,
+            "unknown subcommand `{}` (expected `record`)",
+            args[0]
+        );
         return Err(3);
     }
 
@@ -1036,7 +1297,11 @@ pub fn run_cli(args: &[String], stdout: &mut dyn Write, stderr: &mut dyn Write) 
     };
 
     let input_bytes = fs::read(&input_path).map_err(|e| {
-        let _ = writeln!(stderr, "failed to read input `{}`: {e}", input_path.display());
+        let _ = writeln!(
+            stderr,
+            "failed to read input `{}`: {e}",
+            input_path.display()
+        );
         2u8
     })?;
     let input = parse_input_json(&input_bytes).map_err(|e| {
@@ -1087,7 +1352,9 @@ struct StackReceiptSnap {
 fn load_head_stack_receipt(repo_root: &Path) -> Result<(String, StackReceiptSnap), AdmissionError> {
     let receipts_dir = repo_root.join("receipts");
     let head = fs::read_to_string(receipts_dir.join("HEAD"))
-        .map_err(|e| AdmissionError::new("receipt-missing", format!("cannot read receipts/HEAD: {e}")))?
+        .map_err(|e| {
+            AdmissionError::new("receipt-missing", format!("cannot read receipts/HEAD: {e}"))
+        })?
         .trim()
         .to_owned();
     if !is_lower_hex(&head, 64) {
@@ -1110,27 +1377,31 @@ fn load_head_stack_receipt(repo_root: &Path) -> Result<(String, StackReceiptSnap
             format!("stack receipt `receipts/{head}.json` tampered (actual BLAKE3 `{actual}`)"),
         ));
     }
-    let admitted = json::admit(&bytes, &Limits::default())
-        .map_err(|e| AdmissionError::new("receipt-missing", format!("invalid receipt JSON: {e}")))?;
+    let admitted = json::admit(&bytes, &Limits::default()).map_err(|e| {
+        AdmissionError::new("receipt-missing", format!("invalid receipt JSON: {e}"))
+    })?;
     let v = admitted.value();
     let repo_dirty = v
         .get("repo_dirty")
         .and_then(|x| x.as_bool())
-        .ok_or_else(|| AdmissionError::new("receipt-missing", "receipt missing bool `repo_dirty`"))?;
+        .ok_or_else(|| {
+            AdmissionError::new("receipt-missing", "receipt missing bool `repo_dirty`")
+        })?;
     let toolchain = req_str(v, "toolchain")?;
     let duplicates = req_str_vec(v, "duplicates")?;
     let sib_arr = v
         .get("siblings")
         .and_then(|x| x.as_array())
-        .ok_or_else(|| AdmissionError::new("receipt-missing", "receipt missing array `siblings`"))?;
+        .ok_or_else(|| {
+            AdmissionError::new("receipt-missing", "receipt missing array `siblings`")
+        })?;
     let mut siblings = Vec::with_capacity(sib_arr.len());
     for item in sib_arr {
         let fd = req_str(item, "fd")?;
         let rev = req_str(item, "rev")?;
-        let dirty = item
-            .get("dirty")
-            .and_then(|x| x.as_bool())
-            .ok_or_else(|| AdmissionError::new("receipt-missing", "sibling missing bool `dirty`"))?;
+        let dirty = item.get("dirty").and_then(|x| x.as_bool()).ok_or_else(|| {
+            AdmissionError::new("receipt-missing", "sibling missing bool `dirty`")
+        })?;
         siblings.push(SiblingSnap { fd, rev, dirty });
     }
     Ok((
@@ -1165,11 +1436,7 @@ fn resolve_foundation(gate: &str, explicit: Option<&str>) -> Result<String, Admi
     ))
 }
 
-fn is_gate_own_scope_spec(
-    spec: &GateDefault,
-    foundation: &str,
-    covers: &AdmissionCovers,
-) -> bool {
+fn is_gate_own_scope_spec(spec: &GateDefault, foundation: &str, covers: &AdmissionCovers) -> bool {
     if spec.foundation != "WORKSPACE" && foundation != spec.foundation {
         return false;
     }
@@ -1229,7 +1496,10 @@ fn run_command_with_timeout(
                 thread::sleep(Duration::from_millis(20));
             }
             Err(e) => {
-                return Err(AdmissionError::new("wait-failed", format!("wait `{prog}`: {e}")));
+                return Err(AdmissionError::new(
+                    "wait-failed",
+                    format!("wait `{prog}`: {e}"),
+                ));
             }
         }
     };
@@ -1316,16 +1586,20 @@ fn is_valid_gate_id(gate: &str) -> bool {
     if let Some(rest) = gate.strip_prefix("INT-") {
         let parts: Vec<&str> = rest.split('-').collect();
         return parts.len() >= 2
-            && parts[..parts.len() - 1]
-                .iter()
-                .all(|p| !p.is_empty() && p.bytes().all(|b| b.is_ascii_uppercase() || b.is_ascii_digit()))
+            && parts[..parts.len() - 1].iter().all(|p| {
+                !p.is_empty()
+                    && p.bytes()
+                        .all(|b| b.is_ascii_uppercase() || b.is_ascii_digit())
+            })
             && !parts[parts.len() - 1].is_empty()
             && parts[parts.len() - 1].bytes().all(|b| b.is_ascii_digit());
     }
     if let Some(rest) = gate.strip_prefix("ADMIT-") {
         return !rest.is_empty()
             && rest.split('-').all(|p| {
-                !p.is_empty() && p.bytes().all(|b| b.is_ascii_uppercase() || b.is_ascii_digit())
+                !p.is_empty()
+                    && p.bytes()
+                        .all(|b| b.is_ascii_uppercase() || b.is_ascii_digit())
             });
     }
     false
@@ -1336,12 +1610,17 @@ fn is_valid_foundation_id(fd: &str) -> bool {
         return true;
     }
     fd.strip_prefix("FD-").is_some_and(|rest| {
-        !rest.is_empty() && rest.bytes().all(|b| b.is_ascii_uppercase() || b.is_ascii_digit())
+        !rest.is_empty()
+            && rest
+                .bytes()
+                .all(|b| b.is_ascii_uppercase() || b.is_ascii_digit())
     })
 }
 
 fn is_lower_hex(s: &str, len: usize) -> bool {
-    s.len() == len && s.bytes().all(|b| b.is_ascii_digit() || matches!(b, b'a'..=b'f'))
+    s.len() == len
+        && s.bytes()
+            .all(|b| b.is_ascii_digit() || matches!(b, b'a'..=b'f'))
 }
 
 // ============================================================================
@@ -1353,9 +1632,26 @@ fn decode_record(root: &Json<'_>) -> Result<AdmissionRecord, AdmissionError> {
         .as_object()
         .ok_or_else(|| AdmissionError::new("parse-error", "record must be JSON object"))?;
     const ALLOWED_KEYS: &[&str] = &[
-        "command", "controls", "covers", "exit", "facts_reread", "foundation", "gate",
-        "harness_receipt", "host", "measured", "output_excerpt", "output_hash", "recorded",
-        "repo_rev", "schema", "sibling_rev", "stack_receipt", "status", "toolchain", "workspace",
+        "command",
+        "controls",
+        "covers",
+        "exit",
+        "facts_reread",
+        "foundation",
+        "gate",
+        "harness_receipt",
+        "host",
+        "measured",
+        "output_excerpt",
+        "output_hash",
+        "recorded",
+        "repo_rev",
+        "schema",
+        "sibling_rev",
+        "stack_receipt",
+        "status",
+        "toolchain",
+        "workspace",
     ];
     for m in members {
         if !ALLOWED_KEYS.contains(&m.name.as_str()) {
@@ -1368,7 +1664,10 @@ fn decode_record(root: &Json<'_>) -> Result<AdmissionRecord, AdmissionError> {
 
     let schema = req_str(root, "schema")?;
     if schema != ADMISSION_SCHEMA {
-        return Err(AdmissionError::new("parse-error", format!("unexpected schema `{schema}`")));
+        return Err(AdmissionError::new(
+            "parse-error",
+            format!("unexpected schema `{schema}`"),
+        ));
     }
     let gate = req_str(root, "gate")?;
     let foundation = req_str(root, "foundation")?;
@@ -1488,7 +1787,11 @@ fn decode_covers(node: &Json<'_>) -> Result<AdmissionCovers, AdmissionError> {
             ));
         }
     };
-    Ok(AdmissionCovers { crates, groups, tool })
+    Ok(AdmissionCovers {
+        crates,
+        groups,
+        tool,
+    })
 }
 
 fn decode_measured_vec(node: &Json<'_>) -> Result<Vec<MeasuredEntry>, AdmissionError> {
@@ -1508,10 +1811,10 @@ fn decode_measured_vec(node: &Json<'_>) -> Result<Vec<MeasuredEntry>, AdmissionE
             .and_then(|v| v.as_str())
             .unwrap_or("")
             .to_owned();
-        let threshold = decode_measure_num(
-            item.get("threshold")
-                .ok_or_else(|| AdmissionError::new("parse-error", "missing `measured.threshold`"))?,
-        )?;
+        let threshold =
+            decode_measure_num(item.get("threshold").ok_or_else(|| {
+                AdmissionError::new("parse-error", "missing `measured.threshold`")
+            })?)?;
         let relation = MeasureRelation::parse(&req_str(item, "relation")?)?;
         out.push(MeasuredEntry {
             name,
@@ -1593,10 +1896,9 @@ fn opt_nullable_str(obj: &Json<'_>, key: &str) -> Result<Option<String>, Admissi
     match obj.get(key) {
         None => Ok(None),
         Some(v) if v.is_null() => Ok(None),
-        Some(v) => v
-            .as_str()
-            .map(|s| Some(s.to_owned()))
-            .ok_or_else(|| AdmissionError::new("parse-error", format!("`{key}` must be string or null"))),
+        Some(v) => v.as_str().map(|s| Some(s.to_owned())).ok_or_else(|| {
+            AdmissionError::new("parse-error", format!("`{key}` must be string or null"))
+        }),
     }
 }
 
@@ -1607,9 +1909,9 @@ fn req_str_vec(obj: &Json<'_>, key: &str) -> Result<Vec<String>, AdmissionError>
         .ok_or_else(|| AdmissionError::new("parse-error", format!("missing array `{key}`")))?;
     arr.iter()
         .map(|it| {
-            it.as_str()
-                .map(ToOwned::to_owned)
-                .ok_or_else(|| AdmissionError::new("parse-error", format!("`{key}` item must be string")))
+            it.as_str().map(ToOwned::to_owned).ok_or_else(|| {
+                AdmissionError::new("parse-error", format!("`{key}` item must be string"))
+            })
         })
         .collect()
 }
@@ -1798,8 +2100,14 @@ mod tests {
         let out = record(&opts, &sample_input()).expect("record pass");
 
         let after = fs::read(&gates_path).expect("read gates after");
-        assert_eq!(before, after, "writer must never touch registries/gates.toml");
-        assert_eq!(out.record.harness_receipt.as_deref(), Some(harness.as_str()));
+        assert_eq!(
+            before, after,
+            "writer must never touch registries/gates.toml"
+        );
+        assert_eq!(
+            out.record.harness_receipt.as_deref(),
+            Some(harness.as_str())
+        );
     }
 
     #[test]
@@ -1829,9 +2137,15 @@ mod tests {
         let mut stderr = Vec::new();
         run_cli(&args, &mut stdout, &mut stderr).expect("cli record must succeed");
         let stdout_s = String::from_utf8(stdout).expect("utf8");
-        assert!(stdout_s.contains(&lib_out.record_hash), "stdout must print record hash: {stdout_s}");
+        assert!(
+            stdout_s.contains(&lib_out.record_hash),
+            "stdout must print record hash: {stdout_s}"
+        );
         let cli_bytes = fs::read(repo_cli.join(&lib_out.rel_path)).expect("cli bytes");
-        assert_eq!(lib_bytes, cli_bytes, "example and library must write identical canonical bytes");
+        assert_eq!(
+            lib_bytes, cli_bytes,
+            "example and library must write identical canonical bytes"
+        );
 
         // Dirty receipt -> non-zero exit naming `pass-on-dirty` and writes NOTHING.
         let (repo_dirty, _) = build_synthetic_repo("ex_dirty", true);

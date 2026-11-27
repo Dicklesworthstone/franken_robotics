@@ -139,10 +139,12 @@ awk '
 _in_workspace e2e_cmd --name "nc_empty_enforced_by" --expect-exit "101" -- \
   env "CARGO_TARGET_DIR=${TARGET_DIR}" "FROB_CONFORMANCE_ROOT=${SCRATCH_EMPTY}" \
   cargo test --manifest-path "${MANIFEST}" -p frob-conformance --test adr_tether --locked -- adr_enforced_by_resolves
-if [ "${E2E_LAST_EXIT}" -ne 0 ] && printf '%s\n%s\n' "${E2E_LAST_STDOUT}" "${E2E_LAST_STDERR}" | grep -Fq "ADR-TETHER-02"; then
-  e2e_assert_eq "nc_empty_enforced_by_caught" "caught" "caught"
-else
-  e2e_assert_eq "nc_empty_enforced_by_caught" "missed" "caught"
+if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
+  if [ "${E2E_LAST_EXIT}" -ne 0 ] && [ -f "${E2E_LAST_STDOUT}" ] && [ -f "${E2E_LAST_STDERR}" ] && grep -Fq "ADR-TETHER-02" "${E2E_LAST_STDOUT}" "${E2E_LAST_STDERR}"; then
+    e2e_assert_eq "nc_empty_enforced_by_caught" "caught" "caught"
+  else
+    e2e_assert_eq "nc_empty_enforced_by_caught" "missed" "caught"
+  fi
 fi
 
 # Negative control 2: mark ADR-TETHER-03 check pending beyond its M0 milestone
@@ -156,8 +158,10 @@ awk '
 _in_workspace e2e_cmd --name "nc_pending_beyond_milestone" --expect-exit "101" -- \
   env "CARGO_TARGET_DIR=${TARGET_DIR}" "FROB_CONFORMANCE_ROOT=${SCRATCH_PAST}" \
   cargo test --manifest-path "${MANIFEST}" -p frob-conformance --test adr_tether --locked -- adr_enforced_by_resolves
-if [ "${E2E_LAST_EXIT}" -ne 0 ] && printf '%s\n%s\n' "${E2E_LAST_STDOUT}" "${E2E_LAST_STDERR}" | grep -Fq "ADR-TETHER-03"; then
-  e2e_assert_eq "nc_pending_beyond_milestone_caught" "caught" "caught"
-else
-  e2e_assert_eq "nc_pending_beyond_milestone_caught" "missed" "caught"
+if [ "${E2E_DRY_RUN:-0}" != "1" ]; then
+  if [ "${E2E_LAST_EXIT}" -ne 0 ] && [ -f "${E2E_LAST_STDOUT}" ] && [ -f "${E2E_LAST_STDERR}" ] && grep -Fq "ADR-TETHER-03" "${E2E_LAST_STDOUT}" "${E2E_LAST_STDERR}"; then
+    e2e_assert_eq "nc_pending_beyond_milestone_caught" "caught" "caught"
+  else
+    e2e_assert_eq "nc_pending_beyond_milestone_caught" "missed" "caught"
+  fi
 fi

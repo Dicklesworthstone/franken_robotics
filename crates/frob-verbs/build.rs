@@ -34,16 +34,45 @@ use engine::entry::ParsedRegistry;
 use engine::lint::{LintContext, LintError};
 use engine::schema_id::schema_file_name;
 
+const RELEASE_FORBIDDEN_FEATURES: &[(&str, &str)] = &[
+    ("CARGO_FEATURE_CONFORMANCE", "conformance"),
+    ("CARGO_FEATURE_GAUNTLET_MUTATIONS", "gauntlet-mutations"),
+    ("CARGO_FEATURE_NC_BARE_UNKNOWN_VERB", "nc-bare-unknown-verb"),
+    ("CARGO_FEATURE_NC_SECOND_ENVELOPE", "nc-second-envelope"),
+    ("CARGO_FEATURE_NC_OMIT_805", "nc-omit-805"),
+    ("CARGO_FEATURE_NC_KEY_IN_REQUIRED", "nc-key-in-required"),
+    ("CARGO_FEATURE_NC_APPEND_990", "nc-append-990"),
+];
+
 fn main() {
     println!("cargo:rerun-if-env-changed=FROB_VERBS_REGISTRY");
     println!("cargo:rerun-if-env-changed=FROB_VERBS_SCHEMAS_DIR");
     println!("cargo:rerun-if-env-changed=FROB_VERBS_SCOPES");
 
     let conformance = env::var_os("CARGO_FEATURE_CONFORMANCE").is_some();
-    let profile = env::var("PROFILE").unwrap_or_default();
-    if conformance && profile == "release" {
-        eprintln!("frob-verbs build failed: feature `conformance` is forbidden in release builds");
-        process::exit(1);
+    // Cargo classifies PROFILE by inheritance, independent of debug assertions.
+    if env::var("PROFILE").as_deref() == Ok("release") {
+        let mut forbidden: BTreeSet<String> = RELEASE_FORBIDDEN_FEATURES
+            .iter()
+            .filter_map(|&(env_var, feature)| env::var_os(env_var).map(|_| feature.to_owned()))
+            .collect();
+        for (key, _) in env::vars() {
+            if let Some(rest) = key.strip_prefix("CARGO_FEATURE_")
+                && (rest.starts_with("NC_")
+                    || rest.starts_with("CX_")
+                    || rest.starts_with("MUTANT_"))
+            {
+                forbidden.insert(rest.to_ascii_lowercase().replace('_', "-"));
+            }
+        }
+        if !forbidden.is_empty() {
+            let list: Vec<&str> = forbidden.iter().map(String::as_str).collect();
+            eprintln!(
+                "frob-verbs build failed: feature(s) `{}` forbidden in release profiles",
+                list.join("`, `")
+            );
+            process::exit(1);
+        }
     }
 
     let manifest_dir = PathBuf::from(

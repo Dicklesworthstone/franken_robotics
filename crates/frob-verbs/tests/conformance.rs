@@ -1,10 +1,17 @@
 //! Crate-level conformance checks for `frob-verbs` (N32a-02, N34-08 rule 3, ADR-TETHER-02).
 
+use std::env;
+use std::fs;
+use std::path::PathBuf;
 use std::process::Command;
+use std::sync::atomic::{AtomicU64, Ordering};
+use std::time::{SystemTime, UNIX_EPOCH};
 
 use frob_core::registry::refusals::RefusalRegistry;
 use frob_core::registry::toml::{self, Fields};
 use frob_verbs::registry::{REGISTRY_DIGEST, REGISTRY_DIGEST_HEX, TASK_CLUSTERS, VERBS};
+
+const CARGO_TOML: &str = include_str!("../Cargo.toml");
 
 const CONTRACT_MD: &str = include_str!("../CONTRACT.md");
 const CONTRACT_TOML: &str = include_str!("../contract.toml");
@@ -196,5 +203,170 @@ fn registry_only_has_no_physics() {
                 "registry-only linked unexpected FrankenSim physics crate `{pkg}`:\n{stdout}"
             );
         }
+    }
+}
+
+const RELEASE_FORBIDDEN_FEATURES: &[&str] = &[
+    "conformance",
+    "gauntlet-mutations",
+    "nc-bare-unknown-verb",
+    "nc-second-envelope",
+    "nc-omit-805",
+    "nc-key-in-required",
+    "nc-append-990",
+];
+
+const NC_FEATURES: &[&str] = &[
+    "nc-bare-unknown-verb",
+    "nc-second-envelope",
+    "nc-omit-805",
+    "nc-key-in-required",
+    "nc-append-990",
+];
+
+fn parse_manifest_features(raw: &str) -> Vec<(String, Vec<String>)> {
+    let mut in_features = false;
+    let mut pending: Option<(String, String)> = None;
+    let mut out = Vec::new();
+    for raw_line in raw.lines() {
+        let line = raw_line.split('#').next().unwrap_or("").trim();
+        if line.is_empty() {
+            continue;
+        }
+        if let Some((ref key, ref mut acc)) = pending {
+            acc.push(' ');
+            acc.push_str(line);
+            if line.contains(']') {
+                out.push((key.clone(), parse_bracket_list(acc)));
+                pending = None;
+            }
+            continue;
+        }
+        if line.starts_with('[') && line.ends_with(']') {
+            in_features = line == "[features]";
+            continue;
+        }
+        if !in_features {
+            continue;
+        }
+        let Some((k, v)) = line.split_once('=') else {
+            continue;
+        };
+        let key = k.trim().trim_matches('"').trim_matches('\'').to_owned();
+        let val = v.trim();
+        if val.contains('[') && !val.contains(']') {
+            pending = Some((key, val.to_owned()));
+        } else {
+            out.push((key, parse_bracket_list(val)));
+        }
+    }
+    out
+}
+
+fn parse_bracket_list(val: &str) -> Vec<String> {
+    let Some(start) = val.find('[') else {
+        return Vec::new();
+    };
+    let rest = &val[start + 1..];
+    let end = rest.find(']').unwrap_or(rest.len());
+    rest[..end]
+        .split(',')
+        .map(|s| s.trim().trim_matches('"').trim_matches('\'').trim())
+        .filter(|s| !s.is_empty())
+        .map(str::to_owned)
+        .collect()
+}
+
+#[test]
+fn nc_features_imply_gauntlet_mutations() {
+    let features = parse_manifest_features(CARGO_TOML);
+    for &nc in NC_FEATURES {
+        let deps = features
+            .iter()
+            .find(|(name, _)| name == nc)
+            .map(|(_, deps)| deps)
+            .unwrap_or_else(|| panic!("frob-verbs/Cargo.toml missing `[features].{nc}`"));
+        assert!(
+            deps.iter().any(|d| d == "gauntlet-mutations"),
+            "frob-verbs planted-defect feature `{nc}` must imply `gauntlet-mutations`, got {deps:?}"
+        );
+    }
+    for (name, deps) in &features {
+        if name.starts_with("nc-") {
+            assert!(
+                deps.iter().any(|d| d == "gauntlet-mutations"),
+                "every `nc-*` feature in frob-verbs/Cargo.toml must imply `gauntlet-mutations`; `{name}` has {deps:?}"
+            );
+        }
+        if matches!(name.as_str(), "default" | "registry-only") {
+            for &forbidden in RELEASE_FORBIDDEN_FEATURES {
+                assert!(
+                    !deps.iter().any(|d| d == forbidden),
+                    "`{name}` must not enable release-forbidden feature `{forbidden}`"
+                );
+            }
+        }
+    }
+}
+
+#[test]
+fn release_profile_refuses_conformance_and_mutation_features() {
+    static SEQ: AtomicU64 = AtomicU64::new(0);
+    let manifest_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    let repo_root = manifest_dir
+        .parent()
+        .and_then(|p| p.parent())
+        .expect("crates/frob-verbs sits two levels below workspace root");
+    let workspace_manifest = repo_root.join("Cargo.toml");
+
+    let base = env::var_os("CARGO_TARGET_TMPDIR")
+        .or_else(|| env::var_os("TMPDIR"))
+        .map(PathBuf::from)
+        .unwrap_or_else(env::temp_dir);
+    let nanos = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map_or(0, |d| d.as_nanos());
+    let target_dir = base.join(format!(
+        "frob-verbs-release-guard-{}-{nanos}-{}",
+        std::process::id(),
+        SEQ.fetch_add(1, Ordering::Relaxed)
+    ));
+    fs::create_dir_all(&target_dir).expect("create isolated target dir for release guard test");
+
+    for &feature in RELEASE_FORBIDDEN_FEATURES {
+        let output = Command::new("cargo")
+            .args([
+                "check",
+                "--manifest-path",
+                workspace_manifest.to_str().expect("utf8 manifest path"),
+                "--offline",
+                "--locked",
+                "-j",
+                "1",
+                "--release",
+                "--config",
+                "profile.release.debug-assertions=true",
+                "--no-default-features",
+                "--features",
+                &format!("registry-only,{feature}"),
+                "-p",
+                "frob-verbs",
+            ])
+            .current_dir(repo_root)
+            .env("CARGO_TARGET_DIR", &target_dir)
+            .env_remove("CARGO_BUILD_BUILD_DIR")
+            .output()
+            .expect("invoke cargo check for frob-verbs release-profile guard");
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        assert!(
+            !output.status.success(),
+            "release profile with debug-assertions=true and `--features {feature}` MUST fail in build.rs; stderr:\n{stderr}"
+        );
+        assert!(
+            stderr.contains("frob-verbs build failed:")
+                && stderr.contains(feature)
+                && stderr.contains("release"),
+            "release profile refusal for `{feature}` must come from build.rs and name the feature; stderr:\n{stderr}"
+        );
     }
 }

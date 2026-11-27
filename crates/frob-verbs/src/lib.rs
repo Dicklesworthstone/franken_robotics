@@ -20,10 +20,17 @@
 compile_error!("frob-verbs feature `conformance` is forbidden in release builds");
 
 #[cfg(all(
-    any(feature = "nc-bare-unknown-verb", feature = "nc-second-envelope"),
+    any(
+        feature = "gauntlet-mutations",
+        feature = "nc-bare-unknown-verb",
+        feature = "nc-second-envelope",
+        feature = "nc-omit-805",
+        feature = "nc-key-in-required",
+        feature = "nc-append-990",
+    ),
     not(debug_assertions)
 ))]
-compile_error!("frob-verbs planted-defect features `nc-*` are forbidden in release builds");
+compile_error!("frob-verbs gauntlet/planted-defect features are forbidden in release builds");
 
 pub mod dispatch;
 pub mod envelope;

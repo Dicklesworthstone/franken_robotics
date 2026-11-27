@@ -62,6 +62,11 @@ fn write_json_string(s: &str, out: &mut String) {
 }
 
 fuzz_target!(|data: &[u8]| {
+    #[cfg(feature = "planted-panic")]
+    if !data.is_empty() && data[0] == b'{' {
+        panic!("planted negative (N34-17 AC7): fuzz harness must catch target panic");
+    }
+
     let limits = Limits::default();
     if let Ok(admitted) = admit(data, &limits) {
         let mut reserialized = String::new();

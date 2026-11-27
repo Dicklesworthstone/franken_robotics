@@ -13,6 +13,12 @@ cargo-fuzz = true
 libfuzzer-sys = "0.4"
 frob-core = { path = ".." }
 
+[features]
+default = []
+# Planted negative for N34-17 AC7: panics on a short input so the pinned fuzz
+# lane's exit/output/artifact assertions are verified to catch a real crash.
+planted-panic = []
+
 [[bin]]
 name = "admit"
 path = "fuzz_targets/admit.rs"

@@ -1,0 +1,17 @@
+[crate]
+name = "frob-chronicle"
+layer = 6
+rank = 2
+plane = "decision"
+determinism = "D2"
+evidence = "Estimated"
+gates = []
+refusals = []
+
+[budgets]
+wall_ms = 3600000
+memory_mib = 128
+
+[safe_mode]
+on_budget = "reference-path"
+on_calibration = "reference-path"

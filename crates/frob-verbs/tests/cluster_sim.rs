@@ -81,15 +81,15 @@ fn schemas_and_refusal_lists() {
                 .unwrap();
         }
         let raw = lookup_schema(row.input_schema.as_str()).unwrap();
-        let expected = if row.kind == Kind::Run {
+        let expected = if row.name == "sim.run" {
+            &[
+                701, 702, 703, 704, 720, 723, 724, 761, 790, 802, 803, 805, 808,
+            ][..]
+        } else if row.kind == Kind::Run {
             &[701, 702, 703, 704, 720, 723, 724, 761, 802, 803, 805, 808][..]
         } else {
             &[720, 723, 724, 802, 808][..]
         };
-        assert!(
-            row.refusals.is_empty(),
-            "no chapter handler is linked in the M0 registration"
-        );
         let codes = row.all_refusals_with(raw, registry);
         assert_eq!(
             codes.iter().map(|item| item.code).collect::<Vec<_>>(),

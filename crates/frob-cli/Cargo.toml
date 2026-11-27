@@ -17,7 +17,12 @@ name = "frob"
 path = "src/main.rs"
 
 [dependencies]
-frob-verbs = { path = "../frob-verbs" }
+frob-verbs = { path = "../frob-verbs", default-features = false, features = ["handlers"] }
+
+[features]
+default = ["referee"]
+referee = ["frob-verbs/referee"]
+conformance = ["frob-verbs/conformance"]
 
 [lints]
 workspace = true

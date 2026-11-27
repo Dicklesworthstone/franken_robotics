@@ -30,6 +30,43 @@
     "oracle_match": {"$ref": "#/$defs/match"},
     "rollout_match": {"$ref": "#/$defs/match"},
     "reproduced": {"type": "boolean"},
+    "trace": {"type": "string", "pattern": "^[0-9a-f]{32}$"},
+    "outcome": {"enum": ["completed", "cancelled"]},
+    "oracle_fd_digest": {"anyOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+    "oracle_rollout_digest": {"anyOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+    "oracle_pin": {"type": "string"},
+    "wall_s_per_sim_s": {"type": "number", "minimum": 0},
+    "t0": {
+      "type": "object",
+      "required": ["links", "nq", "nv", "mass_kg", "gravity_m_s2", "com_drop_m", "vertical_momentum_kg_m_s", "forward_dynamics_digest"],
+      "properties": {
+        "links": {"type": "integer", "minimum": 1},
+        "nq": {"type": "integer", "minimum": 1},
+        "nv": {"type": "integer", "minimum": 1},
+        "mass_kg": {"type": "number", "minimum": 0},
+        "gravity_m_s2": {"type": "number", "minimum": 0},
+        "com_drop_m": {"type": "number"},
+        "vertical_momentum_kg_m_s": {"type": "number"},
+        "forward_dynamics_digest": {"$ref": "#/$defs/digest"}
+      },
+      "additionalProperties": false
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code"],
+        "properties": {
+          "code": {"enum": ["oracle-match", "rollout-match", "digest-mismatch", "cancelled"]},
+          "match": {"$ref": "#/$defs/match"},
+          "chunk": {"type": "integer", "minimum": 0},
+          "last_completed_chunk": {"type": "integer", "minimum": 0},
+          "expected_digest": {"anyOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+          "observed_digest": {"anyOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]}
+        },
+        "additionalProperties": false
+      }
+    },
     "recorded_command": {"type": "array", "minItems": 1, "items": {"type": "string"}},
     "execution_authorized": {"const": false},
     "hardware_safety_signoff": {"const": false},

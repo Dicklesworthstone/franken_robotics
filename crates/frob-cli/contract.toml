@@ -15,3 +15,7 @@ memory_mib = 128
 [safe_mode]
 on_budget = "reference-path"
 on_calibration = "reference-path"
+
+[features]
+referee = { tier = "S" }
+conformance = { tier = "S" }

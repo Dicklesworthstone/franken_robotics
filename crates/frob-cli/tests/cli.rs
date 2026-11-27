@@ -34,6 +34,87 @@ fn checked(out: &Output, exit: u8) -> Tree {
     answer.envelope.tree().clone()
 }
 
+fn sim_refusal(args: &[&str], exit: u8, code: &str, pointer: &str) {
+    let store = std::env::temp_dir().join(format!(
+        "frob-cli-bd024-{}-{}.db",
+        std::process::id(),
+        SystemTime::now()
+            .duration_since(UNIX_EPOCH)
+            .unwrap()
+            .as_nanos()
+    ));
+    let output = Command::new(env!("CARGO_BIN_EXE_frob"))
+        .env_clear()
+        .env("FROB_STORE", &store)
+        .args(["sim", "run", "g1", "--key", "refusal", "--json"])
+        .args(args)
+        .output()
+        .unwrap();
+    let envelope = checked(&output, exit);
+    let refusal = envelope.get("refusal").unwrap();
+    assert_eq!(refusal.get("code").and_then(Tree::as_str), Some(code));
+    assert_eq!(refusal.get("pointer").and_then(Tree::as_str), Some(pointer));
+    assert!(!store.exists());
+}
+
+#[test]
+fn tier_not_implemented_724() {
+    for tier in ["batch-cpu", "gpu-metal", "gpu-cuda"] {
+        sim_refusal(&["--tier", tier], 5, "FROB-REF-724", "/tier");
+    }
+    sim_refusal(
+        &["--tier", "referee", "--worlds", "2"],
+        5,
+        "FROB-REF-724",
+        "/worlds",
+    );
+}
+
+#[test]
+fn tier_misspelt_802() {
+    sim_refusal(&["--tier", "refere"], 3, "FROB-REF-802", "/tier");
+}
+
+#[test]
+fn unknown_flag_802() {
+    sim_refusal(
+        &["--tier", "referee", "--fixture", "g1"],
+        3,
+        "FROB-REF-802",
+        "/fixture",
+    );
+}
+
+#[cfg(feature = "referee")]
+#[test]
+fn invalid_seconds_and_seed_802() {
+    for seconds in ["0", "0.01"] {
+        sim_refusal(
+            &["--tier", "referee", "--seconds", seconds],
+            3,
+            "FROB-REF-802",
+            "/seconds",
+        );
+    }
+    sim_refusal(
+        &["--tier", "referee", "--seed", "18446744073709551616"],
+        3,
+        "FROB-REF-802",
+        "/seed",
+    );
+}
+
+#[cfg(not(feature = "referee"))]
+#[test]
+fn missing_referee_group_790() {
+    sim_refusal(
+        &["--tier", "referee"],
+        5,
+        "FROB-REF-790",
+        "foundation/referee/compiled",
+    );
+}
+
 #[test]
 fn doctor_reports_compiled_stack_receipt_and_lock() {
     let out = call(&["doctor", "--section", "stack_receipt", "--json"]);

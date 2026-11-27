@@ -165,7 +165,9 @@ fn run(
             env::var_os("FROB_SOCKET").ok_or("FROB_SOCKET is required for socket dispatch")?;
         Socket::new(DaemonClient::new(path, registry.clone())?).submit(&cx, &request)?
     } else {
-        InProcess::new(pipeline, handler_table()).submit(&cx, &request)?
+        InProcess::new(pipeline, handler_table())
+            .with_local_ledger(cfg!(feature = "referee") && request.verb == "sim.run")
+            .submit(&cx, &request)?
     };
     while let Some(frame) = stream.next_frame(&cx)? {
         match frame {

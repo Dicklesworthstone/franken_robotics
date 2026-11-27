@@ -21,6 +21,7 @@ on_calibration = "reference-path"
 [features]
 registry-only = { tier = "S" }
 handlers = { tier = "S" }
+referee = { tier = "S" }
 conformance = { tier = "S" }
 gauntlet-mutations = { tier = "S" }
 nc-bare-unknown-verb = { tier = "S" }

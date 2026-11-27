@@ -748,6 +748,14 @@ name = "frob-cert"
 version = "0.0.1"
 
 [[package]]
+name = "frob-chronicle"
+version = "0.0.1"
+dependencies = [
+ "frob-core",
+ "frob-fsim",
+]
+
+[[package]]
 name = "frob-cli"
 version = "0.0.1"
 dependencies = [
@@ -871,7 +879,9 @@ dependencies = [
 name = "frob-verbs"
 version = "0.0.1"
 dependencies = [
+ "frob-chronicle",
  "frob-core",
+ "frob-fsim",
 ]
 
 [[package]]
@@ -1287,6 +1297,7 @@ dependencies = [
 name = "fs-fmm"
 version = "0.0.1"
 dependencies = [
+ "fs-exec",
  "fs-math",
 ]
 

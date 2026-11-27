@@ -14,6 +14,8 @@ rank = 4
 
 [dependencies]
 frob-core = { path = "../frob-core" }
+frob-chronicle = { path = "../frob-chronicle", optional = true }
+frob-fsim = { path = "../frob-fsim", default-features = false, optional = true }
 
 [dev-dependencies]
 frob-core = { path = "../frob-core", features = ["test-support"] }
@@ -22,9 +24,10 @@ frob-core = { path = "../frob-core", features = ["test-support"] }
 frob-core = { path = "../frob-core" }
 
 [features]
-default = ["handlers"]
+default = ["referee"]
 registry-only = []
-handlers = []
+handlers = ["dep:frob-chronicle", "dep:frob-fsim"]
+referee = ["handlers", "frob-fsim/referee"]
 conformance = []
 # Planted defects for GATE-TETHER-03 and GATE-TETHER-02 negative controls (N32a-03, NJL-01); never enabled in a build.
 gauntlet-mutations = []

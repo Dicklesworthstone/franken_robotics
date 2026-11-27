@@ -11,7 +11,8 @@ use fs_mbd::articulated::motion::{
     FreeFloatingMotionLoads, FreeFloatingMotionState, step_free_floating,
 };
 use fs_mbd::articulated::{
-    ArticulatedModel, FreeFloatingBaseState, JointKind, free_floating_forward_dynamics,
+    ArticulatedModel, BaseState, FreeFloatingBaseState, JointKind, forward_kinematics,
+    free_floating_forward_dynamics, free_floating_momentum,
 };
 use fs_mbd::robot_models::{CatalogRobotModel, unitree_g1_29dof};
 
@@ -57,6 +58,46 @@ impl InProcRefereeDynamics {
     #[must_use]
     pub const fn new() -> Self {
         Self
+    }
+
+    /// Return world-Z centre of mass (m) and total linear momentum (kg m/s).
+    pub fn vertical_observables(
+        &self,
+        model: &RefereeModel,
+        state: &RefereeState,
+    ) -> Result<(f64, f64), RefereeRefusal> {
+        let inner = model.inner();
+        let (base, q, v) = validate_and_unpack(
+            inner.facts(),
+            state,
+            &vec![0.0; inner.facts().actuators as usize],
+        )?;
+        let model = inner.model();
+        let upstream = |error: fs_mbd::articulated::ArticulatedError| {
+            RefereeRefusal::new(RefereeRefusalKind::Upstream, error.to_string())
+        };
+        let kinematics = forward_kinematics(
+            model,
+            BaseState::prescribed(base.world_from_base, base.twist_body, Twist::zero()),
+            q,
+            v,
+        )
+        .map_err(upstream)?;
+        let mut weighted_z = 0.0;
+        for (link, pose) in model.links().iter().zip(&kinematics.world_from_link) {
+            let inertia = link.inertia();
+            let center = pose
+                .transform_point(inertia.center_of_mass())
+                .map_err(|error| {
+                    RefereeRefusal::new(RefereeRefusalKind::Upstream, error.to_string())
+                })?;
+            weighted_z += inertia.mass() * center.z;
+        }
+        let momentum = free_floating_momentum(model, base, q, v).map_err(upstream)?;
+        Ok((
+            weighted_z / inner.facts().mass_kg,
+            momentum.linear_momentum_world.z,
+        ))
     }
 }
 
@@ -157,14 +198,13 @@ impl RefereeDynamics for InProcRefereeDynamics {
             external_body_wrench: &external,
             gravity_world: Vec3::new(0.0, 0.0, -STANDARD_GRAVITY_M_S2),
         };
-        let step = step_free_floating(inner.model(), &motion_state, loads, dt, || false).map_err(
-            |e| {
+        let step =
+            step_free_floating(inner.model(), &motion_state, loads, dt, || false).map_err(|e| {
                 RefereeRefusal::new(
                     RefereeRefusalKind::Upstream,
                     format!("upstream step_free_floating refused: {e}"),
                 )
-            },
-        )?;
+            })?;
         Ok(pack_state(&step.state_after))
     }
 

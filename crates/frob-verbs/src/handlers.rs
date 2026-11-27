@@ -10,6 +10,9 @@ use crate::{
     registry::{VERBS, VerbEntry},
 };
 
+#[path = "verbs/sim_run.rs"]
+mod sim_run;
+
 /// Return the slice of verb entries present in the compiled static registry table.
 ///
 /// Whether an individual verb has an active handler in this build is determined by the
@@ -24,5 +27,6 @@ pub fn registered_verbs() -> &'static [VerbEntry] {
 pub fn handler_table() -> HandlerTable {
     let mut table = HandlerTable::new();
     operator::register(&mut table);
+    sim_run::register(&mut table);
     table
 }

@@ -1,0 +1,20 @@
+[package]
+name = "frob-chronicle"
+version.workspace = true
+edition.workspace = true
+license-file.workspace = true
+repository.workspace = true
+authors.workspace = true
+publish = false
+description = "Durable simulation records and execution receipts."
+
+[package.metadata.frob]
+layer = 6
+rank = 2
+
+[dependencies]
+frob-core = { path = "../frob-core" }
+frob-fsim = { path = "../frob-fsim", default-features = false, features = ["ledger"] }
+
+[lints]
+workspace = true

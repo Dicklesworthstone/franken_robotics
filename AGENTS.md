@@ -30,23 +30,32 @@ and their review continues beside it.
 - Every sibling project (frankensim, fastmcp_rust, asupersync and the rest) is the owner's: a change a Bead needs
   in a sibling is made in that sibling's repository, by the upstream Beads (`FD-…`), not worked around here.
 
-## Working rules (machine and suite)
+## Working rules
 
-These standing rules bind every implementing agent (adopted from the machine-level rules and `frankensim/AGENTS.md`):
+These twelve standing rules bind every implementing agent (adopted from the machine-level rules and `frankensim/AGENTS.md`, matching `N34-15`'s rule table):
 
-- **Build offload only.** `cargo` runs through the build-offload shim (`rch`) and is never invoked by absolute path.
-- **Canonical project tree.** Projects stay under `~/projects`.
-- **Isolated target directories.** Use `${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/<name>` so parallel sessions and matrix cells never contend on build locks.
-- **Disk preflight.** Run a free-space preflight before heavy build or test lanes.
-- **Machine envelope and timeouts.** No run uses more than 16 GiB of memory, 8 cores, or one hour of wall time without the owner's written approval given before it starts. Any run longer than a few minutes starts under an explicit timeout.
-- **No deletions without permission.** No file or directory is deleted without explicit owner permission.
-- **No branches and no worktrees.** Work lands on `main`; exclusive file reservations through Agent Mail replace branches.
-- **Pre-commit quality bar.** Run `ubs` on changed files, and run formatting, lints, and tests before a commit.
-- **Issue tracking and triage.** Manage Beads with `br` and triage with `bv --robot-*` (never bare `bv`).
-- **Compiled source and commit evidence.** Source that was never compiled does not land, and the commit message carries the verification commands and their results.
-- **Focused patches only.** Code is changed by focused patches, never by automated rewrite scripts or broad regular-expression rewrites.
-- **Stack attribution and sibling pins.** Before a build failure is blamed on this repository, run `xtask check-stack` (or `scripts/bootstrap/first_receipt.sh` until `xtask check-stack` lands). Never move a sibling checkout back to its pin to make a check pass.
-- **Process is never the product.** Before any non-product work, an agent answers three questions: (1) which capability, defect, or blocker does this address, (2) is it the smallest direct action, and (3) is it worth its cost now.
+| # | Rule | Why | Enforced by |
+|---|---|---|---|
+| 1 | Cargo runs through the build-offload shim (`rch`), which queues for a worker and never compiles locally; `cargo` is not invoked by absolute path. Projects stay under `~/projects`. | Local compiles starve every other agent on a shared host, and checkouts outside `~/projects` break sibling path resolution and offload rules. | `frob_envelope_run` in `scripts/lib/envelope.sh` refuses a command line whose first word is an absolute path ending in `/cargo`; every script in `scripts/` calls plain `cargo`. |
+| 2 | Isolated target directories use `${RCH_TARGET_BASE:-${TMPDIR:-/tmp}}/<name>`; large scratch uses `${BIG_SCRATCH:-${TMPDIR:-/tmp}}/<name>`. | Parallel sessions and matrix cells contend on build locks and exhaust shared scratch if they share one target directory. | `frob_target_dir` and `frob_scratch_dir` in `scripts/lib/envelope.sh`; scripts use nothing else. |
+| 3 | A disk preflight precedes heavy build and test lanes. | Heavy lanes fail mid-run and wedge shared workers when free space runs out. | `frob_disk_preflight` in `scripts/lib/envelope.sh`; a heavy lane that skips it fails its own self-test. |
+| 4 | **The machine envelope.** No run on any host uses more than 16 GiB of memory, 8 cores, one hour of wall time, or one device without the owner's written approval given before it starts; builds and tests count; any run longer than a few minutes starts under an explicit timeout; when an agent stops, its jobs stop. | Unbounded or orphaned runs exhaust shared RAM, CPU, devices, or wall-clock capacity across concurrent sessions. | `frob_envelope_run` in `scripts/lib/envelope.sh` (covers runs outside the verbs) and the verbs' own admission (`N36-20`, via `frob` and `frob-launch`), both reading `registries/compute_envelope.toml`. |
+| 5 | Lanes that need more than E0 (the world bank on the M5 Ultra, training campaigns on the two RTX 4090 cards, the ten-fold tournament) name their budget in their work package and wait for that approval. Until it is given, the default E0 envelope applies. | Prevents unapproved high-resource jobs from starving the fleet before their budget and kill rules are ratified. | `frob_envelope_run` in `scripts/lib/envelope.sh` reads an approval record in `registries/compute_envelope.toml` and refuses above-E0 runs without one; without an approval, the default applies. |
+| 6 | No file or directory is deleted without explicit owner permission. No branches and no worktrees: work lands on `main`, and exclusive file reservations through Agent Mail replace branches. | Prevents unrecoverable file loss and week-long branch divergence across parallel agents. | `frob_envelope_selftest` in `scripts/lib/envelope.sh` greps `scripts/` for deleting commands outside a script's own scratch directory; Agent Mail file reservations are a working practice. |
+| 7 | `ubs` runs on changed files before a commit. Formatting, lints, and tests run before a commit. Beads are managed with `br` and triaged with `bv --robot-*` (never bare `bv`). | Catches defects, lint regressions, and formatting drift before code lands on `main`, and prevents interactive TUI hangs. | `scripts/precommit.sh`: `ubs` on changed files, `cargo fmt --check`, `cargo clippy`, `cargo test` for touched crates, `scripts/lib/tests/*_test.sh`, and the six workspace checks. |
+| 8 | Source that was never compiled does not land. The commit message carries the verification commands and their results. | Keeps `main` buildable for every agent and leaves an auditable verification trail on every commit. | `scripts/precommit.sh` prints the verification block to paste into the commit message; the first commit contains no crate that has not compiled. |
+| 9 | Code is changed by focused patches, never by automated rewrite scripts or broad regular-expression rewrites. An existing file is revised in place; a new file must be new functionality or a required contract or test artifact. | Prevents noisy mechanical diffs, broken abstractions, and file sprawl. | Review; the exit review samples commits for file sprawl. |
+| 10 | Before a build failure is attributed to this repository, the stack check runs. An off-pin sibling is classified as a fast-forward or a divergence before any remedy is proposed, and a sibling checkout is never moved back to its pin to make a check pass. | Sibling checkouts move under other agents; misattributing failures or rewinding a sibling destroys another agent's work. | `cargo xtask check-stack` (`N33a-05`; drift classes from `N33a-04`) is the first step of the build-failure recipe below; the check writes nothing to a sibling. |
+| 11 | Process is never the product. Before non-product work an agent answers three questions: (1) which capability, defect, or blocker does this address, (2) is it the smallest direct action, and (3) is it worth its cost now. If any answer is unclear the work is not done. | Prevents multi-day tooling detours that ship no real capability. | The exactly-six rule for workspace checks; bead close reasons that cite a test's output; the exit review. |
+| 12 | The machine-level rule on Apple Simulator audio applies to any use of a device simulator. This project uses none. | Preserves machine-level audio hygiene so any later simulator use inherits the rule automatically. | Nothing to enforce; recorded so that a later use inherits it. |
+
+For rule 4, `frob_envelope_run` in `scripts/lib/envelope.sh` enforces per-run limits for runs outside the verbs (builds, tests, heavy shell lanes), while the verbs' own admission (`N36-20`) covers runs started through `frob` and `frob-launch`, both reading `registries/compute_envelope.toml`.
+
+### Build-failure recipe (rule 10)
+
+1. Run `cargo xtask check-stack` before attributing a build failure to this repository.
+2. Classify any off-pin sibling as a fast-forward or a divergence (`N33a-04` drift classes) before proposing any remedy.
+3. Never move a sibling checkout back to its pin to make a check pass; resolve drift forward through the owning upstream bead (`FD-…`).
 
 ## Swarm rules (binding on every agent)
 

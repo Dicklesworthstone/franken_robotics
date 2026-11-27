@@ -50,7 +50,7 @@ e2e_assert_file "checkout_gates_exists" "${CHECKOUT_GATES}"
 e2e_step "recorder_unit_suite" "Run the full N38b-19 recorder test suite in isolated scratch Git repos"
 e2e_cmd --name "cargo_test_recorder" -- \
   env "CARGO_TARGET_DIR=${TARGET_BASE}/conformance" \
-  cargo test --offline -j 1 -p frob-conformance --test recorder
+  cargo test --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p frob-conformance --test recorder
 e2e_assert_eq "cargo_test_recorder_exit" "${E2E_LAST_EXIT}" "0"
 
 e2e_step "scratch_cli_recording_and_plants" "Exercise both record modes and the refusal plants in a scratch Git repo"
@@ -129,7 +129,7 @@ EOF
   # Plant 1: self-certify (recorder session matches implementer session:impl-e2e)
   e2e_cmd --name "plant_self_certify" --expect-exit 3 -- \
     env "CARGO_TARGET_DIR=${TARGET_BASE}/conformance" "FROB_SESSION=session:impl-e2e" \
-    cargo run --offline -j 1 -p frob-conformance --example record_gate -- \
+    cargo run --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p frob-conformance --example record_gate -- \
       --repo-root "${SCRATCH}" --gate GATE-GAUNT-10 --receipt "${GOOD_HASH}" --bead N38b-19 --date 2026-11-25
   e2e_assert_eq "plant_self_certify_exit" "${E2E_LAST_EXIT}" "3"
   if [ "${E2E_LAST_EXIT}" = 3 ] && grep -Eq '^reason=self-certified( |$)' "${E2E_LAST_STDERR}"; then got="ok"; else got="missing"; fi
@@ -141,7 +141,7 @@ EOF
   # Plant 2: missed-control
   e2e_cmd --name "plant_missed_control" --expect-exit 3 -- \
     env "CARGO_TARGET_DIR=${TARGET_BASE}/conformance" "FROB_SESSION=session:reviewer-e2e" \
-    cargo run --offline -j 1 -p frob-conformance --example record_gate -- \
+    cargo run --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p frob-conformance --example record_gate -- \
       --repo-root "${SCRATCH}" --gate GATE-GAUNT-10 --receipt "${MISSED_HASH}" --bead N38b-19 --date 2026-11-25
   e2e_assert_eq "plant_missed_control_exit" "${E2E_LAST_EXIT}" "3"
   if [ "${E2E_LAST_EXIT}" = 3 ] && grep -Eq '^reason=control-not-caught( |$)' "${E2E_LAST_STDERR}"; then got="ok"; else got="missing"; fi
@@ -153,7 +153,7 @@ EOF
   # Plant 3: tampered-receipt
   e2e_cmd --name "plant_tampered_receipt" --expect-exit 3 -- \
     env "CARGO_TARGET_DIR=${TARGET_BASE}/conformance" "FROB_SESSION=session:reviewer-e2e" \
-    cargo run --offline -j 1 -p frob-conformance --example record_gate -- \
+    cargo run --manifest-path "${E2E_REPO_ROOT}/Cargo.toml" --offline -j 1 -p frob-conformance --example record_gate -- \
       --repo-root "${SCRATCH}" --gate GATE-GAUNT-10 --receipt "${TAMPER_HASH}" --bead N38b-19 --date 2026-11-25
   e2e_assert_eq "plant_tampered_receipt_exit" "${E2E_LAST_EXIT}" "3"
   if [ "${E2E_LAST_EXIT}" = 3 ] && grep -Eq '^reason=receipt-hash-mismatch( |$)' "${E2E_LAST_STDERR}"; then got="ok"; else got="missing"; fi

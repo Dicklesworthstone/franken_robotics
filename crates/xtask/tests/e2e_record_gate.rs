@@ -6,7 +6,7 @@ use std::path::Path;
 use std::process::Command;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use frob_conformance::e2e::json::{JsonValue, parse_strict};
+use xtask::e2e_json::{JsonValue, parse_strict};
 use xtask::e2e_runner::run_script;
 
 const PLANTS: [&str; 4] = [

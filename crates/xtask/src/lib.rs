@@ -21,3 +21,9 @@ pub mod report;
 pub mod stack;
 pub mod status_table;
 pub mod workspaces;
+
+// Share pure source with frob-conformance without linking the crate.
+#[path = "../../frob-conformance/src/register/print.rs"]
+mod conformance_register_print;
+#[path = "../../frob-conformance/src/e2e/json.rs"]
+pub mod e2e_json;

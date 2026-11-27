@@ -13,7 +13,6 @@ layer = 7
 rank = 5
 
 [dependencies]
-frob-conformance = { path = "../frob-conformance", default-features = false }
 frob-core = { path = "../frob-core" }
 frob-verbs = { path = "../frob-verbs", default-features = false, features = ["registry-only"] }
 fs-blake3 = { path = "../../../frankensim/crates/fs-blake3", default-features = false }

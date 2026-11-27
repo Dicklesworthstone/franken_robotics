@@ -9,8 +9,8 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fs;
 use std::path::Path;
 
-use frob_conformance::register::print::extract_str_list;
-pub use frob_conformance::register::print::{
+use crate::conformance_register_print::extract_str_list;
+pub use crate::conformance_register_print::{
     ClaimKind, GatePart, GateRegistry, GateRow, PartStatus, RecordedMeta, StatusTableError,
     parse_gates_toml, readme_table as generate_from_toml, status_table, try_status_table,
     validate_gate_row,

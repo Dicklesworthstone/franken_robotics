@@ -5,7 +5,7 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use frob_conformance::e2e::json;
+use xtask::e2e_json as json;
 use xtask::e2e_runner::run_script;
 
 #[test]

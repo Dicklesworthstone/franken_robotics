@@ -7,7 +7,7 @@ use std::io::{self, Read, Seek, SeekFrom};
 use std::path::{Component, Path, PathBuf};
 use std::process::Command;
 
-use frob_conformance::e2e::json::{JsonValue, parse_strict};
+use crate::e2e_json::{JsonValue, parse_strict};
 
 pub use std::process::Output as ScriptRun;
 
